@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Sitemap: https://roboparts.cn/sitemap.xml
+
+# Static assets - cache aggressively
+User-agent: *
+Disallow: /js/
+Disallow: /css/
+
+# STL files - allow for downloaders
+Allow: /stl/

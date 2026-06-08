@@ -1,0 +1,170 @@
+{
+  "updatedAt": "2026-06-08 08:50",
+  "brand": [
+    {
+      "date": "2026-06-01",
+      "title": "知行机器人发布\"优采\"数据采集手",
+      "content": "全球首款搭载高精度感知模组的数据采集手，触觉空间分辨率2.34 taxels/cm²，力觉识别精度0.1N，XYZ三轴空间定位精度0.7mm，位姿精度0.01°，整机重量600g，统一输出频率30Hz，面向具身智能算法训练、灵巧操作示教学习、精密装配算法训练。",
+      "source": "https://m.tech.china.com/articles/20260601/202606011883782.html",
+      "impact": "high"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "知行机器人发布高精度触觉感知产品",
+      "content": "搭载高精度触觉感知模组的新硬件产品，支持实时数据处理与可视化，无缝兼容主流操作系统。具体型号和参数待进一步确认。",
+      "source": "https://prchinawire.com/news/20260603/2974/",
+      "impact": "medium"
+    },
+    {
+      "date": "2026-05-26",
+      "title": "Festo发布HPPH两指气动平行夹爪",
+      "content": "超轻量0.68kg集成设计，专为协作机器人载荷受限场景优化，阀门/传感器/电气接口全部集成于夹爪本体。最大夹持1kg，协作模式夹持力140N，IO-Link通信，ISO/TS 15066+TÜV Süd安全认证。",
+      "source": "https://www.roboticstomorrow.com/news/2026/05/26/festo-introduces-two-finger-pneumatic-gripper-for-cobot-applications/26618/",
+      "impact": "high"
+    },
+    {
+      "date": "2026-05-12",
+      "title": "Festo发布GripperAI智能夹爪选型软件（补记）",
+      "content": "基于AI的通用夹爪选型与抓取规划软件，支持混合产品免编程抓取、自动计算抓取点、自动选择工具、抓取失败自动重试。运行于标准工业PC配合3D相机，兼容多数工业/协作机器人和笛卡尔系统。",
+      "source": "https://www.roboticstomorrow.com/news/2026/05/12/festo-introduces-gripperai-an-ai-based-solution-for-mixed-product-robotic-handling-/26560/",
+      "impact": "medium"
+    },
+    {
+      "date": "2026-06-04",
+      "title": "沃姆WOMMER电动快换盘宣介",
+      "content": "重复定位精度±0.02mm，全电驱动，断电机械自锁，秒级切换，模块化多通道接口（电力+气路+信号），可对接浮动模块。具体型号未公开。",
+      "source": "https://www.sohu.com/a/1032216674_121166192",
+      "impact": "low"
+    },
+    {
+      "date": "2026-06-02",
+      "title": "沃姆WOMMER大负载柔性电爪宣介",
+      "content": "夹持力5-1000N可调，力控精度毫牛级，最大承载30kg级工件，定位偏差补偿±2mm，EtherCAT/Modbus TCP，IP54防护，传动寿命超500万次，兼容ABB/KUKA/FANUC/安川/埃斯顿/新松等。",
+      "source": "https://www.sohu.com/a/1031192536_121166192",
+      "impact": "low"
+    },
+    {
+      "date": "2026-06-07",
+      "title": "沃姆WOMMER全品类国产夹爪矩阵发布",
+      "content": "全品类产品（气动夹爪/电动夹爪/三爪卡盘/浮动模块/快换装置），全系遵循ISO 9409标准接口，适配FANUC/ABB/KUKA/汇川/埃斯顿等主流品牌。部分高端型号集成多维传感器，支持IO/Modbus/EtherNet/IP通信协议。",
+      "source": "https://www.sohu.com/a/1033383644_121166192",
+      "impact": "medium"
+    }
+  ],
+  "opensource": [
+    {
+      "date": "2026-05-30",
+      "title": "KH CUBE模块化仿生机械手全开源发布",
+      "content": "面向新工科科创/竞赛/毕设/科研的轻量化末端执行器开发平台。统一通用控制本体+三款快换夹爪（柔性/刚性/精密），提供3D打印文件（3MF格式）。B站播放量较高，社区关注度上升。",
+      "source": "https://www.bilibili.com/video/BV1MmVV6REkd/",
+      "impact": "high"
+    },
+    {
+      "date": "2026-06-01",
+      "title": "睿尔曼RMG24两指平行夹爪全开源发布",
+      "content": "睿尔曼正式开源RMG24全套设计文件（3D模型/PCB/Gerber/BOM/上位机/固件），MIT许可证。最大开合65mm，0.4s极速开合，负载4kg，自重0.5kg，负载比8:1。WHJ03集成关节驱动，双通信接口。",
+      "source": "https://github.com/RealManRobot/Two-Finger-Gripper",
+      "impact": "high"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "OpenClaw仿生龙虾钳爪全栈开源项目",
+      "content": "欠驱动抓取仿生龙虾钳爪，全栈开源（硬件/电路/固件/ROS2 MoveIt!集成）。支持MG996R/DYNAMIXEL舵机，适配UR5/Franka Panda/DIY臂。control_plugins/目录支持.so插件化第三方夹爪接入。",
+      "source": "https://blog.csdn.net/weixin_29696711/article/details/161579391",
+      "impact": "high"
+    },
+    {
+      "date": "2026-06-06",
+      "title": "Millibar DGRM双夹爪安装座",
+      "content": "允许单台机器人手腕同时安装两个末端执行工具，专为机床上下料优化。轻量化铝材+黑色阳极氧化，支持ISO 31.5/40/50/63mm四种法兰规格，兼容FANUC CRX/UR等主流协作臂。提供STEP格式3D模型。",
+      "source": "https://millibar.com/product/dgrm/",
+      "impact": "medium"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "Millibar RTA-A机器人到工具适配器",
+      "content": "解决EOAT安装孔距与机器人工具法兰孔距不匹配问题。支持ISO 31.5/40/50/63mm四种PCD规格互转，含空白版可自行加工。提供5种型号STEP格式3D模型。",
+      "source": "https://millibar.com/product/rta-a/",
+      "impact": "medium"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "Indystry.cc 3D可打印模块化机器人夹爪",
+      "content": "波兰创客Nikodem Bartnik的平行式夹爪STL文件包（$20），核心亮点为模块化安装法兰可适配不同机械臂接口。提供Fusion 360源文件(.f3d)和STEP文件，用户可自行修改适配器。",
+      "source": "https://indystry.cc/product/3d-printable-modular-robot-gripper/",
+      "impact": "medium"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "OpenClaw ROS2三层控制架构深度工程实践",
+      "content": "深度解析OpenClaw的Motion/Task/Interface三层物理隔离架构。关键发现：control_plugins/目录支持.so插件化夹爪控制（grasp_planner.so、force_control.so等），第三方夹爪可通过插件形式接入。转接件需同时考虑机械适配和软件驱动兼容。",
+      "source": "https://blog.csdn.net/weixin_30588381/article/details/161672980",
+      "impact": "medium"
+    },
+    {
+      "date": "2026-06-04",
+      "title": "PAROL6机械结构设计详解教程（含夹爪附件）",
+      "content": "PAROL6桌面机械臂完整搭建教程，GRIPPER_ATTACHMENTS目录含水平气动夹爪安装座等附件STL，展示'多种夹爪+统一法兰接口'参考实现。PETG/0.2mm层高/20-30%填充。",
+      "source": "https://github.com/PCrnjak/PAROL6-Desktop-robot-arm",
+      "impact": "medium"
+    }
+  ],
+  "standard": [
+    {
+      "date": "2026-06-08",
+      "title": "rmw_zenoh正式晋升ROS 2官方Tier 1支持",
+      "content": "ROS 2首个非DDS官方中间层实现，在Kilted Kaiju LTS中获得Tier 1支持。Zenoh在发现机制扩展性（O(n) vs O(n²)）、WAN/多子网支持方面显著优于DDS。>20台机器人舰队、多站点部署应选择Zenoh。",
+      "source": "https://ros2.tw/ros2/rmw_zenoh/basic/",
+      "impact": "high"
+    },
+    {
+      "date": "2026-06-08",
+      "title": "ISO 21423进入FDIS阶段 — 移动机器人互操作性标准即将发布",
+      "content": "ISO/FDIS 21423规定了工业AMR之间互操作性的通信协议，覆盖AMR本体、舰队管理设备。移动机器人领域首个跨品牌互操作性国际标准。",
+      "source": "https://bds-bg.org/en/project/show/iso:proj:86749",
+      "impact": "high"
+    },
+    {
+      "date": "2026-06-07",
+      "title": "ISO 10218-2:2025正式出版",
+      "content": "取代2011年版，将ISO/TS 15066核心内容完整纳入，成为传统工业机器人和协作机器人系统安全唯一权威参考标准。术语从'协作机器人'转向'协作应用'，新增网络安全要求。",
+      "source": "https://www.evsint.com/zh-CN/industrial-robot-safety-standards-iso-10218-ce-marking-2026/",
+      "impact": "high"
+    },
+    {
+      "date": "2026-06-05",
+      "title": "全国首个人形机器人全生命周期管理平台发布",
+      "content": "每台机器人赋予29位唯一身份编码，覆盖生产/流通/维护/回收全阶段。已覆盖100余家企业、2.8万余台机器人完成赋码。零部件更换需授权+重绑+重测。",
+      "source": "https://finance.sina.com.cn/jjxw/2026-06-05/doc-iniakmqn8296607.shtml",
+      "impact": "high"
+    },
+    {
+      "date": "2026-05-26",
+      "title": "苏州大会启动34项人形机器人国标研制",
+      "content": "覆盖安全要求、试验方法、通信协议、模型训练平台等方向。苏州12家企业表达参编意愿。通信标准直接影响零件互通。",
+      "source": "https://www.sohu.com/a/1028335563_413483",
+      "impact": "high"
+    },
+    {
+      "date": "2026-06-05",
+      "title": "GB/T 47494-2026物流机器人电气安全标准全文公开",
+      "content": "规定额定电压72V及以下物流机器人的整机及零部件电气安全要求。2026年11月1日正式实施。夹爪电气安全选型参考。",
+      "source": "https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=A8728D95A44EE14EC04A28F5C7341ADB",
+      "impact": "high"
+    },
+    {
+      "date": "2026-06-07",
+      "title": "WOMMER全品类夹爪矩阵全系遵循ISO 9409接口",
+      "content": "国产末端执行器品牌WOMMER发布全品类产品，全系遵循ISO 9409标准接口，适配FANUC/ABB/KUKA/汇川/埃斯顿等主流品牌。国产夹爪生态持续壮大。",
+      "source": "https://www.sohu.com/a/1033383644_121166192",
+      "impact": "medium"
+    },
+    {
+      "date": "2026-05-12",
+      "title": "ISO/AWI 22166-1模块化服务机器人框架最终草案",
+      "content": "确立硬件模块化、软件接口通用化、低碳能耗优化三大核心框架。替代2021年旧版标准，对标零件选型+转接件业务。",
+      "source": "https://chinawto.mofcom.gov.cn/article/jsbl/zcfg/202605/20260503628036.shtml",
+      "impact": "high"
+    }
+  ]
+}

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboLink - 机器人零件对接平台 | 不同品牌的机器人零件，在这里找到连接方式</title>
+<meta name="description" content="RoboLink是面向机器人创客和爱好者的零件对接平台，提供零件选型、兼容性检查、STL转接件下载、3D打印代打和社区交流。">
+<meta name="keywords" content="机器人零件,夹爪转接,机械臂兼容,STL下载,3D打印,创客,机器人DIY,末端执行器,法兰转接件">
+<meta name="author" content="RoboLink">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://roboparts.cn/">
+<meta property="og:title" content="RoboLink - 机器人零件对接平台">
+<meta property="og:description" content="不同品牌的机器人零件，在这里找到连接方式。免费STL转接件下载，3D打印代打服务。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://roboparts.cn/">
+<meta property="og:site_name" content="RoboLink">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RoboLink - 机器人零件对接平台">
+<meta name="twitter:description" content="不同品牌的机器人零件，在这里找到连接方式">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2' y='14' width='8' height='8' rx='2' fill='%23378ADD'/><rect x='20' y='2' width='8' height='8' rx='2' fill='%23639922'/><rect x='20' y='20' width='8' height='8' rx='2' fill='%23D85A30'/><line x1='10' y1='18' x2='20' y2='18' stroke='%23378ADD' stroke-width='2' stroke-linecap='round'/><line x1='10' y1='18' x2='10' y2='6' stroke='%23B4B2A9' stroke-width='1.5'/><line x1='10' y1='6' x2='20' y2='6' stroke='%23B4B2A9' stroke-width='1.5'/></svg>">
+<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- JSON-LD 结构化数据 -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "RoboLink",
+  "url": "https://roboparts.cn",
+  "description": "面向机器人创客和爱好者的零件对接平台，提供零件选型、兼容性检查、STL转接件下载、3D打印代打和社区交流。",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "CNY",
+    "description": "免费STL转接件下载"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "RoboLink"
+  },
+  "inLanguage": "zh-CN",
+  "sameAs": []
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "什么是RoboLink?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "RoboLink是面向机器人创客和爱好者的零件对接平台，帮助用户找到不同品牌机器人零件之间的连接方案，提供免费STL转接件下载、兼容性检查和3D打印代打服务。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "RoboLink支持哪些品牌的机械臂和夹爪?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "目前支持DOBOT、UR、Franka、HIWIN、AUBO、uArm、Elephant Robotics等18款机械臂，以及Robotiq、OnRobot、慧灵、大寰、柔触等34款末端执行器。持续更新中。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "STL转接件免费吗?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "是的，所有STL转接件设计文件完全免费下载。如果你没有3D打印机，可以通过平台委托嘉立创或魔猴网代打，费用约15-50元/件。"
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-container">
+    <a href="#" class="logo">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <rect x="2" y="12" width="8" height="8" rx="2" fill="#378ADD"/>
+        <rect x="18" y="2" width="8" height="8" rx="2" fill="#639922"/>
+        <rect x="18" y="18" width="8" height="8" rx="2" fill="#D85A30"/>
+        <line x1="10" y1="16" x2="18" y2="16" stroke="#378ADD" stroke-width="2" stroke-linecap="round"/>
+        <line x1="22" y1="10" x2="22" y2="18" stroke="#639922" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>RoboLink</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#parts">零件库</a></li>
+      <li><a href="#compat">兼容检查</a></li>
+      <li><a href="#community">社区</a></li>
+      <li><a href="#stl">STL下载</a></li>
+      <li><a href="#monitor">行业动态</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <!-- 登录按钮（未登录时显示） -->
+      <button class="btn btn-outline btn-sm" id="navAuthBtn" onclick="showAuthModal('login')" style="font-size:13px;padding:6px 16px;">登录 / 注册</button>
+      <!-- 用户菜单（登录后显示） -->
+      <div id="navUserMenu" style="display:none;align-items:center;gap:8px;cursor:pointer;position:relative;" onclick="toggleUserDropdown()">
+        <div class="user-avatar-initial" style="width:32px;height:32px;border-radius:50%;background:var(--blue-400);color:white;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;">U</div>
+        <span class="user-display-name" style="font-size:13px;font-weight:500;color:var(--gray-800);"></span>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 5L6 8L9 5" stroke="var(--gray-400)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <!-- 下拉菜单 -->
+        <div id="userDropdown" style="display:none;position:absolute;top:40px;right:0;background:white;border:1px solid var(--gray-100);border-radius:var(--radius-md);padding:8px 0;min-width:140px;box-shadow:var(--shadow-md);z-index:101;">
+          <a href="#" onclick="event.stopPropagation()" style="display:block;padding:8px 16px;font-size:13px;color:var(--gray-600);text-decoration:none;" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='transparent'">我的收藏</a>
+          <a href="#" onclick="event.stopPropagation()" style="display:block;padding:8px 16px;font-size:13px;color:var(--gray-600);text-decoration:none;" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='transparent'">我的发帖</a>
+          <a href="#" onclick="event.stopPropagation()" style="display:block;padding:8px 16px;font-size:13px;color:var(--gray-600);text-decoration:none;" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='transparent'">上传设计</a>
+          <hr style="border:none;border-top:1px solid var(--gray-100);margin:4px 0;">
+          <a href="#" onclick="event.stopPropagation();handleSignOut()" style="display:block;padding:8px 16px;font-size:13px;color:var(--coral-400);text-decoration:none;" onmouseover="this.style.background='var(--coral-50)'" onmouseout="this.style.background='transparent'">退出登录</a>
+        </div>
+      </div>
+    </div>
+    <button class="nav-toggle" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<header id="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1>不同品牌的机器人零件<br>在这里找到连接方式</h1>
+      <p class="hero-sub">零件选型 + 兼容匹配 + 社区经验 + 3D打印转接件<br>让普通人也能玩转机器人</p>
+      <div class="hero-actions">
+        <a href="#parts" class="btn btn-primary">开始选型</a>
+        <a href="#compat" class="btn btn-secondary">检查兼容性</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">15</span><span class="stat-label">收录品牌</span></div>
+        <div class="stat"><span class="stat-num">34</span><span class="stat-label">零件型号</span></div>
+        <div class="stat"><span class="stat-num">12</span><span class="stat-label">转接件设计</span></div>
+        <div class="stat"><span class="stat-num">340+</span><span class="stat-label">社区用户</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="parts" class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>零件选型引擎</h2>
+      <p>从品牌、类型、参数多维度筛选，找到最适合你项目的零件</p>
+    </div>
+    <div class="parts-filters">
+      <div class="filter-group">
+        <label>品类</label>
+        <div class="filter-tags" id="categoryFilter">
+          <button class="tag active" data-value="all">全部</button>
+          <button class="tag" data-value="electric-gripper">电动夹爪</button>
+          <button class="tag" data-value="soft-gripper">柔性夹爪</button>
+          <button class="tag" data-value="servo-gripper">舵机夹爪</button>
+          <button class="tag" data-value="vacuum">真空吸盘</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <label>品牌</label>
+        <div class="filter-tags" id="brandFilter">
+          <button class="tag active" data-value="all">全部</button>
+          <button class="tag" data-value="robotiq">Robotiq</button>
+          <button class="tag" data-value="onrobot">OnRobot</button>
+          <button class="tag" data-value="schunk">Schunk</button>
+          <button class="tag" data-value="festo">Festo</button>
+          <button class="tag" data-value="huiling">慧灵科技</button>
+          <button class="tag" data-value="dahang">大寰机器人</button>
+          <button class="tag" data-value="rouchu">柔触机器人</button>
+          <button class="tag" data-value="zhixing">知行机器人</button>
+          <button class="tag" data-value="worm">沃姆机器人</button>
+          <button class="tag" data-value="tianji">天机机器人</button>
+          <button class="tag" data-value="yiyuan">一元智能</button>
+        </div>
+      </div>
+      <div class="filter-search">
+        <input type="text" id="partSearch" placeholder="搜索型号或关键词...">
+      </div>
+    </div>
+    <div class="parts-grid" id="partsGrid"></div>
+    <div class="load-more">
+      <button class="btn btn-outline" id="loadMoreParts">加载更多</button>
+    </div>
+  </div>
+</section>
+
+<section id="compat" class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <h2>兼容性检查</h2>
+      <p>选择你的机械臂和目标夹爪，一键查看是否兼容以及需要的转接方案</p>
+    </div>
+    <div class="compat-checker">
+      <div class="compat-pair">
+        <div class="compat-card">
+          <div class="compat-card-header">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="8" width="6" height="6" rx="1" stroke="#378ADD" stroke-width="1.5"/><rect x="12" y="2" width="6" height="6" rx="1" stroke="#378ADD" stroke-width="1.5"/><line x1="8" y1="11" x2="12" y2="5" stroke="#378ADD" stroke-width="1.5"/></svg>
+            <span>机械臂 / 机器人本体</span>
+          </div>
+          <select id="robotArm" class="compat-select">
+            <option value="">选择机械臂品牌和型号...</option>
+          </select>
+        </div>
+        <div class="compat-connector">
+          <svg width="40" height="24" viewBox="0 0 40 24"><line x1="0" y1="12" x2="30" y2="12" stroke="#B4B2A9" stroke-width="1.5"/><polygon points="28,8 36,12 28,16" fill="#B4B2A9"/></svg>
+        </div>
+        <div class="compat-card">
+          <div class="compat-card-header">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="5" y="10" width="4" height="4" rx="1" stroke="#D85A30" stroke-width="1.5"/><rect x="11" y="10" width="4" height="4" rx="1" stroke="#D85A30" stroke-width="1.5"/><rect x="8" y="4" width="4" height="4" rx="1" stroke="#D85A30" stroke-width="1.5"/></svg>
+            <span>末端执行器 / 夹爪</span>
+          </div>
+          <select id="endEffector" class="compat-select">
+            <option value="">选择夹爪品牌和型号...</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-lg" id="checkCompat">检查兼容性</button>
+      <div class="compat-result" id="compatResult" style="display:none;"></div>
+    </div>
+  </div>
+</section>
+
+<section id="community" class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>社区动态</h2>
+      <p>创客们的搭配经验、踩坑记录、改装方案</p>
+    </div>
+    <div class="community-tabs">
+      <button class="tab active" data-tab="latest">最新发布</button>
+      <button class="tab" data-tab="popular">热门方案</button>
+      <button class="tab" data-tab="combo">搭配方案</button>
+      <button class="tab" data-tab="tutorial">教程</button>
+      <button class="tab" data-tab="qa">问答求助</button>
+      <button class="tab" data-tab="review">评测</button>
+      <button class="tab post-btn" onclick="togglePostForm()">+ 发帖</button>
+    </div>
+    <div class="new-post-form" id="newPostForm" style="display:none;">
+      <div id="postFormNotice" style="display:none;background:var(--amber-50);border:1px solid var(--amber-400);border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:12px;font-size:13px;color:var(--amber-400);">
+        <a href="#" onclick="event.preventDefault();showAuthModal('register')" style="color:var(--amber-400);text-decoration:underline;">请先登录</a>
+        <span>后才能发帖</span>
+      </div>
+      <div class="form-row">
+        <input type="text" id="newPostTitle" placeholder="标题" style="flex:1;">
+        <select id="newPostTab">
+          <option value="combo">搭配方案</option>
+          <option value="review">评测</option>
+          <option value="qa">问答求助</option>
+          <option value="tutorial">教程</option>
+        </select>
+      </div>
+      <textarea id="newPostContent" rows="3" placeholder="分享你的搭配经验、踩坑记录或改装方案..."></textarea>
+      <div style="text-align:right;">
+        <button class="btn btn-primary" onclick="submitPost()">发布</button>
+      </div>
+    </div>
+    <div class="community-feed" id="communityFeed"></div>
+  </div>
+</section>
+
+<section id="stl" class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <h2>转接件设计库</h2>
+      <p>免费下载STL文件，自己打印或委托代打</p>
+    </div>
+    <div class="stl-grid" id="stlGrid"></div>
+    <div class="print-service">
+      <div class="service-card">
+        <h3>没有3D打印机?</h3>
+        <p>下载STL文件后，上传到嘉立创3D打印平台下单代打</p>
+        <div class="price-range">单个转接件 <strong>15-50元</strong> · PLA材料 · 3-5天送达</div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <a href="https://www.jlc-3dp.cn/" target="_blank" rel="noopener" class="btn btn-primary">前往嘉立创下单</a>
+          <a href="https://www.mohou.com/" target="_blank" rel="noopener" class="btn btn-secondary">魔猴网代打</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="monitor" class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>行业动态监控</h2>
+      <p>每日自动追踪品牌新品、开源社区、标准化进展</p>
+    </div>
+    <div class="monitor-tabs">
+      <button class="tab active" data-mtab="brand">品牌动态</button>
+      <button class="tab" data-mtab="opensource">开源社区</button>
+      <button class="tab" data-mtab="standard">标准化</button>
+    </div>
+    <div class="monitor-feed" id="monitorFeed"></div>
+    <div class="monitor-timestamp">
+      <span id="monitorUpdateTime">数据更新于 --</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="logo">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+            <rect x="2" y="12" width="8" height="8" rx="2" fill="#378ADD"/>
+            <rect x="18" y="2" width="8" height="8" rx="2" fill="#639922"/>
+            <rect x="18" y="18" width="8" height="8" rx="2" fill="#D85A30"/>
+            <line x1="10" y1="16" x2="18" y2="16" stroke="#378ADD" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>RoboLink</span>
+        </div>
+        <p>让普通人也能玩转机器人的零件对接平台</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>平台</h4>
+          <a href="#parts">零件库</a>
+          <a href="#compat">兼容检查</a>
+          <a href="#stl">STL下载</a>
+        </div>
+        <div class="footer-col">
+          <h4>社区</h4>
+          <a href="#community">最新动态</a>
+          <a href="#" onclick="togglePostForm();return false;">发布方案</a>
+          <a href="#">帮助中心</a>
+        </div>
+        <div class="footer-col">
+          <h4>信息</h4>
+          <a href="#monitor">行业动态</a>
+          <a href="#">品牌合作</a>
+          <a href="#">关于我们</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 RoboLink - 机器人零件对接平台 | 数据仅供参考，工业场景请自行验证精度</p>
+    </div>
+  </div>
+</footer>
+
+<!-- 认证弹窗 -->
+<div id="authModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:2000;justify-content:center;align-items:center;">
+  <div style="background:white;border-radius:16px;padding:32px;max-width:420px;width:90%;position:relative;">
+    <button onclick="closeAuthModal()" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:#666;">&times;</button>
+
+    <!-- Auth Tabs -->
+    <div style="display:flex;gap:0;margin-bottom:24px;background:var(--gray-50);border-radius:8px;padding:4px;">
+      <button data-auth-tab="login" class="auth-tab active" onclick="showAuthModal('login')" style="flex:1;padding:8px;border:none;background:white;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;">登录</button>
+      <button data-auth-tab="register" class="auth-tab" onclick="showAuthModal('register')" style="flex:1;padding:8px;border:none;background:transparent;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--gray-600);">注册</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="authLoginForm" onsubmit="handleLogin(event)">
+      <div style="margin-bottom:16px;">
+        <label style="display:block;font-size:13px;font-weight:500;color:var(--gray-600);margin-bottom:6px;">邮箱</label>
+        <input type="email" id="loginEmail" placeholder="your@email.com" required style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:14px;font-family:inherit;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue-400)'" onblur="this.style.borderColor='var(--gray-200)'">
+      </div>
+      <div style="margin-bottom:20px;">
+        <label style="display:block;font-size:13px;font-weight:500;color:var(--gray-600);margin-bottom:6px;">密码</label>
+        <input type="password" id="loginPassword" placeholder="输入密码" required style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:14px;font-family:inherit;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue-400)'" onblur="this.style.borderColor='var(--gray-200)'">
+      </div>
+      <button type="submit" id="loginSubmitBtn" class="btn btn-primary" style="width:100%;padding:12px;font-size:15px;">登录</button>
+      <div style="text-align:center;margin-top:12px;">
+        <button type="button" onclick="handleGuestLogin()" style="background:none;border:none;color:var(--gray-400);font-size:13px;cursor:pointer;font-family:inherit;">游客模式浏览</button>
+      </div>
+    </form>
+
+    <!-- Register Form -->
+    <form id="authRegisterForm" style="display:none;" onsubmit="handleRegister(event)">
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-size:13px;font-weight:500;color:var(--gray-600);margin-bottom:6px;">用户名</label>
+        <input type="text" id="registerUsername" placeholder="你的昵称" required style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:14px;font-family:inherit;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue-400)'" onblur="this.style.borderColor='var(--gray-200)'">
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-size:13px;font-weight:500;color:var(--gray-600);margin-bottom:6px;">邮箱</label>
+        <input type="email" id="registerEmail" placeholder="your@email.com" required style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:14px;font-family:inherit;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue-400)'" onblur="this.style.borderColor='var(--gray-200)'">
+      </div>
+      <div style="margin-bottom:20px;">
+        <label style="display:block;font-size:13px;font-weight:500;color:var(--gray-600);margin-bottom:6px;">密码</label>
+        <input type="password" id="registerPassword" placeholder="至少6位密码" required minlength="6" style="width:100%;padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:14px;font-family:inherit;outline:none;box-sizing:border-box;" onfocus="this.style.borderColor='var(--blue-400)'" onblur="this.style.borderColor='var(--gray-200)'">
+      </div>
+      <button type="submit" id="registerSubmitBtn" class="btn btn-primary" style="width:100%;padding:12px;font-size:15px;">注册</button>
+    </form>
+
+    <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--gray-400);">
+      登录即表示同意 <a href="#" style="color:var(--blue-400);">用户协议</a> 和 <a href="#" style="color:var(--blue-400);">隐私政策</a>
+    </p>
+  </div>
+</div>
+
+<!-- 3D预览弹窗 -->
+<div id="stlPreviewModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:1000;justify-content:center;align-items:center;">
+  <div style="background:white;border-radius:12px;padding:24px;max-width:600px;width:90%;position:relative;">
+    <button onclick="closeSTLPreview()" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:#666;">&times;</button>
+    <h3 style="margin:0 0 16px;color:var(--gray-800);">3D模型预览</h3>
+    <div id="stl3dViewer" style="width:100%;height:400px;border-radius:8px;overflow:hidden;background:#f8f7f4;"></div>
+    <p style="margin:12px 0 0;font-size:13px;color:var(--gray-400);text-align:center;">鼠标拖拽旋转 · 滚轮缩放 · 自动旋转中</p>
+  </div>
+</div>
+
+<!-- 脚本加载顺序：config → data → auth → app → stl-viewer -->
+<script src="js/config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script src="js/stl-viewer.js"></script>
+
+</body>
+</html>

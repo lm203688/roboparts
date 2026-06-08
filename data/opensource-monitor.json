@@ -1,0 +1,26 @@
+{
+  "updatedAt": "2026-06-08 08:06",
+  "items": [
+    {
+      "date": "2026-06-03",
+      "title": "Indystry.cc推出3D可打印模块化机器人夹爪（含模块化安装法兰+源文件）",
+      "content": "波兰创客Nikodem Bartnik在Indystry.cc上架$20的平行式夹爪STL文件包，核心亮点为模块化安装法兰(Modular Mounting Flange)可适配不同机械臂，提供Fusion 360源文件(.f3d)和STEP文件支持用户自行修改适配器。DS3225舵机驱动，含可更换TPU防滑垫片。",
+      "source": "Indystry.cc",
+      "impact": "medium"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "OpenClaw发布ROS2三层控制架构深度工程实践文章",
+      "content": "CSDN深度解析OpenClaw的Motion/Task/Interface三层物理隔离架构（Motion Layer<50μs响应）。关键发现：OpenClaw的control_plugins/目录支持.so插件化夹爪控制（grasp_planner.so、force_control.so等），第三方夹爪可通过插件形式接入，说明转接件需同时考虑机械适配和软件驱动兼容。",
+      "source": "CSDN",
+      "impact": "medium"
+    },
+    {
+      "date": "2026-06-04",
+      "title": "PAROL6机械结构设计详解教程发布（含夹爪附件安装座STL）",
+      "content": "CSDN发布PAROL6桌面机械臂完整搭建教程，详细解析STL文件结构和3D打印参数（PETG/0.2mm层高）。PAROL6仓库GRIPPER_ATTACHMENTS目录含水平气动夹爪安装座等附件STL，展示了'多种夹爪+统一法兰接口'的参考实现方案。",
+      "source": "CSDN / GitHub",
+      "impact": "medium"
+    }
+  ]
+}

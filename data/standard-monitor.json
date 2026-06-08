@@ -1,0 +1,26 @@
+{
+  "updatedAt": "2026-06-08 08:21",
+  "items": [
+    {
+      "date": "2026-06-08",
+      "title": "rmw_zenoh 正式晋升 ROS 2 官方 Tier 1 支持",
+      "content": "ROS 2 首个非 DDS 官方中间层实现 rmw_zenoh 在 Kilted Kaiju LTS 中获得 Tier 1 支持。Zenoh 在发现机制扩展性（O(n) vs O(n²)）、WAN/多子网支持方面显著优于 DDS，加权总评分 4.15 vs 3.10。>20台机器人舰队、多站点/云端部署、WiFi 场景应选择 Zenoh。机器人通讯协议层发生历史性变化。",
+      "source": "开源机器人基金会 OSRF / ROS 2 社群",
+      "impact": "high"
+    },
+    {
+      "date": "2026-06-08",
+      "title": "ISO 21423 进入 FDIS 阶段 — 移动机器人互操作性标准即将发布",
+      "content": "ISO/FDIS 21423 规定了工业自主移动机器人（AMR）之间互操作性的通信协议，覆盖 AMR 本体、舰队管理设备等。已进入最终国际标准草案阶段，距离正式发布仅剩投票确认。这是移动机器人领域首个跨品牌互操作性国际标准。",
+      "source": "ISO TC 299 机器人技术委员会",
+      "impact": "high"
+    },
+    {
+      "date": "2026-06-08",
+      "title": "WOMMER沃姆发布全品类国产夹爪矩阵，全系遵循 ISO 9409 接口",
+      "content": "国产末端执行器品牌 WOMMER 于6月7日发布全品类产品（气动/电动夹爪、三爪卡盘、浮动模块、快换装置），全系遵循 ISO 9409 标准接口，适配 FANUC/ABB/KUKA/汇川/埃斯顿等主流品牌。部分高端型号集成多维传感器，支持 Modbus/EtherNet/IP 协议对接 MES 平台。",
+      "source": "WOMMER沃姆机器人末端",
+      "impact": "medium"
+    }
+  ]
+}
