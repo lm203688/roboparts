@@ -1,6 +1,6 @@
 # RoboParts 完整部署操作手册
 
-> 目标域名：**roboparts.cn** | 部署平台：Vercel | 后端：Supabase
+> 目标域名：**roboparts.cc** | 部署平台：Vercel | 后端：Supabase
 > 预计总耗时：30分钟（大部分是等待时间）
 
 ---
@@ -10,7 +10,7 @@
 ### 操作
 1. 登录腾讯云控制台：https://console.cloud.tencent.com
 2. 搜索「域名注册」或直接访问：https://buy.cloud.tencent.com/domain
-3. 搜索 `roboparts.cn`
+3. 搜索 `roboparts.cc`
 4. 选择购买年限（建议选3年，约150元）
 5. 填写域名持有者信息（实名认证，需要身份证信息）
 6. 完成支付
@@ -21,7 +21,7 @@
 - 审核通过前可以先用 Vercel 临时域名预览
 
 ### 注册完成后
-记录你的域名：`roboparts.cn`
+记录你的域名：`roboparts.cc`
 
 ---
 
@@ -99,16 +99,16 @@ const SUPABASE_CONFIG = {
 
 ### 4.1 在 Vercel 添加域名
 1. Vercel Dashboard → 你的项目 → **Settings** → **Domains**
-2. 输入：`roboparts.cn`
+2. 输入：`roboparts.cc`
 3. 点击 **Add**
-4. 再添加：`www.roboparts.cn`
+4. 再添加：`www.roboparts.cc`
 5. 点击 **Add**
 
 Vercel 会显示需要配置的 DNS 记录。
 
 ### 4.2 在腾讯云配置 DNS 解析
 1. 登录腾讯云控制台：https://console.cloud.tencent.com/cns
-2. 找到 `roboparts.cn` 域名，点击 **解析**
+2. 找到 `roboparts.cc` 域名，点击 **解析**
 3. 添加以下记录：
 
 | 主机记录 | 记录类型 | 记录值 | TTL |
@@ -130,10 +130,10 @@ Vercel 会显示需要配置的 DNS 记录。
 
 域名生效后，逐项检查：
 
-- [ ] `https://roboparts.cn/` — 网站正常显示
-- [ ] `https://www.roboparts.cn/` — 能正常访问（重定向到主域名）
-- [ ] `https://roboparts.cn/sitemap.xml` — 返回 XML 内容
-- [ ] `https://roboparts.cn/robots.txt` — 返回 robots 内容
+- [ ] `https://roboparts.cc/` — 网站正常显示
+- [ ] `https://www.roboparts.cc/` — 能正常访问（重定向到主域名）
+- [ ] `https://roboparts.cc/sitemap.xml` — 返回 XML 内容
+- [ ] `https://roboparts.cc/robots.txt` — 返回 robots 内容
 - [ ] 点击「登录/注册」— 弹出登录框（测试 Supabase 连接）
 - [ ] 社区板块 — 发帖/评论功能正常
 - [ ] STL 下载 — 点击下载按钮能下载 .stl 文件
@@ -147,17 +147,17 @@ Vercel 会显示需要配置的 DNS 记录。
 1. 打开 https://ziyuan.baidu.com
 2. 用百度账号登录
 3. 点击「用户中心」→「添加站点」
-4. 输入 `https://roboparts.cn`
+4. 输入 `https://roboparts.cc`
 5. 验证方式选择 **HTML标签验证**
 6. 将验证 meta 标签添加到 `index.html` 的 `<head>` 中
-7. 在「数据引入」→「链接提交」中提交 `https://roboparts.cn/sitemap.xml`
+7. 在「数据引入」→「链接提交」中提交 `https://roboparts.cc/sitemap.xml`
 
 ### 6.2 Google Search Console
 1. 打开 https://search.google.com/search-console
 2. 点击「添加资源」
-3. 选择「网域」，输入 `roboparts.cn`
+3. 选择「网域」，输入 `roboparts.cc`
 4. 验证方式选择 **DNS 记录验证**（和域名绑定一起做）
-5. 在「站点地图」中提交 `https://roboparts.cn/sitemap.xml`
+5. 在「站点地图」中提交 `https://roboparts.cc/sitemap.xml`
 
 ### 6.3 Bing Webmaster Tools
 1. 打开 https://www.bing.com/webmasters
@@ -171,7 +171,7 @@ Vercel 会显示需要配置的 DNS 记录。
 ```
 用户浏览器
     ↓
-roboparts.cn (HTTPS)
+roboparts.cc (HTTPS)
     ↓
 Vercel CDN (全球加速)
     ↓
@@ -187,7 +187,7 @@ Supabase (Auth + PostgreSQL + Storage)
 
 | 项目 | 费用 | 周期 |
 |------|------|------|
-| 域名 roboparts.cn | ~35元/年（首年） | 按年 |
+| 域名 roboparts.cc | ~35元/年（首年） | 按年 |
 | Vercel 部署 | 免费 | 永久 |
 | Supabase 免费层 | 免费（500MB数据库/月） | 永久 |
 | CDN/HTTPS | 免费 | 永久 |
@@ -217,7 +217,7 @@ A: 通常1个工作日，审核通过前 Vercel 临时域名照常可用。
 A: 免费层支持 500MB 数据库 + 50MB 文件存储 + 50000月活用户，初期完全够用。
 
 ### Q: DNS 一直不生效怎么办？
-A: 确认腾讯云 DNS 记录格式正确（不要带多余空格），用 `nslookup roboparts.cn` 检查。
+A: 确认腾讯云 DNS 记录格式正确（不要带多余空格），用 `nslookup roboparts.cc` 检查。
 
 ### Q: 网站打开慢怎么办？
 A: Vercel 自带全球CDN，国内访问也很快。如果仍慢，可以后续切换到 Cloudflare Pages（有国内节点）。

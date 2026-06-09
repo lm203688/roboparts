@@ -13,9 +13,9 @@ const SUPABASE_CONFIG = {
 
 // 域名配置（部署后替换为你的实际域名）
 const SITE_CONFIG = {
-  domain: 'roboparts.cn',
+  domain: 'roboparts.cc',
   siteName: 'RoboParts',
-  siteUrl: 'https://roboparts.cn',
+  siteUrl: 'https://roboparts.cc',
   siteDescription: 'RoboLink是面向机器人创客和爱好者的零件对接平台，提供零件选型、兼容性检查、STL转接件下载、3D打印代打和社区交流。',
 };
 
