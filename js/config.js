@@ -6,9 +6,9 @@
 
 const SUPABASE_CONFIG = {
   // 替换为你的 Supabase Project URL
-  url: 'YOUR_SUPABASE_URL_HERE',
+  url: 'https://pendpzoycfngylrrbwon.supabase.co',
   // 替换为你的 Supabase Anon (public) Key
-  anonKey: 'YOUR_SUPABASE_ANON_KEY_HERE',
+  anonKey: 'sb_publishable_Cm0je2pGSzSctnoNJh7wig_qsw-YxDo',
 };
 
 // 域名配置（部署后替换为你的实际域名）
