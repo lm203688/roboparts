@@ -1,26 +1,26 @@
 {
-  "updatedAt": "2026-06-09 08:06",
+  "updatedAt": "2026-06-10 08:06",
   "items": [
     {
-      "date": "2026-06-09",
-      "title": "丰田YUBI开源灵巧操作系统v1.1.1更新，含独立法兰盘STL目录",
-      "content": "丰田TRI开源手指驱动遥操作夹爪系统，v1.1.1新增独立flange/法兰盘STL子目录。使用DYNAMIXEL舵机驱动，STL+STEP完整文件，通用适配设计思路可供创客社区参考。",
-      "source": "GitHub (Toyota/yubi-hw)",
+      "date": "2026-06-10",
+      "title": "Robotiq 2F-85开源可互换夹爪套筒（免工具快拆设计）",
+      "content": "为Robotiq 2F-85自适应夹爪设计的3D打印套筒+末端附件集合，模块化免工具快拆。通用套筒摩擦力卡扣安装，支持Pincher精确抓取和Rough高摩擦纹理等多种末端秒级切换。包含完整STL文件和打印设置参数。",
+      "source": "GitHub (emmalieker/Robotiq-2F85-CustomGripperSleeve)",
       "impact": "high"
     },
     {
-      "date": "2026-06-09",
-      "title": "Robo9开源3D打印平行夹爪（含深度相机安装座）",
-      "content": "面向教育/实验室场景的齿轮齿条平行夹爪，集成45°深度相机安装座。Waveshare STS3215舵机+LM6UU轴承，STEP+BOM完整开源，适配SO-ARM100/101机械臂。",
-      "source": "GitHub (roboninecom)",
+      "date": "2026-06-10",
+      "title": "Pollen Robotics PincOpen低成本夹爪含SO-ARM100转接接口",
+      "content": "约25欧元超低成本平行双指夹爪，Feetech STS3215舵机驱动。含与SO-ARM100/101机械臂的专用转接接口设计，指尖可互换，STL+STEP+Onshape在线可编辑。跨品牌转接设计参考案例。",
+      "source": "GitHub (pollen-robotics/PincOpen)",
       "impact": "medium"
     },
     {
-      "date": "2026-06-09",
-      "title": "FANUC WINGMAN跨品牌快换系统兼容UR机器人",
-      "content": "FANUC CRX协作机器人工具更换系统同时兼容FANUC CRX和Universal Robots，支持自动+手动双模式，即插即用。跨品牌快换对接典型案例。",
-      "source": "FANUC CRX官网 / UR Marketplace",
-      "impact": "medium"
+      "date": "2026-06-10",
+      "title": "OpenClaw全栈开发指南一周内第三篇媒体报道（热度持续走高）",
+      "content": "仿生龙虾钳爪开源项目OpenClaw本周迎来第三篇长文报道（继5月31日、6月3日之后），涵盖硬件设计/3D打印/闭环控制。创客教育市场对开源夹爪方案需求旺盛，社区关注度持续升温。",
+      "source": "njrunfeng.com（网络资讯聚合）",
+      "impact": "low"
     }
   ]
 }
