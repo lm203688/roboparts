@@ -59,7 +59,7 @@
       "name": "什么是RoboLink?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "RoboLink是面向机器人创客和爱好者的零件对接平台，帮助用户找到不同品牌机器人零件之间的连接方案，提供免费STL转接件下载、兼容性检查和3D打印代打服务。"
+        "text": "RoboLink是面向机器人创客和爱好者的零件对接平台，帮助用户找到不同品牌机器人零件之间的连接方案，提供免费STL转接件下载、兼容性检查和3D打印代打服务。访问 roboparts.cc 了解更多。"
       }
     },
     {
@@ -67,7 +67,7 @@
       "name": "RoboLink支持哪些品牌的机械臂和夹爪?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "目前支持DOBOT、UR、Franka、HIWIN、AUBO、uArm、Elephant Robotics等18款机械臂，以及Robotiq、OnRobot、慧灵、大寰、柔触等34款末端执行器。持续更新中。"
+        "text": "目前支持DOBOT、UR、Franka、HIWIN、AUBO、uArm、Elephant Robotics等18款机械臂，以及Robotiq、OnRobot、慧灵、大寰、柔触等34款末端执行器。覆盖工业协作臂和桌面创客臂两大类。持续更新中。"
       }
     },
     {
@@ -75,8 +75,196 @@
       "name": "STL转接件免费吗?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "是的，所有STL转接件设计文件完全免费下载。如果你没有3D打印机，可以通过平台委托嘉立创或魔猴网代打，费用约15-50元/件。"
+        "text": "是的，所有STL转接件设计文件完全免费下载。如果你没有3D打印机，可以通过平台委托嘉立创或魔猴网代打，费用约15-50元/件。在 roboparts.cc 的STL库页面可以直接下载。"
       }
+    },
+    {
+      "@type": "Question",
+      "name": "DOBOT机械臂能接Robotiq夹爪吗?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "DOBOT的M1和CR3型号使用ISO 9409-50法兰（M6螺栓），与Robotiq 2F-85/2F-140的法兰标准一致，可以直接安装。但需要注意协议兼容性：DOBOT使用Modbus RTU，Robotiq也使用Modbus RTU，电信号兼容。安装后需要在DOBOT控制系统中配置夹爪的Modbus地址。DOBOT Magician和Lite 6的法兰是自定义规格，需要3D打印转接件。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "UR机械臂的法兰标准是什么?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "UR3e、UR5e、UR10e、UR16e等所有协作臂系列均使用ISO 9409-50-4-M6法兰标准。这是一个行业标准的50mm直径法兰盘，4个M6安装孔，螺距为标准公制。Robotiq、OnRobot、Schunk、Festo等主流工业夹爪都兼容这个法兰，可以直接安装。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Elephant Robotics myCobot 280能接什么夹爪?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "myCobot 280使用自定义M4法兰，与ISO标准法兰不兼容。可以直接接的夹爪包括：慧灵LFG-Micro（M4法兰）、大寰PIKA（M3法兰，需转接）、沃姆WK-01、天机TG-01等小型桌面夹爪。也可以通过3D打印转接件接舵机夹爪（MG996R、SG90等）。RoboParts提供专用的myCobot 280转接件STL文件。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "什么是ISO 9409法兰标准?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ISO 9409是国际标准化组织制定的机器人末端接口标准。最常用的是ISO 9409-50-4-M6（50mm法兰盘、4个M6螺栓）和ISO 9409-40-4-M4（40mm法兰盘、4个M4螺栓）。大多数工业协作臂（UR、KUKA、ABB、DOBOT等）使用ISO 9409-50标准。桌面级和教育级机器人通常使用自定义小法兰。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "如何用3D打印制作机器人转接件?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "制作转接件的步骤：1) 确认你的机械臂法兰尺寸和夹爪法兰尺寸；2) 在RoboParts网站查找对应的STL文件或定制设计；3) 用FDM 3D打印机打印（推荐PLA+或PETG材料，层高0.2mm，填充率40%以上）；4) 安装到机械臂上测试。FDM精度±0.2mm，对于创客和教学应用完全足够。打印成本约5-15元/件。在roboparts.cc可以免费下载STL文件。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "uArm Swift Pro能接什么夹爪?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "uArm Swift Pro使用自定义M4法兰接口。可以直接接的夹爪包括：慧灵LFG-Micro、沃姆WK-01、天机TG-01等M4法兰夹爪。RoboParts提供uArm专用的转接件STL文件，可以让uArm接上更多品牌的夹爪，包括舵机夹爪和MG996R等。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "舵机夹爪和电动夹爪有什么区别?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "舵机夹爪使用PWM信号控制，价格低（5-35元），力量小但简单，适合创客DIY和教育场景，代表型号有MG996R、SG90。电动夹爪使用Modbus/I2C等通信协议，力量大（可达150N），精度高（0.01-0.05mm），价格高（500-12000元），适合工业和精密应用，代表品牌有Robotiq、OnRobot、慧灵、大寰。选择取决于你的应用场景和预算。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "慧灵科技夹爪怎么样，性价比高吗?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "慧灵科技是国内性价比最高的工业夹爪品牌之一。LFG-2T（1680元）对标Robotiq 2F-85（8500元），力量和行程接近，价格仅为前者的20%。LFG-Micro（680元）是桌面级最小巧的电动夹爪之一。支持Modbus RTU和I2C双协议，兼容大多数协作臂。在创客和教学场景中非常推荐。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "大寰机器人和慧灵科技哪个好?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "大寰机器人定位中高端，GECKO系列精度达0.02mm，对标Robotiq，适合精密装配场景，价格2980-5000元。PIKA系列是迷你版，仅9克重，适合微操作。慧灵科技性价比更高，LFG-2T只要1680元但功能完整，适合教学和创客。综合来说：预算有限选慧灵，精度要求高选大寰。两者都兼容ISO 9409-50法兰。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "机器人夹爪多少钱一个?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "价格跨度很大：舵机夹爪5-35元（SG90、MG996R），国产桌面夹爪168-880元（一元YG-100、天机TG-01、沃姆WK-01），国产工业夹爪680-4000元（慧灵LFG系列、大寰GECKO、柔触FG），进口工业夹爪5600-12000元（Robotiq、OnRobot、Schunk）。推荐创客入门从国产桌面夹爪开始，预算1000元以内就能获得不错的体验。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "柔性夹爪适合什么场景?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "柔性夹爪（如柔触FG系列）使用硅胶或弹性材料手指，适合：食品抓取（不会损伤表面）、异形物体抓取（自适应形状）、易碎物品搬运（力度可控）。精度不如刚性夹爪（1-2mm vs 0.02mm），不适合精密装配。价格1680-3680元，在食品、农业、3C组装等领域有独特优势。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "3D打印转接件用什么材料?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "推荐材料排序：1) PETG（首选，耐热70°C，强度好，适合大多数场景）；2) PLA+（易打印，强度够，但不耐高温）；3) ABS（耐热好但打印需要封闭环境）；4) 尼龙（最强但打印难度高）。创客和教学场景PLA+就够用。工业场景建议用PETG或铝合金CNC加工。FDM打印精度±0.2mm，对法兰接口来说完全够用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "不同品牌机械臂的法兰为什么不兼容?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "法兰不兼容主要有三个原因：1) 尺寸不同（ISO 9409-50直径50mm，ISO 9409-40直径40mm，自定义法兰更小）；2) 螺栓孔位不同（M6 vs M4 vs M3，孔数和圆心距不同）；3) 电信号接口不同（有的用法兰内的针脚，有的用外接线缆）。工业臂大多遵循ISO标准可以互换，但桌面创客臂（myCobot、uArm等）多为自定义规格，需要转接件。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "没有3D打印机怎么办?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以通过在线3D打印服务代打。RoboParts平台集成了嘉立创3D打印（jlc-3dp.cn）和魔猴网（mohou.com），一键下单，PLA材料约15-30元/件，PETG约25-50元/件，3-5天发货。也可以找当地创客空间的3D打印机，通常10-20元/件。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "机器人兼容性检查怎么做?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "检查兼容性需要关注三点：1) 法兰物理尺寸（直径、螺栓孔位是否匹配）；2) 电气接口（电压、通信协议是否兼容）；3) 承载能力（夹爪重量是否在机械臂负载范围内）。RoboParts网站提供在线兼容性检查工具，选择你的机械臂和夹爪型号，自动判断是否兼容并给出转接方案。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "入门级机械臂推荐哪款?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "入门推荐：1) DOBOT Magician（约2000元），教学经典，支持多种末端，社区资源丰富；2) Elephant myCobot 280（约1500元），最便宜的6轴协作臂，体积小巧；3) uArm Swift Pro（约3000元），金属结构，精度好。配合慧灵LFG-Micro夹爪（680元）或舵机夹爪（25元），1000-3000元就能搭建完整系统。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "创客做机器人需要什么基础?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "基础要求：1) 机械基础（了解螺栓、法兰等连接方式）；2) 电子基础（会接线、理解电压电流）；3) 编程基础（Python或C++，会调用API）；4) 3D打印能力（会使用切片软件）。不需要全部精通，每个领域的基础知识就够起步。RoboParts社区有很多入门教程和经验分享，可以边做边学。"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "如何用3D打印为机械臂制作转接件",
+  "description": "详细教程：从确认法兰尺寸到3D打印输出转接件的完整步骤",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "确认法兰尺寸",
+      "text": "查看机械臂末端的法兰规格（直径、螺栓孔数、孔径）。工业臂通常标注在说明书上（如ISO 9409-50-4-M6），桌面臂需要实际测量。记录外径、螺栓孔圆心距、螺栓孔径三个关键尺寸。"
+    },
+    {
+      "@type": "HowToStep",
+      "name": "查找或设计STL模型",
+      "text": "在RoboParts网站（roboparts.cc）的STL库中搜索你的机械臂型号，查看是否有现成的转接件设计。如果有，直接下载STL文件。如果没有，可以用Tinkercad或Fusion 360根据测量尺寸自行设计。"
+    },
+    {
+      "@type": "HowToStep",
+      "name": "切片设置",
+      "text": "使用Cura或PrusaSlicer打开STL文件。推荐参数：层高0.2mm，填充率40%（网格填充），壁厚3层，支撑自动生成。材料选择PETG（耐热好）或PLA+（易打印）。"
+    },
+    {
+      "@type": "HowToStep",
+      "name": "3D打印输出",
+      "text": "发送G-code到3D打印机。PLA+打印温度200-210°C，床温60°C；PETG打印温度230-250°C，床温80°C。打印时间通常1-3小时。如果自己没有打印机，可以在RoboParts平台一键委托嘉立创或魔猴网代打。"
+    },
+    {
+      "@type": "HowToStep",
+      "name": "安装测试",
+      "text": "打印完成后取出零件，清理支撑材料。用对应规格的螺栓（M4或M6）将转接件固定到机械臂法兰上，再将夹爪固定到转接件另一端。检查是否稳固，必要时微调尺寸后重新打印。"
+    }
+  ],
+  "tool": [
+    {
+      "@type": "HowToTool",
+      "name": "3D打印机（FDM）",
+      "description": "任何FDM 3D打印机均可，推荐打印体积不小于150x150x150mm"
+    },
+    {
+      "@type": "HowToTool",
+      "name": "游标卡尺",
+      "description": "用于精确测量法兰尺寸，精度0.02mm"
+    },
+    {
+      "@type": "HowToTool",
+      "name": "切片软件",
+      "description": "Cura、PrusaSlicer或Mango3D等免费切片软件"
     }
   ]
 }
@@ -407,6 +595,34 @@
 </div>
 
 <!-- 脚本加载顺序：config → data → auth → app → stl-viewer -->
+<!-- SEO: 静态内容回退，供无法执行JS的爬虫读取 -->
+<noscript>
+<div style="padding:20px;max-width:800px;margin:0 auto;font-family:sans-serif;">
+<h1>RoboLink - 机器人零件对接平台</h1>
+<p>不同品牌的机器人零件，在这里找到连接方式。免费STL转接件下载，3D打印代打服务。</p>
+<h2>支持的机械臂品牌（18款）</h2>
+<p>DOBOT（Magician、M1、CR3、Lite 6）、Universal Robots（UR3e、UR5e）、Franka Emika（Panda）、HIWIN（RA610-6F）、AUBO（i06）、uArm（Swift Pro Metal）、Elephant Robotics（myCobot 280/320/630）、LoFi Robot（MK2）、矽递科技（reBot-DevArm）、SO-ARM（SO-ARM100）、CRobot（CR4）</p>
+<h2>支持的末端执行器（34款）</h2>
+<p>进口工业夹爪：Robotiq（2F-85、2F-140、Hand-E、EPICK）、OnRobot（RG2、RG6、VGC10）、Schunk（EGP-40）、Festo（DHGP）</p>
+<p>国产工业夹爪：慧灵科技（LFG-2T、LFG-Micro、LFG-3T、VG-Micro）、大寰机器人（GECKO、PIKA）、柔触机器人（FG-2、FG-mini）、知行机器人（HG-210）</p>
+<p>国产桌面夹爪：沃姆机器人（WK-01）、天机机器人（TG-01）、一元智能（YG-100）</p>
+<p>舵机夹爪：MG996R、MG995、SG90、DS3218</p>
+<h2>免费STL转接件下载</h2>
+<p>提供12款转接件设计：ISO50-M4转接件、ISO40-M4转接件、ISO50-舵机转接件、M4-舵机转接件、双夹爪安装座、线缆拖链支架、被动式工具快换、uArm夹爪转接件、自定义夹爪手指、myCobot舵机转接件、相机安装座、NEMA17步进电机安装座。</p>
+<h2>机器人兼容性检查</h2>
+<p>支持4种法兰组自动匹配：ISO 9409-50（M6螺栓）、ISO 9409-40（M4螺栓）、自定义M4、标准舵机。检查法兰尺寸、通信协议和电压兼容性。</p>
+<h2>3D打印代打服务</h2>
+<p>集成嘉立创3D打印和魔猴网，PLA材料15-30元/件，PETG材料25-50元/件，3-5天发货。</p>
+<h2>机器人创客社区</h2>
+<p>分享你的机器人项目、转接件设计、使用心得。发帖、评论、点赞，与全国机器人爱好者交流。</p>
+<h2>常见问题</h2>
+<p><strong>DOBOT能接Robotiq夹爪吗？</strong> DOBOT M1/CR3使用ISO 9409-50法兰，与Robotiq 2F-85/2F-140兼容，可直接安装。</p>
+<p><strong>什么是ISO 9409法兰标准？</strong> 国际机器人末端接口标准，ISO 9409-50-4-M6是最常用规格（50mm直径、4个M6螺栓孔）。</p>
+<p><strong>入门机械臂推荐？</strong> DOBOT Magician（约2000元）教学经典，Elephant myCobot 280（约1500元）最便宜6轴协作臂。</p>
+<p><strong>没有3D打印机怎么办？</strong> 通过平台委托嘉立创或魔猴网代打，一键下单。</p>
+</div>
+</noscript>
+
 <script src="js/config.js"></script>
 <script src="js/data.js"></script>
 <script src="js/auth.js"></script>
