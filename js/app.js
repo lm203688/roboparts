@@ -167,8 +167,9 @@ function getProductLink(product) {
   for (const bn of brandNames) {
     if (product.brand.includes(bn)) {
       const baseUrl = AFFILIATE_CONFIG.brandLinks[bn];
-      const ref = generateRefCode();
-      return `${baseUrl}${encodeURIComponent(product.model)}&ref=${ref}`;
+      // 搜索 "品牌 + 型号" 更精准
+      const keyword = encodeURIComponent(`${product.brand} ${product.model}`);
+      return `${baseUrl}${encodeURIComponent(product.model)}`;
     }
   }
   return null;
@@ -766,7 +767,7 @@ function savePosts(posts) {
 function initStlGrid() {
   const grid = document.getElementById('stlGrid');
   grid.innerHTML = STL_DESIGNS.map(s => `
-    <div class="stl-card">
+    <div class="stl-card${s.isNew ? ' stl-new' : ''}">
       <div class="stl-preview">
         <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
           <rect x="15" y="30" width="50" height="30" rx="4" stroke="#B4B2A9" stroke-width="1.5"/>
@@ -776,6 +777,7 @@ function initStlGrid() {
           <rect x="25" y="15" width="30" height="20" rx="3" stroke="#D85A30" stroke-width="1.5" stroke-dasharray="4,2"/>
         </svg>
         <span class="stl-badge free">免费下载</span>
+        ${s.isNew ? '<span class="stl-badge new">NEW</span>' : ''}
       </div>
       <div class="stl-info">
         <h4>${s.name}</h4>
@@ -794,6 +796,8 @@ function initStlGrid() {
 
 async function downloadStl(id) {
   const url = `stl/${id}.stl`;
+  const design = STL_DESIGNS.find(s => s.id === id);
+
   fetch(url, { method: 'HEAD' })
     .then(res => {
       if (res.ok) {
@@ -802,6 +806,22 @@ async function downloadStl(id) {
         a.download = `${id}.stl`;
         a.click();
         showToast('STL文件下载中，可用Cura/PrusaSlicer切片后打印');
+
+        // 追踪下载（Supabase）
+        const client = RoboLinkAuth.getClient();
+        if (client && design) {
+          client.from('product_clicks').insert({
+            user_id: RoboLinkAuth.getUser()?.id || null,
+            product_id: id,
+            product_name: design.name,
+            brand: 'STL下载',
+            source_page: 'stl',
+            ref_code: generateRefCode(),
+          }).then(() => {
+            // 更新本地计数
+            design.downloads++;
+          }).catch(() => {});
+        }
       } else {
         showToast('该转接件设计正在制作中，敬请期待！');
       }

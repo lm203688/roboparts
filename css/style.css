@@ -645,6 +645,9 @@ body {
   font-weight: 500;
 }
 .stl-badge.free { background: var(--green-50); color: var(--green-400); }
+.stl-badge.new { background: var(--coral-400); color: #fff; top: auto; bottom: 8px; animation: pulse-badge 2s ease-in-out infinite; }
+@keyframes pulse-badge { 0%,100% { opacity:1; } 50% { opacity:0.7; } }
+.stl-card.stl-new { border-color: var(--coral-200); }
 .stl-info {
   padding: 14px;
 }
