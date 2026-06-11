@@ -787,7 +787,7 @@ function initStlGrid() {
         <div class="stl-actions">
           <button class="btn btn-primary" onclick="downloadStl('${s.id}')">下载STL</button>
           <button class="btn btn-outline" onclick="loadSTLModel('${s.id}')">3D预览</button>
-          <button class="btn btn-secondary" onclick="orderPrint('${s.id}')">委托代打</button>
+          <button class="btn btn-secondary" onclick="orderPrint('${s.id}')">委托代打 ¥${s.printPrice}起</button>
         </div>
       </div>
     </div>
@@ -829,43 +829,11 @@ async function downloadStl(id) {
     .catch(() => showToast('下载出错，请稍后重试'));
 }
 
-// 3D打印下单（含追踪）
+// 3D打印下单（接入虎皮椒支付）
 async function orderPrint(id) {
   const design = STL_DESIGNS.find(s => s.id === id);
   if (!design) return;
-
-  const refCode = generateRefCode();
-
-  const msg = `准备为「${design.name}」下单3D打印。\n\n推荐材料：PLA（创客级，便宜耐用）\n预计费用：15-35元\n\n即将跳转到嘉立创3D打印平台（jlc-3dp.cn），请先下载STL文件再上传。\n追踪码: ${refCode}`;
-  const confirmed = confirm(msg);
-
-  if (confirmed) {
-    // 记录订单追踪
-    const client = RoboLinkAuth.getClient();
-    if (client) {
-      try {
-        await client.from('print_orders').insert({
-          user_id: RoboLinkAuth.getUser()?.id || null,
-          stl_id: id,
-          stl_name: design.name,
-          target_url: 'https://www.jlc-3dp.cn/',
-          ref_code: refCode,
-          status: 'created',
-        });
-      } catch (e) {
-        console.warn('Order tracking save failed:', e);
-      }
-    }
-
-    // 先下载STL，再跳转（带追踪参数）
-    const a = document.createElement('a');
-    a.href = `stl/${id}.stl`;
-    a.download = `${id}.stl`;
-    a.click();
-    setTimeout(() => {
-      window.open(`https://www.jlc-3dp.cn/?ref=${refCode}`, '_blank');
-    }, 500);
-  }
+  PaymentSystem.open(design);
 }
 
 // ========== 行业监控 ==========
