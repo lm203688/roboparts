@@ -135,34 +135,34 @@ const COMMUNITY_POSTS = [
 // ========== STL转接件设计 ==========
 const STL_DESIGNS = [
   // --- 第一批：法兰转接件 ---
-  { id: 'adapter-iso50-m4', name: 'ISO50法兰转M4转接板', desc: '适用于ISO9409-50机械臂连接M4接口夹爪，底板带4个M6安装耳，中心M8沉孔', compat: 'DOBOT/uArm/UR系列 + 慧灵Mini/大寰PIKA', downloads: 234, size: '29KB', ready: true },
-  { id: 'adapter-iso40-m4', name: 'ISO40法兰转M4转接板', desc: '适用于Robotiq Hand-E等ISO40接口夹爪连接M4臂，4xM4 PCD36mm', compat: 'Robotiq Hand-E + uArm/Elephant', downloads: 156, size: '49KB', ready: true },
-  { id: 'adapter-iso50-servo', name: 'ISO50法兰转舵机支架', desc: '将工业协作臂的ISO50法兰转为标准舵机接口，适配MG996R/MG995', compat: 'UR/DOBOT + MG996R/MG995', downloads: 189, size: '42KB', ready: true },
-  { id: 'adapter-m4-servo', name: 'M4接口转舵机支架', desc: '桌面臂M4法兰连接舵机控制夹爪，4xM4 PCD22mm', compat: 'uArm/LoFi/Elephant + MG996R', downloads: 312, size: '43KB', ready: true },
+  { id: 'adapter-iso50-m4', name: 'ISO50法兰转M4转接板', desc: '适用于ISO9409-50机械臂连接M4接口夹爪，底板带4个M6安装耳，中心M8沉孔', compat: 'DOBOT/uArm/UR系列 + 慧灵Mini/大寰PIKA', downloads: 234, size: '29KB', ready: true, printPrice: 15 },
+  { id: 'adapter-iso40-m4', name: 'ISO40法兰转M4转接板', desc: '适用于Robotiq Hand-E等ISO40接口夹爪连接M4臂，4xM4 PCD36mm', compat: 'Robotiq Hand-E + uArm/Elephant', downloads: 156, size: '49KB', ready: true, printPrice: 15 },
+  { id: 'adapter-iso50-servo', name: 'ISO50法兰转舵机支架', desc: '将工业协作臂的ISO50法兰转为标准舵机接口，适配MG996R/MG995', compat: 'UR/DOBOT + MG996R/MG995', downloads: 189, size: '42KB', ready: true, printPrice: 18 },
+  { id: 'adapter-m4-servo', name: 'M4接口转舵机支架', desc: '桌面臂M4法兰连接舵机控制夹爪，4xM4 PCD22mm', compat: 'uArm/LoFi/Elephant + MG996R', downloads: 312, size: '43KB', ready: true, printPrice: 18 },
   // --- 第一批：功能件 ---
-  { id: 'adapter-dual-gripper', name: '双夹爪安装板', desc: '一个ISO50法兰同时安装两个小型夹爪，实现双手操作', compat: 'ISO50法兰通用', downloads: 98, size: '63KB', ready: true },
-  { id: 'adapter-cable-chain', name: '线缆拖链安装支架', desc: '用于在机械臂末端安装线缆拖链，防止线缆缠绕，C形托架设计', compat: 'ISO50法兰通用', downloads: 145, size: '59KB', ready: true },
-  { id: 'tool-changer-passive', name: '被动式快换接头', desc: '基于球头定位的快换机构，支持手动更换工具，4球头+中心定位销', compat: 'ISO50法兰通用', downloads: 203, size: '103KB', ready: true },
-  { id: 'adapter-uarm-gripper', name: 'uArm通用夹爪安装座', desc: '专为uArm Swift Pro设计的通用夹爪安装座，多排M3安装孔', compat: 'uArm Swift Pro + 多种夹爪', downloads: 278, size: '83KB', ready: true },
-  { id: 'gripper-jaw-custom', name: '可定制手指组件', desc: '模块化夹爪手指，L形设计，带卡扣安装结构，支持不同指尖', compat: '慧灵LFG系列通用', downloads: 167, size: '29KB', ready: true },
-  { id: 'adapter-elephant-servo', name: 'myCobot舵机转接板', desc: '专为Elephant myCobot设计的舵机接口转接，M4法兰到舵机', compat: 'Elephant myCobot 280', downloads: 121, size: '39KB', ready: true },
-  { id: 'mount-camera', name: '夹爪集成摄像头安装座', desc: '在夹爪侧面安装微型摄像头，实现视觉抓取，侧面伸出臂+圆柱座', compat: 'ISO50法兰通用', downloads: 156, size: '37KB', ready: true },
-  { id: 'adapter-nema17', name: 'NEMA17步进电机安装板', desc: '在机械臂末端安装NEMA17电机驱动的自定义工具，ISO50到NEMA17', compat: 'ISO50法兰通用', downloads: 89, size: '97KB', ready: true },
+  { id: 'adapter-dual-gripper', name: '双夹爪安装板', desc: '一个ISO50法兰同时安装两个小型夹爪，实现双手操作', compat: 'ISO50法兰通用', downloads: 98, size: '63KB', ready: true, printPrice: 22 },
+  { id: 'adapter-cable-chain', name: '线缆拖链安装支架', desc: '用于在机械臂末端安装线缆拖链，防止线缆缠绕，C形托架设计', compat: 'ISO50法兰通用', downloads: 145, size: '59KB', ready: true, printPrice: 20 },
+  { id: 'tool-changer-passive', name: '被动式快换接头', desc: '基于球头定位的快换机构，支持手动更换工具，4球头+中心定位销', compat: 'ISO50法兰通用', downloads: 203, size: '103KB', ready: true, printPrice: 25 },
+  { id: 'adapter-uarm-gripper', name: 'uArm通用夹爪安装座', desc: '专为uArm Swift Pro设计的通用夹爪安装座，多排M3安装孔', compat: 'uArm Swift Pro + 多种夹爪', downloads: 278, size: '83KB', ready: true, printPrice: 20 },
+  { id: 'gripper-jaw-custom', name: '可定制手指组件', desc: '模块化夹爪手指，L形设计，带卡扣安装结构，支持不同指尖', compat: '慧灵LFG系列通用', downloads: 167, size: '29KB', ready: true, printPrice: 15 },
+  { id: 'adapter-elephant-servo', name: 'myCobot舵机转接板', desc: '专为Elephant myCobot设计的舵机接口转接，M4法兰到舵机', compat: 'Elephant myCobot 280', downloads: 121, size: '39KB', ready: true, printPrice: 18 },
+  { id: 'mount-camera', name: '夹爪集成摄像头安装座', desc: '在夹爪侧面安装微型摄像头，实现视觉抓取，侧面伸出臂+圆柱座', compat: 'ISO50法兰通用', downloads: 156, size: '37KB', ready: true, printPrice: 18 },
+  { id: 'adapter-nema17', name: 'NEMA17步进电机安装板', desc: '在机械臂末端安装NEMA17电机驱动的自定义工具，ISO50到NEMA17', compat: 'ISO50法兰通用', downloads: 89, size: '97KB', ready: true, printPrice: 20 },
   // --- 第二批：法兰转接 + 工具安装 ---
-  { id: 'adapter-iso50-iso40', name: 'ISO50转ISO40法兰转接环', desc: '工业场景最常用：大法兰协作臂直接安装小法兰夹爪(如Hand-E)，锥台过渡设计', compat: 'UR/DOBOT/AUBO + Robotiq Hand-E', downloads: 0, size: '157KB', ready: true, isNew: true },
-  { id: 'adapter-servo-claw', name: '舵机夹爪爪指套装', desc: '完整平行爪组件，底座+导轨+双指，适配MG996R/MG995，即插即用', compat: 'MG996R/MG995/DS3218舵机', downloads: 0, size: '64KB', ready: true, isNew: true },
-  { id: 'mount-pen-holder', name: '画笔/工具夹持器', desc: '末端安装画笔或圆杆工具，教学演示、写字画画，带侧紧螺丝', compat: '通用M4/ISO50法兰', downloads: 0, size: '90KB', ready: true, isNew: true },
-  { id: 'adapter-suction-cup', name: '通用真空吸盘安装座', desc: '法兰安装+气管接口，适配各种口径吸盘，适合薄片/光滑物体抓取', compat: 'M4/ISO50法兰通用', downloads: 0, size: '110KB', ready: true, isNew: true },
+  { id: 'adapter-iso50-iso40', name: 'ISO50转ISO40法兰转接环', desc: '工业场景最常用：大法兰协作臂直接安装小法兰夹爪(如Hand-E)，锥台过渡设计', compat: 'UR/DOBOT/AUBO + Robotiq Hand-E', downloads: 0, size: '157KB', ready: true, isNew: true, printPrice: 20 },
+  { id: 'adapter-servo-claw', name: '舵机夹爪爪指套装', desc: '完整平行爪组件，底座+导轨+双指，适配MG996R/MG995，即插即用', compat: 'MG996R/MG995/DS3218舵机', downloads: 0, size: '64KB', ready: true, isNew: true, printPrice: 25 },
+  { id: 'mount-pen-holder', name: '画笔/工具夹持器', desc: '末端安装画笔或圆杆工具，教学演示、写字画画，带侧紧螺丝', compat: '通用M4/ISO50法兰', downloads: 0, size: '90KB', ready: true, isNew: true, printPrice: 15 },
+  { id: 'adapter-suction-cup', name: '通用真空吸盘安装座', desc: '法兰安装+气管接口，适配各种口径吸盘，适合薄片/光滑物体抓取', compat: 'M4/ISO50法兰通用', downloads: 0, size: '110KB', ready: true, isNew: true, printPrice: 22 },
   // --- 第二批：夹爪配件 ---
-  { id: 'gripper-finger-flat', name: '平行夹爪平面指尖', desc: '带摩擦纹理的平面指尖，适合抓取方块/薄片/扁平物体，卡扣安装', compat: '慧灵LFG/大寰GECKO通用', downloads: 0, size: '30KB', ready: true, isNew: true },
-  { id: 'gripper-finger-round', name: '平行夹爪圆弧指尖', desc: 'V形圆弧指尖，适合抓取圆柱/球体/管道，自定心设计', compat: '慧灵LFG/大寰GECKO通用', downloads: 0, size: '29KB', ready: true, isNew: true },
-  { id: 'gripper-finger-spring', name: '弹性手指组件', desc: '薄壁弹性设计带弹簧槽，过盈抓取不易损伤物体，适合脆弱物品', compat: '慧灵LFG/大寰PIKA通用', downloads: 0, size: '32KB', ready: true, isNew: true },
+  { id: 'gripper-finger-flat', name: '平行夹爪平面指尖', desc: '带摩擦纹理的平面指尖，适合抓取方块/薄片/扁平物体，卡扣安装', compat: '慧灵LFG/大寰GECKO通用', downloads: 0, size: '30KB', ready: true, isNew: true, printPrice: 12 },
+  { id: 'gripper-finger-round', name: '平行夹爪圆弧指尖', desc: 'V形圆弧指尖，适合抓取圆柱/球体/管道，自定心设计', compat: '慧灵LFG/大寰GECKO通用', downloads: 0, size: '29KB', ready: true, isNew: true, printPrice: 12 },
+  { id: 'gripper-finger-spring', name: '弹性手指组件', desc: '薄壁弹性设计带弹簧槽，过盈抓取不易损伤物体，适合脆弱物品', compat: '慧灵LFG/大寰PIKA通用', downloads: 0, size: '32KB', ready: true, isNew: true, printPrice: 15 },
   // --- 第二批：末端工具配件 ---
-  { id: 'adapter-elec-box', name: '小型控制器安装盒', desc: '法兰安装防水电子盒，可装ESP32/Arduino等控制板，侧面走线口', compat: 'ISO50/M4法兰通用', downloads: 0, size: '67KB', ready: true, isNew: true },
-  { id: 'mount-led-ring', name: 'LED照明环安装座', desc: '12颗LED环形照明，末端视觉抓取补光，侧面出线', compat: '通用法兰', downloads: 0, size: '160KB', ready: true, isNew: true },
-  { id: 'mount-screwdriver', name: '螺丝刀工具安装座', desc: '末端安装电动螺丝刀，带侧夹紧缝和紧固螺丝，适合装配场景', compat: 'ISO50法兰通用', downloads: 0, size: '79KB', ready: true, isNew: true },
-  { id: 'endcap-iso50', name: 'ISO50法兰端盖保护罩', desc: '保护未使用的法兰接口防尘防水，O型圈槽设计，快拆安装', compat: 'ISO50法兰通用', downloads: 0, size: '89KB', ready: true, isNew: true },
-  { id: 'adapter-quick-lock-pin', name: '快锁销机构', desc: '弹簧球头快拆销，快速手动更换末端工具，免工具操作', compat: '通用法兰', downloads: 0, size: '110KB', ready: true, isNew: true },
+  { id: 'adapter-elec-box', name: '小型控制器安装盒', desc: '法兰安装防水电子盒，可装ESP32/Arduino等控制板，侧面走线口', compat: 'ISO50/M4法兰通用', downloads: 0, size: '67KB', ready: true, isNew: true, printPrice: 22 },
+  { id: 'mount-led-ring', name: 'LED照明环安装座', desc: '12颗LED环形照明，末端视觉抓取补光，侧面出线', compat: '通用法兰', downloads: 0, size: '160KB', ready: true, isNew: true, printPrice: 28 },
+  { id: 'mount-screwdriver', name: '螺丝刀工具安装座', desc: '末端安装电动螺丝刀，带侧夹紧缝和紧固螺丝，适合装配场景', compat: 'ISO50法兰通用', downloads: 0, size: '79KB', ready: true, isNew: true, printPrice: 20 },
+  { id: 'endcap-iso50', name: 'ISO50法兰端盖保护罩', desc: '保护未使用的法兰接口防尘防水，O型圈槽设计，快拆安装', compat: 'ISO50法兰通用', downloads: 0, size: '89KB', ready: true, isNew: true, printPrice: 15 },
+  { id: 'adapter-quick-lock-pin', name: '快锁销机构', desc: '弹簧球头快拆销，快速手动更换末端工具，免工具操作', compat: '通用法兰', downloads: 0, size: '110KB', ready: true, isNew: true, printPrice: 22 },
 ];
 
 // ========== 行业监控数据（模拟，后续由自动化任务写入）==========
