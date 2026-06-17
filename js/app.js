@@ -785,10 +785,11 @@ function initStlGrid() {
         <div class="stl-compat">适用: ${s.compat}</div>
         <div class="stl-meta"><span>${s.size}</span> · <span>${s.downloads} 次下载</span></div>
         <div class="stl-actions">
-          <button class="btn btn-primary" onclick="downloadStl('${s.id}')">下载STL</button>
+          <button class="btn btn-outline" onclick="downloadStl('${s.id}')">⬇ 下载STL</button>
           <button class="btn btn-outline" onclick="loadSTLModel('${s.id}')">3D预览</button>
-          <button class="btn btn-secondary" onclick="orderPrint('${s.id}')">委托代打 ¥${s.printPrice}起</button>
+          <button class="btn btn-print" onclick="orderPrint('${s.id}')">🖨 代打 ¥${s.printPrice}起</button>
         </div>
+        <button class="btn btn-showoff" onclick="showShowoffModal('${s.id}')">📸 晒出你的成品 · 领打印返现</button>
       </div>
     </div>
   `).join('');
@@ -805,7 +806,6 @@ async function downloadStl(id) {
         a.href = url;
         a.download = `${id}.stl`;
         a.click();
-        showToast('STL文件下载中，可用Cura/PrusaSlicer切片后打印');
 
         // 追踪下载（Supabase）
         const client = RoboLinkAuth.getClient();
@@ -818,10 +818,12 @@ async function downloadStl(id) {
             source_page: 'stl',
             ref_code: generateRefCode(),
           }).then(() => {
-            // 更新本地计数
             design.downloads++;
           }).catch(() => {});
         }
+
+        // 下载成功后延迟弹出晒图引导
+        setTimeout(() => showDownloadSuccessGuide(id), 1200);
       } else {
         showToast('该转接件设计正在制作中，敬请期待！');
       }
@@ -829,11 +831,192 @@ async function downloadStl(id) {
     .catch(() => showToast('下载出错，请稍后重试'));
 }
 
+// 下载成功引导弹窗（轻提示，不强制）
+function showDownloadSuccessGuide(id) {
+  const design = STL_DESIGNS.find(s => s.id === id);
+  if (!design) return;
+
+  const modal = document.getElementById('downloadSuccessModal');
+  if (!modal) return;
+
+  document.getElementById('dsm-name').textContent = design.name;
+  document.getElementById('dsm-print-btn').onclick = () => {
+    closeDownloadSuccess();
+    orderPrint(id);
+  };
+  document.getElementById('dsm-showoff-btn').onclick = () => {
+    closeDownloadSuccess();
+    showShowoffModal(id);
+  };
+
+  modal.style.display = 'flex';
+  requestAnimationFrame(() => modal.classList.add('dsm-visible'));
+}
+
+function closeDownloadSuccess() {
+  const modal = document.getElementById('downloadSuccessModal');
+  if (!modal) return;
+  modal.classList.remove('dsm-visible');
+  setTimeout(() => { modal.style.display = 'none'; }, 280);
+}
+
 // 3D打印下单（接入虎皮椒支付）
 async function orderPrint(id) {
   const design = STL_DESIGNS.find(s => s.id === id);
   if (!design) return;
   PaymentSystem.open(design);
+}
+
+// ========== 晒图入口 ==========
+let _showoffDesignId = null;
+
+function showShowoffModal(id) {
+  _showoffDesignId = id;
+  const design = STL_DESIGNS.find(s => s.id === id);
+  if (!design) return;
+
+  const modal = document.getElementById('showoffModal');
+  if (!modal) return;
+
+  document.getElementById('showoff-design-name').textContent = design.name;
+  document.getElementById('showoff-preview-filename').textContent = '';
+  document.getElementById('showoff-preview-img').style.display = 'none';
+  document.getElementById('showoff-preview-img').src = '';
+  document.getElementById('showoff-desc').value = '';
+  document.getElementById('showoff-file-input').value = '';
+  document.getElementById('showoff-submit-btn').disabled = true;
+  document.getElementById('showoff-submit-btn').textContent = '发布成品';
+
+  modal.style.display = 'flex';
+  requestAnimationFrame(() => modal.classList.add('sf-visible'));
+}
+
+function closeShowoffModal() {
+  const modal = document.getElementById('showoffModal');
+  if (!modal) return;
+  modal.classList.remove('sf-visible');
+  setTimeout(() => { modal.style.display = 'none'; }, 280);
+}
+
+function handleShowoffFileChange(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    showToast('请选择图片文件（JPG/PNG/WebP）');
+    return;
+  }
+  if (file.size > 10 * 1024 * 1024) {
+    showToast('图片不能超过10MB');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = document.getElementById('showoff-preview-img');
+    img.src = e.target.result;
+    img.style.display = 'block';
+    document.getElementById('showoff-preview-filename').textContent = file.name;
+    document.getElementById('showoff-submit-btn').disabled = false;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function submitShowoff() {
+  if (!RoboLinkAuth.isLoggedIn()) {
+    closeShowoffModal();
+    showAuthModal('register');
+    return;
+  }
+
+  const user = RoboLinkAuth.getUser();
+  if (user.isGuest) {
+    closeShowoffModal();
+    showAuthModal('register');
+    showToast('请注册账号后再晒出成品');
+    return;
+  }
+
+  const file = document.getElementById('showoff-file-input').files[0];
+  const desc = document.getElementById('showoff-desc').value.trim();
+  const design = STL_DESIGNS.find(s => s.id === _showoffDesignId);
+  const submitBtn = document.getElementById('showoff-submit-btn');
+
+  if (!file) { showToast('请先选择成品照片'); return; }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = '发布中...';
+
+  try {
+    const client = RoboLinkAuth.getClient();
+
+    // 上传图片到 Supabase Storage（如果有client），否则用base64
+    let imageUrl = '';
+    if (client && !user.isGuest) {
+      const ext = file.name.split('.').pop();
+      const filename = `showoffs/${user.id}_${Date.now()}.${ext}`;
+      const { data: uploadData, error: uploadError } = await client.storage
+        .from('public-assets')
+        .upload(filename, file, { cacheControl: '3600', upsert: false });
+
+      if (!uploadError) {
+        const { data: { publicUrl } } = client.storage.from('public-assets').getPublicUrl(filename);
+        imageUrl = publicUrl;
+      }
+    }
+
+    // 发帖到社区
+    const postTitle = `🎉 成品晒图：${design?.name || '转接件'}`;
+    const postContent = `${desc || '打印完成！效果不错'}${imageUrl ? '\n\n[图片]' : ''}`;
+
+    if (client && !user.isGuest) {
+      await client.from('posts').insert({
+        user_id: user.id,
+        title: postTitle,
+        content: postContent,
+        tab: 'combo',
+        tag: 'showoff',
+        tag_text: '成品晒图',
+        image_url: imageUrl || null,
+        stl_id: _showoffDesignId,
+      });
+    } else {
+      // localStorage 降级
+      const posts = getAllPosts();
+      posts.unshift({
+        id: 'showoff_' + Date.now(),
+        author: user.displayName || '创客',
+        avatar: user.avatarInitial || 'U',
+        time: '刚刚',
+        tab: 'combo',
+        tag: 'showoff',
+        tagText: '成品晒图',
+        title: postTitle,
+        content: postContent,
+        likes: 0,
+        comments: 0,
+      });
+      savePosts(posts);
+    }
+
+    closeShowoffModal();
+    showToast('🎉 成品已发布到社区！感谢分享');
+
+    // 刷新社区
+    await loadCommunityPosts();
+    renderCommunity('latest');
+
+    // 3秒后提示分享
+    setTimeout(() => {
+      showToast('💡 分享链接给朋友，一起来围观你的成品！');
+    }, 3000);
+
+  } catch (e) {
+    console.error('Showoff submit error:', e);
+    submitBtn.disabled = false;
+    submitBtn.textContent = '发布成品';
+    showToast('发布失败，请稍后重试');
+  }
 }
 
 // ========== 行业监控 ==========
