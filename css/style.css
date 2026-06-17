@@ -1022,3 +1022,163 @@ html { scroll-behavior: smooth; }
   .pay-options { gap: 6px; }
   .pay-option { padding: 8px 10px; }
 }
+
+/* ========== 打印按钮（高亮橙色）========== */
+.btn-print {
+  background: var(--coral-400);
+  color: white;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  font-size: 13px;
+  font-family: var(--font);
+  transition: background 0.15s, transform 0.1s;
+}
+.btn-print:hover { background: var(--coral-600); transform: translateY(-1px); }
+.btn-print:active { transform: translateY(0); }
+
+/* ========== 晒图入口按钮 ========== */
+.btn-showoff {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 9px 14px;
+  background: linear-gradient(135deg, #fff7ed 0%, #fff3e0 100%);
+  border: 1.5px dashed var(--coral-200);
+  border-radius: var(--radius-md);
+  color: var(--coral-400);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.btn-showoff:hover {
+  border-color: var(--coral-400);
+  background: linear-gradient(135deg, #ffede0 0%, #ffe8cc 100%);
+}
+
+/* ========== 下载成功引导弹窗（底部浮层）========== */
+.dsm-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+}
+#downloadSuccessModal { transition: opacity 0.28s; opacity: 0; }
+#downloadSuccessModal.dsm-visible { opacity: 1; }
+.dsm-card {
+  position: relative;
+  z-index: 1;
+  background: white;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  padding: 28px 24px 32px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  transform: translateY(80px);
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+#downloadSuccessModal.dsm-visible .dsm-card { transform: translateY(0); }
+.dsm-icon { font-size: 40px; line-height: 1; margin-bottom: 10px; }
+.dsm-title { font-size: 18px; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+.dsm-desc { font-size: 14px; color: var(--gray-600); line-height: 1.5; margin-bottom: 20px; }
+.dsm-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.dsm-btn { flex: 1; min-width: 140px; }
+.dsm-close {
+  margin-top: 14px;
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--gray-400);
+  cursor: pointer;
+  font-family: var(--font);
+  text-decoration: underline;
+}
+
+/* ========== 晒图弹窗 ========== */
+.sf-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+}
+#showoffModal { transition: opacity 0.25s; opacity: 0; }
+#showoffModal.sf-visible { opacity: 1; }
+.sf-card {
+  position: relative;
+  z-index: 1;
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 28px 24px 24px;
+  max-width: 440px;
+  width: 90%;
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+#showoffModal.sf-visible .sf-card { transform: scale(1) translateY(0); }
+.sf-close-btn {
+  position: absolute;
+  top: 12px; right: 16px;
+  background: none; border: none;
+  font-size: 24px; cursor: pointer;
+  color: var(--gray-400); line-height: 1;
+}
+.sf-header { text-align: center; margin-bottom: 18px; }
+.sf-emoji { font-size: 40px; line-height: 1; margin-bottom: 8px; }
+.sf-header h3 { font-size: 18px; font-weight: 700; color: var(--gray-900); }
+.sf-upload-area {
+  border: 2px dashed var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 12px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.sf-upload-area:hover { border-color: var(--coral-400); background: var(--coral-50); }
+.sf-upload-placeholder p { font-size: 14px; color: var(--gray-600); margin: 6px 0 2px; }
+.sf-desc-input {
+  width: 100%;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-size: 13px;
+  font-family: var(--font);
+  resize: vertical;
+  margin-bottom: 12px;
+  outline: none;
+}
+.sf-desc-input:focus { border-color: var(--coral-400); }
+.sf-reward {
+  background: linear-gradient(135deg, #fff7ed, #fff3e0);
+  border: 1px solid var(--coral-200);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--coral-600);
+  margin-bottom: 16px;
+  text-align: center;
+}
+.sf-submit {
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+}
+.sf-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+@media (max-width: 480px) {
+  .dsm-actions { flex-direction: column; }
+  .dsm-btn { min-width: 0; }
+  .sf-card { width: 100%; border-radius: var(--radius-lg) var(--radius-lg) 0 0; margin: auto 0 0; }
+}
