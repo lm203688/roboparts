@@ -623,6 +623,56 @@
 </div>
 </noscript>
 
+<!-- 下载成功引导弹窗 -->
+<div id="downloadSuccessModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:1500;justify-content:center;align-items:flex-end;padding-bottom:0;">
+  <div class="dsm-backdrop" onclick="closeDownloadSuccess()"></div>
+  <div class="dsm-card">
+    <div class="dsm-icon">✅</div>
+    <div class="dsm-title">STL 文件已下载！</div>
+    <div class="dsm-desc"><span id="dsm-name"></span><br>准备好打印了吗？</div>
+    <div class="dsm-actions">
+      <button class="btn btn-print dsm-btn" id="dsm-print-btn">🖨 帮我代打</button>
+      <button class="btn btn-outline dsm-btn" id="dsm-showoff-btn">📸 我已打印，去晒图</button>
+    </div>
+    <button class="dsm-close" onclick="closeDownloadSuccess()">稍后再说</button>
+  </div>
+</div>
+
+<!-- 晒图弹窗 -->
+<div id="showoffModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:1600;justify-content:center;align-items:center;">
+  <div class="sf-backdrop" onclick="closeShowoffModal()"></div>
+  <div class="sf-card">
+    <button class="sf-close-btn" onclick="closeShowoffModal()">×</button>
+    <div class="sf-header">
+      <div class="sf-emoji">📸</div>
+      <h3>晒出你的成品</h3>
+      <p id="showoff-design-name" style="font-size:13px;color:var(--gray-400);margin-top:4px;"></p>
+    </div>
+
+    <!-- 上传照片 -->
+    <div class="sf-upload-area" onclick="document.getElementById('showoff-file-input').click()">
+      <input type="file" id="showoff-file-input" accept="image/*" style="display:none" onchange="handleShowoffFileChange(this)">
+      <img id="showoff-preview-img" style="display:none;max-height:160px;border-radius:8px;object-fit:cover;width:100%;">
+      <div id="showoff-upload-placeholder" class="sf-upload-placeholder">
+        <span style="font-size:32px;">🖼</span>
+        <p>点击上传成品照片</p>
+        <span style="font-size:12px;color:var(--gray-400);">JPG / PNG / WebP · 最大10MB</span>
+      </div>
+      <p id="showoff-preview-filename" style="font-size:12px;color:var(--gray-400);margin-top:6px;text-align:center;"></p>
+    </div>
+
+    <!-- 描述 -->
+    <textarea id="showoff-desc" class="sf-desc-input" placeholder="分享一下打印效果、使用场景或改进意见（选填）..." rows="2"></textarea>
+
+    <!-- 奖励说明 -->
+    <div class="sf-reward">
+      🎁 晒图即可获得 <strong>5元打印返现券</strong>，下次代打直接抵扣
+    </div>
+
+    <button class="btn btn-print sf-submit" id="showoff-submit-btn" onclick="submitShowoff()" disabled>发布成品</button>
+  </div>
+</div>
+
 <script src="js/config.js"></script>
 <script src="js/data.js"></script>
 <script src="js/auth.js"></script>
