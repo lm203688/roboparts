@@ -26,14 +26,14 @@
     ],
     "category_counts": {
       "actuators": 217,
-      "platforms": 41,
-      "chips": 108,
-      "robot_ai_models": 46,
       "sensors": 90,
+      "chips": 108,
       "interfaces": 44,
-      "llms": 42,
       "protocols": 64,
+      "llms": 42,
+      "platforms": 41,
       "flexible_actuators": 21,
+      "robot_ai_models": 46,
       "data_acquisition": 46,
       "connectors": 2,
       "integrated_joints": 1,
@@ -46,24 +46,34 @@
       "pcb": 2,
       "bionic_mechanisms": 9
     },
-    "updated": "2026-08-27T14:45:11.288336Z",
+    "updated": "2026-08-28T09:04:15.954694Z",
     "source": "roboparts.cc",
     "tier": "full",
     "provenance_coverage": {
-      "source_pct": "80.83",
+      "source_pct": 92.05,
       "traceable_pct": 49.02,
-      "confidence_pct": 100,
-      "last_verified_pct": "64.41",
+      "confidence_pct": 100.0,
+      "last_verified_pct": 64.41,
       "tier_a_traceable": 376,
       "tier_b_attributable": 241,
       "tier_c_none": 150,
+      "verified_true": 409,
+      "verified_false": 358,
       "verify_threshold": 0.6,
       "clean_set": {
         "total": 666,
-        "traceable_pct": 47.9
+        "source_pct": 96.1,
+        "traceable_pct": 47.9,
+        "confidence_pct": 100.0,
+        "last_verified_pct": 64.11
       },
-      "total_clean": 666,
-      "total": 767
+      "tier_definition": {
+        "A": "可点开复核的一手来源（官方规格书/标准文本/带链接厂商文档）",
+        "B": "弱归因（厂商目录声明值、官网首页，无原始链接）",
+        "C": "无溯源（历史导入，待补来源，confidence 上限 0.30）"
+      },
+      "tier_rule": "source_tier 由证据形态推导，不由录入者自封：A=有深链可点开复核；B=仅根域名/具名标准号/具名厂商目录（知道去哪找，点不开）；C=无来源/无身份聚合/有话无锚点。判据唯一源 scripts/govern_source_tier.py",
+      "note": "主指标看 traceable_pct（Tier A 可点开复核）；source_pct 含 Tier B 弱归因，仅作过程指标；Tier C 已显式标注，供 Agent 侧过滤。【2026-08-10 更正】此前实现为「source 字段非空即判 A」，traceable_pct 曾虚报为 47.32%，已按证据重算为 49.02%，原值留在实体的 source_tier_prev 字段供审计。"
     },
     "data_quality": {
       "audited_at": "2026-08-27T14:53:41.304Z",
@@ -1316,7 +1326,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "vendor_url_pattern",
+      "source_tier_basis": "deep_link:www.kollmorgen.com/en/products/kollmorgen-tbm2g",
       "rp_id": "RP-ACT-0009",
       "derived_properties": {
         "has_power_input": true,
@@ -1326,7 +1336,8 @@
       "source_url": "https://www.kollmorgen.com/en/products/kollmorgen-tbm2g",
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.908Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "kollmorgen.com (URL 引用)"
     },
     {
       "id": "ACT-010",
@@ -1378,7 +1389,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0010",
       "derived_properties": {
         "has_power_input": true,
@@ -1388,7 +1399,8 @@
       "source_url": "https://www.google.com/search?q=Enertion%2FVESC%20Focbox%20Unity%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-011",
@@ -1854,7 +1866,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0018",
       "derived_properties": {
         "has_power_input": true,
@@ -1864,7 +1876,8 @@
       "source_url": "https://www.google.com/search?q=MIT%2FCustom%20MIT%20Mini%20Cheetah%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-019",
@@ -2229,7 +2242,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0024",
       "derived_properties": {
         "has_power_input": true,
@@ -2239,7 +2252,8 @@
       "source_url": "https://www.google.com/search?q=RoboDrive%2FKollmorgen%20RoboDrive%20ILM%2070%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-025",
@@ -2292,7 +2306,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0025",
       "derived_properties": {
         "has_power_input": true,
@@ -2302,7 +2316,8 @@
       "source_url": "https://www.google.com/search?q=Innodisk%20Innodisk%20Flexidrive%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-026",
@@ -2550,7 +2565,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0029",
       "derived_properties": {
         "has_power_input": true,
@@ -2560,7 +2575,8 @@
       "source_url": "https://www.google.com/search?q=Dexai%2FWonik%20Robotics%20Dexai%20Allegro%20Hand%20v4%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-030",
@@ -2677,7 +2693,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "vendor_url_pattern",
+      "source_tier_basis": "deep_link:lynxmotion.com/product/lynxmotion-lss-arm",
       "rp_id": "RP-ACT-0031",
       "derived_properties": {
         "has_power_input": true,
@@ -2687,7 +2703,8 @@
       "source_url": "https://lynxmotion.com/product/lynxmotion-lss-arm",
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "lynxmotion.com (URL 引用)"
     },
     {
       "id": "ACT-032",
@@ -2929,7 +2946,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "vendor_url_pattern",
+      "source_tier_basis": "deep_link:www.schaeffler.com/products/schaeffler-planetary-gear-actuat",
       "rp_id": "RP-ACT-0035",
       "derived_properties": {
         "has_power_input": true,
@@ -2997,7 +3014,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0036",
       "derived_properties": {
         "has_power_input": true,
@@ -3066,7 +3083,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "vendor_url_pattern",
+      "source_tier_basis": "deep_link:tesla.com/tesla-optimus-gen-3-hand-actuator",
       "rp_id": "RP-ACT-0037",
       "derived_properties": {
         "has_power_input": true,
@@ -3135,7 +3152,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0038",
       "derived_properties": {
         "has_power_input": true,
@@ -3204,7 +3221,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0039",
       "derived_properties": {
         "has_power_input": true,
@@ -3272,7 +3289,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0040",
       "derived_properties": {
         "has_power_input": true,
@@ -3340,7 +3357,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0041",
       "derived_properties": {
         "has_power_input": true,
@@ -3408,7 +3425,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0042",
       "derived_properties": {
         "has_power_input": true,
@@ -3476,7 +3493,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "A",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0043",
       "derived_properties": {
         "has_power_input": true,
@@ -3544,7 +3561,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0044",
       "derived_properties": {
         "has_power_input": true,
@@ -3612,7 +3629,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0045",
       "derived_properties": {
         "has_power_input": true,
@@ -3679,7 +3696,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0046",
       "derived_properties": {
         "has_power_input": true,
@@ -3747,7 +3764,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0047",
       "derived_properties": {
         "has_power_input": true,
@@ -3815,7 +3832,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0048",
       "derived_properties": {
         "has_power_input": true,
@@ -3883,7 +3900,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0049",
       "derived_properties": {
         "has_power_input": true,
@@ -3950,7 +3967,7 @@
       "entity_kind": "market_intelligence",
       "kind_basis": "status=market_trend（市场趋势条目，非具体在售型号）",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0050",
       "derived_properties": {
         "has_power_input": true,
@@ -4021,7 +4038,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0051",
       "derived_properties": {
         "has_power_input": true,
@@ -4089,7 +4106,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0052",
       "derived_properties": {
         "has_power_input": true,
@@ -4158,7 +4175,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0053",
       "derived_properties": {
         "has_power_input": true,
@@ -4227,7 +4244,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0054",
       "derived_properties": {
         "has_power_input": true,
@@ -4297,7 +4314,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "vendor_url_pattern",
+      "source_tier_basis": "deep_link:www.schaeffler.com/products/schaeffler-compact-actuator-ces-",
       "rp_id": "RP-ACT-0055",
       "derived_properties": {
         "has_power_input": true,
@@ -4366,7 +4383,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0056",
       "derived_properties": {
         "has_power_input": true,
@@ -4434,7 +4451,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0057",
       "derived_properties": {
         "has_power_input": true,
@@ -4506,7 +4523,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0058",
       "derived_properties": {
         "has_power_input": true,
@@ -4575,7 +4592,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0059",
       "derived_properties": {
         "has_power_input": true,
@@ -4644,7 +4661,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0060",
       "derived_properties": {
         "has_power_input": true,
@@ -4716,7 +4733,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "vendor_url_pattern",
+      "source_tier_basis": "deep_link:tesla.com/tesla-optimus-gen-3-hand-50-actuators",
       "rp_id": "RP-ACT-0061",
       "derived_properties": {
         "has_power_input": true,
@@ -4784,7 +4801,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0062",
       "derived_properties": {
         "has_power_input": true,
@@ -4853,7 +4870,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0063",
       "derived_properties": {
         "has_power_input": true,
@@ -4921,7 +4938,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0064",
       "derived_properties": {
         "has_power_input": true,
@@ -4991,7 +5008,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "vendor_url_pattern",
+      "source_tier_basis": "deep_link:www.schaeffler.com/products/schaeffler-4-in-1-compact-actuat",
       "rp_id": "RP-ACT-0065",
       "derived_properties": {
         "has_power_input": true,
@@ -5059,7 +5076,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "A",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0066",
       "derived_properties": {
         "has_power_input": true,
@@ -5128,7 +5145,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0067",
       "derived_properties": {
         "has_power_input": true,
@@ -5196,7 +5213,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0068",
       "derived_properties": {
         "has_power_input": true,
@@ -6119,7 +6136,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0085",
       "derived_properties": {
         "has_power_input": true,
@@ -6185,7 +6202,7 @@
       "entity_kind": "market_intelligence",
       "kind_basis": "type=market_report（研究/报告类条目，非可采购零部件）",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0001",
       "source_url": "https://www.google.com/search?q=%E5%A4%9A%E5%AE%B6%20PatSnap%20Humanoid%20Actuator%20Analysis%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
@@ -6249,7 +6266,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0086",
       "derived_properties": {
         "has_power_input": true,
@@ -6318,7 +6335,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0087",
       "derived_properties": {
         "has_power_input": true,
@@ -6386,7 +6403,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0088",
       "derived_properties": {
         "has_power_input": true,
@@ -6455,7 +6472,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0089",
       "derived_properties": {
         "has_power_input": true,
@@ -6524,7 +6541,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0090",
       "derived_properties": {
         "has_power_input": true,
@@ -6756,7 +6773,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0094",
       "derived_properties": {
         "has_power_input": true,
@@ -6766,7 +6783,8 @@
       "source_url": "https://www.google.com/search?q=X-Humanoid%20Tien%20Kung%20Ultra%20Actuator%20System%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-tesla-optimus-g3-50act",
@@ -6851,7 +6869,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0096",
       "derived_properties": {
         "has_power_input": true,
@@ -6899,7 +6917,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "A",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0097",
       "derived_ecosystem": [
         "ROS2",
@@ -6953,7 +6971,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0098",
       "derived_ecosystem": [
         "ROS2",
@@ -6967,7 +6985,8 @@
       },
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "source": "unitree.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-D4E5F6",
@@ -7007,7 +7026,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "vendor_url_pattern",
+      "source_tier_basis": "deep_link:tesla.com/tesla-optimus-actuator",
       "rp_id": "RP-ACT-0099",
       "derived_properties": {
         "has_power_input": true,
@@ -7017,7 +7036,8 @@
       "source_url": "https://tesla.com/tesla-optimus-actuator",
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "tesla.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-G7H8I9",
@@ -7057,7 +7077,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0100",
       "derived_properties": {
         "has_power_input": true,
@@ -7067,7 +7087,8 @@
       "source_url": "https://www.google.com/search?q=Boston%20Dynamics%20Boston%20Dynamics%20Atlas%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-J0K1L2",
@@ -7107,7 +7128,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0101",
       "derived_properties": {
         "has_power_input": true,
@@ -7117,7 +7138,8 @@
       "source_url": "https://www.google.com/search?q=Figure%20AI%20Figure%20AI%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-M3N4O5",
@@ -7157,7 +7179,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0102",
       "derived_properties": {
         "has_power_input": true,
@@ -7167,7 +7189,8 @@
       "source_url": "https://www.google.com/search?q=Agility%20Robotics%20Agility%20Robotics%20Digit%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-P6Q7R8",
@@ -7207,7 +7230,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0103",
       "derived_properties": {
         "has_power_input": true,
@@ -7217,7 +7240,8 @@
       "source_url": "https://www.google.com/search?q=Apptronik%20Apptronik%20Apollo%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-S9T0U1",
@@ -7257,7 +7281,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0104",
       "derived_properties": {
         "has_power_input": true,
@@ -7267,7 +7291,8 @@
       "source_url": "https://www.google.com/search?q=1X%20Technologies%201X%20NEO%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-V2W3X4",
@@ -7307,7 +7332,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0105",
       "derived_properties": {
         "has_power_input": true,
@@ -7316,7 +7341,8 @@
       },
       "source_url": "https://www.agibot.cn/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "source": "agibot.cn (URL 引用)"
     },
     {
       "id": "ACTUATOR-abc123",
@@ -7360,7 +7386,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0106",
       "derived_properties": {
         "has_power_input": true,
@@ -7369,7 +7395,8 @@
       },
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "source": "unitree.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-def456",
@@ -7413,7 +7440,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0107",
       "derived_properties": {
         "has_power_input": true,
@@ -7423,7 +7450,8 @@
       "source_url": "https://www.google.com/search?q=%E5%8C%97%E4%BA%AC%E9%93%B6%E6%B2%B3%E9%80%9A%E7%94%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%20Galbot%20G1%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-ghi789",
@@ -7467,7 +7495,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0108",
       "derived_properties": {
         "has_power_input": true,
@@ -7477,7 +7505,8 @@
       "source_url": "https://www.google.com/search?q=%E5%9B%BD%E5%9C%B0%E5%85%B1%E5%BB%BA%E5%85%B7%E8%BA%AB%E6%99%BA%E8%83%BD%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%88%9B%E6%96%B0%E4%B8%AD%E5%BF%83%20%E5%A4%A9%E5%B7%A52.0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-jkl012",
@@ -7521,7 +7550,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0109",
       "derived_properties": {
         "has_power_input": true,
@@ -7531,7 +7560,8 @@
       "source_url": "https://www.google.com/search?q=%E6%9C%AA%E6%98%8E%E7%A1%AE%20%E4%BC%97%E6%93%8EPM01%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-mno345",
@@ -7574,7 +7604,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0110",
       "derived_properties": {
         "has_power_input": true,
@@ -7584,7 +7614,8 @@
       "source_url": "https://www.google.com/search?q=Figure%20AI%20Figure%20AI%E6%89%A7%E8%A1%8C%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-pqr678",
@@ -7627,7 +7658,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0111",
       "derived_properties": {
         "has_power_input": true,
@@ -7637,7 +7668,8 @@
       "source_url": "https://www.google.com/search?q=Agility%20Robotics%20Agility%20Robotics%E6%89%A7%E8%A1%8C%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-stu901",
@@ -7681,7 +7713,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0112",
       "derived_properties": {
         "has_power_input": true,
@@ -7691,7 +7723,8 @@
       "source_url": "https://www.google.com/search?q=%E7%89%B9%E6%96%AF%E6%8B%89%20%E7%89%B9%E6%96%AF%E6%8B%89%E6%89%A7%E8%A1%8C%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-vwx234",
@@ -7735,7 +7768,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0113",
       "derived_properties": {
         "has_power_input": true,
@@ -7745,7 +7778,8 @@
       "source_url": "https://www.google.com/search?q=%E6%B3%A2%E5%A3%AB%E9%A1%BF%E5%8A%A8%E5%8A%9B%20%E6%B3%A2%E5%A3%AB%E9%A1%BF%E5%8A%A8%E5%8A%9B%E6%89%A7%E8%A1%8C%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-yza567",
@@ -7788,7 +7822,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0114",
       "derived_properties": {
         "has_power_input": true,
@@ -7798,7 +7832,8 @@
       "source_url": "https://www.google.com/search?q=Apptronik%20Apptronik%E6%89%A7%E8%A1%8C%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-bcd890",
@@ -7841,7 +7876,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0115",
       "derived_properties": {
         "has_power_input": true,
@@ -7851,7 +7886,8 @@
       "source_url": "https://www.google.com/search?q=1X%20Technologies%201X%20Technologies%E6%89%A7%E8%A1%8C%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACTUATOR-efg123",
@@ -7894,7 +7930,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "entity_homepage",
       "rp_id": "RP-ACT-0116",
       "derived_properties": {
         "has_power_input": true,
@@ -7904,7 +7940,8 @@
       "source_url": "https://www.agibot.cn/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "agibot.cn (URL 引用)"
     },
     {
       "id": "ACT-118",
@@ -7939,7 +7976,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0117",
       "derived_properties": {
         "has_power_input": true,
@@ -7949,7 +7986,8 @@
       "source_url": "https://www.google.com/search?q=RoboDrive%20Dynamics%20MegaTorque%20Pro-X%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-119",
@@ -7984,7 +8022,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0118",
       "derived_properties": {
         "has_power_input": true,
@@ -7994,7 +8032,8 @@
       "source_url": "https://www.google.com/search?q=Synthetic%20Motion%20Systems%20PrecisionGrip%20Servo%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-120",
@@ -8029,7 +8068,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0119",
       "derived_properties": {
         "has_power_input": true,
@@ -8039,7 +8078,8 @@
       "source_url": "https://www.google.com/search?q=FluidForce%20Inc%20PowerPak%20Hydraulic%20Cylinder%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-121",
@@ -8074,7 +8114,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0120",
       "derived_properties": {
         "has_power_input": true,
@@ -8084,7 +8124,8 @@
       "source_url": "https://www.google.com/search?q=CompressTech%20Solutions%20AirLift%20Pneumatic%20Piston%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-122",
@@ -8119,7 +8160,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0121",
       "derived_properties": {
         "has_power_input": true,
@@ -8129,7 +8170,8 @@
       "source_url": "https://www.google.com/search?q=Smart%20Materials%20Co%20NanoFlex%20SMA%20Wire%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-123",
@@ -8164,7 +8206,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0122",
       "derived_properties": {
         "has_power_input": true,
@@ -8174,7 +8216,8 @@
       "source_url": "https://www.google.com/search?q=Precision%20Piezo%20Ceramics%20UltraSonic%20Piezo%20Bender%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-124",
@@ -8209,7 +8252,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0123",
       "derived_properties": {
         "has_power_input": true,
@@ -8219,7 +8262,8 @@
       "source_url": "https://www.google.com/search?q=HeavyBot%20Components%20Titanium%20Gear%20Servo%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-125",
@@ -8254,7 +8298,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0124",
       "derived_properties": {
         "has_power_input": true,
@@ -8264,7 +8308,8 @@
       "source_url": "https://www.google.com/search?q=FluidForce%20Inc%20Vortex%20Hydraulic%20Motor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-126",
@@ -8299,7 +8344,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0125",
       "derived_properties": {
         "has_power_input": true,
@@ -8309,7 +8354,8 @@
       "source_url": "https://www.google.com/search?q=CompressTech%20Solutions%20SwiftAir%20Pneumatic%20Rotary%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-127",
@@ -8344,7 +8390,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0126",
       "derived_properties": {
         "has_power_input": true,
@@ -8354,7 +8400,8 @@
       "source_url": "https://www.google.com/search?q=Smart%20Materials%20Co%20ShapeShift%20SMA%20Coil%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-128",
@@ -8389,7 +8436,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0127",
       "derived_properties": {
         "has_power_input": true,
@@ -8399,7 +8446,8 @@
       "source_url": "https://www.google.com/search?q=Precision%20Piezo%20Ceramics%20MicroStep%20Piezo%20Linear%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-129",
@@ -8434,7 +8482,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0128",
       "derived_properties": {
         "has_power_input": true,
@@ -8444,7 +8492,8 @@
       "source_url": "https://www.google.com/search?q=RoboDrive%20Dynamics%20StealthForce%20Motor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-130",
@@ -8479,7 +8528,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0129",
       "derived_properties": {
         "has_power_input": true,
@@ -8489,7 +8538,8 @@
       "source_url": "https://www.google.com/search?q=Synthetic%20Motion%20Systems%20GyroServo%20360%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-131",
@@ -8524,7 +8574,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0130",
       "derived_properties": {
         "has_power_input": true,
@@ -8534,7 +8584,8 @@
       "source_url": "https://www.google.com/search?q=FluidForce%20Inc%20PressMaster%20Hydraulic%20Press%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-132",
@@ -8569,7 +8620,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0131",
       "derived_properties": {
         "has_power_input": true,
@@ -8579,7 +8630,8 @@
       "source_url": "https://www.google.com/search?q=CompressTech%20Solutions%20Diaphragm%20Pneumatic%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-133",
@@ -8614,7 +8666,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0132",
       "derived_properties": {
         "has_power_input": true,
@@ -8624,7 +8676,8 @@
       "source_url": "https://www.google.com/search?q=RoboDrive%20Systems%20TorqueMaster%20Pro%20X7%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-134",
@@ -8659,7 +8712,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0133",
       "derived_properties": {
         "has_power_input": true,
@@ -8669,7 +8722,8 @@
       "source_url": "https://www.google.com/search?q=HeavyMotive%20Inc.%20HydraLift%205000%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-135",
@@ -8704,7 +8758,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0134",
       "derived_properties": {
         "has_power_input": true,
@@ -8714,7 +8768,8 @@
       "source_url": "https://www.google.com/search?q=AirLogic%20Dynamics%20PneuSwift%20Compact%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-136",
@@ -8749,7 +8804,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0135",
       "derived_properties": {
         "has_power_input": true,
@@ -8759,7 +8814,8 @@
       "source_url": "https://www.google.com/search?q=OmniMotors%20DynoForce%20V12%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-137",
@@ -8794,7 +8850,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0136",
       "derived_properties": {
         "has_power_input": true,
@@ -8804,7 +8860,8 @@
       "source_url": "https://www.google.com/search?q=Smart%20Materials%20Co.%20FlexiWire%20SMA-50%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-138",
@@ -8839,7 +8896,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0137",
       "derived_properties": {
         "has_power_input": true,
@@ -8849,7 +8906,8 @@
       "source_url": "https://www.google.com/search?q=Precision%20Micro%20Devices%20NanoPiezo%20Z-Axis%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-139",
@@ -8884,7 +8942,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0138",
       "derived_properties": {
         "has_power_input": true,
@@ -8894,7 +8952,8 @@
       "source_url": "https://www.google.com/search?q=Microbotics%20LLC%20MicroGrip%20Servo%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-140",
@@ -8929,7 +8988,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0139",
       "derived_properties": {
         "has_power_input": true,
@@ -8939,7 +8998,8 @@
       "source_url": "https://www.google.com/search?q=FluidPower%20Solutions%20PressurMax%20HP-250%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-141",
@@ -8974,7 +9034,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0140",
       "derived_properties": {
         "has_power_input": true,
@@ -8984,7 +9044,8 @@
       "source_url": "https://www.google.com/search?q=AirLogic%20Dynamics%20VacuGrip%20Series%204%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-142",
@@ -9019,7 +9080,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0141",
       "derived_properties": {
         "has_power_input": true,
@@ -9029,7 +9090,8 @@
       "source_url": "https://www.google.com/search?q=OmniMotors%20StepperMax%20NEMA%2023%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-143",
@@ -9064,7 +9126,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0142",
       "derived_properties": {
         "has_power_input": true,
@@ -9074,7 +9136,8 @@
       "source_url": "https://www.google.com/search?q=Smart%20Materials%20Co.%20SmaSpring%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-144",
@@ -9109,7 +9172,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0143",
       "derived_properties": {
         "has_power_input": true,
@@ -9119,7 +9182,8 @@
       "source_url": "https://www.google.com/search?q=Precision%20Micro%20Devices%20BenderPiezo%20T-100%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-145",
@@ -9154,7 +9218,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0144",
       "derived_properties": {
         "has_power_input": true,
@@ -9164,7 +9228,8 @@
       "source_url": "https://www.google.com/search?q=RoboDrive%20Systems%20HD%20Servo%20360%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-146",
@@ -9199,7 +9264,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0145",
       "derived_properties": {
         "has_power_input": true,
@@ -9209,7 +9274,8 @@
       "source_url": "https://www.google.com/search?q=HeavyMotive%20Inc.%20FlowMaster%20Valve%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-147",
@@ -9244,7 +9310,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0146",
       "derived_properties": {
         "has_power_input": true,
@@ -9254,7 +9320,8 @@
       "source_url": "https://www.google.com/search?q=OmniMotors%20TurboSpin%20PMDC%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "actuator-sea-001",
@@ -10516,12 +10583,13 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0013",
       "source_url": "https://www.google.com/search?q=NXP%20NXP%20i.MX%208M%20Plus%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "CHIP-014",
@@ -10629,12 +10697,13 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0015",
       "source_url": "https://www.google.com/search?q=Infineon%20Infineon%20AURIX%20TC397%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "CHIP-016",
@@ -10744,12 +10813,13 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0017",
       "source_url": "https://www.google.com/search?q=AMD%2FXilinx%20AMD%20Xilinx%20Kria%20K26%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "CHIP-018",
@@ -11146,7 +11216,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0024",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -11215,7 +11285,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0025",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ9%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -11285,7 +11355,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0026",
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Edge%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -11357,7 +11427,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0027",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Jetson%20Thor%20(2026%20BC%20Award)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -11426,7 +11496,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0028",
       "source_url": "https://www.google.com/search?q=AMD%20AMD%20Ryzen%20AI%20Processor%202026%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -11493,7 +11563,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0029",
       "source_url": "https://www.google.com/search?q=Microsoft%20Microsoft%20Braga%20AI%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -11552,7 +11622,7 @@
       "entity_kind": "software",
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ROB-0001",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Cosmos%20%2B%20GR00T%20Model%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -11622,7 +11692,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0030",
       "source_url": "https://www.google.com/search?q=GigaDevice%20GigaDevice%20GD32H7%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -11692,7 +11762,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0031",
       "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20Qualcomm%20IQ10%20Platform%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -11762,7 +11832,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0032",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20RB6%20v2%20(QCS8250)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -11832,7 +11902,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0033",
       "source_url": "https://www.google.com/search?q=Horizon%20Robotics%20Horizon%20Robotics%20J6%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -11903,7 +11973,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0034",
       "source_url": "https://www.google.com/search?q=Renesas%20Renesas%20RZ%2FV2H%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -11974,7 +12044,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0035",
       "source_url": "https://www.google.com/search?q=Texas%20Instruments%20TI%20TDA4VP%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -12047,7 +12117,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0036",
       "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Genio%20700%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -12118,7 +12188,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0037",
       "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Edge%20AI%20Chip%20(Dual%207B)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -12193,7 +12263,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0038",
       "source_url": "https://www.google.com/search?q=Rockchip%20Rockchip%20RK3588S%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -12268,7 +12338,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0039",
       "source_url": "https://www.google.com/search?q=Amlogic%20Amlogic%20A311D2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -12378,7 +12448,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0040",
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Robotics%20Edition%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -12438,7 +12508,7 @@
       "entity_kind": "software",
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ROB-0002",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Cosmos%20%2B%20GR00T%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -12510,7 +12580,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0041",
       "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20MIC-710AI%20(IQ10)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -12582,7 +12652,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0042",
       "source_url": "https://www.google.com/search?q=GigaDevice%20GigaDevice%20GD32H7%20Robot%20Edition%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -13241,7 +13311,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0056",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Snapdragon%20X2%20Plus%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -13311,7 +13381,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0057",
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20CES%202026%20AI%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -13382,7 +13452,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0058",
       "source_url": "https://www.google.com/search?q=Thundercomm%2FQualcomm%20Thundercomm%20TurboX%20IRB10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -13452,7 +13522,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0059",
       "source_url": "https://www.google.com/search?q=NEURA%20Robotics%2FQualcomm%20NEURA%20Robotics%20IQ10%20Platform%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -13583,7 +13653,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0062",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20GB10%20Grace%20%2B%20Blackwell%20(DIGITS%20Desktop%20AI)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -13623,12 +13693,13 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0063",
       "source_url": "https://www.google.com/search?q=%E4%BB%96%E5%B1%B1%E7%A7%91%E6%8A%80%20%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E8%8A%AF%E7%89%87%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "CHIP-66",
@@ -14941,12 +15012,13 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0093",
       "source_url": "https://www.google.com/search?q=Horizon%20Robotics%20(%E5%9C%B0%E5%B9%B3%E7%BA%BF)%20Horizon%20Robotics%20Journey%20J6M%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "CHIP-101",
@@ -15052,12 +15124,13 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0095",
       "source_url": "https://www.google.com/search?q=Huawei%20(%E5%8D%8E%E4%B8%BA)%20Huawei%20Ascend%20310B%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "CHIP-103",
@@ -15105,12 +15178,13 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0096",
       "source_url": "https://www.google.com/search?q=Kinara%20(acquired%20by%20NXP)%20Kinara%20Ara-2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "IF-001",
@@ -15431,7 +15505,7 @@
       "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-INT-0006",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Isaac%20GR00T%20Platform%20(GR00T%20N1.5%20%2B%20GR00T-Dreams)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -15471,11 +15545,12 @@
       },
       "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0007",
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "unitree.com (URL 引用)"
     },
     {
       "id": "INTERFACE-def456",
@@ -16941,7 +17016,7 @@
       "entity_kind": "software",
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ROB-0007",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Isaac%20GR00T%201.7%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -17004,7 +17079,7 @@
       "entity_kind": "software",
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ROB-0008",
       "source_url": "https://www.google.com/search?q=HuggingFace%20SmolVLA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -17067,7 +17142,7 @@
       "entity_kind": "software",
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ROB-0009",
       "source_url": "https://www.google.com/search?q=Physical%20Intelligence%20%CF%800.5%20(Physical%20Intelligence)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -20591,7 +20666,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0006",
       "derived_properties": {
         "has_data_output": true,
@@ -20645,7 +20720,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0007",
       "derived_properties": {
         "has_data_output": true,
@@ -20699,7 +20774,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0008",
       "derived_properties": {
         "has_data_output": true,
@@ -20753,7 +20828,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0009",
       "derived_properties": {
         "has_data_output": true,
@@ -20807,7 +20882,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0010",
       "derived_properties": {
         "has_data_output": true,
@@ -20861,7 +20936,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0011",
       "derived_properties": {
         "has_data_output": true,
@@ -20968,7 +21043,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0013",
       "derived_properties": {
         "has_data_output": true,
@@ -21023,7 +21098,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0014",
       "derived_properties": {
         "has_data_output": true,
@@ -21077,7 +21152,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "vendor_url_pattern",
+      "source_tier_basis": "deep_link:tesla.com/tesla-optimus-gen-3-sensor-suite",
       "rp_id": "RP-SEN-0015",
       "derived_properties": {
         "has_data_output": true,
@@ -21131,7 +21206,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "A",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-SEN-0016",
       "derived_ecosystem": [
         "ROS2",
@@ -21190,7 +21265,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "A",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-SEN-0017",
       "derived_ecosystem": [
         "ROS2",
@@ -23063,7 +23138,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0052",
       "derived_properties": {
         "has_data_output": true,
@@ -23118,7 +23193,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0053",
       "derived_properties": {
         "has_data_output": true,
@@ -23173,7 +23248,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0054",
       "derived_properties": {
         "has_data_output": true,
@@ -23228,7 +23303,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0055",
       "derived_properties": {
         "has_data_output": true,
@@ -23283,7 +23358,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0056",
       "derived_properties": {
         "has_data_output": true,
@@ -23338,7 +23413,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0057",
       "derived_properties": {
         "has_data_output": true,
@@ -23393,7 +23468,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0058",
       "derived_properties": {
         "has_data_output": true,
@@ -23448,7 +23523,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0059",
       "derived_properties": {
         "has_data_output": true,
@@ -23503,7 +23578,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0060",
       "derived_properties": {
         "has_data_output": true,
@@ -23558,7 +23633,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0061",
       "derived_properties": {
         "has_data_output": true,
@@ -23613,7 +23688,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0062",
       "derived_properties": {
         "has_data_output": true,
@@ -23668,7 +23743,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0063",
       "derived_properties": {
         "has_data_output": true,
@@ -23723,7 +23798,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0064",
       "derived_properties": {
         "has_data_output": true,
@@ -23778,7 +23853,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0065",
       "derived_properties": {
         "has_data_output": true,
@@ -23833,7 +23908,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0066",
       "derived_properties": {
         "has_data_output": true,
@@ -23888,7 +23963,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0067",
       "derived_properties": {
         "has_data_output": true,
@@ -24242,12 +24317,13 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0009",
       "source_url": "https://www.google.com/search?q=X-Humanoid%20Embodied%20Tien%20Kung%203.0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "RPLAT-009",
@@ -24416,7 +24492,7 @@
       ],
       "price_range": "From $13,500",
       "category": "platforms",
-      "verified": false,
+      "verified": true,
       "data_quality": "ok",
       "quarantine": false,
       "source": "厂商目录声明值：Unitree Robotics (China)（无原始链接，未核验）",
@@ -24468,7 +24544,7 @@
       ],
       "price_range": "N/A",
       "category": "platforms",
-      "verified": false,
+      "verified": true,
       "data_quality": "ok",
       "quarantine": false,
       "source": "厂商目录声明值：Unitree Robotics (China)（无原始链接，未核验）",
@@ -24590,12 +24666,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0016",
       "source_url": "https://www.google.com/search?q=Figure%20AI%20Figure%20AI%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "PLATFORM-def456",
@@ -24631,12 +24708,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0017",
       "source_url": "https://www.google.com/search?q=Agility%20Robotics%20Agility%20Robotics%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "PLATFORM-ghi789",
@@ -24672,12 +24750,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0018",
       "source_url": "https://www.google.com/search?q=%E7%89%B9%E6%96%AF%E6%8B%89%20%E7%89%B9%E6%96%AF%E6%8B%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "PLATFORM-jkl012",
@@ -24713,12 +24792,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0019",
       "source_url": "https://www.google.com/search?q=%E6%B3%A2%E5%A3%AB%E9%A1%BF%E5%8A%A8%E5%8A%9B%20%E6%B3%A2%E5%A3%AB%E9%A1%BF%E5%8A%A8%E5%8A%9B%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "PLATFORM-mno345",
@@ -24754,12 +24834,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0020",
       "source_url": "https://www.google.com/search?q=Apptronik%20Apptronik%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "PLATFORM-pqr678",
@@ -24795,12 +24876,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0021",
       "source_url": "https://www.google.com/search?q=1X%20Technologies%201X%20Technologies%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "PLATFORM-stu901",
@@ -24836,7 +24918,7 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0022",
       "derived_ecosystem": [
         "ROS2",
@@ -24845,7 +24927,8 @@
       ],
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）"
+      "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
+      "source": "unitree.com (URL 引用)"
     },
     {
       "id": "PLATFORM-vwx234",
@@ -24881,12 +24964,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "entity_homepage",
       "rp_id": "RP-PLA-0023",
       "source_url": "https://www.agibot.cn/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "agibot.cn (URL 引用)"
     },
     {
       "id": "PLATFORM-yza567",
@@ -24922,12 +25006,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0024",
       "source_url": "https://www.google.com/search?q=%E4%BC%98%E5%82%B2%E6%9C%BA%E5%99%A8%E4%BA%BA%20%E4%BC%98%E5%82%B2%E6%9C%BA%E5%99%A8%E4%BA%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "FA-001",
@@ -24964,12 +25049,13 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-FLE-0001",
       "source_url": "https://www.google.com/search?q=DEKA%20DEKA%20Luke%20Arm%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "FA-002",
@@ -25006,12 +25092,13 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-FLE-0002",
       "source_url": "https://www.google.com/search?q=Festo%20%20Festo%20DHEF%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "FA-003",
@@ -25048,12 +25135,13 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-FLE-0003",
       "source_url": "https://www.google.com/search?q=QMC%20QMC%20Soft%20Gripper%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "FA-004",
@@ -25129,12 +25217,13 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-FLE-0005",
       "source_url": "https://www.google.com/search?q=Various%20Shape%20Memory%20Alloy%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "FA-006",
@@ -25171,12 +25260,13 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-FLE-0006",
       "source_url": "https://www.google.com/search?q=CU%20Boulder%20HASEL%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "RAI-001",
@@ -26297,12 +26387,13 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0005",
       "source_url": "https://www.google.com/search?q=DexRobot%20DexTele%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "DATA-006",
@@ -26622,12 +26713,13 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0011",
       "source_url": "https://www.google.com/search?q=Daimon%20Robotics%20(%E6%88%B4%E7%9B%9F%E6%9C%BA%E5%99%A8%E4%BA%BA)%20DM-Tac%20W%E7%B3%BB%E5%88%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "DATA-012",
@@ -26675,12 +26767,13 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0012",
       "source_url": "https://www.google.com/search?q=TachinTech%20(%E9%80%94%E8%A7%81%E7%A7%91%E6%8A%80)%20TachinGlove%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "DATA-013",
@@ -26731,12 +26824,13 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0013",
       "source_url": "https://www.google.com/search?q=TUM%20%2B%20Agile%20Robots%20%2B%20NJU%20%2B%20SHU%20TacUMI%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "DATA-014",
@@ -26784,12 +26878,13 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0014",
       "source_url": "https://www.google.com/search?q=Academic%20Research%20(ICRA%202026)%20PolyUMI%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "DATA-015",
@@ -26838,12 +26933,13 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0015",
       "source_url": "https://www.google.com/search?q=%E7%BA%AC%E9%92%9B%E6%9C%BA%E5%99%A8%E4%BA%BA%20(MIT%20Adelson%20lab)%20GelFinger%20GF225%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "ACT-hd-leaderdrive-lcs",
@@ -26906,7 +27002,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0155",
       "derived_properties": {
         "has_power_input": true,
@@ -26972,7 +27068,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0156",
       "derived_properties": {
         "has_power_input": true,
@@ -27033,7 +27129,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0157",
       "derived_properties": {
         "has_power_input": true,
@@ -27151,7 +27247,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0159",
       "derived_properties": {
         "has_power_input": true,
@@ -27208,7 +27304,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0160",
       "derived_properties": {
         "has_power_input": true,
@@ -27264,7 +27360,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0161",
       "derived_properties": {
         "has_power_input": true,
@@ -27320,7 +27416,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0162",
       "derived_properties": {
         "has_power_input": true,
@@ -27393,7 +27489,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0163",
       "derived_properties": {
         "has_power_input": true,
@@ -27461,7 +27557,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0164",
       "derived_properties": {
         "has_power_input": true,
@@ -27530,7 +27626,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0165",
       "derived_properties": {
         "has_power_input": true,
@@ -27599,7 +27695,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0166",
       "derived_properties": {
         "has_power_input": true,
@@ -27666,7 +27762,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0167",
       "derived_properties": {
         "has_power_input": true,
@@ -27731,7 +27827,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0168",
       "derived_properties": {
         "has_power_input": true,
@@ -27789,7 +27885,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0169",
       "derived_properties": {
         "has_power_input": true,
@@ -27853,7 +27949,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0170",
       "derived_properties": {
         "has_power_input": true,
@@ -27911,7 +28007,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0171",
       "derived_properties": {
         "has_power_input": true,
@@ -27976,7 +28072,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0172",
       "derived_properties": {
         "has_power_input": true,
@@ -28034,7 +28130,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0173",
       "derived_properties": {
         "has_power_input": true,
@@ -28092,7 +28188,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0174",
       "derived_properties": {
         "has_power_input": true,
@@ -28159,7 +28255,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0175",
       "derived_properties": {
         "has_power_input": true,
@@ -28289,7 +28385,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0177",
       "derived_properties": {
         "has_power_input": true,
@@ -28474,7 +28570,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0180",
       "derived_properties": {
         "has_power_input": true,
@@ -28599,7 +28695,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0182",
       "derived_properties": {
         "has_power_input": true,
@@ -28666,7 +28762,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0183",
       "derived_properties": {
         "has_power_input": true,
@@ -28727,7 +28823,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0184",
       "derived_properties": {
         "has_power_input": true,
@@ -28804,7 +28900,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0185",
       "derived_properties": {
         "has_power_input": true,
@@ -28874,7 +28970,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0186",
       "derived_properties": {
         "has_power_input": true,
@@ -29236,7 +29332,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0073",
       "derived_properties": {
         "has_data_output": true,
@@ -29299,7 +29395,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0074",
       "derived_properties": {
         "has_data_output": true,
@@ -29361,7 +29457,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0075",
       "derived_properties": {
         "has_data_output": true,
@@ -29423,7 +29519,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0076",
       "derived_properties": {
         "has_data_output": true,
@@ -29485,7 +29581,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0077",
       "derived_properties": {
         "has_data_output": true,
@@ -29542,7 +29638,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0078",
       "derived_properties": {
         "has_data_output": true,
@@ -29612,7 +29708,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0187",
       "derived_properties": {
         "has_power_input": true,
@@ -29679,7 +29775,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0188",
       "derived_properties": {
         "has_power_input": true,
@@ -29743,7 +29839,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0189",
       "derived_properties": {
         "has_power_input": true,
@@ -29807,7 +29903,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0190",
       "derived_properties": {
         "has_power_input": true,
@@ -29874,7 +29970,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0191",
       "derived_properties": {
         "has_power_input": true,
@@ -29939,7 +30035,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0192",
       "derived_properties": {
         "has_power_input": true,
@@ -29999,7 +30095,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0193",
       "derived_properties": {
         "has_power_input": true,
@@ -30064,7 +30160,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-ACT-0194",
       "derived_properties": {
         "has_power_input": true,
@@ -30129,7 +30225,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0016",
       "source_url": "https://www.google.com/search?q=Stanford%20University%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%8C%E7%A4%BE%E5%8C%BA%E5%8F%AF%E8%87%AA%E5%BB%BA%EF%BC%89%20Mobile%20ALOHA%20%E7%A7%BB%E5%8A%A8%E5%8F%8C%E8%87%82%E9%81%A5%E6%93%8D%E4%BD%9C%E9%87%87%E9%9B%86%E5%B9%B3%E5%8F%B0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -30191,7 +30287,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0017",
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%20%2F%20MIT%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20Open-TeleVision%20%E6%B2%89%E6%B5%B8%E5%BC%8F%20VR%20%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -30251,7 +30347,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0018",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20AirExo-2%20%E4%BD%8E%E6%88%90%E6%9C%AC%E5%8F%AF%E7%A9%BF%E6%88%B4%E5%A4%96%E9%AA%A8%E9%AA%BC%E9%87%87%E9%9B%86%E8%A3%85%E7%BD%AE%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -30311,7 +30407,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0019",
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20Bunny-VisionPro%20%E5%8F%8C%E6%89%8B%E5%AE%9E%E6%97%B6%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -30370,7 +30466,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0020",
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20ACE%20%E8%B7%A8%E5%B9%B3%E5%8F%B0%E8%A7%86%E8%A7%89-%E5%A4%96%E9%AA%A8%E9%AA%BC%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -30430,7 +30526,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0021",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20DOGlove%20%E5%8A%9B%E5%8F%8D%E9%A6%88%E6%95%B0%E6%8D%AE%E6%89%8B%E5%A5%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -30490,7 +30586,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0022",
       "source_url": "https://www.google.com/search?q=Manus%EF%BC%88%E8%8D%B7%E5%85%B0%EF%BC%89%20Manus%20Quantum%20Metagloves%20%E5%8A%A8%E6%8D%95%E6%89%8B%E5%A5%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -30550,7 +30646,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0023",
       "source_url": "https://www.google.com/search?q=Rokoko%EF%BC%88%E4%B8%B9%E9%BA%A6%EF%BC%89%20Rokoko%20Smartsuit%20Pro%20II%20%E6%83%AF%E6%80%A7%E5%8A%A8%E6%8D%95%E6%9C%8D%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -30611,7 +30707,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0024",
       "source_url": "https://www.google.com/search?q=%E5%8C%97%E4%BA%AC%E8%AF%BA%E4%BA%A6%E8%85%BE%E7%A7%91%E6%8A%80%20(Noitom)%20%E8%AF%BA%E4%BA%A6%E8%85%BE%20Perception%20Neuron%20Studio%20%E6%83%AF%E6%80%A7%E5%8A%A8%E6%8D%95%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -30671,7 +30767,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0025",
       "source_url": "https://www.google.com/search?q=%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA%20%2F%20%E5%AD%A6%E6%9C%AF%E5%9B%A2%E9%98%9F%20FastUMI%20%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E5%9E%8B%20UMI%20%E9%87%87%E9%9B%86%E8%A3%85%E7%BD%AE%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -30731,7 +30827,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-DAT-0026",
       "source_url": "https://www.google.com/search?q=Stanford%20University%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20HumanPlus%20%E4%BA%BA%E5%BD%A2%E5%BD%B1%E5%AD%90%E5%AD%A6%E4%B9%A0%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -30856,7 +30952,7 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "press_coverage: quantum_bit 2026-08-22",
+      "source_tier_basis": "unattributable_text",
       "kind_basis": "category=data_acquisition: neural interface hardware, physical wearable",
       "rp_id": "RP-DAT-0028",
       "entity_kind_basis": "默认归类",
@@ -30917,7 +31013,7 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "kind_basis": "category=data_acquisition: neural interface software/reference, no physical hardware",
       "source_tier_prev": "B",
       "rp_id": "RP-DAT-0029",
@@ -30976,7 +31072,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0097",
       "source_url": "https://www.google.com/search?q=Axelera%20AI%EF%BC%88%E8%8D%B7%E5%85%B0%EF%BC%89%20Axelera%20Metis%20AIPU%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -31037,7 +31133,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0098",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%E5%8D%8A%E5%AF%BC%E4%BD%93%20(Axera)%20%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%20AX650N%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -31095,7 +31191,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0099",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%E5%8D%8A%E5%AF%BC%E4%BD%93%20(Axera)%20%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%20AX8850%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -31153,7 +31249,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0100",
       "source_url": "https://www.google.com/search?q=%E9%BB%91%E8%8A%9D%E9%BA%BB%E6%99%BA%E8%83%BD%20(Black%20Sesame%20Technologies%2C%202533.HK)%20%E9%BB%91%E8%8A%9D%E9%BA%BB%E6%99%BA%E8%83%BD%20%E5%8D%8E%E5%B1%B1%20A2000%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -31212,7 +31308,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0101",
       "source_url": "https://www.google.com/search?q=%E7%AE%97%E8%83%BD%E7%A7%91%E6%8A%80%20(SOPHGO)%20%E7%AE%97%E8%83%BD%20SOPHON%20BM1684X%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -31269,7 +31365,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0102",
       "source_url": "https://www.google.com/search?q=%E4%B8%AD%E7%A7%91%E5%AF%92%E6%AD%A6%E7%BA%AA%20(688256.SH)%20%E5%AF%92%E6%AD%A6%E7%BA%AA%20MLU370-S4%20%E6%8E%A8%E7%90%86%E5%8A%A0%E9%80%9F%E5%8D%A1%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -31444,7 +31540,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0105",
       "source_url": "https://www.google.com/search?q=Ambarella%EF%BC%88%E7%BE%8E%E5%9B%BD%E5%AE%89%E9%9C%B8%EF%BC%89%20Ambarella%20N1-655%20%E8%BE%B9%E7%BC%98%20GenAI%20SoC%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -31505,7 +31601,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0106",
       "source_url": "https://www.google.com/search?q=Texas%20Instruments%20TI%20AM69A%20%E8%BE%B9%E7%BC%98%20AI%20%E5%A4%84%E7%90%86%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -31562,7 +31658,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0107",
       "source_url": "https://www.google.com/search?q=DEEPX%EF%BC%88%E9%9F%A9%E5%9B%BD%EF%BC%89%20DEEPX%20DX-M1%20%E8%BE%B9%E7%BC%98%20NPU%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -31619,7 +31715,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-CHI-0108",
       "source_url": "https://www.google.com/search?q=%E5%90%8E%E6%91%A9%E6%99%BA%E8%83%BD%20(Houmo.AI)%20%E5%90%8E%E6%91%A9%E6%99%BA%E8%83%BD%20%E6%BC%AB%E7%95%8C%20M30%20%E5%AD%98%E7%AE%97%E4%B8%80%E4%BD%93%E8%8A%AF%E7%89%87%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
@@ -31673,7 +31769,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0079",
       "derived_properties": {
         "has_data_output": true,
@@ -31732,7 +31828,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0080",
       "derived_properties": {
         "has_data_output": true,
@@ -31792,7 +31888,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0081",
       "derived_properties": {
         "has_data_output": true,
@@ -31854,7 +31950,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0082",
       "derived_properties": {
         "has_data_output": true,
@@ -31914,7 +32010,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0083",
       "derived_properties": {
         "has_data_output": true,
@@ -31974,7 +32070,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0084",
       "derived_properties": {
         "has_data_output": true,
@@ -32041,7 +32137,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0085",
       "derived_properties": {
         "has_data_output": true,
@@ -32108,7 +32204,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0086",
       "derived_properties": {
         "has_data_output": true,
@@ -32174,7 +32270,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0087",
       "derived_properties": {
         "has_data_output": true,
@@ -32239,7 +32335,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0088",
       "derived_properties": {
         "has_data_output": true,
@@ -39496,7 +39592,7 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "source_tier_prev": "B",
       "rp_id": "RP-INT-0001",
       "source_url": "https://www.google.com/search?q=%E7%9F%A9%E9%98%B5%E8%B6%85%E6%99%BA%20Matrix%20%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20(MATRIX-1%2F3)%20datasheet",
@@ -40452,7 +40548,7 @@
         "gap": "厂商未公开机械安装接口规格"
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "quarantine": false,
       "standard_conformance": {
@@ -40510,7 +40606,7 @@
         "gap": "厂商未公开机械安装接口规格"
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "quarantine": false,
       "standard_conformance": {
@@ -40571,7 +40667,7 @@
         "gap": "厂商未公开机械安装接口规格"
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "quarantine": false,
       "standard_conformance": {
@@ -40626,7 +40722,7 @@
         "gap": "厂商未公开机械安装接口规格"
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "quarantine": false,
       "standard_conformance": {
@@ -40683,7 +40779,7 @@
         "gap": "软件工具，无机械接口"
       },
       "entity_kind": "software",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "quarantine": false,
       "standard_conformance": {
@@ -40737,7 +40833,7 @@
         "gap": "软件框架，无机械接口"
       },
       "entity_kind": "software",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "quarantine": false,
       "standard_conformance": {
@@ -40837,7 +40933,7 @@
         ]
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
@@ -40938,7 +41034,7 @@
         ]
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
@@ -41031,7 +41127,7 @@
         ]
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
@@ -41121,7 +41217,7 @@
         ]
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
@@ -41194,7 +41290,7 @@
         ]
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
@@ -41276,7 +41372,7 @@
         ]
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
@@ -41353,7 +41449,7 @@
         ]
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
@@ -41441,7 +41537,7 @@
         ]
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
@@ -41513,7 +41609,7 @@
         ]
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
@@ -41539,7 +41635,7 @@
       "year": 2011,
       "source": "https://www.iso.org/standard/37618.html",
       "source_tier": "A",
-      "source_tier_basis": "iso_official",
+      "source_tier_basis": "deep_link:www.iso.org/standard/37618.html",
       "confidence": 1,
       "confidence_basis": "iso_official_publication",
       "relevance": "safety_compliance_required_for_production_lines",
@@ -41572,7 +41668,7 @@
       "year": 2016,
       "source": "https://www.iso.org/standard/66341.html",
       "source_tier": "A",
-      "source_tier_basis": "iso_official",
+      "source_tier_basis": "deep_link:www.iso.org/standard/66341.html",
       "confidence": 1,
       "confidence_basis": "iso_official_publication",
       "relevance": "mandatory_for_collaborative_robots_in_human_workspaces",
@@ -41604,7 +41700,7 @@
       "year": 2015,
       "source": "https://www.iso.org/standard/48798.html",
       "source_tier": "A",
-      "source_tier_basis": "iso_official",
+      "source_tier_basis": "deep_link:www.iso.org/standard/48798.html",
       "confidence": 1,
       "confidence_basis": "iso_official_publication",
       "relevance": "required_for_emergency_stop_and_safety_gate_design",
@@ -41636,7 +41732,7 @@
       "year": 1988,
       "source": "https://www.iso.org/standard/20853.html",
       "source_tier": "A",
-      "source_tier_basis": "iso_official",
+      "source_tier_basis": "deep_link:www.iso.org/standard/20853.html",
       "confidence": 1,
       "confidence_basis": "iso_official_publication",
       "relevance": "prerequisite_for_cross_brand_performance_comparison",
@@ -41668,7 +41764,7 @@
       "year": 2012,
       "source": "https://www.vdi.de/",
       "source_tier": "B",
-      "source_tier_basis": "industry_association",
+      "source_tier_basis": "root_url_only",
       "confidence": 0.9,
       "confidence_basis": "industry_standard",
       "relevance": "widely_referenced_in_european_integration_projects",
@@ -41700,7 +41796,7 @@
       "year": 2011,
       "source": "https://openstd.samr.gov.cn/",
       "source_tier": "B",
-      "source_tier_basis": "chinese_gov_standard",
+      "source_tier_basis": "root_url_only",
       "confidence": 1,
       "confidence_basis": "chinese_gov_publication",
       "relevance": "mandatory_for_china_market_access",
@@ -41734,7 +41830,7 @@
       "year": 2018,
       "source": "https://openstd.samr.gov.cn/",
       "source_tier": "B",
-      "source_tier_basis": "chinese_gov_standard",
+      "source_tier_basis": "root_url_only",
       "confidence": 1,
       "confidence_basis": "chinese_gov_publication",
       "relevance": "used_in_domestic_substitution_projects",
@@ -41770,7 +41866,7 @@
       "flange": "ISO 9409-1 A50 compatible",
       "source": "https://www.harmonicdrive.net/",
       "source_tier": "B",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "root_url_only",
       "confidence": 0.9,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -41808,7 +41904,7 @@
       "flange": "ISO 9409-1 A63 compatible",
       "source": "https://www.harmonicdrive.net/",
       "source_tier": "B",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "root_url_only",
       "confidence": 0.9,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -41846,7 +41942,7 @@
       "flange": "ISO 9409-1 A100 compatible",
       "source": "https://www.harmonicdrive.net/",
       "source_tier": "B",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "root_url_only",
       "confidence": 0.9,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -41884,7 +41980,7 @@
       "flange": "ISO 9409-1 A50 compatible",
       "source": "https://www.greenharmonic.com/",
       "source_tier": "B",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "root_url_only",
       "confidence": 0.85,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -41923,7 +42019,7 @@
       "flange": "ISO 9409-1 A100 compatible",
       "source": "https://www.greenharmonic.com/",
       "source_tier": "B",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "root_url_only",
       "confidence": 0.85,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -41962,7 +42058,7 @@
       "flange": "custom_mount",
       "source": "https://www.nabtesco.com/",
       "source_tier": "B",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "root_url_only",
       "confidence": 0.85,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -42000,7 +42096,7 @@
       "flange": "custom_mount",
       "source": "https://www.nabtesco.com/",
       "source_tier": "B",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "root_url_only",
       "confidence": 0.85,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -42038,7 +42134,7 @@
       "flange": "custom_mount",
       "source": "https://www.lif-drive.com/",
       "source_tier": "B",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "root_url_only",
       "confidence": 0.8,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -42076,7 +42172,7 @@
       "protocol": "IO_Link",
       "source": "https://www.onrobot.com/products/vacuum-grippers/vg1",
       "source_tier": "A",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "deep_link:www.onrobot.com/products/vacuum-grippers/vg1",
       "confidence": 0.9,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -42114,7 +42210,7 @@
       "protocol": "EtherCAT",
       "source": "https://www.onrobot.com/products/robotic-grippers/ng10",
       "source_tier": "A",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "deep_link:www.onrobot.com/products/robotic-grippers/ng10",
       "confidence": 0.9,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -42152,7 +42248,7 @@
       "protocol": "EtherCAT",
       "source": "https://www.onrobot.com/products/robotic-grippers/ng30",
       "source_tier": "A",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "deep_link:www.onrobot.com/products/robotic-grippers/ng30",
       "confidence": 0.9,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -42190,7 +42286,7 @@
       "protocol": "pneumatic",
       "source": "https://www.schunk.com/products/grippers/swg",
       "source_tier": "A",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "deep_link:www.schunk.com/products/grippers/swg",
       "confidence": 0.85,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -42227,7 +42323,7 @@
       "protocol": "Modbus",
       "source": "https://www.pos-robotics.com/",
       "source_tier": "B",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "root_url_only",
       "confidence": 0.85,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [

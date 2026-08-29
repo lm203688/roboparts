@@ -1,8 +1,5 @@
 {
   "meta": {
-    "category": "sensors",
-    "source": "entities.json projection",
-    "generated_at": "2026-08-27T14:54:22.415Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -26,7 +23,7 @@
     }
   },
   "count": 90,
-  "updated": "2026-08-27T14:54:22.415Z",
+  "updated": "2026-08-28T09:04:15.954694Z",
   "data": [
     {
       "id": "CHIP-67",
@@ -281,7 +278,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0006",
       "derived_properties": {
         "has_data_output": true,
@@ -335,7 +332,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0007",
       "derived_properties": {
         "has_data_output": true,
@@ -389,7 +386,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0008",
       "derived_properties": {
         "has_data_output": true,
@@ -443,7 +440,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0009",
       "derived_properties": {
         "has_data_output": true,
@@ -497,7 +494,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0010",
       "derived_properties": {
         "has_data_output": true,
@@ -551,7 +548,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0011",
       "derived_properties": {
         "has_data_output": true,
@@ -658,7 +655,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0013",
       "derived_properties": {
         "has_data_output": true,
@@ -713,7 +710,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0014",
       "derived_properties": {
         "has_data_output": true,
@@ -767,7 +764,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "vendor_url_pattern",
+      "source_tier_basis": "deep_link:tesla.com/tesla-optimus-gen-3-sensor-suite",
       "rp_id": "RP-SEN-0015",
       "derived_properties": {
         "has_data_output": true,
@@ -821,7 +818,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "A",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-SEN-0016",
       "derived_ecosystem": [
         "ROS2",
@@ -880,7 +877,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "A",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-SEN-0017",
       "derived_ecosystem": [
         "ROS2",
@@ -2753,7 +2750,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0052",
       "derived_properties": {
         "has_data_output": true,
@@ -2808,7 +2805,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0053",
       "derived_properties": {
         "has_data_output": true,
@@ -2863,7 +2860,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0054",
       "derived_properties": {
         "has_data_output": true,
@@ -2918,7 +2915,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0055",
       "derived_properties": {
         "has_data_output": true,
@@ -2973,7 +2970,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0056",
       "derived_properties": {
         "has_data_output": true,
@@ -3028,7 +3025,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0057",
       "derived_properties": {
         "has_data_output": true,
@@ -3083,7 +3080,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0058",
       "derived_properties": {
         "has_data_output": true,
@@ -3138,7 +3135,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0059",
       "derived_properties": {
         "has_data_output": true,
@@ -3193,7 +3190,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0060",
       "derived_properties": {
         "has_data_output": true,
@@ -3248,7 +3245,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0061",
       "derived_properties": {
         "has_data_output": true,
@@ -3303,7 +3300,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0062",
       "derived_properties": {
         "has_data_output": true,
@@ -3358,7 +3355,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0063",
       "derived_properties": {
         "has_data_output": true,
@@ -3413,7 +3410,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0064",
       "derived_properties": {
         "has_data_output": true,
@@ -3468,7 +3465,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0065",
       "derived_properties": {
         "has_data_output": true,
@@ -3523,7 +3520,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0066",
       "derived_properties": {
         "has_data_output": true,
@@ -3578,7 +3575,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0067",
       "derived_properties": {
         "has_data_output": true,
@@ -3940,7 +3937,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0073",
       "derived_properties": {
         "has_data_output": true,
@@ -4003,7 +4000,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0074",
       "derived_properties": {
         "has_data_output": true,
@@ -4065,7 +4062,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0075",
       "derived_properties": {
         "has_data_output": true,
@@ -4127,7 +4124,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0076",
       "derived_properties": {
         "has_data_output": true,
@@ -4189,7 +4186,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0077",
       "derived_properties": {
         "has_data_output": true,
@@ -4246,7 +4243,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0078",
       "derived_properties": {
         "has_data_output": true,
@@ -4305,7 +4302,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0079",
       "derived_properties": {
         "has_data_output": true,
@@ -4364,7 +4361,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0080",
       "derived_properties": {
         "has_data_output": true,
@@ -4424,7 +4421,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0081",
       "derived_properties": {
         "has_data_output": true,
@@ -4486,7 +4483,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0082",
       "derived_properties": {
         "has_data_output": true,
@@ -4546,7 +4543,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0083",
       "derived_properties": {
         "has_data_output": true,
@@ -4606,7 +4603,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0084",
       "derived_properties": {
         "has_data_output": true,
@@ -4673,7 +4670,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0085",
       "derived_properties": {
         "has_data_output": true,
@@ -4740,7 +4737,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0086",
       "derived_properties": {
         "has_data_output": true,
@@ -4806,7 +4803,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0087",
       "derived_properties": {
         "has_data_output": true,
@@ -4871,7 +4868,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-SEN-0088",
       "derived_properties": {
         "has_data_output": true,

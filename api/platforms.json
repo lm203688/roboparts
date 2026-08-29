@@ -1,8 +1,5 @@
 {
   "meta": {
-    "category": "platforms",
-    "source": "entities.json projection",
-    "generated_at": "2026-08-27T14:54:22.415Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -26,7 +23,7 @@
     }
   },
   "count": 41,
-  "updated": "2026-08-27T14:54:22.415Z",
+  "updated": "2026-08-28T09:04:15.954694Z",
   "data": [
     {
       "id": "ACT-patsnap-actuator",
@@ -83,7 +80,7 @@
       "entity_kind": "market_intelligence",
       "kind_basis": "type=market_report（研究/报告类条目，非可采购零部件）",
       "source_tier_prev": "B",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0001",
       "source_url": "https://www.google.com/search?q=%E5%A4%9A%E5%AE%B6%20PatSnap%20Humanoid%20Actuator%20Analysis%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
@@ -432,12 +429,13 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0009",
       "source_url": "https://www.google.com/search?q=X-Humanoid%20Embodied%20Tien%20Kung%203.0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "RPLAT-009",
@@ -606,7 +604,7 @@
       ],
       "price_range": "From $13,500",
       "category": "platforms",
-      "verified": false,
+      "verified": true,
       "data_quality": "ok",
       "quarantine": false,
       "source": "厂商目录声明值：Unitree Robotics (China)（无原始链接，未核验）",
@@ -658,7 +656,7 @@
       ],
       "price_range": "N/A",
       "category": "platforms",
-      "verified": false,
+      "verified": true,
       "data_quality": "ok",
       "quarantine": false,
       "source": "厂商目录声明值：Unitree Robotics (China)（无原始链接，未核验）",
@@ -780,12 +778,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0016",
       "source_url": "https://www.google.com/search?q=Figure%20AI%20Figure%20AI%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "PLATFORM-def456",
@@ -821,12 +820,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0017",
       "source_url": "https://www.google.com/search?q=Agility%20Robotics%20Agility%20Robotics%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "PLATFORM-ghi789",
@@ -862,12 +862,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0018",
       "source_url": "https://www.google.com/search?q=%E7%89%B9%E6%96%AF%E6%8B%89%20%E7%89%B9%E6%96%AF%E6%8B%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "PLATFORM-jkl012",
@@ -903,12 +904,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0019",
       "source_url": "https://www.google.com/search?q=%E6%B3%A2%E5%A3%AB%E9%A1%BF%E5%8A%A8%E5%8A%9B%20%E6%B3%A2%E5%A3%AB%E9%A1%BF%E5%8A%A8%E5%8A%9B%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "PLATFORM-mno345",
@@ -944,12 +946,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0020",
       "source_url": "https://www.google.com/search?q=Apptronik%20Apptronik%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "PLATFORM-pqr678",
@@ -985,12 +988,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0021",
       "source_url": "https://www.google.com/search?q=1X%20Technologies%201X%20Technologies%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "PLATFORM-stu901",
@@ -1026,7 +1030,7 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0022",
       "derived_ecosystem": [
         "ROS2",
@@ -1035,7 +1039,8 @@
       ],
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）"
+      "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
+      "source": "unitree.com (URL 引用)"
     },
     {
       "id": "PLATFORM-vwx234",
@@ -1071,12 +1076,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "dataset_source",
+      "source_tier_basis": "entity_homepage",
       "rp_id": "RP-PLA-0023",
       "source_url": "https://www.agibot.cn/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "agibot.cn (URL 引用)"
     },
     {
       "id": "PLATFORM-yza567",
@@ -1112,12 +1118,13 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-PLA-0024",
       "source_url": "https://www.google.com/search?q=%E4%BC%98%E5%82%B2%E6%9C%BA%E5%99%A8%E4%BA%BA%20%E4%BC%98%E5%82%B2%E6%9C%BA%E5%99%A8%E4%BA%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "RPLAT-oss-open-duck-mini",

@@ -637,6 +637,10 @@ def source_states(led: dict, now: datetime | None = None,
     now = now or datetime.now(timezone(timedelta(hours=8)))
     runs = (led or {}).get('runs') or []
     attempts = (led or {}).get('attempts') or {}
+    # 台账可显式声明「来源自 X 时刻起声明」（led['declared'][sk]），
+    # 覆盖 ENUM_SOURCES 里的默认声明时间 —— 新来源入台账即可从当天起算宽限，
+    # 测试也能构造「从未成功但宽限期内」的真实形态（见 L1.79 阴性）。
+    declared_overrides = (led or {}).get('declared') or {}
     out = {}
     for sk, spec in ENUM_SOURCES.items():
         last_ok = None
@@ -649,7 +653,8 @@ def source_states(led: dict, now: datetime | None = None,
             dt = _parse_dt(r.get('at'))
             if dt and (last_ok is None or dt > last_ok):
                 last_ok = dt
-        ref = last_ok or _parse_dt(spec['declared_at']) or now
+        declared_at = declared_overrides.get(sk) or spec.get('declared_at')
+        ref = last_ok or _parse_dt(declared_at) or now
         silent_days = (now - ref).total_seconds() / 86400.0
 
         fail = attempts.get(sk) or {}

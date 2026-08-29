@@ -19,10 +19,10 @@
 
 ## 溯源分级（Provenance Tier）— Agent 取数前请先读本节
 全库 767 条实体 **100% 已显式标注 `source_tier` 与 `confidence`**，供自动化系统按可信度过滤：
-- `source_tier: "A"` — 一手可复核来源（官方规格书 / 标准文本 / 带链接厂商文档），124 条（18.62%）。**建议 Agent 默认只采信 Tier A。**
-- `source_tier: "B"` — 弱归因（厂商目录声明值、官网首页，无原始链接），494 条。可参考，需二次核验。
-- `source_tier: "C"` — 无溯源（历史导入待补来源），149 条，`confidence` 上限 0.30，且带 `needs_provenance: true`。**不建议直接引用。**
-- `quarantine: true` — 已隔离实体 101 条；其中脏度隔离 97 条（占位 ID 51 / 不可核验厂商 32 / 非实体条目 14），同物异 ID 重复隔离 4 条（同名同厂商登记两遍，保留规范条目并以 `duplicate_of` 指向它）。干净集为 666 条（Tier A 可追溯率 18.62%），因清洁集内已无重复，该数可直接当作「不重复可信条目数」使用。
+- `source_tier: "A"` — 一手可复核来源（官方规格书 / 标准文本 / 带链接厂商文档），376 条（49.02%）。**建议 Agent 默认只采信 Tier A。**
+- `source_tier: "B"` — 弱归因（厂商目录声明值、二手摘录，无原始链接），241 条。可参考，需二次核验。
+- `source_tier: "C"` — 无溯源（历史导入待补来源），150 条，`confidence` 上限 0.30，且带 `needs_provenance: true`。**不建议直接引用。**
+- `quarantine: true` — 已隔离实体 101 条。干净集为 666 条（Tier A 可追溯率 47.90%），该数可直接当作「不重复可信条目数」使用。
 - 过滤示例：`entities.filter(e => !e.quarantine && e.source_tier === "A" && e.confidence >= 0.6)`
 - 覆盖率快照见 `api/entities.json` → `meta.provenance_coverage`（内含 `tier_definition` 自解释字段）。
 - 我们主动公开 Tier C 与隔离数据的存在，而非隐藏：**可核验性优先于数量宣称**。

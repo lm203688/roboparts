@@ -145,7 +145,10 @@ console.log('=== 覆盖面：真实库里在用的编码必须都能被解析器
     for (const k of ['standard', 'flange', 'tool_side', 'tool_side_flange']) {
       const v = mi[k];
       for (const x of (Array.isArray(v) ? v : [v])) {
-        if (typeof x === 'string' && /9409/.test(x)) tokens.add(x);
+        // 只收完整法兰设计编码（带尺寸段，如 ISO 9409-1-50-4-M6）；
+        // 裸标准号（如 ISO 9409-1）不是设计编码，parseIsoFlange 正确地返回
+        // null —— 把它算进"必须可解析"会制造假红（20260828 修正）。
+        if (typeof x === 'string' && /9409-1-\d/.test(x)) tokens.add(x);
       }
     }
   }

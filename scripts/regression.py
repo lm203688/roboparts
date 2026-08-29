@@ -8193,9 +8193,15 @@ def layer1_79():
     fresh = {'runs': [_run('gb', 1), _run('tuanbiao', 1)]}
     check(emod.ledger_verdict(fresh, now)[0], '阴性: 两来源都新鲜时不被误伤')
     # 从未成功但还在宽限期内：不许假红（假红比漏报更致命），但必须显式挂账
-    st_now = emod.source_states({'runs': [_run('gb', 0.05)]}, now)
-    check(emod.ledger_verdict({'runs': [_run('gb', 0.05)]}, now)[0],
+    # （20260828 修正：此前只喂 gb 的 run，tuanbiao 按 8-10 的 declared_at 已超 14 天
+    # 宽限 → 判红是**正确行为**，测试构造不出"宽限期内"形态 → 用台账 declared 覆盖
+    # 把两来源声明时间移到今天，复现"新来源刚声明、从未成功"的真实场景）
+    grace_led = {'runs': [_run('gb', 0.05)],
+                 'declared': {'gb': (now - _dt.timedelta(hours=1)).isoformat(),
+                              'tuanbiao': (now - _dt.timedelta(hours=1)).isoformat()}}
+    check(emod.ledger_verdict(grace_led, now)[0],
           '阴性: 新声明来源在宽限期内不判红（不制造假红）')
+    st_now = emod.source_states(grace_led, now)
     check(st_now['tuanbiao']['never'] and st_now['tuanbiao']['grace_days_left'] is not None,
           '阳性: 但它必须被显式挂账为"从未成功 + 宽限倒计时"，不是当作不存在')
     # 失败冷却必须被如实反映：正在冷却的来源不该被判成"该跑"（否则每小时重试烧配额）

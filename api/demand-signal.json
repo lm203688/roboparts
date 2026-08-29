@@ -22,7 +22,7 @@
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
-  "scan_date": "2026-08-21",
+  "scan_date": "2026-08-28",
   "method": "scripts/demand_scan.mjs 只读监听（GitHub/ROS/Stack 可达；Reddit 沙箱不可达已降级）。绝不发帖。",
   "channels": {
     "github": {
@@ -54,129 +54,121 @@
       "hit_count": 0
     }
   },
-  "real_query_count": 11,
-  "explicit_compatibility_pain": 11,
+  "real_query_count": 10,
+  "explicit_compatibility_pain": 10,
   "cross_brand_compat_engine_users": 0,
   "can_answer_today": {
-    "mech_decl_rate": 0.0202,
-    "mech_declared": 15,
-    "total_entities": 744,
+    "mech_decl_rate": 0.0078,
+    "mech_declared": 6,
+    "total_entities": 767,
     "estimate": "极低：跨品牌兼容类提问今天绝大多数答不出（需真实 BOM 反喂抬声明率）"
   },
   "category_counts": {
     "actuators": 217,
     "platforms": 41,
     "chips": 108,
-    "robot_ai_models": 45,
+    "robot_ai_models": 46,
     "sensors": 90,
-    "interfaces": 37,
+    "interfaces": 44,
     "llms": 42,
     "protocols": 64,
     "flexible_actuators": 21,
-    "data_acquisition": 44,
+    "data_acquisition": 46,
     "connectors": 2,
     "integrated_joints": 1,
-    "reducers": 3,
+    "reducers": 11,
     "controllers": 3,
-    "grippers": 8,
+    "grippers": 13,
     "structural": 3,
     "cables": 2,
     "power": 2,
     "pcb": 2,
     "bionic_mechanisms": 9
   },
-  "verdict": "已捕获 11 条真实兼容性提问信号（跨品牌引擎潜在用户 0 条）。但本站机械接口声明率仅 2.02%，绝大多数今天答不出——需求存在，供给（可计算兼容性）不足。",
+  "verdict": "已捕获 10 条真实兼容性提问信号（跨品牌引擎潜在用户 0 条）。但本站机械接口声明率仅 0.78%，绝大多数今天答不出——需求存在，供给（可计算兼容性）不足。",
   "sources": [
     {
       "name": "github",
-      "url": "https://github.com/IvorySQL/IvorySQL/pull/1572",
+      "url": "https://github.com/agentscope-ai/ReMe/pull/505",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "Add Oracle-compatible SPLIT PARTITION syntax",
+      "evidence": "feat(core): support live component replacement",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/tzehon/wardrobe-stylist/pull/21",
+      "url": "https://github.com/vain90/Moolias/pull/117",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "docs: record replacement archive evidence",
+      "evidence": "Add guided alias activation and replacement workflow",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/bestter/ImageGenerator/pull/271",
+      "url": "https://github.com/ROCm/aiter/pull/4526",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "⚡ Bolt: Use StringBuilder for currentPrompt replacements in TemplateParser",
+      "evidence": "[HIP] [FlyDSL] [Kernel] Extend MXFP4 GEMM1 replacement to A4W4",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/simonoppowa/OpenNutriTracker/issues/732",
+      "url": "https://github.com/lidge-jun/opencodex/issues/2816",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "Map: a user-run OpenAI-compatible endpoint as a fourth provider",
+      "evidence": "Feature request: opt-in upstream Responses WebSocket transport for OpenAI-compatible providers",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/yujunkong/agent-k/pull/36",
+      "url": "https://github.com/AntaresQAQ/VoxMesh/pull/35",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "feat(providers): PROVIDER-001~014 + custom OpenAI Compatible",
+      "evidence": "feat: stream compatible Chat completions",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/Jhacarreiro/openai-compatible-tool-adapter/pull/18",
+      "url": "https://github.com/godotengine/godot/pull/118932",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "fix: reject invalid OPENAI_COMPATIBLE_ADAPTER_MAX_RETRIES values",
+      "evidence": "dotnet: Make GodotSharp and generators compatible with trimming",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/FS-GG/.github/issues/2772",
+      "url": "https://github.com/elastic/kibana/pull/287765",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "claim --force is not atomic: a transport failure between the destructive eviction and the replacement write leaves the row with NO holder, and the exit code reads like \"nothing happened\"",
+      "evidence": "[9.5] fix(fleet): hide version-specific policy icon for compatible agents (#287504)",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/nintendomustdie/hermes-agent/pull/1",
+      "url": "https://github.com/elastic/kibana/pull/287764",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "fix: skip thinking param for MiniMax Anthropic-compatible endpoints",
+      "evidence": "[9.4] fix(fleet): hide version-specific policy icon for compatible agents (#287504)",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/Jhacarreiro/ai-server-commander/pull/20",
+      "url": "https://github.com/torumakabe/aks-chaos-lab/pull/218",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "fix: cap replacements count and edit file size",
+      "evidence": "build(deps): bump astral-sh/uv from 0.12.2 to 0.12.5 in /src/api in the docker-compatible group",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/craft-ai-agents/craft-agents-oss/pull/1026",
+      "url": "https://github.com/rust-lang/rust/pull/161904",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "fix: fast connection test for OpenAI-compatible endpoints, and duplicate /v1 path",
-      "relevance": "中（需判别是否跨品牌兼容痛点）"
-    },
-    {
-      "name": "github",
-      "url": "https://github.com/unixwin/rubash/issues/55",
-      "signal_type": "社区兼容性提问",
-      "real_signal": true,
-      "evidence": "[Compat][BusyBox][ash-signals] Bash-compatible differences",
+      "evidence": "declare C and C-unwind as mutually ABI-compatible",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     }
   ],
-  "real_demand_signal_count": 11,
+  "real_demand_signal_count": 10,
   "actionable_fixes": [
     "抬机械接口声明率：导入真实开源人形 BOM（天工/lerobot-humanoid/Asimov）反喂 ingestion"
   ]

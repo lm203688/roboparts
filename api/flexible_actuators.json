@@ -1,8 +1,5 @@
 {
   "meta": {
-    "category": "flexible_actuators",
-    "source": "entities.json projection",
-    "generated_at": "2026-08-27T14:54:22.415Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -26,7 +23,7 @@
     }
   },
   "count": 21,
-  "updated": "2026-08-27T14:54:22.415Z",
+  "updated": "2026-08-28T09:04:15.954694Z",
   "data": [
     {
       "id": "FA-001",
@@ -63,12 +60,13 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-FLE-0001",
       "source_url": "https://www.google.com/search?q=DEKA%20DEKA%20Luke%20Arm%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "FA-002",
@@ -105,12 +103,13 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-FLE-0002",
       "source_url": "https://www.google.com/search?q=Festo%20%20Festo%20DHEF%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "FA-003",
@@ -147,12 +146,13 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-FLE-0003",
       "source_url": "https://www.google.com/search?q=QMC%20QMC%20Soft%20Gripper%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "FA-004",
@@ -228,12 +228,13 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-FLE-0005",
       "source_url": "https://www.google.com/search?q=Various%20Shape%20Memory%20Alloy%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "FA-006",
@@ -270,12 +271,13 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "google_search",
+      "source_tier_basis": "deep_link:www.google.com/search",
       "rp_id": "RP-FLE-0006",
       "source_url": "https://www.google.com/search?q=CU%20Boulder%20HASEL%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "source": "google.com (URL 引用)"
     },
     {
       "id": "XFA-001",

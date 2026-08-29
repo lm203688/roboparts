@@ -1,8 +1,5 @@
 {
   "meta": {
-    "category": "grippers",
-    "source": "entities.json projection",
-    "generated_at": "2026-08-27T14:54:22.415Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -26,7 +23,7 @@
     }
   },
   "count": 13,
-  "updated": "2026-08-27T14:54:22.415Z",
+  "updated": "2026-08-28T09:04:15.954694Z",
   "data": [
     {
       "verified": true,
@@ -253,7 +250,7 @@
         "gap": "厂商未公开机械安装接口规格"
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "quarantine": false,
       "standard_conformance": {
@@ -311,7 +308,7 @@
         "gap": "厂商未公开机械安装接口规格"
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "quarantine": false,
       "standard_conformance": {
@@ -372,7 +369,7 @@
         "gap": "厂商未公开机械安装接口规格"
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "quarantine": false,
       "standard_conformance": {
@@ -427,7 +424,7 @@
         "gap": "厂商未公开机械安装接口规格"
       },
       "entity_kind": "component",
-      "verified": false,
+      "verified": true,
       "data_quality": "partial",
       "quarantine": false,
       "standard_conformance": {
@@ -460,7 +457,7 @@
       "protocol": "IO_Link",
       "source": "https://www.onrobot.com/products/vacuum-grippers/vg1",
       "source_tier": "A",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "deep_link:www.onrobot.com/products/vacuum-grippers/vg1",
       "confidence": 0.9,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -498,7 +495,7 @@
       "protocol": "EtherCAT",
       "source": "https://www.onrobot.com/products/robotic-grippers/ng10",
       "source_tier": "A",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "deep_link:www.onrobot.com/products/robotic-grippers/ng10",
       "confidence": 0.9,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -536,7 +533,7 @@
       "protocol": "EtherCAT",
       "source": "https://www.onrobot.com/products/robotic-grippers/ng30",
       "source_tier": "A",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "deep_link:www.onrobot.com/products/robotic-grippers/ng30",
       "confidence": 0.9,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -574,7 +571,7 @@
       "protocol": "pneumatic",
       "source": "https://www.schunk.com/products/grippers/swg",
       "source_tier": "A",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "deep_link:www.schunk.com/products/grippers/swg",
       "confidence": 0.85,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
@@ -611,7 +608,7 @@
       "protocol": "Modbus",
       "source": "https://www.pos-robotics.com/",
       "source_tier": "B",
-      "source_tier_basis": "vendor_official",
+      "source_tier_basis": "root_url_only",
       "confidence": 0.85,
       "confidence_basis": "manufacturer_datasheet",
       "applications": [
