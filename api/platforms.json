@@ -23,7 +23,7 @@
     }
   },
   "count": 41,
-  "updated": "2026-08-28T09:04:15.954694Z",
+  "updated": "2026-08-29T02:42:48.021483Z",
   "data": [
     {
       "id": "ACT-patsnap-actuator",
@@ -479,10 +479,10 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "duplicate_of": "RPLAT-010",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0010",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "duplicate_of": "RPLAT-010"
     },
     {
       "id": "RPLAT-010",

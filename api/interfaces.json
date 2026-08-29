@@ -23,7 +23,7 @@
     }
   },
   "count": 44,
-  "updated": "2026-08-28T09:04:15.954694Z",
+  "updated": "2026-08-29T02:42:48.021483Z",
   "data": [
     {
       "id": "IF-001",
@@ -1937,7 +1937,7 @@
       "relevance": "safety_compliance_required_for_production_lines",
       "domestic_equivalent": "GB/T 11291",
       "verified": true,
-      "data_quality": "excellent",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -1948,7 +1948,8 @@
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     },
     {
       "id": "STD-ISO-15066",
@@ -1969,7 +1970,7 @@
       "confidence_basis": "iso_official_publication",
       "relevance": "mandatory_for_collaborative_robots_in_human_workspaces",
       "verified": true,
-      "data_quality": "excellent",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -1980,7 +1981,8 @@
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     },
     {
       "id": "STD-ISO-13849",
@@ -2001,7 +2003,7 @@
       "confidence_basis": "iso_official_publication",
       "relevance": "required_for_emergency_stop_and_safety_gate_design",
       "verified": true,
-      "data_quality": "excellent",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -2012,7 +2014,8 @@
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     },
     {
       "id": "STD-ISO-9787",
@@ -2033,7 +2036,7 @@
       "confidence_basis": "iso_official_publication",
       "relevance": "prerequisite_for_cross_brand_performance_comparison",
       "verified": true,
-      "data_quality": "excellent",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -2044,7 +2047,8 @@
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     },
     {
       "id": "STD-VDI-3844",
@@ -2065,7 +2069,7 @@
       "confidence_basis": "industry_standard",
       "relevance": "widely_referenced_in_european_integration_projects",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -2076,7 +2080,8 @@
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     },
     {
       "id": "STD-GB-T-11291",
@@ -2098,7 +2103,7 @@
       "relevance": "mandatory_for_china_market_access",
       "iso_equivalent": "ISO 10218",
       "verified": true,
-      "data_quality": "excellent",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -2110,7 +2115,8 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source_tier_prev": "A",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     },
     {
       "id": "STD-GB-T-36008",
@@ -2131,7 +2137,7 @@
       "confidence_basis": "chinese_gov_publication",
       "relevance": "used_in_domestic_substitution_projects",
       "verified": true,
-      "data_quality": "excellent",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -2143,7 +2149,8 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source_tier_prev": "A",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     }
   ]
 }

@@ -22,8 +22,8 @@
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
-  "count": 21,
-  "updated": "2026-08-28T09:04:15.954694Z",
+  "count": 22,
+  "updated": "2026-08-29T02:42:48.021483Z",
   "data": [
     {
       "id": "FA-001",
@@ -953,6 +953,61 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0021",
       "entity_kind_basis": "默认归类"
+    },
+    {
+      "id": "XFA-017",
+      "name": "UNIST Magnetic Composite Artificial Muscle",
+      "name_en": "UNIST Magnetic Composite Artificial Muscle",
+      "category": "flexible_actuators",
+      "manufacturer": "UNIST (Hoon Eui Jeong)",
+      "type": "magnetic_composite_actuator",
+      "description": "韩国釜山国立大学（UNIST）开发的磁复合人工肌肉。1.13g 自重可举起 5kg（4400 倍自重），工作密度 1150 kJ/m³（人类组织 30 倍），收缩率 86.4%（人类 40% 的 2 倍）。可通过磁场切换软/硬状态——硬态承重、软态收缩。",
+      "application": "humanoid_robots,soft_robotics,prosthetics",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "UNIST 机械工程系 Prof. Hoon Eui Jeong 团队，发表于 Advanced Functional Materials 期刊。",
+      "source_tier": "A",
+      "source_url": "https://onlinelibrary.wiley.com/journal/16163028",
+      "confidence": 0.7,
+      "confidence_basis": "peer_reviewed_journal",
+      "last_verified": "2026-08-26",
+      "oss": false,
+      "performance_metrics": {
+        "weight_g": 1.13,
+        "lift_kg": 5,
+        "strength_ratio": 4400,
+        "work_density_kJ_per_m3": 1150,
+        "human_work_density_ratio": 30,
+        "strain_pct": 86.4,
+        "human_strain_pct": 40,
+        "dual_mode": "rigid_flexible_via_magnetic_field"
+      },
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "open_research",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "research_prototype",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "研究原型阶段，无标准化接口；未来若商用需跟踪标准化进程"
+      },
+      "entity_kind": "component",
+      "source_scope": "research_paper",
+      "source_tier_basis": "deep_link:onlinelibrary.wiley.com/journal/16163028",
+      "rp_id": "RP-FLE-0022",
+      "entity_kind_basis": "默认归类",
+      "source_tier_prev": "B",
+      "tier_cap_reason": "来源为同行评审期刊（Advanced Functional Materials）报道的 UNIST 研究原型，非厂商量产规格页；按 source_tier_basis=peer_reviewed_journal 归 B。研究原型阶段无标准化机械接口，mechanical_interface 保持 not_declared。"
     }
   ]
 }

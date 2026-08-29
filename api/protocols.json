@@ -23,7 +23,7 @@
     }
   },
   "count": 64,
-  "updated": "2026-08-28T09:04:15.954694Z",
+  "updated": "2026-08-29T02:42:48.021483Z",
   "data": [
     {
       "id": "PROTO-001",
@@ -570,7 +570,10 @@
       "applications": [
         "factory_automation",
         "SCADA",
-        "industrial_iot"
+        "industrial_iot",
+        "robot_control",
+        "robot_data_acquisition",
+        "predictive_maintenance"
       ],
       "pros": [
         "platform_independent",
@@ -612,7 +615,50 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0010",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "robot_brand_support": {
+        "note": "OPC UA (IEC 62541) 是工业机器人的通用通信标准。主流机器人品牌均支持 OPC UA Client/Server，通过它实现机器人控制器与 MES/SCADA/云平台的双向数据交换。",
+        "supported_brands": [
+          {
+            "brand": "UR",
+            "profile": "UA_Server + PubSub"
+          },
+          {
+            "brand": "ABB",
+            "profile": "UA_Server"
+          },
+          {
+            "brand": "KUKA",
+            "profile": "UA_Server"
+          },
+          {
+            "brand": "Fanuc",
+            "profile": "UA_Server"
+          },
+          {
+            "brand": "Siemens",
+            "profile": "UA_Server + PubSub"
+          },
+          {
+            "brand": "Beckhoff",
+            "profile": "UA_Server + PubSub"
+          }
+        ],
+        "robot_use_cases": [
+          "多机器人协同控制（通过 OPC UA PubSub 广播指令）",
+          "机器人状态数据采集（关节位置/力矩/温度实时上传）",
+          "预测性维护（振动/温度数据 → SCADA → 云平台）",
+          "与 RoboParts 兼容引擎的集成（通过 OPC UA 获取运行时机器人型号/控制器信息）"
+        ]
+      },
+      "lost_layer_recovery": {
+        "fields": [
+          "robot_brand_support",
+          "applications"
+        ],
+        "source_commit": "5bcd7c7",
+        "source_path": "api/protocols.json"
+      }
     },
     {
       "id": "PROTO-011",

@@ -202,7 +202,7 @@ e.meta.provenance_coverage = {
 };
 
 e.meta.mechanical_interface_coverage = {
-  total, declared, partial, not_declared, n_a,
+  total, declared, partial, not_declared, not_applicable: n_a,
   coupled_categories: ['actuators','sensors','platforms','flexible_actuators','connectors'],
   coupled_count: ents.filter(x => ['actuators','sensors','platforms','flexible_actuators','connectors'].includes(x.category)).length
 };

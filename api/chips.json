@@ -23,7 +23,7 @@
     }
   },
   "count": 108,
-  "updated": "2026-08-28T09:04:15.954694Z",
+  "updated": "2026-08-29T02:42:48.021483Z",
   "data": [
     {
       "id": "CHIP-001",
@@ -3779,10 +3779,10 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "duplicate_of": "CHIP-81",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0064",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "duplicate_of": "CHIP-81"
     },
     {
       "id": "CHIP-68",
@@ -4440,10 +4440,10 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "duplicate_of": "CHIP-68",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0084",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "duplicate_of": "CHIP-68"
     },
     {
       "id": "CHIP-92",
@@ -4573,10 +4573,10 @@
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "duplicate_of": "CHIP-80",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0088",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "duplicate_of": "CHIP-80"
     },
     {
       "id": "CHIP-096",

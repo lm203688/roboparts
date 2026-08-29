@@ -23,7 +23,7 @@
     }
   },
   "count": 13,
-  "updated": "2026-08-28T09:04:15.954694Z",
+  "updated": "2026-08-29T02:42:48.021483Z",
   "data": [
     {
       "verified": true,
@@ -251,7 +251,7 @@
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false
@@ -309,7 +309,7 @@
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false
@@ -370,7 +370,7 @@
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false
@@ -425,7 +425,7 @@
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false
@@ -466,7 +466,7 @@
       ],
       "price_range": "¥3000-6000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -477,7 +477,8 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "quarantine": false
     },
     {
       "id": "GRIPPER-ONR-NG1",
@@ -504,7 +505,7 @@
       ],
       "price_range": "¥15000-30000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -515,7 +516,8 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "quarantine": false
     },
     {
       "id": "GRIPPER-ONR-NG30",
@@ -542,7 +544,7 @@
       ],
       "price_range": "¥25000-50000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -553,7 +555,8 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "quarantine": false
     },
     {
       "id": "GRIPPER-SCHUNK-SWG15",
@@ -579,7 +582,7 @@
       ],
       "price_range": "¥5000-12000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -590,7 +593,8 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "quarantine": false
     },
     {
       "id": "GRIPPER-POS-2F20",
@@ -618,7 +622,7 @@
       "domestic_rate": 1,
       "price_range": "¥3000-8000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -628,7 +632,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     }
   ]
 }

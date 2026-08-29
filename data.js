@@ -1,5 +1,5 @@
 const DB = {
-  "updated": "2026-08-28T09:04:15.954694Z",
+  "updated": "2026-08-29T02:42:48.021483Z",
   "stats": {
     "actuators": 217,
     "sensors": 90,
@@ -8,7 +8,7 @@ const DB = {
     "protocols": 64,
     "llms": 42,
     "platforms": 41,
-    "flexible_actuators": 21,
+    "flexible_actuators": 22,
     "robot_ai_models": 46,
     "data_acquisition": 46,
     "connectors": 2,
@@ -21690,10 +21690,10 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "duplicate_of": "CHIP-81",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0064",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "duplicate_of": "CHIP-81"
     },
     {
       "id": "CHIP-68",
@@ -22351,10 +22351,10 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "duplicate_of": "CHIP-68",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0084",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "duplicate_of": "CHIP-68"
     },
     {
       "id": "CHIP-92",
@@ -22484,10 +22484,10 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "duplicate_of": "CHIP-80",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0088",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "duplicate_of": "CHIP-80"
     },
     {
       "id": "CHIP-096",
@@ -25550,7 +25550,7 @@ const DB = {
       "relevance": "safety_compliance_required_for_production_lines",
       "domestic_equivalent": "GB/T 11291",
       "verified": true,
-      "data_quality": "excellent",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -25561,7 +25561,8 @@ const DB = {
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     },
     {
       "id": "STD-ISO-15066",
@@ -25582,7 +25583,7 @@ const DB = {
       "confidence_basis": "iso_official_publication",
       "relevance": "mandatory_for_collaborative_robots_in_human_workspaces",
       "verified": true,
-      "data_quality": "excellent",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -25593,7 +25594,8 @@ const DB = {
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     },
     {
       "id": "STD-ISO-13849",
@@ -25614,7 +25616,7 @@ const DB = {
       "confidence_basis": "iso_official_publication",
       "relevance": "required_for_emergency_stop_and_safety_gate_design",
       "verified": true,
-      "data_quality": "excellent",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -25625,7 +25627,8 @@ const DB = {
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     },
     {
       "id": "STD-ISO-9787",
@@ -25646,7 +25649,7 @@ const DB = {
       "confidence_basis": "iso_official_publication",
       "relevance": "prerequisite_for_cross_brand_performance_comparison",
       "verified": true,
-      "data_quality": "excellent",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -25657,7 +25660,8 @@ const DB = {
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     },
     {
       "id": "STD-VDI-3844",
@@ -25678,7 +25682,7 @@ const DB = {
       "confidence_basis": "industry_standard",
       "relevance": "widely_referenced_in_european_integration_projects",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -25689,7 +25693,8 @@ const DB = {
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     },
     {
       "id": "STD-GB-T-11291",
@@ -25711,7 +25716,7 @@ const DB = {
       "relevance": "mandatory_for_china_market_access",
       "iso_equivalent": "ISO 10218",
       "verified": true,
-      "data_quality": "excellent",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -25723,7 +25728,8 @@ const DB = {
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source_tier_prev": "A",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     },
     {
       "id": "STD-GB-T-36008",
@@ -25744,7 +25750,7 @@ const DB = {
       "confidence_basis": "chinese_gov_publication",
       "relevance": "used_in_domestic_substitution_projects",
       "verified": true,
-      "data_quality": "excellent",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "n_a",
         "mount_type": "unknown",
@@ -25756,7 +25762,8 @@ const DB = {
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source_tier_prev": "A",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "quarantine": false
     }
   ],
   "protocols": [
@@ -26305,7 +26312,10 @@ const DB = {
       "applications": [
         "factory_automation",
         "SCADA",
-        "industrial_iot"
+        "industrial_iot",
+        "robot_control",
+        "robot_data_acquisition",
+        "predictive_maintenance"
       ],
       "pros": [
         "platform_independent",
@@ -26347,7 +26357,50 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0010",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "robot_brand_support": {
+        "note": "OPC UA (IEC 62541) 是工业机器人的通用通信标准。主流机器人品牌均支持 OPC UA Client/Server，通过它实现机器人控制器与 MES/SCADA/云平台的双向数据交换。",
+        "supported_brands": [
+          {
+            "brand": "UR",
+            "profile": "UA_Server + PubSub"
+          },
+          {
+            "brand": "ABB",
+            "profile": "UA_Server"
+          },
+          {
+            "brand": "KUKA",
+            "profile": "UA_Server"
+          },
+          {
+            "brand": "Fanuc",
+            "profile": "UA_Server"
+          },
+          {
+            "brand": "Siemens",
+            "profile": "UA_Server + PubSub"
+          },
+          {
+            "brand": "Beckhoff",
+            "profile": "UA_Server + PubSub"
+          }
+        ],
+        "robot_use_cases": [
+          "多机器人协同控制（通过 OPC UA PubSub 广播指令）",
+          "机器人状态数据采集（关节位置/力矩/温度实时上传）",
+          "预测性维护（振动/温度数据 → SCADA → 云平台）",
+          "与 RoboParts 兼容引擎的集成（通过 OPC UA 获取运行时机器人型号/控制器信息）"
+        ]
+      },
+      "lost_layer_recovery": {
+        "fields": [
+          "robot_brand_support",
+          "applications"
+        ],
+        "source_commit": "5bcd7c7",
+        "source_path": "api/protocols.json"
+      }
     },
     {
       "id": "PROTO-011",
@@ -31613,10 +31666,10 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "duplicate_of": "RPLAT-010",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0010",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "duplicate_of": "RPLAT-010"
     },
     {
       "id": "RPLAT-010",
@@ -34181,6 +34234,61 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0021",
       "entity_kind_basis": "默认归类"
+    },
+    {
+      "id": "XFA-017",
+      "name": "UNIST Magnetic Composite Artificial Muscle",
+      "name_en": "UNIST Magnetic Composite Artificial Muscle",
+      "category": "flexible_actuators",
+      "manufacturer": "UNIST (Hoon Eui Jeong)",
+      "type": "magnetic_composite_actuator",
+      "description": "韩国釜山国立大学（UNIST）开发的磁复合人工肌肉。1.13g 自重可举起 5kg（4400 倍自重），工作密度 1150 kJ/m³（人类组织 30 倍），收缩率 86.4%（人类 40% 的 2 倍）。可通过磁场切换软/硬状态——硬态承重、软态收缩。",
+      "application": "humanoid_robots,soft_robotics,prosthetics",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "UNIST 机械工程系 Prof. Hoon Eui Jeong 团队，发表于 Advanced Functional Materials 期刊。",
+      "source_tier": "A",
+      "source_url": "https://onlinelibrary.wiley.com/journal/16163028",
+      "confidence": 0.7,
+      "confidence_basis": "peer_reviewed_journal",
+      "last_verified": "2026-08-26",
+      "oss": false,
+      "performance_metrics": {
+        "weight_g": 1.13,
+        "lift_kg": 5,
+        "strength_ratio": 4400,
+        "work_density_kJ_per_m3": 1150,
+        "human_work_density_ratio": 30,
+        "strain_pct": 86.4,
+        "human_strain_pct": 40,
+        "dual_mode": "rigid_flexible_via_magnetic_field"
+      },
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "open_research",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "research_prototype",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "研究原型阶段，无标准化接口；未来若商用需跟踪标准化进程"
+      },
+      "entity_kind": "component",
+      "source_scope": "research_paper",
+      "source_tier_basis": "deep_link:onlinelibrary.wiley.com/journal/16163028",
+      "rp_id": "RP-FLE-0022",
+      "entity_kind_basis": "默认归类",
+      "source_tier_prev": "B",
+      "tier_cap_reason": "来源为同行评审期刊（Advanced Functional Materials）报道的 UNIST 研究原型，非厂商量产规格页；按 source_tier_basis=peer_reviewed_journal 归 B。研究原型阶段无标准化机械接口，mechanical_interface 保持 not_declared。"
     }
   ],
   "robot_ai_models": [
@@ -36371,7 +36479,7 @@ const DB = {
       },
       "entity_kind": "software",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false
@@ -36425,7 +36533,7 @@ const DB = {
       },
       "entity_kind": "software",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false
@@ -38463,8 +38571,8 @@ const DB = {
       ],
       "description": "Puppeteer 开源机器人数据采集/遥操作系统，用于模仿学习与 VLA 训练。",
       "verified": false,
-      "data_quality": "unverifiable_vendor",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source": "公开资料：https://github.com/google-deepmind/puppeteer",
       "source_tier": "A",
       "source_url": "https://github.com/google-deepmind/puppeteer",
@@ -38518,8 +38626,8 @@ const DB = {
       ],
       "description": "Telekinesis 开源机器人数据采集/遥操作系统，用于模仿学习与 VLA 训练。",
       "verified": false,
-      "data_quality": "unverifiable_vendor",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source": "公开资料：https://github.com/google-deepmind/telekinesis",
       "source_tier": "A",
       "source_url": "https://github.com/google-deepmind/telekinesis",
@@ -39379,7 +39487,7 @@ const DB = {
       ],
       "price_range": "¥3000-8000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -39389,7 +39497,8 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-HD-32",
@@ -39417,7 +39526,7 @@ const DB = {
       ],
       "price_range": "¥5000-12000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -39427,7 +39536,8 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-HD-50",
@@ -39455,7 +39565,7 @@ const DB = {
       ],
       "price_range": "¥10000-25000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -39465,7 +39575,8 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-GH-25",
@@ -39494,7 +39605,7 @@ const DB = {
       "domestic_rate": 1,
       "price_range": "¥1500-4000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -39504,7 +39615,8 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-GH-50",
@@ -39533,7 +39645,7 @@ const DB = {
       "domestic_rate": 1,
       "price_range": "¥5000-12000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -39543,7 +39655,8 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-RV-50",
@@ -39571,7 +39684,7 @@ const DB = {
       ],
       "price_range": "¥15000-35000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -39581,7 +39694,8 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-RV-200",
@@ -39609,7 +39723,7 @@ const DB = {
       ],
       "price_range": "¥40000-80000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -39619,7 +39733,8 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-LIF-60",
@@ -39648,7 +39763,7 @@ const DB = {
       "domestic_rate": 1,
       "price_range": "¥8000-18000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -39658,7 +39773,8 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     }
   ],
   "controllers": [
@@ -40061,7 +40177,7 @@ const DB = {
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false
@@ -40119,7 +40235,7 @@ const DB = {
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false
@@ -40180,7 +40296,7 @@ const DB = {
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false
@@ -40235,7 +40351,7 @@ const DB = {
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false
@@ -40276,7 +40392,7 @@ const DB = {
       ],
       "price_range": "¥3000-6000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -40287,7 +40403,8 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "quarantine": false
     },
     {
       "id": "GRIPPER-ONR-NG1",
@@ -40314,7 +40431,7 @@ const DB = {
       ],
       "price_range": "¥15000-30000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -40325,7 +40442,8 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "quarantine": false
     },
     {
       "id": "GRIPPER-ONR-NG30",
@@ -40352,7 +40470,7 @@ const DB = {
       ],
       "price_range": "¥25000-50000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -40363,7 +40481,8 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "quarantine": false
     },
     {
       "id": "GRIPPER-SCHUNK-SWG15",
@@ -40389,7 +40508,7 @@ const DB = {
       ],
       "price_range": "¥5000-12000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -40400,7 +40519,8 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "quarantine": false
     },
     {
       "id": "GRIPPER-POS-2F20",
@@ -40428,7 +40548,7 @@ const DB = {
       "domestic_rate": 1,
       "price_range": "¥3000-8000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -40438,7 +40558,8 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     }
   ],
   "structural": [
@@ -40948,7 +41069,7 @@ const DB = {
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -40957,7 +41078,8 @@ const DB = {
         "load_capacity": "50N"
       },
       "rp_id": "RP-BIO-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-JOINT-002",
@@ -41049,7 +41171,7 @@ const DB = {
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -41058,7 +41180,8 @@ const DB = {
         "load_capacity": "80N"
       },
       "rp_id": "RP-BIO-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-JOINT-003",
@@ -41142,7 +41265,7 @@ const DB = {
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -41151,7 +41274,8 @@ const DB = {
         "load_capacity": "30N"
       },
       "rp_id": "RP-BIO-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-ACTUATOR-001",
@@ -41232,7 +41356,7 @@ const DB = {
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -41241,7 +41365,8 @@ const DB = {
         "stroke": "50mm"
       },
       "rp_id": "RP-BIO-0004",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-ACTUATOR-002",
@@ -41305,7 +41430,7 @@ const DB = {
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -41314,7 +41439,8 @@ const DB = {
         "stroke": "3mm"
       },
       "rp_id": "RP-BIO-0005",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-SENSOR-001",
@@ -41387,7 +41513,7 @@ const DB = {
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -41396,7 +41522,8 @@ const DB = {
         "sampling_rate": "1kHz"
       },
       "rp_id": "RP-BIO-0006",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-SENSOR-002",
@@ -41464,7 +41591,7 @@ const DB = {
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -41473,7 +41600,8 @@ const DB = {
         "array_size": "4x4"
       },
       "rp_id": "RP-BIO-0007",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-FRAME-001",
@@ -41552,7 +41680,7 @@ const DB = {
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -41561,7 +41689,8 @@ const DB = {
         "weight": "120g"
       },
       "rp_id": "RP-BIO-0008",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-SKIN-001",
@@ -41624,7 +41753,7 @@ const DB = {
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -41633,7 +41762,8 @@ const DB = {
         "thickness": "2mm"
       },
       "rp_id": "RP-BIO-0009",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     }
   ]
 };

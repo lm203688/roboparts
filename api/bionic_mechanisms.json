@@ -23,7 +23,7 @@
     }
   },
   "count": 9,
-  "updated": "2026-08-28T09:04:15.954694Z",
+  "updated": "2026-08-29T02:42:48.021483Z",
   "data": [
     {
       "id": "BIONIC-JOINT-001",
@@ -115,7 +115,7 @@
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -124,7 +124,8 @@
         "load_capacity": "50N"
       },
       "rp_id": "RP-BIO-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-JOINT-002",
@@ -216,7 +217,7 @@
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -225,7 +226,8 @@
         "load_capacity": "80N"
       },
       "rp_id": "RP-BIO-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-JOINT-003",
@@ -309,7 +311,7 @@
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -318,7 +320,8 @@
         "load_capacity": "30N"
       },
       "rp_id": "RP-BIO-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-ACTUATOR-001",
@@ -399,7 +402,7 @@
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -408,7 +411,8 @@
         "stroke": "50mm"
       },
       "rp_id": "RP-BIO-0004",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-ACTUATOR-002",
@@ -472,7 +476,7 @@
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -481,7 +485,8 @@
         "stroke": "3mm"
       },
       "rp_id": "RP-BIO-0005",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-SENSOR-001",
@@ -554,7 +559,7 @@
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -563,7 +568,8 @@
         "sampling_rate": "1kHz"
       },
       "rp_id": "RP-BIO-0006",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-SENSOR-002",
@@ -631,7 +637,7 @@
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -640,7 +646,8 @@
         "array_size": "4x4"
       },
       "rp_id": "RP-BIO-0007",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-FRAME-001",
@@ -719,7 +726,7 @@
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -728,7 +735,8 @@
         "weight": "120g"
       },
       "rp_id": "RP-BIO-0008",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "BIONIC-SKIN-001",
@@ -791,7 +799,7 @@
       },
       "entity_kind": "component",
       "verified": true,
-      "data_quality": "partial",
+      "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
       "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
@@ -800,7 +808,8 @@
         "thickness": "2mm"
       },
       "rp_id": "RP-BIO-0009",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     }
   ]
 }

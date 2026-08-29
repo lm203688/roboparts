@@ -23,7 +23,7 @@
     }
   },
   "count": 11,
-  "updated": "2026-08-28T09:04:15.954694Z",
+  "updated": "2026-08-29T02:42:48.021483Z",
   "data": [
     {
       "verified": true,
@@ -196,7 +196,7 @@
       ],
       "price_range": "¥3000-8000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -206,7 +206,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-HD-32",
@@ -234,7 +235,7 @@
       ],
       "price_range": "¥5000-12000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -244,7 +245,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-HD-50",
@@ -272,7 +274,7 @@
       ],
       "price_range": "¥10000-25000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -282,7 +284,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-GH-25",
@@ -311,7 +314,7 @@
       "domestic_rate": 1,
       "price_range": "¥1500-4000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -321,7 +324,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-GH-50",
@@ -350,7 +354,7 @@
       "domestic_rate": 1,
       "price_range": "¥5000-12000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -360,7 +364,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-RV-50",
@@ -388,7 +393,7 @@
       ],
       "price_range": "¥15000-35000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -398,7 +403,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-RV-200",
@@ -426,7 +432,7 @@
       ],
       "price_range": "¥40000-80000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -436,7 +442,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     },
     {
       "id": "REDUCER-LIF-60",
@@ -465,7 +472,7 @@
       "domestic_rate": 1,
       "price_range": "¥8000-18000",
       "verified": true,
-      "data_quality": "good",
+      "data_quality": "ok",
       "mechanical_interface": {
         "status": "not_declared",
         "mount_type": "unknown",
@@ -475,7 +482,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "quarantine": false
     }
   ]
 }

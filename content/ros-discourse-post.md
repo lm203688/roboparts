@@ -6,7 +6,7 @@ We're building **RoboParts** (https://roboparts.cc), an open structured dataset 
 
 ## What is RoboParts?
 
-A curated, structured dataset of **767 entities** across **20 categories**:
+A curated, structured dataset of **768 entities** across **20 categories**:
 
 | Category | Count | Example Data Points |
 |---|---|---|
@@ -19,7 +19,7 @@ A curated, structured dataset of **767 entities** across **20 categories**:
 | LLMs | 42 | Parameters, open-source, embodied-AI fine-tuning |
 | Platforms | 41 | Simulation support, ROS 2 compatibility, open-source |
 | Interfaces | 44 | Power rating, connector type, speed |
-| Flexible Actuators | 21 | Series Elastic Actuators, soft robotics, bio-inspired |
+| Flexible Actuators | 22 | Series Elastic Actuators, soft robotics, bio-inspired |
 | Connectors | 2 | Current rating, data rate, routing opening, mating orientation |
 
 Counts are generated from the dataset itself and verified against the live API on every deploy.
@@ -30,7 +30,7 @@ Most component databases quietly turn "we don't know" into "no". We think that's
 
 Concretely, on ROS support:
 
-- **47 of 767** entities explicitly declare ROS support
+- **47 of 768** entities explicitly declare ROS support
 - **27** explicitly declare no ROS support
 - **693 (90%)** have *never declared it*
 
@@ -40,10 +40,10 @@ Field coverage is published rather than hidden:
 
 | Field | Coverage |
 |---|---|
-| `confidence`, `source_tier`, `data_quality`, `standard_conformance` | 767/767 (100%) |
-| `source` | 620/767 (81%) |
-| `last_verified` | 494/767 (64%) |
-| `ros_support` | 47/767 (6%) |
+| `confidence`, `source_tier`, `data_quality`, `standard_conformance` | 768/768 (100%) |
+| `source` | 621/768 (81%) |
+| `last_verified` | 495/768 (64%) |
+| `ros_support` | 47/768 (6%) |
 
 Filling in the sparse mechanical and ROS fields is our current priority. If you have vendor-confirmed data, contributions are very welcome.
 
