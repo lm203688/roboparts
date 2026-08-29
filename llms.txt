@@ -60,7 +60,7 @@
   - 定位销孔 H7 / 工装销 g6 过渡配合，严禁过盈硬敲；螺栓须 12.9 级，禁用 4.8/8.8 级及不锈钢。
   - 存在厂商专用非标法兰（如 ABB IRB140 / IRB2400 早期版本），不能套用标准转接板。
 
-**覆盖率如实披露**：767 条中 371 条为机械可耦合实体（actuators / sensors / platforms / flexible_actuators / connectors，具备物理安装面）。现状：尺寸级已声明 2 条、partial 4 条（fill_pct 1.62%，含 partial），not_declared 375 条，n_a 366 条（类目与实体类型不一致的边界项）。
+**覆盖率如实披露**：767 条中 371 条为机械可耦合实体（actuators / sensors / platforms / flexible_actuators / connectors，具备物理安装面）。现状：尺寸级已声明 2 条、partial 4 条（fill_pct 1.02%，含 partial），not_declared 388 条，n_a 373 条（类目与实体类型不一致的边界项）。
 ⚠️ **`not_declared` 表示"厂商未公开或尚未采集"，不等于"无机械接口"** —— 请勿据此推断不兼容。我们选择把缺口显式暴露为可查询字段，而不是让字段静默缺失。
 
 ## 数据分类
