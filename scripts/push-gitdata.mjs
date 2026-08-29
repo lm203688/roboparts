@@ -19,6 +19,8 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 
 const DRY = process.argv.includes('--dry-run');
+const SKIP_TREE_CHECK = process.argv.includes('--skip-tree-check');
+const FORCE = process.argv.includes('--force');
 
 function git(args, opts = {}) {
   return execFileSync('git', args, { maxBuffer: 1024 * 1024 * 256, ...opts });
@@ -188,10 +190,14 @@ if (baseLocal === localSha) {
 }
 
 // 快进安全检查（对本地等价物做）
-try {
-  git(['merge-base', '--is-ancestor', baseLocal, localSha]);
-} catch {
-  throw new Error(`本地基准 ${baseLocal.slice(0, 8)} 不是 HEAD 的祖先 —— 拒绝非快进推送`);
+if (!FORCE) {
+  try {
+    git(['merge-base', '--is-ancestor', baseLocal, localSha]);
+  } catch {
+    throw new Error(`本地基准 ${baseLocal.slice(0, 8)} 不是 HEAD 的祖先 —— 拒绝非快进推送`);
+  }
+} else {
+  console.log(`⚠️ 非快进推送（--force），基准 ${baseLocal.slice(0, 8)} 不是 HEAD 祖先`);
 }
 
 const commits = gitStr(['rev-list', '--reverse', `${baseLocal}..HEAD`]).split('\n').filter(Boolean);
@@ -243,8 +249,10 @@ for (const c of commits) {
 
   // 完整性：重放后的 tree 必须与本地该提交的 tree 完全一致
   const localTree = gitStr(['rev-parse', `${c}^{tree}`]);
-  if (tree.sha !== localTree) {
+  if (!SKIP_TREE_CHECK && tree.sha !== localTree) {
     throw new Error(`tree 不一致！本地 ${localTree} != 远端 ${tree.sha}（提交 ${c.slice(0, 8)}）`);
+  } else if (SKIP_TREE_CHECK && tree.sha !== localTree) {
+    console.log(`  ⚠️ tree mismatch（已跳过校验）: 本地 ${localTree} != 远端 ${tree.sha}`);
   }
 
   parentSha = commit.sha;
@@ -254,7 +262,7 @@ for (const c of commits) {
 if (DRY) { console.log('dry-run 结束'); process.exit(0); }
 
 // ---------- 5. 更新分支引用 ----------
-const upd = await api('PATCH', `/git/refs/heads/${BRANCH}`, { sha: parentSha, force: false });
+const upd = await api('PATCH', `/git/refs/heads/${BRANCH}`, { sha: parentSha, force: FORCE });
 console.log(`ref 已更新 -> ${upd.object.sha}`);
 
 // ---------- 6. 收尾校验 ----------
