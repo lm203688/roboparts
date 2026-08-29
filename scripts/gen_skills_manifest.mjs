@@ -158,8 +158,38 @@ if (!ad.skills) {
 // 「query 710 entities」，而回归 L2 又只校 total_entities 字段 → 假绿。这里从 entities.json
 // 真相源现算并回写两处，regen 即保鲜，杜绝再次漂移。
 {
+  // 现算两样：total 与 categories 明细。
+  // 明细此前是脚本不改、靠手工同步的——见下方 N13 注释。
   let truth = null;
-  try { truth = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'entities.json'), 'utf8')).meta.total_entities; } catch { /* 缺真相源不阻断 regen */ }
+  let counts = null;
+  try {
+    const doc = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'entities.json'), 'utf8'));
+    truth = doc.meta && doc.meta.total_entities;
+    const arr = Array.isArray(doc.entities) ? doc.entities : [];
+    // 【20260829-12】categories 明细此前只靠手工同步（本轮手工现算过一次），
+    // 下次新增/迁移实体会再次脱节。闸门 regression L2 的判据是「直接对
+    // entities[].category 计数」（ents_by_cat），所以这里必须现算同一量——
+    // 不读派生的 meta.category_counts，避免「修好了数据、却拿派生副本写回」。
+    if (arr.length) {
+      counts = {};
+      for (const e of arr) {
+        const c = e && e.category;
+        if (!c) continue;
+        counts[c] = (counts[c] || 0) + 1;
+      }
+    }
+  } catch { /* 缺真相源不阻断 regen */ }
+  if (counts && Object.keys(counts).length) {
+    // 保留既有键序（读起来稳定），真相源里新出现的类目追加到末尾。
+    const ordered = {};
+    for (const k of Object.keys(ad.categories || {})) {
+      if (counts[k] !== undefined) ordered[k] = counts[k];
+    }
+    for (const k of Object.keys(counts)) {
+      if (ordered[k] === undefined) ordered[k] = counts[k];
+    }
+    ad.categories = ordered;
+  }
   if (typeof truth === 'number' && truth > 0) {
     ad.total_entities = truth;
     if (typeof ad.ai_agent_instructions === 'string') {
