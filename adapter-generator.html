@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>法兰转接件生成器：把不兼容的机器人法兰变兼容 | RoboParts</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="RoboParts 兼容性转接件生成器：选两侧机器人法兰（ISO 9409-1 标准尺寸或自定义），一键生成可 3D 打印的转接板，浏览器内实时 3D 预览，下载 STL（3D 打印）或 OpenSCAD 源文件（免费桌面编辑）。让不兼容的零件变兼容。">
+<meta name="keywords" content="机器人法兰,转接板,适配器,ISO 9409-1,法兰不兼容,3D打印,OpenSCAD,兼容无忧,RoboParts">
+<link rel="canonical" href="https://roboparts.cc/adapter-generator">
+<meta property="og:type" content="article">
+<meta property="og:title" content="法兰转接件生成器：把不兼容的机器人法兰变兼容 | RoboParts">
+<meta property="og:description" content="选两侧法兰，一键生成可 3D 打印的转接板，浏览器内实时 3D 预览，下载 STL / OpenSCAD。">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"RoboParts 法兰转接件生成器","operatingSystem":"Web","applicationCategory":"EngineeringApplication","url":"https://roboparts.cc/adapter-generator","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"description":"选两侧机器人法兰，生成可 3D 打印的转接板并实时 3D 预览，导出 STL/OpenSCAD。","author":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc"},"isAccessibleForFree":true}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"用 RoboParts 生成法兰转接板","description":"当两侧机器人法兰螺栓节圆/孔数/螺纹不一致时，生成可打印转接板的步骤。","step":[{"@type":"HowToStep","position":1,"name":"选择两侧法兰","text":"在左侧选机器人腕部法兰（侧A），右侧选工具端法兰（侧B），支持 ISO 9409-1 标准尺寸或自定义。"},{"@type":"HowToStep","position":2,"name":"设置板厚与中心孔","text":"设定转接板厚度与中心通孔直径，点击「生成 3D 预览」。"},{"@type":"HowToStep","position":3,"name":"预览并下载","text":"在浏览器内旋转查看模型，下载 STL 直接 3D 打印，或下载 OpenSCAD 源文件在桌面端二次编辑。"}]}</script>
+<style>
+:root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--line:#243352;--warn:#ffcf6b}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.7}
+a{color:var(--acc2);text-decoration:none}a:hover{text-decoration:underline}
+.nav{border-bottom:1px solid var(--line);background:#0e1530}
+.nav .in{max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px}
+.nav .brand{font-weight:800;color:var(--acc);font-size:16px}.nav a{color:var(--mut)}.nav a:hover{color:var(--txt)}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 20px 72px}
+.crumb{font-size:13px;color:var(--mut);margin-bottom:12px}
+h1{font-size:28px;line-height:1.4;margin:0 0 8px}
+.lede{background:var(--card);border-left:3px solid var(--acc);border-radius:0 10px 10px 0;padding:14px 16px;color:#c8d2e6;margin:14px 0 22px;font-size:15px}
+.layout{display:grid;grid-template-columns:340px 1fr;gap:22px;align-items:start}
+@media(max-width:880px){.layout{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.panel h2{font-size:16px;margin:0 0 12px;color:var(--acc);border:0;padding:0}
+.side{margin-bottom:18px;padding-bottom:14px;border-bottom:1px dashed var(--line)}
+.side:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+.side .lab{font-size:13px;color:var(--mut);margin-bottom:6px}
+select,input{width:100%;background:#0e1530;border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:8px 10px;font-size:14px;margin-bottom:8px}
+.cust{background:#0c1428;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:6px;display:none}
+.cust.show{display:block}
+.cust .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.field{font-size:12px;color:var(--mut);margin:2px 0 4px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;font-weight:800;border:0;border-radius:9px;padding:10px 16px;margin:6px 8px 0 0;font-size:14px;cursor:pointer}
+.btn:hover{opacity:.9}
+.btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+#viewer{width:100%;height:440px;background:radial-gradient(circle at 50% 40%,#16203c,#0a0f1f);border:1px solid var(--line);border-radius:14px;position:relative}
+#viewer .hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--mut)}
+.spec{font-size:13px;color:var(--mut);margin-top:10px;white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace}
+.warn{background:#1a1606;border:1px solid #4a3a10;border-left:3px solid var(--warn);border-radius:0 10px 10px 0;padding:12px 14px;color:#e8d9a8;font-size:13.5px;margin-top:16px}
+.warn b{color:var(--warn)}
+.pre{background:#0a1128;border:1px solid var(--line);border-radius:10px;padding:12px;overflow:auto;max-height:260px;font-size:12.5px;color:#cfe3ff;white-space:pre}
+.pre[hidden]{display:none}
+.foot{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+.tag{display:inline-block;background:#0e1530;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--mut);margin:2px 4px 2px 0}
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+</head>
+<body>
+<div class="nav"><div class="in">
+<a class="brand" href="/">RoboParts</a>
+<a href="/articles">技术文库</a>
+<a href="/oss">开源数据层</a>
+<a href="/bom-checker">BOM 兼容检查</a>
+<a href="/selection">智能选型</a>
+<a href="/data-hub">数据中心</a>
+<a href="/pricing">定价</a>
+</div></div>
+<div class="wrap">
+<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 法兰转接件生成器</div>
+<h1>法兰转接件生成器：把不兼容的机器人法兰变兼容</h1>
+<div class="lede">两侧法兰<b>螺栓节圆 / 孔数 / 螺纹</b>不一致时，RoboParts 自动生成一块可 3D 打印的转接板 —— 浏览器内实时预览，导出 STL（直接打印）或 OpenSCAD 源文件（免费桌面端二次编辑）。这是"兼容无忧"从<b>判定</b>走向<b>解决</b>的一步。（参考开源生态：OpenSCAD / CadQuery / build123d / FreeCAD）</div>
+
+<div class="layout">
+  <div class="panel">
+    <h2>① 选择两侧法兰</h2>
+    <div class="side">
+      <div class="lab">侧 A · 机器人腕部法兰</div>
+      <select id="sideA" onchange="onPreset('A')"></select>
+      <div class="cust" id="custA"></div>
+    </div>
+    <div class="side">
+      <div class="lab">侧 B · 工具 / 末端执行器法兰</div>
+      <select id="sideB" onchange="onPreset('B')"></select>
+      <div class="cust" id="custB"></div>
+    </div>
+    <h2 style="margin-top:6px">② 板参数</h2>
+    <div class="field">转接板厚度 (mm)</div>
+    <input id="thick" type="number" value="10" min="4" max="30" step="1">
+    <div class="field">中心通孔直径 (mm)</div>
+    <input id="bore" type="number" value="20" min="0" max="120" step="1">
+    <button class="btn" onclick="generate()">生成 3D 预览</button>
+    <button class="btn ghost" onclick="toggleScad()">查看 OpenSCAD 源码</button>
+    <div class="pre" id="scadBox" hidden></div>
+    <button class="btn" onclick="downloadSTL()">下载 STL（3D 打印）</button>
+    <button class="btn ghost" onclick="downloadScad()">下载 .scad（OpenSCAD）</button>
+    <a class="btn ghost" href="https://github.com/lm203688/roboparts/tree/main/adapters" target="_blank" rel="noopener">高精度 STEP（CadQuery）</a>
+    <div class="share" id="shareBox" hidden style="margin-top:12px;border-top:1px dashed var(--line);padding-top:12px">
+      <div class="field" style="margin-bottom:8px">📣 把这个转接方案分享出去（别人打开即复现你的配置）：</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn ghost" onclick="copyShare()">🔗 复制链接</button>
+        <a class="btn ghost" id="shX" target="_blank" rel="noopener">X</a>
+        <a class="btn ghost" id="shReddit" target="_blank" rel="noopener">Reddit</a>
+        <a class="btn ghost" id="shHN" target="_blank" rel="noopener">Hacker News</a>
+        <a class="btn ghost" id="shZhihu" target="_blank" rel="noopener">知乎</a>
+      </div>
+      <div id="copyTip" style="font-size:12px;color:var(--acc);margin-top:6px;display:none">已复制！去粘贴就能带来一波同好流量 🚀</div>
+    </div>
+
+    <div id="printBox" hidden style="margin-top:14px;border-top:1px dashed var(--line);padding-top:14px">
+      <h2>③ 打印估算</h2>
+      <div class="field">材料</div>
+      <select id="pMat" onchange="updatePrintEstimate()">
+        <option value="PLA">PLA（易打，强度一般）</option>
+        <option value="PETG" selected>PETG（推荐，韧性好）</option>
+        <option value="ABS">ABS（耐热，需封箱）</option>
+      </select>
+      <div class="field">填充率</div>
+      <select id="pInfill" onchange="updatePrintEstimate()">
+        <option value="20">20%（展示件）</option>
+        <option value="40" selected>40%（一般受力）</option>
+        <option value="60">60%（高负载）</option>
+        <option value="80">80%（接近实心）</option>
+      </select>
+      <div class="field">壁厚 / 顶底层</div>
+      <select id="pWalls" onchange="updatePrintEstimate()">
+        <option value="2">2 层壁</option>
+        <option value="3" selected>3 层壁</option>
+        <option value="4">4 层壁（推荐）</option>
+        <option value="5">5 层壁</option>
+      </select>
+      <div class="field">层高</div>
+      <select id="pLayer" onchange="updatePrintEstimate()">
+        <option value="0.16">0.16 mm（精细）</option>
+        <option value="0.2" selected>0.20 mm（标准）</option>
+        <option value="0.28">0.28 mm（快速）</option>
+      </select>
+      <div id="printResult" style="margin-top:10px;font-size:13px;color:var(--txt);background:#0c1428;border:1px solid var(--line);border-radius:10px;padding:12px;line-height:1.7">
+        点击「生成 3D 预览」后自动估算
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div id="viewer"><div class="hint">拖动旋转 · 滚轮缩放</div></div>
+    <div class="spec" id="spec">—</div>
+    <div class="warn">
+      <b>装配安全红线（来自 ISO 9409-1 法兰规范）：</b><br>
+      ① 螺栓<b>不得过长</b>——超长会顶破腕部油封导致减速器漏油，装机前查原厂允许旋入深度。<br>
+      ② 螺栓强度等级按原厂（如 ABB 强制 12.9 级），禁用不锈钢/低等级防咬死或松动。<br>
+      ③ 定位销用 g6 过渡配合，严禁过盈硬敲损伤销孔。<br>
+      ④ 本生成器产物为<b>几何转接建议</b>，不构成认证，量产前请样机实测。
+    </div>
+
+    <div id="feedbackBox" hidden style="margin-top:16px;border-top:1px dashed var(--line);padding-top:14px">
+      <h2>🔁 安装反馈（数字-物理闭环）</h2>
+      <div class="field">下载 STL → 打印 → 安装后，回填结果帮我们校准转接参数：</div>
+      <div style="display:flex;gap:8px;margin:8px 0;flex-wrap:wrap">
+        <button class="btn ghost" onclick="sendFeedback('ok')">✅ 合适，装上了</button>
+        <button class="btn ghost" onclick="sendFeedback('bad')">❌ 不合适</button>
+        <button class="btn ghost" onclick="sendFeedback('adjust')">🔧 需调整</button>
+      </div>
+      <input id="fbNote" placeholder="可选备注：哪里不合适 / 需要的修改（如孔位偏了 2mm）" style="width:100%;background:#0e1530;border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:8px 10px;font-size:13px;margin-bottom:8px">
+      <div id="fbTip" style="font-size:12px;color:var(--acc);display:none"></div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+© 2026 RoboParts · 开源机器人零部件兼容性平台 ·
+<a href="/iso-9409-flange">ISO 9409-1 法兰速查</a> ·
+<a href="/llms.txt">llms.txt</a> ·
+<a href="/agent-discovery.json">Agent 发现清单</a>
+</div>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { STLExporter } from 'three/addons/exporters/STLExporter.js';
+
+// ---- 标准法兰预设（ISO 9409-1 型式A）----
+const PRESETS = {
+  'A50':  {label:'ISO9409-1-A50-4-M6',  pcd:50,  holes:4, thread:'M6',  clr:6.5, pins:2, pinD:6,  pinPCD:22},
+  'A80':  {label:'ISO9409-1-A80-4-M8',  pcd:80,  holes:4, thread:'M8',  clr:8.5, pins:2, pinD:8,  pinPCD:38},
+  'A100': {label:'ISO9409-1-A100-6-M10',pcd:100, holes:6, thread:'M10', clr:10.5,pins:2, pinD:10, pinPCD:50},
+  'A160': {label:'ISO9409-1-A160-8-M12',pcd:160, holes:8, thread:'M12', clr:12.5,pins:0, pinD:0,  pinPCD:0}
+};
+const CUSTOM = {label:'自定义', pcd:60, holes:4, thread:'M6', clr:6.5, pins:0, pinD:0, pinPCD:0};
+
+function fillSelect(id){
+  const s = document.getElementById(id);
+  s.innerHTML = '';
+  for(const k of Object.keys(PRESETS)){
+    const o=document.createElement('option'); o.value=k; o.textContent=PRESETS[k].label; s.appendChild(o);
+  }
+  const o=document.createElement('option'); o.value='CUSTOM'; o.textContent='自定义…'; s.appendChild(o);
+}
+fillSelect('sideA'); fillSelect('sideB');
+document.getElementById('sideA').value='A50';
+document.getElementById('sideB').value='A80';
+
+function onPreset(side){
+  const sel = document.getElementById('side'+side).value;
+  const box = document.getElementById('cust'+side);
+  if(sel==='CUSTOM'){
+    box.classList.add('show');
+    if(!box.dataset.built){
+      box.innerHTML = `<div class="row">
+        <div><div class="field">节圆直径 PCD(mm)</div><input id="${side}_pcd" type="number" value="60" min="10" max="300"></div>
+        <div><div class="field">螺栓孔数</div><input id="${side}_holes" type="number" value="4" min="1" max="16"></div></div>
+        <div class="row">
+        <div><div class="field">螺纹</div><input id="${side}_thread" value="M6"></div>
+        <div><div class="field">孔 clearance(mm)</div><input id="${side}_clr" type="number" value="6.5" step="0.5"></div></div>
+        <div class="row">
+        <div><div class="field">定位销数(0/2)</div><input id="${side}_pins" type="number" value="0" min="0" max="2"></div>
+        <div><div class="field">销径(mm)</div><input id="${side}_pinD" type="number" value="6" step="0.5"></div></div>`;
+      box.dataset.built='1';
+    }
+  } else {
+    box.classList.remove('show');
+  }
+}
+
+function getSide(side){
+  const sel = document.getElementById('side'+side).value;
+  if(sel!=='CUSTOM') return {...PRESETS[sel], key:sel};
+  const g = id => parseFloat(document.getElementById(side+'_'+id).value)||0;
+  const thread = document.getElementById(side+'_thread').value || 'M6';
+  return {key:'CUSTOM', label:'自定义', pcd:g('pcd'), holes:g('holes'), thread, clr:g('clr'), pins:g('pins'), pinD:g('pinD'),
+          pinPCD: (g('pcd')/2 - 14) > g('pinD')/2+6 ? g('pcd')/2 - 14 : g('pinD')/2+6};
+}
+
+function holesOf(s){
+  const arr=[];
+  const r = s.pcd/2;
+  for(let i=0;i<s.holes;i++){
+    const a = (360/s.holes)*i * Math.PI/180;
+    arr.push({x:r*Math.cos(a), y:r*Math.sin(a), rad:s.clr/2});
+  }
+  if(s.pins===2){
+    for(let i=0;i<2;i++){
+      const a = i*180 * Math.PI/180;
+      arr.push({x:s.pinPCD*Math.cos(a), y:s.pinPCD*Math.sin(a), rad:s.pinD/2});
+    }
+  }
+  return arr;
+}
+
+// three.js 场景
+let scene, camera, renderer, controls, mesh, curGeom, curParams;
+function initScene(){
+  const el = document.getElementById('viewer');
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(45, el.clientWidth/el.clientHeight, 0.1, 2000);
+  camera.position.set(160,140,200);
+  renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+  renderer.setSize(el.clientWidth, el.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  el.appendChild(renderer.domElement);
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  scene.add(new THREE.AmbientLight(0xffffff,0.6));
+  const d=new THREE.DirectionalLight(0xffffff,0.9); d.position.set(120,200,150); scene.add(d);
+  const d2=new THREE.DirectionalLight(0x88aaff,0.4); d2.position.set(-150,-100,-120); scene.add(d2);
+  window.addEventListener('resize', ()=>{
+    camera.aspect = el.clientWidth/el.clientHeight; camera.updateProjectionMatrix();
+    renderer.setSize(el.clientWidth, el.clientHeight);
+  });
+  animate();
+}
+function animate(){ requestAnimationFrame(animate); controls.update(); renderer.render(scene,camera); }
+
+function buildGeometry(p){
+  const outerR = Math.max(p.a.pcd/2, p.b.pcd/2) + 18;
+  const shape = new THREE.Shape();
+  shape.absarc(0,0,outerR,0,Math.PI*2,false);
+  const holes = [...holesOf(p.a), ...holesOf(p.b)];
+  holes.push({x:0,y:0,rad:p.bore/2});
+  for(const h of holes){
+    const path = new THREE.Path();
+    path.absarc(h.x, h.y, h.rad, 0, Math.PI*2, true);
+    shape.holes.push(path);
+  }
+  const geo = new THREE.ExtrudeGeometry(shape, {depth:p.thick, bevelEnabled:false, curveSegments:72, steps:1});
+  geo.center();
+  return {geo, outerR};
+}
+
+function generate(){
+  const a = getSide('A'), b = getSide('B');
+  const thick = parseFloat(document.getElementById('thick').value)||10;
+  const bore = parseFloat(document.getElementById('bore').value)||20;
+  const p = {a,b,thick,bore};
+  const {geo, outerR} = buildGeometry(p);
+  if(mesh){ scene.remove(mesh); mesh.geometry.dispose(); }
+  curGeom = geo; curParams = p;
+  const mat = new THREE.MeshStandardMaterial({color:0x37e0a6, metalness:0.35, roughness:0.5, side:THREE.DoubleSide});
+  mesh = new THREE.Mesh(geo, mat);
+  scene.add(mesh);
+  const size = new THREE.Vector3(); geo.computeBoundingBox();
+  geo.boundingBox.getSize(size);
+  const md = Math.max(size.x,size.y,size.z);
+  camera.position.set(md*0.9, md*0.8, md*1.1);
+  controls.target.set(0,0,0);
+  document.getElementById('spec').textContent =
+    `外径 Ø${(outerR*2).toFixed(1)} mm · 板厚 ${thick} mm · 中心孔 Ø${bore} mm\n`+
+    `侧A ${a.label}（PCD ${a.pcd}, ${a.holes}×${a.thread}${a.pins?', '+a.pins+'×pinφ'+a.pinD:''}）\n`+
+    `侧B ${b.label}（PCD ${b.pcd}, ${b.holes}×${b.thread}${b.pins?', '+b.pins+'×pinφ'+b.pinD:''}）`;
+  buildScad(p, outerR); updateShare(p); updatePrintEstimate();
+  document.getElementById('printBox').hidden = false;
+  document.getElementById('feedbackBox').hidden = false;
+}
+
+function scadHoleLine(cx,cy,r,h){
+  return `    translate([${cx.toFixed(2)},${cy.toFixed(2)},0]) cylinder(r=${r.toFixed(2)},h=${h},$fn=32,center=true);`;
+}
+function buildScad(p, outerR){
+  const a=p.a,b=p.b, t=p.thick, h=t+2;
+  let s = `// RoboParts 法兰转接板 (${a.label} ↔ ${b.label})\n`;
+  s += `// 由 https://roboparts.cc/adapter-generator 生成 · 开源可改\n`;
+  s += `outer_d = ${(outerR*2).toFixed(2)};\nthickness = ${t};\n\n`;
+  s += `module bolt_circle(pcd, n, r, h){\n  for(i=[0:n-1]) rotate([0,0,i*(360/n)]) translate([pcd/2,0,0]) cylinder(r=r,h=h,$fn=32,center=true);\n}\n`;
+  s += `module pins(pcd, n, r, h){ if(n>0) for(i=[0:n-1]) rotate([0,0,i*180]) translate([pcd/2,0,0]) cylinder(r=r,h=h,$fn=32,center=true);\n}\n\n`;
+  s += `difference(){\n  cylinder(r=outer_d/2, h=thickness, $fn=128, center=true);\n`;
+  s += `  // 侧A 螺栓孔\n  bolt_circle(${a.pcd}, ${a.holes}, ${(a.clr/2).toFixed(2)}, ${h});\n`;
+  if(a.pins) s += `  // 侧A 定位销孔\n  pins(${a.pinPCD.toFixed(1)}, ${a.pins}, ${(a.pinD/2).toFixed(2)}, ${h});\n`;
+  s += `  // 侧B 螺栓孔\n  bolt_circle(${b.pcd}, ${b.holes}, ${(b.clr/2).toFixed(2)}, ${h});\n`;
+  if(b.pins) s += `  // 侧B 定位销孔\n  pins(${b.pinPCD.toFixed(1)}, ${b.pins}, ${(b.pinD/2).toFixed(2)}, ${h});\n`;
+  s += `  // 中心通孔\n  cylinder(r=${(p.bore/2).toFixed(2)}, h=${h}, $fn=64, center=true);\n}\n`;
+  document.getElementById('scadBox').textContent = s;
+  window.__scad = s;
+}
+function toggleScad(){ const b=document.getElementById('scadBox'); b.hidden=!b.hidden; }
+
+function downloadSTL(){
+  if(!mesh){ alert('请先点击「生成 3D 预览」'); return; }
+  const exporter = new STLExporter();
+  const data = exporter.parse(mesh, {binary:true});
+  const blob = new Blob([data], {type:'application/octet-stream'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='roboparts-flange-adapter.stl'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+}
+function downloadScad(){
+  if(!window.__scad){ alert('请先生成预览'); return; }
+  const blob = new Blob([window.__scad], {type:'text/plain'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='roboparts-flange-adapter.scad'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+}
+
+// ---- 分享裂变层 ----
+function shareUrl(p){
+  const a = p.a.key==='CUSTOM' ? `CUSTOM:${p.a.pcd}:${p.a.holes}:${p.a.thread}:${p.a.clr}:${p.a.pins}:${p.a.pinD}` : p.a.key;
+  const b = p.b.key==='CUSTOM' ? `CUSTOM:${p.b.pcd}:${p.b.holes}:${p.b.thread}:${p.b.clr}:${p.b.pins}:${p.b.pinD}` : p.b.key;
+  return 'https://roboparts.cc/adapter-generator' + `?a=${encodeURIComponent(a)}&b=${encodeURIComponent(b)}&t=${p.thick}&bore=${p.bore}`;
+}
+function updateShare(p){
+  document.getElementById('shareBox').hidden = false;
+  const url = shareUrl(p);
+  const text = `我用 RoboParts 生成了一个机器人法兰转接板（${p.a.label} ↔ ${p.b.label}），一键 3D 预览+下载 STL/OpenSCAD，把不兼容的法兰变兼容 🔧`;
+  document.getElementById('shX').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+  document.getElementById('shReddit').href = `https://www.reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent('RoboParts 法兰转接件生成器：把不兼容的机器人法兰变兼容')}`;
+  document.getElementById('shHN').href = `https://news.ycombinator.com/submitlink?u=${encodeURIComponent(url)}&t=${encodeURIComponent('Show HN: RoboParts flange adapter generator (turns incompatible robot flanges compatible)')}`;
+  document.getElementById('shZhihu').href = `https://www.zhihu.com/write?title=${encodeURIComponent('把不兼容的机器人法兰变兼容：一个开源转接件生成器')}&content=${encodeURIComponent(text+' '+url)}`;
+  history.replaceState(null,'',url);
+}
+function copyShare(){
+  const url = location.href;
+  if(navigator.clipboard){ navigator.clipboard.writeText(url).then(showCopyTip); }
+  else { const t=document.createElement('textarea'); t.value=url; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); showCopyTip(); }
+}
+function showCopyTip(){ const e=document.getElementById('copyTip'); e.style.display='block'; setTimeout(()=>e.style.display='none',2600); }
+
+// ---- 打印成本/可行性估算器 ----
+function updatePrintEstimate(){
+  if(!curParams) return;
+  const p = curParams;
+  const mat = document.getElementById('pMat').value;
+  const infill = parseFloat(document.getElementById('pInfill').value)/100;
+  const walls = parseInt(document.getElementById('pWalls').value);
+  const layerH = parseFloat(document.getElementById('pLayer').value);
+
+  const density = {PLA:1.24,PETG:1.27,ABS:1.04}[mat];
+  const priceKg = {PLA:80,PETG:95,ABS:110}[mat];
+  const outerR = Math.max(p.a.pcd/2, p.b.pcd/2) + 18;
+  const t = p.thick;
+
+  // 实体体积（圆柱 - 所有孔）
+  const grossMm3 = Math.PI * outerR*outerR * t;
+  const boreMm3 = Math.PI * (p.bore/2)*(p.bore/2) * t;
+  const holeVol = (holes)=> holes.reduce((s,h)=> s + Math.PI*h.rad*h.rad*t, 0);
+  const removedMm3 = boreMm3 + holeVol(holesOf(p.a)) + holeVol(holesOf(p.b));
+  const netMm3 = Math.max(0, grossMm3 - removedMm3);
+  const netCm3 = netMm3 / 1000;
+
+  // FDM 实际耗材 ≈ 实体体积 × 密度 × (壳体固定 + 填充)
+  const shellFactor = 0.12 + (walls-2)*0.04; // 2壁≈12%, 3壁≈16%, 4壁≈20%
+  const materialRatio = shellFactor + (1-shellFactor)*infill;
+  const grams = netCm3 * density * materialRatio * 1.06; // 1.06 = 支撑/损耗
+  const cost = grams * priceKg / 1000;
+
+  // 打印时间估算
+  const nozzle = 0.4;
+  const speed = 55; // mm/s 平均（含加速/转弯折扣）
+  const flowMm3s = nozzle * layerH * speed;
+  const layers = Math.max(1, Math.ceil(t / layerH));
+  const layerOverhead = 18; // 秒/层（换层、回抽、空驶）
+  const printSec = (netMm3 / flowMm3s) * materialRatio + layers * layerOverhead;
+  const printMin = Math.ceil(printSec/60);
+
+  // 强度建议
+  const maxThread = Math.max(parseFloat(p.a.thread.replace(/[^0-9.]/g,''))||6, parseFloat(p.b.thread.replace(/[^0-9.]/g,''))||6);
+  const recThick = maxThread >= 10 ? 12 : (maxThread >= 8 ? 10 : 8);
+  const thickOK = t >= recThick;
+  const infillOK = infill >= 0.4;
+  const wallsOK = walls >= 3;
+
+  let recs = [];
+  if(!thickOK) recs.push(`板厚建议 ≥ ${recThick} mm（当前 ${t} mm），以承受 ${p.a.thread}/${p.b.thread} 螺栓预紧力`);
+  if(!infillOK) recs.push('结构件建议填充率 ≥ 40%');
+  if(!wallsOK) recs.push('壁厚建议 ≥ 3 层，防止螺栓孔撕裂');
+  if(mat==='PLA') recs.push('PLA 长期受力易蠕变，静态/轻载可用；高负载请换 PETG 或 ABS');
+
+  const fmtTime = printMin < 60 ? `${printMin} 分钟` : `${(printMin/60).toFixed(1)} 小时`;
+  document.getElementById('printResult').innerHTML =
+    `<b>实体净体积：</b>${netCm3.toFixed(2)} cm³<br>`+
+    `<b>预估耗材：</b>${grams.toFixed(1)} g（${mat}，${(infill*100).toFixed(0)}% 填充，${walls} 层壁）<br>`+
+    `<b>材料成本：</b>约 ¥${cost.toFixed(2)}（按 ¥${priceKg}/kg 估算）<br>`+
+    `<b>预估打印时间：</b>${fmtTime}（层高 ${layerH} mm）<br>`+
+    `<b>强度评估：</b>${thickOK&&infillOK&&wallsOK ? '✅ 当前参数适合一般负载' : '⚠️ 建议调整参数'}<br>`+
+    (recs.length ? `<div style="margin-top:8px;color:var(--warn);font-size:12px">${recs.map(r=>'• '+r).join('<br>')}</div>` : '')+
+    `<div style="margin-top:8px;font-size:11px;color:var(--mut)">* 估算仅供家用 FDM 参考，实际以切片软件（Bambu Studio / Cura / PrusaSlicer）为准。</div>`;
+}
+
+// ---- 数字-物理反馈闭环（安装回填）----
+function sendFeedback(fit){
+  if(!curParams){ alert('请先生成预览'); return; }
+  const payload = {
+    flangeA: curParams.a.label,
+    flangeB: curParams.b.label,
+    fit,
+    note: (document.getElementById('fbNote').value||'').trim()
+  };
+  const tip = document.getElementById('fbTip');
+  tip.style.display='block'; tip.textContent='提交中…';
+  fetch('/api/adapter-feedback', {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+  }).then(r=>r.json()).then(d=>{
+    tip.textContent = d.ok ? ('✅ '+ (d.msg||'已记录，感谢回填！')) : ('⚠️ '+(d.error||'提交失败'));
+  }).catch(e=>{ tip.textContent='⚠️ 网络错误：'+e.message; });
+}
+
+function readParamsFromUrl(){
+  const sp = new URLSearchParams(location.search); if(!sp.has('a')) return;
+  const parse = v => v.startsWith('CUSTOM:') ? (()=>{ const [,,pcd,holes,thread,clr,pins,pinD]=v.split(':'); return {CUSTOM:true,pcd:+pcd,holes:+holes,thread,clr:+clr,pins:+pins,pinD:+pinD}; })() : {preset:v};
+  const A=parse(sp.get('a')), B=parse(sp.get('b'));
+  const apply=(side,o)=>{ const id='side'+side; if(o.preset){ document.getElementById(id).value=o.preset; onPreset(side);} if(o.CUSTOM){ document.getElementById(id).value='CUSTOM'; onPreset(side); const g=s=>document.getElementById(side+'_'+s); g('pcd').value=o.pcd; g('holes').value=o.holes; g('thread').value=o.thread; g('clr').value=o.clr; g('pins').value=o.pins; g('pinD').value=o.pinD; } };
+  apply('A',A); apply('B',B);
+  if(sp.has('t')) document.getElementById('thick').value=sp.get('t');
+  if(sp.has('bore')) document.getElementById('bore').value=sp.get('bore');
+}
+
+initScene();
+// 首屏：优先还原分享配置，否则默认生成
+window.addEventListener('load', ()=>{ readParamsFromUrl(); setTimeout(generate,200); });
+</script>
+</body>
+</html>

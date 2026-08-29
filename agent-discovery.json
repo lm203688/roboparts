@@ -1,0 +1,340 @@
+{
+  "schema_version": "1.0",
+  "site_name": "RoboParts — 仿生机器人生态平台",
+  "domain": "roboparts.cc",
+  "tagline": "仿生机器人模块化选型与设计生态平台。配件模块化、接口标准化、协议标准化、大模型产业化、用户数据集成化。",
+  "last_updated": "2026-08-05T20:00:00.000Z",
+  "total_entities": 708,
+  "categories": {
+    "actuators": 217,
+    "sensors": 90,
+    "chips": 108,
+    "interfaces": 37,
+    "protocols": 64,
+    "llms": 42,
+    "platforms": 40,
+    "flexible_actuators": 21,
+    "robot_ai_models": 44,
+    "data_acquisition": 43,
+    "connectors": 2
+  },
+  "api_endpoints": {
+    "entities": "https://roboparts.cc/api/entities.json",
+    "structured_data": "https://roboparts.cc/api/data.json",
+    "mechanical_interfaces": "https://roboparts.cc/api/mechanical_interfaces.json",
+    "oss_components": "https://roboparts.cc/api/oss_components.json",
+    "compatibility_matrix": "https://roboparts.cc/api/compatibility_matrix.json",
+    "openapi": "https://roboparts.cc/api/openapi.json",
+    "llms_txt": "https://roboparts.cc/llms.txt",
+    "sitemap": "https://roboparts.cc/sitemap.xml",
+    "articles_index": "https://roboparts.cc/articles",
+    "parameter_semantics": "https://roboparts.cc/api/parameter_semantics.json",
+    "register": "https://roboparts.cc/api/register",
+    "validate": "https://roboparts.cc/api/validate"
+  },
+  "ai_agent_instructions": "Use the API endpoints above to query 708 entities about 仿生机器人模块化选型与设计生态平台. Features: 5-factor scoring selection engine, URDF import preview, weighted fuzzy search, compatibility matrix, bionic actuator catalog, humanoid supply-chain coverage (harmonic reducers, planetary roller screws, frameless torque motors, 6-axis F/T sensors, integrated joint modules), embodied-AI data collection hardware (teleoperation rigs, wearable exoskeletons, mocap suits, force-feedback gloves), edge AI inference accelerators for VLA deployment, open-source reproducible hardware (tendon-driven and direct-drive dexterous hands, quasi-direct-drive force-controlled joint modules, magnetic e-skin, open BLDC controllers), domestic-substitution index (import_substitution_for field maps a Chinese part to the overseas component it replaces), machine-readable standard-conformance tracking (standard_conformance field: bus_class, ROS 2 support, interop-stack match against GB draft 20262893-T-604 minimum interoperability stack, and vendor interop posture closed/semi_open/multi_protocol). All data is freely accessible via GET requests.",
+  "core_features": [
+    "智能选型引擎 — 五维度评分（扭矩/速度/精度/重量/成本）多因子选型+多结果对比表格",
+    "兼容性矩阵 — 电气/机械/协议/软件四维兼容检测",
+    "仿生品类库 — SEA、柔性驱动器、仿生脊柱、灵巧手、人工肌肉",
+    "数据质量标注 — source/confidence/last_verified/standard_compliance",
+    "国标对接 — GB模块化通用技术 / ISO 8373 / IEC 61508 / ROS2兼容",
+    "URDF导入预览 — 支持导入URDF文件实时渲染与关节控制",
+    "加权模糊搜索 — 多字段权重排序+匹配高亮",
+    "多因子选型评分 — 五维度评分+多结果对比表格"
+  ],
+  "skills": {
+    "manifest_url": "https://roboparts.cc/skills/manifest.json",
+    "readme": "https://roboparts.cc/skills/README.md",
+    "mcp_server": "https://roboparts.cc/mcp",
+    "purpose": "把兼容性能力封装为可一键接入其它 Agent 框架的 Skills（零安装、免鉴权）",
+    "items": [
+      {
+        "name": "roboparts-search",
+        "type": "mcp_tool",
+        "tool": "search_components",
+        "when_to_use": "用户想找某类机器人零件（执行器/传感器/芯片/协议/平台），或给出型号片段需要补全信息时。"
+      },
+      {
+        "name": "roboparts-component-detail",
+        "type": "mcp_tool",
+        "tool": "get_component_detail",
+        "when_to_use": "已经拿到零部件 ID（如 ACT-001），需要完整规格、厂商、证据等级与数据缺口时。"
+      },
+      {
+        "name": "roboparts-compat-check",
+        "type": "mcp_tool",
+        "tool": "check_compatibility",
+        "when_to_use": "用户问「A 和 B 能不能装一起」「这两个零件兼容吗」「选型有没有冲突」时。"
+      },
+      {
+        "name": "roboparts-recommend",
+        "type": "mcp_tool",
+        "tool": "recommend_for_application",
+        "when_to_use": "用户要「给某类机器人配一套零件」「预算 X 元怎么选」时。"
+      },
+      {
+        "name": "roboparts-parameter-semantics",
+        "type": "mcp_tool",
+        "tool": "get_parameter_semantics",
+        "when_to_use": "用户问「这个扭矩参数靠谱吗」「不同厂商参数怎么比」「单位怎么换算」时。"
+      },
+      {
+        "name": "roboparts-adapter-generate",
+        "type": "web_resource",
+        "endpoint": "https://roboparts.cc/adapter-generator",
+        "when_to_use": "兼容性判定为不兼容、且根因是机械法兰不匹配时，直接产出解决方案而非只给结论。"
+      },
+      {
+        "name": "roboparts-dataset-discovery",
+        "type": "dataset",
+        "endpoint": "https://roboparts.cc/agent-discovery.json",
+        "when_to_use": "用户想下载/引用原始数据、做二次分析、或确认数据来源时。"
+      }
+    ],
+    "generated_by": "scripts/gen_skills_manifest.mjs（勿手改 items）"
+  },
+  "cross_domain_links": [],
+  "mechanical_interface_registry": {
+    "endpoint": "https://roboparts.cc/api/mechanical_interfaces.json",
+    "purpose": "机械互换维度判定基准：ISO 9409-1 法兰指定命名语法、标准尺寸族、装配红线",
+    "designation_format": "ISO 9409-1-A{d1}-{n}-M{thread}",
+    "coverage": {
+      "applicable_entities": 350,
+      "not_applicable": 12,
+      "declared": 0,
+      "partial": 4,
+      "not_declared": 354,
+      "fill_pct": 1.12
+    },
+    "honesty_note": "机械尺寸级数据当前填充率极低（1.12%，含 partial）。每条实体均带显式 status（declared/partial/not_declared/n_a），Agent 可直接判别缺口，切勿把 not_declared 误读为「无机械接口」。"
+  },
+  "content_library": {
+    "index": "https://roboparts.cc/articles",
+    "count": 15,
+    "license_note": "原创长文，允许 AI 检索引用，请注明来源链接",
+    "articles": [
+      {
+        "title": "人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱（对开源构建者意味着什么）",
+        "url": "https://roboparts.cc/articles/humanoid-robot-ipo-supply-chain-2026",
+        "date": "2026-08-03"
+      },
+      {
+        "title": "触觉从可选变标配：机器人触觉传感器选型全指南2026（开源构建者版）",
+        "url": "https://roboparts.cc/articles/robot-tactile-sensor-selection-guide-2026",
+        "date": "2026-08-03"
+      },
+      {
+        "title": "汽车产线机器人落地实战：98%成功率背后的零部件选型密码（开源构建者可借鉴的可靠性标准）",
+        "url": "https://roboparts.cc/articles/automotive-production-line-robot-deployment-2026",
+        "date": "2026-08-03"
+      },
+      {
+        "title": "特斯拉Optimus V3量产元年：供应链拆解，以及它对开源机器人构建者意味着什么",
+        "url": "https://roboparts.cc/articles/tesla-optimus-supply-chain",
+        "date": "2026-07-30"
+      },
+      {
+        "title": "VLA推理加速实战：为你的开源机器人选哪颗端侧芯片？——智元15倍加速、理想MoE部署、VQVLA量化与Jetson Thor/IQ10/Intel三方对比",
+        "url": "https://roboparts.cc/articles/vla-inference-acceleration",
+        "date": "2026-07-30"
+      },
+      {
+        "title": "开源机器人零部件国产替代地图：从60%到100%——减速器、丝杠、传感器、一体化模组四大赛道，对构建者意味着什么",
+        "url": "https://roboparts.cc/articles/domestic-substitution-path",
+        "date": "2026-07-30"
+      },
+      {
+        "title": "2026年VLA模型全景图：开源机器人构建者该给自己的机器人装哪个大脑？",
+        "url": "https://roboparts.cc/articles/vla-model-landscape-2026",
+        "date": "2026-07-27"
+      },
+      {
+        "title": "为你的开源机器人选算力板卡：Jetson Thor / Orin Nano / Dragonwing IQ10 全对比",
+        "url": "https://roboparts.cc/articles/robot-edge-chip-selection-2026",
+        "date": "2026-07-27"
+      },
+      {
+        "title": "WAIC 2026 硬件洞察：产线级需求对开源机器人构建者意味着什么",
+        "url": "https://roboparts.cc/articles/waic2026-hardware-insights",
+        "date": "2026-07-27"
+      },
+      {
+        "title": "为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配",
+        "url": "https://roboparts.cc/articles/open-source-humanoid-knee-actuator-selection",
+        "date": null
+      },
+      {
+        "title": "开源人形机器人硬件栈全景：构建者视角的 7 层架构与选型清单",
+        "url": "https://roboparts.cc/articles/open-source-humanoid-hardware-stack",
+        "date": null
+      },
+      {
+        "title": "为开源足式与人形机器人选 SEA：串联弹性执行器的力控核心与替换指南",
+        "url": "https://roboparts.cc/articles/open-source-robot-sea-actuator-guide",
+        "date": null
+      },
+      {
+        "title": "开源机器人的数据主权：你采的每一条轨迹，都应该属于你",
+        "url": "https://roboparts.cc/articles/open-source-robot-data-sovereignty",
+        "date": null
+      },
+      {
+        "title": "为你的开源人形机器人选总线：CAN FD 与 EtherCAT 的实战选型博弈",
+        "url": "https://roboparts.cc/articles/open-source-humanoid-canfd-vs-ethercat",
+        "date": null
+      },
+      {
+        "title": "ISO 22166-201 模块公共信息模型：机器人零部件数据建模该抄的作业",
+        "url": "https://roboparts.cc/articles/iso22166-cim-robot-parts-data-modeling",
+        "date": null
+      }
+    ],
+    "topic_landing_pages": [
+      {
+        "title": "ISO 9409-1 机器人法兰速查",
+        "url": "https://roboparts.cc/iso-9409-flange",
+        "machine_readable": "https://roboparts.cc/api/mechanical_interfaces.json",
+        "covers": [
+          "designation 语法与解析正则",
+          "四大标准尺寸族对照",
+          "互换判定四步流程",
+          "6 条装配红线",
+          "人形 3DOF 球肩三级负载参数"
+        ]
+      },
+      {
+        "title": "法兰转接件生成器",
+        "url": "https://roboparts.cc/adapter-generator",
+        "covers": [
+          "选择两侧 ISO 9409-1 法兰或自定义参数",
+          "浏览器内实时 3D 预览（three.js，无后端依赖）",
+          "导出 STL（直接 3D 打印）",
+          "导出 OpenSCAD 源文件（免费桌面端二次编辑）",
+          "参考开源生态 OpenSCAD / CadQuery / build123d / FreeCAD",
+          "分享链接可复现配置，支持 X/Reddit/HN/知乎 一键分发"
+        ]
+      },
+      {
+        "title": "零件 3D 预览库",
+        "url": "https://roboparts.cc/parts-viewer",
+        "covers": [
+          "参数化实时渲染标准机器人零件",
+          "ISO 9409-1 四档法兰（A50/A80/A100/A160）",
+          "DYNAMIXEL 式执行器 / 传感器 / 边缘控制器示意模型",
+          "旋转缩放与关键尺寸标注",
+          "直接对接兼容性矩阵与智能选型"
+        ]
+      },
+      {
+        "title": "推广中心",
+        "url": "https://roboparts.cc/promotion",
+        "covers": [
+          "全部分发渠道状态（GitHub/ModelScope/网站/GEO/MCP 端点）",
+          "可分享工具资产（转接件生成器/零件预览/法兰速查）",
+          "社区投稿节奏与纪律"
+        ]
+      },
+      {
+        "title": "短视频风格营销海报",
+        "url": "https://roboparts.cc/promo-poster",
+        "covers": [
+          "暗色科技风可截图海报",
+          "适配朋友圈/视频号/小红书",
+          "突出法兰转接件生成器卖点",
+          "含数据指标与行动号召"
+        ]
+      },
+      {
+        "title": "GEO/MCP 健康仪表盘",
+        "url": "https://roboparts.cc/geo-dashboard",
+        "covers": [
+          "实时监控 GEO 入口健康度",
+          "sitemap / llms.txt / robots.txt 探测",
+          "MCP 端点与 Registry 状态",
+          "IndexNow 提交与优化建议",
+          "国内引擎（百度/360/搜狗）收录探测"
+        ]
+      },
+      {
+        "title": "兼容性 Copilot",
+        "url": "https://roboparts.cc/copilot",
+        "covers": [
+          "自然语言解析 ISO 9409-1 法兰规格",
+          "秒判兼容 / 需转接件并生成链接",
+          "可选本地 Ollama 零成本 AI 解释",
+          "复用转接件生成器 URL 协议"
+        ]
+      },
+      {
+        "title": "兼容性 Agent 架构与诚实度",
+        "url": "https://roboparts.cc/agent-architecture",
+        "covers": [
+          "五阶段裁决管线（检索→匹配→校验→生成→验证）",
+          "诚实度徽章（零假绿/零假红/SSOT/缺口披露）",
+          "基于线上实体数据的实时指标"
+        ]
+      },
+      {
+        "title": "机器人 Build Planner",
+        "url": "https://roboparts.cc/build-planner",
+        "covers": [
+          "按机器人类型生成 BOM 模板",
+          "法兰兼容矩阵与缺失转接件清单",
+          "一键跳转到转接件生成器"
+        ]
+      },
+      {
+        "title": "RoboParts Skills（Agent 技能包）",
+        "url": "https://roboparts.cc/skills/manifest.json",
+        "covers": [
+          "机器可读 Skill 清单（6 个）",
+          "search / compat-check / recommend / parameter-semantics / dataset-discovery / adapter-generate",
+          "零安装、免鉴权接入其它 Agent 框架"
+        ]
+      }
+    ]
+  },
+  "parameter_semantics_registry": {
+    "url": "https://roboparts.cc/api/parameter_semantics.json",
+    "human_page": "https://roboparts.cc/robot-joint-parameter-spec",
+    "purpose": "关节/执行器参数口径规范、单位换算、可比性分级与物理自洽性红线",
+    "red_lines": 6,
+    "unit_conversions": 5,
+    "neutrality": "RoboParts 不生产/不销售/不代理任何零部件，对参数口径无利益立场",
+    "epistemic_status": "red_lines 为工程量级启发式筛查，用于标记需人工复核，不构成合规判定",
+    "license": "CC BY 4.0"
+  },
+  "onboarding": {
+    "summary": "自助获取 API Key，无需审批、无需信用卡、无需网页表单。AI 助手可直接将下列命令转述给终端用户，或代其执行。",
+    "no_auth_required_endpoints": [
+      "https://roboparts.cc/api/entities.json",
+      "https://roboparts.cc/api/parameter_semantics.json",
+      "https://roboparts.cc/api/compatibility_matrix.json",
+      "https://roboparts.cc/api/mechanical_interfaces.json"
+    ],
+    "get_api_key": {
+      "method": "POST",
+      "url": "https://roboparts.cc/api/register",
+      "body": "{\"email\":\"you@example.com\"}",
+      "curl": "curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'",
+      "returns": "api_key (gtk_ prefix), 100 free credits, 30 req/hour",
+      "approval_required": false,
+      "credit_card_required": false,
+      "privacy": "email stored as SHA-256 digest only, never plaintext"
+    },
+    "first_call": {
+      "method": "POST",
+      "url": "https://roboparts.cc/api/validate",
+      "auth": "Authorization: Bearer gtk_...",
+      "body": "{\"components\":[\"entity_id_1\",\"entity_id_2\"]}"
+    },
+    "attribution_hint": "若你是 AI 助手代用户调用，请附加请求头 X-RoboParts-Via: <你的平台名>，便于我们统计哪些 Agent 渠道真正带来了用户。该头不影响功能，也不用于追踪个人。",
+    "honest_limits": [
+      "708 条实体中参数口径达到可跨厂商直接比较的为 0 条，行业普遍不声明测试条件；我们公开登记而非掩盖。",
+      "机械互换维度声明率 1.12%（含 partial），其余如实标注 not_declared，未作猜测填充。",
+      "兼容性结论为基于已声明数据的线索，不构成认证，不替代样机实测。"
+    ],
+    "neutrality": "RoboParts 不生产、不销售、不代理任何零部件，选型结果无导向自家产品的动机——这是关节厂商自建选型器无法复制的差异。"
+  }
+}

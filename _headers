@@ -1,0 +1,22 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com https://challenges.cloudflare.com; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://api.creem.io
+
+/api/*
+  X-RateLimit-Limit: 60
+  X-RateLimit-Window: 60
+  Cache-Control: no-store, no-cache, must-revalidate
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, POST, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization, X-Creem-Signature
+
+/llms-full.txt
+  Cache-Control: public, max-age=86400
+  X-Robots-Tag: noindex
+
+/anti-scrape.js
+  Cache-Control: public, max-age=604800

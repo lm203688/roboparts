@@ -1,0 +1,32 @@
+{
+  "mcpVersion": "2025-06-18",
+  "servers": [
+    {
+      "name": "roboparts",
+      "title": "RoboParts 机器人零部件兼容性",
+      "description": "仿生/人形机器人零部件兼容性数据层：688 条实体（685 条可选型零件 + 3 条市场情报），支持协议/电气/机械/ROS2 四维兼容判定。中立数据层 —— 既不生产也不转售任何零部件。",
+      "transport": "streamable-http",
+      "url": "https://roboparts.cc/mcp",
+      "authentication": "none",
+      "readOnly": true,
+      "tools": [
+        "search_components",
+        "get_component_detail",
+        "check_compatibility",
+        "recommend_for_application",
+        "get_parameter_semantics"
+      ],
+      "documentation": "https://roboparts.cc/mcp-guide",
+      "provider": {
+        "name": "RoboParts",
+        "url": "https://roboparts.cc"
+      },
+      "boundaries": [
+        "只读、免鉴权、不设 cookie、不存储调用方数据",
+        "兼容性结论基于厂商公开声明字段的规则推断，非实验室实测",
+        "厂商未声明的维度记为无法判定，不计入兼容也不计入不兼容",
+        "与任何零部件厂商无商业绑定"
+      ]
+    }
+  ]
+}

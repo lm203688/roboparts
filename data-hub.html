@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>数据中枢 — RoboParts 仿生机器人生态平台</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="RoboParts 数据中枢：一键导出 9 大品类机器人零部件数据，支持 JSON 全量导出与分类导出，你的数据你做主。">
+<link rel="canonical" href="https://roboparts.cc/data-hub">
+<text y='.9em' font-size='90'>🤖</text></svg>">
+<style>
+:root{
+  --bg:#0a0e17;
+  --card:#111827;
+  --border:#1e2d4a;
+  --text:#e2e8f0;
+  --accent:#06b6d4;
+  --accent-hover:#22d3ee;
+  --muted:#94a3b8;
+  --dim:#64748b;
+  --success:#10b981;
+  --error:#ef4444;
+  --warning:#f59e0b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+
+/* ========== 顶部导航 ========== */
+.navbar{position:sticky;top:0;z-index:100;background:rgba(10,14,23,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.navbar .nav-inner{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.navbar .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;color:var(--text);text-decoration:none}
+.navbar .brand .logo{width:28px;height:28px;background:linear-gradient(135deg,var(--accent),#0891b2);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#000;font-weight:800;font-size:.95rem}
+.navbar .brand .accent{color:var(--accent)}
+.navbar .nav-links{display:flex;align-items:center;gap:18px}
+.navbar .nav-links a{color:var(--muted);text-decoration:none;font-size:.88rem;transition:color .2s}
+.navbar .nav-links a:hover{color:var(--accent)}
+.navbar .nav-links .back-home{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:8px;font-size:.82rem}
+.navbar .nav-links .back-home:hover{border-color:var(--accent);color:var(--accent)}
+
+.container{max-width:1100px;margin:0 auto;padding:20px}
+
+/* ========== Hero ========== */
+.hero{text-align:center;padding:48px 20px 28px}
+.hero h1{font-size:2rem;background:linear-gradient(135deg,var(--accent),var(--accent-hover));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+.hero p{color:var(--muted);font-size:1.05rem;max-width:680px;margin:0 auto}
+.hero .hero-stats{display:flex;gap:20px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+.hero .hero-stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 22px;min-width:110px}
+.hero .hero-stat .num{font-size:1.5rem;font-weight:800;color:var(--accent)}
+.hero .hero-stat .label{font-size:.76rem;color:var(--dim)}
+
+/* ========== 通用卡片 ========== */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin:24px 0}
+.card h2{font-size:1.3rem;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.card .subtitle{color:var(--muted);font-size:.88rem;margin-bottom:20px}
+
+/* ========== API Key 区 ========== */
+.apikey-card{background:linear-gradient(180deg,#0f1626 0%,var(--card) 100%);border:1px solid var(--border);border-radius:16px;padding:24px;margin:24px 0}
+.apikey-card h2{font-size:1.15rem;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.apikey-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.apikey-row input{flex:1;min-width:240px;padding:12px 16px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.9rem;font-family:'JetBrains Mono',Consolas,monospace}
+.apikey-row input:focus{outline:none;border-color:var(--accent)}
+.apikey-row .btn{white-space:nowrap}
+.apikey-hint{font-size:.78rem;color:var(--dim);margin-top:10px}
+.apikey-hint a{color:var(--accent);text-decoration:none}
+.apikey-hint a:hover{text-decoration:underline}
+.apikey-balance{margin-top:14px;padding:12px 16px;background:var(--bg);border-radius:10px;display:none}
+.apikey-balance.show{display:block}
+.apikey-balance .label{font-size:.76rem;color:var(--dim);margin-bottom:2px}
+.apikey-balance .value{font-size:1.4rem;font-weight:800;color:var(--success)}
+.apikey-balance.error .value{color:var(--error);font-size:.95rem}
+
+/* ========== 按钮 ========== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:10px;border:none;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary:disabled{background:var(--border);color:var(--dim);cursor:not-allowed}
+.btn-featured{background:var(--warning);color:#000}
+.btn-featured:hover{background:#fbbf24}
+.btn-featured:disabled{background:var(--border);color:var(--dim);cursor:not-allowed}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-outline:disabled{border-color:var(--border);color:var(--dim);cursor:not-allowed}
+.btn-sm{padding:8px 14px;font-size:.8rem}
+.btn-block{display:block;width:100%}
+
+/* ========== 品类卡片网格 ========== */
+.category-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:8px}
+.cat-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:20px;transition:all .3s;display:flex;flex-direction:column}
+.cat-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.cat-card .cat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.cat-card .cat-icon{font-size:1.6rem}
+.cat-card .cat-count{font-size:1.6rem;font-weight:800;color:var(--accent)}
+.cat-card .cat-count .unit{font-size:.78rem;font-weight:400;color:var(--dim);margin-left:4px}
+.cat-card .cat-name{font-size:1.05rem;font-weight:700;margin-bottom:4px}
+.cat-card .cat-name .en{font-size:.78rem;color:var(--dim);font-weight:400;margin-left:6px}
+.cat-card .cat-desc{font-size:.8rem;color:var(--muted);margin-bottom:14px;flex:1}
+.cat-card .cat-api{font-size:.72rem;color:var(--dim);font-family:'JetBrains Mono',Consolas,monospace;margin-bottom:12px;padding:6px 10px;background:var(--card);border-radius:6px;word-break:break-all}
+.cat-card .btn{width:100%}
+
+/* ========== 全量导出 ========== */
+.full-export{background:linear-gradient(180deg,#1a1f35 0%,var(--card) 100%);border:1px solid rgba(245,158,11,0.4);border-radius:16px;padding:28px;margin:28px 0;position:relative;overflow:hidden}
+.full-export::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--warning),var(--accent))}
+.full-export h2{font-size:1.3rem;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.full-export .subtitle{color:var(--muted);font-size:.88rem;margin-bottom:18px}
+.full-export .cost-warn{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:.85rem;color:var(--warning);display:flex;align-items:center;gap:8px}
+.full-export .cost-warn strong{color:#fbbf24}
+.full-export .export-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.full-export .export-row .btn{flex:1;min-width:220px}
+.full-export .export-meta{font-size:.78rem;color:var(--dim);margin-top:12px}
+
+/* ========== 数据格式说明 ========== */
+.format-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:8px}
+.format-item{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:18px}
+.format-item .fmt-icon{font-size:1.4rem;margin-bottom:8px}
+.format-item .fmt-name{font-weight:700;font-size:.95rem;margin-bottom:4px}
+.format-item .fmt-name .badge{font-size:.66rem;padding:2px 8px;border-radius:8px;margin-left:6px;vertical-align:middle}
+.format-item .fmt-name .badge.free{background:rgba(16,185,129,0.15);color:var(--success)}
+.format-item .fmt-name .badge.paid{background:rgba(245,158,11,0.15);color:var(--warning)}
+.format-item .fmt-desc{font-size:.8rem;color:var(--muted);margin-bottom:8px}
+.format-item .fmt-detail{font-size:.76rem;color:var(--dim);font-family:'JetBrains Mono',Consolas,monospace}
+
+/* ========== 结果区 ========== */
+.result-box{margin-top:18px;padding:18px;border-radius:12px;display:none}
+.result-box.show{display:block}
+.result-box.success{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3)}
+.result-box.error{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3)}
+.result-box.info{background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3)}
+.result-box .result-title{font-weight:700;margin-bottom:6px;font-size:1rem}
+.result-box.success .result-title{color:var(--success)}
+.result-box.error .result-title{color:var(--error)}
+.result-box.info .result-title{color:var(--accent)}
+.result-box .result-detail{font-size:.84rem;color:var(--muted);word-break:break-all}
+.result-box .result-detail code{font-family:'JetBrains Mono',Consolas,monospace;background:var(--bg);padding:2px 6px;border-radius:4px;font-size:.8rem}
+
+/* ========== Toast ========== */
+.toast-container{position:fixed;top:80px;right:20px;z-index:2000;display:flex;flex-direction:column;gap:10px;max-width:360px}
+.toast{padding:14px 18px;border-radius:10px;font-size:.88rem;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.3);animation:toastIn .3s ease;border-left:4px solid}
+.toast.success{background:#111827;border-left-color:var(--success);color:var(--success)}
+.toast.error{background:#111827;border-left-color:var(--error);color:var(--error)}
+.toast.info{background:#111827;border-left-color:var(--accent);color:var(--accent)}
+.toast.warning{background:#111827;border-left-color:var(--warning);color:var(--warning)}
+.toast .toast-icon{font-size:1.1rem;flex-shrink:0}
+.toast .toast-msg{flex:1;color:var(--text)}
+.toast.fade-out{animation:toastOut .3s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(40px)}}
+
+/* ========== 页脚 ========== */
+footer{text-align:center;padding:40px 20px;color:var(--dim);font-size:.8rem;border-top:1px solid var(--border);margin-top:40px}
+footer a{color:var(--accent);text-decoration:none}
+
+/* ========== 响应式 ========== */
+@media(max-width:768px){
+  .hero h1{font-size:1.5rem}
+  .navbar .nav-links{gap:10px}
+  .navbar .nav-links a{font-size:.8rem}
+  .card{padding:20px}
+  .category-grid{grid-template-columns:1fr}
+  .apikey-row input{min-width:100%}
+  .apikey-row .btn{width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== 顶部导航 ========== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="/" class="brand">
+      <span class="logo">R</span>
+      Robo<span class="accent">Parts</span>
+    </a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/designer">设计画布</a>
+      <a href="/selection">智能选型</a>
+      <a href="/bom-manager">BOM管理</a>
+      <a href="/urdf-library">URDF库</a>
+      <a href="/suppliers">供应商</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== Hero ========== -->
+<div class="hero">
+  <h1>数据中枢 — 你的数据，你做主</h1>
+  <p>RoboParts 全量机器人零部件数据，9 大品类 708 实体。分类导出 JSON，或一键导出全量数据集，数据主权完全归你所有。</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num">9</div>
+      <div class="label">数据品类</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num" id="statTotal">435</div>
+      <div class="label">实体总数</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">JSON</div>
+      <div class="label">导出格式</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ========== API Key 区 ========== -->
+  <div class="apikey-card">
+    <h2>🔑 API Key 与积分</h2>
+    <div class="apikey-row">
+      <input type="text" id="apiKeyInput" placeholder="输入你的 API Key (gtk_ 开头)" />
+      <button class="btn btn-outline" onclick="checkBalance()">查询余额</button>
+    </div>
+    <div class="apikey-hint">
+      还没有 API Key？<a href="/#api-access">免费注册即赠 100 积分</a> · 分类导出免费，全量导出消耗 50 积分 · <a href="/credits">前往充值</a>
+    </div>
+    <div class="apikey-balance" id="balanceResult"></div>
+  </div>
+
+  <!-- ========== 9 大品类导出 ========== -->
+  <div class="card">
+    <h2>📂 分类数据导出</h2>
+    <p class="subtitle">每个品类可独立导出为 JSON 文件，免费下载，无需消耗积分。点击「导出 JSON」即可下载对应品类的完整数据。</p>
+    <div class="category-grid" id="categoryGrid"></div>
+  </div>
+
+  <!-- ========== 全量导出 ========== -->
+  <div class="full-export">
+    <h2>🚀 全量数据导出</h2>
+    <p class="subtitle">一键导出 RoboParts 全部 9 大品类、708 实体的完整数据集（含全部字段），适合离线分析、本地建模与数据集构建。</p>
+    <div class="cost-warn">
+      <span>⚠️</span>
+      <span>本次导出将消耗 <strong>50 积分</strong>。请确保账户余额充足，否则将返回 402 错误。<a href="/credits" style="color:#fbbf24;text-decoration:underline">前往充值 →</a></span>
+    </div>
+    <div class="export-row">
+      <button class="btn btn-featured" onclick="exportFullData()" id="btnFullExport">🚀 导出全量数据 (entities.json)</button>
+      <button class="btn btn-outline" onclick="previewFullData()">👁️ 免费预览 (仅摘要字段)</button>
+    </div>
+    <div class="export-meta">接口：<code style="font-family:'JetBrains Mono',Consolas,monospace;color:var(--accent)">GET /api/entities.json</code> · 需通过 Header 或 Query 传入 API Key</div>
+    <div class="result-box" id="fullExportResult"></div>
+  </div>
+
+  <!-- ========== 物理 AI 训练数据集 ========== -->
+  <div class="card">
+    <h2>🤖 物理 AI 训练数据集（面向具身智能 / VLA 训练流水线）</h2>
+    <p class="subtitle">一份可直接被 Sim-to-Real / TurboVLA 类 V+L→A 策略消费的结构化多模态数据集（schema v2.0）：零件目录（含标准标签、证据等级、<b>多模态暴露 force/tactile/geometric/electrical/vision</b>）+ 兼容性关系（四维裁决现算，并标注 <b>物理交互类型 interaction_type 与力觉剖面 force_profile</b>）+ 互操作性标准登记表。免鉴权、HTTP GET 即可拉取，随主库实时更新。</p>
+    <div class="export-row">
+      <a class="btn btn-outline" href="/api/training_dataset.json" target="_blank" rel="noopener">⬇ 下载训练数据集 v2 (JSON)</a>
+      <a class="btn btn-outline" href="/mcp-guide#training-dataset">查看接入说明 →</a>
+    </div>
+    <div class="export-row" style="margin-top:10px">
+      <a class="btn btn-outline" href="/docs/modality-extension-blueprint.md" target="_blank" rel="noopener">📐 多模态扩展蓝图（TurboVLA 参考）</a>
+      <a class="btn btn-outline" href="/docs/tactile-force-collection-roadmap.md" target="_blank" rel="noopener">🧰 触觉/力觉采集路线</a>
+    </div>
+    <div class="export-meta">接口：<code style="font-family:'JetBrains Mono',Consolas,monospace;color:var(--accent)">GET /api/training_dataset.json</code> · 兼容性关系由规则引擎现算（非实测）· force/tactile 仅声明级参数，原始传感时序为零</div>
+  </div>
+
+  <!-- ========== 数据格式说明 ========== -->
+  <div class="card">
+    <h2>📋 数据格式说明</h2>
+    <p class="subtitle">所有导出数据均为结构化 JSON 格式，可通过 BOM 导出工具转换为 CSV。免费预览仅含摘要字段，付费导出含全部字段。</p>
+    <div class="format-grid">
+      <div class="format-item">
+        <div class="fmt-icon">🟢</div>
+        <div class="fmt-name">分类 JSON <span class="badge free">免费</span></div>
+        <div class="fmt-desc">单品类完整数据，含全部字段，无需积分。</div>
+        <div class="fmt-detail">GET /api/{category}.json</div>
+      </div>
+      <div class="format-item">
+        <div class="fmt-icon">🟡</div>
+        <div class="fmt-name">全量 JSON <span class="badge paid">50 积分</span></div>
+        <div class="fmt-desc">9 大品类合并数据集，含全部字段，需 API Key 鉴权。</div>
+        <div class="fmt-detail">GET /api/entities.json?key=...</div>
+      </div>
+      <div class="format-item">
+        <div class="fmt-icon">👁️</div>
+        <div class="fmt-name">免费预览 <span class="badge free">免费</span></div>
+        <div class="fmt-desc">全量数据的摘要字段（id、name、category 等），用于评估数据价值。</div>
+        <div class="fmt-detail">GET /api/entities.json (无 Key)</div>
+      </div>
+      <div class="format-item">
+        <div class="fmt-icon">📄</div>
+        <div class="fmt-name">CSV 转换 <span class="badge free">免费</span></div>
+        <div class="fmt-desc">导出 JSON 后，可前往 BOM 管理器转换为 CSV 表格格式。</div>
+        <div class="fmt-detail">/bom-manager.html · JSON → CSV</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== Toast 容器 ========== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ========== 页脚 ========== -->
+<footer>
+  <p>© 2026 RoboParts · 仿生机器人生态平台 · <a href="/">返回首页</a></p>
+  <p style="margin-top:8px">数据导出: <a href="mailto:support@roboparts.cc">support@roboparts.cc</a> · 你的数据，你做主</p>
+</footer>
+
+<script>
+// ============ 9 大品类配置 ============
+const CATEGORIES = [
+  { key:'actuators',            name:'执行器',        en:'Actuators',           icon:'⚙️', count:147, desc:'伺服、电机、液压、气动等驱动元件' },
+  { key:'flexible_actuators',   name:'柔性执行器',    en:'Flexible Actuators',  icon:'🌀', count:6,   desc:'人工肌肉、SEA、软体驱动等柔性元件' },
+  { key:'sensors',              name:'传感器',        en:'Sensors',             icon:'📡', count:42,  desc:'视觉、力觉、触觉、IMU 等感知元件' },
+  { key:'chips',                name:'芯片',          en:'Chips',               icon:'🔧', count:95,  desc:'主控、AI 推理、MCU、电源管理等芯片' },
+  { key:'protocols',            name:'通信协议',      en:'Protocols',           icon:'🔗', count:64,  desc:'CAN FD、EtherCAT、Modbus 等协议' },
+  { key:'llms',                 name:'大模型',        en:'LLMs',                icon:'🧠', count:27,  desc:'VLA、语言、多模态等机器人 AI 大模型' },
+  { key:'robot_ai_models',      name:'机器人AI模型',  en:'Robot AI Models',     icon:'🤖', count:17,  desc:'具身智能、运动控制等专用 AI 模型' },
+  { key:'interfaces',           name:'接口',          en:'Interfaces',          icon:'🔌', count:14,  desc:'机械与电气接口标准规范' },
+  { key:'platforms',            name:'平台',          en:'Platforms',           icon:'🏗️', count:23,  desc:'人形、四足、机械臂等机器人平台' },
+];
+
+// ============ 渲染品类卡片 ============
+function renderCategories() {
+  const grid = document.getElementById('categoryGrid');
+  let total = 0;
+  grid.innerHTML = CATEGORIES.map(c => {
+    total += c.count;
+    return `
+      <div class="cat-card">
+        <div class="cat-head">
+          <span class="cat-icon">${c.icon}</span>
+          <span class="cat-count">${c.count}<span class="unit">条</span></span>
+        </div>
+        <div class="cat-name">${c.name}<span class="en">${c.en}</span></div>
+        <div class="cat-desc">${c.desc}</div>
+        <div class="cat-api">GET /api/${c.key}.json</div>
+        <button class="btn btn-primary btn-sm" onclick="exportCategory('${c.key}','${c.name}')">⬇ 导出 JSON</button>
+      </div>
+    `;
+  }).join('');
+  // 更新总数
+  const statTotal = document.getElementById('statTotal');
+  if (statTotal) statTotal.textContent = total;
+}
+
+// ============ 导出单品类 JSON ============
+async function exportCategory(categoryKey, categoryName) {
+  const btn = event ? event.target : null;
+  const originalText = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.textContent = '导出中...'; }
+
+  try {
+    const res = await fetch(`/api/${categoryKey}.json`);
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.error || `HTTP ${res.status}`);
+    }
+    const data = await res.json();
+    // 下载为 JSON 文件
+    downloadJSON(data, `roboparts_${categoryKey}.json`);
+    const count = data.count || (data.data ? data.data.length : (Array.isArray(data) ? data.length : 0));
+    showToast(`已导出「${categoryName}」${count} 条数据`, 'success');
+  } catch (e) {
+    showToast(`导出失败：${e.message}`, 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = originalText; }
+  }
+}
+
+// ============ 导出全量数据（消耗 50 积分）============
+async function exportFullData() {
+  const apiKey = document.getElementById('apiKeyInput').value.trim();
+  const resultBox = document.getElementById('fullExportResult');
+  const btn = document.getElementById('btnFullExport');
+
+  // 校验 API Key
+  if (!apiKey || !apiKey.startsWith('gtk_')) {
+    showToast('请先在上方输入有效的 API Key（gtk_ 开头）', 'warning');
+    document.getElementById('apiKeyInput').focus();
+    return;
+  }
+
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '导出中...';
+  resultBox.className = 'result-box';
+
+  try {
+    const res = await fetch('/api/entities.json?key=' + encodeURIComponent(apiKey));
+    const data = await res.json();
+
+    if (res.ok) {
+      // 成功：下载
+      downloadJSON(data, 'roboparts_entities_full.json');
+      const remaining = res.headers.get('X-Credits-Remaining');
+      resultBox.className = 'result-box show success';
+      resultBox.innerHTML = `
+        <div class="result-title">✓ 全量数据导出成功</div>
+        <div class="result-detail">
+          数据集已下载为 <code>roboparts_entities_full.json</code><br>
+          消耗积分：50 ${remaining !== null ? '· 剩余积分：' + remaining : ''}<br>
+          如需查看余额变化，请点击上方「查询余额」刷新。
+        </div>
+      `;
+      showToast('全量数据导出成功，消耗 50 积分', 'success');
+      // 自动刷新余额
+      checkBalance(true);
+    } else if (res.status === 402) {
+      // 积分不足
+      resultBox.className = 'result-box show error';
+      const needed = data.credits_needed || 50;
+      resultBox.innerHTML = `
+        <div class="result-title">✕ 积分不足</div>
+        <div class="result-detail">
+          当前积分：${data.credits_remaining !== undefined ? data.credits_remaining : '未知'} · 还需 ${needed} 积分<br>
+          <a href="/credits" style="color:var(--accent)">前往充值 →</a>
+        </div>
+      `;
+      showToast('积分不足，全量导出需 50 积分', 'error');
+    } else {
+      resultBox.className = 'result-box show error';
+      resultBox.innerHTML = `
+        <div class="result-title">✕ 导出失败</div>
+        <div class="result-detail">${data.error || data.message || '未知错误 (HTTP ' + res.status + ')'}</div>
+      `;
+      showToast(data.error || '导出失败', 'error');
+    }
+  } catch (e) {
+    resultBox.className = 'result-box show error';
+    resultBox.innerHTML = `
+      <div class="result-title">✕ 网络错误</div>
+      <div class="result-detail">${e.message}</div>
+    `;
+    showToast('网络错误：' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+
+// ============ 免费预览全量数据 ============
+async function previewFullData() {
+  const resultBox = document.getElementById('fullExportResult');
+  resultBox.className = 'result-box';
+  resultBox.innerHTML = '<div class="result-title" style="color:var(--accent)">⏳ 正在加载预览...</div>';
+  resultBox.classList.add('show', 'info');
+
+  try {
+    // 不带 API Key，获取免费预览（仅摘要字段）
+    const res = await fetch('/api/entities.json');
+    const data = await res.json();
+
+    if (res.ok) {
+      const total = (data.meta && data.meta.total) || (data.entities ? data.entities.length : 0);
+      const returned = data.entities ? data.entities.length : 0;
+      const locked = (data.meta && data.meta.locked_fields_per_entity) || 0;
+      resultBox.className = 'result-box show info';
+      resultBox.innerHTML = `
+        <div class="result-title">👁️ 免费预览（仅摘要字段）</div>
+        <div class="result-detail">
+          实体总数：<code>${total}</code> · 本次返回：<code>${returned}</code> 条<br>
+          每条实体锁定字段：<code>${locked}</code> 个（需 API Key 解锁全字段）<br>
+          示例：<code>${data.entities && data.entities[0] ? (data.entities[0].id + ' · ' + (data.entities[0].name||'')) : '无'}</code><br>
+          如需完整字段，请输入 API Key 后点击「导出全量数据」（消耗 50 积分）。
+        </div>
+      `;
+      showToast(`免费预览已加载，共 ${total} 条实体`, 'info');
+    } else {
+      resultBox.className = 'result-box show error';
+      resultBox.innerHTML = `<div class="result-title">✕ 预览失败</div><div class="result-detail">${data.error || 'HTTP ' + res.status}</div>`;
+    }
+  } catch (e) {
+    resultBox.className = 'result-box show error';
+    resultBox.innerHTML = `<div class="result-title">✕ 网络错误</div><div class="result-detail">${e.message}</div>`;
+  }
+}
+
+// ============ 查询积分余额 ============
+async function checkBalance(silent) {
+  const apiKey = document.getElementById('apiKeyInput').value.trim();
+  const result = document.getElementById('balanceResult');
+
+  if (!apiKey || !apiKey.startsWith('gtk_')) {
+    if (!silent) showToast('请输入有效的 API Key（gtk_ 开头）', 'warning');
+    result.className = 'apikey-balance show error';
+    result.innerHTML = '<div class="label">错误</div><div class="value">请输入有效的 API Key（gtk_ 开头）</div>';
+    return;
+  }
+
+  if (!silent) {
+    result.className = 'apikey-balance show';
+    result.innerHTML = '<div class="label">查询中...</div><div class="value" style="color:var(--accent)">⏳ 正在查询</div>';
+  }
+
+  try {
+    const res = await fetch('/api/credits/balance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ api_key: apiKey })
+    });
+    const data = await res.json();
+
+    if (res.ok && data.credits !== undefined) {
+      result.className = 'apikey-balance show';
+      result.innerHTML = `
+        <div class="label">当前积分余额</div>
+        <div class="value">${data.credits} 积分</div>
+        <div style="margin-top:6px;font-size:.78rem;color:var(--dim)">
+          套餐: ${data.plan || 'free'} · 累计调用: ${data.api_calls || 0} 次
+        </div>
+      `;
+      if (!silent) showToast('余额查询成功：' + data.credits + ' 积分', 'success');
+    } else {
+      result.className = 'apikey-balance show error';
+      result.innerHTML = `<div class="label">查询失败</div><div class="value">${data.error || 'API Key 无效或不存在'}</div>`;
+      if (!silent) showToast(data.error || 'API Key 无效', 'error');
+    }
+  } catch (e) {
+    result.className = 'apikey-balance show error';
+    result.innerHTML = `<div class="label">网络错误</div><div class="value">${e.message}</div>`;
+    if (!silent) showToast('网络错误：' + e.message, 'error');
+  }
+}
+
+// ============ 下载 JSON 文件 ============
+function downloadJSON(data, filename) {
+  const jsonStr = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+// ============ Toast 提示 ============
+function showToast(message, type) {
+  type = type || 'info';
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  const icons = { success: '✓', error: '✕', info: 'ℹ', warning: '⚠' };
+  toast.innerHTML = '<span class="toast-icon">' + (icons[type] || 'ℹ') + '</span><span class="toast-msg">' + escapeHtml(message) + '</span>';
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
+
+// ============ HTML 转义 ============
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// ============ 页面初始化 ============
+window.addEventListener('DOMContentLoaded', () => {
+  // 渲染品类卡片
+  renderCategories();
+
+  // 从 localStorage 恢复 API Key
+  const savedKey = localStorage.getItem('roboparts_api_key');
+  if (savedKey) {
+    document.getElementById('apiKeyInput').value = savedKey;
+  }
+
+  // 监听 API Key 输入，自动保存
+  document.getElementById('apiKeyInput').addEventListener('change', (e) => {
+    localStorage.setItem('roboparts_api_key', e.target.value.trim());
+  });
+});
+</script>
+</body>
+</html>

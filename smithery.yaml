@@ -1,0 +1,46 @@
+# Smithery 目录清单 —— RoboParts hosted MCP
+#
+# 我方走 hosted Streamable HTTP 端点而非 npm 包分发：
+# 用户侧成本从「装包 + 领 key + 起进程」降到「粘贴一个 URL」。
+# 端点免鉴权只读，因此不需要 configSchema。
+startCommand:
+  type: http
+  url: https://roboparts.cc/mcp
+  configSchema:
+    type: object
+    properties: {}
+    required: []
+
+name: roboparts
+displayName: RoboParts 机器人零部件兼容性
+description: >-
+  仿生/人形机器人零部件兼容性数据层。688 条实体（执行器、传感器、芯片、通信协议、
+  接口、机器人平台、具身智能模型），支持 protocol / electrical / mechanical / ROS2
+  四维兼容判定与参数口径可比性核对。中立数据层：既不生产也不转售任何零部件；
+  兼容性结论基于厂商公开声明字段的规则推断而非实测，未声明维度显式标为「无法判定」。
+homepage: https://roboparts.cc
+documentation: https://roboparts.cc/mcp-guide
+license: MIT
+icon: https://roboparts.cc/favicon.ico
+
+tags:
+  - robotics
+  - humanoid-robot
+  - hardware
+  - compatibility
+  - bom
+  - embodied-ai
+  - actuator
+  - sensor
+
+tools:
+  - name: search_components
+    description: 按品类/关键词检索机器人零部件，返回摘要与证据等级
+  - name: get_component_detail
+    description: 按 ID 获取完整字段，含 source_tier / confidence / quarantine 元数据
+  - name: check_compatibility
+    description: 两个零件的协议/电气/机械/ROS2 四维兼容判定
+  - name: recommend_for_application
+    description: 按应用场景（人形/四足/机械臂/AMR/工业）推荐零部件组合
+  - name: get_parameter_semantics
+    description: 参数口径规范 —— 判断两份参数表能否直接比较

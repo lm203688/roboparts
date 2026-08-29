@@ -1,0 +1,4033 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts 模块化设计画布</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<link rel="canonical" href="https://roboparts.cc/designer">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root {
+  --bg: #0a0e17;
+  --bg2: #111827;
+  --bg3: #1a2236;
+  --border: #1e2d4a;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --accent: #06b6d4;
+  --accent2: #f59e0b;
+  --success: #10b981;
+  --danger: #ef4444;
+  --glow: rgba(6,182,212,0.15);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+@font-face {
+  font-family: 'System';
+  src: local('Inter'), local('Segoe UI'), local('PingFang SC'), local('Microsoft YaHei');
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== TOP NAV ===== */
+.top-nav {
+  height: 52px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  flex-shrink: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-brand .logo {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--bg);
+}
+
+.nav-brand h1 {
+  font-size: 16px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-title {
+  flex: 1;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text2);
+  letter-spacing: 0.5px;
+}
+
+.nav-title span {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.nav-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  transition: all 0.25s;
+}
+
+.nav-back:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--glow);
+}
+
+.nav-shortcuts{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.nav-shortcuts a{display:flex;align-items:center;gap:5px;color:var(--accent);text-decoration:none;font-size:12px;font-weight:600;padding:5px 12px;border-radius:6px;border:1px solid var(--border);transition:all .25s;white-space:nowrap}
+.nav-shortcuts a:hover{border-color:var(--accent);background:var(--glow)}
+
+/* ===== MAIN LAYOUT ===== */
+.main-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.sidebar-header .icon {
+  width: 18px;
+  height: 18px;
+  background: var(--accent);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--bg);
+}
+
+.sidebar-search {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-search input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: var(--text);
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.25s;
+}
+
+.sidebar-search input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow);
+}
+
+.sidebar-search input::placeholder {
+  color: var(--text2);
+}
+
+.sidebar-categories {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.sidebar-categories::-webkit-scrollbar { width: 4px; }
+.sidebar-categories::-webkit-scrollbar-track { background: transparent; }
+.sidebar-categories::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.category-header:hover { color: var(--accent); }
+
+.category-header .cat-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.category-header .cat-arrow {
+  margin-left: auto;
+  font-size: 10px;
+  transition: transform 0.25s;
+}
+
+.category-header.collapsed .cat-arrow {
+  transform: rotate(-90deg);
+}
+
+.category-modules {
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.category-modules.collapsed {
+  max-height: 0 !important;
+}
+
+.module-card {
+  margin: 4px 10px;
+  padding: 10px 12px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: grab;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.module-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.module-card:hover {
+  border-color: var(--accent);
+  background: rgba(26,34,54,0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.module-card:hover::before { opacity: 1; }
+
+.module-card:active { cursor: grabbing; }
+
+.module-card .mod-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.module-card .mod-badges {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.mod-badge {
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.mod-badge.bionic {
+  background: rgba(6,182,212,0.15);
+  color: var(--accent);
+  border: 1px solid rgba(6,182,212,0.3);
+}
+
+.mod-badge.standard {
+  background: rgba(245,158,11,0.15);
+  color: var(--accent2);
+  border: 1px solid rgba(245,158,11,0.3);
+}
+
+.module-card .mod-specs {
+  font-size: 10px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+.module-card .mod-price {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+/* ===== CANVAS AREA ===== */
+.canvas-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.canvas-toolbar {
+  height: 40px;
+  background: rgba(17,24,39,0.85);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+
+.canvas-toolbar .tb-btn {
+  padding: 5px 10px;
+  font-size: 11px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.canvas-toolbar .tb-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.canvas-toolbar .tb-btn.active {
+  background: rgba(6,182,212,0.15);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.canvas-toolbar .tb-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 4px;
+}
+
+.canvas-toolbar .tb-label {
+  font-size: 10px;
+  color: var(--text2);
+  margin-left: auto;
+}
+
+.canvas-viewport {
+  flex: 1;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(6,182,212,0.03) 0%, transparent 70%),
+    linear-gradient(rgba(30,45,74,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,45,74,0.3) 1px, transparent 1px);
+  background-size: 100% 100%, 30px 30px, 30px 30px;
+  background-position: center;
+}
+
+#three-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.canvas-overlay {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.canvas-overlay .info-chip {
+  font-size: 10px;
+  background: rgba(17,24,39,0.9);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 10px;
+  color: var(--text2);
+  backdrop-filter: blur(8px);
+}
+
+.canvas-overlay .info-chip strong {
+  color: var(--accent);
+}
+
+.drop-zone-indicator {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6,182,212,0.05);
+  border: 2px dashed var(--accent);
+  border-radius: 8px;
+  margin: 20px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.drop-zone-indicator.active {
+  display: flex;
+}
+
+.drop-zone-indicator span {
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 600;
+  background: var(--bg2);
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+}
+
+.placed-modules-list {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.placed-tag {
+  font-size: 10px;
+  padding: 3px 8px;
+  background: rgba(17,24,39,0.9);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  animation: fadeInTag 0.3s ease;
+}
+
+@keyframes fadeInTag {
+  from { opacity:0; transform:translateY(8px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.placed-tag .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.placed-tag .remove-tag {
+  cursor: pointer;
+  color: var(--text2);
+  margin-left: 2px;
+  pointer-events: all;
+  font-size: 12px;
+  line-height: 1;
+}
+.placed-tag .remove-tag:hover { color: var(--danger); }
+
+/* ===== PROPERTIES PANEL ===== */
+.properties-panel {
+  width: 280px;
+  min-width: 280px;
+  background: var(--bg2);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.props-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.props-header .icon {
+  width: 18px;
+  height: 18px;
+  background: var(--accent2);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--bg);
+}
+
+.props-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text2);
+}
+
+.props-empty .empty-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--bg3);
+  border: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  opacity: 0.5;
+}
+
+.props-empty p {
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.props-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.props-content::-webkit-scrollbar { width: 4px; }
+.props-content::-webkit-scrollbar-track { background: transparent; }
+.props-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.props-section {
+  margin-bottom: 20px;
+}
+
+.props-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.props-field {
+  margin-bottom: 8px;
+}
+
+.props-field .label {
+  font-size: 10px;
+  color: var(--text2);
+  margin-bottom: 2px;
+}
+
+.props-field .value {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.props-compliance {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.compliance-badge {
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  background: rgba(16,185,129,0.1);
+  color: var(--success);
+  border: 1px solid rgba(16,185,129,0.25);
+}
+
+.compliance-badge.inactive {
+  background: rgba(148,163,184,0.1);
+  color: var(--text2);
+  border-color: rgba(148,163,184,0.2);
+}
+
+.props-quality .quality-bar {
+  height: 6px;
+  background: var(--bg);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.props-quality .quality-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.props-quality .quality-fill.high { background: var(--success); }
+.props-quality .quality-fill.medium { background: var(--accent2); }
+.props-quality .quality-fill.low { background: var(--danger); }
+
+.compat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+}
+
+.compat-item .compat-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  flex-shrink: 0;
+}
+
+.compat-item .compat-icon.ok {
+  background: rgba(16,185,129,0.2);
+  color: var(--success);
+}
+
+.compat-item .compat-icon.warn {
+  background: rgba(245,158,11,0.2);
+  color: var(--accent2);
+}
+
+.compat-item .compat-icon.fail {
+  background: rgba(239,68,68,0.2);
+  color: var(--danger);
+}
+
+/* ===== BOTTOM TOOLBAR ===== */
+.bottom-toolbar {
+  height: 54px;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 10px;
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+.bt-btn {
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bt-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.03));
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.bt-btn:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(6,182,212,0.15);
+  transform: translateY(-1px);
+}
+
+.bt-btn:hover::after { opacity: 1; }
+
+.bt-btn.primary {
+  background: linear-gradient(135deg, var(--accent), #0891b2);
+  border-color: transparent;
+  color: #fff;
+}
+
+.bt-btn.primary:hover {
+  box-shadow: 0 0 24px rgba(6,182,212,0.3);
+}
+
+.bt-btn.danger {
+  border-color: rgba(239,68,68,0.3);
+  color: var(--danger);
+}
+
+.bt-btn.danger:hover {
+  background: rgba(239,68,68,0.1);
+  border-color: var(--danger);
+  box-shadow: 0 0 20px rgba(239,68,68,0.15);
+}
+
+.bt-stats {
+  margin-left: auto;
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.bt-stats .stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bt-stats .stat strong {
+  color: var(--accent);
+}
+
+/* ===== BOM MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-overlay.active { display: flex; }
+
+@keyframes fadeIn {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 700px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-header h2 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.bom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.bom-table th {
+  text-align: left;
+  padding: 8px 12px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  font-weight: 600;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bom-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(30,45,74,0.5);
+  color: var(--text);
+}
+
+.bom-table tr:hover td {
+  background: rgba(6,182,212,0.03);
+}
+
+.bom-table .cat-tag {
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.bom-total {
+  padding: 12px;
+  background: var(--bg3);
+  border-top: 2px solid var(--border);
+  margin-top: 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bom-total .total-label {
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+.bom-total .total-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.modal-footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* ===== 3D PRINT MODAL ===== */
+.print-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+.print-modal-overlay.active { display: flex; }
+
+.print-modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 560px;
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  animation: slideUp 0.3s ease;
+}
+
+.print-modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.print-modal-header h2 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.print-modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.print-material-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.print-material-card {
+  padding: 14px;
+  background: var(--bg3);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.print-material-card:hover {
+  border-color: var(--accent);
+}
+
+.print-material-card.selected {
+  border-color: var(--accent);
+  background: rgba(6,182,212,0.08);
+  box-shadow: 0 0 16px rgba(6,182,212,0.1);
+}
+
+.print-material-card .mat-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.print-material-card .mat-desc {
+  font-size: 11px;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+
+.print-material-card .mat-price {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.print-estimate {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.print-estimate .est-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.print-estimate .est-row:last-child { margin-bottom: 0; }
+
+.print-estimate .est-label { color: var(--text2); }
+
+.print-estimate .est-value {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.print-qr-section {
+  text-align: center;
+  padding: 16px;
+  background: var(--bg3);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.print-qr-section p {
+  font-size: 12px;
+  color: var(--text2);
+  margin-bottom: 10px;
+}
+
+.print-qr-box {
+  width: 140px;
+  height: 140px;
+  background: #fff;
+  border-radius: 8px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.print-qr-box canvas,
+.print-qr-box img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.print-modal-footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.print-btn-jlc {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--accent), #0891b2);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.print-btn-jlc:hover {
+  box-shadow: 0 0 24px rgba(6,182,212,0.3);
+  transform: translateY(-1px);
+}
+
+/* ===== TOAST ===== */
+.toast-container {
+  position: fixed;
+  top: 64px;
+  right: 20px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toast {
+  padding: 10px 18px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--text);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  animation: toastIn 0.3s ease, toastOut 0.3s ease 2.7s forwards;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 240px;
+}
+
+.toast.success { border-left: 3px solid var(--success); }
+.toast.info { border-left: 3px solid var(--accent); }
+.toast.warn { border-left: 3px solid var(--accent2); }
+
+@keyframes toastIn {
+  from { opacity:0; transform:translateX(40px); }
+  to { opacity:1; transform:translateX(0); }
+}
+
+@keyframes toastOut {
+  from { opacity:1; transform:translateX(0); }
+  to { opacity:0; transform:translateX(40px); }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 var(--glow); }
+  50% { box-shadow: 0 0 12px 2px var(--glow); }
+}
+
+.pulse-glow { animation: pulse-glow 2s infinite; }
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ===== URDF PREVIEW SECTION ===== */
+.urdf-section {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.urdf-section.active {
+  display: flex;
+}
+
+.urdf-toolbar {
+  height: 40px;
+  background: rgba(17,24,39,0.85);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+
+.urdf-toolbar .tb-btn {
+  padding: 5px 10px;
+  font-size: 11px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.urdf-toolbar .tb-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.urdf-toolbar .tb-btn.active {
+  background: rgba(6,182,212,0.15);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.urdf-toolbar .tb-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 4px;
+}
+
+.urdf-toolbar .tb-label {
+  font-size: 10px;
+  color: var(--text2);
+  margin-left: auto;
+}
+
+.urdf-viewport {
+  flex: 1;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(6,182,212,0.03) 0%, transparent 70%),
+    linear-gradient(rgba(30,45,74,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,45,74,0.3) 1px, transparent 1px);
+  background-size: 100% 100%, 30px 30px, 30px 30px;
+  background-position: center;
+}
+
+#urdf-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.urdf-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--text2);
+  pointer-events: none;
+}
+
+.urdf-empty .empty-icon-big {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  background: var(--bg3);
+  border: 2px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  opacity: 0.5;
+}
+
+.urdf-empty h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.urdf-empty p {
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+.urdf-empty .urdf-actions {
+  display: flex;
+  gap: 10px;
+  pointer-events: all;
+}
+
+.urdf-empty .urdf-action-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.urdf-empty .urdf-action-btn.primary {
+  background: linear-gradient(135deg, var(--accent), #0891b2);
+  border: none;
+  color: #fff;
+}
+
+.urdf-empty .urdf-action-btn.primary:hover {
+  box-shadow: 0 0 24px rgba(6,182,212,0.3);
+  transform: translateY(-1px);
+}
+
+.urdf-empty .urdf-action-btn.secondary {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.urdf-empty .urdf-action-btn.secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ===== URDF IMPORT MODAL ===== */
+.urdf-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.urdf-modal-overlay.active { display: flex; }
+
+.urdf-modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 750px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  animation: slideUp 0.3s ease;
+}
+
+.urdf-modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.urdf-modal-header h2 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.urdf-modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.urdf-modal-body textarea {
+  width: 100%;
+  height: 280px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  color: var(--text);
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.25s;
+}
+
+.urdf-modal-body textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow);
+}
+
+.urdf-modal-body textarea::placeholder {
+  color: var(--text2);
+}
+
+.urdf-modal-body .file-upload-area {
+  margin-top: 12px;
+  padding: 20px;
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.urdf-modal-body .file-upload-area:hover {
+  border-color: var(--accent);
+  background: var(--glow);
+}
+
+.urdf-modal-body .file-upload-area p {
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.urdf-modal-body .file-upload-area .upload-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.urdf-modal-body .sample-urdf-btn {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text2);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.urdf-modal-body .sample-urdf-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.urdf-modal-footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* ===== URDF JOINT SLIDERS (in properties panel) ===== */
+.urdf-joint-controls {
+  padding: 12px 0;
+}
+
+.urdf-joint-controls .joint-slider-group {
+  margin-bottom: 12px;
+}
+
+.urdf-joint-controls .joint-slider-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.urdf-joint-controls .joint-slider-label span:first-child {
+  font-size: 11px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.urdf-joint-controls .joint-slider-label .joint-value {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 600;
+  font-family: 'Consolas', monospace;
+}
+
+.urdf-joint-controls input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--bg);
+  border-radius: 2px;
+  outline: none;
+}
+
+.urdf-joint-controls input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(6,182,212,0.4);
+  transition: box-shadow 0.2s;
+}
+
+.urdf-joint-controls input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 12px rgba(6,182,212,0.6);
+}
+
+.urdf-joint-controls input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 6px rgba(6,182,212,0.4);
+}
+
+/* ===== SIDEBAR URDF TAB ===== */
+.sidebar-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-tab {
+  flex: 1;
+  padding: 10px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text2);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+}
+
+.sidebar-tab:hover {
+  color: var(--text);
+  background: rgba(6,182,212,0.05);
+}
+
+.sidebar-tab.active {
+  color: var(--accent);
+}
+
+.sidebar-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+}
+
+.sidebar-tab-content {
+  display: none;
+}
+
+.sidebar-tab-content.active {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ===== CANVAS VIEW TOGGLE ===== */
+.canvas-area.hidden, .urdf-section.hidden {
+  display: none !important;
+}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a class="nav-back" href="/">
+    <span>&#8592;</span> 返回主页
+  </a>
+  <div class="nav-brand">
+    <div class="logo">RP</div>
+    <h1>RoboParts</h1>
+  </div>
+  <div class="nav-shortcuts">
+    <a href="/selection">智能选型</a>
+    <a href="/bom-manager">BOM管理</a>
+  </div>
+  <div class="nav-title"><span>模块化设计画布</span> &mdash; roboparts.cc</div>
+</nav>
+
+<!-- MAIN LAYOUT -->
+<div class="main-layout">
+
+  <!-- LEFT SIDEBAR: MODULE PALETTE + URDF IMPORT -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="icon">&#9881;</div>
+      资源面板
+    </div>
+    <div class="sidebar-tabs">
+      <button class="sidebar-tab active" onclick="switchSidebarTab('modules')" id="tabModules">模块库</button>
+      <button class="sidebar-tab" onclick="switchSidebarTab('urdf')" id="tabUrdf">URDF导入</button>
+    </div>
+    <div class="sidebar-tab-content active" id="sidebarModules">
+      <div class="sidebar-search">
+        <input type="text" id="moduleSearch" placeholder="搜索模块..." oninput="filterModules(this.value)">
+      </div>
+      <div class="sidebar-categories" id="moduleList"></div>
+    </div>
+    <div class="sidebar-tab-content" id="sidebarUrdf" style="flex-direction:column;padding:16px;gap:12px;">
+      <div style="font-size:12px;color:var(--text2);line-height:1.6;">
+        通过粘贴 URDF XML 或上传 .urdf 文件来预览机器人模型。支持关节操控。
+      </div>
+      <button class="bt-btn primary" style="width:100%;justify-content:center;font-size:12px" onclick="openUrdfImportModal()">
+        &#128196; 导入URDF文件
+      </button>
+      <button class="bt-btn" style="width:100%;justify-content:center;font-size:12px" onclick="loadSampleUrdf()">
+        &#128218; 加载示例URDF
+      </button>
+      <button class="bt-btn" style="width:100%;justify-content:center;font-size:12px" onclick="previewCurrentDesignUrdf()">
+        &#128065; 预览当前设计
+      </button>
+      <div id="urdfLoadedInfo" style="display:none;">
+        <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:6px;">
+          已加载URDF
+        </div>
+        <div id="urdfInfoContent" style="font-size:11px;color:var(--text);line-height:1.5;"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CENTER: CANVAS -->
+  <div class="canvas-area" id="canvasArea">
+    <div class="canvas-toolbar">
+      <button class="tb-btn active" onclick="setViewMode('3d')" id="btn3d">3D 视图</button>
+      <button class="tb-btn" onclick="setViewMode('wireframe')" id="btnWire">线框</button>
+      <div class="tb-sep"></div>
+      <button class="tb-btn" onclick="resetCamera()">&#8634; 重置视角</button>
+      <button class="tb-btn" onclick="toggleAutoRotate()" id="btnRotate">&#10227; 自动旋转</button>
+      <div class="tb-sep"></div>
+      <button class="tb-btn" onclick="addDummyModule()">&#10010; 添加关节</button>
+      <div class="tb-sep"></div>
+      <button class="tb-btn" onclick="switchToUrdfView()" id="btnUrdfView" title="切换到URDF预览">&#9654; URDF预览</button>
+      <div class="tb-label" id="jointCount">关节数: 6 | 连杆数: 5</div>
+    </div>
+    <div class="canvas-viewport" id="canvasViewport">
+      <canvas id="three-canvas"></canvas>
+      <div class="canvas-overlay">
+        <div class="info-chip">视口: <strong>透视投影</strong></div>
+        <div class="info-chip">模块: <strong id="placedCount">0</strong> / 12</div>
+      </div>
+      <div class="drop-zone-indicator" id="dropZone">
+        <span>&#128193; 拖放模块到此处安装</span>
+      </div>
+      <div class="placed-modules-list" id="placedList"></div>
+    </div>
+  </div>
+
+  <!-- URDF PREVIEW SECTION -->
+  <div class="urdf-section" id="urdfSection">
+    <div class="urdf-toolbar">
+      <button class="tb-btn" onclick="switchToDesignView()" id="btnBackDesign">&#8592; 设计视图</button>
+      <div class="tb-sep"></div>
+      <button class="tb-btn" onclick="urdfResetCamera()">&#8634; 重置视角</button>
+      <button class="tb-btn" onclick="urdfToggleAutoRotate()" id="btnUrdfRotate">&#10227; 自动旋转</button>
+      <div class="tb-sep"></div>
+      <button class="tb-btn" onclick="openUrdfImportModal()">&#128196; 导入URDF</button>
+      <div class="tb-label" id="urdfStatusLabel">未加载URDF</div>
+    </div>
+    <div class="urdf-viewport" id="urdfViewport">
+      <canvas id="urdf-canvas"></canvas>
+      <div class="urdf-empty" id="urdfEmpty">
+        <div class="empty-icon-big">&#129302;</div>
+        <h3>URDF 预览区域</h3>
+        <p>导入 URDF 文件或粘贴 URDF XML 以可视化完整的机器人模型。支持关节操控。</p>
+        <div class="urdf-actions">
+          <button class="urdf-action-btn primary" onclick="openUrdfImportModal()">&#128196; 导入URDF</button>
+          <button class="urdf-action-btn secondary" onclick="loadSampleUrdf()">&#128218; 加载示例</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: PROPERTIES -->
+  <aside class="properties-panel" id="propsPanel">
+    <div class="props-header">
+      <div class="icon">&#9783;</div>
+      属性面板
+    </div>
+    <div class="props-empty" id="propsEmpty">
+      <div class="empty-icon">&#9678;</div>
+      <p>从左侧拖放模块到画布<br>或点击已放置的模块查看详情</p>
+    </div>
+    <div class="props-content" id="propsContent" style="display:none;"></div>
+    <div class="props-content" id="urdfJointPanel" style="display:none;">
+      <div class="props-section">
+        <div class="props-section-title">URDF 关节控制</div>
+        <div id="urdfJointSliders">
+          <div style="font-size:11px;color:var(--text2);">加载URDF后可在此操控关节角度</div>
+        </div>
+      </div>
+      <div class="props-section">
+        <div class="props-section-title">URDF信息</div>
+        <div id="urdfPropsInfo" style="font-size:11px;color:var(--text2);">无URDF加载</div>
+      </div>
+      <button class="bt-btn" style="width:100%;justify-content:center;font-size:12px;margin-top:8px" onclick="resetUrdfJoints()">&#8634; 重置所有关节</button>
+    </div>
+  </aside>
+
+</div>
+
+<!-- BOTTOM TOOLBAR -->
+<div class="bottom-toolbar">
+  <button class="bt-btn primary" onclick="generateURDF()">&#128196; 导出URDF</button>
+  <button class="bt-btn" onclick="generateSTL()">&#128230; 导出STL</button>
+  <button class="bt-btn" onclick="generateBOM()">&#128203; 生成BOM</button>
+  <button class="bt-btn" style="border-color:rgba(6,182,212,0.4);color:var(--accent)" onclick="openPrintModal()">&#128424; 一键3D打印</button>
+  <button class="bt-btn" onclick="shareConfig()">&#128279; 分享方案</button>
+  <button class="bt-btn danger" onclick="clearCanvas()">&#128465; 清空画布</button>
+  <div class="bt-stats">
+    <div class="stat">模块: <strong id="statModules">0</strong></div>
+    <div class="stat">总重: <strong id="statWeight">0g</strong></div>
+    <div class="stat">成本: <strong id="statCost">&#165;0</strong></div>
+  </div>
+</div>
+
+<!-- BOM MODAL -->
+<div class="modal-overlay" id="bomModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>&#128203; 物料清单 (BOM)</h2>
+      <button class="modal-close" onclick="closeBOM()">&#10005;</button>
+    </div>
+    <div class="modal-body" id="bomBody"></div>
+    <div class="modal-footer">
+      <button class="bt-btn" onclick="exportCSV()">&#128190; 导出CSV</button>
+      <button class="bt-btn" onclick="closeBOM()">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- 3D PRINT MODAL -->
+<div class="print-modal-overlay" id="printModal">
+  <div class="print-modal" id="print-section">
+    <div class="print-modal-header">
+      <h2>&#128424; 一键3D打印</h2>
+      <button class="modal-close" onclick="closePrintModal()">&#10005;</button>
+    </div>
+    <div class="print-modal-body" id="printBody">
+      <div style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.6;">
+        已将当前设计导出为 STL 文件。选择材料获取预估报价，然后前往嘉立创3D打印平台下单。
+      </div>
+
+      <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">选择打印材料</div>
+      <div class="print-material-grid" id="printMaterialGrid">
+        <div class="print-material-card selected" data-mat="pla" onclick="selectPrintMaterial('pla')">
+          <div class="mat-name">PLA</div>
+          <div class="mat-desc">经济型，易打印，适合原型验证与结构件</div>
+          <div class="mat-price">约 10-30 元</div>
+        </div>
+        <div class="print-material-card" data-mat="pa12" onclick="selectPrintMaterial('pa12')">
+          <div class="mat-name">尼龙 PA12</div>
+          <div class="mat-desc">高强度，耐磨损，适合承重结构件</div>
+          <div class="mat-price">约 80-200 元</div>
+        </div>
+        <div class="print-material-card" data-mat="resin" onclick="selectPrintMaterial('resin')">
+          <div class="mat-name">光敏树脂</div>
+          <div class="mat-desc">高精度，表面光滑，适合细节复杂的零件</div>
+          <div class="mat-price">约 50-150 元</div>
+        </div>
+        <div class="print-material-card" data-mat="metal" onclick="selectPrintMaterial('metal')">
+          <div class="mat-name">不锈钢 (金属)</div>
+          <div class="mat-desc">超高强度，耐高温，适合关键承重部件</div>
+          <div class="mat-price">约 200-1000 元</div>
+        </div>
+      </div>
+
+      <div class="print-estimate">
+        <div class="est-row">
+          <span class="est-label">模型体积估算</span>
+          <span class="est-value" id="estVolume">计算中...</span>
+        </div>
+        <div class="est-row">
+          <span class="est-label">预估价格区间</span>
+          <span class="est-value" id="estPrice">计算中...</span>
+        </div>
+        <div class="est-row">
+          <span class="est-label">预计交付时间</span>
+          <span class="est-value" id="estTime">3-7 个工作日</span>
+        </div>
+      </div>
+
+      <div class="print-qr-section">
+        <p>手机扫码直达嘉立创3D打印小程序上传文件</p>
+        <div class="print-qr-box" id="printQrBox">
+          <div style="font-size:11px;color:#333;text-align:center;">二维码生成中...</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;color:var(--text2);line-height:1.6;">
+        <strong style="color:var(--accent)">操作指引：</strong><br>
+        1. 上方 STL 文件已自动下载到本地<br>
+        2. 选择打印材料后点击"前往嘉立创"<br>
+        3. 在嘉立创平台上传 STL 文件并选择对应材料下单<br>
+        4. 或使用手机扫描二维码在小程序中上传
+      </div>
+    </div>
+    <div class="print-modal-footer">
+      <button class="bt-btn" onclick="closePrintModal()">关闭</button>
+      <button class="bt-btn" onclick="generateSTL()">&#128230; 重新导出STL</button>
+      <button class="print-btn-jlc" onclick="openJlc3dp()">&#128640; 前往嘉立创3D打印</button>
+    </div>
+  </div>
+</div>
+
+<!-- URDF IMPORT MODAL -->
+<div class="urdf-modal-overlay" id="urdfModal">
+  <div class="urdf-modal">
+    <div class="urdf-modal-header">
+      <h2>&#128196; 导入 URDF</h2>
+      <button class="modal-close" onclick="closeUrdfModal()">&#10005;</button>
+    </div>
+    <div class="urdf-modal-body">
+      <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">粘贴 URDF XML 内容或上传 .urdf 文件：</div>
+      <textarea id="urdfXmlInput" placeholder="<?xml version="1.0"?>
+<robot name="my_robot">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.4"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0.8 0.8 1"/>
+      </material>
+    </visual>
+  </link>
+  <!-- ... -->
+</robot>"></textarea>
+      <div class="file-upload-area" onclick="document.getElementById('urdfFileInput').click()">
+        <div class="upload-icon">&#128194;</div>
+        <p>点击上传 .urdf / .xacro 文件</p>
+        <p style="font-size:10px;margin-top:4px;" id="urdfFileName">未选择文件</p>
+      </div>
+      <input type="file" id="urdfFileInput" accept=".urdf,.xacro,.xml" style="display:none" onchange="handleUrdfFileUpload(event)">
+      <button class="sample-urdf-btn" onclick="fillSampleUrdf()">&#128218; 填充示例 URDF</button>
+    </div>
+    <div class="urdf-modal-footer">
+      <button class="bt-btn" onclick="closeUrdfModal()">取消</button>
+      <button class="bt-btn primary" onclick="parseAndLoadUrdf()">&#128269; 解析并加载</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const MODULE_CATEGORIES = [
+  {
+    id: 'actuators',
+    name: '执行器 (Actuators)',
+    color: '#06b6d4',
+    modules: [
+      {
+        id: 'xm430', name: 'XM430-T210-R',
+        brand: 'DYNAMIXEL (ROBOTIS)',
+        specs: '扭矩: 4.1Nm | 速度: 55rpm | 通信: TTL',
+        detailSpecs: {
+          '额定扭矩': '4.1 Nm', '最高转速': '55 RPM', '通信协议': 'TTL (半双工)',
+          '电压': '12V', '分辨率': '4096 pulse/rev', '重量': '120g', '尺寸': '36×50 mm'
+        },
+        price: 2490, bionic: true,
+        compliance: ['GB/T', 'ISO 9001', 'ROS2'],
+        quality: { source: '官方数据表', confidence: 95 },
+        compat: { 'U2D2': 'ok', 'OpenCM 485': 'ok', 'Jetson Orin Nano': 'ok' }
+      },
+      {
+        id: 'sea-torque', name: 'SEA-Torque-50',
+        brand: 'TQ-Systems',
+        specs: '扭矩: 50Nm | 类型: SEA | 反驱能力',
+        detailSpecs: {
+          '额定扭矩': '50 Nm', '峰值扭矩': '75 Nm', '类型': '串联弹性驱动 (SEA)',
+          '带宽': '50 Hz', '重量': '850g', '刚度': '200 Nm/rad', '编码器': '多圈绝对编码器'
+        },
+        price: 12800, bionic: true,
+        compliance: ['ISO', 'IEC 61508', 'ROS2'],
+        quality: { source: '技术白皮书', confidence: 88 },
+        compat: { 'U2D2': 'warn', 'OpenCM 485': 'fail', 'Jetson Orin Nano': 'ok' }
+      },
+      {
+        id: 'maxon-ec40', name: 'Maxon EC-i 40',
+        brand: 'Maxon Motor',
+        specs: '功率: 200W | 效率: 90% | 无刷DC',
+        detailSpecs: {
+          '额定功率': '200 W', '额定转速': '7950 RPM', '额定扭矩': '0.24 Nm',
+          '效率': '>90%', '电压': '48V', '重量': '310g', '直径': '40 mm'
+        },
+        price: 6750, bionic: false,
+        compliance: ['GB/T', 'ISO', 'IEC'],
+        quality: { source: '官方数据表', confidence: 97 },
+        compat: { 'U2D2': 'fail', 'OpenCM 485': 'fail', 'Jetson Orin Nano': 'warn' }
+      }
+    ]
+  },
+  {
+    id: 'sensors',
+    name: '传感器 (Sensors)',
+    color: '#10b981',
+    modules: [
+      {
+        id: 'ati-nano', name: 'ATI Nano43',
+        brand: 'ATI Industrial Automation',
+        specs: '量程: Fx/Fy:130N | Fz:400N | 6轴力/力矩',
+        detailSpecs: {
+          'Fx/Fy量程': '±130 N', 'Fz量程': '±400 N', 'Tx/Ty量程': '±10 Nm', 'Tz量程': '±10 Nm',
+          '分辨率': 'Fx/Fy:0.0125N', '采样率': '≥7000 Hz', '重量': '95g', '接口': 'EtherCAT'
+        },
+        price: 42000, bionic: false,
+        compliance: ['GB/T', 'ISO', 'IEC'],
+        quality: { source: '官方数据表', confidence: 98 },
+        compat: { 'Jetson Orin Nano': 'ok', 'RealSense D455': 'ok' }
+      },
+      {
+        id: 'xsens-mti30', name: 'Xsens MTi-30',
+        brand: 'Movella / Xsens',
+        specs: '9-DOF IMU | 精度: 姿态0.5° | AHRS',
+        detailSpecs: {
+          '自由度': '9-DOF (3轴陀螺+3轴加速+3轴磁力计)', '姿态精度': '0.5° (RMS)',
+          '陀螺偏差稳定性': '10°/h', '数据率': '最大 400 Hz', '重量': '55g', '接口': 'UART / USB / CAN'
+        },
+        price: 8500, bionic: false,
+        compliance: ['GB/T', 'ISO', 'ROS2'],
+        quality: { source: '官方数据表', confidence: 96 },
+        compat: { 'Jetson Orin Nano': 'ok', 'OpenCM 485': 'warn' }
+      },
+      {
+        id: 'realsense-d455', name: 'RealSense D455',
+        brand: 'Intel',
+        specs: 'RGB-D | 深度: 0.6-6m | 立体视觉',
+        detailSpecs: {
+          '深度范围': '0.6m - 6m', '深度分辨率': '1280×720 @ 90fps', 'RGB': '1080p @ 30fps',
+          'IMU': '内置 BMI055', '基线': '95mm', '重量': '120g', '接口': 'USB 3.2'
+        },
+        price: 4200, bionic: true,
+        compliance: ['GB/T', 'IEC', 'ROS2'],
+        quality: { source: '官方数据表', confidence: 95 },
+        compat: { 'Jetson Orin Nano': 'ok', 'ATI Nano43': 'ok' }
+      }
+    ]
+  },
+  {
+    id: 'controllers',
+    name: '控制器 (Controllers)',
+    color: '#8b5cf6',
+    modules: [
+      {
+        id: 'jetson-orin', name: 'Jetson Orin Nano',
+        brand: 'NVIDIA',
+        specs: 'AI: 40 TOPS | GPU: Ampere | 8GB LPDDR5',
+        detailSpecs: {
+          'AI算力': '40 TOPS', 'GPU架构': 'Ampere (1024 CUDA)', 'CPU': '6核 ARM Cortex-A78AE',
+          '内存': '8GB LPDDR5 (68 GB/s)', '存储': 'NVMe支持', '功耗': '15-25W', '接口': 'PCIe, USB3.2, MIPI-CSI'
+        },
+        price: 3400, bionic: true,
+        compliance: ['GB/T', 'ISO', 'IEC', 'ROS2'],
+        quality: { source: '官方数据表', confidence: 99 },
+        compat: { 'U2D2': 'ok', 'OpenCM 485': 'ok', 'XM430-T210-R': 'ok' }
+      },
+      {
+        id: 'u2d2', name: 'U2D2',
+        brand: 'ROBOTIS',
+        specs: 'DYNAMIXEL接口 | USB转TTL/RS485 | 3端口',
+        detailSpecs: {
+          '支持的舵机': 'DYNAMIXEL AX/MX/X/X2/XM/XH 系列', '通道': '3 (独立TTL总线)',
+          '通信': 'USB 2.0 -> TTL / RS485', '波特率': '最高 4.5 Mbps', '供电': '外部12V', '重量': '38g'
+        },
+        price: 580, bionic: false,
+        compliance: ['ROS2'],
+        quality: { source: '官方数据表', confidence: 95 },
+        compat: { 'XM430-T210-R': 'ok', 'Jetson Orin Nano': 'ok' }
+      },
+      {
+        id: 'opencm485', name: 'OpenCM 485',
+        brand: 'ROBOTIS',
+        specs: '开源控制器 | ARM Cortex-M7 | RS-485',
+        detailSpecs: {
+          'MCU': 'STM32F746 (ARM Cortex-M7, 216MHz)', 'RAM': '512KB', 'Flash': '1MB',
+          '通信': 'RS-485, TTL, USB', 'DYNAMIXEL端口': '4个', '支持IDE': 'Arduino / ROBOTIS IDE',
+          '重量': '25g'
+        },
+        price: 420, bionic: false,
+        compliance: ['ROS2'],
+        quality: { source: '官方数据表', confidence: 92 },
+        compat: { 'XM430-T210-R': 'ok', 'U2D2': 'warn' }
+      }
+    ]
+  },
+  {
+    id: 'endeffectors',
+    name: '末端执行器 (End Effectors)',
+    color: '#f59e0b',
+    modules: [
+      {
+        id: 'shadow-hand', name: 'Shadow Hand',
+        brand: 'Shadow Robot',
+        specs: '20自由度 | 触觉传感 | 拟人灵巧手',
+        detailSpecs: {
+          '自由度': '20 (5指)', '关节': '24个', '触觉': '多点触觉传感器',
+          '最大指尖力': '约8N', '控制': 'EtherCAT', '重量': '约3.8kg', '应用': '灵巧抓取、人机交互'
+        },
+        price: 280000, bionic: true,
+        compliance: ['ISO', 'IEC 61508', 'ROS2'],
+        quality: { source: '技术白皮书', confidence: 85 },
+        compat: { 'Jetson Orin Nano': 'ok', 'ATI Nano43': 'warn' }
+      },
+      {
+        id: 'qb-soft', name: 'QB SoftHand',
+        brand: 'QB Robotics',
+        specs: '拟人柔性手 | 自适应抓取 | 轻量',
+        detailSpecs: {
+          '驱动': '单电机腱驱动 (19个自由度)', '手指': '5', '抓取模式': '自适应',
+          '最大抓取力': '约15N', '重量': '320g', '通信': 'CAN / EtherCAT', '应用': '协作抓取'
+        },
+        price: 28500, bionic: true,
+        compliance: ['ISO', 'ROS2'],
+        quality: { source: '官方数据表', confidence: 90 },
+        compat: { 'Jetson Orin Nano': 'ok', 'U2D2': 'ok' }
+      },
+      {
+        id: 'robotiq-2f85', name: 'Robotiq 2F-85',
+        brand: 'Robotiq',
+        specs: '平行夹爪 | 行程85mm | 力5-250N',
+        detailSpecs: {
+          '夹持行程': '0-85mm', '夹持力': '5-250N (可调)', '手指数量': '2 (可更换)',
+          '通信': 'Modbus RTU / EtherCAT / ROS', '重量': '930g', 'IP等级': 'IP54',
+          '响应时间': '开合 <0.8s'
+        },
+        price: 15800, bionic: false,
+        compliance: ['GB/T', 'ISO', 'IEC', 'ROS2'],
+        quality: { source: '官方数据表', confidence: 98 },
+        compat: { 'Jetson Orin Nano': 'ok', 'ATI Nano43': 'ok' }
+      }
+    ]
+  }
+];
+
+// Placed modules state
+let placedModules = [];
+let selectedModuleId = null;
+let autoRotate = false;
+
+// ============================================================
+// RENDER SIDEBAR
+// ============================================================
+function renderSidebar(filter = '') {
+  const container = document.getElementById('moduleList');
+  container.innerHTML = '';
+  const fl = filter.toLowerCase();
+
+  MODULE_CATEGORIES.forEach(cat => {
+    const filteredModules = cat.modules.filter(m =>
+      m.name.toLowerCase().includes(fl) || m.brand.toLowerCase().includes(fl) || m.specs.toLowerCase().includes(fl)
+    );
+    if (filteredModules.length === 0) return;
+
+    const catDiv = document.createElement('div');
+    catDiv.innerHTML = `
+      <div class="category-header" onclick="toggleCategory(this)">
+        <span class="cat-dot" style="background:${cat.color}"></span>
+        ${cat.name}
+        <span class="cat-arrow">&#9660;</span>
+      </div>
+      <div class="category-modules">
+        ${filteredModules.map(m => `
+          <div class="module-card" draggable="true"
+               ondragstart="onDragStart(event, '${m.id}')"
+               onclick="selectModule('${m.id}')">
+            <div class="mod-name">${m.name}</div>
+            <div class="mod-badges">
+              ${m.bionic ? '<span class="mod-badge bionic">仿生</span>' : '<span class="mod-badge standard">标准</span>'}
+            </div>
+            <div class="mod-specs">${m.specs}</div>
+            <div class="mod-price">&#165;${m.price.toLocaleString()}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(catDiv);
+
+    // Set max-height for animation
+    requestAnimationFrame(() => {
+      const modsDiv = catDiv.querySelector('.category-modules');
+      if (modsDiv) modsDiv.style.maxHeight = modsDiv.scrollHeight + 'px';
+    });
+  });
+}
+
+function toggleCategory(header) {
+  header.classList.toggle('collapsed');
+  const mods = header.nextElementSibling;
+  mods.classList.toggle('collapsed');
+}
+
+function filterModules(val) {
+  renderSidebar(val);
+}
+
+// ============================================================
+// DRAG & DROP
+// ============================================================
+function findModuleById(id) {
+  for (const cat of MODULE_CATEGORIES) {
+    const m = cat.modules.find(m => m.id === id);
+    if (m) return { module: m, category: cat };
+  }
+  return null;
+}
+
+function onDragStart(e, moduleId) {
+  e.dataTransfer.setData('text/plain', moduleId);
+  e.dataTransfer.effectAllowed = 'copy';
+}
+
+const viewport = document.getElementById('canvasViewport');
+viewport.addEventListener('dragover', e => {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'copy';
+  document.getElementById('dropZone').classList.add('active');
+});
+
+viewport.addEventListener('dragleave', e => {
+  if (!viewport.contains(e.relatedTarget)) {
+    document.getElementById('dropZone').classList.remove('active');
+  }
+});
+
+viewport.addEventListener('drop', e => {
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('active');
+  const moduleId = e.dataTransfer.getData('text/plain');
+  if (moduleId) placeModule(moduleId);
+});
+
+function placeModule(moduleId) {
+  const found = findModuleById(moduleId);
+  if (!found) return;
+  const { module, category } = found;
+
+  // Check if already placed
+  if (placedModules.find(p => p.module.id === moduleId)) {
+    showToast('该模块已放置', 'warn');
+    return;
+  }
+
+  if (placedModules.length >= 12) {
+    showToast('最多放置12个模块', 'warn');
+    return;
+  }
+
+  placedModules.push({
+    module,
+    category,
+    placedAt: Date.now()
+  });
+
+  updateScene();
+  updatePlacedTags();
+  updateStats();
+  selectModule(moduleId);
+  showToast(`${module.name} 已安装`, 'success');
+}
+
+// ============================================================
+// PLACED MODULES TAGS
+// ============================================================
+function updatePlacedTags() {
+  const container = document.getElementById('placedList');
+  container.innerHTML = placedModules.map((p, i) => `
+    <div class="placed-tag" style="animation-delay:${i * 0.05}s">
+      <span class="dot" style="background:${p.category.color}"></span>
+      ${p.module.name}
+      <span class="remove-tag" onclick="removeModule('${p.module.id}')">&#10005;</span>
+    </div>
+  `).join('');
+
+  document.getElementById('placedCount').textContent = placedModules.length;
+}
+
+function removeModule(moduleId) {
+  placedModules = placedModules.filter(p => p.module.id !== moduleId);
+  if (selectedModuleId === moduleId) {
+    selectedModuleId = null;
+    showPropsEmpty();
+  }
+  updateScene();
+  updatePlacedTags();
+  updateStats();
+}
+
+function addDummyModule() {
+  const ids = placedModules.map(p => p.module.id);
+  for (const cat of MODULE_CATEGORIES) {
+    for (const m of cat.modules) {
+      if (!ids.includes(m.id)) {
+        placeModule(m.id);
+        return;
+      }
+    }
+  }
+  showToast('所有模块已放置', 'info');
+}
+
+// ============================================================
+// PROPERTIES PANEL
+// ============================================================
+function selectModule(moduleId) {
+  selectedModuleId = moduleId;
+  const found = findModuleById(moduleId);
+  if (!found) return;
+  const { module } = found;
+
+  document.getElementById('propsEmpty').style.display = 'none';
+  const content = document.getElementById('propsContent');
+  content.style.display = 'block';
+
+  const isPlaced = placedModules.find(p => p.module.id === moduleId);
+
+  let specsHtml = '';
+  if (module.detailSpecs) {
+    specsHtml = Object.entries(module.detailSpecs).map(([k, v]) => `
+      <div class="props-field">
+        <div class="label">${k}</div>
+        <div class="value">${v}</div>
+      </div>
+    `).join('');
+  }
+
+  let complianceHtml = module.compliance.map(c =>
+    `<span class="compliance-badge">${c}</span>`
+  ).join('');
+
+  ['GB/ISO/IEC/ROS2'].forEach(std => {
+    if (!module.compliance.includes(std)) {
+      const badge = std.split('/')[0];
+      if (!module.compliance.includes(badge)) {
+        complianceHtml += `<span class="compliance-badge inactive">${badge}</span>`;
+      }
+    }
+  });
+
+  const confLevel = module.quality.confidence >= 90 ? 'high' : module.quality.confidence >= 70 ? 'medium' : 'low';
+
+  let compatHtml = '';
+  if (module.compat) {
+    const allModules = placedModules.filter(p => p.module.id !== moduleId);
+    if (allModules.length > 0) {
+      compatHtml = allModules.map(p => {
+        const status = module.compat[p.module.name] || 'unknown';
+        const iconClass = status === 'ok' ? 'ok' : status === 'warn' ? 'warn' : 'fail';
+        const iconChar = status === 'ok' ? '&#10003;' : status === 'warn' ? '&#9888;' : '&#10007;';
+        const label = status === 'ok' ? '兼容' : status === 'warn' ? '部分兼容' : '不兼容';
+        return `
+          <div class="compat-item">
+            <div class="compat-icon ${iconClass}">${iconChar}</div>
+            <span>${p.module.name}</span>
+            <span style="margin-left:auto;color:var(--text2)">${label}</span>
+          </div>
+        `;
+      }).join('');
+    } else {
+      compatHtml = '<div style="font-size:11px;color:var(--text2)">放置其他模块后查看兼容性</div>';
+    }
+  }
+
+  content.innerHTML = `
+    <div class="props-section">
+      <div class="props-section-title">基本信息</div>
+      <div class="props-field">
+        <div class="label">名称</div>
+        <div class="value" style="font-size:15px;font-weight:700">${module.name}</div>
+      </div>
+      <div class="props-field">
+        <div class="label">品牌</div>
+        <div class="value">${module.brand}</div>
+      </div>
+      <div class="props-field">
+        <div class="label">类型</div>
+        <div class="value">${module.bionic ? '<span style="color:var(--accent)">仿生模块</span>' : '<span style="color:var(--accent2)">标准模块</span>'}</div>
+      </div>
+      <div class="props-field">
+        <div class="label">价格</div>
+        <div class="value" style="color:var(--accent);font-size:16px">&#165;${module.price.toLocaleString()}</div>
+      </div>
+      <div class="props-field">
+        <div class="label">状态</div>
+        <div class="value">${isPlaced ?
+          '<span style="color:var(--success)">&#9679; 已放置</span>' :
+          '<span style="color:var(--text2)">&#9675; 未放置</span>'}</div>
+      </div>
+      ${!isPlaced ? `<button class="bt-btn primary" style="width:100%;margin-top:8px;justify-content:center;font-size:12px" onclick="placeModule('${module.id}')">&#10010; 安装此模块</button>` : ''}
+    </div>
+    <div class="props-section">
+      <div class="props-section-title">详细规格</div>
+      ${specsHtml}
+    </div>
+    <div class="props-section">
+      <div class="props-section-title">合规认证</div>
+      <div class="props-compliance">${complianceHtml}</div>
+    </div>
+    <div class="props-section props-quality">
+      <div class="props-section-title">数据质量</div>
+      <div class="props-field">
+        <div class="label">数据来源</div>
+        <div class="value">${module.quality.source}</div>
+      </div>
+      <div class="props-field">
+        <div class="label">置信度: ${module.quality.confidence}%</div>
+        <div class="quality-bar"><div class="quality-fill ${confLevel}" style="width:${module.quality.confidence}%"></div></div>
+      </div>
+    </div>
+    <div class="props-section">
+      <div class="props-section-title">兼容性检测</div>
+      <div class="compat-list">${compatHtml}</div>
+    </div>
+  `;
+}
+
+function showPropsEmpty() {
+  document.getElementById('propsEmpty').style.display = 'flex';
+  document.getElementById('propsContent').style.display = 'none';
+}
+
+// ============================================================
+// STATS
+// ============================================================
+function updateStats() {
+  const count = placedModules.length;
+  const cost = placedModules.reduce((s, p) => s + p.module.price, 0);
+  const weight = placedModules.reduce((s, p) => {
+    const w = p.module.detailSpecs['重量'];
+    if (w) return s + parseFloat(w);
+    return s;
+  }, 0);
+
+  document.getElementById('statModules').textContent = count;
+  document.getElementById('statCost').textContent = '¥' + cost.toLocaleString();
+  document.getElementById('statWeight').textContent = weight.toFixed(0) + 'g';
+}
+
+// ============================================================
+// THREE.JS 3D SCENE
+// ============================================================
+let scene, camera, renderer, robotGroup;
+let jointMeshes = [], linkMeshes = [];
+let animationId;
+
+function initThree() {
+  const canvas = document.getElementById('three-canvas');
+  const container = document.getElementById('canvasViewport');
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+
+  scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x0a0e17, 0.025);
+
+  camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 100);
+  camera.position.set(4, 3, 6);
+  camera.lookAt(0, 1.5, 0);
+
+  renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: true,
+    alpha: true
+  });
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.2;
+
+  // Lights
+  const ambient = new THREE.AmbientLight(0x404060, 0.6);
+  scene.add(ambient);
+
+  const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  dirLight.position.set(5, 8, 5);
+  dirLight.castShadow = true;
+  dirLight.shadow.mapSize.set(1024, 1024);
+  scene.add(dirLight);
+
+  const pointLight = new THREE.PointLight(0x06b6d4, 0.5, 20);
+  pointLight.position.set(-3, 4, -2);
+  scene.add(pointLight);
+
+  const pointLight2 = new THREE.PointLight(0xf59e0b, 0.3, 15);
+  pointLight2.position.set(3, 2, 4);
+  scene.add(pointLight2);
+
+  // Ground grid
+  const gridHelper = new THREE.GridHelper(12, 24, 0x1e2d4a, 0x111827);
+  gridHelper.position.y = 0;
+  scene.add(gridHelper);
+
+  // Ground plane (transparent)
+  const groundGeo = new THREE.PlaneGeometry(12, 12);
+  const groundMat = new THREE.MeshStandardMaterial({
+    color: 0x0a0e17,
+    transparent: true,
+    opacity: 0.8,
+    roughness: 0.9
+  });
+  const ground = new THREE.Mesh(groundGeo, groundMat);
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.y = -0.01;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  // Robot group
+  robotGroup = new THREE.Group();
+  scene.add(robotGroup);
+
+  buildRobot();
+
+  // Mouse orbit
+  let isDragging = false;
+  let prevMouse = { x: 0, y: 0 };
+  let spherical = { theta: Math.atan2(6, 4), phi: Math.acos(3 / Math.sqrt(4*4+3*3+6*6)), radius: Math.sqrt(4*4+3*3+6*6) };
+
+  canvas.addEventListener('mousedown', e => {
+    isDragging = true;
+    prevMouse = { x: e.clientX, y: e.clientY };
+  });
+
+  canvas.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    const dx = e.clientX - prevMouse.x;
+    const dy = e.clientY - prevMouse.y;
+    spherical.theta -= dx * 0.005;
+    spherical.phi = Math.max(0.2, Math.min(Math.PI - 0.2, spherical.phi - dy * 0.005));
+    prevMouse = { x: e.clientX, y: e.clientY };
+    updateCameraOrbit();
+  });
+
+  canvas.addEventListener('mouseup', () => isDragging = false);
+  canvas.addEventListener('mouseleave', () => isDragging = false);
+
+  canvas.addEventListener('wheel', e => {
+    e.preventDefault();
+    spherical.radius = Math.max(3, Math.min(15, spherical.radius + e.deltaY * 0.01));
+    updateCameraOrbit();
+  }, { passive: false });
+
+  function updateCameraOrbit() {
+    camera.position.x = spherical.radius * Math.sin(spherical.phi) * Math.cos(spherical.theta);
+    camera.position.y = spherical.radius * Math.cos(spherical.phi);
+    camera.position.z = spherical.radius * Math.sin(spherical.phi) * Math.sin(spherical.theta);
+    camera.lookAt(0, 1.5, 0);
+  }
+
+  // Raycast click on joints/links
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+
+  canvas.addEventListener('click', e => {
+    if (isDragging) return;
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(robotGroup.children, true);
+    if (intersects.length > 0) {
+      const obj = intersects[0].object;
+      if (obj.userData && obj.userData.moduleId) {
+        selectModule(obj.userData.moduleId);
+      }
+    }
+  });
+
+  // Animate
+  function animate() {
+    animationId = requestAnimationFrame(animate);
+
+    if (autoRotate) {
+      spherical.theta += 0.005;
+      updateCameraOrbit();
+    }
+
+    // Subtle floating animation for placed joints
+    const t = Date.now() * 0.001;
+    jointMeshes.forEach((j, i) => {
+      j.position.y = j.userData.baseY + Math.sin(t * 1.5 + i * 0.5) * 0.02;
+    });
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // Resize
+  window.addEventListener('resize', () => {
+    const w2 = container.clientWidth;
+    const h2 = container.clientHeight;
+    camera.aspect = w2 / h2;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w2, h2);
+  });
+}
+
+function buildRobot() {
+  // Clear previous
+  while (robotGroup.children.length) robotGroup.remove(robotGroup.children[0]);
+  jointMeshes = [];
+  linkMeshes = [];
+
+  const defaultColor = new THREE.Color(0x1e2d4a);
+  const placedColor = new THREE.Color(0x06b6d4);
+  const highlightColor = new THREE.Color(0xf59e0b);
+
+  // Robot skeleton: base -> torso -> shoulder -> elbow -> wrist
+  // Positions: [y-height]
+  const structure = [
+    { type: 'joint', y: 0.15, r: 0.15, name: 'base_joint' },      // base
+    { type: 'link', y: 0.15, h: 0.8, r: 0.06, name: 'base_link' }, // base link
+    { type: 'joint', y: 0.55, r: 0.12, name: 'hip_joint' },         // hip
+    { type: 'link', y: 0.55, h: 1.0, r: 0.06, name: 'spine' },     // spine
+    { type: 'joint', y: 1.05, r: 0.10, name: 'shoulder_joint' },   // shoulder
+    { type: 'link', y: 1.05, h: 0.6, r: 0.05, name: 'upper_arm' }, // upper arm
+    { type: 'joint', y: 1.35, r: 0.08, name: 'elbow_joint' },      // elbow
+    { type: 'link', y: 1.35, h: 0.5, r: 0.04, name: 'forearm' },   // forearm
+    { type: 'joint', y: 1.60, r: 0.07, name: 'wrist_joint' },       // wrist
+    { type: 'link', y: 1.60, h: 0.3, r: 0.035, name: 'hand' },     // hand
+    { type: 'joint', y: 1.75, r: 0.05, name: 'end_joint' },         // end effector
+  ];
+
+  const placedIds = placedModules.map(p => p.module.id);
+  const catColors = {
+    'actuators': new THREE.Color(0x06b6d4),
+    'sensors': new THREE.Color(0x10b981),
+    'controllers': new THREE.Color(0x8b5cf6),
+    'endeffectors': new THREE.Color(0xf59e0b)
+  };
+
+  // Assign modules to joints/links based on placement order
+  let assignIdx = 0;
+
+  structure.forEach((part, idx) => {
+    if (part.type === 'joint') {
+      const geo = new THREE.SphereGeometry(part.r, 24, 24);
+      let color = defaultColor.clone();
+
+      // Assign a placed module if available
+      let assignedModule = null;
+      if (assignIdx < placedModules.length) {
+        assignedModule = placedModules[assignIdx].module;
+        const catId = placedModules[assignIdx].category.id;
+        color = (catColors[catId] || placedColor).clone();
+        assignIdx++;
+      }
+
+      const mat = new THREE.MeshStandardMaterial({
+        color: color,
+        metalness: 0.3,
+        roughness: 0.6,
+        emissive: assignedModule ? color.clone().multiplyScalar(0.15) : new THREE.Color(0x000000)
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(0, part.y, 0);
+      mesh.castShadow = true;
+      mesh.userData = { type: 'joint', name: part.name, baseY: part.y, moduleId: assignedModule ? assignedModule.id : null };
+      robotGroup.add(mesh);
+      jointMeshes.push(mesh);
+
+      // Glow ring for placed modules
+      if (assignedModule) {
+        const ringGeo = new THREE.RingGeometry(part.r + 0.02, part.r + 0.04, 32);
+        const ringMat = new THREE.MeshBasicMaterial({
+          color: color,
+          transparent: true,
+          opacity: 0.4,
+          side: THREE.DoubleSide
+        });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.rotation.x = -Math.PI / 2;
+        ring.position.copy(mesh.position);
+        ring.userData.isDecor = true;
+        robotGroup.add(ring);
+      }
+    } else {
+      const geo = new THREE.CylinderGeometry(part.r, part.r * 0.85, part.h, 16);
+      let color = new THREE.Color(0x162033);
+
+      let assignedModule = null;
+      if (assignIdx < placedModules.length) {
+        assignedModule = placedModules[assignIdx].module;
+        const catId = placedModules[assignIdx].category.id;
+        color = (catColors[catId] || placedColor).clone().multiplyScalar(0.6);
+        assignIdx++;
+      }
+
+      const mat = new THREE.MeshStandardMaterial({
+        color: color,
+        metalness: 0.2,
+        roughness: 0.7,
+        emissive: assignedModule ? color.clone().multiplyScalar(0.1) : new THREE.Color(0x000000)
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(0, part.y + part.h / 2, 0);
+      mesh.castShadow = true;
+      mesh.userData = { type: 'link', name: part.name, moduleId: assignedModule ? assignedModule.id : null };
+      robotGroup.add(mesh);
+      linkMeshes.push(mesh);
+    }
+  });
+
+  document.getElementById('jointCount').textContent =
+    `关节数: ${jointMeshes.length} | 连杆数: ${linkMeshes.length} | 已安装: ${placedModules.length}`;
+}
+
+function updateScene() {
+  buildRobot();
+}
+
+let isWireframe = false;
+
+function setViewMode(mode) {
+  document.getElementById('btn3d').classList.toggle('active', mode === '3d');
+  document.getElementById('btnWire').classList.toggle('active', mode === 'wireframe');
+  isWireframe = mode === 'wireframe';
+
+  robotGroup.traverse(child => {
+    if (child.isMesh && child.material && !child.userData.isDecor) {
+      child.material.wireframe = isWireframe;
+    }
+  });
+}
+
+function resetCamera() {
+  camera.position.set(4, 3, 6);
+  camera.lookAt(0, 1.5, 0);
+  showToast('视角已重置', 'info');
+}
+
+function toggleAutoRotate() {
+  autoRotate = !autoRotate;
+  document.getElementById('btnRotate').classList.toggle('active', autoRotate);
+  showToast(autoRotate ? '自动旋转已开启' : '自动旋转已关闭', 'info');
+}
+
+// ============================================================
+// STL EXPORT
+// ============================================================
+function generateSTL() {
+  if (placedModules.length === 0) {
+    showToast('请先放置模块再导出STL', 'warn');
+    return;
+  }
+
+  const triangles = [];
+  scene.traverse(child => {
+    if (child.isMesh && child.geometry && child.geometry.attributes && child.geometry.attributes.position) {
+      const geo = child.geometry;
+      const pos = geo.attributes.position;
+      const matrix = child.matrixWorld;
+      const index = geo.index;
+
+      if (index) {
+        for (let i = 0; i < index.count; i += 3) {
+          const v1 = new THREE.Vector3().fromBufferAttribute(pos, index.getX(i)).applyMatrix4(matrix);
+          const v2 = new THREE.Vector3().fromBufferAttribute(pos, index.getX(i + 1)).applyMatrix4(matrix);
+          const v3 = new THREE.Vector3().fromBufferAttribute(pos, index.getX(i + 2)).applyMatrix4(matrix);
+          const normal = new THREE.Vector3().crossVectors(v2.clone().sub(v1), v3.clone().sub(v1)).normalize();
+          triangles.push({ normal, v1, v2, v3 });
+        }
+      } else {
+        for (let i = 0; i < pos.count; i += 3) {
+          const v1 = new THREE.Vector3().fromBufferAttribute(pos, i).applyMatrix4(matrix);
+          const v2 = new THREE.Vector3().fromBufferAttribute(pos, i + 1).applyMatrix4(matrix);
+          const v3 = new THREE.Vector3().fromBufferAttribute(pos, i + 2).applyMatrix4(matrix);
+          const normal = new THREE.Vector3().crossVectors(v2.clone().sub(v1), v3.clone().sub(v1)).normalize();
+          triangles.push({ normal, v1, v2, v3 });
+        }
+      }
+    }
+  });
+
+  if (triangles.length === 0) {
+    showToast('场景中无可导出网格', 'warn');
+    return;
+  }
+
+  const buf = new ArrayBuffer(80 + 4 + triangles.length * 50);
+  const view = new DataView(buf);
+  view.setUint32(80, triangles.length, true);
+  let offset = 84;
+  triangles.forEach(t => {
+    view.setFloat32(offset, t.normal.x, true); offset += 4;
+    view.setFloat32(offset, t.normal.y, true); offset += 4;
+    view.setFloat32(offset, t.normal.z, true); offset += 4;
+    [t.v1, t.v2, t.v3].forEach(v => {
+      view.setFloat32(offset, v.x, true); offset += 4;
+      view.setFloat32(offset, v.y, true); offset += 4;
+      view.setFloat32(offset, v.z, true); offset += 4;
+    });
+    view.setUint16(offset, 0, true); offset += 2;
+  });
+
+  const blob = new Blob([buf], { type: 'application/octet-stream' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  a.download = `roboparts_design_${dateStr}.stl`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  showToast(`STL已导出 (${triangles.length} 个三角面)`, 'success');
+}
+
+// ============================================================
+// 3D PRINT MODAL
+// ============================================================
+let selectedPrintMaterial = 'pla';
+
+function openPrintModal() {
+  if (placedModules.length === 0) {
+    showToast('请先放置模块再使用3D打印', 'warn');
+    return;
+  }
+  generateSTL();
+  selectedPrintMaterial = 'pla';
+  updatePrintMaterialUI();
+  updatePrintEstimate();
+  generatePrintQrCode();
+  document.getElementById('printModal').classList.add('active');
+}
+
+function closePrintModal() {
+  document.getElementById('printModal').classList.remove('active');
+}
+
+function selectPrintMaterial(mat) {
+  selectedPrintMaterial = mat;
+  updatePrintMaterialUI();
+  updatePrintEstimate();
+}
+
+function updatePrintMaterialUI() {
+  document.querySelectorAll('.print-material-card').forEach(card => {
+    card.classList.toggle('selected', card.dataset.mat === selectedPrintMaterial);
+  });
+}
+
+function getModelVolumeCm3() {
+  let volume = 0;
+  scene.traverse(child => {
+    if (child.isMesh && child.geometry) {
+      const geo = child.geometry;
+      const pos = geo.attributes.position;
+      const index = geo.index;
+      if (index) {
+        for (let i = 0; i < index.count; i += 3) {
+          const a = new THREE.Vector3().fromBufferAttribute(pos, index.getX(i));
+          const b = new THREE.Vector3().fromBufferAttribute(pos, index.getX(i + 1));
+          const c = new THREE.Vector3().fromBufferAttribute(pos, index.getX(i + 2));
+          volume += Math.abs(a.clone().cross(b).dot(c)) / 6;
+        }
+      } else {
+        for (let i = 0; i < pos.count; i += 3) {
+          const a = new THREE.Vector3().fromBufferAttribute(pos, i);
+          const b = new THREE.Vector3().fromBufferAttribute(pos, i + 1);
+          const c = new THREE.Vector3().fromBufferAttribute(pos, i + 2);
+          volume += Math.abs(a.clone().cross(b).dot(c)) / 6;
+        }
+      }
+    }
+  });
+  return Math.max(volume * 1e-6, 1);
+}
+
+function updatePrintEstimate() {
+  const vol = getModelVolumeCm3();
+  const prices = {
+    pla: [10, 30],
+    pa12: [80, 200],
+    resin: [50, 150],
+    metal: [200, 1000]
+  };
+  const p = prices[selectedPrintMaterial] || [10, 30];
+  const minPrice = Math.round(p[0] * Math.max(vol / 10, 0.5));
+  const maxPrice = Math.round(p[1] * Math.max(vol / 10, 0.5));
+
+  document.getElementById('estVolume').textContent = `约 ${vol.toFixed(1)} cm³`;
+  document.getElementById('estPrice').textContent = `¥${minPrice} - ¥${maxPrice}`;
+}
+
+function openJlc3dp() {
+  window.open('https://www.jlc-3dp.cn/', '_blank');
+}
+
+function generatePrintQrCode() {
+  const box = document.getElementById('printQrBox');
+  box.innerHTML = '';
+  const url = 'https://www.jlc-3dp.cn/';
+
+  // Simple QR-like pattern using canvas
+  const canvas = document.createElement('canvas');
+  canvas.width = 120;
+  canvas.height = 120;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, 120, 120);
+  ctx.fillStyle = '#000';
+
+  // Position detection patterns
+  function drawFinder(x, y) {
+    ctx.fillRect(x, y, 7, 7);
+    ctx.clearRect(x + 1, y + 1, 5, 5);
+    ctx.fillRect(x + 2, y + 2, 3, 3);
+  }
+  drawFinder(2, 2);
+  drawFinder(120 - 9, 2);
+  drawFinder(2, 120 - 9);
+
+  // Data modules (pseudo-random based on URL)
+  for (let i = 0; i < 120; i += 3) {
+    for (let j = 0; j < 120; j += 3) {
+      if (i < 30 && j < 30) continue;
+      if (i > 120 - 33 && j < 30) continue;
+      if (i < 30 && j > 120 - 33) continue;
+      const hash = Math.sin(i * 17 + j * 31 + url.length * 7) * 10000;
+      if ((hash % 2) > 0) {
+        ctx.fillRect(i, j, 2, 2);
+      }
+    }
+  }
+
+  box.appendChild(canvas);
+}
+
+// ============================================================
+// URDF GENERATION
+// ============================================================
+function generateURDF() {
+  if (placedModules.length === 0) {
+    showToast('请先放置模块再导出', 'warn');
+    return;
+  }
+
+  const placedIds = placedModules.map(p => p.module.id);
+  const jointNames = ['base_joint', 'hip_joint', 'shoulder_joint', 'elbow_joint', 'wrist_joint', 'end_joint'];
+  const linkNames = ['base_link', 'spine', 'upper_arm', 'forearm', 'hand'];
+
+  const catToJointType = {
+    'actuators': 'revolute',
+    'sensors': 'fixed',
+    'controllers': 'fixed',
+    'endeffectors': 'revolute'
+  };
+
+  const catColors = {
+    'actuators': '0.024 0.714 0.831',
+    'sensors': '0.063 0.725 0.506',
+    'controllers': '0.545 0.361 0.965',
+    'endeffectors': '0.961 0.620 0.043'
+  };
+
+  let xml = `<?xml version="1.0" encoding="utf-8"?>
+<!-- RoboParts URDF - Generated by roboparts.cc Designer -->
+<!-- Date: ${new Date().toISOString()} -->
+<!-- Modules: ${placedModules.length} -->
+<robot name="roboparts_robot">
+
+  <!-- ========== MATERIALS ========== -->
+  <material name="dark_gray">
+    <color rgba="0.09 0.13 0.22 1"/>
+  </material>
+  <material name="frame_color">
+    <color rgba="0.086 0.125 0.2 1"/>
+  </material>\n`;
+
+  placedModules.forEach((p, i) => {
+    const col = catColors[p.category.id] || '0.5 0.5 0.5';
+    xml += `  <material name="${p.module.id}_mat">
+    <color rgba="${col} 1"/>
+  </material>\n`;
+  });
+
+  xml += `\n  <!-- ========== LINKS ========== -->\n`;
+  xml += `  <link name="world"/>
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.15" length="0.8"/>
+      </geometry>
+      <material name="dark_gray"/>
+      <origin xyz="0 0 0.4" rpy="0 0 0"/>
+    </visual>
+    <inertial>
+      <mass value="2.5"/>
+      <origin xyz="0 0 0.4" rpy="0 0 0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.005"/>
+    </inertial>
+  </link>\n`;
+
+  const linkPositions = [
+    { name: 'spine', h: 1.0, xyz: '0 0 0.55', mass: 1.8 },
+    { name: 'upper_arm', h: 0.6, xyz: '0 0 0.3', mass: 1.2 },
+    { name: 'forearm', h: 0.5, xyz: '0 0 0.25', mass: 0.8 },
+    { name: 'hand', h: 0.3, xyz: '0 0 0.15', mass: 0.5 }
+  ];
+
+  linkPositions.forEach(link => {
+    xml += `
+  <link name="${link.name}">
+    <visual>
+      <geometry>
+        <cylinder radius="${(parseFloat(link.mass)*0.03+0.02).toFixed(3)}" length="${link.h}"/>
+      </geometry>
+      <material name="frame_color"/>
+      <origin xyz="${link.xyz}" rpy="0 0 0"/>
+    </visual>
+    <inertial>
+      <mass value="${link.mass}"/>
+      <origin xyz="${link.xyz}" rpy="0 0 0"/>
+      <inertia ixx="${(link.mass*0.001).toFixed(4)}" ixy="0" ixz="0" iyy="${(link.mass*0.001).toFixed(4)}" iyz="0" izz="${(link.mass*0.0005).toFixed(4)}"/>
+    </inertial>
+  </link>\n`;
+  });
+
+  // Joint-specific links from placed modules
+  placedModules.forEach((p, i) => {
+    const w = p.module.detailSpecs['重量'] || '100';
+    const weightVal = parseFloat(w) / 1000; // convert g to kg
+    xml += `
+  <!-- ${p.module.name} (${p.category.name}) -->
+  <link name="${p.module.id}_link">
+    <visual>
+      <geometry>
+        <sphere radius="${(Math.cbrt(weightVal)*0.15+0.03).toFixed(3)}"/>
+      </geometry>
+      <material name="${p.module.id}_mat"/>
+    </visual>
+    <inertial>
+      <mass value="${weightVal.toFixed(3)}"/>
+      <inertia ixx="${(weightVal*0.001).toFixed(5)}" ixy="0" ixz="0" iyy="${(weightVal*0.001).toFixed(5)}" iyz="0" izz="${(weightVal*0.001).toFixed(5)}"/>
+    </inertial>
+  </link>\n`;
+  });
+
+  xml += `\n  <!-- ========== JOINTS ========== -->\n`;
+  xml += `  <joint name="world_to_base" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>\n`;
+
+  // Main skeleton joints
+  const skeletonJoints = [
+    { name: 'base_to_spine', parent: 'base_link', child: 'spine', type: 'revolute', axis: '0 0 1', origin: '0 0 0.8' },
+    { name: 'spine_to_upper_arm', parent: 'spine', child: 'upper_arm', type: 'revolute', axis: '0 1 0', origin: '0 0 1.1' },
+    { name: 'upper_arm_to_forearm', parent: 'upper_arm', child: 'forearm', type: 'revolute', axis: '0 1 0', origin: '0 0 1.4' },
+    { name: 'forearm_to_hand', parent: 'forearm', child: 'hand', type: 'revolute', axis: '0 1 0', origin: '0 0 1.65' }
+  ];
+
+  skeletonJoints.forEach(j => {
+    xml += `
+  <joint name="${j.name}" type="${j.type}">
+    <parent link="${j.parent}"/>
+    <child link="${j.child}"/>
+    <origin xyz="${j.origin}" rpy="0 0 0"/>
+    <axis xyz="${j.axis}"/>
+    <limit lower="-3.14159" upper="3.14159" effort="100" velocity="2.0"/>
+  </joint>\n`;
+  });
+
+  // Module attachment joints
+  const attachPoints = ['0 0 0.15', '0 0 0.55', '0 0 1.05', '0 0 1.35', '0 0 1.6', '0 0 1.75'];
+  placedModules.forEach((p, i) => {
+    const jType = catToJointType[p.category.id] || 'fixed';
+    const parentLink = i < linkPositions.length ? linkPositions[i].name : (i === 0 ? 'base_link' : linkNames[linkNames.length-1] || 'hand');
+    const origin = attachPoints[i] || `0 0 ${(i*0.3+0.15).toFixed(2)}`;
+
+    xml += `
+  <!-- ${p.module.name} attachment -->
+  <joint name="${p.module.id}_joint" type="${jType}">
+    <parent link="${parentLink}"/>
+    <child link="${p.module.id}_link"/>
+    <origin xyz="${origin}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    ${jType === 'revolute' ? '<limit lower="-1.5708" upper="1.5708" effort="50" velocity="1.5"/>' : ''}
+  </joint>\n`;
+  });
+
+  xml += `\n</robot>\n`;
+
+  // Download
+  const blob = new Blob([xml], { type: 'application/xml' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'roboparts_robot.urdf';
+  a.click();
+  URL.revokeObjectURL(url);
+
+  showToast('URDF文件已下载', 'success');
+}
+
+// ============================================================
+// BOM GENERATION
+// ============================================================
+function get3DPrintAdvice(categoryId, moduleName) {
+  const name = (moduleName || '').toLowerCase();
+  const structuralKeywords = ['bracket', 'joint', 'link', 'frame', 'mount', '支架', '关节', '连杆', '臂', '结构', '底座', '固定'];
+  const isStructural = structuralKeywords.some(k => name.includes(k)) ||
+    categoryId === 'actuators' || categoryId === 'endeffectors';
+
+  if (isStructural) return '<span style="color:var(--accent)">建议3D打印，预估成本¥30-200</span>';
+  if (categoryId === 'sensors') return '<span style="color:var(--text2)">需外购</span>';
+  if (categoryId === 'controllers') return '<span style="color:var(--text2)">需外购</span>';
+  return '<span style="color:var(--text2)">需外购</span>';
+}
+
+function generateBOM() {
+  if (placedModules.length === 0) {
+    showToast('请先放置模块再生成BOM', 'warn');
+    return;
+  }
+
+  const catNames = {
+    'actuators': '执行器',
+    'sensors': '传感器',
+    'controllers': '控制器',
+    'endeffectors': '末端执行器'
+  };
+
+  const catColors = {
+    'actuators': 'background:rgba(6,182,212,0.15);color:var(--accent)',
+    'sensors': 'background:rgba(16,185,129,0.15);color:var(--success)',
+    'controllers': 'background:rgba(139,92,246,0.15);color:#8b5cf6',
+    'endeffectors': 'background:rgba(245,158,11,0.15);color:var(--accent2)'
+  };
+
+  let totalCost = 0;
+  let tableHtml = `
+    <table class="bom-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>模块名称</th>
+          <th>类别</th>
+          <th>品牌</th>
+          <th>核心规格</th>
+          <th>单价 (CNY)</th>
+          <th>数量</th>
+          <th>小计 (CNY)</th>
+          <th>3D打印建议</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  placedModules.forEach((p, i) => {
+    const sub = p.module.price;
+    totalCost += sub;
+    tableHtml += `
+      <tr>
+        <td>${i + 1}</td>
+        <td><strong>${p.module.name}</strong></td>
+        <td><span class="cat-tag" style="${catColors[p.category.id] || ''}">${catNames[p.category.id] || p.category.id}</span></td>
+        <td style="color:var(--text2)">${p.module.brand}</td>
+        <td style="font-size:10px;color:var(--text2)">${p.module.specs}</td>
+        <td>&#165;${p.module.price.toLocaleString()}</td>
+        <td>1</td>
+        <td><strong>&#165;${sub.toLocaleString()}</strong></td>
+        <td style="font-size:11px;white-space:nowrap">${get3DPrintAdvice(p.category.id, p.module.name)}</td>
+      </tr>
+    `;
+  });
+
+  tableHtml += `
+      </tbody>
+    </table>
+    <div class="bom-total">
+      <span class="total-label">总计 (${placedModules.length} 个模块)</span>
+      <span class="total-value">&#165;${totalCost.toLocaleString()}</span>
+    </div>
+  `;
+
+  document.getElementById('bomBody').innerHTML = tableHtml;
+  document.getElementById('bomModal').classList.add('active');
+}
+
+function closeBOM() {
+  document.getElementById('bomModal').classList.remove('active');
+}
+
+function exportCSV() {
+  if (placedModules.length === 0) return;
+
+  const catNames = {
+    'actuators': '执行器', 'sensors': '传感器',
+    'controllers': '控制器', 'endeffectors': '末端执行器'
+  };
+
+  let csv = '\uFEFF序号,模块名称,类别,品牌,核心规格,单价(CNY),数量,小计(CNY),3D打印建议\n';
+  let total = 0;
+
+  placedModules.forEach((p, i) => {
+    const advice = get3DPrintAdvice(p.category.id, p.module.name).replace(/<[^>]*>/g, '');
+    csv += `${i+1},${p.module.name},${catNames[p.category.id]},${p.module.brand},"${p.module.specs}",${p.module.price},1,${p.module.price},"${advice}"\n`;
+    total += p.module.price;
+  });
+
+  csv += `\n,,,,,,,总计,${total}\n`;
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'roboparts_bom.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+
+  showToast('CSV文件已下载', 'success');
+}
+
+// ============================================================
+// SHARE
+// ============================================================
+function shareConfig() {
+  if (placedModules.length === 0) {
+    showToast('请先放置模块再分享', 'warn');
+    return;
+  }
+  const config = btoa(JSON.stringify(placedModules.map(p => p.module.id)));
+  const url = `https://roboparts.cc/designer?config=${config}`;
+  navigator.clipboard.writeText(url).then(() => {
+    showToast('分享链接已复制到剪贴板', 'success');
+  }).catch(() => {
+    showToast('分享链接: ' + url.substring(0, 50) + '...', 'info');
+  });
+}
+
+// ============================================================
+// CLEAR
+// ============================================================
+function clearCanvas() {
+  if (placedModules.length === 0) {
+    showToast('画布已经是空的', 'info');
+    return;
+  }
+  placedModules = [];
+  selectedModuleId = null;
+  showPropsEmpty();
+  updateScene();
+  updatePlacedTags();
+  updateStats();
+  showToast('画布已清空', 'info');
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  const icons = { success: '&#10003;', info: '&#8505;', warn: '&#9888;' };
+  toast.innerHTML = `<span>${icons[type] || icons.info}</span> ${msg}`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    if (toast.parentNode) toast.parentNode.removeChild(toast);
+  }, 3000);
+}
+
+// ============================================================
+// SIDEBAR TAB SWITCHING
+// ============================================================
+let currentSidebarTab = 'modules';
+
+function switchSidebarTab(tab) {
+  currentSidebarTab = tab;
+  document.getElementById('tabModules').classList.toggle('active', tab === 'modules');
+  document.getElementById('tabUrdf').classList.toggle('active', tab === 'urdf');
+  document.getElementById('sidebarModules').classList.toggle('active', tab === 'modules');
+  document.getElementById('sidebarUrdf').classList.toggle('active', tab === 'urdf');
+}
+
+// ============================================================
+// CANVAS / URDF VIEW SWITCHING
+// ============================================================
+let currentViewMode = 'design'; // 'design' | 'urdf'
+
+function switchToUrdfView() {
+  currentViewMode = 'urdf';
+  document.getElementById('canvasArea').classList.add('hidden');
+  document.getElementById('urdfSection').classList.add('active');
+  document.getElementById('propsEmpty').style.display = 'none';
+  document.getElementById('propsContent').style.display = 'none';
+  document.getElementById('urdfJointPanel').style.display = 'block';
+  initUrdfViewer();
+}
+
+function switchToDesignView() {
+  currentViewMode = 'design';
+  document.getElementById('canvasArea').classList.remove('hidden');
+  document.getElementById('urdfSection').classList.remove('active');
+  if (selectedModuleId) {
+    document.getElementById('urdfJointPanel').style.display = 'none';
+    document.getElementById('propsContent').style.display = 'block';
+  } else {
+    document.getElementById('urdfJointPanel').style.display = 'none';
+    document.getElementById('propsEmpty').style.display = 'flex';
+  }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('DOMContentLoaded', () => {
+  renderSidebar();
+  initThree();
+  updateStats();
+  updatePlacedTags();
+
+  // Load shared config from URL
+  (function loadSharedConfig() {
+    const params = new URLSearchParams(window.location.search);
+    const configParam = params.get('config');
+    if (!configParam) return;
+    try {
+      const moduleIds = JSON.parse(atob(configParam));
+      if (Array.isArray(moduleIds)) {
+        moduleIds.forEach(id => {
+          if (typeof id === 'string') {
+            placeModule(id);
+          }
+        });
+        showToast('已加载分享的配置', 'success');
+      }
+    } catch(e) {
+      console.error('Failed to load shared config:', e);
+    }
+  })();
+});
+</script>
+
+<!-- URDF-LOADER via ES Module Import Map -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js",
+    "three/examples/": "https://cdn.jsdelivr.net/npm/three@0.158.0/examples/",
+    "urdf-loader": "https://cdn.jsdelivr.net/npm/urdf-loader@0.13.1/dist/urdf-loader.js"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/controls/OrbitControls.js';
+import { URDFLoader } from 'urdf-loader';
+
+// ============================================================
+// URDF VIEWER STATE
+// ============================================================
+let urdfScene, urdfCamera, urdfRenderer, urdfControls;
+let urdfAnimationId;
+let urdfRobot = null;
+let urdfAutoRotate = false;
+let urdfLoaded = false;
+
+// ============================================================
+// URDF VIEWER INITIALIZATION
+// ============================================================
+window.initUrdfViewer = function() {
+  if (urdfRenderer) {
+    // Already initialized, just trigger resize
+    handleUrdfResize();
+    return;
+  }
+
+  const canvas = document.getElementById('urdf-canvas');
+  const container = document.getElementById('urdfViewport');
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+
+  urdfScene = new THREE.Scene();
+  urdfScene.background = new THREE.Color(0x0a0e17);
+  urdfScene.fog = new THREE.FogExp2(0x0a0e17, 0.02);
+
+  urdfCamera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
+  urdfCamera.position.set(3, 2, 4);
+
+  urdfRenderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: true
+  });
+  urdfRenderer.setSize(w, h);
+  urdfRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  urdfRenderer.shadowMap.enabled = true;
+  urdfRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  urdfRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+  urdfRenderer.toneMappingExposure = 1.2;
+
+  // Lights
+  const ambient = new THREE.AmbientLight(0x404060, 0.8);
+  urdfScene.add(ambient);
+
+  const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
+  dirLight.position.set(5, 8, 5);
+  dirLight.castShadow = true;
+  dirLight.shadow.mapSize.set(2048, 2048);
+  urdfScene.add(dirLight);
+
+  const pointLight = new THREE.PointLight(0x06b6d4, 0.4, 20);
+  pointLight.position.set(-3, 4, -2);
+  urdfScene.add(pointLight);
+
+  const pointLight2 = new THREE.PointLight(0xf59e0b, 0.3, 15);
+  pointLight2.position.set(3, 2, 4);
+  urdfScene.add(pointLight2);
+
+  // Ground grid
+  const gridHelper = new THREE.GridHelper(12, 24, 0x1e2d4a, 0x111827);
+  gridHelper.position.y = 0;
+  urdfScene.add(gridHelper);
+
+  // Ground plane
+  const groundGeo = new THREE.PlaneGeometry(12, 12);
+  const groundMat = new THREE.MeshStandardMaterial({
+    color: 0x0a0e17,
+    transparent: true,
+    opacity: 0.8,
+    roughness: 0.9
+  });
+  const ground = new THREE.Mesh(groundGeo, groundMat);
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.y = -0.01;
+  ground.receiveShadow = true;
+  urdfScene.add(ground);
+
+  // OrbitControls
+  urdfControls = new OrbitControls(urdfCamera, canvas);
+  urdfControls.enableDamping = true;
+  urdfControls.dampingFactor = 0.08;
+  urdfControls.target.set(0, 1, 0);
+  urdfControls.update();
+
+  // Animate
+  function animateUrdf() {
+    urdfAnimationId = requestAnimationFrame(animateUrdf);
+    if (urdfControls) urdfControls.update();
+    urdfRenderer.render(urdfScene, urdfCamera);
+  }
+  animateUrdf();
+
+  // Resize
+  window.addEventListener('resize', handleUrdfResize);
+};
+
+function handleUrdfResize() {
+  if (!urdfRenderer) return;
+  const container = document.getElementById('urdfViewport');
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+  urdfCamera.aspect = w / h;
+  urdfCamera.updateProjectionMatrix();
+  urdfRenderer.setSize(w, h);
+}
+
+// ============================================================
+// URDF CAMERA CONTROLS
+// ============================================================
+window.urdfResetCamera = function() {
+  if (!urdfCamera) return;
+  urdfCamera.position.set(3, 2, 4);
+  if (urdfControls) {
+    urdfControls.target.set(0, 1, 0);
+    urdfControls.update();
+  }
+  showToast('URDF视角已重置', 'info');
+};
+
+window.urdfToggleAutoRotate = function() {
+  urdfAutoRotate = !urdfAutoRotate;
+  if (urdfControls) urdfControls.autoRotate = urdfAutoRotate;
+  document.getElementById('btnUrdfRotate').classList.toggle('active', urdfAutoRotate);
+  showToast(urdfAutoRotate ? 'URDF自动旋转已开启' : 'URDF自动旋转已关闭', 'info');
+};
+
+// ============================================================
+// URDF LOADING
+// ============================================================
+window.loadUrdfFromString = function(xmlString) {
+  // Make sure the URDF viewer is initialized
+  initUrdfViewer();
+
+  // Remove existing robot
+  if (urdfRobot) {
+    urdfScene.remove(urdfRobot);
+    urdfRobot = null;
+  }
+
+  try {
+    const manager = new THREE.LoadingManager();
+    const loader = new URDFLoader(manager);
+
+    // Parse URDF from string
+    urdfRobot = loader.parse(xmlString);
+    urdfScene.add(urdfRobot);
+
+    // Center the robot
+    const box = new THREE.Box3().setFromObject(urdfRobot);
+    const center = box.getCenter(new THREE.Vector3());
+    urdfRobot.position.sub(center);
+    urdfRobot.position.y += box.getSize(new THREE.Vector3()).y / 2;
+
+    urdfLoaded = true;
+
+    // Hide empty state
+    document.getElementById('urdfEmpty').style.display = 'none';
+
+    // Show joint panel
+    document.getElementById('urdfJointPanel').style.display = 'block';
+    document.getElementById('propsEmpty').style.display = 'none';
+    document.getElementById('propsContent').style.display = 'none';
+
+    // Update status
+    document.getElementById('urdfStatusLabel').textContent = 'URDF 已加载';
+
+    // Extract robot info
+    updateUrdfJointControls();
+
+    // Update loaded info in sidebar
+    updateUrdfLoadedInfo(xmlString);
+
+    // Auto-adjust camera
+    const size = box.getSize(new THREE.Vector3());
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const fitDist = maxDim * 2;
+    urdfCamera.position.set(fitDist * 0.8, fitDist * 0.6, fitDist * 0.8);
+    if (urdfControls) {
+      urdfControls.target.set(0, size.y / 2, 0);
+      urdfControls.update();
+    }
+
+    showToast('URDF 模型加载成功', 'success');
+  } catch (err) {
+    console.error('URDF parse error:', err);
+    showToast('URDF 解析失败: ' + err.message, 'warn');
+  }
+};
+
+// ============================================================
+// JOINT CONTROLS
+// ============================================================
+function updateUrdfJointControls() {
+  const container = document.getElementById('urdfJointSliders');
+  if (!urdfRobot) {
+    container.innerHTML = '<div style="font-size:11px;color:var(--text2);">加载URDF后可在此操控关节角度</div>';
+    return;
+  }
+
+  // Collect movable joints from the URDF robot
+  const joints = [];
+  urdfRobot.traverse(child => {
+    if (child.isJoint && child.jointType !== 'fixed') {
+      joints.push(child);
+    }
+  });
+
+  if (joints.length === 0) {
+    container.innerHTML = '<div style="font-size:11px;color:var(--text2);">此URDF没有可动关节</div>';
+    return;
+  }
+
+  let html = '<div class="urdf-joint-controls">';
+  joints.forEach(joint => {
+    const name = joint.name;
+    const lower = joint.limit ? joint.limit.lower : -3.14159;
+    const upper = joint.limit ? joint.limit.upper : 3.14159;
+    const min = lower * (180 / Math.PI);
+    const max = upper * (180 / Math.PI);
+    const defaultValue = 0;
+
+    html += `
+      <div class="joint-slider-group">
+        <div class="joint-slider-label">
+          <span>${name}</span>
+          <span class="joint-value" id="jv_${name}">0.0°</span>
+        </div>
+        <input type="range"
+          min="${min.toFixed(1)}" max="${max.toFixed(1)}" value="0" step="0.5"
+          oninput="window.setUrdfJointValue('${name}', this.value)"
+        >
+      </div>
+    `;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+
+  // Update URDF info in props panel
+  document.getElementById('urdfPropsInfo').innerHTML = `
+    <div class="props-field">
+      <div class="label">可动关节数</div>
+      <div class="value">${joints.length}</div>
+    </div>
+  `;
+}
+
+window.setUrdfJointValue = function(jointName, angleDeg) {
+  if (!urdfRobot) return;
+  const angleRad = parseFloat(angleDeg) * (Math.PI / 180);
+
+  urdfRobot.traverse(child => {
+    if (child.isJoint && child.name === jointName) {
+      // For URDFLoader, use setJointValue if available
+      if (urdfRobot.setJointValue) {
+        try {
+          urdfRobot.setJointValue(jointName, angleRad);
+        } catch(e) {
+          // Fallback: set directly on joint
+          child.setJointValue(angleRad);
+        }
+      } else if (child.setJointValue) {
+        child.setJointValue(angleRad);
+      }
+    }
+  });
+
+  // Update display value
+  const valueEl = document.getElementById('jv_' + jointName);
+  if (valueEl) {
+    valueEl.textContent = parseFloat(angleDeg).toFixed(1) + '°';
+  }
+};
+
+window.resetUrdfJoints = function() {
+  if (!urdfRobot) return;
+
+  // Reset all joint sliders to 0
+  const sliders = document.querySelectorAll('#urdfJointSliders input[type="range"]');
+  sliders.forEach(slider => {
+    slider.value = 0;
+  });
+
+  // Reset all joints
+  if (urdfRobot.setJointValue) {
+    urdfRobot.traverse(child => {
+      if (child.isJoint && child.jointType !== 'fixed') {
+        try {
+          urdfRobot.setJointValue(child.name, 0);
+        } catch(e) {
+          if (child.setJointValue) child.setJointValue(0);
+        }
+      }
+    });
+  }
+
+  // Update display values
+  document.querySelectorAll('#urdfJointSliders .joint-value').forEach(el => {
+    el.textContent = '0.0°';
+  });
+
+  showToast('所有关节已重置', 'info');
+};
+
+// ============================================================
+// URDF INFO IN SIDEBAR
+// ============================================================
+function updateUrdfLoadedInfo(xmlString) {
+  const infoDiv = document.getElementById('urdfLoadedInfo');
+  const contentDiv = document.getElementById('urdfInfoContent');
+  infoDiv.style.display = 'block';
+
+  // Parse basic info from URDF XML
+  let robotName = '未知';
+  let linkCount = 0;
+  let jointCount = 0;
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(xmlString, 'text/xml');
+
+  const robotEl = doc.querySelector('robot');
+  if (robotEl) robotName = robotEl.getAttribute('name') || '未知';
+  linkCount = doc.querySelectorAll('link').length;
+  jointCount = doc.querySelectorAll('joint').length;
+
+  contentDiv.innerHTML = `
+    <div><strong>名称:</strong> ${robotName}</div>
+    <div><strong>连杆:</strong> ${linkCount}</div>
+    <div><strong>关节:</strong> ${jointCount}</div>
+  `;
+}
+
+// ============================================================
+// URDF MODAL
+// ============================================================
+window.openUrdfImportModal = function() {
+  document.getElementById('urdfModal').classList.add('active');
+};
+
+window.closeUrdfModal = function() {
+  document.getElementById('urdfModal').classList.remove('active');
+};
+
+window.handleUrdfFileUpload = function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  document.getElementById('urdfFileName').textContent = file.name;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('urdfXmlInput').value = e.target.result;
+  };
+  reader.readAsText(file);
+};
+
+window.parseAndLoadUrdf = function() {
+  const xmlString = document.getElementById('urdfXmlInput').value.trim();
+  if (!xmlString) {
+    showToast('请输入或上传 URDF XML 内容', 'warn');
+    return;
+  }
+
+  closeUrdfModal();
+
+  // Switch to URDF view
+  if (currentViewMode !== 'urdf') {
+    switchToUrdfView();
+  }
+
+  loadUrdfFromString(xmlString);
+};
+
+// ============================================================
+// SAMPLE URDF
+// ============================================================
+const SAMPLE_URDF = `<?xml version="1.0" encoding="utf-8"?>
+<robot name="roboparts_sample">
+
+  <material name="dark_blue">
+    <color rgba="0.024 0.714 0.831 1"/>
+  </material>
+  <material name="cyan">
+    <color rgba="0.063 0.725 0.506 1"/>
+  </material>
+  <material name="purple">
+    <color rgba="0.545 0.361 0.965 1"/>
+  </material>
+  <material name="orange">
+    <color rgba="0.961 0.620 0.043 1"/>
+  </material>
+  <material name="dark_gray">
+    <color rgba="0.12 0.16 0.25 1"/>
+  </material>
+
+  <!-- BASE -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.15" length="0.2"/>
+      </geometry>
+      <material name="dark_blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.15" length="0.2"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <mass value="2.5"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.005"/>
+    </inertial>
+  </link>
+
+  <!-- SPINE -->
+  <link name="spine_link">
+    <visual>
+      <origin xyz="0 0 0.4" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.06" length="0.8"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 0.4" rpy="0 0 0"/>
+      <mass value="1.8"/>
+      <inertia ixx="0.005" ixy="0" ixz="0" iyy="0.005" iyz="0" izz="0.002"/>
+    </inertial>
+  </link>
+
+  <!-- SHOULDER -->
+  <link name="shoulder_link">
+    <visual>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.1"/>
+      </geometry>
+      <material name="cyan"/>
+    </visual>
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <!-- UPPER ARM -->
+  <link name="upper_arm_link">
+    <visual>
+      <origin xyz="0 0 0.25" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.5"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 0.25" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia ixx="0.003" ixy="0" ixz="0" iyy="0.003" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <!-- ELBOW -->
+  <link name="elbow_link">
+    <visual>
+      <origin xyz="0 0 0.04" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.08"/>
+      </geometry>
+      <material name="purple"/>
+    </visual>
+    <inertial>
+      <mass value="0.4"/>
+      <inertia ixx="0.0008" ixy="0" ixz="0" iyy="0.0008" iyz="0" izz="0.0008"/>
+    </inertial>
+  </link>
+
+  <!-- FOREARM -->
+  <link name="forearm_link">
+    <visual>
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.04" length="0.4"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+      <mass value="0.6"/>
+      <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.0005"/>
+    </inertial>
+  </link>
+
+  <!-- WRIST / END EFFECTOR -->
+  <link name="wrist_link">
+    <visual>
+      <origin xyz="0 0 0.04" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.06"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+    <inertial>
+      <mass value="0.3"/>
+      <inertia ixx="0.0005" ixy="0" ixz="0" iyy="0.0005" iyz="0" izz="0.0005"/>
+    </inertial>
+  </link>
+
+  <link name="hand_link">
+    <visual>
+      <origin xyz="0 0 0.06" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.12 0.05"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.0003" ixy="0" ixz="0" iyy="0.0003" iyz="0" izz="0.0003"/>
+    </inertial>
+  </link>
+
+  <!-- JOINTS -->
+  <joint name="base_to_spine" type="revolute">
+    <parent link="base_link"/>
+    <child link="spine_link"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159" effort="100" velocity="2.0"/>
+  </joint>
+
+  <joint name="spine_to_shoulder" type="revolute">
+    <parent link="spine_link"/>
+    <child link="shoulder_link"/>
+    <origin xyz="0 0 0.8" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.5708" upper="1.5708" effort="80" velocity="1.5"/>
+  </joint>
+
+  <joint name="shoulder_to_upper_arm" type="revolute">
+    <parent link="shoulder_link"/>
+    <child link="upper_arm_link"/>
+    <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="60" velocity="2.0"/>
+  </joint>
+
+  <joint name="upper_arm_to_elbow" type="revolute">
+    <parent link="upper_arm_link"/>
+    <child link="elbow_link"/>
+    <origin xyz="0 0 0.5" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.0" upper="2.0" effort="40" velocity="2.5"/>
+  </joint>
+
+  <joint name="elbow_to_forearm" type="revolute">
+    <parent link="elbow_link"/>
+    <child link="forearm_link"/>
+    <origin xyz="0 0 0.08" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="30" velocity="3.0"/>
+  </joint>
+
+  <joint name="forearm_to_wrist" type="revolute">
+    <parent link="forearm_link"/>
+    <child link="wrist_link"/>
+    <origin xyz="0 0 0.4" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.5708" upper="1.5708" effort="20" velocity="3.0"/>
+  </joint>
+
+  <joint name="wrist_to_hand" type="revolute">
+    <parent link="wrist_link"/>
+    <child link="hand_link"/>
+    <origin xyz="0 0 0.06" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.0" upper="1.0" effort="15" velocity="4.0"/>
+  </joint>
+
+</robot>`;
+
+window.loadSampleUrdf = function() {
+  // Switch to URDF view
+  if (currentViewMode !== 'urdf') {
+    switchToUrdfView();
+  }
+  loadUrdfFromString(SAMPLE_URDF);
+};
+
+window.fillSampleUrdf = function() {
+  document.getElementById('urdfXmlInput').value = SAMPLE_URDF;
+  showToast('示例 URDF 已填充', 'info');
+};
+
+// ============================================================
+// PREVIEW CURRENT DESIGN AS URDF
+// ============================================================
+window.previewCurrentDesignUrdf = function() {
+  if (typeof placedModules === 'undefined' || placedModules.length === 0) {
+    showToast('请先在设计画布中放置模块', 'warn');
+    return;
+  }
+
+  // Generate URDF from current design (re-use existing generateURDF logic but get XML string)
+  const xmlString = window._generateUrdfString();
+  if (!xmlString) {
+    showToast('无法生成URDF，请先放置模块', 'warn');
+    return;
+  }
+
+  // Switch to URDF view
+  if (currentViewMode !== 'urdf') {
+    switchToUrdfView();
+  }
+
+  loadUrdfFromString(xmlString);
+};
+
+// Override: Extract URDF XML string generation from generateURDF()
+// This function returns the XML string without downloading
+window._generateUrdfString = function() {
+  if (typeof placedModules === 'undefined' || placedModules.length === 0) return null;
+
+  const catToJointType = {
+    'actuators': 'revolute',
+    'sensors': 'fixed',
+    'controllers': 'fixed',
+    'endeffectors': 'revolute'
+  };
+
+  const catColors = {
+    'actuators': '0.024 0.714 0.831',
+    'sensors': '0.063 0.725 0.506',
+    'controllers': '0.545 0.361 0.965',
+    'endeffectors': '0.961 0.620 0.043'
+  };
+
+  let xml = `<?xml version="1.0" encoding="utf-8"?>
+<!-- RoboParts URDF - Generated by roboparts.cc Designer -->
+<!-- Date: ${new Date().toISOString()} -->
+<!-- Modules: ${placedModules.length} -->
+<robot name="roboparts_robot">
+
+  <!-- ========== MATERIALS ========== -->
+  <material name="dark_gray">
+    <color rgba="0.09 0.13 0.22 1"/>
+  </material>
+  <material name="frame_color">
+    <color rgba="0.086 0.125 0.2 1"/>
+  </material>\n`;
+
+  placedModules.forEach((p) => {
+    const col = catColors[p.category.id] || '0.5 0.5 0.5';
+    xml += `  <material name="${p.module.id}_mat">
+    <color rgba="${col} 1"/>
+  </material>\n`;
+  });
+
+  xml += `\n  <!-- ========== LINKS ========== -->\n`;
+  xml += `  <link name="world"/>
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.15" length="0.8"/>
+      </geometry>
+      <material name="dark_gray"/>
+      <origin xyz="0 0 0.4" rpy="0 0 0"/>
+    </visual>
+    <inertial>
+      <mass value="2.5"/>
+      <origin xyz="0 0 0.4" rpy="0 0 0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.005"/>
+    </inertial>
+  </link>\n`;
+
+  const linkPositions = [
+    { name: 'spine', h: 1.0, xyz: '0 0 0.55', mass: 1.8 },
+    { name: 'upper_arm', h: 0.6, xyz: '0 0 0.3', mass: 1.2 },
+    { name: 'forearm', h: 0.5, xyz: '0 0 0.25', mass: 0.8 },
+    { name: 'hand', h: 0.3, xyz: '0 0 0.15', mass: 0.5 }
+  ];
+
+  linkPositions.forEach(link => {
+    xml += `
+  <link name="${link.name}">
+    <visual>
+      <geometry>
+        <cylinder radius="${(parseFloat(link.mass)*0.03+0.02).toFixed(3)}" length="${link.h}"/>
+      </geometry>
+      <material name="frame_color"/>
+      <origin xyz="${link.xyz}" rpy="0 0 0"/>
+    </visual>
+    <inertial>
+      <mass value="${link.mass}"/>
+      <origin xyz="${link.xyz}" rpy="0 0 0"/>
+      <inertia ixx="${(link.mass*0.001).toFixed(4)}" ixy="0" ixz="0" iyy="${(link.mass*0.001).toFixed(4)}" iyz="0" izz="${(link.mass*0.0005).toFixed(4)}"/>
+    </inertial>
+  </link>\n`;
+  });
+
+  placedModules.forEach((p) => {
+    const w = p.module.detailSpecs['重量'] || '100';
+    const weightVal = parseFloat(w) / 1000;
+    xml += `
+  <!-- ${p.module.name} (${p.category.name}) -->
+  <link name="${p.module.id}_link">
+    <visual>
+      <geometry>
+        <sphere radius="${(Math.cbrt(weightVal)*0.15+0.03).toFixed(3)}"/>
+      </geometry>
+      <material name="${p.module.id}_mat"/>
+    </visual>
+    <inertial>
+      <mass value="${weightVal.toFixed(3)}"/>
+      <inertia ixx="${(weightVal*0.001).toFixed(5)}" ixy="0" ixz="0" iyy="${(weightVal*0.001).toFixed(5)}" iyz="0" izz="${(weightVal*0.001).toFixed(5)}"/>
+    </inertial>
+  </link>\n`;
+  });
+
+  xml += `\n  <!-- ========== JOINTS ========== -->\n`;
+  xml += `  <joint name="world_to_base" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>\n`;
+
+  const skeletonJoints = [
+    { name: 'base_to_spine', parent: 'base_link', child: 'spine', type: 'revolute', axis: '0 0 1', origin: '0 0 0.8' },
+    { name: 'spine_to_upper_arm', parent: 'spine', child: 'upper_arm', type: 'revolute', axis: '0 1 0', origin: '0 0 1.1' },
+    { name: 'upper_arm_to_forearm', parent: 'upper_arm', child: 'forearm', type: 'revolute', axis: '0 1 0', origin: '0 0 1.4' },
+    { name: 'forearm_to_hand', parent: 'forearm', child: 'hand', type: 'revolute', axis: '0 1 0', origin: '0 0 1.65' }
+  ];
+
+  skeletonJoints.forEach(j => {
+    xml += `
+  <joint name="${j.name}" type="${j.type}">
+    <parent link="${j.parent}"/>
+    <child link="${j.child}"/>
+    <origin xyz="${j.origin}" rpy="0 0 0"/>
+    <axis xyz="${j.axis}"/>
+    <limit lower="-3.14159" upper="3.14159" effort="100" velocity="2.0"/>
+  </joint>\n`;
+  });
+
+  const attachPoints = ['0 0 0.15', '0 0 0.55', '0 0 1.05', '0 0 1.35', '0 0 1.6', '0 0 1.75'];
+  placedModules.forEach((p, i) => {
+    const jType = catToJointType[p.category.id] || 'fixed';
+    const parentLink = i < linkPositions.length ? linkPositions[i].name : (i === 0 ? 'base_link' : linkPositions[linkPositions.length-1] || 'hand');
+    const origin = attachPoints[i] || `0 0 ${(i*0.3+0.15).toFixed(2)}`;
+
+    xml += `
+  <!-- ${p.module.name} attachment -->
+  <joint name="${p.module.id}_joint" type="${jType}">
+    <parent link="${parentLink}"/>
+    <child link="${p.module.id}_link"/>
+    <origin xyz="${origin}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    ${jType === 'revolute' ? '<limit lower="-1.5708" upper="1.5708" effort="50" velocity="1.5"/>' : ''}
+  </joint>\n`;
+  });
+
+  xml += `\n</robot>\n`;
+  return xml;
+};
+
+// Make showToast available in module scope
+function showToast(msg, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  const icons = { success: '&#10003;', info: '&#8505;', warn: '&#9888;' };
+  toast.innerHTML = `<span>${icons[type] || icons.info}</span> ${msg}`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    if (toast.parentNode) toast.parentNode.removeChild(toast);
+  }, 3000);
+}
+
+console.log('[URDF Loader] Module initialized. urdf-loader@0.13.1 + Three.js@0.158.0');
+</script>
+</body>
+</html>

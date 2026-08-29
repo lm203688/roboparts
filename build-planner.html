@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>机器人 Build Planner — 选型 BOM 与兼容性清单 | RoboParts</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="RoboParts Build Planner：选机器人类型（格斗/人形/机械臂/ROS小车/四足），自动生成零件 BOM 模板、法兰兼容矩阵与缺失转接件列表，一键下载清单。">
+<link rel="canonical" href="https://roboparts.cc/build-planner">
+<meta name="robots" content="index,follow">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"RoboParts 机器人 Build Planner","applicationCategory":"EngineeringApplication","url":"https://roboparts.cc/build-planner","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"isAccessibleForFree":true,"author":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc"}}</script>
+<style>
+:root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--line:#243352;--warn:#ffcf6b;--err:#ff6b6b}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.7}
+a{color:var(--acc2);text-decoration:none}a:hover{text-decoration:underline}
+.nav{border-bottom:1px solid var(--line);background:#0e1530}
+.nav .in{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px}
+.nav .brand{font-weight:800;color:var(--acc);font-size:16px}.nav a{color:var(--mut)}.nav a:hover{color:var(--txt)}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 20px 72px}
+.crumb{font-size:13px;color:var(--mut);margin-bottom:12px}
+h1{font-size:30px;margin:0 0 8px}
+.lede{background:var(--card);border-left:3px solid var(--acc);border-radius:0 10px 10px 0;padding:14px 16px;color:#c8d2e6;margin:14px 0 22px;font-size:15px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:20px}
+.panel h2{font-size:18px;margin:0 0 14px;color:var(--acc)}
+.types{display:flex;gap:10px;flex-wrap:wrap}
+.type{flex:1;min-width:130px;background:#0e1530;border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;cursor:pointer;font-weight:700}
+.type:hover{border-color:var(--acc)}
+.type.active{border-color:var(--acc);background:#10241c}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+th{color:var(--mut);font-weight:600}
+.tag{display:inline-block;background:#0e1530;border:1px solid var(--line);border-radius:999px;padding:2px 9px;font-size:12px;color:var(--mut)}
+.ok{color:var(--acc)}.need{color:var(--warn)}
+.miss{background:#1a1606;border:1px solid #4a3a10;border-radius:10px;padding:10px 14px;margin-top:10px;font-size:13px;color:#e8d9a8}
+.actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.btn{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;font-weight:800;border:0;border-radius:10px;padding:10px 16px;font-size:14px;cursor:pointer}
+.btn:hover{opacity:.9}.btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+.foot{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+</style>
+</head>
+<body>
+<div class="nav"><div class="in">
+<a class="brand" href="/">RoboParts</a>
+<a href="/copilot">Copilot</a>
+<a href="/adapter-generator">转接件生成器</a>
+<a href="/agent-architecture">兼容性架构</a>
+<a href="/geo-dashboard">GEO 仪表盘</a>
+</div></div>
+<div class="wrap">
+<div class="crumb"><a href="/">首页</a> › 机器人 Build Planner</div>
+<h1>机器人 Build Planner</h1>
+<div class="lede">选一种机器人类型，自动生成<strong>零件 BOM 模板</strong> + <strong>法兰兼容矩阵</strong> + <strong>缺失转接件清单</strong>。不兼容的关节一键跳到转接件生成器，把"能不能装"变成"怎么装"。</div>
+
+<div class="panel">
+  <h2>① 选择机器人类型</h2>
+  <div class="types" id="types"></div>
+</div>
+
+<div class="panel" id="result" hidden>
+  <h2 id="resTitle"></h2>
+  <table>
+    <thead><tr><th>角色</th><th>推荐规格</th><th>安装法兰</th><th>说明</th></tr></thead>
+    <tbody id="bomBody"></tbody>
+  </table>
+  <h2 style="margin-top:18px">② 关节兼容矩阵（相邻连接）</h2>
+  <div id="matrix"></div>
+  <div id="missList"></div>
+  <div class="actions">
+    <button class="btn" onclick="downloadBom()">⬇️ 下载 BOM 清单（.txt）</button>
+    <a class="btn ghost" id="bulkAdapter" target="_blank" rel="noopener">➡️ 批量生成缺失转接件</a>
+  </div>
+</div>
+
+<div class="foot">
+© 2026 RoboParts · Build Planner 复用法兰预设与 <a href="/adapter-generator">转接件生成器</a> · <a href="/llms.txt">llms.txt</a>
+</div>
+</div>
+
+<script>
+// 法兰预设键（与 adapter-generator 一致）
+const TYPES = {
+  fight: { title:'格斗机器人', chain:[
+      {role:'底盘/躯干', spec:'钢/碳板', flange:'A100', note:'武器与驱动安装基面'},
+      {role:'武器舵机', spec:'大扭矩舵机', flange:'A80', note:'臂根旋转'},
+      {role:'夹爪/机械臂', spec:'二指夹爪', flange:'A50', note:'末端执行'},
+      {role:'控制器', spec:'飞控/电调', flange:null, note:'无物理法兰'},
+    ]},
+  humanoid: { title:'人形机器人', chain:[
+      {role:'髋关节', spec:'一体化关节模组', flange:'A160', note:'重载球肩/盆骨'},
+      {role:'膝关节', spec:'一体化关节模组', flange:'A100', note:'中载'},
+      {role:'踝关节', spec:'一体化关节模组', flange:'A80', note:'轻载'},
+      {role:'灵巧手', spec:'五指灵巧手', flange:'A50', note:'腕端'},
+      {role:'控制器', spec:'机载算力', flange:null, note:'无物理法兰'},
+    ]},
+  arm: { title:'机械臂', chain:[
+      {role:'基座 J1', spec:'谐波减速关节', flange:'A100', note:'固定基面'},
+      {role:'大臂 J2', spec:'谐波减速关节', flange:'A100', note:'肩'},
+      {role:'小臂 J3', spec:'谐波减速关节', flange:'A80', note:'肘'},
+      {role:'腕部 J4/J5', spec:'腕关节', flange:'A50', note:'腕'},
+      {role:'夹爪', spec:'二指夹爪', flange:'A50', note:'末端'},
+    ]},
+  ros_car: { title:'ROS 移动小车', chain:[
+      {role:'底盘', spec:'差速/全向轮', flange:'A100', note:'上层载板'},
+      {role:'激光雷达', spec:'单线/多线', flange:null, note:'顶部支架'},
+      {role:'深度摄像头', spec:'RGB-D', flange:null, note:'云台'},
+      {role:'控制器', spec:'Jetson/树莓派', flange:null, note:'无物理法兰'},
+    ]},
+  quadruped: { title:'四足机器人', chain:[
+      {role:'髋关节', spec:'高扭矩关节', flange:'A160', note:'盆骨'},
+      {role:'膝关节', spec:'高扭矩关节', flange:'A100', note:'大腿'},
+      {role:'踝关节', spec:'关节模组', flange:'A80', note:'小腿'},
+      {role:'足端', spec:'缓冲垫', flange:null, note:'触地'},
+    ]},
+};
+
+function adapterUrl(a,b){ return `https://roboparts.cc/adapter-generator?a=${a}&b=${b}&t=10&bore=20`; }
+function flangeTag(f){ return f? `<span class="tag">${f}</span>` : '<span style="color:var(--mut)">—</span>'; }
+
+let current=null;
+function renderTypes(){
+  const el=document.getElementById('types');
+  el.innerHTML='';
+  for(const k of Object.keys(TYPES)){
+    const d=document.createElement('div');
+    d.className='type'; d.dataset.k=k; d.textContent=TYPES[k].title;
+    d.onclick=()=>select(k);
+    el.appendChild(d);
+  }
+}
+function select(k){
+  current=k;
+  document.querySelectorAll('.type').forEach(t=>t.classList.toggle('active', t.dataset.k===k));
+  const t=TYPES[k];
+  document.getElementById('resTitle').textContent='BOM 模板 · '+t.title;
+  const body=document.getElementById('bomBody');
+  body.innerHTML=t.chain.map(c=>`<tr><td>${c.role}</td><td>${c.spec}</td><td>${flangeTag(c.flange)}</td><td style="color:var(--mut)">${c.note}</td></tr>`).join('');
+  // 相邻关节兼容矩阵
+  const matrix=document.getElementById('matrix');
+  let rows='';
+  for(let i=0;i<t.chain.length-1;i++){
+    const a=t.chain[i], b=t.chain[i+1];
+    const fa=a.flange, fb=b.flange;
+    let cls='ok', txt='直接连接 ✅';
+    if(fa&&fb&&fa!==fb){ cls='need'; txt='需转接件 🔧'; }
+    else if(!fa||!fb){ cls='ok'; txt='非法兰连接（支架/线缆）'; }
+    rows+=`<div style="padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px"><b>${a.role}</b> (${fa||'—'}) → <b>${b.role}</b> (${fb||'—'}) ：<span class="${cls}">${txt}</span></div>`;
+  }
+  matrix.innerHTML=rows;
+
+  // 缺失转接件清单
+  const miss=t.chain.filter(c=>c.flange);
+  const missRows=[];
+  for(let i=0;i<miss.length-1;i++){
+    const fa=miss[i].flange, fb=miss[i+1].flange;
+    if(fa!==fb) missRows.push({from:miss[i].role,to:miss[i+1].role,a:fa,b:fb});
+  }
+  const ml=document.getElementById('missList');
+  if(missRows.length){
+    ml.innerHTML='<div class="miss"><b>⚠️ 缺失转接件（'+missRows.length+' 处）：</b><br>'+
+      missRows.map(m=>`• ${m.from} (${m.a}) ↔ ${m.to} (${m.b}) —— <a href="${adapterUrl(m.a,m.b)}" target="_blank" rel="noopener">生成 ${m.a}→${m.b} 转接板</a>`).join('<br>')+'</div>';
+  } else { ml.innerHTML='<div style="margin-top:10px;color:var(--acc);font-size:13px">✅ 所有法兰关节标准一致，无需转接件。</div>'; }
+
+  // 批量入口：取第一处缺失
+  const ba=document.getElementById('bulkAdapter');
+  if(missRows.length){ ba.href=adapterUrl(missRows[0].a,missRows[0].b); ba.style.display='inline-block'; }
+  else ba.style.display='none';
+
+  document.getElementById('result').hidden=false;
+}
+
+function downloadBom(){
+  if(!current) return;
+  const t=TYPES[current];
+  let s=`RoboParts Build Planner · ${t.title}\n生成时间 ${new Date().toISOString()}\n\n`;
+  s+=`【BOM 模板】\n`;
+  t.chain.forEach((c,i)=>{ s+=`${i+1}. ${c.role} | ${c.spec} | 法兰:${c.flange||'—'} | ${c.note}\n`; });
+  s+=`\n【相邻连接兼容性】\n`;
+  for(let i=0;i<t.chain.length-1;i++){
+    const a=t.chain[i],b=t.chain[i+1];
+    let r='直接连接'; if(a.flange&&b.flange&&a.flange!==b.flange) r=`需转接件 ${a.flange}→${b.flange}`;
+    else if(!a.flange||!b.flange) r='非法兰连接';
+    s+=`${a.role} → ${b.role} : ${r}\n`;
+  }
+  s+=`\n数据来源：https://roboparts.cc/build-planner （兼容无忧）\n`;
+  const blob=new Blob([s],{type:'text/plain'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`roboparts-bom-${current}.txt`; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+}
+
+renderTypes();
+</script>
+</body>
+</html>

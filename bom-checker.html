@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts · BOM 兼容性检查器（免费）</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<link rel="canonical" href="https://roboparts.cc/bom-checker">
+<style>
+  :root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--bad:#ff6b6b;--ok:#37e0a6;--warn:#ffd166}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.6}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 64px}
+  h1{font-size:26px;margin:0 0 6px}
+  .sub{color:var(--mut);margin-bottom:24px}
+  .card{background:var(--card);border:1px solid #233; border-radius:14px;padding:18px 20px;margin-bottom:18px}
+  button{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;border:0;border-radius:10px;padding:10px 18px;font-weight:700;cursor:pointer;font-size:14px}
+  button.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+  .row{display:flex;gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap}
+  select,input{background:#0e1530;color:var(--txt);border:1px solid #2a3556;border-radius:8px;padding:8px 10px;font-size:14px}
+  select{flex:1;min-width:220px}
+  .adder{display:flex;gap:8px;margin:12px 0}
+  .adder input[type=text]{flex:1}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin-top:8px}
+  th,td{border:1px solid #243;padding:6px 8px;text-align:center}
+  th{background:#0e1530;color:var(--acc)}
+  .ok{color:var(--ok)} .bad{color:var(--bad)} .null{color:var(--mut)}
+  .group{background:#0e1530;border-left:3px solid var(--acc);padding:8px 12px;border-radius:6px;margin:6px 0}
+  .warn{color:var(--warn);background:#2a2410;border-left:3px solid var(--warn);padding:6px 10px;border-radius:6px;margin:4px 0}
+  .pill{display:inline-block;background:#0e1530;border:1px solid #2a3556;border-radius:999px;padding:2px 10px;font-size:12px;color:var(--mut)}
+  #result{display:none}
+  .tip{color:var(--mut);font-size:12px}
+  a{color:var(--acc2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🔧 BOM 兼容性检查器 <span class="pill">免费 · 锁构建者</span></h1>
+  <div class="sub">粘贴开源机器人组件，立即得到「两两兼容性矩阵 + 可互换选型组 + 冲突告警」。数据来自开源机器人（天工 / roboto_origin / LeRobot-Humanoid / Unitree Go2·G1 / OpenArm）兼容性数据层。</div>
+
+  <div class="card">
+    <div class="row"><b>组件清单</b> <span class="tip">每行一个：选库内 ID，或填自定义规格</span></div>
+    <div id="rows"></div>
+    <div class="adder">
+      <select id="pick"><option value="">— 从开源库选择组件 —</option></select>
+      <button class="ghost" onclick="addPick()">+ 加入</button>
+    </div>
+    <div class="adder">
+      <input type="text" id="customId" placeholder="或直接输入库内 ID，如 OSS-TIENKUNG-001 / ACT-001">
+      <button class="ghost" onclick="addCustom()">+ 加入</button>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <button onclick="runCheck()">▶ 运行兼容性检查</button>
+      <button class="ghost" onclick="addCustomSpec()">+ 自定义规格行</button>
+    </div>
+    <div class="tip" id="limitTip"></div>
+  </div>
+
+  <div class="card" id="result">
+    <h3>检查结果</h3>
+    <div id="summary"></div>
+    <h4>兼容性矩阵</h4>
+    <div id="matrix" style="overflow:auto"></div>
+    <h4>可互换选型组</h4>
+    <div id="groups"></div>
+    <h4>冲突告警</h4>
+    <div id="warns"></div>
+    <h4>🛒 采购建议（检查→采购转化）<span class="tip">标注可购性，点击直达寻源</span></h4>
+    <div id="purchase"></div>
+    <div class="row" style="margin-top:10px">
+      <button class="ghost" onclick="exportProcure()">⬇ 导出采购清单 (CSV)</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="tip">这是一个「免费工具锁构建者」的增长飞轮（对标 TraceParts）：工程师免费使用 → 沉淀兼容性数据 → 供应商按线索付费、深度数据走 Pro API 订阅（<a href="/credits">升级</a>）。</div>
+  </div>
+</div>
+
+<script>
+const API='/api';
+let rows=[];
+
+async function init(){
+  try{
+    const r=await fetch(API+'/oss?limit=200');
+    const j=await r.json();
+    const sel=document.getElementById('pick');
+    (j.data||[]).forEach(e=>{
+      const o=document.createElement('option');
+      o.value=e.id; o.textContent=`${e.id} · ${e.name} · ${e.category}`;
+      sel.appendChild(o);
+    });
+  }catch(e){}
+  addPick(); addPick();
+}
+function addPick(){ const sel=document.getElementById('pick'); if(!sel.value) return; const id=sel.value; rows.push({kind:'id',id}); render(); }
+function addCustom(){ const v=document.getElementById('customId').value.trim(); if(!v) return; rows.push({kind:'id',id:v}); document.getElementById('customId').value=''; render(); }
+function addCustomSpec(){ rows.push({kind:'spec'}); render(); }
+function del(i){ rows.splice(i,1); render(); }
+function render(){
+  const c=document.getElementById('rows'); c.innerHTML='';
+  rows.forEach((r,i)=>{
+    const d=document.createElement('div'); d.className='row';
+    if(r.kind==='id'){
+      d.innerHTML=`<span class="pill">库内</span><input type="text" value="${r.id}" style="flex:1" onchange="rows[${i}].id=this.value"> <button class="ghost" onclick="del(${i})">✕</button>`;
+    } else {
+      d.innerHTML=`<span class="pill">自定义</span>
+        <input type="text" placeholder="名称" style="width:140px" onchange="rows[${i}].name=this.value">
+        <input type="text" placeholder="协议 EtherCAT" style="width:120px" onchange="rows[${i}].protocol=this.value">
+        <input type="text" placeholder="接口" style="width:90px" onchange="rows[${i}].interface=this.value">
+        <input type="text" placeholder="电压 48~48V" style="width:100px" onchange="rows[${i}].voltage=this.value">
+        <select title="不知道就选「ROS2 未知」——系统会按未声明处理，不会替你断言不支持" onchange="rows[${i}].ros=this.value">
+          <option value="unknown">ROS2 未知</option><option value="yes">ROS2 支持</option><option value="no">ROS2 不支持</option>
+        </select>
+        <button class="ghost" onclick="del(${i})">✕</button>`;
+    }
+    c.appendChild(d);
+  });
+  document.getElementById('limitTip').textContent=`当前 ${rows.length} 个组件（免费层 ≤ 12，Pro 无限制）`;
+}
+
+async function runCheck(){
+  // 【20260806-15】旧写法 `ros_support:!!r.ros` 把「用户没勾复选框」压成 false（= 断言不支持）。
+  // 后端 bom/check.js 上一轮已改成三态（typeof === 'boolean' ? ... : undefined），
+  // 但前端永远发布尔值，**后端那条 unknown 分支从 UI 根本走不到，是死代码**。
+  // 单个复选框物理上表达不了三态，故改为下拉，默认「未知」。
+  const items=rows.map(r=> r.kind==='id' ? {id:r.id} : {
+    name:r.name, protocol:r.protocol, interface:r.interface, voltage:r.voltage,
+    ...(r.ros==='yes' ? {ros_support:true} : r.ros==='no' ? {ros_support:false} : {})
+  });
+  const res=await fetch(API+'/bom/check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items})});
+  const j=await res.json();
+  const box=document.getElementById('result'); box.style.display='block';
+  if(!res.ok){ document.getElementById('summary').innerHTML=`<div class="warn">${j.message||j.error||'请求失败'}</div>`; return; }
+  document.getElementById('summary').innerHTML=`<div class="pill">组件 ${j.summary.components}</div> <div class="pill">兼容对 ${j.summary.compatible_pairs}/${j.summary.pairs}</div> <div class="pill">可互换组 ${j.summary.interchangeable_groups}</div> <div class="pill">层级 ${j.tier}</div>`;
+
+  // 矩阵
+  let html='<table><tr><th>A \\ B</th>';
+  const refs=j.components.map(c=>c.ref);
+  refs.forEach(r=>html+=`<th>${r}</th>`);
+  html+='</tr>';
+  refs.forEach((ra,i)=>{
+    html+=`<tr><th>${ra}</th>`;
+    refs.forEach((rb,j2)=>{
+      if(i===j2){html+='<td>—</td>';return;}
+      const m=j.matrix.find(x=>(x.a===ra&&x.b===rb)||(x.a===rb&&x.b===ra));
+      if(!m){html+='<td></td>';return;}
+      const cls=m.overall_compatible===true?'ok':(m.overall_compatible===false?'bad':'null');
+      const txt=m.overall_compatible===true?'✓':(m.overall_compatible===false?'✗':'?');
+      html+=`<td class="${cls}" title="${m.dimensions.map(d=>d.dimension+':'+(d.compatible===null?'?':d.compatible)).join('; ')}">${txt} ${m.compatibility_score}%</td>`;
+    });
+    html+='</tr>';
+  });
+  html+='</table>';
+  document.getElementById('matrix').innerHTML=html;
+
+  document.getElementById('groups').innerHTML = j.interchangeable_groups.length
+    ? j.interchangeable_groups.map(g=>`<div class="group">可互换：${g.join(' ⇄ ')}</div>`).join('')
+    : '<div class="tip">无全兼容可互换组（组件来自不同标准总线）。</div>';
+
+  document.getElementById('warns').innerHTML = j.warnings.length
+    ? j.warnings.map(w=>`<div class="warn">⚠ ${w}</div>`).join('')
+    : '<div class="tip">无明确冲突。</div>';
+
+  // 采购建议（CL5：构建者检查→采购转化）
+  let ph='';
+  if(j.purchase_summary && j.purchase_summary.length){
+    ph += `<div class="tip" style="margin-bottom:8px">本 BOM 共匹配 <b>${j.purchase_summary.length}</b> 个寻源渠道（聚合自各组件品类与关键字）。</div>`;
+    ph += j.purchase_summary.map(s=>`<div class="group" style="border-left-color:var(--acc2)">${s.registered?'<span class="pill">已注册</span> ':''}<a href="${s.url||'#'}" target="_blank" rel="noopener">${s.name}</a> <span class="tip">· ${s.note||''} · ${(s.categories||[]).join('/')}</span></div>`).join('');
+  } else {
+    ph += '<div class="tip">暂无可购性标注（组件缺少品类信息）。</div>';
+  }
+  // 逐组件可购性
+  if(j.components && j.components.length){
+    ph += '<table style="margin-top:10px"><tr><th>组件</th><th>品类</th><th>可购渠道</th></tr>';
+    j.components.forEach(c=>{
+      const opts=(c.purchase_options||[]).map(o=>`<a href="${o.url||'#'}" target="_blank" rel="noopener">${o.name}</a>`).join('、')||'<span class="tip">—</span>';
+      ph+=`<tr><td>${c.name||c.ref}</td><td>${c.category||'—'}</td><td>${opts}</td></tr>`;
+    });
+    ph+='</table>';
+  }
+  document.getElementById('purchase').innerHTML=ph;
+  window.__lastProcure = j;
+}
+function exportProcure(){
+  const j=window.__lastProcure; if(!j||!j.components){alert('请先运行检查');return;}
+  let csv='组件,品类,可购渠道\n';
+  j.components.forEach(c=>{
+    const opts=(c.purchase_options||[]).map(o=>o.name).join('|');
+    csv+=`"${(c.name||c.ref).replace(/"/g,'""')}","${c.category||''}","${opts.replace(/"/g,'""')}"\n`;
+  });
+  const blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='roboparts-采购清单.csv'; a.click();
+}
+init();
+</script>
+</body>
+</html>

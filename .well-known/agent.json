@@ -1,0 +1,141 @@
+{
+  "$comment": "由 scripts/gen_skills_manifest.mjs 从 functions/mcp.js 的 TOOLS 生成，勿手改",
+  "protocolVersion": "0.2.0",
+  "name": "RoboParts",
+  "description": "把 RoboParts 机器人零部件兼容性能力封装为可被其他 Agent 框架（WorkBuddy / Dify / Coze / Cursor / Claude）一键接入的 Skills。底层统一走免鉴权只读 MCP 端点，零安装、零 API Key。本清单由 MCP 工具定义自动生成，参数与线上端点逐字一致。",
+  "url": "https://roboparts.cc/mcp",
+  "preferredTransport": "JSONRPC",
+  "provider": {
+    "organization": "RoboParts",
+    "url": "https://roboparts.cc"
+  },
+  "version": "1.1.0",
+  "documentationUrl": "https://roboparts.cc/llms.txt",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false
+  },
+  "securitySchemes": {},
+  "security": [],
+  "defaultInputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "roboparts-search",
+      "name": "搜索机器人零部件",
+      "description": "用户想找某类机器人零件（执行器/传感器/芯片/协议/平台），或给出型号片段需要补全信息时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "roboparts-component-detail",
+      "name": "查询单个零部件详情",
+      "description": "已经拿到零部件 ID（如 ACT-001），需要完整规格、厂商、证据等级与数据缺口时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "roboparts-compat-check",
+      "name": "四维兼容性判定",
+      "description": "用户问「A 和 B 能不能装一起」「这两个零件兼容吗」「选型有没有冲突」时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "roboparts-recommend",
+      "name": "按应用场景推荐组合",
+      "description": "用户要「给某类机器人配一套零件」「预算 X 元怎么选」时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "roboparts-parameter-semantics",
+      "name": "参数口径语义查询",
+      "description": "用户问「这个扭矩参数靠谱吗」「不同厂商参数怎么比」「单位怎么换算」时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "roboparts-adapter-generate",
+      "name": "生成法兰转接件",
+      "description": "兼容性判定为不兼容、且根因是机械法兰不匹配时，直接产出解决方案而非只给结论。",
+      "tags": [
+        "robotics",
+        "web_resource"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "roboparts-dataset-discovery",
+      "name": "公开数据集发现",
+      "description": "用户想下载/引用原始数据、做二次分析、或确认数据来源时。",
+      "tags": [
+        "robotics",
+        "dataset"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    }
+  ]
+}

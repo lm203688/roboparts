@@ -1,0 +1,76 @@
+{
+  "_comment": [
+    "本文件只存放【人写的散文】：技能名、标题、何时使用。",
+    "工具名、参数名、参数类型、必填性 一律不在这里写 —— 它们由 scripts/gen_skills_manifest.mjs",
+    "从 functions/mcp.js 的 TOOLS（唯一真相源）自动填充，杜绝手抄漂移。",
+    "若这里写了一个 TOOLS 中不存在的 tool 名，生成器直接报错退出（不许悄悄生成一个调不通的技能）。"
+  ],
+  "provider": "RoboParts",
+  "mcp_server": "https://roboparts.cc/mcp",
+  "mcp_registry_name": "cc.roboparts/roboparts",
+  "summary": "把 RoboParts 机器人零部件兼容性能力封装为可被其他 Agent 框架（WorkBuddy / Dify / Coze / Cursor / Claude）一键接入的 Skills。底层统一走免鉴权只读 MCP 端点，零安装、零 API Key。本清单由 MCP 工具定义自动生成，参数与线上端点逐字一致。",
+  "mcp_skills": [
+    {
+      "tool": "search_components",
+      "name": "roboparts-search",
+      "title": "搜索机器人零部件",
+      "when_to_use": "用户想找某类机器人零件（执行器/传感器/芯片/协议/平台），或给出型号片段需要补全信息时。"
+    },
+    {
+      "tool": "get_component_detail",
+      "name": "roboparts-component-detail",
+      "title": "查询单个零部件详情",
+      "when_to_use": "已经拿到零部件 ID（如 ACT-001），需要完整规格、厂商、证据等级与数据缺口时。"
+    },
+    {
+      "tool": "check_compatibility",
+      "name": "roboparts-compat-check",
+      "title": "四维兼容性判定",
+      "when_to_use": "用户问「A 和 B 能不能装一起」「这两个零件兼容吗」「选型有没有冲突」时。"
+    },
+    {
+      "tool": "recommend_for_application",
+      "name": "roboparts-recommend",
+      "title": "按应用场景推荐组合",
+      "when_to_use": "用户要「给某类机器人配一套零件」「预算 X 元怎么选」时。"
+    },
+    {
+      "tool": "get_parameter_semantics",
+      "name": "roboparts-parameter-semantics",
+      "title": "参数口径语义查询",
+      "when_to_use": "用户问「这个扭矩参数靠谱吗」「不同厂商参数怎么比」「单位怎么换算」时。"
+    }
+  ],
+  "non_mcp_skills": [
+    {
+      "name": "roboparts-adapter-generate",
+      "type": "web_resource",
+      "title": "生成法兰转接件",
+      "endpoint": "https://roboparts.cc/adapter-generator",
+      "local_path": "adapter-generator.html",
+      "description": "当两侧 ISO 9409-1 法兰（PCD/孔数/螺纹）不一致时，生成可 3D 打印的转接板。支持 URL 参数复现：?a=A80&b=A50&t=10&bore=20（a/b 为 A50/A80/A100/A160 或 CUSTOM:pcd:holes:thread:clr:pins:pinD）。",
+      "when_to_use": "兼容性判定为不兼容、且根因是机械法兰不匹配时，直接产出解决方案而非只给结论。",
+      "params": [
+        { "name": "a", "type": "string", "required": false, "desc": "侧 A 法兰：预设键 A50/A80/A100/A160 或 CUSTOM:..." },
+        { "name": "b", "type": "string", "required": false, "desc": "侧 B 法兰：同上" },
+        { "name": "t", "type": "number", "required": false, "desc": "转接板厚度 mm，默认 10" },
+        { "name": "bore", "type": "number", "required": false, "desc": "中心通孔直径 mm，默认 20" }
+      ]
+    },
+    {
+      "name": "roboparts-dataset-discovery",
+      "type": "dataset",
+      "title": "公开数据集发现",
+      "endpoint": "https://roboparts.cc/agent-discovery.json",
+      "local_path": "agent-discovery.json",
+      "description": "发现 RoboParts 公开数据集端点并直接下载原始 JSON。注意：这不是一个 MCP 工具（端点未提供 dataset_discovery 工具），而是一组可直接 GET 的静态数据文件。",
+      "when_to_use": "用户想下载/引用原始数据、做二次分析、或确认数据来源时。",
+      "datasets": [
+        { "url": "https://roboparts.cc/api/entities.json", "local_path": "api/entities.json", "desc": "归一化零部件实体库（含证据等级与数据缺口标注）" },
+        { "url": "https://roboparts.cc/api/oss_components.json", "local_path": "api/oss_components.json", "desc": "开源机器人项目零部件摄取库（含溯源分级）" },
+        { "url": "https://roboparts.cc/api/mechanical_interfaces.json", "local_path": "api/mechanical_interfaces.json", "desc": "ISO 9409-1 机械接口注册表" },
+        { "url": "https://roboparts.cc/api/parameter_semantics.json", "local_path": "api/parameter_semantics.json", "desc": "参数口径规范与物理红线（CC BY 4.0）" }
+      ]
+    }
+  ]
+}

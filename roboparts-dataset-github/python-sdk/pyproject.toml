@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "roboparts"
+version = "1.0.0"
+description = "RoboParts Python SDK - 仿生机器人零部件结构化数据 API 客户端"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "RoboParts", email = "support@roboparts.cc" }]
+keywords = ["robotics", "robot-parts", "bionic", "actuator", "sensor", "embodied-ai", "ros2", "dataset"]
+urls = { Homepage = "https://roboparts.cc", Repository = "https://github.com/lm203688/roboparts" }
+dependencies = ["requests>=2.28.0"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["roboparts*"]

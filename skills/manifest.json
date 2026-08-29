@@ -1,0 +1,199 @@
+{
+  "schema_version": "1.1",
+  "generated_by": "scripts/gen_skills_manifest.mjs（从 functions/mcp.js 的 TOOLS 生成，勿手改）",
+  "provider": "RoboParts",
+  "summary": "把 RoboParts 机器人零部件兼容性能力封装为可被其他 Agent 框架（WorkBuddy / Dify / Coze / Cursor / Claude）一键接入的 Skills。底层统一走免鉴权只读 MCP 端点，零安装、零 API Key。本清单由 MCP 工具定义自动生成，参数与线上端点逐字一致。",
+  "mcp_server": "https://roboparts.cc/mcp",
+  "mcp_registry_name": "cc.roboparts/roboparts",
+  "skills": [
+    {
+      "name": "roboparts-search",
+      "title": "搜索机器人零部件",
+      "type": "mcp_tool",
+      "tool": "search_components",
+      "description": "搜索机器人零部件。可按品类、关键词筛选，返回匹配条目的摘要（id/name/category/manufacturer/关键规格/证据等级）。覆盖执行器、传感器、芯片、通信协议、接口、机器人平台、具身智能模型等 10 个品类。库存实时口径（总数/可选型/已隔离）见 initialize 的 instructions 或 GET /mcp 的 dataset 字段 —— 此处不写死数字，避免文案与真实库存漂移。",
+      "when_to_use": "用户想找某类机器人零件（执行器/传感器/芯片/协议/平台），或给出型号片段需要补全信息时。",
+      "params": [
+        {
+          "name": "category",
+          "type": "string",
+          "required": false,
+          "desc": "品类精确筛选，取值必须来自 enum（严格相等，不做别名映射：传 \"actuator\"、\"电机\" 均返回空）。不传则跨全部 10 个品类检索。注意品类与 ID 前缀不是一一对应的，请以本字段为准。",
+          "enum": [
+            "actuators",
+            "sensors",
+            "chips",
+            "protocols",
+            "platforms",
+            "llms",
+            "interfaces",
+            "flexible_actuators",
+            "robot_ai_models",
+            "data_acquisition",
+            "connectors"
+          ]
+        },
+        {
+          "name": "keyword",
+          "type": "string",
+          "required": false,
+          "desc": "关键词，对 name / name_en / manufacturer / type / protocol / interface / description 七个字段做大小写不敏感的**子串**匹配（非分词、非模糊、不纠错）。**中英文命中集合可能完全不重叠**，务必两种都试：实测 \"六维力\" 命中 16 条、\"force torque\" 命中 2 条、交集为 0（部分国产条目尚无英文名）。多个词不做 AND 拆分，\"harmonic drive 20Nm\" 会被当作一整个串匹配，实测返回 0 条；请只给一个词（如 \"harmonic\" 命中 9 条），再用 category 收窄。"
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "desc": "返回条数上限，默认 10，最大 50（超出按 50 截断）。"
+        },
+        {
+          "name": "include_market_intelligence",
+          "type": "boolean",
+          "required": false,
+          "desc": "默认 false。库内另有 3 条市场情报条目（专利地图/咨询报告/趋势条目），它们不是可采购零件，默认不返回；仅在你确实想查行业研究材料时设为 true。"
+        }
+      ]
+    },
+    {
+      "name": "roboparts-component-detail",
+      "title": "查询单个零部件详情",
+      "type": "mcp_tool",
+      "tool": "get_component_detail",
+      "description": "按 ID 获取单个零部件的完整字段，包含 source_tier（数据来源等级）、confidence（置信度）、data_quality 与 mechanical_interface 等元数据。用于在做出采购/设计决策前核对证据强度。",
+      "when_to_use": "已经拿到零部件 ID（如 ACT-001），需要完整规格、厂商、证据等级与数据缺口时。",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "desc": "零部件 ID，如 ACT-001 / CHIP-001 / SENS-001。大小写与连字符需完全匹配，不做模糊查找；建议先由 search_components 返回值取得。注意 ID 前缀不能反推 category（库内存在前缀与品类不一致的条目，实时条数见 GET /mcp 的 dataset.id_category_mismatch）。"
+        }
+      ]
+    },
+    {
+      "name": "roboparts-compat-check",
+      "title": "四维兼容性判定",
+      "type": "mcp_tool",
+      "tool": "check_compatibility",
+      "description": "判定两个零部件在 protocol（协议）/ electrical（电气）/ mechanical（机械）/ software（ROS2）四个维度的兼容性，返回逐维结论、总体判定与置信说明。注意：结论基于厂商公开声明字段做规则推断，非实验室实测；厂商未声明的维度记为\"无法判定\"，既不计入兼容也不计入不兼容。",
+      "when_to_use": "用户问「A 和 B 能不能装一起」「这两个零件兼容吗」「选型有没有冲突」时。",
+      "params": [
+        {
+          "name": "component1_id",
+          "type": "string",
+          "required": true,
+          "desc": "零件 1 的 ID，形如 ACT-001 / CHIP-001 / PROTO-012。请先用 search_components 取得，不要自行拼造：ID 前缀与 category 并非一一对应（例如 sensors 品类下存在 CHIP-67，platforms 下存在 ACT-patsnap-actuator；实时不一致条数见 GET /mcp 的 dataset.id_category_mismatch），按品类猜前缀会取到错误条目或直接查无此项。"
+        },
+        {
+          "name": "component2_id",
+          "type": "string",
+          "required": true,
+          "desc": "零件 2 的 ID，取值方式同 component1_id。两个 ID 可以属于不同品类（跨品类比对正是本工具的用途）。"
+        }
+      ]
+    },
+    {
+      "name": "roboparts-recommend",
+      "title": "按应用场景推荐组合",
+      "type": "mcp_tool",
+      "tool": "recommend_for_application",
+      "description": "按应用场景推荐零部件组合，可选预算上限（USD）。返回各品类的候选项及推荐理由。这是基于库内字段的启发式筛选，不构成工程选型意见，最终仍需核对厂商原始数据手册。",
+      "when_to_use": "用户要「给某类机器人配一套零件」「预算 X 元怎么选」时。",
+      "params": [
+        {
+          "name": "application",
+          "type": "string",
+          "required": true,
+          "desc": "应用场景，必填，取值限 enum。判定方式是拿一组固定场景词去匹配条目的 applications/name/type/description 字段，而非人工标注的场景分类：humanoid=人形/双足，quadruped=四足，robot_arm=机械臂/协作臂，amr=移动机器人/AGV，industrial=工业产线。若某品类下无任何条目命中该场景，该品类会退化为品类罗列并在 scene_matched=false 中标明，此时结果不代表适配该场景，应改用 search_components 按具体参数筛选。",
+          "enum": [
+            "humanoid",
+            "quadruped",
+            "robot_arm",
+            "amr",
+            "industrial"
+          ]
+        },
+        {
+          "name": "budget",
+          "type": "number",
+          "required": false,
+          "desc": "单件预算上限（USD，正数），可选。**价格字段覆盖率有限**（实时覆盖数见 GET /mcp 的 dataset.priced），因此本参数只能剔除「确定超预算」的条目，不能保证结果全部在预算内。每条结果会附 price_fit：within（确定在预算内）/ partial（区间跨越预算）/ unknown（库内无价格，未经校验）。不传则不做任何价格筛选，也不返回 price_fit。"
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "required": false,
+          "desc": "每品类返回条数，默认 3，上限 10（超出按 10 截断）。四个品类各自独立计数。"
+        }
+      ]
+    },
+    {
+      "name": "roboparts-parameter-semantics",
+      "title": "参数口径语义查询",
+      "type": "mcp_tool",
+      "tool": "get_parameter_semantics",
+      "description": "获取参数口径规范：同一个 torque/speed 字段在不同厂商那里含义可能不同（库内 torque 出现 19 种口径、speed 37 种，甚至混入 Gbps 与 rad/s）。本工具返回物理红线、单位换算、可比性分级与向厂商问询的清单，用于判断两份参数表到底能不能直接比较。",
+      "when_to_use": "用户问「这个扭矩参数靠谱吗」「不同厂商参数怎么比」「单位怎么换算」时。",
+      "params": []
+    },
+    {
+      "name": "roboparts-adapter-generate",
+      "type": "web_resource",
+      "title": "生成法兰转接件",
+      "endpoint": "https://roboparts.cc/adapter-generator",
+      "description": "当两侧 ISO 9409-1 法兰（PCD/孔数/螺纹）不一致时，生成可 3D 打印的转接板。支持 URL 参数复现：?a=A80&b=A50&t=10&bore=20（a/b 为 A50/A80/A100/A160 或 CUSTOM:pcd:holes:thread:clr:pins:pinD）。",
+      "when_to_use": "兼容性判定为不兼容、且根因是机械法兰不匹配时，直接产出解决方案而非只给结论。",
+      "params": [
+        {
+          "name": "a",
+          "type": "string",
+          "required": false,
+          "desc": "侧 A 法兰：预设键 A50/A80/A100/A160 或 CUSTOM:..."
+        },
+        {
+          "name": "b",
+          "type": "string",
+          "required": false,
+          "desc": "侧 B 法兰：同上"
+        },
+        {
+          "name": "t",
+          "type": "number",
+          "required": false,
+          "desc": "转接板厚度 mm，默认 10"
+        },
+        {
+          "name": "bore",
+          "type": "number",
+          "required": false,
+          "desc": "中心通孔直径 mm，默认 20"
+        }
+      ]
+    },
+    {
+      "name": "roboparts-dataset-discovery",
+      "type": "dataset",
+      "title": "公开数据集发现",
+      "endpoint": "https://roboparts.cc/agent-discovery.json",
+      "description": "发现 RoboParts 公开数据集端点并直接下载原始 JSON。注意：这不是一个 MCP 工具（端点未提供 dataset_discovery 工具），而是一组可直接 GET 的静态数据文件。",
+      "when_to_use": "用户想下载/引用原始数据、做二次分析、或确认数据来源时。",
+      "datasets": [
+        {
+          "url": "https://roboparts.cc/api/entities.json",
+          "desc": "归一化零部件实体库（含证据等级与数据缺口标注）"
+        },
+        {
+          "url": "https://roboparts.cc/api/oss_components.json",
+          "desc": "开源机器人项目零部件摄取库（含溯源分级）"
+        },
+        {
+          "url": "https://roboparts.cc/api/mechanical_interfaces.json",
+          "desc": "ISO 9409-1 机械接口注册表"
+        },
+        {
+          "url": "https://roboparts.cc/api/parameter_semantics.json",
+          "desc": "参数口径规范与物理红线（CC BY 4.0）"
+        }
+      ]
+    }
+  ]
+}

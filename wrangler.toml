@@ -1,0 +1,44 @@
+name = "robotparts"
+compatibility_date = "2024-09-23"
+# 安全：wrangler 在有本配置文件时忽略 `wrangler pages deploy` 的目录参数，
+# 仅使用 pages_build_output_dir 作为部署源。因此指向由 scripts/deploy.mjs 填充的
+# 干净暂存目录（已排除 .workbuddy/ops/mcp-server 等私有目录）。切勿改回 "." 或删除本行。
+pages_build_output_dir = ".deploy-staging"
+
+[vars]
+# Creem payment integration - non-secret config
+CREEM_API_URL = "https://api.creem.io"
+# Creem 产品 ID（在 creem.io 后台创建产品后复制；非密钥，可放 [vars]）
+CREEM_PRODUCT_ID_PRO = "prod_6cfKNRP3ryu1KHsFzaUCRf"
+CREEM_PRODUCT_ID_STARTER = "prod_534mCzT9muGkI9x4rX7B0X"
+CREEM_PRODUCT_ID_LIFETIME = "prod_4LiR28oho8KGWey9dkjvpS"
+# 密钥类（CREEM_API_KEY / CREEM_WEBHOOK_SECRET）切勿写在此处！
+# 请在本机执行（写入 Cloudflare 加密变量）：
+#   wrangler pages secret put CREEM_API_KEY
+#   wrangler pages secret put CREEM_WEBHOOK_SECRET
+# P0 安全修复：供应商审核/报价仅允许下列管理员 key（逗号分隔）。
+# 配置方式二选一：
+#   1) 在此填写你自己的 gtk_ 管理员 key，例如 ADMIN_API_KEYS = "gtk_abc123,gtk_def456"
+#   2) 或在 Cloudflare 后台将你 USER_CREDITS 里该 key 的 JSON 记录加 "role":"admin"
+# 两者皆为空时，审批/报价接口将一律返回 403（fail-closed，安全默认）。
+ADMIN_API_KEYS = "gtk_45ac14dcd46eecabc4c59ba80af20bbe144b4a8c32a3aa79"
+
+[[kv_namespaces]]
+binding = "USER_CREDITS"
+id = "f01526d743c24e1a91b2586a865f4864"
+
+[[kv_namespaces]]
+binding = "API_KEYS"
+id = "1d0cb08199ac405a9c90df75c2dc3f25"
+
+[[kv_namespaces]]
+binding = "SUPPLIERS"
+id = "c2a5c71cc43246f4a094bc8bf46f72f8"
+
+[[kv_namespaces]]
+binding = "SUPPLIER_INQUIRIES"
+id = "c131a8b0c4724ee590837b8b04c6abf8"
+
+[[kv_namespaces]]
+binding = "URDF_LIBRARY"
+id = "297bf8c4377e4287b6963328300dee15"

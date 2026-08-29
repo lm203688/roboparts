@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>智能选型引擎 — RoboParts 仿生机器人生态平台</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="RoboParts 智能选型引擎，基于应用场景、预算与性能需求，推荐最适合的机器人零部件方案">
+<link rel="canonical" href="https://roboparts.cc/selection">
+<style>
+:root{
+  --bg:#0a0e17;
+  --card:#111827;
+  --border:#1e2d4a;
+  --text:#e2e8f0;
+  --accent:#06b6d4;
+  --accent-hover:#22d3ee;
+  --muted:#94a3b8;
+  --dim:#64748b;
+  --success:#10b981;
+  --error:#ef4444;
+  --warning:#f59e0b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+
+/* ========== 顶部导航 ========== */
+.navbar{position:sticky;top:0;z-index:100;background:rgba(10,14,23,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.navbar .nav-inner{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.navbar .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;color:var(--text);text-decoration:none}
+.navbar .brand .logo{width:28px;height:28px;background:linear-gradient(135deg,var(--accent),#0891b2);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#000;font-weight:800;font-size:.95rem}
+.navbar .brand .accent{color:var(--accent)}
+.navbar .nav-links{display:flex;align-items:center;gap:18px}
+.navbar .nav-links a{color:var(--muted);text-decoration:none;font-size:.88rem;transition:color .2s}
+.navbar .nav-links a:hover{color:var(--accent)}
+.navbar .nav-links a.active{color:var(--accent);font-weight:600}
+.navbar .nav-links .back-home{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:8px;font-size:.82rem}
+.navbar .nav-links .back-home:hover{border-color:var(--accent);color:var(--accent)}
+
+.container{max-width:1100px;margin:0 auto;padding:20px}
+
+/* ========== Hero ========== */
+.hero{text-align:center;padding:36px 20px 24px}
+.hero h1{font-size:2rem;color:var(--accent);margin-bottom:8px}
+.hero p{color:var(--muted);font-size:1.02rem;max-width:680px;margin:0 auto}
+.hero .stats{display:flex;gap:24px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.hero .stat-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 20px;min-width:120px}
+.hero .stat-item .num{font-size:1.4rem;font-weight:800;color:var(--accent)}
+.hero .stat-item .label{font-size:.78rem;color:var(--dim)}
+
+/* ========== 卡片 / 表单 ========== */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin:20px 0}
+.card h2{font-size:1.3rem;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.card .subtitle{color:var(--muted);font-size:.88rem;margin-bottom:24px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:.85rem;font-weight:600;color:var(--text)}
+.form-group label .required{color:var(--error);margin-left:2px}
+.form-group label .optional{color:var(--dim);font-weight:400;font-size:.78rem;margin-left:6px}
+.form-group input,.form-group select{
+  padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-size:.9rem;font-family:inherit;transition:border-color .2s;
+}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--accent)}
+.form-group input::placeholder{color:var(--dim)}
+.form-group .hint{font-size:.76rem;color:var(--dim)}
+.form-group .error-msg{font-size:.76rem;color:var(--error);display:none}
+.form-group.has-error input,.form-group.has-error select{border-color:var(--error)}
+.form-group.has-error .error-msg{display:block}
+
+/* checkbox 行 */
+.checkbox-row{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;cursor:pointer}
+.checkbox-row input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+.checkbox-row .cb-label{font-size:.9rem}
+.checkbox-row .cb-desc{font-size:.78rem;color:var(--dim);margin-left:auto}
+
+/* 品类多选 */
+.category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:4px}
+.category-chip{position:relative;display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;font-size:.85rem;user-select:none}
+.category-chip:hover{border-color:var(--accent)}
+.category-chip input{position:absolute;opacity:0;pointer-events:none}
+.category-chip .check{width:16px;height:16px;border:1.5px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.category-chip input:checked ~ .check{background:var(--accent);border-color:var(--accent)}
+.category-chip input:checked ~ .check::after{content:'✓';color:#000;font-size:.7rem;font-weight:800}
+.category-chip:has(input:checked){border-color:var(--accent);background:rgba(6,182,212,0.08)}
+
+/* 按钮 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 28px;border-radius:10px;border:none;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary:disabled{background:var(--border);color:var(--dim);cursor:not-allowed}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-block{display:block;width:100%}
+.btn-sm{padding:8px 16px;font-size:.82rem}
+.btn-success{background:var(--success);color:#000}
+.btn-success:hover{background:#34d399}
+
+/* ========== 结果区域 ========== */
+.results-section{margin-top:24px}
+.results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.results-header h3{font-size:1.15rem;display:flex;align-items:center;gap:8px}
+.results-header .result-count{font-size:.85rem;color:var(--dim)}
+
+.result-list{display:flex;flex-direction:column;gap:16px}
+.result-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;transition:all .3s;position:relative;overflow:hidden}
+.result-item:hover{border-color:var(--accent);transform:translateY(-2px)}
+.result-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);opacity:.6}
+.result-item .ri-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:12px}
+.result-item .ri-name{font-size:1.1rem;font-weight:700;color:var(--text)}
+.result-item .ri-category{font-size:.72rem;color:var(--accent);background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.25);padding:2px 10px;border-radius:10px;margin-left:8px}
+.result-item .ri-score{display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0}
+.result-item .ri-score .score-val{font-size:1.6rem;font-weight:800;color:var(--accent)}
+.result-item .ri-score .score-label{font-size:.7rem;color:var(--dim)}
+.result-item .ri-reason{font-size:.88rem;color:var(--muted);margin:10px 0;padding:10px 14px;background:var(--bg);border-radius:8px;border-left:3px solid var(--accent)}
+.result-item .ri-meta{display:flex;flex-wrap:wrap;gap:16px;font-size:.8rem;color:var(--dim);margin:10px 0}
+.result-item .ri-meta span{display:inline-flex;align-items:center;gap:4px}
+.result-item .ri-meta strong{color:var(--text)}
+.result-item .ri-compat{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.result-item .ri-compat .compat-tag{font-size:.72rem;padding:3px 10px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:var(--success);border-radius:10px}
+.result-item .ri-supplier{font-size:.82rem;color:var(--muted);margin-top:8px;padding-top:10px;border-top:1px dashed var(--border)}
+.result-item .ri-supplier strong{color:var(--accent)}
+.result-item .ri-actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+
+/* 空状态 / 加载 */
+.empty-state{text-align:center;padding:60px 20px;color:var(--dim)}
+.empty-state .icon{font-size:3rem;margin-bottom:12px;opacity:.5}
+.empty-state .title{font-size:1.1rem;color:var(--muted);margin-bottom:6px}
+.empty-state .desc{font-size:.85rem}
+
+.loading-state{text-align:center;padding:40px;color:var(--muted)}
+.loading-state .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ========== 积分不足提示 ========== */
+.credits-warning{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:20px;margin-top:20px;text-align:center}
+.credits-warning .cw-icon{font-size:2rem;margin-bottom:8px}
+.credits-warning .cw-title{color:var(--warning);font-weight:700;font-size:1.05rem;margin-bottom:6px}
+.credits-warning .cw-desc{font-size:.85rem;color:var(--muted);margin-bottom:14px}
+.credits-warning .btn{margin:0 auto;display:inline-flex}
+
+/* ========== Toast 提示 ========== */
+.toast-container{position:fixed;top:80px;right:20px;z-index:2000;display:flex;flex-direction:column;gap:10px;max-width:360px}
+.toast{padding:14px 18px;border-radius:10px;font-size:.88rem;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.3);animation:toastIn .3s ease;border-left:4px solid}
+.toast.success{background:#111827;border-left-color:var(--success);color:var(--success)}
+.toast.error{background:#111827;border-left-color:var(--error);color:var(--error)}
+.toast.info{background:#111827;border-left-color:var(--accent);color:var(--accent)}
+.toast.warning{background:#111827;border-left-color:var(--warning);color:var(--warning)}
+.toast .toast-icon{font-size:1.1rem;flex-shrink:0}
+.toast .toast-msg{flex:1;color:var(--text)}
+.toast.fade-out{animation:toastOut .3s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(40px)}}
+
+/* ========== 页脚 ========== */
+footer{text-align:center;padding:40px 20px;color:var(--dim);font-size:.8rem;border-top:1px solid var(--border);margin-top:40px}
+footer a{color:var(--accent);text-decoration:none}
+
+/* ========== 响应式 ========== */
+@media(max-width:768px){
+  .form-grid{grid-template-columns:1fr}
+  .hero h1{font-size:1.5rem}
+  .navbar .nav-links{gap:10px}
+  .navbar .nav-links a{font-size:.8rem}
+  .card{padding:20px}
+  .result-item .ri-header{flex-direction:column}
+  .result-item .ri-score{align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== 顶部导航 ========== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="/" class="brand">
+      <span class="logo">R</span>
+      Robo<span class="accent">Parts</span>
+    </a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/#api-access">API 文档</a>
+      <a href="/designer">设计画布</a>
+      <a href="/selection" class="active">智能选型</a>
+      <a href="/bom-manager">BOM管理</a>
+      <a href="/credits">积分充值</a>
+      <a href="/" class="back-home">← 返回首页</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== Hero ========== -->
+<div class="hero">
+  <h1>智能选型引擎</h1>
+  <p>基于应用场景、预算、性能需求与通信协议，智能推荐最适合的机器人零部件方案，并可直接加入 BOM 清单。</p>
+  <div class="stats">
+    <div class="stat-item">
+      <div class="num">450+</div>
+      <div class="label">零部件数据</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">9</div>
+      <div class="label">覆盖品类</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">5</div>
+      <div class="label">应用场景</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ========== 选型表单 ========== -->
+  <div class="card">
+    <h2>🤖 选型参数配置</h2>
+    <p class="subtitle">填写您的应用场景与技术需求，智能引擎将为您推荐最优零部件方案。每次调用消耗 1 积分。</p>
+
+    <form id="selectionForm" onsubmit="return false;">
+      <div class="form-grid">
+
+        <!-- 应用场景 -->
+        <div class="form-group">
+          <label>应用场景 <span class="required">*</span></label>
+          <select id="scenario">
+            <option value="humanoid">人形机器人 (Humanoid)</option>
+            <option value="quadruped">四足机器人 (Quadruped)</option>
+            <option value="robot_arm">机械臂 (Robot Arm)</option>
+            <option value="amr">AMR 移动机器人 (AMR)</option>
+            <option value="industrial">工业机器人 (Industrial)</option>
+          </select>
+          <span class="hint">选择目标机器人类型，影响推荐权重</span>
+        </div>
+
+        <!-- 通信协议 -->
+        <div class="form-group">
+          <label>通信协议 <span class="optional">选填</span></label>
+          <select id="protocol">
+            <option value="all">全部</option>
+            <option value="EtherCAT">EtherCAT</option>
+            <option value="CAN">CAN</option>
+            <option value="RS485">RS485</option>
+          </select>
+          <span class="hint">限定通信协议兼容性</span>
+        </div>
+
+        <!-- 预算 -->
+        <div class="form-group">
+          <label>预算上限 <span class="optional">选填，单位元</span></label>
+          <input type="number" id="budget" placeholder="如：5000" min="0" step="100" />
+          <span class="hint">单个零部件预算上限（元）</span>
+        </div>
+
+        <!-- 最低扭矩 -->
+        <div class="form-group">
+          <label>最低扭矩 <span class="optional">选填，单位 Nm</span></label>
+          <input type="number" id="min_torque" placeholder="如：20" min="0" step="0.1" />
+          <span class="hint">执行器最低扭矩需求（Nm）</span>
+        </div>
+
+        <!-- 最大重量 -->
+        <div class="form-group">
+          <label>最大重量 <span class="optional">选填，单位 g</span></label>
+          <input type="number" id="max_weight" placeholder="如：500" min="0" step="1" />
+          <span class="hint">零部件最大重量限制（g）</span>
+        </div>
+
+        <!-- ROS 需求 -->
+        <div class="form-group">
+          <label class="checkbox-row">
+            <input type="checkbox" id="ros_required" />
+            <span class="cb-label">需要 ROS 支持</span>
+            <span class="cb-desc">仅推荐兼容 ROS 的零部件</span>
+          </label>
+        </div>
+
+        <!-- 分类勾选 -->
+        <div class="form-group full">
+          <label>零部件分类 <span class="optional">默认全选</span></label>
+          <div class="category-grid" id="categoryGrid">
+            <label class="category-chip">
+              <input type="checkbox" value="actuators" checked />
+              <span class="check"></span>
+              <span>执行器</span>
+            </label>
+            <label class="category-chip">
+              <input type="checkbox" value="sensors" checked />
+              <span class="check"></span>
+              <span>传感器</span>
+            </label>
+            <label class="category-chip">
+              <input type="checkbox" value="chips" checked />
+              <span class="check"></span>
+              <span>芯片</span>
+            </label>
+          </div>
+          <span class="hint">选择需要推荐的零部件分类</span>
+        </div>
+
+        <!-- API Key -->
+        <div class="form-group full">
+          <label>API Key <span class="required">*</span></label>
+          <input type="text" id="api_key" placeholder="gtk_xxxxxxxx" style="font-family:'JetBrains Mono',Consolas,monospace" />
+          <span class="hint">用于身份验证与积分扣减，<a href="/#api-access" style="color:var(--accent)">免费注册</a> 即赠 100 积分</span>
+          <span class="error-msg" id="err-api_key">请输入有效的 API Key（gtk_ 开头）</span>
+        </div>
+
+      </div>
+
+      <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <button class="btn btn-primary" id="submitBtn" onclick="runSelection()">
+          启动智能选型
+        </button>
+        <button class="btn btn-outline" type="button" onclick="resetForm()">重置参数</button>
+        <span style="font-size:.82rem;color:var(--dim)">本次调用将消耗 <strong style="color:var(--accent)">1 积分</strong></span>
+      </div>
+    </form>
+
+    <!-- 积分不足提示 -->
+    <div class="credits-warning" id="creditsWarning" style="display:none">
+      <div class="cw-icon">⚠️</div>
+      <div class="cw-title">积分不足，无法完成选型</div>
+      <div class="cw-desc" id="cwDesc">您的账户积分余额不足以完成本次选型调用，请充值后重试。</div>
+      <a href="/credits" class="btn btn-primary btn-sm">前往充值积分</a>
+    </div>
+  </div>
+
+  <!-- ========== 推荐结果 ========== -->
+  <div class="results-section">
+    <div class="results-header">
+      <h3>📊 推荐结果</h3>
+      <span class="result-count" id="resultCount"></span>
+    </div>
+
+    <div id="resultContainer">
+      <div class="empty-state">
+        <div class="icon">🔍</div>
+        <div class="title">等待选型参数</div>
+        <div class="desc">填写上方表单并点击"启动智能选型"，查看推荐方案</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== Toast 容器 ========== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ========== 页脚 ========== -->
+<footer>
+  <p>© 2026 RoboParts · 仿生机器人生态平台 · <a href="/">返回首页</a></p>
+  <p style="margin-top:8px">选型引擎: <a href="mailto:support@roboparts.cc">support@roboparts.cc</a> · 客服: <a href="mailto:support@roboparts.cc">support@roboparts.cc</a></p>
+</footer>
+
+<script>
+// ============ 分类中文映射 ============
+const CATEGORY_LABELS = {
+  actuators: '执行器',
+  sensors: '传感器',
+  chips: '芯片',
+};
+
+// ============ 场景中文映射 ============
+const SCENARIO_LABELS = {
+  humanoid: '人形机器人',
+  quadruped: '四足机器人',
+  robot_arm: '机械臂',
+  amr: 'AMR移动机器人',
+  industrial: '工业机器人',
+};
+
+// ============ Toast 提示 ============
+function showToast(message, type) {
+  type = type || 'info';
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  const icons = { success: '✓', error: '✕', info: 'ℹ', warning: '⚠' };
+  toast.innerHTML = '<span class="toast-icon">' + (icons[type] || 'ℹ') + '</span><span class="toast-msg">' + escapeHtml(message) + '</span>';
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
+
+// ============ HTML 转义 ============
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// ============ 表单校验辅助 ============
+function setFieldError(fieldId, hasError) {
+  const el = document.getElementById(fieldId);
+  if (!el) return;
+  const group = el.closest('.form-group');
+  if (group) {
+    if (hasError) group.classList.add('has-error');
+    else group.classList.remove('has-error');
+  }
+}
+
+// ============ 重置表单 ============
+function resetForm() {
+  document.getElementById('selectionForm').reset();
+  // 恢复分类默认全选
+  document.querySelectorAll('#categoryGrid input').forEach(cb => cb.checked = true);
+  document.querySelectorAll('.form-group.has-error').forEach(g => g.classList.remove('has-error'));
+  // 保留 API Key
+  const savedKey = localStorage.getItem('roboparts_api_key');
+  if (savedKey) document.getElementById('api_key').value = savedKey;
+  // 隐藏积分不足提示
+  document.getElementById('creditsWarning').style.display = 'none';
+}
+
+// ============ 运行智能选型 ============
+async function runSelection() {
+  const apiKey = document.getElementById('api_key').value.trim();
+  const scenario = document.getElementById('scenario').value;
+  const protocol = document.getElementById('protocol').value;
+  const budget = document.getElementById('budget').value;
+  const minTorque = document.getElementById('min_torque').value;
+  const maxWeight = document.getElementById('max_weight').value;
+  const rosRequired = document.getElementById('ros_required').checked;
+  const categories = Array.from(document.querySelectorAll('#categoryGrid input:checked')).map(cb => cb.value);
+
+  // 校验 API Key
+  let hasError = false;
+  if (!apiKey || !apiKey.startsWith('gtk_')) {
+    setFieldError('api_key', true);
+    hasError = true;
+  } else {
+    setFieldError('api_key', false);
+  }
+
+  if (categories.length === 0) {
+    showToast('请至少选择一个零部件分类', 'error');
+    hasError = true;
+  }
+
+  if (hasError) {
+    showToast('请检查必填项', 'error');
+    return;
+  }
+
+  // 保存 API Key
+  localStorage.setItem('roboparts_api_key', apiKey);
+
+  // 构造请求体
+  const payload = {
+    api_key: apiKey,
+    scenario: scenario,
+    categories: categories,
+  };
+  if (protocol && protocol !== 'all') payload.protocol = protocol;
+  if (budget) payload.budget = Number(budget);
+  if (minTorque) payload.min_torque = Number(minTorque);
+  if (maxWeight) payload.max_weight = Number(maxWeight);
+  payload.ros_required = rosRequired;
+
+  // 按钮状态
+  const btn = document.getElementById('submitBtn');
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '智能分析中...';
+
+  // 隐藏积分不足提示
+  document.getElementById('creditsWarning').style.display = 'none';
+
+  // 显示加载状态
+  const container = document.getElementById('resultContainer');
+  container.innerHTML = `
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>正在调用智能选型引擎，请稍候...</p>
+    </div>
+  `;
+  document.getElementById('resultCount').textContent = '';
+
+  try {
+    const res = await fetch('https://roboparts.cc/api/selection/engine', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+
+    // 处理积分不足 (402)
+    if (res.status === 402) {
+      container.innerHTML = '';
+      const cw = document.getElementById('creditsWarning');
+      cw.style.display = 'block';
+      document.getElementById('cwDesc').textContent = data.error || '您的账户积分余额不足以完成本次选型调用，请充值后重试。';
+      if (data.current_credits !== undefined) {
+        document.getElementById('cwDesc').textContent += '（当前积分：' + data.current_credits + '）';
+      }
+      showToast('积分不足，请充值后重试', 'warning');
+      return;
+    }
+
+    if (res.ok && data.success) {
+      // 引擎返回 {actuators: [...], sensors: [...], chips: [...]} 对象，需展平为数组
+      const recObj = data.recommendations || {};
+      let recommendations = [];
+      if (Array.isArray(recObj)) {
+        recommendations = recObj;
+      } else {
+        for (const [cat, items] of Object.entries(recObj)) {
+          if (Array.isArray(items)) {
+            items.forEach(it => {
+              if (!it.category) it.category = cat;
+              recommendations.push(it);
+            });
+          }
+        }
+      }
+      renderResults(recommendations, data);
+      showToast('智能选型完成，共推荐 ' + recommendations.length + ' 个方案', 'success');
+    } else {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="icon">⚠️</div>
+          <div class="title">选型失败</div>
+          <div class="desc">${escapeHtml(data.error || '请稍后重试')}</div>
+        </div>
+      `;
+      showToast(data.error || '选型失败', 'error');
+    }
+  } catch (e) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">📡</div>
+        <div class="title">网络错误</div>
+        <div class="desc">${escapeHtml(e.message)}</div>
+        <div class="desc" style="margin-top:8px">请检查网络连接后重试</div>
+      </div>
+    `;
+    showToast('网络错误：' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+
+// ============ 渲染推荐结果 ============
+function renderResults(recommendations, respData) {
+  const container = document.getElementById('resultContainer');
+  const countEl = document.getElementById('resultCount');
+
+  if (!recommendations || recommendations.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">📭</div>
+        <div class="title">未找到匹配方案</div>
+        <div class="desc">尝试调整选型参数（放宽预算、扭矩或分类限制）后重新查询</div>
+      </div>
+    `;
+    countEl.textContent = '';
+    return;
+  }
+
+  countEl.textContent = '共 ' + recommendations.length + ' 个推荐方案' +
+    (respData.meta && respData.meta.credits_remaining !== undefined ? ' · 剩余积分：' + respData.meta.credits_remaining : '') +
+    (respData.credits_remaining !== undefined ? ' · 剩余积分：' + respData.credits_remaining : '');
+
+  container.innerHTML = '<div class="result-list" id="resultList"></div>';
+  const list = document.getElementById('resultList');
+
+  recommendations.forEach((item, idx) => {
+    const score = item.score !== undefined ? Number(item.score).toFixed(1) : '-';
+    const categoryLabel = CATEGORY_LABELS[item.category] || item.category || '未分类';
+    const scenarioLabel = SCENARIO_LABELS[item.scenario] || item.scenario || '';
+
+    // 兼容性标签
+    let compatHtml = '';
+    if (item.compatibility && Array.isArray(item.compatibility) && item.compatibility.length > 0) {
+      compatHtml = '<div class="ri-compat">' +
+        item.compatibility.map(c => '<span class="compat-tag">' + escapeHtml(c) + '</span>').join('') +
+        '</div>';
+    } else if (item.protocols && Array.isArray(item.protocols) && item.protocols.length > 0) {
+      compatHtml = '<div class="ri-compat">' +
+        item.protocols.map(p => '<span class="compat-tag">' + escapeHtml(p) + '</span>').join('') +
+        '</div>';
+    }
+
+    // 供应商建议
+    let supplierHtml = '';
+    if (item.supplier_suggestion || item.supplier) {
+      const supplier = item.supplier_suggestion || item.supplier;
+      supplierHtml = '<div class="ri-supplier">🏪 供应商建议：<strong>' + escapeHtml(supplier) + '</strong></div>';
+    }
+
+    // 元信息
+    let metaHtml = '';
+    if (item.torque !== undefined && item.torque !== null) {
+      metaHtml += '<span>🔧 扭矩：<strong>' + escapeHtml(String(item.torque)) + ' Nm</strong></span>';
+    }
+    if (item.weight !== undefined && item.weight !== null) {
+      metaHtml += '<span>⚖️ 重量：<strong>' + escapeHtml(String(item.weight)) + ' g</strong></span>';
+    }
+    if (item.price !== undefined && item.price !== null) {
+      metaHtml += '<span>💰 参考价：<strong>¥' + escapeHtml(String(item.price)) + '</strong></span>';
+    }
+    if (item.ros_compatible) {
+      metaHtml += '<span>✅ ROS 兼容</span>';
+    }
+    if (scenarioLabel) {
+      metaHtml += '<span>🎯 场景：' + escapeHtml(scenarioLabel) + '</span>';
+    }
+
+    // 构造添加到 BOM 的参数
+    const bomParams = new URLSearchParams();
+    if (item.id) bomParams.set('id', item.id);
+    else bomParams.set('id', item.name || ('REC-' + (idx + 1)));
+    if (item.name) bomParams.set('name', item.name);
+    if (item.category) bomParams.set('category', categoryLabel);
+    if (item.manufacturer) bomParams.set('manufacturer', item.manufacturer);
+    if (item.brand) bomParams.set('manufacturer', item.brand);
+    if (item.price) bomParams.set('price', item.price);
+
+    const div = document.createElement('div');
+    div.className = 'result-item';
+    div.innerHTML = `
+      <div class="ri-header">
+        <div>
+          <span class="ri-name">${escapeHtml(item.name || '未命名方案')}</span>
+          <span class="ri-category">${escapeHtml(categoryLabel)}</span>
+        </div>
+        <div class="ri-score">
+          <span class="score-val">${escapeHtml(String(score))}</span>
+          <span class="score-label">综合评分</span>
+        </div>
+      </div>
+      ${item.reason ? '<div class="ri-reason">💡 ' + escapeHtml(item.reason) + '</div>' : ''}
+      ${metaHtml ? '<div class="ri-meta">' + metaHtml + '</div>' : ''}
+      ${compatHtml}
+      ${supplierHtml}
+      <div class="ri-actions">
+        <a href="/bom-manager?add=${encodeURIComponent(bomParams.toString())}" class="btn btn-success btn-sm">+ 添加到 BOM</a>
+        ${item.id ? '<a href="/designer?module=' + encodeURIComponent(item.id) + '" class="btn btn-outline btn-sm" target="_blank">🔧 导入设计画布</a>' : ''}
+        ${item.id ? '<button class="btn btn-outline btn-sm" onclick="copyComponentId(\'' + escapeHtml(item.id) + '\')">复制零部件 ID</button>' : ''}
+      </div>
+    `;
+    list.appendChild(div);
+  });
+
+  // 兼容性警告显示
+  if (respData.compatibility_warnings && respData.compatibility_warnings.length > 0) {
+    const warnDiv = document.createElement('div');
+    warnDiv.className = 'compat-warnings';
+    warnDiv.style.cssText = 'margin-top:16px;padding:16px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:12px';
+    warnDiv.innerHTML = '<div style="font-weight:700;color:var(--warning);margin-bottom:8px">⚠️ 跨品类兼容性警告</div>' +
+      respData.compatibility_warnings.map(w => '<div style="font-size:.85rem;color:var(--muted);margin-bottom:4px">• ' + escapeHtml(w) + '</div>').join('');
+    container.appendChild(warnDiv);
+  }
+}
+
+// ============ 复制零部件 ID ============
+function copyComponentId(id) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(id).then(() => {
+      showToast('零部件 ID 已复制到剪贴板', 'success');
+    }).catch(() => {
+      fallbackCopy(id);
+    });
+  } else {
+    fallbackCopy(id);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    showToast('零部件 ID 已复制', 'success');
+  } catch (e) {
+    showToast('复制失败，请手动复制', 'warning');
+  }
+  document.body.removeChild(ta);
+}
+
+// ============ 页面初始化 ============
+window.addEventListener('DOMContentLoaded', () => {
+  // 从 localStorage 恢复 API Key
+  const savedKey = localStorage.getItem('roboparts_api_key');
+  if (savedKey) {
+    document.getElementById('api_key').value = savedKey;
+  }
+
+  // 监听 API Key 输入，自动保存
+  document.getElementById('api_key').addEventListener('change', (e) => {
+    localStorage.setItem('roboparts_api_key', e.target.value.trim());
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts · 开源机器人兼容性数据层</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<link rel="canonical" href="https://roboparts.cc/oss">
+<style>
+  :root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.6}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 20px 64px}
+  h1{font-size:26px;margin:0 0 6px}
+  .sub{color:var(--mut);margin-bottom:20px}
+  .card{background:var(--card);border:1px solid #233;border-radius:14px;padding:16px 18px;margin-bottom:16px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+  select,input,button{background:#0e1530;color:var(--txt);border:1px solid #2a3556;border-radius:8px;padding:8px 10px;font-size:14px}
+  button{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;border:0;font-weight:700;cursor:pointer}
+  button.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+  table{border-collapse:collapse;width:100%;font-size:13px}
+  th,td{border:1px solid #243;padding:6px 8px;text-align:left}
+  th{background:#0e1530;color:var(--acc);position:sticky;top:0}
+  tr.sel{background:#0e2a22}
+  .badge{display:inline-block;background:#0e1530;border:1px solid #2a3556;border-radius:6px;padding:1px 8px;font-size:12px;color:var(--mut);margin:2px}
+  .stats{display:flex;gap:10px;flex-wrap:wrap}
+  .pill{background:#0e1530;border:1px solid #2a3556;border-radius:999px;padding:4px 12px;font-size:13px}
+  .tablebox{max-height:460px;overflow:auto}
+  a{color:var(--acc2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🌐 开源机器人兼容性数据层</h1>
+  <div class="sub">中文圈稀缺的「开源机器人组件兼容性数据库」——归一化自天工 / roboto_origin / LeRobot-Humanoid / Unitree Go2·G1 / OpenArm 等开源项目。免费浏览，深度规格走 Pro（<a href="/credits">升级</a>）。</div>
+
+  <div class="card">
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <select id="cat"><option value="">全部类别</option></select>
+      <select id="robot"><option value="">全部来源机器人</option></select>
+      <input type="text" id="q" placeholder="搜索名称 / 厂商 / 标准" style="flex:1;min-width:200px">
+      <button onclick="load()">搜索</button>
+      <button class="ghost" id="sendBtn" onclick="sendToChecker()">→ 勾选发送到 BOM 检查器</button>
+    </div>
+    <div class="tablebox">
+      <table id="tbl"><thead><tr><th></th><th>ID</th><th>名称</th><th>类别</th><th>厂商</th><th>协议</th><th>接口</th><th>电压</th><th>ROS2</th><th>来源</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+</div>
+
+<script>
+const API='/api';
+let current=[];
+async function init(){
+  try{
+    const s=await (await fetch(API+'/oss?stats=1')).json();
+    const st=document.getElementById('stats');
+    st.innerHTML=`<span class="pill">组件 ${s.total}</span>`+(s.by_robot?Object.entries(s.by_robot).map(([k,v])=>`<span class="pill">${k}: ${v}</span>`).join(''):'');
+    const cat=document.getElementById('cat'), rob=document.getElementById('robot');
+    Object.keys(s.by_category||{}).forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=k;cat.appendChild(o);});
+    Object.keys(s.by_robot||{}).forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=k;rob.appendChild(o);});
+  }catch(e){}
+  load();
+}
+// 【20260806-15】ROS 列三态渲染。
+// 旧写法 `e.ros_support?'✓':'–'` 把 false（厂商明确不支持）与 undefined（厂商没说）
+// 折叠成同一个 '–'，读者只会理解成「不支持」。数据层这轮已停止伪造布尔值，
+// 未声明项会真的以 undefined 出现——显示层若不同步改，等于换个地方继续撒谎。
+function rosCell(e){
+  if(e.ros_support===true)  return '<span title="厂商/上游明确声明支持 ROS">✓ 支持</span>';
+  if(e.ros_support===false) return '<span title="厂商/上游明确声明不支持 ROS">✗ 不支持</span>';
+  if(e.ros_ecosystem_origin===true)
+    return '<span style="opacity:.7" title="该位点取自机器人的 ROS/URDF 模型文件，可证明它出现在 ROS 生态中；但这不等于该零件原生支持 ROS，厂商未就此声明">? 未声明<sup>·URDF来源</sup></span>';
+  if(e._locked_fields!==undefined && e.ros_support===undefined)
+    return '<span style="opacity:.55" title="ROS 支持情况为 Pro 字段，或厂商未声明">–</span>';
+  return '<span style="opacity:.7" title="厂商未声明 ROS 支持情况（注意：这不是「不支持」）">? 未声明</span>';
+}
+async function load(){
+  const u=new URL(API+'/oss',location.origin);
+  u.searchParams.set('limit','500');
+  const c=document.getElementById('cat').value, r=document.getElementById('robot').value, q=document.getElementById('q').value;
+  if(c)u.searchParams.set('category',c); if(r)u.searchParams.set('robot',r); if(q)u.searchParams.set('q',q);
+  const j=await (await fetch(u)).json();
+  current=j.data||[];
+  const tb=document.querySelector('#tbl tbody'); tb.innerHTML='';
+  current.forEach((e,i)=>{
+    const tr=document.createElement('tr'); tr.dataset.i=i;
+    tr.innerHTML=`<td><input type="checkbox" onchange="toggle(this,${i})"></td>
+      <td>${e.id}</td><td>${e.name}</td><td>${e.category}</td><td>${e.manufacturer||''}</td>
+      <td>${e.protocol||''}</td><td>${e.interface||''}</td><td>${e.voltage||''}</td>
+      <td>${rosCell(e)}</td><td>${e.source_robot||''}</td>`;
+    tb.appendChild(tr);
+  });
+}
+const selected=new Set();
+function toggle(cb,i){ cb.checked?selected.add(i):selected.delete(i); document.querySelector(`#tbl tbody tr[data-i="${i}"]`).classList.toggle('sel',cb.checked); }
+function sendToChecker(){
+  const ids=[...selected].map(i=>current[i].id);
+  if(!ids.length){alert('请先勾选组件');return;}
+  sessionStorage.setItem('bom_ids',JSON.stringify(ids));
+  location.href='/bom-checker.html';
+}
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+  离线 dry-run 夹具：仅用于验证 ingest_oss_bom.mjs 的「解析 → 归一化 → 合并」链路，
+  不代表任何真实机器人。故意混入一个语义不可判的 link（aux_module_x1），
+  用来证明 category 推断失败时会如实落到 'unknown'，而不是被兜底猜成某个类目。
+-->
+<robot name="sample_biped">
+
+  <link name="base_link">
+    <visual>
+      <geometry><box size="0.2 0.1 0.05"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+  </link>
+
+  <link name="torso_imu_link">
+    <visual>
+      <geometry><mesh filename="package://sample/meshes/imu_bmi088.stl"/></geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+  <link name="left_hip_servo_link">
+    <visual>
+      <geometry><mesh filename="package://sample/meshes/joint_actuator.stl"/></geometry>
+      <material name="anodized"/>
+    </visual>
+  </link>
+
+  <link name="head_lidar_link">
+    <visual>
+      <geometry><cylinder length="0.06" radius="0.04"/></geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+  <link name="aux_module_x1">
+    <visual>
+      <geometry><box size="0.03 0.03 0.03"/></geometry>
+    </visual>
+  </link>
+
+  <joint name="torso_imu_fixed" type="fixed">
+    <parent link="base_link"/>
+    <child link="torso_imu_link"/>
+  </joint>
+
+  <joint name="left_hip_pitch" type="revolute">
+    <parent link="base_link"/>
+    <child link="left_hip_servo_link"/>
+    <limit effort="80" velocity="12.5" lower="-1.57" upper="1.57"/>
+  </joint>
+
+  <joint name="head_lidar_fixed" type="fixed">
+    <parent link="base_link"/>
+    <child link="head_lidar_link"/>
+  </joint>
+
+  <joint name="aux_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="aux_module_x1"/>
+  </joint>
+
+</robot>

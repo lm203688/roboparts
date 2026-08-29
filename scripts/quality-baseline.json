@@ -1,0 +1,116 @@
+{
+  "_doc": "RoboParts 数据质量棘轮基线。由 scripts/regression.py L1.5 消费。规则：这些上限只能调低（治理见效后下调），绝不能上调来迁就脏数据。任何一项超限即阻断发布。【20260808-02 分账】max_quarantined 只统计脏度隔离（placeholder_id + unverifiable_vendor + non_entity，三者之和恰为原基线 95），去重隔离另立 max_duplicate —— 两者性质不同：脏度是历史债务，去重是主动治理动作，并账会导致「每治理一次就被自己的闸门拦一次」。【20260809-09 加固】任何朝松方向改动基线必须在 _adjustments 留下机器可复核记录（L1.72），否则判红；min_traceable_pct 与 max_* 方向相反，只能下调（归位实情）或未来上调锁定收益。",
+  "_established": "2026-08-05",
+  "_established_by": "N10 Schema 治理 · 周三例行",
+  "_rationale": "存量 95 条无法溯源条目（17.46%）是历史新闻抓取与批量扩充留下的债务。一次性删除风险高（可能误伤真实条目），故采用隔离标记 + 棘轮闸门：允许带病发布，但杜绝新增。",
+  "max_quarantined": 97,
+  "max_placeholder_id": 51,
+  "max_unverifiable_vendor": 32,
+  "max_non_entity": 14,
+  "max_duplicate": 4,
+  "min_traceable_pct": 12.85,
+  "_traceable_history": [
+    {
+      "date": "2026-08-09",
+      "value": 47.32,
+      "n": 708,
+      "by": "L1.70 治理 · 总指挥飞轮",
+      "note": "将「Tier A + 仅厂商首页来源」的注水条目按本仓自己的 tier_definition 封顶 Tier B（73 条 vendor-scope 命中，含 2026-08-05 点名的 maxongroup.com 反例），并把 2 条编造 GitHub 来源的条目隔离。traceable_pct 由 57.91% 归位到 47.32%，虚高 10.6pp 已挤出。基线 min_traceable_pct 同步下调并通过 L1.72 recalibration 自证（新判据在旧数据上命中 73 条）。"
+    },
+    {
+      "date": "2026-08-05",
+      "value": 47.06,
+      "n": 544,
+      "by": "N10 Schema 治理 · 基线建立"
+    },
+    {
+      "date": "2026-08-05",
+      "value": 48.35,
+      "n": 577,
+      "by": "T5 实体扩展 +33（具身采集/边缘算力/国产传感器）",
+      "note": "min_traceable_pct 是下限，方向与 max_* 相反：只能上调锁定收益，不能下调迁就稀释。本次扩充首次触发该闸门（新增条目 Tier B 占比过高把比率从 47.06% 稀释到 45.93%），按「一手锚点=A / 二手研报=B」复核后 14 条升级为 A，比率回升至 48.35%。"
+    },
+    {
+      "date": "2026-08-05",
+      "value": 54.42,
+      "n": 577,
+      "by": "N10 第 3 轮 · 官方来源实证核验（scripts/verify_vendor_sources.py）",
+      "note": "首次用真实 HTTP 请求核验官方页面：注册表 57 条，35 条 HTTP 200 且页面文本命中实体名 -> 升 Tier A（+6.07pp）。判级引入 scope 硬封顶：URL 若仅为厂商首页（如把 Maxon EC Flat 60 挂到 maxongroup.com），无论响应多正常一律封顶 Tier B —— 该规则当场挤掉 8 条注水 Tier A（43 -> 35）。404 条目拒绝写入而非降级，避免留下死链。"
+    },
+    {
+      "date": "2026-08-05",
+      "value": 55.2,
+      "n": 587,
+      "by": "T5 实体扩展 +10（开源硬件上游缺口批次 I）",
+      "note": "首次出现「扩充反而抬高可追溯率」的批次：10 条新增全部实证升 Tier A（+0.78pp），而非以往「先稀释再补救」。做法是入库时一律先标 source_tier=B、confidence=0.55，是否升 A 完全交给 HTTP 实证，杜绝自证。选品上刻意避开厂商官网（本机对 leaderdrive.cn/hiwin.tw 等厂商域名不通），改锚定 GitHub 一手仓库 —— 开源项目的仓库即其规范发布地，scope='entity' 判定无歧义。反例守住：ACT-004 是「Odrive D6374」具体型号，ODrive 项目仓库证明不了该型号规格，故维持 scope='vendor' 封顶 Tier B，未借机注水。"
+    },
+    {
+      "date": "2026-08-10",
+      "value": 12.85,
+      "n": 708,
+      "by": "L1.82 判据证据化 · 总指挥飞轮（第 70 次运行）",
+      "superseded_value": 47.32,
+      "_superseded_doc": "断点前对外播报过的虚数。对外 note 里「曾虚报为 X%」必须由生成器读本字段渲染，禁止在文案中手打（L1.83）。",
+      "note": "【口径断点，非质量劣化】本条之前的全部历史值都建立在「有 source 就是 Tier A」的错误判据上，属虚数。本次把判据改为纯证据推导（A=深链可点开 / B=根域名·具名标准·具名厂商目录 / C=无锚点），真实可追溯率首次显形为 12.85%（91/708）。曲线在此断裂是口径归位造成的，跨断点比较无意义；后续棘轮从 12.85 重新起算。",
+      "criterion": "govern_source_tier.derive_tier@2026-08-10"
+    }
+  ],
+  "_adjustments": [
+    {
+      "key": "max_quarantined",
+      "to": 97,
+      "from": 95,
+      "kind": "legacy_discovery",
+      "ids": [
+        "XDA-007",
+        "XDA-008"
+      ],
+      "date": "2026-08-09",
+      "by": "L1.70/L1.72 治理 · 总指挥飞轮",
+      "note": "本轮全库扫描发现 2 条存量条目的 source_url 是编造的 GitHub 仓库（XDA-007 puppeteer、XDA-008 telekinesis，均经 GitHub API 实证 404），如实标 quarantine 后脏度由 95 升 97。属「发现了既有的脏」，非「新灌脏」，delta(2)==len(ids)(2) 且均为存量并附 quarantine_reason，L1.72 自证通过。"
+    },
+    {
+      "key": "max_unverifiable_vendor",
+      "to": 32,
+      "from": 30,
+      "kind": "legacy_discovery",
+      "ids": [
+        "XDA-007",
+        "XDA-008"
+      ],
+      "date": "2026-08-09",
+      "by": "L1.70/L1.72 治理 · 总指挥飞轮",
+      "note": "同批 2 条编造来源被标 data_quality=unverifiable_vendor，不可溯源厂商数 30->32。与 max_quarantined 同步松动，同一组存量发现事件。"
+    },
+    {
+      "key": "min_traceable_pct",
+      "to": 47.32,
+      "from": 55.2,
+      "kind": "recalibration",
+      "date": "2026-08-09",
+      "by": "L1.70 治理 · 总指挥飞轮",
+      "note": "口径变严（非放水）的自证：scripts/source_scope.py 按 URL 形状判定出处范围，将「Tier A + 仅厂商首页」的注水条目封顶 B（本仓 tier_definition.B 白纸黑字写「官网首页=B」）。在 git HEAD 旧数据上命中 73 条 vendor-scope 注水（含 2026-08-05 曾点名的 maxongroup.com 反例 MOT-maxon-re25），证明新判据确实更严。traceable_pct 由 57.91% 归位至 47.32%，虚高 10.6pp 已挤出。下限随实情下调，未来只能上调锁定收益。"
+    },
+    {
+      "key": "min_traceable_pct",
+      "to": 12.85,
+      "from": 47.32,
+      "kind": "recalibration",
+      "date": "2026-08-10",
+      "by": "L1.82 治理 · 总指挥飞轮（第 70 次运行）",
+      "note": "口径变严（非放水）的自证：source_tier 此前由 enrich_provenance「source 字段非空即判 A」自动盖章，与本仓自己写下的定义「Tier A = 有 URL/具名文档，可点开复核」直接矛盾。修复前全库 A=336，其中真有深链的仅 48 条，275 条**没有任何 URL**（含 source 文本写着\"web aggregation (credibility B)\" 却标 A 的自相矛盾条目）。判据收唯一源 scripts/govern_source_tier.derive_tier() 后重算：A=91 / B=210 / C=407，traceable_pct 47.32% -> 12.85%。L1.72 自证：以当前判据重算 git HEAD 版旧数据，降级命中 300+ 条，证明是收紧。**注意：此前所有 traceable_pct 历史值（47.06 / 48.35 / 54.42 / 55.2 / 47.32）均在错误判据下产生，与本值不可比，不得据此判定「数据质量下降」。**"
+    }
+  ],
+  "_next_targets": {
+    "2026-08-31": {
+      "max_quarantined": 60,
+      "comment": "先清 non_entity(14) + protocols/interfaces 占位(9)，这批无争议"
+    },
+    "2026-09-30": {
+      "max_quarantined": 20,
+      "min_traceable_pct": 60.0,
+      "comment": "unverifiable_vendor 32 条需逐条检索确认后再删；Tier B 逐步升级为 Tier A"
+    }
+  },
+  "_duplicate_rationale": "20260808-02 巡检按 (name, manufacturer) 归一化聚类，发现清洁集内有 4 组同名同厂商重复登记：CHIP-66/CHIP-81（Jetson Orin NX）、CHIP-91/CHIP-68（Qualcomm RB5）、CHIP-95/CHIP-80（QRB5165）、RPLAT-009/RPLAT-010（Tesla Optimus Gen 3）。危害不止是数字虚高：functions/mcp.js 的 search_components / recommend_for_application 只过滤 quarantine、不做去重，Agent 会拿到两条 id 不同但实为同一颗芯片的候选，误判成两个可选方案。按既有治理约定不删除，标 data_quality=duplicate + duplicate_of 后隔离，清洁集 593 -> 589。基线设为当前值 4：既锁住「不许再冒出新的重复」，也防去重逻辑跑飞时大批误隔离。清零方式是合并冗余条目后下调本值，不是上调它。"
+}

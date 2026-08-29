@@ -1,0 +1,92 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.dev.vars
+
+# Cloudflare
+.wrangler/
+.dev.mf/
+
+# Build outputs
+dist/
+build/
+.cache/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Trae work files
+.trae-html-share-packages/
+
+# Secrets (never commit)
+**/secrets/
+**/*.key
+**/*.pem
+
+# Local agent memory / private ops — never deploy to public Pages
+.workbuddy/
+.workbuddy/**
+ops/
+ops/**
+
+# Project-local analysis artifacts & dataset tooling (not served by the site)
+mcp-server/
+roboparts-dataset-github/
+multi-persona-ux-analysis-v3/
+robot-ai-models-evaluation/
+scheduled-tasks-closure-analysis/
+
+# Deployment staging dir (populated by scripts/deploy.mjs, never commit)
+.deploy-staging/
+
+# Python venv / caches (local only)
+venv/
+__pycache__/
+*.pyc
+
+# 本地工具与密钥（严禁入库/上线）
+.tools/
+.secrets/
+*.pem
+
+# 飞轮历轮遗留的临时调试产物（非交付物，勿入库）
+.chk/
+.dep_ent.json
+.m[0-9].txt
+.mcp_*.txt
+
+# 百度推送每日节流戳（本地状态，非交付物）
+.baidu-push-stamp
+
+# 训练数据集：10MB 纯派生产物，由 scripts/export_training_dataset.mjs 从
+# api/entities.json 现算而来。入库的是生成器不是快照 —— 每轮重生成都会往
+# 仓库塞一份 10MB 全量 blob（git 不做二进制增量），且本仓推送走 GitHub
+# Git Data API（base64 膨胀 1.33 倍），大 blob 会把推送打挂。
+# 可复现性由「生成器 + 输入(api/entities.json) 都在库」保证；
+# 部署前由 deploy.mjs 0b2 无条件重生成，一致性由回归 L1.80 硬校验。
+api/training_dataset.json

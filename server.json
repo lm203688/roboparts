@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "cc.roboparts/roboparts",
+  "title": "RoboParts 机器人零部件兼容性",
+  "description": "688 humanoid robot component entities with 4-dimension compatibility checking. Vendor-neutral.",
+  "version": "1.1.0",
+  "websiteUrl": "https://roboparts.cc",
+  "repository": {
+    "url": "https://github.com/lm203688/roboparts",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://roboparts.cc/mcp"
+    }
+  ]
+}

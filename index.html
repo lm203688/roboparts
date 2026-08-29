@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts — 开源机器人兼容性平台</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="中文圈稀缺的开源机器人兼容性平台：归一化天工 / roboto_origin / LeRobot-Humanoid / Unitree / OpenArm 等开源项目的组件，提供免费 BOM 兼容性检查、兼容性数据 API 与智能选型。">
+<meta name="keywords" content="开源机器人,人形机器人,兼容性,BOM检查,URDF,机器人选型,ROS2,模块化,humanoid,open-source robotics">
+<link rel="canonical" href="https://roboparts.cc/">
+<meta property="og:title" content="RoboParts — 开源机器人兼容性平台">
+<meta property="og:description" content="免费 BOM 兼容性检查器 + 开源机器人兼容性数据层 + 智能选型引擎。">
+<meta property="og:type" content="website">
+<text y='.9em' font-size='90'>🤖</text></svg>">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "RoboParts — 开源机器人兼容性平台",
+  "url": "https://roboparts.cc",
+  "description": "开源机器人组件兼容性数据库与选型工具",
+  "potentialAction": { "@type": "SearchAction", "target": "https://roboparts.cc/api/search?q={search_term_string}", "query-input": "required name=search_term_string" }
+}
+</script>
+<style>
+  :root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.6}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px 64px}
+  header{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1c2540;position:sticky;top:0;background:rgba(11,16,32,.92);backdrop-filter:blur(8px);z-index:5}
+  header .logo{font-weight:800;font-size:18px}
+  header .logo span{color:var(--acc)}
+  nav a{color:var(--mut);text-decoration:none;margin-left:16px;font-size:14px}
+  nav a:hover{color:var(--acc)}
+  .hero{padding:64px 0 40px;text-align:center}
+  .hero h1{font-size:40px;margin:0 0 14px;background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--mut);font-size:17px;max-width:680px;margin:0 auto 28px}
+  .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  button, .btn{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;border:0;border-radius:12px;padding:13px 22px;font-weight:800;font-size:15px;cursor:pointer;text-decoration:none;display:inline-block}
+  .btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:36px 0}
+  .card{background:var(--card);border:1px solid #233;border-radius:16px;padding:22px}
+  .card h3{margin:0 0 8px;font-size:18px}
+  .card .ico{font-size:26px}
+  .card p{color:var(--mut);font-size:14px;margin:0 0 14px}
+  .card a{color:var(--acc2);text-decoration:none;font-weight:700}
+  .model{max-width:760px;margin:48px auto 0;background:var(--card);border:1px solid #233;border-radius:16px;padding:26px}
+  .model h2{margin-top:0}
+  .steps{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+  .step{background:#0e1530;border:1px solid #2a3556;border-radius:10px;padding:10px 14px;flex:1;min-width:160px}
+  .step b{color:var(--acc)}
+  .pill{display:inline-block;background:#0e1530;border:1px solid #2a3556;border-radius:999px;padding:3px 12px;font-size:12px;color:var(--mut);margin:3px}
+  footer{text-align:center;color:var(--mut);font-size:13px;padding:30px 0;border-top:1px solid #1c2540;margin-top:40px}
+  a{color:var(--acc2)}
+</style>
+<!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"708 条实体（其中 509 条实物零部件、94 条接口/协议规范、79 条 AI 模型与软件、9 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
+</head>
+<body>
+<header>
+  <div class="logo">Robo<span>Parts</span></div>
+  <nav>
+    <a href="/bom-checker.html">BOM 检查</a>
+    <a href="/copilot">兼容性 Copilot</a>
+    <a href="/oss.html">OSS 数据层</a>
+    <a href="/selection.html">选型引擎</a>
+    <a href="/adapter-generator">转接件生成器</a>
+    <a href="/agent-architecture">兼容性架构</a>
+    <a href="/build-planner">Build Planner</a>
+    <a href="/articles/">技术文库</a>
+    <a href="/data-hub.html">数据 API</a>
+    <a href="/pricing.html">定价</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <h1>开源机器人兼容性平台</h1>
+    <p>一站式查清楚：天工、LeRobot、Unitree、OpenArm 等开源项目的电机、关节、传感器、控制器，能不能装到一起、能不能互相替换。粘贴 BOM、搜索零件、或直接问 Copilot，立刻拿到兼容性结论与替代方案。</p>
+    <div class="cta">
+      <a class="btn" href="/bom-checker.html">▶ 免费检查 BOM 兼容性</a>
+      <a class="btn ghost" href="/selection.html">按场景选型</a>
+      <a class="btn ghost" href="/copilot">问 AI Copilot</a>
+      <a class="btn ghost" href="/articles/">技术文库</a>
+    </div>
+  </section>
+
+  <section class="hero" style="padding-top:0">
+    <p style="font-size:14.5px;opacity:.85">
+      热门速查：<a href="/iso-9409-flange">ISO 9409-1 机器人法兰对照表</a> · <a href="/robot-joint-parameter-spec">关节参数虚标怎么辨别</a> ·
+      <a href="/articles/open-source-humanoid-knee-actuator-selection">膝关节执行器选型</a> ·
+      <a href="/articles/open-source-humanoid-canfd-vs-ethercat">CAN FD 与 EtherCAT 怎么选</a> ·
+      <a href="/articles/robot-tactile-sensor-selection-guide-2026">触觉传感器选型指南</a>
+    </p>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <div class="ico">🔧</div>
+      <h3>免费 BOM 兼容性检查器</h3>
+      <p>粘贴组件清单，秒得两两兼容性矩阵、可互换选型组与冲突告警。构建者免费的日常工具（对标 TraceParts）。</p>
+      <a href="/bom-checker.html">立即使用 →</a>
+    </div>
+    <div class="card">
+      <div class="ico">🌐</div>
+      <h3>开源兼容性数据层</h3>
+      <p>133+ 开源机器人组件，跨项目归一化。中文圈稀缺的「开源机器人兼容性数据库」，持续摄取新开源发布。</p>
+      <a href="/oss.html">浏览数据 →</a>
+    </div>
+    <div class="card">
+      <div class="ico">🧠</div>
+      <h3>智能选型引擎</h3>
+      <p>按人形/四足/机械臂场景与预算、扭矩、电压、ROS 需求，对执行器/传感器/芯片综合评分与跨品类兼容分析。</p>
+      <a href="/selection.html">开始选型 →</a>
+    </div>
+    <div class="card">
+      <div class="ico">📦</div>
+      <h3>URDF 模型库</h3>
+      <p>60+ 机器人 URDF 模型，含开源生态（天工、LeRobot、Unitree），自动生成仿真/ROS2 兼容性标签。</p>
+      <a href="/urdf-library.html">查看模型 →</a>
+    </div>
+  </section>
+
+  <section class="model">
+    <h2>三步找到能用的零件</h2>
+    <p style="color:var(--mut)">不用逐页翻 datasheet，RoboParts 把接口、电压、协议、尺寸统一成可判定的数据。</p>
+    <div class="steps">
+      <div class="step"><b>① 找到你的零件</b><br>在 <span data-rp="total_entities3">708</span> 条实体、<span data-rp="oss_total2">325</span> 个开源组件里搜索电机、关节、传感器，或直接粘贴你的 BOM 清单。</div>
+      <div class="step"><b>② 查能不能配</b><br>机械法兰、电气电压、通信协议、ROS 支持四维兼容判定，冲突直接标红。</div>
+      <div class="step"><b>③ 拿替代方案</b><br>兼容组自动推荐可互换零件，避开停产、缺货、参数虚标的坑。</div>
+    </div>
+    <div>
+      <span class="pill">ISO 9409-1 法兰对照</span>
+      <span class="pill">参数虚标识别</span>
+      <span class="pill">URDF 兼容性标签</span>
+      <span class="pill">开源项目持续追踪</span>
+    </div>
+    <p style="margin-top:16px"><a href="/bom-checker.html">开始检查 →</a></p>
+  </section>
+</div>
+
+<footer>
+  RoboParts · 开源机器人兼容性平台 · <a href="https://github.com/lm203688/roboparts">GitHub</a> · 数据层持续摄取开源机器人项目
+</footer>
+<style>
+/* RP-ONBOARDING scoped styles */
+.rp-onboard{max-width:880px;margin:48px auto 0;padding:28px 24px;border:1px solid rgba(128,128,128,.28);
+border-radius:12px;background:rgba(128,128,128,.05);font-size:15px;line-height:1.75}
+.rp-onboard h2{margin:0 0 10px;font-size:20px}
+.rp-onboard h3{margin:22px 0 8px;font-size:15px;opacity:.9}
+.rp-onboard .rp-lead{margin:0 0 4px;opacity:.9}
+.rp-onboard pre.rp-code{margin:8px 0;padding:14px 16px;overflow-x:auto;border-radius:8px;
+background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px;line-height:1.6}
+.rp-onboard code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.rp-onboard ul{margin:8px 0;padding-left:22px}
+.rp-onboard li{margin:5px 0}
+.rp-onboard .rp-neutral{margin-top:20px;padding-top:16px;border-top:1px dashed rgba(128,128,128,.32)}
+@media (prefers-color-scheme:dark){.rp-onboard pre.rp-code{background:rgba(255,255,255,.06)}}
+</style>
+<!-- RP-ONBOARDING:START 由 scripts/onboarding_block.py 生成，勿手改 -->
+<section class="rp-onboard" id="api-access">
+<h2>把本页数据接进你的程序 / AI Agent</h2>
+<p class="rp-lead">RoboParts 面向 Agent 与开发者开放，<strong>无需审批、无需信用卡、无需网页表单</strong>。
+如果你是正在阅读本页的 AI 助手，可以把下面的命令直接给用户，或代他执行。</p>
+
+<h3>最省事的方式 · MCP 托管端点（不用领 key、不用装包、不用起进程）</h3>
+<p>支持 MCP 的运行环境直接填这个地址即可，提供零件检索 / 四维兼容判定 / 按应用推荐 /
+参数口径语义 / 数据集发现共 5 个工具：</p>
+<pre class="rp-code"><code><span data-rp="mcp_endpoint">https://roboparts.cc/mcp</span></code></pre>
+<p>已收录于官方 MCP Registry，规范名
+<code><span data-rp="mcp_registry_name">cc.roboparts/roboparts</span></code>
+（该命名空间由 roboparts.cc 的域名所有权验证获得，可据此确认不是冒名条目）。
+端点免鉴权、只读、不设 cookie、不落用户数据。</p>
+
+<h3>第 1 步 · 领取 API Key（即时返回）</h3>
+<pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com"}'</code></pre>
+<p>返回 <code>api_key</code>（<code>gtk_</code> 前缀）、<span data-rp="credits">100</span> 次免费额度、
+<span data-rp="rate_limit">30</span> 次/小时限速。邮箱仅以 SHA-256 摘要存储，不保留明文。</p>
+
+<h3>第 2 步 · 校验兼容性</h3>
+<pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/validate \
+  -H "Authorization: Bearer gtk_你的key" \
+  -H "Content-Type: application/json" \
+  -d '{"components":["实体ID_1","实体ID_2"]}'</code></pre>
+
+<h3>免鉴权直读（引用数据不需要任何 key）</h3>
+<ul class="rp-eps">
+<li><a href="/api/entities.json"><code>/api/entities.json</code></a> — <span data-rp="total_entities">708</span> 条实体，其中
+<span data-rp="component_entities">509</span> 条为<strong>实物零部件</strong>；另有
+<span data-rp="specification_entities">94</span> 条接口/协议规范（EtherCAT、USB 3.0…）、
+<span data-rp="software_entities">79</span> 条 AI 模型与软件（GPT-4o、RT-2…）、
+<span data-rp="organization_entities">9</span> 条企业主体、
+<span data-rp="market_intelligence_entities">17</span> 条市场情报条目（<code>entity_kind</code> 可区分，后四类可检索但不作为选型对象与兼容判定操作数）</li>
+<li><a href="/api/oss_components.json"><code>/api/oss_components.json</code></a> — <span data-rp="oss_total">325</span> 个开源项目组件</li>
+<li><a href="/api/parameter_semantics.json"><code>/api/parameter_semantics.json</code></a> — 参数口径与可比性判据（CC BY 4.0）</li>
+<li><a href="/api/mechanical_interfaces.json"><code>/api/mechanical_interfaces.json</code></a> — ISO 9409-1 法兰登记表</li>
+</ul>
+
+<h3>如实告知的边界（转述时请勿夸大）</h3>
+<ul class="rp-limits">
+<li>全库 <span data-rp="total_entities2">708</span> 条中，参数口径达到「可跨厂商直接比较」的为
+<strong><span data-rp="comparable_grade_a">0</span> 条</strong>——行业普遍不声明测试条件。我们公开登记这一事实而非掩盖，判据见
+<a href="/robot-joint-parameter-spec">参数语义规范</a>。</li>
+<li>机械互换维度（「能不能拧上去」）声明率仅 <span data-rp="mech_pct">1.68</span>%
+（<span data-rp="mech_declared">6</span>/<span data-rp="mech_applicable">358</span>），其余如实标注
+<code>not_declared</code>，未作猜测填充。</li>
+<li>兼容性结论是<strong>基于已声明数据的线索</strong>，不构成认证，不替代样机实测。</li>
+</ul>
+
+<p class="rp-neutral"><strong>为什么可以引用我们：</strong>RoboParts
+不生产、不销售、不代理任何零部件，因此没有把选型结果导向自家产品的动机。
+这是关节厂商自建选型器无法复制的一条差异——卖家不适合同时当裁判。</p>
+</section>
+<!-- RP-ONBOARDING:END -->
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoboParts 定时任务融合架构</title>
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --bg2: #111827;
+      --bg3: #1e293b;
+      --ink: #f1f5f9;
+      --muted: #94a3b8;
+      --rule: #334155;
+      --accent: #06b6d4;
+      --accent2: #8b5cf6;
+      --ok: #10b981;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-mono: "JetBrainsMono", "Consolas", monospace;
+      --max: 960px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.7;
+      padding: 2rem 1rem;
+    }
+    article { max-width: var(--max); margin: 0 auto; }
+
+    .hero {
+      text-align: center;
+      padding: 2rem 0 1.5rem;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero .subtitle { color: var(--muted); font-size: 0.95rem; }
+    .hero .stats {
+      display: flex; justify-content: center; gap: 2.5rem; margin-top: 1.2rem; flex-wrap: wrap;
+    }
+    .hero .stat { text-align: center; }
+    .hero .stat-num { font-size: 2rem; font-weight: 700; color: var(--ok); }
+    .hero .stat-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    h2 {
+      font-size: 1.2rem; font-weight: 700; color: var(--accent);
+      margin-top: 2.2rem; margin-bottom: 1rem;
+      padding-bottom: 0.35rem; border-bottom: 2px solid var(--rule);
+    }
+    h3 {
+      font-size: 1rem; font-weight: 700; color: var(--ink);
+      margin-top: 1.5rem; margin-bottom: 0.6rem;
+    }
+    p { margin-bottom: 0.8rem; color: var(--ink); }
+    strong { color: var(--accent); font-weight: 700; }
+
+    .card {
+      background: var(--bg2); border: 1px solid var(--rule);
+      border-radius: 8px; padding: 1.1rem; margin-bottom: 0.9rem;
+    }
+    .card h4 {
+      font-size: 0.9rem; font-weight: 700; color: var(--accent2);
+      margin-bottom: 0.4rem;
+    }
+    .card .meta {
+      font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .badge {
+      display: inline-block; font-family: var(--font-mono); font-size: 0.7rem;
+      font-weight: 700; padding: 0.12rem 0.45rem; border-radius: 4px;
+      margin-right: 0.25rem;
+    }
+    .badge-new { background: rgba(6, 182, 212, 0.12); color: var(--accent); border: 1px solid rgba(6, 182, 212, 0.3); }
+    .badge-keep { background: rgba(16, 185, 129, 0.12); color: var(--ok); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-del { background: rgba(239, 68, 68, 0.12); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+    thead th {
+      background: var(--bg3); color: var(--accent); font-weight: 700;
+      text-align: left; padding: 0.55rem 0.7rem;
+      border-bottom: 2px solid var(--accent); position: sticky; top: 0;
+    }
+    tbody td {
+      padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--rule);
+      color: var(--ink); vertical-align: top;
+    }
+    tbody tr:hover { background: rgba(6, 182, 212, 0.04); }
+    td.mono { font-family: var(--font-mono); font-size: 0.78rem; }
+
+    .timeline {
+      display: flex; flex-direction: column; gap: 0.6rem;
+      margin: 1rem 0; padding-left: 1.2rem; border-left: 2px solid var(--rule);
+    }
+    .tl-item { position: relative; }
+    .tl-item::before {
+      content: ""; position: absolute; left: -1.45rem; top: 0.5rem;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+    }
+    .tl-item.daily::before { background: var(--accent); }
+    .tl-item.weekly::before { background: var(--accent2); }
+    .tl-item.monthly::before { background: var(--ok); }
+    .tl-time { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
+    .tl-name { font-weight: 700; color: var(--ink); }
+    .tl-desc { font-size: 0.85rem; color: var(--muted); }
+
+    .fusion-arrow {
+      text-align: center; color: var(--muted); font-size: 1.4rem;
+      margin: 0.3rem 0;
+    }
+    .highlight {
+      background: rgba(6, 182, 212, 0.08);
+      border-left: 3px solid var(--accent);
+      padding: 0.6rem 0.9rem;
+      border-radius: 0 6px 6px 0;
+      margin: 0.8rem 0;
+    }
+
+    footer {
+      margin-top: 2.5rem; padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+      color: var(--muted); font-size: 0.8rem; text-align: center;
+    }
+  </style>
+</head>
+<body>
+<article>
+  <div class="hero">
+    <h1>RoboParts 定时任务融合架构</h1>
+    <p class="subtitle">7个分立任务 → 4个融合任务，消除冗余、统一闭环</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">7→4</div>
+        <div class="stat-label">任务数量</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">-43%</div>
+        <div class="stat-label">减少比例</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">33</div>
+        <div class="stat-label">全站总任务</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>一、融合前后对比</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>原任务</th>
+        <th>调度</th>
+        <th>状态</th>
+        <th>融合去向</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>项目健康度日报</td>
+        <td class="mono">daily 02:00</td>
+        <td><span class="badge badge-del">已删除</span></td>
+        <td rowspan="2"><strong>每日综合巡检</strong><br><span class="mono">daily 02:30</span></td>
+      </tr>
+      <tr>
+        <td>每日情报收集</td>
+        <td class="mono">daily 03:00</td>
+        <td><span class="badge badge-del">已删除</span></td>
+      </tr>
+      <tr>
+        <td>每周趋势研判</td>
+        <td class="mono">Sun 03:00</td>
+        <td><span class="badge badge-del">已删除</span></td>
+        <td rowspan="3"><strong>每周综合运营</strong><br><span class="mono">Mon 03:00</span></td>
+      </tr>
+      <tr>
+        <td>每周运营综合</td>
+        <td class="mono">Mon 02:00</td>
+        <td><span class="badge badge-del">已删除</span></td>
+      </tr>
+      <tr>
+        <td>每周SEO文章生产</td>
+        <td class="mono">Mon 04:00</td>
+        <td><span class="badge badge-del">已删除</span></td>
+      </tr>
+      <tr>
+        <td>每周数据实体扩展</td>
+        <td class="mono">Wed 04:00</td>
+        <td><span class="badge badge-keep">保留</span></td>
+        <td>独立执行</td>
+      </tr>
+      <tr>
+        <td>每月经营分析</td>
+        <td class="mono">1st 02:00</td>
+        <td><span class="badge badge-keep">保留</span></td>
+        <td>更新读取路径</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>二、新执行时间线</h2>
+  <div class="timeline">
+    <div class="tl-item daily">
+      <div class="tl-time">每天 02:30</div>
+      <div class="tl-name">每日综合巡检</div>
+      <div class="tl-desc">Part A 健康度检查 + Part B 情报摘要 + Part C 今日待办</div>
+    </div>
+    <div class="tl-item weekly">
+      <div class="tl-time">每周一 03:00</div>
+      <div class="tl-name">每周综合运营</div>
+      <div class="tl-desc">Ch1 趋势研判 + Ch2 运营综合 + Ch3 行动追踪 + Ch4 SEO文章生产</div>
+    </div>
+    <div class="tl-item weekly">
+      <div class="tl-time">每周三 04:00</div>
+      <div class="tl-name">每周数据实体扩展</div>
+      <div class="tl-desc">情报驱动数据扩充，新增VLA/芯片/基准实体</div>
+    </div>
+    <div class="tl-item monthly">
+      <div class="tl-time">每月1日 02:00</div>
+      <div class="tl-name">每月经营分析</div>
+      <div class="tl-desc">读取全部日报周报，产出月报并归档上月报告</div>
+    </div>
+  </div>
+
+  <h2>三、融合任务详情</h2>
+
+  <div class="card">
+    <h4><span class="badge badge-new">NEW</span> 每日综合巡检 <span class="mono">daily 02:30</span></h4>
+    <div class="meta">ID: 222f04bf | 融合来源: 项目健康度日报 + 每日情报收集</div>
+    <p><strong>Part A - 健康度检查：</strong>全站可用性、API端点、支付链路、数据完整性（450实体9分类）、国际化字段完整性（_en缺失统计）、数据时效性抽查、用户数据安全。</p>
+    <p><strong>Part B - 情报摘要：</strong>GitHub/HF/arXiv/知乎/ROS/NVIDIA/中国团队/WAM生态/评测基准/产线商业化，标记P0/P1/P2紧急度。</p>
+    <p><strong>Part C - 今日待办：</strong>汇总修复项和情报跟进项，格式化为行动清单并标注衔接任务。</p>
+    <p class="mono">产出: reports/daily-comprehensive-{YYYYMMDD}.md</p>
+  </div>
+
+  <div class="card">
+    <h4><span class="badge badge-new">NEW</span> 每周综合运营 <span class="mono">Mon 03:00</span></h4>
+    <div class="meta">ID: 7b5c030a | 融合来源: 每周趋势研判 + 每周运营综合 + 每周SEO文章生产</div>
+    <p><strong>Chapter 1 - 趋势研判：</strong>读取本周全部综合日报，汇总关键信号，研判VLA vs WAM范式、端侧芯片格局、产线商业化进展、政策跟踪、开源生态。</p>
+    <p><strong>Chapter 2 - 运营综合：</strong>安全扫描、性能成本、竞品追踪、推广效果、用户留存、数据集更新、国际化质量、海外渠道监控、产线商业化跟踪、政策标准跟踪。</p>
+    <p><strong>Chapter 3 - 行动建议与执行追踪：</strong>产出P0/P1/P2行动建议，读取上周执行追踪表检查落实状态，统计执行率，连续2周未落实的P0升级为告警。</p>
+    <p><strong>Chapter 4 - SEO内容生产：</strong>基于趋势热点确定2-3篇选题，撰写技术文章并保存到 content/ 目录，含SEO元信息。</p>
+    <p class="mono">产出: reports/weekly-comprehensive-{YYYYMMDD}.md + content/article-*.md</p>
+  </div>
+
+  <div class="card">
+    <h4><span class="badge badge-keep">KEEP</span> 每周数据实体扩展 <span class="mono">Wed 04:00</span></h4>
+    <div class="meta">ID: 7cfada63 | 状态: 保留原样</div>
+    <p>情报驱动数据扩充，当前450实体9分类。优先级：P1新增VLA/世界模型实体到robot_ai_models、P1新增芯片到chips、P2新增评测基准到protocols。新增实体必须含完整字段和国际化_en字段。</p>
+    <p class="mono">产出: reports/entity-expansion-{YYYYMMDD}.md</p>
+  </div>
+
+  <div class="card">
+    <h4><span class="badge badge-keep">KEEP</span> 每月经营分析 <span class="mono">1st 02:00</span></h4>
+    <div class="meta">ID: f0fd67f2 | 状态: 保留，更新读取路径</div>
+    <p>读取本月全部综合日报和周报，产出经营月报（收入/转化漏斗/渠道ROI/生态评估/路线图复审/策略建议）。月报完成后将上月报告打包归档为ZIP并清理原始文件。</p>
+    <div class="highlight">
+      <strong>路径更新：</strong>读取路径从 daily-health-*/daily-intel-*/weekly-trend-*/weekly-ops-* 更新为 <span class="mono">daily-comprehensive-* / weekly-comprehensive-*</span>
+    </div>
+    <p class="mono">产出: reports/monthly-report-{YYYYMM}.md + reports/archive-{YYYYMM}.zip</p>
+  </div>
+
+  <h2>四、执行闭环关系</h2>
+  <div class="highlight">
+    <strong>日报 → 周报 → 数据扩展/月报</strong><br>
+    每日综合巡检产出的情报摘要和待办项，为每周综合运营提供素材。<br>
+    每周综合运营产出的行动建议中"数据集该补什么"直接对接每周数据实体扩展。<br>
+    每月经营分析读取全部日报和周报，完成月度归档闭环。
+  </div>
+
+  <h2>五、文件命名规范变更</h2>
+  <table>
+    <thead>
+      <tr><th>类型</th><th>旧命名</th><th>新命名</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>日报</td><td class="mono">daily-health-{YYYYMMDD}.md<br>daily-intel-{YYYY-MM-DD}.md</td><td class="mono">daily-comprehensive-{YYYYMMDD}.md</td></tr>
+      <tr><td>周报</td><td class="mono">weekly-trend-{YYYYMMDD}.md<br>weekly-ops-{YYYYMMDD}.md</td><td class="mono">weekly-comprehensive-{YYYYMMDD}.md</td></tr>
+      <tr><td>数据扩展</td><td class="mono">entity-expansion-{YYYYMMDD}.md</td><td class="mono">entity-expansion-{YYYYMMDD}.md（不变）</td></tr>
+      <tr><td>月报</td><td class="mono">monthly-report-{YYYYMM}.md</td><td class="mono">monthly-report-{YYYYMM}.md（不变）</td></tr>
+      <tr><td>归档</td><td class="mono">archive-{YYYYMM}.zip</td><td class="mono">archive-{YYYYMM}.zip（不变）</td></tr>
+    </tbody>
+  </table>
+
+  <footer>
+    生成时间: 2026-07-27 | RoboParts 自动化运营系统
+  </footer>
+</article>
+</body>
+</html>

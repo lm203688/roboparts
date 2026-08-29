@@ -1,0 +1,82 @@
+# robots.txt for roboparts.cc
+# Last updated: 2026-08-05
+#
+# 【2026-08-05 修订说明】
+# 此前本文件 Disallow 了 20 个 /api/*.json 数据端点，但：
+#   1) sitemap.xml 同时把这些 JSON 列为待抓 URL —— 两个文件给出互相矛盾的信号；
+#   2) llms.txt 明确邀请 AI Agent 取用这些数据端点 —— 与 Disallow 直接冲突。
+# RoboParts 的定位是「可被 AI 检索与引用的机器人零部件兼容性数据层」，
+# 让 AI 抓到结构化数据正是产品目标本身，而非需要防范的行为。
+# 因此本次放开公开数据端点，仅保留两类禁止项：内部用量统计与反爬蜜罐。
+
+User-agent: *
+Allow: /
+
+# ── 明确欢迎 AI 检索与训练爬虫抓取公开数据 ──────────────────────────
+# 数据以 CC-BY 精神提供：可自由引用，请注明来源 https://roboparts.cc
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+# ── 传统搜索引擎 ────────────────────────────────────────────────
+User-agent: Baiduspider
+Allow: /
+
+User-agent: bingbot
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+# ── 仅禁止内部/陷阱端点（不含任何公开数据）────────────────────────
+User-agent: *
+Disallow: /api/usage.json
+Disallow: /api/honeypot.json
+
+# ── 站点地图与 AI 说明文件 ──────────────────────────────────────
+Sitemap: https://roboparts.cc/sitemap.xml
+
+# 面向 AI Agent 的站点说明（数据分级、引用规范、API 清单、技术文库索引）：
+#   https://roboparts.cc/llms.txt
+#   https://roboparts.cc/agent-discovery.json

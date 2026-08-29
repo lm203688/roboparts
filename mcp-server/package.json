@@ -1,0 +1,47 @@
+{
+  "name": "roboparts-mcp-server",
+  "version": "1.0.2",
+  "description": "MCP server for RoboParts — 688 humanoid robot component entities with compatibility, mechanical interface and parameter-comparability data. Vendor-neutral: we neither manufacture nor resell any part.",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "roboparts-mcp-server": "index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "robotics",
+    "humanoid-robot",
+    "robot-parts",
+    "compatibility",
+    "actuator",
+    "servo",
+    "sensor",
+    "bom",
+    "ai-agent"
+  ],
+  "homepage": "https://roboparts.cc",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lm203688/roboparts.git",
+    "directory": "mcp-server"
+  },
+  "bugs": {
+    "url": "https://github.com/lm203688/roboparts/issues"
+  },
+  "author": "RoboParts (https://roboparts.cc)",
+  "license": "MIT"
+}

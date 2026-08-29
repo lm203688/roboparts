@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>机器人零件 3D 预览库 | RoboParts</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="RoboParts 标准机器人零件 3D 预览库：ISO 9409-1 四档法兰、执行器、传感器、控制器参数化实时渲染，支持旋转缩放与尺寸标注，直接对接兼容性矩阵。">
+<meta name="keywords" content="机器人零件,3D预览,ISO 9409-1,法兰,执行器,传感器,机器人3D模型,RoboParts">
+<link rel="canonical" href="https://roboparts.cc/parts-viewer">
+<meta property="og:type" content="website">
+<meta property="og:title" content="机器人零件 3D 预览库 | RoboParts">
+<meta property="og:description" content="标准机器人零件参数化 3D 预览，直接对接兼容性矩阵。">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"RoboParts 机器人零件 3D 预览库","description":"ISO 9409-1 四档法兰、执行器、传感器、控制器参数化 3D 预览与尺寸标注。","url":"https://roboparts.cc/parts-viewer","isPartOf":{"@type":"WebSite","name":"RoboParts","url":"https://roboparts.cc"}}</script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+<style>
+:root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--line:#243352}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.7}
+a{color:var(--acc2);text-decoration:none}a:hover{text-decoration:underline}
+.nav{border-bottom:1px solid var(--line);background:#0e1530}
+.nav .in{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px}
+.nav .brand{font-weight:800;color:var(--acc);font-size:16px}.nav a{color:var(--mut)}.nav a:hover{color:var(--txt)}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 72px}
+.crumb{font-size:13px;color:var(--mut);margin-bottom:12px}
+h1{font-size:28px;margin:0 0 8px}
+.lede{background:var(--card);border-left:3px solid var(--acc);border-radius:0 10px 10px 0;padding:14px 16px;color:#c8d2e6;margin:14px 0 22px;font-size:15px}
+.layout{display:grid;grid-template-columns:280px 1fr;gap:22px;align-items:start}
+@media(max-width:880px){.layout{grid-template-columns:1fr}}
+.list .item{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-bottom:9px;cursor:pointer;font-size:14px;transition:.15s}
+.list .item:hover{border-color:var(--acc)}
+.list .item.on{border-color:var(--acc);background:#10233a}
+.list .item .sub{font-size:12px;color:var(--mut);margin-top:2px}
+#viewer{width:100%;height:520px;background:radial-gradient(circle at 50% 40%,#16203c,#0a0f1f);border:1px solid var(--line);border-radius:14px;position:relative}
+#viewer .hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--mut)}
+.spec{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:14px;font-size:13.5px}
+.spec h3{margin:0 0 8px;color:var(--acc);font-size:15px}
+.spec table{width:100%;border-collapse:collapse}
+.spec td{padding:5px 8px;border-bottom:1px solid var(--line);font-size:13px}
+.spec td:first-child{color:var(--mut);width:42%}
+.spec a.btn{display:inline-block;margin-top:12px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;font-weight:800;border-radius:9px;padding:9px 14px;font-size:13px}
+.foot{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+.tag{display:inline-block;background:#0e1530;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--mut);margin:2px 4px 2px 0}
+</style>
+</head>
+<body>
+<div class="nav"><div class="in">
+<a class="brand" href="/">RoboParts</a>
+<a href="/articles">技术文库</a>
+<a href="/oss">开源数据层</a>
+<a href="/bom-checker">BOM 兼容检查</a>
+<a href="/selection">智能选型</a>
+<a href="/adapter-generator">转接件生成器</a>
+<a href="/pricing">定价</a>
+</div></div>
+<div class="wrap">
+<div class="crumb"><a href="/">首页</a> › 零件 3D 预览库</div>
+<h1>机器人零件 3D 预览库</h1>
+<div class="lede">参数化实时渲染的标准机器人零件 —— 拖动旋转、滚轮缩放、查看关键尺寸。所有几何均由开源算法生成（参考 OpenSCAD / CadQuery），并可直接对接 <a href="/bom-checker">兼容性矩阵</a> 与 <a href="/selection">智能选型</a>。这是"兼容无忧"的可视化底座。</div>
+
+<div class="layout">
+  <div class="list" id="list"></div>
+  <div>
+    <div id="viewer"><div class="hint">拖动旋转 · 滚轮缩放</div></div>
+    <div class="spec" id="spec"></div>
+  </div>
+</div>
+
+<div class="foot">
+© 2026 RoboParts · 开源机器人零部件兼容性平台 ·
+<a href="/iso-9409-flange">ISO 9409-1 法兰速查</a> ·
+<a href="/adapter-generator">转接件生成器</a> ·
+<a href="/llms.txt">llms.txt</a>
+</div>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// ---------- 场景 ----------
+let scene, camera, renderer, controls, mesh, curGroup;
+const el = document.getElementById('viewer');
+function initScene(){
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(45, el.clientWidth/el.clientHeight, 0.1, 4000);
+  camera.position.set(180,150,220);
+  renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+  renderer.setSize(el.clientWidth, el.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  el.appendChild(renderer.domElement);
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  scene.add(new THREE.AmbientLight(0xffffff,0.65));
+  const d=new THREE.DirectionalLight(0xffffff,0.9); d.position.set(140,220,160); scene.add(d);
+  const d2=new THREE.DirectionalLight(0x88aaff,0.4); d2.position.set(-160,-110,-130); scene.add(d2);
+  window.addEventListener('resize',()=>{camera.aspect=el.clientWidth/el.clientHeight;camera.updateProjectionMatrix();renderer.setSize(el.clientWidth,el.clientHeight);});
+  animate();
+}
+function animate(){ requestAnimationFrame(animate); controls.update(); renderer.render(scene,camera); }
+
+const matBody = new THREE.MeshStandardMaterial({color:0x3a465f, metalness:0.4, roughness:0.55});
+function M(color){ return new THREE.MeshStandardMaterial({color, metalness:0.4, roughness:0.5}); }
+function boltCircle(mat, pcd, n, r, depth){
+  const g = new THREE.Group();
+  for(let i=0;i<n;i++){
+    const a=i*Math.PI*2/n;
+    const b=new THREE.Mesh(new THREE.CylinderGeometry(r,r,depth,20), mat);
+    b.position.set(pcd/2*Math.cos(a), pcd/2*Math.sin(a), 0);
+    g.add(b);
+  }
+  return g;
+}
+
+// ---------- 零件几何 ----------
+function partFlange(p){ // ISO 9409-1 型式A
+  const g=new THREE.Group();
+  const t=12, R=p.pcd/2+18;
+  const plate=new THREE.Mesh(new THREE.CylinderGeometry(R,R,t,96), M(0x37e0a6));
+  plate.rotation.x=Math.PI/2; plate.position.z=0; g.add(plate);
+  const holes=boltCircle(M(0x0b1020), p.pcd, p.holes, p.clr/2, t+2);
+  g.add(holes);
+  if(p.pins){ const pins=boltCircle(M(0x0b1020), p.pinPCD, 2, p.pinD/2, t+2); g.add(pins); }
+  const bore=new THREE.Mesh(new THREE.CylinderGeometry(p.bore/2,p.bore/2,t+2,40), M(0x0b1020));
+  bore.rotation.x=Math.PI/2; g.add(bore);
+  g.userData.dim = `外径 Ø${(R*2).toFixed(0)} · PCD Ø${p.pcd} · ${p.holes}×${p.thread}${p.pins?' · 2×pinφ'+p.pinD:''} · 中心孔 Ø${p.bore}`;
+  return g;
+}
+function partActuator(){ // DYNAMIXEL 风格执行器
+  const g=new THREE.Group();
+  const body=new THREE.Mesh(new THREE.CylinderGeometry(28,28,52,48), M(0x5b9dff));
+  body.rotation.x=Math.PI/2; g.add(body);
+  const flange=new THREE.Mesh(new THREE.CylinderGeometry(36,36,6,48), M(0x2c3650));
+  flange.rotation.x=Math.PI/2; flange.position.z=29; g.add(flange);
+  const h=boltCircle(M(0x0b1020), 52, 4, 2.2, 10); h.position.z=29; g.add(h);
+  const shaft=new THREE.Mesh(new THREE.CylinderGeometry(8,8,16,32), M(0x9fb3d6));
+  shaft.rotation.x=Math.PI/2; shaft.position.z=38; g.add(shaft);
+  g.userData.dim = `外径 Ø56 · 长 68 · 法兰 PCD Ø52 4×M3 · 输出轴 Ø16 · 典型扭矩 5–20 Nm（示意）`;
+  return g;
+}
+function partSensor(){
+  const g=new THREE.Group();
+  const box=new THREE.Mesh(new THREE.BoxGeometry(40,30,20), M(0x9b8cff)); g.add(box);
+  const lens=new THREE.Mesh(new THREE.CylinderGeometry(7,7,6,32), M(0x0b1020)); lens.rotation.x=Math.PI/2; lens.position.z=11; g.add(lens);
+  const tab=new THREE.Mesh(new THREE.BoxGeometry(8,6,24), M(0x2c3650)); tab.position.set(20,0,0); g.add(tab);
+  g.userData.dim = `外壳 40×30×20 · 镜头 Ø14 · 安装耳 2×M2 · 量程示意 ±5 m`;
+  return g;
+}
+function partController(){
+  const g=new THREE.Group();
+  const box=new THREE.Mesh(new THREE.BoxGeometry(70,50,22), M(0x37e0a6)); g.add(box);
+  for(let i=0;i<6;i++){ const f=new THREE.Mesh(new THREE.BoxGeometry(2,40,24), M(0x2c3650)); f.position.set(-28+i*11,0,11.5); g.add(f); }
+  g.userData.dim = `70×50×22 · 铝鳍散热 · 4×M3 安装 · 典型算力 1–4 TOPS（示意）`;
+  return g;
+}
+
+// ---------- 零件清单 ----------
+const PARTS = [
+  {id:'flange-a50', name:'ISO 9409-1 法兰 · A50-4-M6', sub:'机器人腕部标准接口', build:()=>partFlange({pcd:50,holes:4,thread:'M6',clr:6.5,pins:2,pinPCD:22,bore:14}), tag:'flange', link:'/iso-9409-flange'},
+  {id:'flange-a80', name:'ISO 9409-1 法兰 · A80-4-M8', sub:'最常用中等负载接口', build:()=>partFlange({pcd:80,holes:4,thread:'M8',clr:8.5,pins:2,pinPCD:38,bore:20}), tag:'flange', link:'/iso-9409-flange'},
+  {id:'flange-a100', name:'ISO 9409-1 法兰 · A100-6-M10', sub:'重载接口', build:()=>partFlange({pcd:100,holes:6,thread:'M10',clr:10.5,pins:2,pinPCD:50,bore:30}), tag:'flange', link:'/iso-9409-flange'},
+  {id:'flange-a160', name:'ISO 9409-1 法兰 · A160-8-M12', sub:'大型工业机器人', build:()=>partFlange({pcd:160,holes:8,thread:'M12',clr:12.5,pins:0,pinPCD:0,bore:50}), tag:'flange', link:'/iso-9409-flange'},
+  {id:'actuator', name:'执行器（DYNAMIXEL 风格）', sub:'旋转模组示意', build:partActuator, tag:'actuator', link:'/selection'},
+  {id:'sensor', name:'深度/视觉传感器', sub:'感知模组示意', build:partSensor, tag:'sensor', link:'/selection'},
+  {id:'controller', name:'边缘控制器', sub:'算力模组示意', build:partController, tag:'controller', link:'/selection'},
+];
+
+function renderList(){
+  const l=document.getElementById('list');
+  PARTS.forEach((p,i)=>{
+    const d=document.createElement('div'); d.className='item'+(i===0?' on':''); d.dataset.id=p.id;
+    d.innerHTML=`<div>${p.name}</div><div class="sub">${p.sub}</div>`;
+    d.onclick=()=>selectPart(p.id);
+    l.appendChild(d);
+  });
+}
+function selectPart(id){
+  const p=PARTS.find(x=>x.id===id); if(!p) return;
+  document.querySelectorAll('.list .item').forEach(e=>e.classList.toggle('on', e.dataset.id===id));
+  if(curGroup){ scene.remove(curGroup); }
+  curGroup=p.build();
+  // 居中
+  const box=new THREE.Box3().setFromObject(curGroup); const c=box.getCenter(new THREE.Vector3()); curGroup.position.sub(c);
+  scene.add(curGroup);
+  const size=box.getSize(new THREE.Vector3()); const md=Math.max(size.x,size.y,size.z)||100;
+  camera.position.set(md*0.9, md*0.8, md*1.2); controls.target.set(0,0,0);
+  document.getElementById('spec').innerHTML =
+    `<h3>${p.name}</h3><table>
+      <tr><td>类别</td><td><span class="tag">${p.tag}</span></td></tr>
+      <tr><td>关键尺寸</td><td>${curGroup.userData.dim||'—'}</td></tr>
+      <tr><td>渲染方式</td><td>参数化 three.js（开源算法，非厂商 CAD）</td></tr>
+    </table>
+    <a class="btn" href="${p.link}">查看兼容性 / 选型 →</a>`;
+}
+
+initScene(); renderList(); selectPart('flange-a80');
+</script>
+</body>
+</html>

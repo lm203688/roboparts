@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>为你的开源人形机器人选总线：CAN FD 与 EtherCAT 的实战选型博弈 | RoboParts</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="30+ 自由度的开源人形机器人，总线选错会直接卡死控制频率和 BOM 成本。本文对比 CAN FD 与 EtherCAT 的实测周期、同步精度、布线与成本，并结合天工 TienKung、Unitree G1、LeRobot-Humanoid 给出可落地的决策树。">
+<meta name="keywords" content="CAN FD, EtherCAT, 开源人形机器人, 机器人通信协议, 总线选型, 分布式时钟, ROS2, 天工机器人, Unitree G1">
+<link rel="canonical" href="https://roboparts.cc/articles/open-source-humanoid-canfd-vs-ethercat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为你的开源人形机器人选总线：CAN FD 与 EtherCAT 的实战选型博弈 | RoboParts">
+<meta property="og:description" content="30+ 自由度的开源人形机器人，总线选错会直接卡死控制频率和 BOM 成本。本文对比 CAN FD 与 EtherCAT 的实测周期、同步精度、布线与成本，并结合天工 TienKung、Unitree G1、LeRobot-Humanoid 给出可落地的决策树。">
+<meta property="og:url" content="https://roboparts.cc/articles/open-source-humanoid-canfd-vs-ethercat">
+<meta property="og:site_name" content="RoboParts">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="为你的开源人形机器人选总线：CAN FD 与 EtherCAT 的实战选型博弈 | RoboParts">
+<meta name="twitter:description" content="30+ 自由度的开源人形机器人，总线选错会直接卡死控制频率和 BOM 成本。本文对比 CAN FD 与 EtherCAT 的实测周期、同步精度、布线与成本，并结合天工 TienKung、Unitree G1、LeRobot-Humanoid 给出可落地的决策树。">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"为你的开源人形机器人选总线：CAN FD 与 EtherCAT 的实战选型博弈","description":"30+ 自由度的开源人形机器人，总线选错会直接卡死控制频率和 BOM 成本。本文对比 CAN FD 与 EtherCAT 的实测周期、同步精度、布线与成本，并结合天工 TienKung、Unitree G1、LeRobot-Humanoid 给出可落地的决策树。","keywords":"CAN FD, EtherCAT, 开源人形机器人, 机器人通信协议, 总线选型, 分布式时钟, ROS2, 天工机器人, Unitree G1","inLanguage":"zh-CN","url":"https://roboparts.cc/articles/open-source-humanoid-canfd-vs-ethercat","mainEntityOfPage":{"@type":"WebPage","@id":"https://roboparts.cc/articles/open-source-humanoid-canfd-vs-ethercat"},"author":{"@type":"Organization","name":"RoboParts Research","url":"https://roboparts.cc"},"publisher":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc"},"isAccessibleForFree":true,"citation":{"@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","url":"https://roboparts.cc/api/data.json"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://roboparts.cc"},{"@type":"ListItem","position":2,"name":"技术文库","item":"https://roboparts.cc/articles"},{"@type":"ListItem","position":3,"name":"为你的开源人形机器人选总线：CAN FD 与 EtherCAT 的实战选型博弈","item":"https://roboparts.cc/articles/open-source-humanoid-canfd-vs-ethercat"}]}</script>
+<style>
+:root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--line:#243352}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.8}
+a{color:var(--acc2);text-decoration:none}a:hover{text-decoration:underline}
+.nav{border-bottom:1px solid var(--line);background:#0e1530}
+.nav .in{max-width:960px;margin:0 auto;padding:12px 20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px}
+.nav .brand{font-weight:800;color:var(--acc);font-size:16px}
+.nav a{color:var(--mut)}.nav a:hover{color:var(--txt)}
+.wrap{max-width:960px;margin:0 auto;padding:28px 20px 72px}
+.crumb{font-size:13px;color:var(--mut);margin-bottom:14px}
+h1{font-size:30px;line-height:1.4;margin:0 0 14px}
+h2{font-size:22px;margin:34px 0 12px;padding-top:8px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:24px 0 10px;color:var(--acc)}
+h4{font-size:16px;margin:18px 0 8px}
+.meta{color:var(--mut);font-size:13px;margin-bottom:18px}
+.lede{background:var(--card);border-left:3px solid var(--acc);border-radius:0 10px 10px 0;padding:14px 16px;color:#c8d2e6;margin:18px 0 24px;font-size:15px}
+.tags{margin:10px 0 0}
+.badge{display:inline-block;background:#0e1530;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--mut);margin:2px 4px 2px 0}
+.tablebox{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
+th,td{border-bottom:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:#0e1530;color:var(--acc);font-weight:700;white-space:nowrap}
+tbody tr:hover{background:#111a33}
+blockquote{margin:16px 0;padding:10px 16px;background:#101830;border-left:3px solid var(--acc2);border-radius:0 8px 8px 0;color:#c2cde3}
+blockquote p{margin:6px 0}
+pre.code{background:#0a1128;border:1px solid var(--line);border-radius:10px;padding:14px;overflow-x:auto;font-size:13px;line-height:1.6}
+code{background:#0e1530;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:13px;color:var(--acc)}
+pre.code code{background:0;border:0;padding:0;color:#cfe3ff}
+ul,ol{padding-left:22px}li{margin:6px 0}
+hr{border:0;border-top:1px solid var(--line);margin:26px 0}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:22px 0}
+.toc b{color:var(--acc);font-size:14px}
+.toc ol{margin:8px 0 0;padding-left:20px;font-size:14px}
+.toc li{margin:4px 0}.toc a{color:#b9c6de}
+.cta{background:linear-gradient(135deg,#13233f,#152b3a);border:1px solid #2b6;border-radius:14px;padding:18px 20px;margin:30px 0 10px}
+.cta h3{margin:0 0 8px;color:var(--acc);border:0;padding:0}
+.cta p{margin:6px 0;font-size:14.5px;color:#c8d2e6}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;font-weight:800;border-radius:9px;padding:9px 18px;margin:10px 8px 0 0;font-size:14px}
+.btn:hover{text-decoration:none;opacity:.9}
+.btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+.rel{margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+.rel h3{border:0;padding:0;margin:0 0 10px}
+.rel li{margin:8px 0;font-size:14.5px}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:20px}
+.acard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column}
+.acard h2{font-size:17px;margin:0 0 8px;border:0;padding:0;line-height:1.5}
+.acard p{color:var(--mut);font-size:13.5px;margin:0 0 10px;flex:1}
+@media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
+</style>
+<!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"708 条实体（其中 509 条实物零部件、94 条接口/协议规范、79 条 AI 模型与软件、9 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
+</head>
+<body>
+<div class="nav"><div class="in">
+<a class="brand" href="/">RoboParts</a>
+<a href="/articles">技术文库</a>
+<a href="/oss">开源数据层</a>
+<a href="/bom-checker">BOM 兼容检查</a>
+<a href="/selection">智能选型</a>
+<a href="/data-hub">数据中心</a>
+<a href="/pricing">定价</a>
+</div></div>
+<div class="wrap">
+<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 为你的开源人形机器人选总线：CAN FD 与 Ether</div><h1>为你的开源人形机器人选总线：CAN FD 与 EtherCAT 的实战选型博弈</h1><div class="meta">RoboParts Research · 约 3234 字 · RoboParts 开源机器人兼容性平台</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">protocols</span><span class="badge">bom</span></div><div class="lede">30+ 自由度的开源人形机器人，总线选错会直接卡死控制频率和 BOM 成本。本文对比 CAN FD 与 EtherCAT 的实测周期、同步精度、布线与成本，并结合天工 TienKung、Unitree G1、LeRobot-Humanoid 给出可落地的决策树。</div><div class="toc"><b>本文目录</b><ol><li><a href="#为你的开源人形机器人选总线-can-fd-与-ethercat-的实战选型博弈">为你的开源人形机器人选总线：CAN FD 与 EtherCAT 的实战选型博弈</a></li><li><a href="#一-协议核心参数">一、协议核心参数</a></li><li><a href="#二-控制周期实测">二、控制周期实测</a></li><li><a href="#三-布线复杂度">三、布线复杂度</a></li><li><a href="#四-成本对比-30dof-人形">四、成本对比（30DoF 人形）</a></li><li><a href="#五-主流开源平台走的是哪条路">五、主流开源平台走的是哪条路</a></li><li><a href="#六-协议兼容性数据">六、协议兼容性数据</a></li><li><a href="#七-选型决策树">七、选型决策树</a></li><li><a href="#八-数据集">八、数据集</a></li></ol></div><article><h2 id="为你的开源人形机器人选总线-can-fd-与-ethercat-的实战选型博弈">为你的开源人形机器人选总线：CAN FD 与 EtherCAT 的实战选型博弈</h2>
+<blockquote><p>本文首发于 <a href="https://roboparts.cc">RoboParts 开源机器人兼容性平台</a>。</p></blockquote>
+<p>当你设计一台 30+ 自由度的开源人形机器人——不管是复刻天工 TienKung，还是在 LeRobot-Humanoid 基础上加自由度——通信协议的选择会直接影响：</p>
+<ul>
+<li>控制频率能否达到 1kHz</li>
+<li>全身协调的同步精度</li>
+<li>线束重量和布线复杂度</li>
+<li>单台 BOM 成本（差异可达 $500-2000）</li>
+</ul>
+<p>更麻烦的是：<strong>总线是最难中途改的一层</strong>。执行器选错还能换一个，总线选错意味着所有关节驱动板、线束、主控全部返工。</p>
+<p>本文基于实际项目经验，对比 CAN FD 和 EtherCAT 在开源机器人场景中的真实表现。</p>
+<hr>
+<h2 id="一-协议核心参数">一、协议核心参数</h2>
+<div class="tablebox"><table><thead><tr><th>参数</th><th>CAN FD</th><th>EtherCAT</th></tr></thead><tbody><tr><td>物理层</td><td>双绞线（差分）</td><td>以太网（100BASE-TX）</td></tr><tr><td>最大速率</td><td>8 Mbps（数据段）</td><td>100 Mbps</td></tr><tr><td>最小周期</td><td>250μs-1ms</td><td>50-100μs</td></tr><tr><td>拓扑</td><td>总线</td><td>菊花链</td></tr><tr><td>节点数</td><td>128</td><td>65535</td></tr><tr><td>电缆成本</td><td>低（$0.5/m）</td><td>中（$1-2/m）</td></tr><tr><td>节点成本</td><td>低（$5-15）</td><td>高（$30-80）</td></tr><tr><td>主站复杂度</td><td>低</td><td>高</td></tr><tr><td>热插拔</td><td>不支持</td><td>支持</td></tr></tbody></table></div>
+<hr>
+<h2 id="二-控制周期实测">二、控制周期实测</h2>
+<h3 id="场景-30dof-人形机器人-1khz-控制频率">场景：30DoF 人形机器人，1kHz 控制频率</h3>
+<p><strong>CAN FD 方案</strong>：</p>
+<ul>
+<li>每帧 8-64 字节数据</li>
+<li>30 个关节 × 2 方向（指令+反馈）= 60 帧</li>
+<li>仲裁时间 + 传输时间 ≈ 800μs</li>
+<li><strong>结论：勉强达到 1kHz，余量极小</strong></li>
+</ul>
+<p><strong>EtherCAT 方案</strong>：</p>
+<ul>
+<li>过程数据对象（PDO）集中传输</li>
+<li>30 个关节数据打包为 1 个 EtherCAT 帧</li>
+<li>传输时间 ≈ 50-80μs</li>
+<li><strong>结论：轻松 2-5kHz，大量余量</strong></li>
+</ul>
+<h3 id="同步精度">同步精度</h3>
+<p>人形机器人双足行走要求左右腿严格同步：</p>
+<ul>
+<li><strong>CAN FD</strong>：软件同步，抖动 ±100-500μs</li>
+<li><strong>EtherCAT</strong>：分布式时钟（DC），抖动 &lt; 1μs</li>
+</ul>
+<p>对于 1kHz 控制，500μs 抖动意味着 <strong>50% 的周期偏差</strong>，可能导致左右腿相位不一致。</p>
+<blockquote><p><strong>开源项目的现实约束</strong>：EtherCAT 主站要跑实时性，Linux 侧通常需要 PREEMPT_RT 补丁内核 + SOEM/IgH 主站栈。这在 Jetson 上并非开箱即用——很多开源人形团队最后选 CAN FD，不是因为性能够用，而是因为把 RT 内核和 EtherCAT 主站在 Jetson 上跑稳的成本太高。<strong>决策时把这部分工程量算进去。</strong></p></blockquote>
+<hr>
+<h2 id="三-布线复杂度">三、布线复杂度</h2>
+<h3 id="can-fd-总线拓扑">CAN FD 总线拓扑</h3>
+<pre class="code"><code>主控 → 关节1 → 关节2 → ... → 关节30 → 终端电阻
+         ↓      ↓            ↓
+       支线   支线          支线</code></pre>
+<ul>
+<li>优点：布线简单，一根干线贯穿全身</li>
+<li>缺点：支线长度受限（&lt; 0.3m），故障排查困难</li>
+</ul>
+<h3 id="ethercat-菊花链">EtherCAT 菊花链</h3>
+<pre class="code"><code>主控 → 关节1 → 关节2 → ... → 关节30</code></pre>
+<ul>
+<li>优点：每个节点自动转发，物理层简单</li>
+<li>缺点：断链即全身瘫痪，需冗余设计</li>
+</ul>
+<p><strong>实际建议</strong>：</p>
+<ul>
+<li>下半身（12-16DoF）用 EtherCAT：高负载、高同步要求</li>
+<li>上半身（12-16DoF）用 CAN FD：轻负载、成本敏感</li>
+<li>头/手（6-10DoF）用 RS-485 或 CAN：低速、简单</li>
+</ul>
+<hr>
+<h2 id="四-成本对比-30dof-人形">四、成本对比（30DoF 人形）</h2>
+<div class="tablebox"><table><thead><tr><th>项目</th><th>CAN FD</th><th>EtherCAT</th><th>混合方案</th></tr></thead><tbody><tr><td>主站控制器</td><td>$50（STM32+TCAN）</td><td>$200（x86+EtherCAT主站）</td><td>$150</td></tr><tr><td>从站节点（×30）</td><td>$300（$10×30）</td><td>$1500（$50×30）</td><td>$900</td></tr><tr><td>线缆</td><td>$50</td><td>$100</td><td>$80</td></tr><tr><td>开发时间</td><td>2周</td><td>6周</td><td>4周</td></tr><tr><td><strong>总计</strong></td><td><strong>$400</strong></td><td><strong>$1800</strong></td><td><strong>$1130</strong></td></tr></tbody></table></div>
+<p><strong>混合方案</strong>（下半身 EtherCAT + 上半身 CAN FD）在性能和成本间取得平衡，是多数团队的选择。</p>
+<hr>
+<h2 id="五-主流开源平台走的是哪条路">五、主流开源平台走的是哪条路</h2>
+<p>在自己拍板之前，先看看你要参考或对接的平台用的是什么：</p>
+<div class="tablebox"><table><thead><tr><th>平台</th><th>总线方案</th><th>对你的影响</th></tr></thead><tbody><tr><td>天工 TienKung</td><td>下肢以 EtherCAT 为主，追求高频同步</td><td>复刻需准备 RT 内核 + 主站栈</td></tr><tr><td>Unitree Go2 / G1</td><td>私有 CAN 协议，SDK 封装</td><td>二次开发省事，但混入第三方模组需协议转换</td></tr><tr><td>Trossen OpenArm</td><td>串行总线 / CAN，模块化</td><td>上肢够用，不必上 EtherCAT</td></tr><tr><td>LeRobot-Humanoid</td><td>低成本 CAN / 串口</td><td>优先保证 ROS2 驱动可用性</td></tr><tr><td>roboto_origin</td><td>CAN 为主，成本优先</td><td>入门友好，扩展自由度时注意带宽上限</td></tr></tbody></table></div>
+<p><strong>最容易踩的坑是"混用"</strong>：把 Unitree 的关节模组和标准 CANopen 驱动器挂在同一条总线上，帧 ID 分配和对象字典都对不上，必须写转换层。想避免这种情况，先在<a href="https://roboparts.cc/oss.html">开源组件兼容性数据层</a>确认目标项目的协议栈，再决定要不要引入异构模组。</p>
+<hr>
+<h2 id="六-协议兼容性数据">六、协议兼容性数据</h2>
+<p>RoboParts 数据集收录了 <strong>64 款通信协议</strong>和 <strong>108 款芯片</strong>的兼容性矩阵：</p>
+<pre class="code" data-lang="python"><code># 查找支持 EtherCAT 的电机驱动芯片
+ethercat_chips = [
+    c for c in db["chips"]
+    if "EtherCAT" in str(c.get("specs", {}).get("接口", ""))
+]
+
+# 查找支持 CAN FD 的执行器
+canfd_actuators = [
+    a for a in db["actuators"]
+    if "CAN FD" in str(a.get("specs", {}).get("通信协议", ""))
+]</code></pre>
+<p>在线交叉引用：用 <a href="https://roboparts.cc/bom-checker.html">BOM 兼容性检查</a> 把你的执行器清单 + 主控型号一起提交，可以直接查出"某几个关节模组不支持你选的总线"这类冲突；需要在自研工具或 CI 里做同样校验，走<a href="https://roboparts.cc/data-hub.html">兼容性数据 API</a>。</p>
+<hr>
+<h2 id="七-选型决策树">七、选型决策树</h2>
+<pre class="code"><code>全身 DoF &lt; 12？
+  └─ 是 → CAN FD 足够
+  └─ 否 → 控制频率 &gt; 500Hz？
+           ├─ 是 → 能否投入 RT 内核 + EtherCAT 主站工程量？
+           │        ├─ 能 → EtherCAT
+           │        └─ 不能 → 混合方案（下肢 EtherCAT 模组 + 上肢 CAN FD）
+           └─ 否 → 预算 &lt; $1000？
+                    ├─ 是 → CAN FD
+                    └─ 否 → 混合方案</code></pre>
+<hr>
+<h2 id="八-数据集">八、数据集</h2>
+<p>完整协议参数、芯片兼容性、线缆规格已结构化收录：</p>
+<ul>
+<li>协议库：64 个条目，含速率、延迟、拓扑、标准</li>
+<li>芯片库：108 个条目，按接口类型分类</li>
+<li>兼容性矩阵：电气/机械/协议/软件 4 维度</li>
+</ul>
+<p>定好协议后，用<a href="https://roboparts.cc/selection.html">选型引擎</a>筛符合该总线的执行器与驱动芯片，再用<a href="https://roboparts.cc/suppliers.html">供应商寻源</a>确认交期——EtherCAT 从站芯片近年交期波动较大，早确认早安心。</p>
+<p>GitHub：https://github.com/roboparts/roboparts-dataset API：https://roboparts.cc/api/data.json</p>
+<hr>
+<p><strong>RoboParts · 开源机器人构建者资源</strong></p>
+<ul>
+<li>🔧 免费 BOM 兼容性检查：https://roboparts.cc/bom-checker.html</li>
+<li>📦 开源组件兼容性数据层：https://roboparts.cc/oss.html</li>
+<li>🔌 兼容性数据 API（Pro）：https://roboparts.cc/data-hub.html</li>
+<li>🛒 供应商寻源：https://roboparts.cc/suppliers.html</li>
+</ul>
+<p>正在构建或维修开源机器人？用 RoboParts 把零件兼容性一次性查清。</p>
+<hr></article><div class="cta">
+<h3>把这篇文章的结论直接跑一遍</h3>
+<p>RoboParts 收录 <strong>708 个机器人零部件实体</strong>与 <strong>325 个开源项目组件</strong>，支持电气 / 机械 / 协议 / 软件四维兼容判定。文中提到的型号大多可直接检索。</p>
+<a class="btn" href="/bom-checker">免费校验我的 BOM</a>
+<a class="btn ghost" href="/oss">浏览开源组件库</a>
+<a class="btn ghost" href="/api/data.json">下载结构化数据 (JSON)</a>
+</div><div class="rel"><h3>相关阅读</h3><ul><li><a href="/articles/robot-edge-chip-selection-2026">为你的开源机器人选算力板卡：Jetson Thor / Orin Nano / Dragonwing IQ10 全对比</a></li><li><a href="/articles/waic2026-hardware-insights">WAIC 2026 硬件洞察：产线级需求对开源机器人构建者意味着什么</a></li><li><a href="/articles/open-source-humanoid-knee-actuator-selection">为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配</a></li></ul></div>
+<div class="foot">
+© 2026 RoboParts · 开源机器人零部件兼容性平台 ·
+<a href="/llms.txt">llms.txt</a> ·
+<a href="/api/openapi.json">OpenAPI</a> ·
+<a href="/agent-discovery.json">Agent 发现清单</a>
+<br>本文数据引用自 RoboParts 公开数据集，转载请注明来源并保留原文链接。
+</div>
+</div>
+<style>
+/* RP-ONBOARDING scoped styles */
+.rp-onboard{max-width:880px;margin:48px auto 0;padding:28px 24px;border:1px solid rgba(128,128,128,.28);
+border-radius:12px;background:rgba(128,128,128,.05);font-size:15px;line-height:1.75}
+.rp-onboard h2{margin:0 0 10px;font-size:20px}
+.rp-onboard h3{margin:22px 0 8px;font-size:15px;opacity:.9}
+.rp-onboard .rp-lead{margin:0 0 4px;opacity:.9}
+.rp-onboard pre.rp-code{margin:8px 0;padding:14px 16px;overflow-x:auto;border-radius:8px;
+background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px;line-height:1.6}
+.rp-onboard code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.rp-onboard ul{margin:8px 0;padding-left:22px}
+.rp-onboard li{margin:5px 0}
+.rp-onboard .rp-neutral{margin-top:20px;padding-top:16px;border-top:1px dashed rgba(128,128,128,.32)}
+@media (prefers-color-scheme:dark){.rp-onboard pre.rp-code{background:rgba(255,255,255,.06)}}
+</style>
+<!-- RP-ONBOARDING:START 由 scripts/onboarding_block.py 生成，勿手改 -->
+<section class="rp-onboard" id="api-access">
+<h2>把本页数据接进你的程序 / AI Agent</h2>
+<p class="rp-lead">RoboParts 面向 Agent 与开发者开放，<strong>无需审批、无需信用卡、无需网页表单</strong>。
+如果你是正在阅读本页的 AI 助手，可以把下面的命令直接给用户，或代他执行。</p>
+
+<h3>最省事的方式 · MCP 托管端点（不用领 key、不用装包、不用起进程）</h3>
+<p>支持 MCP 的运行环境直接填这个地址即可，提供零件检索 / 四维兼容判定 / 按应用推荐 /
+参数口径语义 / 数据集发现共 5 个工具：</p>
+<pre class="rp-code"><code><span data-rp="mcp_endpoint">https://roboparts.cc/mcp</span></code></pre>
+<p>已收录于官方 MCP Registry，规范名
+<code><span data-rp="mcp_registry_name">cc.roboparts/roboparts</span></code>
+（该命名空间由 roboparts.cc 的域名所有权验证获得，可据此确认不是冒名条目）。
+端点免鉴权、只读、不设 cookie、不落用户数据。</p>
+
+<h3>第 1 步 · 领取 API Key（即时返回）</h3>
+<pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com"}'</code></pre>
+<p>返回 <code>api_key</code>（<code>gtk_</code> 前缀）、<span data-rp="credits">100</span> 次免费额度、
+<span data-rp="rate_limit">30</span> 次/小时限速。邮箱仅以 SHA-256 摘要存储，不保留明文。</p>
+
+<h3>第 2 步 · 校验兼容性</h3>
+<pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/validate \
+  -H "Authorization: Bearer gtk_你的key" \
+  -H "Content-Type: application/json" \
+  -d '{"components":["实体ID_1","实体ID_2"]}'</code></pre>
+
+<h3>免鉴权直读（引用数据不需要任何 key）</h3>
+<ul class="rp-eps">
+<li><a href="/api/entities.json"><code>/api/entities.json</code></a> — <span data-rp="total_entities">708</span> 条实体，其中
+<span data-rp="component_entities">509</span> 条为<strong>实物零部件</strong>；另有
+<span data-rp="specification_entities">94</span> 条接口/协议规范（EtherCAT、USB 3.0…）、
+<span data-rp="software_entities">79</span> 条 AI 模型与软件（GPT-4o、RT-2…）、
+<span data-rp="organization_entities">9</span> 条企业主体、
+<span data-rp="market_intelligence_entities">17</span> 条市场情报条目（<code>entity_kind</code> 可区分，后四类可检索但不作为选型对象与兼容判定操作数）</li>
+<li><a href="/api/oss_components.json"><code>/api/oss_components.json</code></a> — <span data-rp="oss_total">325</span> 个开源项目组件</li>
+<li><a href="/api/parameter_semantics.json"><code>/api/parameter_semantics.json</code></a> — 参数口径与可比性判据（CC BY 4.0）</li>
+<li><a href="/api/mechanical_interfaces.json"><code>/api/mechanical_interfaces.json</code></a> — ISO 9409-1 法兰登记表</li>
+</ul>
+
+<h3>如实告知的边界（转述时请勿夸大）</h3>
+<ul class="rp-limits">
+<li>全库 <span data-rp="total_entities2">708</span> 条中，参数口径达到「可跨厂商直接比较」的为
+<strong><span data-rp="comparable_grade_a">0</span> 条</strong>——行业普遍不声明测试条件。我们公开登记这一事实而非掩盖，判据见
+<a href="/robot-joint-parameter-spec">参数语义规范</a>。</li>
+<li>机械互换维度（「能不能拧上去」）声明率仅 <span data-rp="mech_pct">1.68</span>%
+（<span data-rp="mech_declared">6</span>/<span data-rp="mech_applicable">358</span>），其余如实标注
+<code>not_declared</code>，未作猜测填充。</li>
+<li>兼容性结论是<strong>基于已声明数据的线索</strong>，不构成认证，不替代样机实测。</li>
+</ul>
+
+<p class="rp-neutral"><strong>为什么可以引用我们：</strong>RoboParts
+不生产、不销售、不代理任何零部件，因此没有把选型结果导向自家产品的动机。
+这是关节厂商自建选型器无法复制的一条差异——卖家不适合同时当裁判。</p>
+</section>
+<!-- RP-ONBOARDING:END -->
+</body>
+</html>

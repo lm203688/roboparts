@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>兼容性 Agent 架构与诚实度 | RoboParts</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="RoboParts 兼容性裁决引擎的架构（检索→匹配→校验→生成→验证）与诚实度指标：零假绿、零假红、Single Source of Truth、缺口诚实披露。指标由线上实体数据实时计算。">
+<link rel="canonical" href="https://roboparts.cc/agent-architecture">
+<meta name="robots" content="index,follow">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"RoboParts 兼容性裁决引擎","applicationCategory":"EngineeringApplication","url":"https://roboparts.cc/agent-architecture","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"isAccessibleForFree":true,"author":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc"}}</script>
+<style>
+:root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--line:#243352;--warn:#ffcf6b;--err:#ff6b6b}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.7}
+a{color:var(--acc2);text-decoration:none}a:hover{text-decoration:underline}
+.nav{border-bottom:1px solid var(--line);background:#0e1530}
+.nav .in{max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px}
+.nav .brand{font-weight:800;color:var(--acc);font-size:16px}.nav a{color:var(--mut)}.nav a:hover{color:var(--txt)}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 20px 72px}
+.crumb{font-size:13px;color:var(--mut);margin-bottom:12px}
+h1{font-size:30px;margin:0 0 8px}
+.lede{background:var(--card);border-left:3px solid var(--acc);border-radius:0 10px 10px 0;padding:14px 16px;color:#c8d2e6;margin:14px 0 26px;font-size:15px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:20px}
+.panel h2{font-size:18px;margin:0 0 14px;color:var(--acc)}
+/* pipeline */
+.pipe{display:flex;gap:10px;flex-wrap:wrap;align-items:stretch}
+.stage{flex:1;min-width:150px;background:#0e1530;border:1px solid var(--line);border-radius:12px;padding:14px;position:relative}
+.stage .n{font-size:12px;color:var(--acc2);font-weight:800}
+.stage .t{font-size:15px;font-weight:700;margin:4px 0 6px}
+.stage .d{font-size:12.5px;color:var(--mut)}
+.stage .m{font-size:11.5px;color:#6f7d99;margin-top:8px;font-family:ui-monospace,Consolas,monospace}
+.arrow{display:flex;align-items:center;color:var(--acc);font-size:20px;flex:0 0 auto}
+@media(max-width:760px){.arrow{transform:rotate(90deg)}}
+/* badges */
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.badge{background:#0c1428;border:1px solid var(--line);border-radius:12px;padding:14px}
+.badge .ic{font-size:20px}
+.badge .t{font-weight:800;font-size:14px;margin:6px 0 4px}
+.badge .d{font-size:12px;color:var(--mut)}
+.badge.ok{border-left:3px solid var(--acc)}.badge.warn{border-left:3px solid var(--warn)}
+/* metrics */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.metric{background:#0c1428;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.metric .num{font-size:30px;font-weight:900;color:var(--acc)}
+.metric .lab{font-size:12.5px;color:var(--mut);margin-top:4px}
+.bar{height:14px;border-radius:8px;background:#0e1530;overflow:hidden;margin-top:8px;display:flex}
+.bar i{height:100%}
+.bar .ok{background:var(--acc)}.bar .no{background:var(--err)}.bar .nu{background:var(--mut)}
+.note{font-size:12.5px;color:var(--mut);margin-top:12px}
+.foot{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+</style>
+</head>
+<body>
+<div class="nav"><div class="in">
+<a class="brand" href="/">RoboParts</a>
+<a href="/copilot">Copilot</a>
+<a href="/adapter-generator">转接件生成器</a>
+<a href="/build-planner">Build Planner</a>
+<a href="/geo-dashboard">GEO 仪表盘</a>
+</div></div>
+<div class="wrap">
+<div class="crumb"><a href="/">首页</a> › 兼容性 Agent 架构与诚实度</div>
+<h1>兼容性 Agent 架构与诚实度</h1>
+<div class="lede">RoboParts 的兼容性裁决不是"给个分数就完事"——它的核心资产是<strong>诚实</strong>：判不了就说判不了，绝不把"没数据"伪装成"兼容"或"不兼容"。下面这张架构图与实时指标，是给 AI Agent 与工程师的信任凭证。</div>
+
+<div class="panel">
+  <h2>🧩 兼容性裁决管线（5 阶段）</h2>
+  <div class="pipe">
+    <div class="stage"><div class="n">① 检索</div><div class="t">Retrieve</div><div class="d">从归一化实体表按 ID / 品类 / 关键词定位两侧零件</div><div class="m">api/entities.json</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="n">② 匹配</div><div class="t">Match</div><div class="d">抽取协议 / 电压 / 机械接口 / ROS 四维证据</div><div class="m">compat_engine.tokens</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="n">③ 校验</div><div class="t">Verify</div><div class="d">四维逐维裁决：共享→兼容；冲突→不兼容；无数据→无法判定</div><div class="m">judgePair()</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="n">④ 生成</div><div class="t">Generate</div><div class="d">不兼容时生成转接件方案（法兰转接板 STL/OpenSCAD）</div><div class="m">adapter-generator</div></div>
+    <div class="arrow">→</div>
+    <div class="stage"><div class="n">⑤ 验证</div><div class="t">Validate</div><div class="d">装配红线校验 + 安装反馈回流，持续校准置信度</div><div class="m">adapter-feedback</div></div>
+  </div>
+  <div class="note">全部裁决逻辑收敛于唯一实现 <code>functions/_lib/compat_engine.js</code>（Single Source of Truth）。/api/compatibility、/mcp、BOM 检查器均 import 它，杜绝"同一问题三个答案"的隐性假绿。</div>
+</div>
+
+<div class="panel">
+  <h2>🛡️ 诚实度徽章（引擎不变式）</h2>
+  <div class="badges">
+    <div class="badge ok"><div class="ic">✅</div><div class="t">零假绿</div><div class="d">未声明数据（null）绝不伪装成兼容（true）。判 true 至少需一项硬约束（协议/电气/机械）有双方声明。</div></div>
+    <div class="badge ok"><div class="ic">✅</div><div class="t">零假红</div><div class="d">厂商"未公开"不等于"装不上"。mechanical 维度 348 条 not_declared 不再被误判为不兼容。</div></div>
+    <div class="badge ok"><div class="ic">📐</div><div class="t">Single Source of Truth</div><div class="d">裁决逻辑唯一实现，所有通道复用，防止口径漂移。</div></div>
+    <div class="badge warn"><div class="ic">🔍</div><div class="t">缺口诚实披露</div><div class="d">机械尺寸级声明率仅 0.57%，逐条显式标注 status，不猜测填充。</div></div>
+    <div class="badge ok"><div class="ic">🧮</div><div class="t">四维裁决</div><div class="d">协议 / 电气 / 机械 / 软件，任一维度冲突即判不兼容，否则如实标 null。</div></div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>📊 实时指标（基于线上实体数据估算）</h2>
+  <div class="metrics" id="metrics">
+    <div class="metric"><div class="num" id="mTotal">…</div><div class="lab">归一化实体</div></div>
+    <div class="metric"><div class="num" id="mMech">…</div><div class="lab">机械接口已声明率</div></div>
+    <div class="metric"><div class="num" id="mProto">…</div><div class="lab">协议已声明率</div></div>
+    <div class="metric"><div class="num" id="mHon">…</div><div class="lab">抽样判定诚实率</div></div>
+  </div>
+  <div class="bar" id="barWrap" style="display:none">
+    <i class="ok" id="barOk"></i><i class="no" id="barNo"></i><i class="nu" id="barNu"></i>
+  </div>
+  <div class="note" id="verdictNote">正在从 <code>/api/entities.json</code> 拉取并计算…（逻辑同 functions/_lib/compat_engine.js；抽样约 200 对随机组合）</div>
+</div>
+
+<div class="foot">
+© 2026 RoboParts · 兼容性裁决引擎 · <a href="/copilot">兼容性 Copilot</a> · <a href="/llms.txt">llms.txt</a> · <a href="/agent-discovery.json">Agent 发现清单</a>
+</div>
+</div>
+
+<script>
+const PROTOCOL_VOCAB=['ethercat','ethernetip','profinet','powerlink','io-link','canopen','can','rs485','rs232','modbus','flexray','lin','spi','i2c','uart','usb','pcie','ros2','ttl','dynamixel','ethernet','wifi','bluetooth','analog','proprietary'];
+const MECH_VOCAB=['flange','法兰','m8','m12','db9','connector','连接器','shaft','轴','standard'];
+function matchVocab(raw,vocab){const hit=new Set();for(const p of vocab){const ascii=/^[\x20-\x7e]+$/.test(p);let ok;if(ascii){const esc=p.replace(/[.*+?^${}()|[\]\\/-]/g,'\\$&');ok=new RegExp('(^|[^a-z0-9])'+esc+'($|[^a-z0-9])','i').test(raw);}else{ok=raw.includes(p);}if(ok)hit.add(p);}return[...hit];}
+function parseVoltage(s){if(!s)return null;const r=String(s).match(/([\d.]+)\s*[~\-]\s*([\d.]+)\s*V/i);if(r)return{min:+r[1],max:+r[2]};const s2=String(s).match(/([\d.]+)\s*V/i);if(s2){const v=+s2[1];return{min:v,max:v};}return null;}
+function tokens(it){return [it.protocol,it.interface,Array.isArray(it.interfaces)?it.interfaces.join('/'):''].filter(Boolean).join(' ').toLowerCase();}
+
+// 轻量裁决（与 compat_engine.js 同口径，用于统计）
+function judgeLite(a,b){
+  const tv=parseVoltage(a.voltage),vb=parseVoltage(b.voltage);
+  const ep=tv&&vb? (tv.min<=vb.max&&vb.min<=tv.max) : null;
+  const ea=matchVocab(tokens(a),PROTOCOL_VOCAB), eb=matchVocab(tokens(b),PROTOCOL_VOCAB);
+  let p=null;
+  if(ea.length&&eb.length){const sh=ea.filter(x=>eb.includes(x)&&x!=='proprietary');p=sh.length?true:false;}
+  const ma=matchVocab(tokens(a),MECH_VOCAB), mb=matchVocab(tokens(b),MECH_VOCAB);
+  let m=null;
+  if(ma.length&&mb.length){m=ma.filter(x=>mb.includes(x)).length>0;}
+  const ra=typeof a.ros_support==='boolean', rb=typeof b.ros_support==='boolean';
+  let s=null;
+  if(ra&&rb){ if(a.ros_support&&b.ros_support)s=true; else if(!a.ros_support&&!b.ros_support)s=true; else s=false; }
+  const decided=[ep, p, m, s].filter(x=>x!==null);
+  if(!decided.length) return null;
+  if([ep,p,m,s].some(x=>x===false)) return false;
+  const hardDecided=[ep,p,m].filter(x=>x!==null).length;
+  if(!hardDecided) return null;
+  return true;
+}
+
+(async function(){
+  try{
+    const d = await (await fetch('/api/entities.json',{cache:'no-store'})).json();
+    const arr = d.entities||[];
+    document.getElementById('mTotal').textContent = arr.length;
+    const mechDeclared = arr.filter(e=>{const mi=e.mechanical_interface;return mi&&typeof mi==='object'&&['declared','partial'].includes(String(mi.status).toLowerCase());}).length;
+    const protoDeclared = arr.filter(e=>matchVocab(tokens(e),PROTOCOL_VOCAB).length>0).length;
+    document.getElementById('mMech').textContent = (mechDeclared/arr.length*100).toFixed(2)+'%';
+    document.getElementById('mProto').textContent = (protoDeclared/arr.length*100).toFixed(1)+'%';
+
+    // 抽样判定分布
+    const N=Math.min(200, arr.length);
+    const idx=new Set(); while(idx.size<N) idx.add(Math.floor(Math.random()*arr.length));
+    const sample=[...idx].map(i=>arr[i]);
+    let ok=0,no=0,nu=0;
+    for(let i=0;i<sample.length;i++)for(let j=i+1;j<sample.length;j++){
+      const r=judgeLite(sample[i],sample[j]);
+      if(r===true)ok++; else if(r===false)no++; else nu++;
+    }
+    const total=ok+no+nu;
+    const honestRate = ((ok+no)/total*100).toFixed(1); // 有依据的结论占比
+    document.getElementById('mHon').textContent = honestRate+'%';
+    document.getElementById('barWrap').style.display='flex';
+    document.getElementById('barOk').style.width=(ok/total*100)+'%';
+    document.getElementById('barNo').style.width=(no/total*100)+'%';
+    document.getElementById('barNu').style.width=(nu/total*100)+'%';
+    document.getElementById('verdictNote').innerHTML =
+      `抽样 ${total} 对随机组合：<span style="color:var(--acc)">${ok} 对判兼容</span> · <span style="color:var(--err)">${no} 对判不兼容</span> · <span style="color:var(--mut)">${nu} 对如实标「无法判定」</span>。<br>诚实率 = 有证据支撑的结论占比 <b>${honestRate}%</b>；其余 ${nu} 对主动披露证据不足，而非编造结论。`;
+  }catch(e){
+    document.getElementById('verdictNote').textContent='实时计算失败：'+e.message;
+  }
+})();
+</script>
+</body>
+</html>

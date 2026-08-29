@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>技术文库 · 开源机器人零部件选型与兼容性长文 | RoboParts</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="RoboParts 技术文库：15 篇开源机器人零部件选型与兼容性深度长文，覆盖执行器选型、VLA 模型部署、边缘芯片、CAN FD/EtherCAT 协议、触觉传感器、国产替代与供应链分析，全部基于 708 个实体的公开数据集撰写。">
+<meta name="keywords" content="开源机器人,零部件选型,兼容性,技术文章,人形机器人,执行器,VLA模型">
+<link rel="canonical" href="https://roboparts.cc/articles/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="技术文库 · 开源机器人零部件选型与兼容性长文 | RoboParts">
+<meta property="og:description" content="RoboParts 技术文库：15 篇开源机器人零部件选型与兼容性深度长文，覆盖执行器选型、VLA 模型部署、边缘芯片、CAN FD/EtherCAT 协议、触觉传感器、国产替代与供应链分析，全部基于 708 个实体的公开数据集撰写。">
+<meta property="og:url" content="https://roboparts.cc/articles/">
+<meta property="og:site_name" content="RoboParts">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="技术文库 · 开源机器人零部件选型与兼容性长文 | RoboParts">
+<meta name="twitter:description" content="RoboParts 技术文库：15 篇开源机器人零部件选型与兼容性深度长文，覆盖执行器选型、VLA 模型部署、边缘芯片、CAN FD/EtherCAT 协议、触觉传感器、国产替代与供应链分析，全部基于 708 个实体的公开数据集撰写。">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"RoboParts 技术文库","description":"RoboParts 技术文库：15 篇开源机器人零部件选型与兼容性深度长文，覆盖执行器选型、VLA 模型部署、边缘芯片、CAN FD/EtherCAT 协议、触觉传感器、国产替代与供应链分析，全部基于 708 个实体的公开数据集撰写。","url":"https://roboparts.cc/articles/","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","name":"RoboParts","url":"https://roboparts.cc"},"mainEntity":{"@type":"ItemList","numberOfItems":15,"itemListElement":[{"@type":"ListItem","position":1,"name":"人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱（对开源构建者意味着什么）","url":"https://roboparts.cc/articles/humanoid-robot-ipo-supply-chain-2026"},{"@type":"ListItem","position":2,"name":"触觉从可选变标配：机器人触觉传感器选型全指南2026（开源构建者版）","url":"https://roboparts.cc/articles/robot-tactile-sensor-selection-guide-2026"},{"@type":"ListItem","position":3,"name":"汽车产线机器人落地实战：98%成功率背后的零部件选型密码（开源构建者可借鉴的可靠性标准）","url":"https://roboparts.cc/articles/automotive-production-line-robot-deployment-2026"},{"@type":"ListItem","position":4,"name":"特斯拉Optimus V3量产元年：供应链拆解，以及它对开源机器人构建者意味着什么","url":"https://roboparts.cc/articles/tesla-optimus-supply-chain"},{"@type":"ListItem","position":5,"name":"VLA推理加速实战：为你的开源机器人选哪颗端侧芯片？——智元15倍加速、理想MoE部署、VQVLA量化与Jetson Thor/IQ10/Intel三方对比","url":"https://roboparts.cc/articles/vla-inference-acceleration"},{"@type":"ListItem","position":6,"name":"开源机器人零部件国产替代地图：从60%到100%——减速器、丝杠、传感器、一体化模组四大赛道，对构建者意味着什么","url":"https://roboparts.cc/articles/domestic-substitution-path"},{"@type":"ListItem","position":7,"name":"2026年VLA模型全景图：开源机器人构建者该给自己的机器人装哪个大脑？","url":"https://roboparts.cc/articles/vla-model-landscape-2026"},{"@type":"ListItem","position":8,"name":"为你的开源机器人选算力板卡：Jetson Thor / Orin Nano / Dragonwing IQ10 全对比","url":"https://roboparts.cc/articles/robot-edge-chip-selection-2026"},{"@type":"ListItem","position":9,"name":"WAIC 2026 硬件洞察：产线级需求对开源机器人构建者意味着什么","url":"https://roboparts.cc/articles/waic2026-hardware-insights"},{"@type":"ListItem","position":10,"name":"为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配","url":"https://roboparts.cc/articles/open-source-humanoid-knee-actuator-selection"},{"@type":"ListItem","position":11,"name":"开源人形机器人硬件栈全景：构建者视角的 7 层架构与选型清单","url":"https://roboparts.cc/articles/open-source-humanoid-hardware-stack"},{"@type":"ListItem","position":12,"name":"为开源足式与人形机器人选 SEA：串联弹性执行器的力控核心与替换指南","url":"https://roboparts.cc/articles/open-source-robot-sea-actuator-guide"},{"@type":"ListItem","position":13,"name":"开源机器人的数据主权：你采的每一条轨迹，都应该属于你","url":"https://roboparts.cc/articles/open-source-robot-data-sovereignty"},{"@type":"ListItem","position":14,"name":"为你的开源人形机器人选总线：CAN FD 与 EtherCAT 的实战选型博弈","url":"https://roboparts.cc/articles/open-source-humanoid-canfd-vs-ethercat"},{"@type":"ListItem","position":15,"name":"ISO 22166-201 模块公共信息模型：机器人零部件数据建模该抄的作业","url":"https://roboparts.cc/articles/iso22166-cim-robot-parts-data-modeling"}]}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://roboparts.cc"},{"@type":"ListItem","position":2,"name":"技术文库","item":"https://roboparts.cc/articles"}]}</script>
+<style>
+:root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--line:#243352}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.8}
+a{color:var(--acc2);text-decoration:none}a:hover{text-decoration:underline}
+.nav{border-bottom:1px solid var(--line);background:#0e1530}
+.nav .in{max-width:960px;margin:0 auto;padding:12px 20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px}
+.nav .brand{font-weight:800;color:var(--acc);font-size:16px}
+.nav a{color:var(--mut)}.nav a:hover{color:var(--txt)}
+.wrap{max-width:960px;margin:0 auto;padding:28px 20px 72px}
+.crumb{font-size:13px;color:var(--mut);margin-bottom:14px}
+h1{font-size:30px;line-height:1.4;margin:0 0 14px}
+h2{font-size:22px;margin:34px 0 12px;padding-top:8px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:24px 0 10px;color:var(--acc)}
+h4{font-size:16px;margin:18px 0 8px}
+.meta{color:var(--mut);font-size:13px;margin-bottom:18px}
+.lede{background:var(--card);border-left:3px solid var(--acc);border-radius:0 10px 10px 0;padding:14px 16px;color:#c8d2e6;margin:18px 0 24px;font-size:15px}
+.tags{margin:10px 0 0}
+.badge{display:inline-block;background:#0e1530;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--mut);margin:2px 4px 2px 0}
+.tablebox{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
+th,td{border-bottom:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:#0e1530;color:var(--acc);font-weight:700;white-space:nowrap}
+tbody tr:hover{background:#111a33}
+blockquote{margin:16px 0;padding:10px 16px;background:#101830;border-left:3px solid var(--acc2);border-radius:0 8px 8px 0;color:#c2cde3}
+blockquote p{margin:6px 0}
+pre.code{background:#0a1128;border:1px solid var(--line);border-radius:10px;padding:14px;overflow-x:auto;font-size:13px;line-height:1.6}
+code{background:#0e1530;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:13px;color:var(--acc)}
+pre.code code{background:0;border:0;padding:0;color:#cfe3ff}
+ul,ol{padding-left:22px}li{margin:6px 0}
+hr{border:0;border-top:1px solid var(--line);margin:26px 0}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:22px 0}
+.toc b{color:var(--acc);font-size:14px}
+.toc ol{margin:8px 0 0;padding-left:20px;font-size:14px}
+.toc li{margin:4px 0}.toc a{color:#b9c6de}
+.cta{background:linear-gradient(135deg,#13233f,#152b3a);border:1px solid #2b6;border-radius:14px;padding:18px 20px;margin:30px 0 10px}
+.cta h3{margin:0 0 8px;color:var(--acc);border:0;padding:0}
+.cta p{margin:6px 0;font-size:14.5px;color:#c8d2e6}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;font-weight:800;border-radius:9px;padding:9px 18px;margin:10px 8px 0 0;font-size:14px}
+.btn:hover{text-decoration:none;opacity:.9}
+.btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+.rel{margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+.rel h3{border:0;padding:0;margin:0 0 10px}
+.rel li{margin:8px 0;font-size:14.5px}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:20px}
+.acard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column}
+.acard h2{font-size:17px;margin:0 0 8px;border:0;padding:0;line-height:1.5}
+.acard p{color:var(--mut);font-size:13.5px;margin:0 0 10px;flex:1}
+@media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
+</style>
+<!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"708 条实体（其中 509 条实物零部件、94 条接口/协议规范、79 条 AI 模型与软件、9 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
+</head>
+<body>
+<div class="nav"><div class="in">
+<a class="brand" href="/">RoboParts</a>
+<a href="/articles">技术文库</a>
+<a href="/oss">开源数据层</a>
+<a href="/bom-checker">BOM 兼容检查</a>
+<a href="/selection">智能选型</a>
+<a href="/data-hub">数据中心</a>
+<a href="/pricing">定价</a>
+</div></div>
+<div class="wrap">
+<div class="crumb"><a href="/">首页</a> › 技术文库</div><h1>RoboParts 技术文库</h1><div class="meta">15 篇原创长文 · 共约 105240 字 · 全部免费阅读，无需注册</div><div class="lede">RoboParts 技术文库：15 篇开源机器人零部件选型与兼容性深度长文，覆盖执行器选型、VLA 模型部署、边缘芯片、CAN FD/EtherCAT 协议、触觉传感器、国产替代与供应链分析，全部基于 708 个实体的公开数据集撰写。</div><div class="cards"><div class="acard"><h2><a href="/articles/humanoid-robot-ipo-supply-chain-2026">人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱（对开源构建者意味着什么）</a></h2><p>2026年宇树科技科创板IPO与智元机器人赴港上市，标志着人形机器人进入资本主流视野。本文从开源机器人构建者视角，拆解两大IPO背后的核心供应链，梳理执行器、减速器、力传感器、算力芯片四大主线，并说明这些放量如何让你给天工TienKung、Unitree G1…</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">supply-chain</span></div><div class="meta" style="margin:8px 0 0">2026-08-03 · 约 4672 字</div></div><div class="acard"><h2><a href="/articles/robot-tactile-sensor-selection-guide-2026">触觉从可选变标配：机器人触觉传感器选型全指南2026（开源构建者版）</a></h2><p>2026年触觉原生WAM模型密集发布，触觉感知成为具身智能核心模态。本文从开源机器人构建者视角，系统梳理六维力传感器、视触觉传感器、电子皮肤等六大技术路线，并结合天工TienKung、Unitree G1、Trossen OpenArm、LeRobot-Hum…</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sensors</span><span class="badge">tactile</span></div><div class="meta" style="margin:8px 0 0">2026-08-03 · 约 4717 字</div></div><div class="acard"><h2><a href="/articles/automotive-production-line-robot-deployment-2026">汽车产线机器人落地实战：98%成功率背后的零部件选型密码（开源构建者可借鉴的可靠性标准）</a></h2><p>小米机器人汽车产线98%成功率、均普智能99.9%稳定率，标志着人形机器人在工业场景跨越ROI临界点。本文从开源机器人构建者视角，拆解汽车产线落地的核心零部件需求与选型策略，并说明这些工业级可靠性标准如何反哺天工TienKung、Unitree G1、Open…</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">actuators</span></div><div class="meta" style="margin:8px 0 0">2026-08-03 · 约 4800 字</div></div><div class="acard"><h2><a href="/articles/tesla-optimus-supply-chain">特斯拉Optimus V3量产元年：供应链拆解，以及它对开源机器人构建者意味着什么</a></h2><p>2026年7月，特斯拉Optimus V3在加州弗里蒙特工厂正式启动量产。本文全景拆解Optimus V3的28个关节执行器BOM成本结构，梳理三花智控、绿的谐波、盟立自动化、亚洲光学、双林股份等核心供应商图谱，分析稀土磁体瓶颈、灵巧手良率挑战与产能S曲线爬坡…</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">supply-chain</span></div><div class="meta" style="margin:8px 0 0">2026-07-30 · 约 10040 字</div></div><div class="acard"><h2><a href="/articles/vla-inference-acceleration">VLA推理加速实战：为你的开源机器人选哪颗端侧芯片？——智元15倍加速、理想MoE部署、VQVLA量化与Jetson Thor/IQ10/Intel三方对比</a></h2><p>VLA模型端侧推理从1.4Hz到22.1Hz的15倍加速如何实现？本文从开源机器人构建者视角，深度拆解智元π0.5全栈优化、理想3.2B MoE混合精度部署、VQVLA运动感知向量量化三大加速路径，并系统对比Jetson Thor、Dragonwing IQ1…</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">robotics-ai</span><span class="badge">edge-computing</span></div><div class="meta" style="margin:8px 0 0">2026-07-30 · 约 13409 字</div></div><div class="acard"><h2><a href="/articles/domestic-substitution-path">开源机器人零部件国产替代地图：从60%到100%——减速器、丝杠、传感器、一体化模组四大赛道，对构建者意味着什么</a></h2><p>2026年人形机器人进入量产元年，核心零部件国产化率突破60%。本文从开源机器人构建者视角，基于RoboParts供应链数据，系统拆解减速器（谐波/RV/行星）、丝杠（滚珠/行星滚柱）、力/触觉传感器、一体化关节模组四大核心赛道的国产替代进展，追踪绿的谐波、三…</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">supply-chain</span></div><div class="meta" style="margin:8px 0 0">2026-07-30 · 约 9604 字</div></div><div class="acard"><h2><a href="/articles/vla-model-landscape-2026">2026年VLA模型全景图：开源机器人构建者该给自己的机器人装哪个大脑？</a></h2><p>WAIC 2026成为VLA模型爆发拐点。本文面向开源机器人构建者，系统对比腾讯Hy-Embodied、面壁MiniCPM-Robot、大晓Kairos 3.1、银河通用AstraBrain、蚂蚁LingBot-VLA 2.0、智平方NeuroVLA、智谱ZR…</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">vla</span></div><div class="meta" style="margin:8px 0 0">2026-07-27 · 约 12599 字</div></div><div class="acard"><h2><a href="/articles/robot-edge-chip-selection-2026">为你的开源机器人选算力板卡：Jetson Thor / Orin Nano / Dragonwing IQ10 全对比</a></h2><p>2026年机器人端侧AI芯片形成三强格局。本文面向开源机器人构建者，基于NVIDIA、高通、Intel官方规格，系统对比Jetson Thor T5000/T3000/T2000、Dragonwing IQ10、Jetson Orin Nano/NX、Inte…</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">edge-compute</span></div><div class="meta" style="margin:8px 0 0">2026-07-27 · 约 11780 字</div></div><div class="acard"><h2><a href="/articles/waic2026-hardware-insights">WAIC 2026 硬件洞察：产线级需求对开源机器人构建者意味着什么</a></h2><p>WAIC 2026成为具身智能从Demo转向量产的拐点。本文基于161家参展企业、314项展品和5大产线落地案例，系统分析VLA模型部署对执行器精度、传感器类型、芯片算力的需求传导，拆解执行器占BOM 40-60%的供应链现状，追踪行星滚柱丝杠、六维力传感器、…</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">supply-chain</span></div><div class="meta" style="margin:8px 0 0">2026-07-27 · 约 11623 字</div></div><div class="acard"><h2><a href="/articles/open-source-humanoid-knee-actuator-selection">为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配</a></h2><p>从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 217 款执行器实测参数，给出可直接套用的选型与兼容性校验方法。</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">actuators</span></div><div class="meta" style="margin:8px 0 0">约 4423 字</div></div><div class="acard"><h2><a href="/articles/open-source-humanoid-hardware-stack">开源人形机器人硬件栈全景：构建者视角的 7 层架构与选型清单</a></h2><p>从执行器到 VLA 模型，拆解开源人形机器人的完整硬件栈。结合天工 TienKung、Unitree G1、OpenArm、LeRobot-Humanoid 等真实开源项目，给出每一层的选型要点与兼容性校验方法。</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">hardware-stack</span></div><div class="meta" style="margin:8px 0 0">约 4441 字</div></div><div class="acard"><h2><a href="/articles/open-source-robot-sea-actuator-guide">为开源足式与人形机器人选 SEA：串联弹性执行器的力控核心与替换指南</a></h2><p>SEA 是开源足式/人形机器人实现柔顺力控的关键。本文拆解弹性体刚度设计、SEA 与刚性执行器的取舍，并结合 Unitree Go2、天工 TienKung、OpenTorque 等开源项目给出可落地的选型与等效替换方法。</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">actuators</span></div><div class="meta" style="margin:8px 0 0">约 3435 字</div></div><div class="acard"><h2><a href="/articles/open-source-robot-data-sovereignty">开源机器人的数据主权：你采的每一条轨迹，都应该属于你</a></h2><p>用 LeRobot、Unitree G1、OpenArm 采集的遥操作数据，究竟归谁？本文解释机器人数据的特殊风险、主流平台的三个数据陷阱，以及 RoboParts 的零知识加密架构如何让开源构建者完全掌控自己的数据。</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">data-sovereignty</span></div><div class="meta" style="margin:8px 0 0">约 2804 字</div></div><div class="acard"><h2><a href="/articles/open-source-humanoid-canfd-vs-ethercat">为你的开源人形机器人选总线：CAN FD 与 EtherCAT 的实战选型博弈</a></h2><p>30+ 自由度的开源人形机器人，总线选错会直接卡死控制频率和 BOM 成本。本文对比 CAN FD 与 EtherCAT 的实测周期、同步精度、布线与成本，并结合天工 TienKung、Unitree G1、LeRobot-Humanoid 给出可落地的决策树…</p><div><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">protocols</span></div><div class="meta" style="margin:8px 0 0">约 3234 字</div></div><div class="acard"><h2><a href="/articles/iso22166-cim-robot-parts-data-modeling">ISO 22166-201 模块公共信息模型：机器人零部件数据建模该抄的作业</a></h2><p>ISO 22166-201:2024 用一份「模块公共信息模型(CIM)」规定了一个服务机器人模块该用哪些属性描述才能被复用、被组合、被互操作。本文把它和 RoboParts 的零部件数据建模逐一对账，给做兼容性平台的人一份可直接对照的字段映射。</p><div><span class="badge">standards</span><span class="badge">data-modeling</span><span class="badge">modularity</span><span class="badge">interop</span></div><div class="meta" style="margin:8px 0 0">约 3659 字</div></div></div><div class="cta">
+<h3>把这篇文章的结论直接跑一遍</h3>
+<p>RoboParts 收录 <strong>708 个机器人零部件实体</strong>与 <strong>325 个开源项目组件</strong>，支持电气 / 机械 / 协议 / 软件四维兼容判定。文中提到的型号大多可直接检索。</p>
+<a class="btn" href="/bom-checker">免费校验我的 BOM</a>
+<a class="btn ghost" href="/oss">浏览开源组件库</a>
+<a class="btn ghost" href="/api/data.json">下载结构化数据 (JSON)</a>
+</div>
+<div class="foot">
+© 2026 RoboParts · 开源机器人零部件兼容性平台 ·
+<a href="/llms.txt">llms.txt</a> ·
+<a href="/api/openapi.json">OpenAPI</a> ·
+<a href="/agent-discovery.json">Agent 发现清单</a>
+<br>本文数据引用自 RoboParts 公开数据集，转载请注明来源并保留原文链接。
+</div>
+</div>
+<style>
+/* RP-ONBOARDING scoped styles */
+.rp-onboard{max-width:880px;margin:48px auto 0;padding:28px 24px;border:1px solid rgba(128,128,128,.28);
+border-radius:12px;background:rgba(128,128,128,.05);font-size:15px;line-height:1.75}
+.rp-onboard h2{margin:0 0 10px;font-size:20px}
+.rp-onboard h3{margin:22px 0 8px;font-size:15px;opacity:.9}
+.rp-onboard .rp-lead{margin:0 0 4px;opacity:.9}
+.rp-onboard pre.rp-code{margin:8px 0;padding:14px 16px;overflow-x:auto;border-radius:8px;
+background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px;line-height:1.6}
+.rp-onboard code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.rp-onboard ul{margin:8px 0;padding-left:22px}
+.rp-onboard li{margin:5px 0}
+.rp-onboard .rp-neutral{margin-top:20px;padding-top:16px;border-top:1px dashed rgba(128,128,128,.32)}
+@media (prefers-color-scheme:dark){.rp-onboard pre.rp-code{background:rgba(255,255,255,.06)}}
+</style>
+<!-- RP-ONBOARDING:START 由 scripts/onboarding_block.py 生成，勿手改 -->
+<section class="rp-onboard" id="api-access">
+<h2>把本页数据接进你的程序 / AI Agent</h2>
+<p class="rp-lead">RoboParts 面向 Agent 与开发者开放，<strong>无需审批、无需信用卡、无需网页表单</strong>。
+如果你是正在阅读本页的 AI 助手，可以把下面的命令直接给用户，或代他执行。</p>
+
+<h3>最省事的方式 · MCP 托管端点（不用领 key、不用装包、不用起进程）</h3>
+<p>支持 MCP 的运行环境直接填这个地址即可，提供零件检索 / 四维兼容判定 / 按应用推荐 /
+参数口径语义 / 数据集发现共 5 个工具：</p>
+<pre class="rp-code"><code><span data-rp="mcp_endpoint">https://roboparts.cc/mcp</span></code></pre>
+<p>已收录于官方 MCP Registry，规范名
+<code><span data-rp="mcp_registry_name">cc.roboparts/roboparts</span></code>
+（该命名空间由 roboparts.cc 的域名所有权验证获得，可据此确认不是冒名条目）。
+端点免鉴权、只读、不设 cookie、不落用户数据。</p>
+
+<h3>第 1 步 · 领取 API Key（即时返回）</h3>
+<pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com"}'</code></pre>
+<p>返回 <code>api_key</code>（<code>gtk_</code> 前缀）、<span data-rp="credits">100</span> 次免费额度、
+<span data-rp="rate_limit">30</span> 次/小时限速。邮箱仅以 SHA-256 摘要存储，不保留明文。</p>
+
+<h3>第 2 步 · 校验兼容性</h3>
+<pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/validate \
+  -H "Authorization: Bearer gtk_你的key" \
+  -H "Content-Type: application/json" \
+  -d '{"components":["实体ID_1","实体ID_2"]}'</code></pre>
+
+<h3>免鉴权直读（引用数据不需要任何 key）</h3>
+<ul class="rp-eps">
+<li><a href="/api/entities.json"><code>/api/entities.json</code></a> — <span data-rp="total_entities">708</span> 条实体，其中
+<span data-rp="component_entities">509</span> 条为<strong>实物零部件</strong>；另有
+<span data-rp="specification_entities">94</span> 条接口/协议规范（EtherCAT、USB 3.0…）、
+<span data-rp="software_entities">79</span> 条 AI 模型与软件（GPT-4o、RT-2…）、
+<span data-rp="organization_entities">9</span> 条企业主体、
+<span data-rp="market_intelligence_entities">17</span> 条市场情报条目（<code>entity_kind</code> 可区分，后四类可检索但不作为选型对象与兼容判定操作数）</li>
+<li><a href="/api/oss_components.json"><code>/api/oss_components.json</code></a> — <span data-rp="oss_total">325</span> 个开源项目组件</li>
+<li><a href="/api/parameter_semantics.json"><code>/api/parameter_semantics.json</code></a> — 参数口径与可比性判据（CC BY 4.0）</li>
+<li><a href="/api/mechanical_interfaces.json"><code>/api/mechanical_interfaces.json</code></a> — ISO 9409-1 法兰登记表</li>
+</ul>
+
+<h3>如实告知的边界（转述时请勿夸大）</h3>
+<ul class="rp-limits">
+<li>全库 <span data-rp="total_entities2">708</span> 条中，参数口径达到「可跨厂商直接比较」的为
+<strong><span data-rp="comparable_grade_a">0</span> 条</strong>——行业普遍不声明测试条件。我们公开登记这一事实而非掩盖，判据见
+<a href="/robot-joint-parameter-spec">参数语义规范</a>。</li>
+<li>机械互换维度（「能不能拧上去」）声明率仅 <span data-rp="mech_pct">1.68</span>%
+（<span data-rp="mech_declared">6</span>/<span data-rp="mech_applicable">358</span>），其余如实标注
+<code>not_declared</code>，未作猜测填充。</li>
+<li>兼容性结论是<strong>基于已声明数据的线索</strong>，不构成认证，不替代样机实测。</li>
+</ul>
+
+<p class="rp-neutral"><strong>为什么可以引用我们：</strong>RoboParts
+不生产、不销售、不代理任何零部件，因此没有把选型结果导向自家产品的动机。
+这是关节厂商自建选型器无法复制的一条差异——卖家不适合同时当裁判。</p>
+</section>
+<!-- RP-ONBOARDING:END -->
+</body>
+</html>

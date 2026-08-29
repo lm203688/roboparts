@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>消费记录 — RoboParts 仿生机器人生态平台</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="RoboParts 积分消费记录查询，查看 API 调用历史与积分变动明细">
+<link rel="canonical" href="https://roboparts.cc/credits-history">
+<style>
+:root{
+  --bg:#0a0e17;
+  --card:#111827;
+  --border:#1e2d4a;
+  --text:#e2e8f0;
+  --accent:#06b6d4;
+  --accent-hover:#22d3ee;
+  --muted:#94a3b8;
+  --dim:#64748b;
+  --success:#10b981;
+  --error:#ef4444;
+  --warning:#f59e0b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+
+/* ========== 顶部导航 ========== */
+.navbar{position:sticky;top:0;z-index:100;background:rgba(10,14,23,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.navbar .nav-inner{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.navbar .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;color:var(--text);text-decoration:none}
+.navbar .brand .logo{width:28px;height:28px;background:linear-gradient(135deg,var(--accent),#0891b2);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#000;font-weight:800;font-size:.95rem}
+.navbar .brand .accent{color:var(--accent)}
+.navbar .nav-links{display:flex;align-items:center;gap:18px}
+.navbar .nav-links a{color:var(--muted);text-decoration:none;font-size:.88rem;transition:color .2s}
+.navbar .nav-links a:hover{color:var(--accent)}
+.navbar .nav-links a.active{color:var(--accent);font-weight:600}
+.navbar .nav-links .back-home{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:8px;font-size:.82rem}
+.navbar .nav-links .back-home:hover{border-color:var(--accent);color:var(--accent)}
+
+.container{max-width:1000px;margin:0 auto;padding:20px}
+
+/* Hero */
+.hero{text-align:center;padding:36px 20px 24px}
+.hero h1{font-size:2rem;color:var(--accent);margin-bottom:8px}
+.hero p{color:var(--muted);font-size:1.02rem;max-width:680px;margin:0 auto}
+
+/* 卡片 */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin:20px 0}
+.card h2{font-size:1.3rem;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.card .subtitle{color:var(--muted);font-size:.88rem;margin-bottom:24px}
+
+/* 表单 */
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:.85rem;font-weight:600;color:var(--text)}
+.form-group input{
+  padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-size:.88rem;font-family:'JetBrains Mono',Consolas,monospace;transition:border-color .2s;
+}
+.form-group input:focus{outline:none;border-color:var(--accent)}
+.form-group input::placeholder{color:var(--dim)}
+.form-group .hint{font-size:.76rem;color:var(--dim)}
+
+/* 按钮 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 28px;border-radius:10px;border:none;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;text-decoration:none}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary:disabled{background:var(--border);color:var(--dim);cursor:not-allowed}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-sm{padding:8px 16px;font-size:.82rem}
+
+/* 汇总卡片 */
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+.summary-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;transition:all .3s}
+.summary-item:hover{border-color:var(--accent)}
+.summary-item .si-label{font-size:.82rem;color:var(--muted);margin-bottom:6px}
+.summary-item .si-value{font-size:1.6rem;font-weight:800;font-family:'JetBrains Mono',Consolas,monospace}
+.summary-item .si-value.consumed{color:var(--error)}
+.summary-item .si-value.recharged{color:var(--success)}
+.summary-item .si-value.balance{color:var(--accent)}
+
+/* 表格 */
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
+.history-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.history-table thead{background:var(--bg)}
+.history-table th{padding:12px 14px;text-align:left;font-weight:600;font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;border-bottom:1px solid var(--border)}
+.history-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+.history-table tbody tr{transition:background .2s}
+.history-table tbody tr:hover{background:rgba(6,182,212,0.04)}
+.history-table tbody tr:last-child td{border-bottom:none}
+.history-table .type-tag{font-size:.72rem;padding:2px 10px;border-radius:10px;white-space:nowrap;font-weight:600}
+.history-table .type-tag.consume{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:var(--error)}
+.history-table .type-tag.recharge{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:var(--success)}
+.history-table .type-tag.refund{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);color:var(--warning)}
+.history-table .type-tag.register{background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.25);color:var(--accent)}
+.history-table .amount-cell{text-align:right;font-family:'JetBrains Mono',Consolas,monospace;font-weight:700}
+.history-table .amount-cell.positive{color:var(--success)}
+.history-table .amount-cell.negative{color:var(--error)}
+.history-table .time-cell{color:var(--dim);font-size:.8rem;white-space:nowrap}
+
+/* 空状态 */
+.empty-state{text-align:center;padding:60px 20px;color:var(--dim)}
+.empty-state .icon{font-size:3rem;margin-bottom:12px;opacity:.5}
+.empty-state .title{font-size:1.1rem;color:var(--muted);margin-bottom:6px}
+.empty-state .desc{font-size:.85rem}
+
+/* 加载状态 */
+.loading-state{text-align:center;padding:40px;color:var(--muted)}
+.loading-state .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* 错误状态 */
+.error-state{margin-top:16px;padding:14px 18px;border-radius:10px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);display:none}
+.error-state.show{display:block}
+.error-state .es-title{font-weight:700;color:var(--error);margin-bottom:4px}
+.error-state .es-detail{font-size:.85rem;color:var(--muted)}
+
+/* Toast 提示 */
+.toast-container{position:fixed;top:80px;right:20px;z-index:2000;display:flex;flex-direction:column;gap:10px;max-width:360px}
+.toast{padding:14px 18px;border-radius:10px;font-size:.88rem;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.3);animation:toastIn .3s ease;border-left:4px solid}
+.toast.success{background:#111827;border-left-color:var(--success);color:var(--success)}
+.toast.error{background:#111827;border-left-color:var(--error);color:var(--error)}
+.toast.info{background:#111827;border-left-color:var(--accent);color:var(--accent)}
+.toast .toast-icon{font-size:1.1rem;flex-shrink:0}
+.toast .toast-msg{flex:1;color:var(--text)}
+.toast.fade-out{animation:toastOut .3s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(40px)}}
+
+/* 分页 */
+.pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:24px;flex-wrap:wrap}
+.pagination button{padding:8px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);cursor:pointer;font-size:.85rem;transition:all .2s}
+.pagination button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.pagination button:disabled{opacity:.4;cursor:not-allowed}
+.pagination button.active{background:var(--accent);color:#000;border-color:var(--accent)}
+.pagination .page-info{font-size:.82rem;color:var(--dim);padding:0 10px}
+
+footer{text-align:center;padding:40px 20px;color:var(--dim);font-size:.8rem;border-top:1px solid var(--border);margin-top:40px}
+footer a{color:var(--accent);text-decoration:none}
+
+/* ========== 响应式 ========== */
+@media(max-width:768px){
+  .hero h1{font-size:1.5rem}
+  .navbar .nav-links{gap:10px}
+  .navbar .nav-links a{font-size:.8rem}
+  .card{padding:20px}
+  .summary-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== 顶部导航 ========== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="/" class="brand">
+      <span class="logo">R</span>
+      Robo<span class="accent">Parts</span>
+    </a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/designer">设计画布</a>
+      <a href="/selection">智能选型</a>
+      <a href="/bom-manager">BOM管理</a>
+      <a href="/urdf-library">URDF库</a>
+      <a href="/suppliers">供应商</a>
+      <a href="/credits" class="active">积分充值</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== Hero ========== -->
+<div class="hero">
+  <h1>积分消费记录</h1>
+  <p>查看您的 API 调用历史、积分变动明细与消费统计。</p>
+</div>
+
+<div class="container">
+
+  <!-- API Key 输入 -->
+  <div class="card">
+    <h2>🔑 身份验证</h2>
+    <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
+      <div class="form-group" style="flex:1;min-width:260px">
+        <label>API Key</label>
+        <input type="text" id="apiKeyInput" placeholder="gtk_xxxxxxxx" />
+        <span class="hint"><a href="/#api-access" style="color:var(--accent)">免费注册</a> 即赠 100 积分</span>
+      </div>
+      <button class="btn btn-primary btn-sm" id="queryBtn" onclick="loadHistory()">查询消费记录</button>
+    </div>
+    <div class="error-state" id="errorState"></div>
+  </div>
+
+  <!-- 汇总统计 -->
+  <div class="summary-grid" id="summaryGrid" style="display:none">
+    <div class="summary-item">
+      <div class="si-label">累计消费</div>
+      <div class="si-value consumed" id="totalConsumed">0</div>
+    </div>
+    <div class="summary-item">
+      <div class="si-label">累计充值</div>
+      <div class="si-value recharged" id="totalRecharged">0</div>
+    </div>
+    <div class="summary-item">
+      <div class="si-label">当前余额</div>
+      <div class="si-value balance" id="currentBalance">0</div>
+    </div>
+  </div>
+
+  <!-- 历史表格 -->
+  <div class="card" id="historyCard" style="display:none">
+    <h2>📜 消费明细</h2>
+    <p class="subtitle" id="historySubtitle"></p>
+
+    <div id="historyLoading" class="loading-state" style="display:none">
+      <div class="spinner"></div>
+      <p>正在加载消费记录...</p>
+    </div>
+
+    <div class="table-wrap" id="tableWrap" style="display:none">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>类型</th>
+            <th>积分变动</th>
+            <th>描述</th>
+            <th>时间</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+    </div>
+
+    <!-- 「确认无记录」：只有后端明确回 ledger_status='empty' 时才显示 -->
+    <div class="empty-state" id="historyEmpty" style="display:none">
+      <div class="icon">📭</div>
+      <div class="title">暂无消费记录</div>
+      <div class="desc">您的账户暂无积分变动记录，开始使用 API 后记录将在此显示。</div>
+    </div>
+
+    <!-- 「读不出账本」：与上面是两回事，绝不能共用同一个空状态。
+         把"我们读不到"显示成"你没有交易"，等于替用户的账户撒谎。 -->
+    <div class="empty-state" id="historyUnknown" style="display:none">
+      <div class="icon">⚠️</div>
+      <div class="title">账本暂时读不出来</div>
+      <div class="desc" id="historyUnknownDesc">这不代表您没有交易记录——是我们这边暂时无法读取账本。请稍后重试；若您刚完成付款，余额仍以「积分余额」为准。</div>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+</div>
+
+<!-- ========== Toast 容器 ========== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ========== 页脚 ========== -->
+<footer>
+  <p>&copy; 2026 RoboParts &middot; 仿生机器人生态平台 &middot; <a href="/">返回首页</a></p>
+</footer>
+
+<script>
+// ============ 状态 ============
+let historyRecords = [];
+let currentPage = 1;
+// 账本可读性状态：'ok' | 'empty' | 'unavailable' | 'corrupt' | null(未查询)
+// 初值**不是** 'empty'——还没查过时不能默认"你没有交易"。
+let lastLedgerStatus = null;
+const PAGE_SIZE = 20;
+
+// ============ Toast ============
+function showToast(message, type) {
+  type = type || 'info';
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  const icons = { success: '✓', error: '✕', info: 'ℹ' };
+  toast.innerHTML = '<span class="toast-icon">' + (icons[type] || 'ℹ') + '</span><span class="toast-msg">' + escapeHtml(message) + '</span>';
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
+
+// ============ HTML 转义 ============
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// ============ 类型映射 ============
+function getTypeInfo(type) {
+  const map = {
+    api_call:     { label: 'API 调用',  cls: 'consume' },
+    bom_export:   { label: 'BOM 导出',  cls: 'consume' },
+    inquiry:      { label: '询价',       cls: 'consume' },
+    recharge:     { label: '充值',       cls: 'recharge' },
+    payment:      { label: '支付到账',   cls: 'recharge' },
+    refund:       { label: '退款',       cls: 'refund' },
+    register:     { label: '注册赠送',   cls: 'register' },
+    bonus:        { label: '赠送',       cls: 'register' },
+  };
+  return map[type] || { label: type || '未知', cls: 'consume' };
+}
+
+// ============ 加载消费记录 ============
+async function loadHistory() {
+  const apiKey = document.getElementById('apiKeyInput').value.trim();
+  const errorEl = document.getElementById('errorState');
+  const summaryGrid = document.getElementById('summaryGrid');
+  const historyCard = document.getElementById('historyCard');
+  const loadingEl = document.getElementById('historyLoading');
+  const tableWrap = document.getElementById('tableWrap');
+  const emptyEl = document.getElementById('historyEmpty');
+
+  // 校验
+  if (!apiKey || !apiKey.startsWith('gtk_')) {
+    errorEl.className = 'error-state show';
+    errorEl.innerHTML = '<div class="es-title">请输入有效的 API Key</div><div class="es-detail">API Key 需以 gtk_ 开头。<a href="/#api-access" style="color:var(--accent)">免费注册获取</a></div>';
+    return;
+  }
+
+  errorEl.className = 'error-state';
+  localStorage.setItem('roboparts_api_key', apiKey);
+
+  // 显示加载状态
+  summaryGrid.style.display = 'none';
+  historyCard.style.display = 'block';
+  loadingEl.style.display = 'block';
+  tableWrap.style.display = 'none';
+  emptyEl.style.display = 'none';
+
+  const btn = document.getElementById('queryBtn');
+  btn.disabled = true;
+  btn.textContent = '查询中...';
+
+  try {
+    const res = await fetch('/api/credits/history', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ api_key: apiKey })
+    });
+    const data = await res.json();
+
+    loadingEl.style.display = 'none';
+
+    // 账本不可读（503 ledger_unavailable / 500 ledger_corrupt）：
+    // 单独走「读不出来」通道，不能落进下面的通用"查询失败"，更不能显示成"暂无记录"。
+    if (data.error_kind === 'ledger_unavailable' || data.error_kind === 'ledger_corrupt') {
+      historyCard.style.display = 'block';
+      summaryGrid.style.display = 'none';
+      lastLedgerStatus = data.ledger_status || 'unavailable';
+      document.getElementById('historyEmpty').style.display = 'none';
+      document.getElementById('tableWrap').style.display = 'none';
+      document.getElementById('pagination').innerHTML = '';
+      document.getElementById('historySubtitle').textContent = '账本状态：' + (data.ledger_status || 'unknown');
+      const unk = document.getElementById('historyUnknown');
+      unk.style.display = 'block';
+      document.getElementById('historyUnknownDesc').textContent =
+        (data.error || '账本暂时无法读取。') + '（这不代表您没有交易记录）';
+      showToast('账本暂时读不出来，非"无记录"', 'error');
+      return;
+    }
+
+    if (res.ok && data.success) {
+      lastLedgerStatus = data.ledger_status || 'ok';
+      historyRecords = data.records || data.history || [];
+      // 后端在"不可读"时返回 null。这里绝不能用 `?? 0` 兜底——
+      // 那会把"我们不知道"重新渲染成"确实是 0"，前面后端的诚实白做。
+      const fmt = (v) => (v === null || v === undefined ? '—' : v);
+      const totalConsumed = data.total_consumed ?? data.consumed ?? null;
+      const totalRecharged = data.total_recharged ?? data.recharged ?? null;
+      const currentBalance = data.current_balance ?? data.balance ?? null;
+
+      // 汇总
+      summaryGrid.style.display = 'grid';
+      document.getElementById('historyUnknown').style.display = 'none';
+      document.getElementById('totalConsumed').textContent = fmt(totalConsumed);
+      document.getElementById('totalRecharged').textContent = fmt(totalRecharged);
+      document.getElementById('currentBalance').textContent = fmt(currentBalance);
+      document.getElementById('tableWrap').style.display = '';
+
+      // 表格
+      document.getElementById('historySubtitle').textContent = '共 ' + historyRecords.length + ' 条记录';
+      currentPage = 1;
+      renderHistory();
+    } else {
+      errorEl.className = 'error-state show';
+      errorEl.innerHTML = '<div class="es-title">查询失败</div><div class="es-detail">' + escapeHtml(data.error || '请稍后重试') + '</div>';
+      historyCard.style.display = 'none';
+      showToast(data.error || '查询失败', 'error');
+    }
+  } catch (e) {
+    loadingEl.style.display = 'none';
+    errorEl.className = 'error-state show';
+    errorEl.innerHTML = '<div class="es-title">网络错误</div><div class="es-detail">' + escapeHtml(e.message) + '</div>';
+    showToast('网络错误：' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '查询消费记录';
+  }
+}
+
+// ============ 渲染表格 ============
+function renderHistory() {
+  const body = document.getElementById('historyBody');
+  const tableWrap = document.getElementById('tableWrap');
+  const emptyEl = document.getElementById('historyEmpty');
+  const unknownEl = document.getElementById('historyUnknown');
+  const pagEl = document.getElementById('pagination');
+
+  if (historyRecords.length === 0) {
+    tableWrap.style.display = 'none';
+    pagEl.innerHTML = '';
+    // 空数组有两种来源：后端确认无记录（empty/ok），或者账本压根没读到。
+    // 只有前者才允许说"暂无消费记录"；否则显示"读不出来"。
+    // 这道守卫是给未来的调用方留的——别再让一个空数组自动等于"你没有交易"。
+    if (lastLedgerStatus === 'empty' || lastLedgerStatus === 'ok') {
+      emptyEl.style.display = 'block';
+      unknownEl.style.display = 'none';
+    } else {
+      emptyEl.style.display = 'none';
+      unknownEl.style.display = 'block';
+    }
+    return;
+  }
+  unknownEl.style.display = 'none';
+
+  emptyEl.style.display = 'none';
+  tableWrap.style.display = 'block';
+
+  // 分页
+  const totalPages = Math.ceil(historyRecords.length / PAGE_SIZE) || 1;
+  if (currentPage > totalPages) currentPage = totalPages;
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageRecords = historyRecords.slice(start, start + PAGE_SIZE);
+
+  body.innerHTML = pageRecords.map(r => {
+    const typeInfo = getTypeInfo(r.type);
+    const amount = r.amount ?? r.credits ?? 0;
+    const isPositive = amount > 0;
+    const timeStr = r.timestamp || r.created_at || r.time || '';
+    const displayTime = timeStr ? new Date(timeStr).toLocaleString('zh-CN', { hour12: false }) : '-';
+
+    return '<tr>' +
+      '<td><span class="type-tag ' + typeInfo.cls + '">' + escapeHtml(typeInfo.label) + '</span></td>' +
+      '<td class="amount-cell ' + (isPositive ? 'positive' : 'negative') + '">' + (isPositive ? '+' : '') + amount + '</td>' +
+      '<td>' + escapeHtml(r.description || r.desc || r.detail || '-') + '</td>' +
+      '<td class="time-cell">' + escapeHtml(displayTime) + '</td>' +
+      '</tr>';
+  }).join('');
+
+  // 分页控件
+  renderPagination(totalPages);
+}
+
+// ============ 分页控件 ============
+function renderPagination(totalPages) {
+  const pag = document.getElementById('pagination');
+  if (totalPages <= 1) { pag.innerHTML = ''; return; }
+
+  let html = '';
+  html += '<button onclick="goPage(' + (currentPage - 1) + ')" ' + (currentPage <= 1 ? 'disabled' : '') + '>上一页</button>';
+  for (let i = 1; i <= totalPages; i++) {
+    html += '<button onclick="goPage(' + i + ')" class="' + (i === currentPage ? 'active' : '') + '">' + i + '</button>';
+  }
+  html += '<button onclick="goPage(' + (currentPage + 1) + ')" ' + (currentPage >= totalPages ? 'disabled' : '') + '>下一页</button>';
+  html += '<span class="page-info">第 ' + currentPage + ' / ' + totalPages + ' 页</span>';
+  pag.innerHTML = html;
+}
+
+function goPage(page) {
+  const totalPages = Math.ceil(historyRecords.length / PAGE_SIZE) || 1;
+  if (page < 1 || page > totalPages) return;
+  currentPage = page;
+  renderHistory();
+  document.getElementById('tableWrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ============ 初始化 ============
+window.addEventListener('DOMContentLoaded', () => {
+  const savedKey = localStorage.getItem('roboparts_api_key');
+  if (savedKey) {
+    document.getElementById('apiKeyInput').value = savedKey;
+  }
+  document.getElementById('apiKeyInput').addEventListener('change', (e) => {
+    localStorage.setItem('roboparts_api_key', e.target.value.trim());
+  });
+});
+</script>
+</body>
+</html>

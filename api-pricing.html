@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>API Pricing - RobotParts DB</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<link rel="canonical" href="https://roboparts.cc/api-pricing">
+<text y='.9em' font-size='90'>⚙️</text></svg>">
+<style>
+:root{--bg:#0a0e17;--bg2:#111827;--bg3:#1a2236;--border:#1e2d4a;--text:#e2e8f0;--text2:#94a3b8;--accent:#06b6d4;--accent2:#f59e0b;--green:#10b981;--red:#ef4444}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{color:var(--accent);text-decoration:none}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,23,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:900px;margin:0 auto;padding:0 20px;display:flex;align-items:center;height:52px;gap:16px}
+.nav-logo{font-size:17px;font-weight:700;color:#fff}
+.nav-links{display:flex;gap:14px;font-size:13px}.nav-links a{color:var(--text2)}
+.container{max-width:900px;margin:0 auto;padding:80px 20px 40px}
+h1{text-align:center;font-size:2em;margin-bottom:8px}h1 span{color:var(--accent)}
+.subtitle{text-align:center;color:var(--text2);margin-bottom:16px}
+.credit-note{max-width:780px;margin:0 auto 16px;background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--accent2);border-radius:10px;padding:14px 18px;font-size:.92rem;color:var(--text)}
+.credit-note strong{color:var(--accent2)}
+.credit-note .en{display:block;font-size:.8rem;color:var(--text2);margin-top:4px}
+.free-line{text-align:center;color:var(--text2);font-size:.88rem;margin:0 0 32px}
+.free-line a{color:var(--accent);font-weight:700}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-bottom:40px}
+.plan{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;position:relative;transition:border-color .2s}
+.plan:hover{border-color:var(--accent)}
+.plan.popular{border-color:var(--accent2)}
+.plan.popular::before{content:'MOST POPULAR';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent2);color:#000;font-size:.65rem;font-weight:800;padding:3px 12px;border-radius:10px;letter-spacing:.5px}
+.plan-name{font-size:1.1em;font-weight:700;margin-bottom:4px}
+.plan-price{font-size:2.2em;font-weight:800;color:var(--accent);margin-bottom:6px}
+.plan-price span{font-size:.4em;color:var(--text2);font-weight:400}
+.plan-credits{display:inline-block;background:rgba(245,158,11,0.12);color:var(--accent2);font-size:.8rem;font-weight:700;padding:4px 10px;border-radius:8px;margin-bottom:14px}
+.plan-desc{color:var(--text2);font-size:.85rem;margin-bottom:16px}
+.plan-features{list-style:none;font-size:.85rem}
+.plan-features li{padding:4px 0;color:var(--text2)}
+.plan-features li::before{content:'✓ ';color:var(--green);font-weight:700}
+.plan-features li.no::before{content:'✗ ';color:var(--red)}
+.cta-btn{display:block;width:100%;padding:12px;border-radius:10px;border:none;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:16px;transition:all .2s}
+.cta-primary{background:var(--accent);color:#000}.cta-primary:hover{opacity:.9}
+.cta-secondary{background:transparent;border:1px solid var(--accent);color:var(--accent)}.cta-secondary:hover{background:var(--accent);color:#000}
+.section{margin:40px 0}.section h2{font-size:1.3em;margin-bottom:16px;color:var(--accent2)}
+.code-block{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px;font-family:monospace;font-size:.85rem;overflow-x:auto;margin:12px 0;color:var(--accent)}
+.code-block .comment{color:var(--text2)}
+.faq-item{border-bottom:1px solid var(--border);padding:16px 0}
+.faq-q{font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-a{color:var(--text2);font-size:.9rem;margin-top:8px;display:none}
+.faq-item.open .faq-a{display:block}
+.footer{text-align:center;padding:40px 20px;color:var(--text2);font-size:13px;border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div class="nav"><div class="nav-inner">
+  <div class="nav-logo">⚙️ RoboParts</div>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/api-pricing" style="color:var(--accent2)">Pricing</a>
+    <a href="/credits">Credits</a>
+    <a href="/data-hub">Data Hub</a>
+  </div>
+</div></div>
+
+<div class="container">
+<h1>⚙️ <span>API Pricing</span></h1>
+<p class="subtitle">Structured robot part compatibility data. Power your AI agents, research tools, and applications.</p>
+
+<div class="credit-note">
+  <strong>💡 积分制说明：</strong>1 积分 = 1 次 API 调用 · 积分永久有效，无月费 · 一次性付费，用完为止
+  <span class="en">Credits are the universal currency — pay once, use forever. No subscriptions, no monthly fees. All prices and settlement are in CNY (¥) via WeChat Pay / Alipay; USD figures are indicative conversions only.</span>
+</div>
+<p class="free-line">New here? <a href="javascript:signUpFree()">Sign up free</a> and get 100 credits to start.</p>
+
+<div class="plans">
+  <div class="plan">
+    <div class="plan-name">Starter</div>
+    <div class="plan-price">¥9<span> one-time</span></div>
+    <div class="plan-credits">100 credits · settled in CNY (≈$1.3)</div>
+    <div class="plan-desc">For trying out the API</div>
+    <ul class="plan-features">
+      <li>100 API calls (1 credit = 1 call)</li>
+      <li>Access to all endpoints</li>
+      <li>708 entities · 609 clean set (99 quarantined) · 410 Tier-A traceable</li>
+      <li>REST API + JSON format</li>
+      <li>Credits never expire</li>
+      <li class="no">Commercial use license</li>
+    </ul>
+    <button class="cta-btn cta-secondary" onclick="buyCredits('starter')">Buy 100 Credits — ¥9</button>
+  </div>
+
+  <div class="plan popular">
+    <div class="plan-name">Pro</div>
+    <div class="plan-price">¥29<span> one-time</span></div>
+    <div class="plan-credits">500 credits · settled in CNY (≈$4)</div>
+    <div class="plan-desc">For production applications</div>
+    <ul class="plan-features">
+      <li>500 API calls (1 credit = 1 call)</li>
+      <li>Access to all endpoints</li>
+      <li>708 entities · 609 clean set (99 quarantined) · 410 Tier-A traceable</li>
+      <li>Bulk JSON export</li>
+      <li>Commercial use license</li>
+      <li>Priority email support</li>
+    </ul>
+    <button class="cta-btn cta-primary" onclick="buyCredits('pro')">Buy 500 Credits — ¥29</button>
+  </div>
+
+  <div class="plan">
+    <div class="plan-name">Lifetime</div>
+    <div class="plan-price">¥199<span> one-time</span></div>
+    <div class="plan-credits">Unlimited · settled in CNY (≈$28)</div>
+    <div class="plan-desc">Pay once, use forever</div>
+    <ul class="plan-features">
+      <li>Unlimited API calls</li>
+      <li>Everything in Pro</li>
+      <li>Lifetime free updates</li>
+      <li>MCP protocol support</li>
+      <li>VIP dedicated support</li>
+      <li>Commercial use license</li>
+    </ul>
+    <button class="cta-btn cta-secondary" onclick="buyCredits('lifetime')">Buy Lifetime — ¥199</button>
+  </div>
+</div>
+
+<div class="section">
+  <h2>📦 Data Packages (One-time)</h2>
+  <p style="color:var(--text2);margin-bottom:16px">Download the complete RoboParts dataset — no subscription needed. Data packages have no self-serve checkout; they are invoiced manually by email.</p>
+  <div class="plans" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+    <div class="plan">
+      <div class="plan-name">Core Dataset</div>
+      <div class="plan-price">¥199<span> one-time</span></div>
+      <div class="plan-desc">Full RoboParts entity export (708 entities)</div>
+      <ul class="plan-features">
+        <li>All 708 entities (JSON)</li>
+        <li>source_tier / confidence / quarantine flags</li>
+        <li>Compatibility dimensions + OpenAPI spec</li>
+        <li>6 months of updates</li>
+      </ul>
+      <button class="cta-btn cta-secondary" onclick="buyDataPack()">Buy Data Pack</button>
+    </div>
+    <div class="plan popular">
+      <div class="plan-name">Core + OSS Bundle</div>
+      <div class="plan-price">¥399<span> one-time</span></div>
+      <div class="plan-desc">Core dataset + open-source robot layer</div>
+      <ul class="plan-features">
+        <li>708 entities + 325 OSS components (6 robots)</li>
+        <li>URDF / BOM normalized mappings</li>
+        <li>All OpenAPI specs</li>
+        <li>12 months of updates</li>
+      </ul>
+      <button class="cta-btn cta-primary" onclick="buyFullBundle()">Buy Full Bundle</button>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>⚡ Quick Start</h2>
+  <div class="code-block">
+    <span class="comment"># 1) Get a free API key (instant, 100 credits, no approval)</span><br>
+    curl -X POST https://roboparts.cc/api/register <br>
+    &nbsp;&nbsp;-H "Content-Type: application/json" <br>
+    &nbsp;&nbsp;-d '{"email":"you@example.com"}'
+  </div>
+  <div class="code-block">
+    <span class="comment"># 2) Call the API (header or ?key= both work)</span><br>
+    curl -H "Authorization: Bearer gtk_YOUR_KEY" <br>
+    &nbsp;&nbsp;https://roboparts.cc/api/data.json
+  </div>
+  <div class="code-block">
+    <span class="comment"># Search entities</span><br>
+    curl -H "Authorization: Bearer gtk_YOUR_KEY" <br>
+    &nbsp;&nbsp;"https://roboparts.cc/api/entities.json?q=keyword"
+  </div>
+</div>
+
+<div class="section">
+  <h2>❓ FAQ</h2>
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">How does the credit system work? <span>▼</span></div>
+    <div class="faq-a">Credits are the universal currency for API calls: <strong>1 credit = 1 API call</strong>. Pay once and credits are added to your account — they never expire and there are no monthly fees. All plans are priced and settled in CNY (¥) via WeChat Pay / Alipay; any USD figure shown is an indicative conversion, not a separate SKU.</div>
+  </div>
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">1 积分 = 1 次 API 调用？积分会过期吗？ <span>▼</span></div>
+    <div class="faq-a">是的，<strong>1 积分 = 1 次 API 调用</strong>。<strong>积分永久有效，无月费</strong>，不按月订阅。一次性付费，用完为止。三档统一为：Starter 100 积分 ¥9、Pro 500 积分 ¥29、Lifetime 无限 ¥199（均以人民币结算）。</div>
+  </div>
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">What counts as an API call? <span>▼</span></div>
+    <div class="faq-a">Each HTTP request to any /api/ endpoint counts as one call and consumes 1 credit. A single /api/data.json request returns all data in one call.</div>
+  </div>
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Do you offer monthly subscriptions? <span>▼</span></div>
+    <div class="faq-a">No. We use a one-time credit model — pay once and credits never expire. No recurring charges, no monthly fees. Visit <a href="/credits">credits</a> to top up.</div>
+  </div>
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">Can I use the data commercially? <span>▼</span></div>
+    <div class="faq-a">Free sign-up credits are for personal/educational use. Pro and Lifetime plans include a commercial use license. Data packages include commercial rights.</div>
+  </div>
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">How often is the data updated? <span>▼</span></div>
+    <div class="faq-a">Continuously, not on a fixed schedule. Every response carries <code>meta.last_updated</code> and <code>meta.total_entities</code> so you can detect changes yourself; the OSS layer additionally exposes its own generation timestamp at <code>/api/oss?stats=1</code>. There is no push/webhook notification for data updates yet — poll <code>meta.last_updated</code> instead.</div>
+  </div>
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">What payment methods do you accept? <span>▼</span></div>
+    <div class="faq-a">WeChat Pay and Alipay (QR code, CNY settlement) — this is currently the <strong>only</strong> self-serve checkout. We do <strong>not</strong> accept credit cards, PayPal or crypto at the moment. If you are outside China and cannot use WeChat/Alipay, email <a href="mailto:61960005@qq.com">61960005@qq.com</a> and we will issue the credits manually against a bank transfer — we would rather tell you this up front than send you to a checkout that fails.</div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>RoboParts · <a href="https://roboparts.cc">roboparts.cc</a> · 仿生机器人零部件兼容性平台</p>
+  <p style="margin-top:8px"><a href="/api-pricing">Pricing</a> · <a href="/credits">Buy Credits</a> · <a href="/#api-access">Get API Key</a> · <a href="mailto:61960005@qq.com">Contact</a></p>
+</div>
+
+<script>
+function signUpFree(){window.location.href='/#api-access'}
+function buyCredits(plan){window.location.href='/credits?plan='+plan}
+// Data Pack / Full Bundle 目前无自助 SKU（后端 /api/payment/create 仅支持 starter|pro|lifetime），
+// 走人工开通，避免把用户导向不存在的结算流程。
+function buyDataPack(){window.location.href='mailto:61960005@qq.com?subject=RoboParts%20Core%20Dataset%20(%C2%A5199)'}
+function buyFullBundle(){window.location.href='mailto:61960005@qq.com?subject=RoboParts%20Core%2BOSS%20Bundle%20(%C2%A5399)'}
+</script>
+</body></html>

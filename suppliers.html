@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>供应商中心 — RoboParts 仿生机器人生态平台</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="RoboParts 供应商入驻、供应商目录与询价中心，连接人形机器人零部件供应商与采购方">
+<link rel="canonical" href="https://roboparts.cc/suppliers">
+<style>
+:root{
+  --bg:#0a0e17;
+  --card:#111827;
+  --border:#1e2d4a;
+  --text:#e2e8f0;
+  --accent:#06b6d4;
+  --accent-hover:#22d3ee;
+  --muted:#94a3b8;
+  --dim:#64748b;
+  --success:#10b981;
+  --error:#ef4444;
+  --warning:#f59e0b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+
+/* ========== 顶部导航 ========== */
+.navbar{position:sticky;top:0;z-index:100;background:rgba(10,14,23,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.navbar .nav-inner{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.navbar .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;color:var(--text);text-decoration:none}
+.navbar .brand .logo{width:28px;height:28px;background:linear-gradient(135deg,var(--accent),#0891b2);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#000;font-weight:800;font-size:.95rem}
+.navbar .brand .accent{color:var(--accent)}
+.navbar .nav-links{display:flex;align-items:center;gap:18px}
+.navbar .nav-links a{color:var(--muted);text-decoration:none;font-size:.88rem;transition:color .2s}
+.navbar .nav-links a:hover{color:var(--accent)}
+.navbar .nav-links .back-home{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:8px;font-size:.82rem}
+.navbar .nav-links .back-home:hover{border-color:var(--accent);color:var(--accent)}
+
+.container{max-width:1100px;margin:0 auto;padding:20px}
+
+/* ========== Hero ========== */
+.hero{text-align:center;padding:36px 20px 24px}
+.hero h1{font-size:2rem;color:var(--accent);margin-bottom:8px}
+.hero p{color:var(--muted);font-size:1.02rem;max-width:680px;margin:0 auto}
+.hero .stats{display:flex;gap:24px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.hero .stat-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 20px;min-width:120px}
+.hero .stat-item .num{font-size:1.4rem;font-weight:800;color:var(--accent)}
+.hero .stat-item .label{font-size:.78rem;color:var(--dim)}
+
+/* ========== Tabs ========== */
+.tabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:6px;margin:24px 0;flex-wrap:wrap}
+.tab-btn{flex:1;min-width:120px;padding:12px 18px;background:transparent;border:none;color:var(--muted);font-size:.92rem;font-weight:600;cursor:pointer;border-radius:8px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.tab-btn:hover{color:var(--text);background:rgba(6,182,212,0.06)}
+.tab-btn.active{background:var(--accent);color:#000}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ========== 卡片 / 表单 ========== */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin:20px 0}
+.card h2{font-size:1.3rem;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.card .subtitle{color:var(--muted);font-size:.88rem;margin-bottom:24px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:.85rem;font-weight:600;color:var(--text)}
+.form-group label .required{color:var(--error);margin-left:2px}
+.form-group label .optional{color:var(--dim);font-weight:400;font-size:.78rem;margin-left:6px}
+.form-group input,.form-group textarea,.form-group select{
+  padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-size:.9rem;font-family:inherit;transition:border-color .2s;
+}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{
+  outline:none;border-color:var(--accent)
+}
+.form-group input::placeholder,.form-group textarea::placeholder{color:var(--dim)}
+.form-group textarea{resize:vertical;min-height:90px}
+.form-group .hint{font-size:.76rem;color:var(--dim)}
+.form-group .error-msg{font-size:.76rem;color:var(--error);display:none}
+.form-group.has-error input,.form-group.has-error textarea,.form-group.has-error select{border-color:var(--error)}
+.form-group.has-error .error-msg{display:block}
+
+/* 品类多选 */
+.category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:4px}
+.category-chip{position:relative;display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;font-size:.85rem;user-select:none}
+.category-chip:hover{border-color:var(--accent)}
+.category-chip input{position:absolute;opacity:0;pointer-events:none}
+.category-chip .check{width:16px;height:16px;border:1.5px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.category-chip input:checked ~ .check{background:var(--accent);border-color:var(--accent)}
+.category-chip input:checked ~ .check::after{content:'✓';color:#000;font-size:.7rem;font-weight:800}
+.category-chip:has(input:checked){border-color:var(--accent);background:rgba(6,182,212,0.08)}
+
+/* checkbox 行 */
+.checkbox-row{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;cursor:pointer}
+.checkbox-row input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+.checkbox-row .cb-label{font-size:.9rem}
+.checkbox-row .cb-desc{font-size:.78rem;color:var(--dim);margin-left:auto}
+
+/* 按钮 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 28px;border-radius:10px;border:none;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary:disabled{background:var(--border);color:var(--dim);cursor:not-allowed}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-block{display:block;width:100%}
+.btn-sm{padding:8px 16px;font-size:.82rem}
+
+/* ========== 成功提示框 ========== */
+.result-box{margin-top:20px;padding:20px;border-radius:12px;display:none}
+.result-box.show{display:block}
+.result-box.success{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3)}
+.result-box.error{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3)}
+.result-box .result-title{font-weight:700;margin-bottom:8px;font-size:1.05rem}
+.result-box.success .result-title{color:var(--success)}
+.result-box.error .result-title{color:var(--error)}
+.result-box .supplier-id-box{margin-top:12px;padding:12px 16px;background:var(--bg);border:1px dashed var(--accent);border-radius:8px;font-family:'JetBrains Mono',Consolas,monospace;font-size:1.05rem;color:var(--accent);text-align:center;letter-spacing:1px}
+.result-box .result-detail{font-size:.85rem;color:var(--muted);margin-top:8px}
+.result-box .btn{margin-top:12px}
+
+/* ========== 供应商目录 ========== */
+.directory-toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
+.directory-toolbar .filter-label{font-size:.88rem;color:var(--muted);font-weight:600}
+.directory-toolbar select{padding:9px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.85rem;cursor:pointer}
+.directory-toolbar select:focus{outline:none;border-color:var(--accent)}
+.directory-toolbar .search-box{flex:1;min-width:200px;padding:9px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.85rem}
+.directory-toolbar .search-box:focus{outline:none;border-color:var(--accent)}
+.directory-toolbar .total-info{font-size:.82rem;color:var(--dim)}
+
+.supplier-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.supplier-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;transition:all .3s;display:flex;flex-direction:column}
+.supplier-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.supplier-card .sc-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
+.supplier-card .sc-name{font-size:1.05rem;font-weight:700;color:var(--text)}
+.supplier-card .sc-status{font-size:.7rem;padding:3px 10px;border-radius:10px;font-weight:600;white-space:nowrap}
+.supplier-card .sc-status.approved{background:rgba(16,185,129,0.15);color:var(--success)}
+.supplier-card .sc-status.pending{background:rgba(245,158,11,0.15);color:var(--warning)}
+.supplier-card .sc-cats{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.supplier-card .sc-cat{font-size:.72rem;padding:3px 10px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.25);color:var(--accent);border-radius:10px}
+.supplier-card .sc-desc{font-size:.82rem;color:var(--muted);margin:8px 0;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.supplier-card .sc-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:.76rem;color:var(--dim);margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.supplier-card .sc-meta span{display:inline-flex;align-items:center;gap:4px}
+.supplier-card .sc-ros{display:inline-flex;align-items:center;gap:4px;color:var(--success);font-size:.76rem}
+.supplier-card .sc-actions{margin-top:12px;display:flex;gap:8px}
+.supplier-card .sc-actions .btn{flex:1}
+
+/* 空状态 */
+.empty-state{text-align:center;padding:60px 20px;color:var(--dim)}
+.empty-state .icon{font-size:3rem;margin-bottom:12px;opacity:.5}
+.empty-state .title{font-size:1.1rem;color:var(--muted);margin-bottom:6px}
+.empty-state .desc{font-size:.85rem}
+.empty-state .btn{margin-top:16px;display:inline-flex}
+
+/* 加载状态 */
+.loading-state{text-align:center;padding:40px;color:var(--muted)}
+.loading-state .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* 分页 */
+.pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:24px;flex-wrap:wrap}
+.pagination button{padding:8px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);cursor:pointer;font-size:.85rem;transition:all .2s}
+.pagination button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.pagination button:disabled{opacity:.4;cursor:not-allowed}
+.pagination button.active{background:var(--accent);color:#000;border-color:var(--accent)}
+.pagination .page-info{font-size:.82rem;color:var(--dim);padding:0 10px}
+
+/* ========== 询价中心 ========== */
+.inquiry-layout{display:grid;grid-template-columns:1fr;gap:20px}
+.inquiry-info{background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.25);border-radius:12px;padding:14px 18px;font-size:.85rem;color:var(--muted);display:flex;gap:10px;align-items:flex-start}
+.inquiry-info .info-icon{color:var(--accent);font-size:1.1rem;flex-shrink:0}
+.inquiry-info strong{color:var(--text)}
+
+/* ========== Toast 提示 ========== */
+.toast-container{position:fixed;top:80px;right:20px;z-index:2000;display:flex;flex-direction:column;gap:10px;max-width:360px}
+.toast{padding:14px 18px;border-radius:10px;font-size:.88rem;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.3);animation:toastIn .3s ease;border-left:4px solid}
+.toast.success{background:#111827;border-left-color:var(--success);color:var(--success)}
+.toast.error{background:#111827;border-left-color:var(--error);color:var(--error)}
+.toast.info{background:#111827;border-left-color:var(--accent);color:var(--accent)}
+.toast.warning{background:#111827;border-left-color:var(--warning);color:var(--warning)}
+.toast .toast-icon{font-size:1.1rem;flex-shrink:0}
+.toast .toast-msg{flex:1;color:var(--text)}
+.toast.fade-out{animation:toastOut .3s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(40px)}}
+
+/* ========== 页脚 ========== */
+footer{text-align:center;padding:40px 20px;color:var(--dim);font-size:.8rem;border-top:1px solid var(--border);margin-top:40px}
+footer a{color:var(--accent);text-decoration:none}
+
+/* ========== 响应式 ========== */
+@media(max-width:768px){
+  .form-grid{grid-template-columns:1fr}
+  .hero h1{font-size:1.5rem}
+  .navbar .nav-links{gap:10px}
+  .navbar .nav-links a{font-size:.8rem}
+  .tab-btn{font-size:.82rem;padding:10px 12px}
+  .card{padding:20px}
+  .supplier-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== 顶部导航 ========== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="/" class="brand">
+      <span class="logo">R</span>
+      Robo<span class="accent">Parts</span>
+    </a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/#api-access">API 文档</a>
+      <a href="/supplier-admin">管理后台</a>
+      <a href="/credits">积分充值</a>
+      <a href="/" class="back-home">← 返回首页</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== Hero ========== -->
+<div class="hero">
+  <h1>供应商中心</h1>
+  <p>入驻 RoboParts 供应商目录，触达人形机器人产业链采购方。浏览供应商目录，发起询价，高效完成零部件采购。</p>
+  <div class="stats">
+    <div class="stat-item">
+      <div class="num" id="statTotal">-</div>
+      <div class="label">入驻供应商</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">7</div>
+      <div class="label">覆盖品类</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">450+</div>
+      <div class="label">零部件数据</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ========== Tabs ========== -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('register')">📋 供应商入驻</button>
+    <button class="tab-btn" onclick="switchTab('directory')">🗂️ 供应商目录</button>
+    <button class="tab-btn" onclick="switchTab('inquiry')">💬 询价中心</button>
+    <button class="tab-btn" onclick="switchTab('myinquiry')">📤 我的询价</button>
+  </div>
+
+  <!-- ========== Tab 1: 供应商入驻 ========== -->
+  <div class="tab-panel active" id="tab-register">
+    <div class="card">
+      <h2>📋 供应商入驻申请</h2>
+      <p class="subtitle">填写以下信息提交入驻申请，审核通过后即可出现在供应商目录并接收询价。带 <span style="color:var(--error)">*</span> 为必填项。</p>
+
+      <form id="supplierForm" onsubmit="return false;">
+        <div class="form-grid">
+
+          <!-- 公司名称 -->
+          <div class="form-group">
+            <label>公司名称 <span class="required">*</span></label>
+            <input type="text" id="company_name" placeholder="如：深圳机器人配件有限公司" maxlength="100" />
+            <span class="error-msg" id="err-company_name">请填写公司名称</span>
+          </div>
+
+          <!-- 联系人姓名 -->
+          <div class="form-group">
+            <label>联系人姓名 <span class="required">*</span></label>
+            <input type="text" id="contact_name" placeholder="如：张三" maxlength="50" />
+            <span class="error-msg" id="err-contact_name">请填写联系人姓名</span>
+          </div>
+
+          <!-- 联系邮箱 -->
+          <div class="form-group">
+            <label>联系邮箱 <span class="required">*</span></label>
+            <input type="email" id="contact_email" placeholder="如：zhangsan@robotparts.cn" />
+            <span class="error-msg" id="err-contact_email">请填写有效的邮箱地址</span>
+          </div>
+
+          <!-- 联系电话 -->
+          <div class="form-group">
+            <label>联系电话 <span class="optional">选填</span></label>
+            <input type="text" id="contact_phone" placeholder="如：13800138000" />
+          </div>
+
+          <!-- 公司网站 -->
+          <div class="form-group">
+            <label>公司网站 <span class="optional">选填</span></label>
+            <input type="url" id="company_website" placeholder="https://example.com" />
+            <span class="error-msg" id="err-company_website">请填写有效的网址（以 http:// 或 https:// 开头）</span>
+          </div>
+
+          <!-- 年营收范围 -->
+          <div class="form-group">
+            <label>年营收范围 <span class="optional">选填</span></label>
+            <select id="annual_revenue_range">
+              <option value="">请选择</option>
+              <option value="100万以下">100 万以下</option>
+              <option value="100-1000万">100-1000 万</option>
+              <option value="1000-5000万">1000-5000 万</option>
+              <option value="5000万以上">5000 万以上</option>
+            </select>
+          </div>
+
+          <!-- 产品数量 -->
+          <div class="form-group">
+            <label>产品数量 <span class="optional">选填</span></label>
+            <input type="number" id="product_count" placeholder="如：50" min="0" max="1000000" />
+            <span class="hint">您公司目前可供应的零部件数量</span>
+          </div>
+
+          <!-- 产品品类（多选） -->
+          <div class="form-group full">
+            <label>产品品类 <span class="required">*</span> <span class="optional">可多选</span></label>
+            <div class="category-grid" id="categoryGrid">
+              <label class="category-chip">
+                <input type="checkbox" value="actuators" />
+                <span class="check"></span>
+                <span>执行器</span>
+              </label>
+              <label class="category-chip">
+                <input type="checkbox" value="sensors" />
+                <span class="check"></span>
+                <span>传感器</span>
+              </label>
+              <label class="category-chip">
+                <input type="checkbox" value="chips" />
+                <span class="check"></span>
+                <span>芯片</span>
+              </label>
+              <label class="category-chip">
+                <input type="checkbox" value="controllers" />
+                <span class="check"></span>
+                <span>控制器</span>
+              </label>
+              <label class="category-chip">
+                <input type="checkbox" value="protocols" />
+                <span class="check"></span>
+                <span>通信协议</span>
+              </label>
+              <label class="category-chip">
+                <input type="checkbox" value="structures" />
+                <span class="check"></span>
+                <span>结构件</span>
+              </label>
+              <label class="category-chip">
+                <input type="checkbox" value="3d_printing" />
+                <span class="check"></span>
+                <span>3D 打印服务</span>
+              </label>
+            </div>
+            <span class="error-msg" id="err-product_categories">请至少选择一个产品品类</span>
+          </div>
+
+          <!-- ROS 支持 -->
+          <div class="form-group full">
+            <label class="checkbox-row">
+              <input type="checkbox" id="has_ros_support" />
+              <span class="cb-label">支持 ROS（机器人操作系统）</span>
+              <span class="cb-desc">提供 ROS 驱动或集成支持</span>
+            </label>
+          </div>
+
+          <!-- 公司描述 -->
+          <div class="form-group full">
+            <label>公司描述 <span class="optional">选填，最多 500 字</span></label>
+            <textarea id="description" placeholder="简要介绍公司主营业务、技术优势、服务案例等..." maxlength="500" oninput="updateCharCount(this,'descCount',500)"></textarea>
+            <span class="hint"><span id="descCount">0</span> / 500 字</span>
+          </div>
+
+        </div>
+
+        <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn btn-primary" id="submitBtn" onclick="submitSupplier()">
+            提交入驻申请
+          </button>
+          <button class="btn btn-outline" type="button" onclick="resetForm()">重置表单</button>
+        </div>
+      </form>
+
+      <!-- 提交结果 -->
+      <div class="result-box" id="registerResult"></div>
+    </div>
+  </div>
+
+  <!-- ========== Tab 2: 供应商目录 ========== -->
+  <div class="tab-panel" id="tab-directory">
+    <div class="card">
+      <h2>🗂️ 供应商目录</h2>
+      <p class="subtitle">浏览已入驻 RoboParts 平台的零部件供应商。联系方式需登录后查看。</p>
+
+      <div class="directory-toolbar">
+        <span class="filter-label">按品类筛选：</span>
+        <select id="categoryFilter" onchange="loadSuppliers(this.value)">
+          <option value="">全部品类</option>
+          <option value="actuators">执行器</option>
+          <option value="sensors">传感器</option>
+          <option value="chips">芯片</option>
+          <option value="controllers">控制器</option>
+          <option value="protocols">通信协议</option>
+          <option value="structures">结构件</option>
+          <option value="3d_printing">3D 打印服务</option>
+        </select>
+        <input type="text" class="search-box" id="searchBox" placeholder="搜索公司名称或描述..." oninput="filterSuppliersLocal()" />
+        <span class="total-info" id="totalInfo"></span>
+      </div>
+
+      <div id="supplierListContainer">
+        <div class="loading-state" id="dirLoading" style="display:none">
+          <div class="spinner"></div>
+          <p>正在加载供应商列表...</p>
+        </div>
+        <div class="supplier-grid" id="supplierGrid"></div>
+        <div class="empty-state" id="dirEmpty" style="display:none">
+          <div class="icon">📭</div>
+          <div class="title">暂无供应商</div>
+          <div class="desc">该品类下还没有供应商入驻，成为第一个入驻的供应商吧</div>
+          <button class="btn btn-primary btn-sm" onclick="switchTab('register')">立即入驻</button>
+        </div>
+      </div>
+
+      <div class="pagination" id="dirPagination"></div>
+    </div>
+  </div>
+
+  <!-- ========== Tab 3: 询价中心 ========== -->
+  <div class="tab-panel" id="tab-inquiry">
+    <div class="card">
+      <h2>💬 询价中心</h2>
+      <p class="subtitle">向供应商发起采购询价，每次询价消耗 1 积分。供应商将在 1-3 个工作日内回复报价。</p>
+
+      <div class="inquiry-info">
+        <span class="info-icon">ℹ️</span>
+        <div>
+          <strong>询价说明：</strong>选择目标供应商，填写采购需求并提交。询价单号将作为您与供应商沟通的凭证。需要 API Key（<code>gtk_</code> 开头），<a href="/#api-access" style="color:var(--accent)">免费注册</a> 即赠 100 积分。
+        </div>
+      </div>
+
+      <form id="inquiryForm" onsubmit="return false;" style="margin-top:20px">
+        <div class="form-grid">
+
+          <!-- API Key -->
+          <div class="form-group full">
+            <label>API Key <span class="required">*</span></label>
+            <input type="text" id="inquiry_api_key" placeholder="gtk_xxxxxxxx" style="font-family:'JetBrains Mono',Consolas,monospace" />
+            <span class="hint">用于身份验证与积分扣减，<a href="/#api-access" style="color:var(--accent)">免费获取</a></span>
+            <span class="error-msg" id="err-inquiry_api_key">请输入有效的 API Key（gtk_ 开头）</span>
+          </div>
+
+          <!-- 供应商选择 -->
+          <div class="form-group full">
+            <label>选择供应商 <span class="required">*</span></label>
+            <select id="inquiry_supplier_id">
+              <option value="">请选择供应商（需先有供应商入驻）</option>
+            </select>
+            <span class="error-msg" id="err-inquiry_supplier_id">请选择一个供应商</span>
+            <span class="hint" id="supplierHint" style="display:none"></span>
+          </div>
+
+          <!-- 零部件 ID -->
+          <div class="form-group full">
+            <label>零部件 ID <span class="optional">选填，多个用逗号分隔</span></label>
+            <input type="text" id="inquiry_component_ids" placeholder="如：ACT-001, ACT-002, SEN-003" />
+            <span class="hint">可在 <a href="/#api-access" style="color:var(--accent)">API 文档</a> 或 <a href="/data-hub" style="color:var(--accent)">数据中心</a> 查询零部件 ID</span>
+          </div>
+
+          <!-- 采购数量 -->
+          <div class="form-group">
+            <label>采购数量 <span class="optional">选填</span></label>
+            <input type="number" id="inquiry_quantity" placeholder="如：10" min="1" max="1000000" value="1" />
+          </div>
+
+          <!-- 期望交付日期 -->
+          <div class="form-group">
+            <label>期望交付日期 <span class="optional">选填</span></label>
+            <input type="date" id="inquiry_delivery_date" />
+          </div>
+
+          <!-- 项目名称 -->
+          <div class="form-group full">
+            <label>项目名称 <span class="optional">选填</span></label>
+            <input type="text" id="inquiry_project_name" placeholder="如：人形机器人 v1" maxlength="100" />
+          </div>
+
+          <!-- 询价留言 -->
+          <div class="form-group full">
+            <label>询价留言 <span class="optional">选填，最多 1000 字</span></label>
+            <textarea id="inquiry_message" placeholder="如：需要批量采购，请提供报价与交期。可附上技术要求..." maxlength="1000" oninput="updateCharCount(this,'msgCount',1000)"></textarea>
+            <span class="hint"><span id="msgCount">0</span> / 1000 字</span>
+          </div>
+
+        </div>
+
+        <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <button class="btn btn-primary" id="inquiryBtn" onclick="submitInquiry()">
+            提交询价
+          </button>
+          <span style="font-size:.82rem;color:var(--dim)">本次询价将消耗 <strong style="color:var(--accent)">1 积分</strong></span>
+        </div>
+      </form>
+
+      <!-- 询价结果 -->
+      <div class="result-box" id="inquiryResult"></div>
+    </div>
+  </div>
+
+  <!-- ========== Tab 4: 我的询价 ========== -->
+  <div class="tab-panel" id="tab-myinquiry">
+    <div class="card">
+      <h2>📤 我的询价</h2>
+      <p class="subtitle">查看您已提交的询价单状态，输入供应商 ID 可查询对应的询价记录。</p>
+
+      <!-- 供应商 ID 输入 -->
+      <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:24px">
+        <div class="form-group" style="flex:1;min-width:260px">
+          <label>供应商 ID <span class="optional">选填，用于筛选</span></label>
+          <input type="text" id="myInquiry_supplier_id" placeholder="如：SUP-xxxxx" style="font-family:'JetBrains Mono',Consolas,monospace" />
+          <span class="hint">输入您的供应商 ID 以筛选该供应商相关的询价单</span>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="saveMySupplierId()">保存 ID</button>
+      </div>
+
+      <!-- 当前保存的供应商 ID -->
+      <div class="inquiry-info" style="margin-bottom:24px" id="savedSupplierInfo" style="display:none">
+        <span class="info-icon">📌</span>
+        <div>
+          当前绑定供应商 ID：<strong id="displaySupplierId">-</strong>
+          <span style="margin-left:8px;font-size:.8rem;color:var(--dim)">（保存后刷新页面自动填入）</span>
+        </div>
+      </div>
+
+      <!-- 询价列表占位表格 -->
+      <div class="table-wrap" style="border-radius:12px;border:1px solid var(--border);overflow:hidden">
+        <table class="history-table" style="width:100%;border-collapse:collapse;font-size:.85rem">
+          <thead>
+            <tr>
+              <th style="padding:12px 14px;text-align:left;font-weight:600;font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);background:var(--bg)">询价单号</th>
+              <th style="padding:12px 14px;text-align:left;font-weight:600;font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);background:var(--bg)">供应商</th>
+              <th style="padding:12px 14px;text-align:left;font-weight:600;font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);background:var(--bg)">状态</th>
+              <th style="padding:12px 14px;text-align:left;font-weight:600;font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);background:var(--bg)">时间</th>
+            </tr>
+          </thead>
+          <tbody id="myInquiryBody">
+            <tr>
+              <td colspan="4" style="padding:40px 14px;text-align:center;color:var(--dim)">
+                <div style="font-size:1.2rem;margin-bottom:8px;color:var(--muted)">询价追踪功能即将上线</div>
+                <div style="font-size:.85rem">此功能将支持查看您提交的所有询价单状态（待报价、已报价、已回复等）。<br>目前您可以通过 <a href="/suppliers.html" onclick="switchTab('inquiry')" style="color:var(--accent)">询价中心</a> 提交新询价，提交后保存的询价单号可用于跟踪。</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top:16px;padding:14px 18px;border-radius:10px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.25);font-size:.85rem;color:var(--muted)">
+        <strong style="color:var(--text)">提示：</strong>提交询价后会返回询价单号（INQ-xxxxx），请妥善保存。后续版本将支持通过 API Key + 询价单号实时查询报价状态。
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== Toast 容器 ========== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ========== 页脚 ========== -->
+<footer>
+  <p>© 2026 RoboParts · 仿生机器人生态平台 · <a href="/">返回首页</a></p>
+  <p style="margin-top:8px">供应商合作: <a href="mailto:suppliers@roboparts.cc">suppliers@roboparts.cc</a> · 客服: <a href="mailto:support@roboparts.cc">support@roboparts.cc</a></p>
+</footer>
+
+<script>
+// ============ 品类中文映射 ============
+const CATEGORY_LABELS = {
+  actuators: '执行器',
+  sensors: '传感器',
+  chips: '芯片',
+  controllers: '控制器',
+  protocols: '通信协议',
+  structures: '结构件',
+  '3d_printing': '3D打印服务',
+};
+
+// 缓存的供应商列表（供本地筛选与询价下拉使用）
+let cachedSuppliers = [];
+let currentDirPage = 1;
+const DIR_PAGE_SIZE = 12;
+
+// ============ 保存我的供应商 ID ============
+function saveMySupplierId() {
+  const sid = document.getElementById('myInquiry_supplier_id').value.trim();
+  if (!sid) {
+    showToast('请输入供应商 ID', 'error');
+    return;
+  }
+  localStorage.setItem('roboparts_supplier_id', sid);
+  document.getElementById('displaySupplierId').textContent = sid;
+  document.getElementById('savedSupplierInfo').style.display = 'flex';
+  showToast('供应商 ID 已保存：' + sid, 'success');
+}
+
+// ============ Tab 切换 ============
+function switchTab(tabId) {
+  // 切换按钮高亮
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  // 通过 onclick 匹配当前 tabId
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'" + tabId + "'")) {
+      btn.classList.add('active');
+    }
+  });
+
+  // 切换面板
+  document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+  const target = document.getElementById('tab-' + tabId);
+  if (target) target.classList.add('active');
+
+  // 懒加载：进入目录或询价 Tab 时自动加载数据
+  if (tabId === 'directory' && cachedSuppliers.length === 0) {
+    loadSuppliers('');
+  }
+  if (tabId === 'inquiry') {
+    // 确保供应商下拉框有数据
+    if (cachedSuppliers.length === 0) {
+      loadSuppliers('').then(() => populateInquirySupplierSelect());
+    } else {
+      populateInquirySupplierSelect();
+    }
+  }
+
+  // 滚动到 Tab 顶部
+  window.scrollTo({ top: document.querySelector('.tabs').offsetTop - 80, behavior: 'smooth' });
+}
+
+// ============ Toast 提示 ============
+function showToast(message, type) {
+  type = type || 'info';
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+
+  const icons = { success: '✓', error: '✕', info: 'ℹ', warning: '⚠' };
+  toast.innerHTML = '<span class="toast-icon">' + (icons[type] || 'ℹ') + '</span><span class="toast-msg">' + escapeHtml(message) + '</span>';
+
+  container.appendChild(toast);
+
+  // 自动消失
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
+
+// ============ HTML 转义 ============
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// ============ 字数统计 ============
+function updateCharCount(textarea, countId, max) {
+  const count = textarea.value.length;
+  const el = document.getElementById(countId);
+  if (el) {
+    el.textContent = count;
+    el.style.color = count > max * 0.9 ? 'var(--warning)' : '';
+  }
+}
+
+// ============ 表单校验辅助 ============
+function setFieldError(fieldId, hasError) {
+  const group = document.getElementById(fieldId).closest('.form-group');
+  if (group) {
+    if (hasError) group.classList.add('has-error');
+    else group.classList.remove('has-error');
+  }
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isValidUrl(url) {
+  if (!url) return true; // 选填
+  return /^https?:\/\/[^\s]+$/.test(url);
+}
+
+// ============ 提交供应商入驻 ============
+async function submitSupplier() {
+  // 收集表单数据
+  const companyName = document.getElementById('company_name').value.trim();
+  const contactName = document.getElementById('contact_name').value.trim();
+  const contactEmail = document.getElementById('contact_email').value.trim();
+  const contactPhone = document.getElementById('contact_phone').value.trim();
+  const companyWebsite = document.getElementById('company_website').value.trim();
+  const productCount = document.getElementById('product_count').value;
+  const annualRevenueRange = document.getElementById('annual_revenue_range').value;
+  const description = document.getElementById('description').value.trim();
+  const hasRosSupport = document.getElementById('has_ros_support').checked;
+
+  // 收集选中的品类
+  const selectedCategories = Array.from(document.querySelectorAll('#categoryGrid input:checked'))
+    .map(cb => cb.value);
+
+  // ========== 前端校验 ==========
+  let hasError = false;
+
+  // 公司名必填
+  if (!companyName) { setFieldError('company_name', true); hasError = true; }
+  else setFieldError('company_name', false);
+
+  // 联系人必填
+  if (!contactName) { setFieldError('contact_name', true); hasError = true; }
+  else setFieldError('contact_name', false);
+
+  // 邮箱必填 + 格式校验
+  if (!contactEmail || !isValidEmail(contactEmail)) { setFieldError('contact_email', true); hasError = true; }
+  else setFieldError('contact_email', false);
+
+  // 网站格式校验（选填）
+  if (!isValidUrl(companyWebsite)) { setFieldError('company_website', true); hasError = true; }
+  else setFieldError('company_website', false);
+
+  // 品类必填
+  if (selectedCategories.length === 0) {
+    document.getElementById('err-product_categories').style.display = 'block';
+    hasError = true;
+  } else {
+    document.getElementById('err-product_categories').style.display = 'none';
+  }
+
+  if (hasError) {
+    showToast('请检查表单中标红的必填项', 'error');
+    return;
+  }
+
+  // ========== 构造请求体 ==========
+  const payload = {
+    company_name: companyName,
+    contact_name: contactName,
+    contact_email: contactEmail,
+    contact_phone: contactPhone,
+    company_website: companyWebsite,
+    product_categories: selectedCategories,
+    description: description,
+    has_ros_support: hasRosSupport,
+    annual_revenue_range: annualRevenueRange,
+  };
+  if (productCount !== '') payload.product_count = Number(productCount);
+
+  // ========== 提交 ============
+  const btn = document.getElementById('submitBtn');
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '提交中...';
+
+  const resultBox = document.getElementById('registerResult');
+  resultBox.className = 'result-box';
+
+  try {
+    const res = await fetch('/api/suppliers/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      // 成功
+      resultBox.className = 'result-box show success';
+      resultBox.innerHTML = `
+        <div class="result-title">✓ 入驻申请提交成功</div>
+        <div class="result-detail">${escapeHtml(data.message || '我们将在 1-3 个工作日内完成审核。')}</div>
+        <div class="supplier-id-box">${escapeHtml(data.supplier_id)}</div>
+        <div class="result-detail" style="margin-top:10px">审核状态：<strong style="color:var(--warning)">待审核 (pending)</strong> · 请妥善保存此供应商 ID</div>
+        <button class="btn btn-outline btn-sm" onclick="copySupplierId('${escapeHtml(data.supplier_id)}')">复制供应商 ID</button>
+        <button class="btn btn-outline btn-sm" onclick="switchTab('directory')">查看供应商目录</button>
+      `;
+      showToast('入驻申请提交成功', 'success');
+      resetForm();
+      // 刷新目录缓存
+      cachedSuppliers = [];
+    } else {
+      // 失败
+      resultBox.className = 'result-box show error';
+      let errMsg = data.error || '提交失败';
+      if (data.details && Array.isArray(data.details)) {
+        errMsg += '：' + data.details.join('；');
+      }
+      if (data.existing_supplier_id) {
+        errMsg += '（已存在的供应商 ID：' + data.existing_supplier_id + '）';
+      }
+      resultBox.innerHTML = `
+        <div class="result-title">✕ 提交失败</div>
+        <div class="result-detail">${escapeHtml(errMsg)}</div>
+      `;
+      showToast(data.error || '提交失败', 'error');
+    }
+  } catch (e) {
+    resultBox.className = 'result-box show error';
+    resultBox.innerHTML = `
+      <div class="result-title">✕ 网络错误</div>
+      <div class="result-detail">${escapeHtml(e.message)}</div>
+      <div class="result-detail" style="margin-top:6px">请检查网络连接后重试。若持续失败，请联系 support@roboparts.cc</div>
+    `;
+    showToast('网络错误，请稍后重试', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+
+// ============ 复制供应商 ID ============
+function copySupplierId(id) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(id).then(() => {
+      showToast('供应商 ID 已复制到剪贴板', 'success');
+    }).catch(() => {
+      fallbackCopy(id);
+    });
+  } else {
+    fallbackCopy(id);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    showToast('供应商 ID 已复制', 'success');
+  } catch (e) {
+    showToast('复制失败，请手动复制', 'warning');
+  }
+  document.body.removeChild(ta);
+}
+
+// ============ 重置表单 ============
+function resetForm() {
+  document.getElementById('supplierForm').reset();
+  document.querySelectorAll('#categoryGrid input:checked').forEach(cb => cb.checked = false);
+  document.querySelectorAll('.form-group.has-error').forEach(g => g.classList.remove('has-error'));
+  document.getElementById('err-product_categories').style.display = 'none';
+  document.getElementById('descCount').textContent = '0';
+}
+
+// ============ 加载供应商列表 ============
+async function loadSuppliers(category) {
+  category = category || '';
+  const grid = document.getElementById('supplierGrid');
+  const empty = document.getElementById('dirEmpty');
+  const loading = document.getElementById('dirLoading');
+  const totalInfo = document.getElementById('totalInfo');
+
+  loading.style.display = 'block';
+  grid.innerHTML = '';
+  empty.style.display = 'none';
+
+  try {
+    const params = new URLSearchParams();
+    if (category) params.set('category', category);
+    params.set('page', '1');
+    params.set('limit', '100'); // 一次性加载全部用于本地搜索
+
+    const res = await fetch('/api/suppliers/list?' + params.toString(), {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' },
+    });
+
+    const data = await res.json();
+
+    loading.style.display = 'none';
+
+    if (res.ok && data.success) {
+      cachedSuppliers = data.suppliers || [];
+      // 更新统计
+      document.getElementById('statTotal').textContent = data.total || 0;
+      currentDirPage = 1;
+      renderSupplierGrid();
+      totalInfo.textContent = '共 ' + (data.total || 0) + ' 家供应商';
+    } else {
+      grid.innerHTML = '';
+      empty.style.display = 'block';
+      empty.querySelector('.title').textContent = '加载失败';
+      empty.querySelector('.desc').textContent = data.error || '请稍后重试';
+      showToast(data.error || '加载供应商列表失败', 'error');
+    }
+  } catch (e) {
+    loading.style.display = 'none';
+    empty.style.display = 'block';
+    empty.querySelector('.title').textContent = '网络错误';
+    empty.querySelector('.desc').textContent = e.message;
+    showToast('网络错误：' + e.message, 'error');
+  }
+}
+
+// ============ 渲染供应商卡片 ============
+function renderSupplierGrid() {
+  const grid = document.getElementById('supplierGrid');
+  const empty = document.getElementById('dirEmpty');
+  const searchKeyword = document.getElementById('searchBox').value.trim().toLowerCase();
+
+  // 本地搜索过滤
+  let displayList = cachedSuppliers;
+  if (searchKeyword) {
+    displayList = cachedSuppliers.filter(s => {
+      return (s.company_name || '').toLowerCase().includes(searchKeyword) ||
+             (s.description || '').toLowerCase().includes(searchKeyword);
+    });
+  }
+
+  // 分页
+  const totalPages = Math.ceil(displayList.length / DIR_PAGE_SIZE) || 1;
+  if (currentDirPage > totalPages) currentDirPage = totalPages;
+  const start = (currentDirPage - 1) * DIR_PAGE_SIZE;
+  const pageList = displayList.slice(start, start + DIR_PAGE_SIZE);
+
+  if (pageList.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    if (searchKeyword) {
+      empty.querySelector('.title').textContent = '未找到匹配的供应商';
+      empty.querySelector('.desc').textContent = '尝试更换关键词或清除筛选条件';
+    } else {
+      empty.querySelector('.title').textContent = '暂无供应商';
+      empty.querySelector('.desc').textContent = '该品类下还没有供应商入驻，成为第一个入驻的供应商吧';
+    }
+    document.getElementById('dirPagination').innerHTML = '';
+    return;
+  }
+
+  empty.style.display = 'none';
+  grid.innerHTML = pageList.map(s => {
+    const cats = (s.product_categories || []).map(c => {
+      return '<span class="sc-cat">' + escapeHtml(CATEGORY_LABELS[c] || c) + '</span>';
+    }).join('');
+
+    const statusClass = s.review_status === 'approved' ? 'approved' : 'pending';
+    const statusText = s.review_status === 'approved' ? '已认证' : '待审核';
+
+    let metaHtml = '';
+    if (s.product_count > 0) {
+      metaHtml += '<span>📦 ' + s.product_count + ' 个产品</span>';
+    }
+    if (s.inquiry_count > 0) {
+      metaHtml += '<span>💬 ' + s.inquiry_count + ' 次询价</span>';
+    }
+    if (s.has_website) {
+      metaHtml += '<span>🌐 <a href="' + escapeHtml(s.company_website) + '" target="_blank" rel="noopener" style="color:var(--accent)">官网</a></span>';
+    }
+
+    const rosBadge = s.has_ros_support ? '<span class="sc-ros">✓ ROS 支持</span>' : '';
+
+    return `
+      <div class="supplier-card">
+        <div class="sc-header">
+          <div class="sc-name">${escapeHtml(s.company_name)}</div>
+          <span class="sc-status ${statusClass}">${statusText}</span>
+        </div>
+        <div class="sc-cats">${cats}</div>
+        <div class="sc-desc">${escapeHtml(s.description || '暂无公司介绍')}</div>
+        ${rosBadge}
+        <div class="sc-meta">
+          ${metaHtml}
+        </div>
+        <div class="sc-actions">
+          <button class="btn btn-primary btn-sm" onclick="startInquiry('${escapeHtml(s.supplier_id)}','${escapeHtml(s.company_name)}')">发起询价</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // 渲染分页
+  renderPagination(totalPages);
+}
+
+// ============ 渲染分页控件 ============
+function renderPagination(totalPages) {
+  const pag = document.getElementById('dirPagination');
+  if (totalPages <= 1) {
+    pag.innerHTML = '';
+    return;
+  }
+
+  let html = '';
+  // 上一页
+  html += `<button onclick="goDirPage(${currentDirPage - 1})" ${currentDirPage <= 1 ? 'disabled' : ''}>上一页</button>`;
+
+  // 页码（最多显示 7 个）
+  let startPage = Math.max(1, currentDirPage - 3);
+  let endPage = Math.min(totalPages, startPage + 6);
+  startPage = Math.max(1, endPage - 6);
+
+  if (startPage > 1) {
+    html += `<button onclick="goDirPage(1)">1</button>`;
+    if (startPage > 2) html += `<span class="page-info">...</span>`;
+  }
+  for (let i = startPage; i <= endPage; i++) {
+    html += `<button onclick="goDirPage(${i})" class="${i === currentDirPage ? 'active' : ''}">${i}</button>`;
+  }
+  if (endPage < totalPages) {
+    if (endPage < totalPages - 1) html += `<span class="page-info">...</span>`;
+    html += `<button onclick="goDirPage(${totalPages})">${totalPages}</button>`;
+  }
+
+  html += `<button onclick="goDirPage(${currentDirPage + 1})" ${currentDirPage >= totalPages ? 'disabled' : ''}>下一页</button>`;
+  html += `<span class="page-info">第 ${currentDirPage} / ${totalPages} 页</span>`;
+
+  pag.innerHTML = html;
+}
+
+function goDirPage(page) {
+  currentDirPage = page;
+  renderSupplierGrid();
+  // 滚动到目录顶部
+  document.getElementById('supplierGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ============ 本地搜索过滤 ============
+function filterSuppliersLocal() {
+  currentDirPage = 1;
+  renderSupplierGrid();
+  const searchKeyword = document.getElementById('searchBox').value.trim().toLowerCase();
+  let count = cachedSuppliers.length;
+  if (searchKeyword) {
+    count = cachedSuppliers.filter(s => {
+      return (s.company_name || '').toLowerCase().includes(searchKeyword) ||
+             (s.description || '').toLowerCase().includes(searchKeyword);
+    }).length;
+  }
+  document.getElementById('totalInfo').textContent = '匹配 ' + count + ' 家供应商';
+}
+
+// ============ 填充询价供应商下拉框 ============
+function populateInquirySupplierSelect() {
+  const select = document.getElementById('inquiry_supplier_id');
+  // 保留第一个 option
+  select.innerHTML = '<option value="">请选择供应商</option>';
+  if (cachedSuppliers.length === 0) {
+    select.innerHTML = '<option value="">暂无供应商，请先入驻</option>';
+    return;
+  }
+  cachedSuppliers.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s.supplier_id;
+    const cats = (s.product_categories || []).map(c => CATEGORY_LABELS[c] || c).join('、');
+    opt.textContent = s.company_name + '（' + cats + '）';
+    select.appendChild(opt);
+  });
+}
+
+// ============ 从目录卡片发起询价 ============
+function startInquiry(supplierId, supplierName) {
+  switchTab('inquiry');
+  setTimeout(() => {
+    const select = document.getElementById('inquiry_supplier_id');
+    select.value = supplierId;
+    // 触发 change 以更新提示
+    updateSupplierHint();
+    document.getElementById('inquiry_api_key').focus();
+    showToast('已选择供应商：' + supplierName + '，请填写询价信息', 'info');
+  }, 300);
+}
+
+// ============ 供应商选择变化时更新提示 ============
+function updateSupplierHint() {
+  const select = document.getElementById('inquiry_supplier_id');
+  const hint = document.getElementById('supplierHint');
+  const supplierId = select.value;
+  if (!supplierId) {
+    hint.style.display = 'none';
+    return;
+  }
+  const supplier = cachedSuppliers.find(s => s.supplier_id === supplierId);
+  if (supplier) {
+    const cats = (supplier.product_categories || []).map(c => CATEGORY_LABELS[c] || c).join('、');
+    hint.style.display = 'block';
+    hint.innerHTML = '已选择：<strong>' + escapeHtml(supplier.company_name) + '</strong> · 品类：' + escapeHtml(cats) +
+      (supplier.has_ros_support ? ' · ✓ ROS 支持' : '');
+  }
+}
+
+// ============ 提交询价 ============
+async function submitInquiry() {
+  const apiKey = document.getElementById('inquiry_api_key').value.trim();
+  const supplierId = document.getElementById('inquiry_supplier_id').value;
+  const componentIdsRaw = document.getElementById('inquiry_component_ids').value.trim();
+  const quantity = document.getElementById('inquiry_quantity').value;
+  const projectName = document.getElementById('inquiry_project_name').value.trim();
+  const message = document.getElementById('inquiry_message').value.trim();
+  const deliveryDate = document.getElementById('inquiry_delivery_date').value;
+
+  // ========== 前端校验 ==========
+  let hasError = false;
+
+  if (!apiKey || !apiKey.startsWith('gtk_')) {
+    setFieldError('inquiry_api_key', true);
+    hasError = true;
+  } else setFieldError('inquiry_api_key', false);
+
+  if (!supplierId) {
+    setFieldError('inquiry_supplier_id', true);
+    hasError = true;
+  } else setFieldError('inquiry_supplier_id', false);
+
+  if (hasError) {
+    showToast('请检查必填项', 'error');
+    return;
+  }
+
+  // 解析零部件 ID（逗号分隔 → 数组）
+  let componentIds = [];
+  if (componentIdsRaw) {
+    componentIds = componentIdsRaw.split(',').map(s => s.trim()).filter(s => s.length > 0);
+  }
+
+  // ========== 构造请求体 ==========
+  const payload = {
+    api_key: apiKey,
+    supplier_id: supplierId,
+    component_ids: componentIds,
+    project_name: projectName,
+    message: message,
+  };
+  if (quantity) payload.quantity = Number(quantity);
+  if (deliveryDate) payload.delivery_date = deliveryDate;
+
+  // ========== 提交 ============
+  const btn = document.getElementById('inquiryBtn');
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '提交中...';
+
+  const resultBox = document.getElementById('inquiryResult');
+  resultBox.className = 'result-box';
+
+  try {
+    const res = await fetch('/api/suppliers/inquiry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      resultBox.className = 'result-box show success';
+      resultBox.innerHTML = `
+        <div class="result-title">✓ 询价单已提交</div>
+        <div class="result-detail">${escapeHtml(data.message || '供应商将在 1-3 个工作日内回复报价。')}</div>
+        <div class="supplier-id-box">${escapeHtml(data.inquiry_id)}</div>
+        <div class="result-detail" style="margin-top:10px">
+          供应商：<strong>${escapeHtml(data.supplier_name || '')}</strong> ·
+          状态：<strong style="color:var(--warning)">待报价 (pending)</strong><br>
+          消耗积分：${data.credits_consumed || 1} · 剩余积分：${data.credits_remaining}
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="copySupplierId('${escapeHtml(data.inquiry_id)}')">复制询价单号</button>
+      `;
+      showToast('询价单提交成功，单号：' + data.inquiry_id, 'success');
+      // 重置表单（保留 API Key）
+      const savedKey = document.getElementById('inquiry_api_key').value;
+      document.getElementById('inquiryForm').reset();
+      document.getElementById('inquiry_api_key').value = savedKey;
+      document.getElementById('msgCount').textContent = '0';
+      // 刷新供应商列表（询价计数会更新）
+      cachedSuppliers = [];
+    } else {
+      resultBox.className = 'result-box show error';
+      let errMsg = data.error || '提交失败';
+      if (data.details && Array.isArray(data.details)) {
+        errMsg += '：' + data.details.join('；');
+      }
+      if (data.current_credits !== undefined) {
+        errMsg += '（当前积分：' + data.current_credits + '）';
+      }
+      resultBox.innerHTML = `
+        <div class="result-title">✕ 询价失败</div>
+        <div class="result-detail">${escapeHtml(errMsg)}</div>
+        ${data.recharge_url ? '<div class="result-detail" style="margin-top:8px"><a href="' + escapeHtml(data.recharge_url) + '" style="color:var(--accent)">前往充值积分 →</a></div>' : ''}
+      `;
+      showToast(data.error || '询价失败', 'error');
+    }
+  } catch (e) {
+    resultBox.className = 'result-box show error';
+    resultBox.innerHTML = `
+      <div class="result-title">✕ 网络错误</div>
+      <div class="result-detail">${escapeHtml(e.message)}</div>
+    `;
+    showToast('网络错误：' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+
+// ============ 页面初始化 ============
+window.addEventListener('DOMContentLoaded', () => {
+  // 从 localStorage 恢复 API Key
+  const savedKey = localStorage.getItem('roboparts_api_key');
+  if (savedKey) {
+    const inquiryKeyInput = document.getElementById('inquiry_api_key');
+    if (inquiryKeyInput) inquiryKeyInput.value = savedKey;
+  }
+
+  // 恢复保存的供应商 ID（我的询价 Tab）
+  const savedSupplierId = localStorage.getItem('roboparts_supplier_id');
+  if (savedSupplierId) {
+    const mySidInput = document.getElementById('myInquiry_supplier_id');
+    if (mySidInput) mySidInput.value = savedSupplierId;
+    const displayEl = document.getElementById('displaySupplierId');
+    if (displayEl) displayEl.textContent = savedSupplierId;
+    const infoEl = document.getElementById('savedSupplierInfo');
+    if (infoEl) infoEl.style.display = 'flex';
+  }
+
+  // 监听供应商选择变化
+  document.getElementById('inquiry_supplier_id').addEventListener('change', updateSupplierHint);
+
+  // 设置交付日期最小值为今天
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('inquiry_delivery_date').setAttribute('min', today);
+
+  // ============ 读取 BOM 询价 URL 参数并预填充 ============
+  const params = new URLSearchParams(window.location.search);
+  const bomItemsParam = params.get('bom_items');
+  const tabParam = params.get('tab');
+
+  if (tabParam === 'inquiry') {
+    // 切换到询价 Tab
+    switchTab('inquiry');
+  }
+
+  if (bomItemsParam) {
+    try {
+      const bomItems = JSON.parse(decodeURIComponent(bomItemsParam));
+      if (Array.isArray(bomItems) && bomItems.length > 0) {
+        // 构建零部件 ID 列表
+        const componentIds = bomItems.map(i => i.id || i.name).filter(Boolean).join(', ');
+        const idsInput = document.getElementById('inquiry_component_ids');
+        if (idsInput && componentIds) {
+          idsInput.value = componentIds;
+        }
+
+        // 构建留言摘要
+        let totalCost = 0;
+        let totalQty = 0;
+        bomItems.forEach(i => {
+          totalCost += (i.price || 0) * (i.qty || 1);
+          totalQty += (i.qty || 1);
+        });
+        const summaryLines = bomItems.map(i =>
+          '  - ' + (i.name || '未命名') + (i.category ? ' (' + i.category + ')' : '') +
+          (i.qty > 1 ? ' x' + i.qty : '') +
+          (i.price > 0 ? ' ¥' + (i.price * (i.qty || 1)).toFixed(2) : '')
+        );
+        const message = '【BOM 清单询价】共 ' + bomItems.length + ' 项，' + totalQty + ' 件，预估总价 ¥' + totalCost.toFixed(2) + '\n\n' +
+          summaryLines.join('\n') + '\n\n请提供批量采购报价与交期，谢谢！';
+
+        const msgInput = document.getElementById('inquiry_message');
+        if (msgInput) {
+          msgInput.value = message;
+          document.getElementById('msgCount').textContent = message.length;
+        }
+
+        // 更新采购数量
+        const qtyInput = document.getElementById('inquiry_quantity');
+        if (qtyInput && totalQty > 1) {
+          qtyInput.value = totalQty;
+        }
+
+        showToast('已从 BOM 清单导入 ' + bomItems.length + ' 项组件', 'success');
+      }
+    } catch (e) {
+      console.warn('BOM 参数解析失败:', e);
+    }
+
+    // 清除 URL 中的 bom_items 参数（保留路径）
+    const cleanUrl = window.location.pathname + (tabParam ? '?tab=inquiry' : '');
+    window.history.replaceState({}, document.title, cleanUrl);
+  }
+
+  // 预加载供应商统计数据（首页 hero 区域）
+  fetch('/api/suppliers/list?limit=1')
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById('statTotal').textContent = data.total || 0;
+      }
+    })
+    .catch(() => {});
+});
+</script>
+</body>
+</html>

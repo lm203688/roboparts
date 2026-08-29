@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>RoboParts — 兼容无忧</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+  <link rel="canonical" href="https://roboparts.cc/promo-poster">
+  <meta name="description" content="RoboParts「兼容无忧」推广海报：708 个机器人零部件实体、跨品牌兼容性核验、BOM 一键体检。">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg:#0b0d10;
+      --card:#13161c;
+      --cyan:#00e5d4;
+      --cyan2:#00b4d8;
+      --gold:#ffd166;
+      --text:#f5f7fa;
+      --muted:#9aa3b2;
+      --green:#52b788;
+    }
+    body {
+      background:#000;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color:var(--text);
+      display:flex;
+      justify-content:center;
+      min-height:100vh;
+    }
+    .poster {
+      width:100%;
+      max-width:420px;
+      background:linear-gradient(180deg, #0b0d10 0%, #11141a 60%, #0b0d10 100%);
+      padding:28px 22px 32px;
+      position:relative;
+      overflow:hidden;
+    }
+    .poster::before {
+      content:"";
+      position:absolute; top:-60px; right:-60px; width:220px; height:220px;
+      background:radial-gradient(circle, rgba(0,229,212,0.12) 0%, transparent 70%);
+      pointer-events:none;
+    }
+    .kicker {
+      color:var(--cyan);
+      font-size:13px; font-weight:700; letter-spacing:0.08em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    h1 {
+      font-size:30px; line-height:1.18; font-weight:900;
+      margin-bottom:8px;
+      background:linear-gradient(90deg, var(--text) 0%, var(--cyan) 100%);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    h1 .highlight { color:var(--cyan); -webkit-text-fill-color:var(--cyan); }
+    .subtitle {
+      color:var(--muted); font-size:14px; line-height:1.5;
+      margin-bottom:22px;
+    }
+    .divider {
+      height:1px; background:linear-gradient(90deg, transparent, var(--cyan), transparent);
+      margin:20px 0; opacity:.45;
+    }
+    .hero {
+      background:var(--card);
+      border:1px solid rgba(0,229,212,0.18);
+      border-radius:18px;
+      padding:20px 18px 18px;
+      text-align:center;
+      position:relative;
+      margin-bottom:18px;
+    }
+    .hero::after {
+      content:"";
+      position:absolute; inset:0; border-radius:18px;
+      background:linear-gradient(135deg, rgba(0,229,212,0.06), transparent 50%);
+      pointer-events:none;
+    }
+    .hero-label {
+      font-size:38px; font-weight:900; letter-spacing:-1px;
+      color:var(--text); margin-bottom:2px;
+    }
+    .hero-label span { color:var(--cyan); }
+    .hero-sub {
+      color:var(--muted); font-size:13px; margin-bottom:14px;
+    }
+    .adapter-svg {
+      width:100%; height:210px; margin:0 auto;
+      filter:drop-shadow(0 12px 28px rgba(0,0,0,0.55));
+    }
+    .specs {
+      display:grid; grid-template-columns:repeat(2, 1fr); gap:10px;
+      margin-top:14px;
+    }
+    .spec {
+      background:rgba(255,255,255,0.04);
+      border-radius:10px; padding:10px 8px; text-align:center;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+    .spec-num {
+      font-size:18px; font-weight:800; color:var(--cyan); line-height:1;
+    }
+    .spec-label {
+      font-size:10px; color:var(--muted); margin-top:5px; line-height:1.2;
+    }
+    .bullets {
+      list-style:none; margin:0 0 22px;
+    }
+    .bullets li {
+      font-size:15px; line-height:1.7; margin-bottom:9px;
+      padding-left:22px; position:relative;
+    }
+    .bullets li::before {
+      content:"✓"; position:absolute; left:0; top:0;
+      color:var(--green); font-weight:900;
+    }
+    .bullets li strong { color:var(--gold); font-weight:800; }
+    .cta-box {
+      background:linear-gradient(90deg, rgba(0,229,212,0.14), rgba(0,180,216,0.08));
+      border:1px solid rgba(0,229,212,0.25);
+      border-radius:14px; padding:16px; text-align:center;
+    }
+    .cta-url {
+      font-size:18px; font-weight:900; color:var(--cyan);
+      letter-spacing:0.5px; word-break:break-all;
+    }
+    .cta-tip {
+      font-size:11px; color:var(--muted); margin-top:6px;
+    }
+    .footer {
+      margin-top:22px; text-align:center;
+      color:var(--muted); font-size:11px;
+    }
+    .badge-row {
+      display:flex; gap:8px; justify-content:center; margin-bottom:14px;
+    }
+    .badge {
+      font-size:10px; color:#000; background:var(--cyan);
+      padding:4px 8px; border-radius:20px; font-weight:800;
+    }
+    @media (min-width:421px){
+      body { background:#181b22; }
+      .poster { box-shadow:0 20px 60px rgba(0,0,0,0.5); margin:20px 0; border-radius:8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="poster">
+    <div class="kicker">开源机器人零部件 · 兼容引擎</div>
+    <h1>几千块的机器人<span class="highlight">转接件</span><br>现在免费 DIY！</h1>
+    <div class="subtitle">RoboParts 法兰转接件生成器 | 选两侧接口 → 一键生成 → 3D 打印自己装</div>
+
+    <div class="divider"></div>
+
+    <div class="hero">
+      <div class="badge-row">
+        <span class="badge">100% 开源</span>
+        <span class="badge">浏览器直出</span>
+        <span class="badge">STL 可打印</span>
+      </div>
+      <div class="hero-label">Robo<span>Parts</span></div>
+      <div class="hero-sub">Adapter Generator · 把「不兼容」变成「兼容」</div>
+      <svg class="adapter-svg" viewBox="0 0 320 210" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#2a3142"/>
+            <stop offset="100%" stop-color="#131925"/>
+          </linearGradient>
+          <linearGradient id="cyanRim" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#00e5d4"/>
+            <stop offset="100%" stop-color="#00b4d8"/>
+          </linearGradient>
+        </defs>
+        <!-- outer plate -->
+        <ellipse cx="160" cy="110" rx="115" ry="68" fill="url(#plate)" stroke="url(#cyanRim)" stroke-width="2.5"/>
+        <ellipse cx="160" cy="104" rx="115" ry="68" fill="#1c2330" opacity=".9"/>
+        <!-- side A bolt circle -->
+        <ellipse cx="122" cy="102" rx="46" ry="27" fill="none" stroke="#00e5d4" stroke-width="1.2" stroke-dasharray="4 3" opacity=".7"/>
+        <circle cx="98" cy="90" r="5" fill="#0b0d10" stroke="#00e5d4" stroke-width="1.5"/>
+        <circle cx="146" cy="90" r="5" fill="#0b0d10" stroke="#00e5d4" stroke-width="1.5"/>
+        <circle cx="98" cy="114" r="5" fill="#0b0d10" stroke="#00e5d4" stroke-width="1.5"/>
+        <circle cx="146" cy="114" r="5" fill="#0b0d10" stroke="#00e5d4" stroke-width="1.5"/>
+        <!-- side B bolt circle -->
+        <ellipse cx="198" cy="102" rx="62" ry="36" fill="none" stroke="#ffd166" stroke-width="1.2" stroke-dasharray="4 3" opacity=".7"/>
+        <circle cx="170" cy="84" r="4.5" fill="#0b0d10" stroke="#ffd166" stroke-width="1.5"/>
+        <circle cx="226" cy="84" r="4.5" fill="#0b0d10" stroke="#ffd166" stroke-width="1.5"/>
+        <circle cx="170" cy="120" r="4.5" fill="#0b0d10" stroke="#ffd166" stroke-width="1.5"/>
+        <circle cx="226" cy="120" r="4.5" fill="#0b0d10" stroke="#ffd166" stroke-width="1.5"/>
+        <circle cx="160" cy="60" r="4.5" fill="#0b0d10" stroke="#ffd166" stroke-width="1.5"/>
+        <circle cx="236" cy="102" r="4.5" fill="#0b0d10" stroke="#ffd166" stroke-width="1.5"/>
+        <circle cx="160" cy="144" r="4.5" fill="#0b0d10" stroke="#ffd166" stroke-width="1.5"/>
+        <!-- center bore -->
+        <ellipse cx="160" cy="102" rx="18" ry="10" fill="#07090c" stroke="#9aa3b2" stroke-width="1.5"/>
+        <!-- labels -->
+        <text x="72" y="170" fill="#00e5d4" font-size="12" font-weight="800">侧 A</text>
+        <text x="228" y="170" fill="#ffd166" font-size="12" font-weight="800">侧 B</text>
+        <text x="160" y="196" fill="#9aa3b2" font-size="10" text-anchor="middle">A50-4-M6 ↔ A80-4-M8 自动转接</text>
+      </svg>
+      <div class="specs">
+        <div class="spec"><div class="spec-num">427+</div><div class="spec-label">机器人零部件<br>数据库</div></div>
+        <div class="spec"><div class="spec-num">0 元</div><div class="spec-label">转接件生成<br>免费使用</div></div>
+        <div class="spec"><div class="spec-num">30 秒</div><div class="spec-label">从选法兰<br>到出 STL</div></div>
+        <div class="spec"><div class="spec-num">ISO<br>9409</div><div class="spec-label">国际标准<br>法兰支持</div></div>
+      </div>
+    </div>
+
+    <ul class="bullets">
+      <li>机器人腕部法兰与工具端<strong>孔位对不上</strong>？一键生成转接板</li>
+      <li>支持 <strong>ISO 9409-1</strong> 标准尺寸 + 自定义 PCD / 孔数 / 销钉</li>
+      <li>导出 <strong>STL</strong> 直接 3D 打印，或 <strong>OpenSCAD</strong> 二次编辑</li>
+      <li>完全开源，参考 FreeCAD / CadQuery / build123d 生态</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-url">roboparts.cc/adapter-generator</div>
+      <div class="cta-tip">浏览器打开 → 选两侧法兰 → 生成 3D 预览 → 下载打印</div>
+    </div>
+
+    <div class="footer">
+      RoboParts · 仿生机器人生态平台 · 让兼容无忧
+    </div>
+  </div>
+</body>
+</html>

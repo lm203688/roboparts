@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BOM清单管理 — RoboParts 仿生机器人生态平台</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="RoboParts BOM 清单管理，支持从智能选型导入、手动添加、自动计价、导出 CSV/JSON">
+<link rel="canonical" href="https://roboparts.cc/bom-manager">
+<style>
+:root{
+  --bg:#0a0e17;
+  --card:#111827;
+  --border:#1e2d4a;
+  --text:#e2e8f0;
+  --accent:#06b6d4;
+  --accent-hover:#22d3ee;
+  --muted:#94a3b8;
+  --dim:#64748b;
+  --success:#10b981;
+  --error:#ef4444;
+  --warning:#f59e0b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+
+/* ========== 顶部导航 ========== */
+.navbar{position:sticky;top:0;z-index:100;background:rgba(10,14,23,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.navbar .nav-inner{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.navbar .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;color:var(--text);text-decoration:none}
+.navbar .brand .logo{width:28px;height:28px;background:linear-gradient(135deg,var(--accent),#0891b2);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#000;font-weight:800;font-size:.95rem}
+.navbar .brand .accent{color:var(--accent)}
+.navbar .nav-links{display:flex;align-items:center;gap:18px}
+.navbar .nav-links a{color:var(--muted);text-decoration:none;font-size:.88rem;transition:color .2s}
+.navbar .nav-links a:hover{color:var(--accent)}
+.navbar .nav-links a.active{color:var(--accent);font-weight:600}
+.navbar .nav-links .back-home{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:8px;font-size:.82rem}
+.navbar .nav-links .back-home:hover{border-color:var(--accent);color:var(--accent)}
+
+.container{max-width:1100px;margin:0 auto;padding:20px}
+
+/* ========== Hero ========== */
+.hero{text-align:center;padding:36px 20px 24px}
+.hero h1{font-size:2rem;color:var(--accent);margin-bottom:8px}
+.hero p{color:var(--muted);font-size:1.02rem;max-width:680px;margin:0 auto}
+
+/* ========== 卡片 ========== */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin:20px 0}
+.card h2{font-size:1.3rem;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.card .subtitle{color:var(--muted);font-size:.88rem;margin-bottom:24px}
+
+/* ========== 工具栏 ========== */
+.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
+.toolbar .separator{width:1px;height:28px;background:var(--border);margin:0 4px}
+
+/* ========== 按钮 ========== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 28px;border-radius:10px;border:none;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;text-decoration:none}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary:disabled{background:var(--border);color:var(--dim);cursor:not-allowed}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-success{background:var(--success);color:#000}
+.btn-success:hover{background:#34d399}
+.btn-danger{background:transparent;border:1px solid rgba(239,68,68,0.3);color:var(--error)}
+.btn-danger:hover{background:rgba(239,68,68,0.1);border-color:var(--error)}
+.btn-sm{padding:8px 16px;font-size:.82rem}
+.btn-xs{padding:5px 12px;font-size:.78rem;border-radius:6px}
+
+/* ========== 表单 ========== */
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:.85rem;font-weight:600;color:var(--text)}
+.form-group label .required{color:var(--error);margin-left:2px}
+.form-group label .optional{color:var(--dim);font-weight:400;font-size:.78rem;margin-left:6px}
+.form-group input,.form-group select{
+  padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-size:.88rem;font-family:inherit;transition:border-color .2s;
+}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--accent)}
+.form-group input::placeholder{color:var(--dim)}
+.form-group .hint{font-size:.76rem;color:var(--dim)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* ========== Modal ========== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:1000;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;max-width:480px;width:100%}
+.modal h3{font-size:1.2rem;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.modal .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+
+/* ========== BOM 表格 ========== */
+.bom-table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
+.bom-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.bom-table thead{background:var(--bg)}
+.bom-table th{padding:12px 14px;text-align:left;font-weight:600;font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;border-bottom:1px solid var(--border)}
+.bom-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+.bom-table tbody tr{transition:background .2s}
+.bom-table tbody tr:hover{background:rgba(6,182,212,0.04)}
+.bom-table tbody tr:last-child td{border-bottom:none}
+.bom-table .qty-input{width:60px;padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.85rem;text-align:center}
+.bom-table .qty-input:focus{outline:none;border-color:var(--accent)}
+.bom-table .price-cell{text-align:right;font-family:'JetBrains Mono',Consolas,monospace}
+.bom-table .subtotal-cell{text-align:right;font-weight:700;color:var(--accent);font-family:'JetBrains Mono',Consolas,monospace}
+.bom-table .category-tag{font-size:.72rem;padding:2px 10px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.25);color:var(--accent);border-radius:10px;white-space:nowrap}
+.bom-table .supplier-cell{font-size:.8rem;color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ========== 汇总栏 ========== */
+.bom-summary{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-top:16px;flex-wrap:wrap;gap:12px}
+.bom-summary .summary-left{display:flex;align-items:center;gap:16px;font-size:.85rem;color:var(--muted)}
+.bom-summary .summary-total{font-size:1.2rem;font-weight:800;color:var(--accent)}
+.bom-summary .summary-total span{font-size:.85rem;color:var(--dim);font-weight:400;margin-left:4px}
+
+/* ========== 导出区域 ========== */
+.export-section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-top:24px}
+.export-section h3{font-size:1.1rem;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.export-row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
+
+/* ========== 空状态 ========== */
+.empty-state{text-align:center;padding:60px 20px;color:var(--dim)}
+.empty-state .icon{font-size:3rem;margin-bottom:12px;opacity:.5}
+.empty-state .title{font-size:1.1rem;color:var(--muted);margin-bottom:6px}
+.empty-state .desc{font-size:.85rem}
+
+/* ========== Toast 提示 ========== */
+.toast-container{position:fixed;top:80px;right:20px;z-index:2000;display:flex;flex-direction:column;gap:10px;max-width:360px}
+.toast{padding:14px 18px;border-radius:10px;font-size:.88rem;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.3);animation:toastIn .3s ease;border-left:4px solid}
+.toast.success{background:#111827;border-left-color:var(--success);color:var(--success)}
+.toast.error{background:#111827;border-left-color:var(--error);color:var(--error)}
+.toast.info{background:#111827;border-left-color:var(--accent);color:var(--accent)}
+.toast.warning{background:#111827;border-left-color:var(--warning);color:var(--warning)}
+.toast .toast-icon{font-size:1.1rem;flex-shrink:0}
+.toast .toast-msg{flex:1;color:var(--text)}
+.toast.fade-out{animation:toastOut .3s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(40px)}}
+
+/* ========== 导出成功提示 ========== */
+.export-result{margin-top:16px;padding:14px 18px;border-radius:10px;display:none}
+.export-result.show{display:block}
+.export-result.success{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3)}
+.export-result.error{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3)}
+.export-result .er-title{font-weight:700;margin-bottom:6px}
+.export-result.success .er-title{color:var(--success)}
+.export-result.error .er-title{color:var(--error)}
+.export-result .er-detail{font-size:.85rem;color:var(--muted)}
+.export-result .download-link{display:inline-flex;align-items:center;gap:6px;margin-top:8px;color:var(--accent);text-decoration:none;font-weight:600;font-size:.88rem}
+.export-result .download-link:hover{text-decoration:underline}
+
+/* ========== 页脚 ========== */
+footer{text-align:center;padding:40px 20px;color:var(--dim);font-size:.8rem;border-top:1px solid var(--border);margin-top:40px}
+footer a{color:var(--accent);text-decoration:none}
+
+/* ========== 响应式 ========== */
+@media(max-width:768px){
+  .form-grid{grid-template-columns:1fr}
+  .hero h1{font-size:1.5rem}
+  .navbar .nav-links{gap:10px}
+  .navbar .nav-links a{font-size:.8rem}
+  .card{padding:20px}
+  .bom-summary{flex-direction:column;align-items:flex-start}
+  .toolbar{flex-direction:column;align-items:stretch}
+  .toolbar .separator{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== 顶部导航 ========== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="/" class="brand">
+      <span class="logo">R</span>
+      Robo<span class="accent">Parts</span>
+    </a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/#api-access">API 文档</a>
+      <a href="/designer">设计画布</a>
+      <a href="/selection">智能选型</a>
+      <a href="/bom-manager" class="active">BOM管理</a>
+      <a href="/credits">积分充值</a>
+      <a href="/" class="back-home">← 返回首页</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== Hero ========== -->
+<div class="hero">
+  <h1>BOM清单管理</h1>
+  <p>管理您的机器人 BOM 清单，支持从智能选型导入、手动添加组件、自动计算成本、导出 CSV/JSON。</p>
+</div>
+
+<div class="container">
+
+  <!-- ========== 工具栏 ========== -->
+  <div class="toolbar">
+    <button class="btn btn-primary btn-sm" onclick="openAddModal()">+ 手动添加</button>
+    <a href="/selection" class="btn btn-outline btn-sm">从选型导入</a>
+    <div class="separator"></div>
+    <button class="btn btn-outline btn-sm" onclick="clearAllBom()" id="clearBtn" style="display:none">清空清单</button>
+  </div>
+
+  <!-- ========== BOM 表格 ========== -->
+  <div id="bomTableArea">
+    <div class="empty-state" id="bomEmpty">
+      <div class="icon">📋</div>
+      <div class="title">BOM 清单为空</div>
+      <div class="desc">点击"手动添加"按钮添加组件，或前往"智能选型"导入推荐方案</div>
+      <div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" onclick="openAddModal()">手动添加</button>
+        <a href="/selection" class="btn btn-outline btn-sm">前往智能选型</a>
+      </div>
+    </div>
+
+    <div id="bomTableContainer" style="display:none">
+      <div class="bom-table-wrap">
+        <table class="bom-table">
+          <thead>
+            <tr>
+              <th style="width:50px">序号</th>
+              <th>模块名称</th>
+              <th>类别</th>
+              <th>品牌</th>
+              <th style="width:100px">单价(元)</th>
+              <th style="width:80px">数量</th>
+              <th style="width:110px">小计(元)</th>
+              <th>供应商</th>
+              <th style="width:70px">操作</th>
+            </tr>
+          </thead>
+          <tbody id="bomBody"></tbody>
+        </table>
+      </div>
+
+      <!-- 汇总 -->
+      <div class="bom-summary">
+        <div class="summary-left">
+          <span>共 <strong id="itemCount">0</strong> 项</span>
+          <span>合计 <strong id="totalQty">0</strong> 件</span>
+        </div>
+        <div class="summary-total">¥<span id="totalCost">0.00</span> <span>总成本</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 导出区域 ========== -->
+  <div class="export-section" id="exportSection" style="display:none">
+    <h3>📤 导出 BOM 清单</h3>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:16px">导出当前 BOM 清单为 CSV 或 JSON 格式，每次导出消耗 1 积分。</p>
+    <div class="export-row">
+      <div class="form-group">
+        <label>API Key <span class="required">*</span></label>
+        <input type="text" id="export_api_key" placeholder="gtk_xxxxxxxx" style="width:260px;font-family:'JetBrains Mono',Consolas,monospace" />
+        <span class="hint"><a href="/#api-access" style="color:var(--accent)">免费注册</a> 即赠 100 积分</span>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-end;padding-bottom:20px">
+        <button class="btn btn-primary btn-sm" id="exportCsvBtn" onclick="exportBom('csv')">导出 CSV</button>
+        <button class="btn btn-outline btn-sm" id="exportJsonBtn" onclick="exportBom('json')">导出 JSON</button>
+        <button class="btn btn-success btn-sm" id="inquiryBtn" onclick="gotoSupplierInquiry()">🏭 发起供应商询价</button>
+      </div>
+    </div>
+    <div class="export-result" id="exportResult"></div>
+  </div>
+
+</div>
+
+<!-- ========== 手动添加 Modal ========== -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <h3>➕ 手动添加组件</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>零部件 ID <span class="optional">选填</span></label>
+        <input type="text" id="add_id" placeholder="如：ACT-001" />
+      </div>
+      <div class="form-group">
+        <label>模块名称 <span class="required">*</span></label>
+        <input type="text" id="add_name" placeholder="如：T-Motor AK80-9" />
+      </div>
+      <div class="form-group">
+        <label>类别</label>
+        <select id="add_category">
+          <option value="执行器">执行器</option>
+          <option value="传感器">传感器</option>
+          <option value="芯片">芯片</option>
+          <option value="控制器">控制器</option>
+          <option value="通信模块">通信模块</option>
+          <option value="结构件">结构件</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>品牌/厂商</label>
+        <input type="text" id="add_manufacturer" placeholder="如：T-Motor" />
+      </div>
+      <div class="form-group">
+        <label>单价(元) <span class="optional">选填</span></label>
+        <input type="number" id="add_price" placeholder="如：899" min="0" step="0.01" />
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline btn-sm" onclick="closeAddModal()">取消</button>
+      <button class="btn btn-primary btn-sm" onclick="addManualItem()">添加到清单</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== Toast 容器 ========== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ========== 页脚 ========== -->
+<footer>
+  <p>&copy; 2026 RoboParts &middot; 仿生机器人生态平台 &middot; <a href="/">返回首页</a></p>
+</footer>
+
+<script>
+// ============ BOM 数据（存在内存 + localStorage） ============
+let bomItems = [];
+const BOM_STORAGE_KEY = 'roboparts_bom_items';
+
+// ============ 初始化 ============
+window.addEventListener('DOMContentLoaded', () => {
+  // 从 localStorage 恢复 BOM 数据
+  try {
+    const saved = localStorage.getItem(BOM_STORAGE_KEY);
+    if (saved) bomItems = JSON.parse(saved);
+  } catch (e) { /* ignore */ }
+
+  // 处理 URL 参数导入
+  handleUrlImport();
+
+  // 恢复 API Key
+  const savedKey = localStorage.getItem('roboparts_api_key');
+  if (savedKey) {
+    const exportKeyInput = document.getElementById('export_api_key');
+    if (exportKeyInput) exportKeyInput.value = savedKey;
+  }
+
+  // 监听 API Key 输入
+  document.getElementById('export_api_key').addEventListener('change', (e) => {
+    localStorage.setItem('roboparts_api_key', e.target.value.trim());
+  });
+
+  // 渲染
+  renderBom();
+});
+
+// ============ 处理 URL 参数导入 ============
+function handleUrlImport() {
+  const params = new URLSearchParams(window.location.search);
+  const addParam = params.get('add');
+  if (!addParam) return;
+
+  try {
+    // add 参数格式: id=xxx&name=yyy&category=zzz&manufacturer=www&price=ppp
+    const addParams = new URLSearchParams(addParam);
+    const item = {
+      id: addParams.get('id') || '',
+      name: addParams.get('name') || '未命名组件',
+      category: addParams.get('category') || '其他',
+      manufacturer: addParams.get('manufacturer') || '',
+      price: Number(addParams.get('price')) || 0,
+      qty: 1,
+    };
+    bomItems.push(item);
+    saveBom();
+    showToast('已从选型结果导入：' + item.name, 'success');
+
+    // 清除 URL 参数
+    window.history.replaceState({}, document.title, window.location.pathname);
+  } catch (e) {
+    showToast('导入参数解析失败', 'error');
+  }
+}
+
+// ============ 保存 BOM 到 localStorage ============
+function saveBom() {
+  localStorage.setItem(BOM_STORAGE_KEY, JSON.stringify(bomItems));
+}
+
+// ============ HTML 转义 ============
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// ============ Toast 提示 ============
+function showToast(message, type) {
+  type = type || 'info';
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  const icons = { success: '✓', error: '✕', info: 'ℹ', warning: '⚠' };
+  toast.innerHTML = '<span class="toast-icon">' + (icons[type] || 'ℹ') + '</span><span class="toast-msg">' + escapeHtml(message) + '</span>';
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
+
+// ============ 渲染 BOM 表格 ============
+function renderBom() {
+  const emptyEl = document.getElementById('bomEmpty');
+  const tableEl = document.getElementById('bomTableContainer');
+  const clearBtn = document.getElementById('clearBtn');
+  const exportSection = document.getElementById('exportSection');
+
+  if (bomItems.length === 0) {
+    emptyEl.style.display = 'block';
+    tableEl.style.display = 'none';
+    clearBtn.style.display = 'none';
+    exportSection.style.display = 'none';
+    return;
+  }
+
+  emptyEl.style.display = 'none';
+  tableEl.style.display = 'block';
+  clearBtn.style.display = 'inline-flex';
+  exportSection.style.display = 'block';
+
+  const body = document.getElementById('bomBody');
+  body.innerHTML = '';
+
+  let totalCost = 0;
+  let totalQty = 0;
+
+  bomItems.forEach((item, idx) => {
+    const qty = item.qty || 1;
+    const price = item.price || 0;
+    const subtotal = qty * price;
+    totalCost += subtotal;
+    totalQty += qty;
+
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td>' + (idx + 1) + '</td>' +
+      '<td><strong>' + escapeHtml(item.name) + '</strong>' + (item.id ? '<br><span style="font-size:.72rem;color:var(--dim)">' + escapeHtml(item.id) + '</span>' : '') + '</td>' +
+      '<td><span class="category-tag">' + escapeHtml(item.category) + '</span></td>' +
+      '<td>' + escapeHtml(item.manufacturer || '-') + '</td>' +
+      '<td class="price-cell">' + price.toFixed(2) + '</td>' +
+      '<td><input type="number" class="qty-input" value="' + qty + '" min="1" max="99999" data-idx="' + idx + '" onchange="updateQty(' + idx + ',this.value)" /></td>' +
+      '<td class="subtotal-cell">' + subtotal.toFixed(2) + '</td>' +
+      '<td class="supplier-cell">' + escapeHtml(item.supplier || item.manufacturer || '-') + '</td>' +
+      '<td><button class="btn btn-danger btn-xs" onclick="removeItem(' + idx + ')">删除</button></td>';
+    body.appendChild(tr);
+  });
+
+  document.getElementById('itemCount').textContent = bomItems.length;
+  document.getElementById('totalQty').textContent = totalQty;
+  document.getElementById('totalCost').textContent = totalCost.toFixed(2);
+}
+
+// ============ 更新数量 ============
+function updateQty(idx, val) {
+  const qty = Math.max(1, Math.min(99999, parseInt(val) || 1));
+  bomItems[idx].qty = qty;
+  saveBom();
+  renderBom();
+}
+
+// ============ 删除项 ============
+function removeItem(idx) {
+  const name = bomItems[idx].name;
+  bomItems.splice(idx, 1);
+  saveBom();
+  renderBom();
+  showToast('已移除：' + name, 'info');
+}
+
+// ============ 清空 BOM ============
+function clearAllBom() {
+  if (!confirm('确定要清空整个 BOM 清单吗？此操作不可撤销。')) return;
+  bomItems = [];
+  saveBom();
+  renderBom();
+  showToast('BOM 清单已清空', 'info');
+}
+
+// ============ Modal 控制 ============
+function openAddModal() {
+  document.getElementById('addModal').classList.add('show');
+  document.getElementById('add_name').focus();
+}
+
+function closeAddModal() {
+  document.getElementById('addModal').classList.remove('show');
+  // 清空表单
+  document.getElementById('add_id').value = '';
+  document.getElementById('add_name').value = '';
+  document.getElementById('add_category').value = '执行器';
+  document.getElementById('add_manufacturer').value = '';
+  document.getElementById('add_price').value = '';
+}
+
+// ============ 手动添加组件 ============
+function addManualItem() {
+  const name = document.getElementById('add_name').value.trim();
+  if (!name) {
+    showToast('请填写模块名称', 'error');
+    document.getElementById('add_name').focus();
+    return;
+  }
+
+  const item = {
+    id: document.getElementById('add_id').value.trim(),
+    name: name,
+    category: document.getElementById('add_category').value,
+    manufacturer: document.getElementById('add_manufacturer').value.trim(),
+    price: Number(document.getElementById('add_price').value) || 0,
+    qty: 1,
+  };
+
+  bomItems.push(item);
+  saveBom();
+  renderBom();
+  closeAddModal();
+  showToast('已添加：' + name, 'success');
+}
+
+// ============ 导出 BOM ============
+async function exportBom(format) {
+  if (bomItems.length === 0) {
+    showToast('BOM 清单为空，无法导出', 'error');
+    return;
+  }
+
+  const apiKey = document.getElementById('export_api_key').value.trim();
+  if (!apiKey || !apiKey.startsWith('gtk_')) {
+    showToast('请输入有效的 API Key（gtk_ 开头）', 'error');
+    document.getElementById('export_api_key').focus();
+    return;
+  }
+
+  localStorage.setItem('roboparts_api_key', apiKey);
+
+  const payload = {
+    api_key: apiKey,
+    format: format,
+    items: bomItems,
+  };
+
+  const btnId = format === 'csv' ? 'exportCsvBtn' : 'exportJsonBtn';
+  const btn = document.getElementById(btnId);
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '导出中...';
+
+  const resultEl = document.getElementById('exportResult');
+  resultEl.className = 'export-result';
+
+  try {
+    const res = await fetch('https://roboparts.cc/api/bom/export', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    // 处理积分不足 (统一 JSON 格式)
+    if (res.status === 402) {
+      const errData = await res.json();
+      resultEl.className = 'export-result show error';
+      resultEl.innerHTML = '<div class="er-title">✕ 积分不足</div><div class="er-detail">' + escapeHtml(errData.error || '请充值后重试') + (errData.credits_remaining !== undefined ? '（当前积分：' + errData.credits_remaining + '）' : '') + '</div><a href="/credits" class="download-link" style="color:var(--warning)">前往充值积分 →</a>';
+      showToast('积分不足，请充值后重试', 'warning');
+      return;
+    }
+
+    const contentType = res.headers.get('Content-Type') || '';
+    const creditsRemaining = res.headers.get('X-Credits-Remaining');
+
+    // CSV 格式：返回 text/csv，需作为文本处理
+    if (res.ok && contentType.includes('text/csv')) {
+      const csvText = await res.text();
+      resultEl.className = 'export-result show success';
+      let totalCost = 0;
+      bomItems.forEach(i => { totalCost += (i.price || 0) * (i.qty || 1); });
+      const blob = new Blob([csvText], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      resultEl.innerHTML =
+        '<div class="er-title">✓ 导出成功</div>' +
+        '<div class="er-detail">已导出 ' + bomItems.length + ' 项组件，总成本 ¥' + totalCost.toFixed(2) + '</div>' +
+        (creditsRemaining ? '<div class="er-detail">剩余积分：' + creditsRemaining + '</div>' : '') +
+        '<a href="' + url + '" download="bom_export.csv" class="download-link">⬇ 下载CSV文件</a>';
+      showToast('BOM 导出成功（CSV）', 'success');
+      return;
+    }
+
+    // JSON 格式
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      resultEl.className = 'export-result show success';
+
+      // 计算总成本
+      let totalCost = 0;
+      bomItems.forEach(i => { totalCost += (i.price || 0) * (i.qty || 1); });
+
+      let downloadHtml = '';
+      // JSON 格式直接提供数据，创建本地下载
+      const jsonStr = JSON.stringify(data, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      downloadHtml = '<a href="' + url + '" download="bom_export.json" class="download-link">⬇ 下载JSON文件</a>';
+
+      const cr = (data.metadata && data.metadata.credits_remaining) || creditsRemaining;
+
+      resultEl.innerHTML =
+        '<div class="er-title">✓ 导出成功</div>' +
+        '<div class="er-detail">已导出 ' + (data.items ? data.items.length : bomItems.length) + ' 项组件，总成本 ¥' + totalCost.toFixed(2) + '</div>' +
+        (cr ? '<div class="er-detail">剩余积分：' + cr + '</div>' : '') +
+        downloadHtml;
+
+      showToast('BOM 导出成功（JSON）', 'success');
+    } else {
+      resultEl.className = 'export-result show error';
+      resultEl.innerHTML = '<div class="er-title">✕ 导出失败</div><div class="er-detail">' + escapeHtml(data.error || '请稍后重试') + '</div>';
+      showToast(data.error || '导出失败', 'error');
+    }
+  } catch (e) {
+    resultEl.className = 'export-result show error';
+    resultEl.innerHTML = '<div class="er-title">✕ 网络错误</div><div class="er-detail">' + escapeHtml(e.message) + '</div>';
+    showToast('网络错误：' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+// ============ 发起供应商询价 ============
+function gotoSupplierInquiry() {
+  if (bomItems.length === 0) {
+    showToast('BOM 清单为空，无法发起询价', 'error');
+    return;
+  }
+  // 精简 BOM 数据用于 URL 传递
+  const items = bomItems.map(i => ({
+    id: i.id || '',
+    name: i.name || '',
+    category: i.category || '',
+    manufacturer: i.manufacturer || '',
+    price: i.price || 0,
+    qty: i.qty || 1,
+  }));
+  const encoded = encodeURIComponent(JSON.stringify(items));
+  window.location.href = '/suppliers.html?bom_items=' + encoded + '&tab=inquiry';
+}
+</script>
+</body>
+</html>

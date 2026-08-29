@@ -1,0 +1,122 @@
+# RoboParts Dataset: GitHub -> HuggingFace 自动同步
+# 触发: push main 分支 (尤其 data/ 变更) 或手动触发
+# 依赖: HF_TOKEN secret (HF 写入令牌)
+# 文档: https://huggingface.co/docs/hub/repositories-github-actions
+#
+# 设置说明:
+#   1. 在 HuggingFace 注册账号 (https://huggingface.co/join)
+#   2. 进入 Settings -> Access Tokens -> Create new token (write权限)
+#   3. 在 GitHub 仓库 Settings -> Secrets and variables -> Actions -> New repository secret
+#      Name: HF_TOKEN  Value: <你的HuggingFace Token>
+#   4. 推送代码或手动触发本工作流即可自动同步
+
+name: Sync to HuggingFace Hub
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'roboparts-dataset-github/data/**'
+      - 'roboparts-dataset-github/huggingface_dataset_card.md'
+      - 'roboparts-dataset-github/README.md'
+  workflow_dispatch:
+    inputs:
+      commit_message:
+        description: '自定义提交消息 (留空则自动生成)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  sync-to-hf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # 1. 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      # 2. 准备 HuggingFace 数据集目录
+      - name: Prepare HF dataset
+        run: |
+          mkdir -p hf-dataset
+          cp -r roboparts-dataset-github/data/* hf-dataset/
+          cp roboparts-dataset-github/huggingface_dataset_card.md hf-dataset/README.md
+          cp roboparts-dataset-github/LICENSE hf-dataset/ 2>/dev/null || true
+
+      # 3. 生成变更摘要
+      - name: Generate change summary
+        id: changes
+        run: |
+          if [[ -n "${{ inputs.commit_message }}" ]]; then
+            echo "summary=${{ inputs.commit_message }}" >> "$GITHUB_OUTPUT"
+            echo "commit_msg=${{ inputs.commit_message }}" >> "$GITHUB_OUTPUT"
+          else
+            SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
+            MSG="sync from GitHub ${SHORT_SHA}: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            echo "summary=${MSG}" >> "$GITHUB_OUTPUT"
+            echo "commit_msg=${MSG}" >> "$GITHUB_OUTPUT"
+          fi
+
+      # 4. 同步到 HuggingFace Dataset
+      - name: Push to HuggingFace Hub
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          pip install huggingface_hub
+          python -c "
+          from huggingface_hub import HfApi
+          import os
+
+          api = HfApi(token=os.environ['HF_TOKEN'])
+
+          # Create or get dataset repo
+          repo_id = 'roboparts/roboparts-dataset'
+          try:
+              api.create_repo(repo_id=repo_id, repo_type='dataset', private=False)
+              print(f'Created dataset repo: {repo_id}')
+          except Exception as e:
+              print(f'Repo may already exist: {e}')
+
+          # Upload all files in hf-dataset
+          api.upload_folder(
+              folder_path='hf-dataset',
+              repo_id=repo_id,
+              repo_type='dataset',
+              commit_message='${{ steps.changes.outputs.commit_msg }}'
+          )
+          print(f'Successfully synced to https://huggingface.co/datasets/{repo_id}')
+          "
+
+      # 5. 同步完成通知
+      - name: Sync summary
+        run: |
+          echo "## HuggingFace Sync Complete" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Repo**: roboparts/roboparts-dataset" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Trigger**: ${{ github.event_name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Commit**: ${GITHUB_SHA}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Message**: ${{ steps.changes.outputs.summary }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "View at: https://huggingface.co/datasets/roboparts/roboparts-dataset" >> "$GITHUB_STEP_SUMMARY"
+
+  # 验证 HF 端数据可访问
+  verify:
+    needs: sync-to-hf
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Verify dataset accessible
+        run: |
+          sleep 5
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://huggingface.co/api/datasets/roboparts/roboparts-dataset")
+          if [ "$HTTP_CODE" -eq 200 ]; then
+            echo "✅ Dataset is accessible (HTTP $HTTP_CODE)"
+          else
+            echo "⚠️ Dataset returned HTTP $HTTP_CODE (may still be processing)"
+          fi

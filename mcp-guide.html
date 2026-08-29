@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MCP Server 使用指南 — RoboParts 仿生机器人生态平台</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="RoboParts MCP Server 使用指南，让 AI 编程助手直接调用零部件选型、兼容性检查等工具，加速机器人硬件开发。">
+<link rel="canonical" href="https://roboparts.cc/mcp-guide">
+<style>
+:root{
+  --bg:#0a0e17;
+  --card:#111827;
+  --border:#1e2d4a;
+  --text:#e2e8f0;
+  --accent:#06b6d4;
+  --accent-hover:#22d3ee;
+  --muted:#94a3b8;
+  --dim:#64748b;
+  --success:#10b981;
+  --error:#ef4444;
+  --warning:#f59e0b;
+  --code-bg:#0d1117;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+
+/* ========== 导航栏 ========== */
+.navbar{position:sticky;top:0;z-index:100;background:rgba(10,14,23,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.navbar .nav-inner{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.navbar .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;color:var(--text);text-decoration:none}
+.navbar .brand .logo{width:28px;height:28px;background:linear-gradient(135deg,var(--accent),#0891b2);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#000;font-weight:800;font-size:.95rem}
+.navbar .brand .accent{color:var(--accent)}
+.navbar .nav-links{display:flex;align-items:center;gap:16px}
+.navbar .nav-links a{color:var(--muted);text-decoration:none;font-size:.88rem;transition:color .2s}
+.navbar .nav-links a:hover{color:var(--accent)}
+
+.container{max-width:1100px;margin:0 auto;padding:20px}
+
+/* ========== Hero ========== */
+.hero{text-align:center;padding:48px 20px 32px}
+.hero h1{font-size:2.2rem;color:var(--accent);margin-bottom:12px;letter-spacing:1px}
+.hero p{color:var(--muted);font-size:1.05rem;max-width:720px;margin:0 auto}
+.hero .badge{display:inline-block;margin-top:16px;padding:6px 16px;background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.3);border-radius:20px;color:var(--accent);font-size:.82rem;font-weight:600}
+
+/* ========== 通用段落 ========== */
+.section{margin:40px 0}
+.section h2{font-size:1.5rem;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.section h2 .icon{font-size:1.3rem}
+.section .desc{color:var(--muted);font-size:.95rem;margin-bottom:24px;max-width:800px}
+
+/* ========== 什么是 MCP ========== */
+.mcp-intro{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 32px;margin:20px 0}
+.mcp-intro p{color:var(--muted);font-size:.95rem;margin-bottom:12px}
+.mcp-intro p:last-child{margin-bottom:0}
+.mcp-intro strong{color:var(--text)}
+.mcp-intro code{background:var(--code-bg);padding:2px 8px;border-radius:4px;font-size:.88rem;color:var(--accent);font-family:'JetBrains Mono',Consolas,monospace}
+
+/* ========== 工具卡片网格 ========== */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;margin-top:20px}
+.tool-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;transition:all .3s}
+.tool-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.tool-card .tc-name{font-size:1.05rem;font-weight:700;color:var(--accent);font-family:'JetBrains Mono',Consolas,monospace;margin-bottom:8px}
+.tool-card .tc-desc{font-size:.88rem;color:var(--muted);margin-bottom:14px}
+.tool-card .tc-params{font-size:.82rem;color:var(--dim)}
+.tool-card .tc-params .param{display:flex;gap:8px;margin:4px 0}
+.tool-card .tc-params .param-name{color:var(--accent);min-width:100px;font-family:'JetBrains Mono',Consolas,monospace;font-size:.8rem}
+.tool-card .tc-params .param-type{color:var(--dim);font-size:.78rem}
+
+/* ========== 代码块 ========== */
+.code-block{background:var(--code-bg);border:1px solid var(--border);border-radius:12px;margin:16px 0;overflow:hidden}
+.code-block .code-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(30,45,74,0.4);border-bottom:1px solid var(--border)}
+.code-block .code-header .label{font-size:.78rem;color:var(--dim);font-weight:600}
+.code-block .code-header .copy-btn{padding:4px 12px;background:transparent;border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:.76rem;cursor:pointer;transition:all .2s}
+.code-block .code-header .copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+.code-block pre{padding:16px 20px;overflow-x:auto;font-size:.84rem;line-height:1.65;font-family:'JetBrains Mono',Consolas,monospace;color:var(--text)}
+.code-block pre .comment{color:var(--dim)}
+.code-block pre .key{color:#7dd3fc}
+.code-block pre .string{color:var(--success)}
+.code-block pre .number{color:var(--warning)}
+
+/* ========== 配置指南 Tabs ========== */
+.config-tabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:6px;margin-bottom:20px;flex-wrap:wrap}
+.config-tab-btn{flex:1;min-width:140px;padding:10px 14px;background:transparent;border:none;color:var(--muted);font-size:.88rem;font-weight:600;cursor:pointer;border-radius:8px;transition:all .2s}
+.config-tab-btn:hover{color:var(--text);background:rgba(6,182,212,0.06)}
+.config-tab-btn.active{background:var(--accent);color:#000}
+.config-panel{display:none}
+.config-panel.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ========== 快速体验 ========== */
+.try-section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin:24px 0}
+.try-section h3{font-size:1.15rem;margin-bottom:16px;color:var(--text)}
+.try-form{display:flex;flex-direction:column;gap:14px}
+.try-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.try-input{padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.9rem;font-family:inherit;transition:border-color .2s}
+.try-input:focus{outline:none;border-color:var(--accent)}
+.try-input::placeholder{color:var(--dim)}
+.try-textarea{padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.9rem;font-family:inherit;resize:vertical;min-height:70px;transition:border-color .2s}
+.try-textarea:focus{outline:none;border-color:var(--accent)}
+.try-textarea::placeholder{color:var(--dim)}
+.try-label{font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:4px}
+.try-label .required{color:var(--error)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 28px;border-radius:10px;border:none;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary:disabled{background:var(--border);color:var(--dim);cursor:not-allowed}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.try-result{margin-top:16px;padding:16px 20px;background:var(--bg);border:1px dashed var(--border);border-radius:10px;display:none;font-size:.85rem;max-height:500px;overflow:auto}
+.try-result.show{display:block}
+.try-result pre{font-family:'JetBrains Mono',Consolas,monospace;font-size:.82rem;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-all}
+.try-result .result-error{color:var(--error)}
+.try-result .result-success{color:var(--success)}
+
+/* ========== Toast ========== */
+.toast-container{position:fixed;top:80px;right:20px;z-index:2000;display:flex;flex-direction:column;gap:10px;max-width:360px}
+.toast{padding:14px 18px;border-radius:10px;font-size:.88rem;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.3);animation:toastIn .3s ease;border-left:4px solid}
+.toast.success{background:#111827;border-left-color:var(--success);color:var(--success)}
+.toast.error{background:#111827;border-left-color:var(--error);color:var(--error)}
+.toast.info{background:#111827;border-left-color:var(--accent);color:var(--accent)}
+.toast .toast-icon{font-size:1.1rem;flex-shrink:0}
+.toast .toast-msg{flex:1;color:var(--text)}
+.toast.fade-out{animation:toastOut .3s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(40px)}}
+
+/* ========== 页脚 ========== */
+footer{text-align:center;padding:40px 20px;color:var(--dim);font-size:.8rem;border-top:1px solid var(--border);margin-top:40px}
+footer a{color:var(--accent);text-decoration:none}
+
+/* ========== 响应式 ========== */
+@media(max-width:768px){
+  .hero h1{font-size:1.6rem}
+  .navbar .nav-links{gap:10px}
+  .navbar .nav-links a{font-size:.78rem}
+  .tool-grid{grid-template-columns:1fr}
+  .try-row{grid-template-columns:1fr}
+  .mcp-intro{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== 导航栏 ========== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="/" class="brand">
+      <span class="logo">R</span>
+      Robo<span class="accent">Parts</span>
+    </a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/selection">选型</a>
+      <a href="/data-hub">BOM</a>
+      <a href="/suppliers">供应商</a>
+      <a href="/mcp-guide" style="color:var(--accent)">MCP指南</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== Hero ========== -->
+<div class="hero">
+  <h1>MCP Server 使用指南</h1>
+  <p>让 Claude、Cursor、Windsurf 等 AI 编程助手直接调用 RoboParts 选型引擎，在对话中完成机器人零部件的智能选型与兼容性分析。</p>
+  <span class="badge">Model Context Protocol</span>
+</div>
+
+<div class="container">
+
+  <!-- ========== 什么是 MCP Server ========== -->
+  <div class="section">
+    <h2><span class="icon">&#128218;</span> 什么是 MCP Server</h2>
+    <div class="mcp-intro">
+      <p><strong>MCP (Model Context Protocol)</strong> 是 Anthropic 推出的开放协议，用于让 AI 模型与外部工具/数据源进行标准化交互。RoboParts MCP Server 将平台的选型引擎、零部件数据库、兼容性分析等能力封装为 MCP 工具，使 AI 编程助手能够在对话中直接调用这些能力。</p>
+      <p>接入后，您只需用自然语言描述需求（如<strong>"推荐人形机器人的执行器"</strong>），AI 助手便会自动调用 <code>search_components</code> 工具，返回匹配的零部件列表。无需手动构造 HTTP 请求，开发效率大幅提升。</p>
+      <p>当前 RoboParts MCP Server 提供 <strong>5 个工具</strong>，覆盖零部件搜索、详情查询、兼容性检查、场景推荐和参数口径规范等核心场景。</p>
+    </div>
+  </div>
+
+  <!-- ========== 5个工具介绍 ========== -->
+  <div class="section">
+    <h2><span class="icon">&#128295;</span> 工具列表</h2>
+    <p class="desc">以下 5 个 MCP 工具可供 AI 编程助手调用，每个工具包含名称、功能描述和参数说明。</p>
+
+    <div class="tool-grid">
+      <!-- 工具1 -->
+      <div class="tool-card">
+        <div class="tc-name">search_components</div>
+        <div class="tc-desc">搜索机器人零部件。可按品类、关键词筛选，返回匹配条目的摘要（id/名称/品类/厂商/关键规格/证据等级）。覆盖执行器、传感器、芯片、通信协议、接口、机器人平台、具身智能模型等 10 个品类。</div>
+        <div class="tc-params">
+          <div class="param"><span class="param-name">category</span><span class="param-type">string - 品类精确筛选，须来自枚举</span></div>
+          <div class="param"><span class="param-name">keyword</span><span class="param-type">string - 关键词，对多字段做子串匹配（中英文命中集可能不重叠，建议两种都试）</span></div>
+          <div class="param"><span class="param-name">limit</span><span class="param-type">number - 返回条数上限，默认 10，最大 50</span></div>
+          <div class="param"><span class="param-name">include_market_intelligence</span><span class="param-type">boolean - 是否含市场情报条目，默认 false</span></div>
+        </div>
+      </div>
+
+      <!-- 工具2 -->
+      <div class="tool-card">
+        <div class="tc-name">get_component_detail</div>
+        <div class="tc-desc">按 ID 获取单个零部件的完整字段，含 source_tier（数据来源等级）、confidence（置信度）、data_quality 与 mechanical_interface 等元数据，用于在采购/设计决策前核对证据强度。</div>
+        <div class="tc-params">
+          <div class="param"><span class="param-name">id</span><span class="param-type">string - 零部件 ID（如 ACT-001），大小写与连字符需完全匹配（必填）</span></div>
+        </div>
+      </div>
+
+      <!-- 工具3 -->
+      <div class="tool-card">
+        <div class="tc-name">check_compatibility</div>
+        <div class="tc-desc">判定两个零部件在 protocol（协议）/ electrical（电气）/ mechanical（机械）/ software（ROS2）四个维度的兼容性，返回逐维结论、总体判定与置信说明。结论基于厂商公开声明字段做规则推断，非实验室实测。</div>
+        <div class="tc-params">
+          <div class="param"><span class="param-name">component1_id</span><span class="param-type">string - 零件 1 ID（必填）</span></div>
+          <div class="param"><span class="param-name">component2_id</span><span class="param-type">string - 零件 2 ID，可与零件 1 不同品类（必填）</span></div>
+        </div>
+      </div>
+
+      <!-- 工具4 -->
+      <div class="tool-card">
+        <div class="tc-name">recommend_for_application</div>
+        <div class="tc-desc">按应用场景推荐零部件组合，可选预算上限（USD）。返回各品类的候选项及推荐理由。基于库内字段的启发式筛选，不构成工程选型意见，最终仍需核对厂商原始数据手册。</div>
+        <div class="tc-params">
+          <div class="param"><span class="param-name">application</span><span class="param-type">string - 应用场景（必填：humanoid/quadruped/robot_arm/amr/industrial）</span></div>
+          <div class="param"><span class="param-name">budget</span><span class="param-type">number - 单件预算上限 USD，可选（仅剔除确定超预算项）</span></div>
+          <div class="param"><span class="param-name">count</span><span class="param-type">number - 每品类返回条数，默认 3，上限 10</span></div>
+        </div>
+      </div>
+
+      <!-- 工具5 -->
+      <div class="tool-card">
+        <div class="tc-name">get_parameter_semantics</div>
+        <div class="tc-desc">获取参数口径规范：同一 torque/speed 字段在不同厂商含义可能不同（库内 torque 出现 19 种口径、speed 37 种，甚至混入 Gbps 与 rad/s）。返回物理红线、单位换算、可比性分级与向厂商问询的清单，用于判断两份参数表到底能不能直接比较。</div>
+        <div class="tc-params">
+          <div class="param"><span class="param-name">（无入参）</span><span class="param-type">本工具不接受参数，调用即返回参数口径规范</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 配置指南 ========== -->
+  <div class="section">
+    <h2><span class="icon">&#9881;</span> 配置指南</h2>
+    <p class="desc">将 RoboParts MCP Server 添加到您的 AI 编程工具中。<strong>推荐使用下方「远程接入」</strong>——无需下载代码、无需 API Key，复制即用。</p>
+
+    <!-- ===== 推荐：远程接入（零安装） ===== -->
+    <div class="code-block" style="border:1px solid var(--accent);">
+      <div class="code-header">
+        <span class="label">推荐 · 远程接入（零安装，无需 API Key）</span>
+        <button class="copy-btn" onclick="copyCode(this)">复制</button>
+      </div>
+      <pre>{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"roboparts"</span>: {
+      <span class="key">"url"</span>: <span class="string">"https://roboparts.cc/mcp"</span>
+    }
+  }
+}</pre>
+    </div>
+    <p class="desc">
+      适用于已原生支持 streamable-HTTP 的客户端（Cursor、Windsurf、VS Code 等）。
+      基础检索与兼容性校验<strong>无需 API Key 即可直接调用</strong>。
+    </p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="label">Claude Desktop（经 mcp-remote 桥接）</span>
+        <button class="copy-btn" onclick="copyCode(this)">复制</button>
+      </div>
+      <pre>{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"roboparts"</span>: {
+      <span class="key">"command"</span>: <span class="string">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="string">"-y"</span>, <span class="string">"mcp-remote"</span>, <span class="string">"https://roboparts.cc/mcp"</span>]
+    }
+  }
+}</pre>
+    </div>
+    <p class="desc">
+      Claude Desktop 尚未原生支持远程 MCP，需经开源桥接包
+      <code style="color:var(--accent)">mcp-remote</code> 转接（npx 自动拉取，无需预装）。
+    </p>
+
+    <h3 style="margin-top:2rem;">本地部署（进阶，可离线运行）</h3>
+    <p class="desc">
+      如需离线或自行改造，可克隆仓库后指向本地入口文件。
+      <strong>先执行：</strong>
+      <code style="color:var(--accent)">git clone https://github.com/lm203688/roboparts.git</code>
+      ，随后把下方配置中的 <code>/path/to/roboparts</code> 替换为你的实际克隆路径。
+    </p>
+
+    <div class="config-tabs">
+      <button class="config-tab-btn active" onclick="switchConfigTab('claude')">Claude Desktop</button>
+      <button class="config-tab-btn" onclick="switchConfigTab('cursor')">VS Code Cursor</button>
+      <button class="config-tab-btn" onclick="switchConfigTab('windsurf')">Windsurf</button>
+    </div>
+
+    <!-- Claude Desktop -->
+    <div class="config-panel active" id="config-claude">
+      <div class="code-block">
+        <div class="code-header">
+          <span class="label">claude_desktop_config.json</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <pre>{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"roboparts"</span>: {
+      <span class="key">"command"</span>: <span class="string">"node"</span>,
+      <span class="key">"args"</span>: [<span class="string">"/path/to/roboparts/mcp-server/index.js"</span>],
+      <span class="key">"env"</span>: {
+        <span class="key">"ROBOPARTS_API_KEY"</span>: <span class="string">"gtk_your_api_key_here"</span>
+      }
+    }
+  }
+}</pre>
+      </div>
+      <p style="color:var(--muted);font-size:.85rem;margin-top:12px">配置文件路径：</p>
+      <ul style="color:var(--dim);font-size:.82rem;margin:8px 0 0 20px;line-height:1.8">
+        <li>macOS: <code style="color:var(--accent)">~/Library/Application Support/Claude/claude_desktop_config.json</code></li>
+        <li>Windows: <code style="color:var(--accent)">%APPDATA%\Claude\claude_desktop_config.json</code></li>
+      </ul>
+    </div>
+
+    <!-- VS Code Cursor -->
+    <div class="config-panel" id="config-cursor">
+      <div class="code-block">
+        <div class="code-header">
+          <span class="label">.cursor/mcp.json</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <pre>{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"roboparts"</span>: {
+      <span class="key">"command"</span>: <span class="string">"node"</span>,
+      <span class="key">"args"</span>: [<span class="string">"/path/to/roboparts/mcp-server/index.js"</span>],
+      <span class="key">"env"</span>: {
+        <span class="key">"ROBOPARTS_API_KEY"</span>: <span class="string">"gtk_your_api_key_here"</span>
+      }
+    }
+  }
+}</pre>
+      </div>
+      <p style="color:var(--muted);font-size:.85rem;margin-top:12px">在项目根目录下创建 <code style="color:var(--accent)">.cursor/mcp.json</code> 文件，Cursor 会自动加载 MCP Server。</p>
+    </div>
+
+    <!-- Windsurf -->
+    <div class="config-panel" id="config-windsurf">
+      <div class="code-block">
+        <div class="code-header">
+          <span class="label">.windsurf/mcp.json</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <pre>{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"roboparts"</span>: {
+      <span class="key">"command"</span>: <span class="string">"node"</span>,
+      <span class="key">"args"</span>: [<span class="string">"/path/to/roboparts/mcp-server/index.js"</span>],
+      <span class="key">"env"</span>: {
+        <span class="key">"ROBOPARTS_API_KEY"</span>: <span class="string">"gtk_your_api_key_here"</span>
+      }
+    }
+  }
+}</pre>
+      </div>
+      <p style="color:var(--muted);font-size:.85rem;margin-top:12px">在项目根目录下创建 <code style="color:var(--accent)">.windsurf/mcp.json</code> 文件，Windsurf 会自动识别并加载。</p>
+    </div>
+  </div>
+
+  <!-- ========== 快速体验 ========== -->
+  <div class="section">
+    <h2><span class="icon">&#9889;</span> 快速体验</h2>
+    <p class="desc">输入自然语言查询，直接调用选型引擎 API 查看效果。需要有效的 API Key。</p>
+
+    <div class="try-section">
+      <h3>在线测试选型引擎</h3>
+      <div class="try-form">
+        <div class="try-row">
+          <div>
+            <div class="try-label">API Key <span class="required">*</span></div>
+            <input type="text" class="try-input" id="tryApiKey" placeholder="gtk_xxxxxxxx" style="font-family:'JetBrains Mono',Consolas,monospace" />
+          </div>
+          <div>
+            <div class="try-label">应用场景</div>
+            <select class="try-input" id="tryApplication">
+              <option value="humanoid">人形机器人</option>
+              <option value="quadruped">四足机器人</option>
+              <option value="robot_arm">机械臂</option>
+              <option value="amr">AMR 移动机器人</option>
+              <option value="industrial">工业自动化</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <div class="try-label">需求描述（自然语言）</div>
+          <textarea class="try-textarea" id="tryRequirements" placeholder="如：推荐人形机器人的执行器，扭矩大于 10Nm，重量小于 500g，支持 EtherCAT" rows="3"></textarea>
+        </div>
+        <div>
+          <button class="btn btn-primary" id="tryBtn" onclick="runTrySearch()">
+            调用选型引擎
+          </button>
+          <span style="font-size:.82rem;color:var(--dim);margin-left:12px">本次调用将消耗 2 积分</span>
+        </div>
+      </div>
+      <div class="try-result" id="tryResult"></div>
+    </div>
+  </div>
+
+  <!-- ========== Python SDK ========== -->
+  <div class="section">
+    <h2><span class="icon">&#128013;</span> Python SDK 示例</h2>
+    <p class="desc">如果您更习惯使用 Python，可以通过 HTTP 直接调用选型引擎 API。以下是一个完整的示例。</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="label">selection_example.py</span>
+        <button class="copy-btn" onclick="copyCode(this)">复制</button>
+      </div>
+      <pre><span class="comment"># RoboParts 智能选型引擎 - Python SDK 示例</span>
+
+<span class="key">import</span> requests
+
+API_BASE = <span class="string">"https://roboparts.cc"</span>
+API_KEY = <span class="string">"gtk_your_api_key_here"</span>  <span class="comment"># 替换为您的 API Key</span>
+
+<span class="comment"># 1. 智能选型推荐</span>
+response = requests.post(
+    f<span class="string">"{API_BASE}/api/selection/engine"</span>,
+    headers={<span class="string">"Content-Type"</span>: <span class="string">"application/json"</span>},
+    json={
+        <span class="string">"api_key"</span>: API_KEY,
+        <span class="string">"application"</span>: <span class="string">"humanoid"</span>,
+        <span class="string">"requirements"</span>: {
+            <span class="string">"torque_min"</span>: <span class="number">10</span>,
+            <span class="string">"weight_max"</span>: <span class="number">500</span>,
+            <span class="string">"voltage"</span>: <span class="number">48</span>,
+            <span class="string">"ros_required"</span>: <span class="key">True</span>,
+        },
+        <span class="string">"categories"</span>: [<span class="string">"actuators"</span>, <span class="string">"sensors"</span>],
+        <span class="string">"count_per_category"</span>: <span class="number">3</span>,
+    }
+)
+result = response.json()
+
+<span class="key">if</span> result.get(<span class="string">"success"</span>):
+    <span class="key">for</span> category, items <span class="key">in</span> result.get(<span class="string">"recommendations"</span>, {}).items():
+        print(f<span class="string">"\n=== {category} ==="</span>)
+        <span class="key">for</span> item <span class="key">in</span> items:
+            print(f<span class="string">"  {item['name']} ({item['component_id']})"</span>)
+            print(f<span class="string">"    评分: {item.get('score', 'N/A')} | 价格: {item.get('price', 'N/A')}"</span>)
+<span class="key">else</span>:
+    print(f<span class="string">"Error: {result.get('error', 'Unknown')}"</span>)
+
+<span class="comment"># 2. 查询余额</span>
+balance_resp = requests.get(
+    f<span class="string">"{API_BASE}/api/credits/balance?key={API_KEY}"</span>
+)
+print(f<span class="string">"\n当前积分: {balance_resp.json().get('credits', 0)}"</span>)</pre>
+    </div>
+  </div>
+
+</div>
+
+  <!-- ========== Skills 技能包 ========== -->
+  <div class="section">
+    <h2><span class="icon">&#129513;</span> Skills 技能包（其它 Agent 框架一键接入）</h2>
+    <p class="desc">除直接连 MCP 外，RoboParts 把能力封装成结构化 Skills 清单，可被 WorkBuddy / Dify / Coze / Cursor 等框架解析后自动注册工具。机器可读清单：<a href="/skills/manifest.json" style="color:var(--accent)">/skills/manifest.json</a> · 说明文档：<a href="/skills/README.md" style="color:var(--accent)">/skills/README.md</a>。</p>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="tc-name">roboparts-search</div><div class="tc-desc">搜索归一化零部件库（708 实体 / 325 开源组件），按品类、关键词、规格筛选。</div><div class="tc-params"><div class="param"><span class="param-name">触发</span><span class="param-type">找某类零件 / 补全型号</span></div></div></div>
+      <div class="tool-card"><div class="tc-name">roboparts-component-detail</div><div class="tc-desc">按 ID（如 ACT-001）取单件完整规格、厂商、证据等级与数据缺口。</div><div class="tc-params"><div class="param"><span class="param-name">触发</span><span class="param-type">已有 ID 要详情</span></div></div></div>
+      <div class="tool-card"><div class="tc-name">roboparts-compat-check</div><div class="tc-desc">四维兼容性裁决，未声明维度如实标「无法判定」（零假绿/零假红）。</div><div class="tc-params"><div class="param"><span class="param-name">触发</span><span class="param-type">判断两件零件能否装一起</span></div></div></div>
+      <div class="tool-card"><div class="tc-name">roboparts-recommend</div><div class="tc-desc">按应用场景（humanoid/quadruped/robot_arm/amr/industrial）与预算推荐零件组合。</div><div class="tc-params"><div class="param"><span class="param-name">触发</span><span class="param-type">按场景/预算配一套零件</span></div></div></div>
+      <div class="tool-card"><div class="tc-name">roboparts-parameter-semantics</div><div class="tc-desc">参数口径规范、单位换算、可比性分级与物理自洽红线。</div><div class="tc-params"><div class="param"><span class="param-name">触发</span><span class="param-type">参数靠不靠谱 / 怎么比</span></div></div></div>
+      <div class="tool-card"><div class="tc-name">roboparts-dataset-discovery</div><div class="tc-desc">发现并下载公开数据集端点（entities/oss/mechanical_interfaces 等）。<strong>非 MCP 工具</strong>，直接 GET 静态 JSON。</div><div class="tc-params"><div class="param"><span class="param-name">触发</span><span class="param-type">下载 / 引用原始数据</span></div></div></div>
+      <div class="tool-card"><div class="tc-name">roboparts-adapter-generate</div><div class="tc-desc">法兰不兼容时生成可 3D 打印转接板（web_resource，拼 URL 参数复现）。</div><div class="tc-params"><div class="param"><span class="param-name">触发</span><span class="param-type">机械法兰不匹配需转接</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- ========== 物理 AI 训练数据集 ========== -->
+  <div class="section" id="training-dataset">
+    <h2><span class="icon">&#129302;</span> 物理 AI 训练数据集</h2>
+    <div class="mcp-intro">
+      <p>RoboParts 把兼容性数据层整理成一份<strong>可直接被具身智能 / Sim-to-Real 训练流水线消费</strong>的结构化数据集，让 MoziSim、Isaac 这类训练平台无需手工解析网页即可直接拉取。</p>
+      <p>数据集含三部分：<strong>零件目录</strong>（规格 + 标准标签 + 证据等级）、<strong>兼容性关系</strong>（按 protocol / electrical / mechanical / software 四维裁决、仅保留有证据的关系）、<strong>互操作性标准登记表</strong>。</p>
+      <p>免鉴权、随主库实时更新；也可通过 MCP 资源 <code>resources/list</code> 自动发现（资源 URI 即下方地址）。</p>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="label">数据集端点</span>
+        <button class="copy-btn" onclick="copyCode(this)">复制</button>
+      </div>
+      <pre>GET <span class="string">https://roboparts.cc/api/training_dataset.json</span></pre>
+    </div>
+    <p class="desc">兼容性关系由规则引擎现算（非实验室实测），数据集 meta 字段如实标注生成时间与口径。接入训练流水线前，请结合厂商原始数据手册核验关键参数。</p>
+  </div>
+
+<!-- ========== Toast 容器 ========== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ========== 页脚 ========== -->
+<footer>
+  <p>&copy; 2026 RoboParts &middot; 仿生机器人生态平台 &middot; <a href="/">返回首页</a></p>
+  <p style="margin-top:8px">MCP Server 反馈: <a href="mailto:support@roboparts.cc">support@roboparts.cc</a> &middot; <a href="/mcp-server/README.md">GitHub 仓库</a></p>
+</footer>
+
+<script>
+// ============ 配置 Tab 切换 ============
+function switchConfigTab(tabId) {
+  document.querySelectorAll('.config-tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.config-panel').forEach(panel => panel.classList.remove('active'));
+  event.target.classList.add('active');
+  var target = document.getElementById('config-' + tabId);
+  if (target) target.classList.add('active');
+}
+
+// ============ 复制代码块 ============
+function copyCode(btn) {
+  var pre = btn.closest('.code-block').querySelector('pre');
+  var text = pre.textContent || pre.innerText;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() {
+      showToast('代码已复制到剪贴板', 'success');
+      btn.textContent = '已复制';
+      setTimeout(function() { btn.textContent = '复制'; }, 2000);
+    });
+  }
+}
+
+// ============ Toast 提示 ============
+function showToast(message, type) {
+  type = type || 'info';
+  var container = document.getElementById('toastContainer');
+  var toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  var icons = { success: '\u2713', error: '\u2715', info: '\u2139' };
+  toast.innerHTML = '<span class="toast-icon">' + (icons[type] || '\u2139') + '</span><span class="toast-msg">' + escapeHtml(message) + '</span>';
+  container.appendChild(toast);
+  setTimeout(function() {
+    toast.classList.add('fade-out');
+    setTimeout(function() { toast.remove(); }, 300);
+  }, 3500);
+}
+
+// ============ HTML 转义 ============
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// ============ 快速体验 ============
+function runTrySearch() {
+  var apiKey = document.getElementById('tryApiKey').value.trim();
+  var application = document.getElementById('tryApplication').value;
+  var requirements = document.getElementById('tryRequirements').value.trim();
+  var btn = document.getElementById('tryBtn');
+  var resultBox = document.getElementById('tryResult');
+
+  // 校验
+  if (!apiKey || !apiKey.startsWith('gtk_')) {
+    showToast('请输入有效的 API Key（gtk_ 开头）', 'error');
+    document.getElementById('tryApiKey').focus();
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '查询中...';
+  resultBox.className = 'try-result';
+  resultBox.innerHTML = '<pre><span class="comment">正在调用选型引擎...</span></pre>';
+  resultBox.classList.add('show');
+
+  // 构造请求体
+  var payload = {
+    api_key: apiKey,
+    application: application,
+    requirements: {},
+    categories: ['actuators', 'sensors'],
+    count_per_category: 3
+  };
+
+  // 简单解析需求描述中的数字参数
+  if (requirements) {
+    var torqueMatch = requirements.match(/扭矩[>大于约]*\s*(\d+)/);
+    if (torqueMatch) payload.requirements.torque_min = Number(torqueMatch[1]);
+    var weightMatch = requirements.match(/重量[<小于约]*\s*(\d+)/);
+    if (weightMatch) payload.requirements.weight_max = Number(weightMatch[1]);
+    var voltageMatch = requirements.match(/(\d+)\s*[vV]/);
+    if (voltageMatch) payload.requirements.voltage = Number(voltageMatch[1]);
+    if (requirements.indexOf('ROS') !== -1 || requirements.indexOf('ros') !== -1) {
+      payload.requirements.ros_required = true;
+    }
+    if (requirements.indexOf('EtherCAT') !== -1) payload.requirements.protocol = 'EtherCAT';
+    if (requirements.indexOf('CAN') !== -1 && requirements.indexOf('EtherCAT') === -1) payload.requirements.protocol = 'CANFD';
+  }
+
+  fetch('https://roboparts.cc/api/selection/engine', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.success) {
+      var output = '';
+      var recs = data.recommendations || {};
+      var creditsRemaining = data.credits_remaining;
+
+      for (var cat in recs) {
+        output += '\n=== ' + escapeHtml(cat) + ' ===\n';
+        var items = recs[cat];
+        for (var i = 0; i < items.length; i++) {
+          var item = items[i];
+          output += item.name + ' (' + (item.component_id || '') + ')\n';
+          output += '  评分: ' + (item.score || 'N/A') + ' | 价格: ' + (item.price || 'N/A') + '\n';
+          if (item.reason) output += '  推荐: ' + item.reason + '\n';
+          output += '\n';
+        }
+      }
+
+      resultBox.innerHTML = '<pre class="result-success">' + escapeHtml(output) + '---\n剩余积分: ' + creditsRemaining + '</pre>';
+      showToast('选型查询成功', 'success');
+    } else {
+      resultBox.innerHTML = '<pre class="result-error">Error: ' + escapeHtml(data.error || 'Unknown error') + '\n\n' + escapeHtml(JSON.stringify(data, null, 2)) + '</pre>';
+      showToast(data.error || '查询失败', 'error');
+    }
+  })
+  .catch(function(e) {
+    resultBox.innerHTML = '<pre class="result-error">Network Error: ' + escapeHtml(e.message) + '</pre>';
+    showToast('网络错误', 'error');
+  })
+  .finally(function() {
+    btn.disabled = false;
+    btn.textContent = '调用选型引擎';
+  });
+}
+
+// ============ 页面初始化 ============
+window.addEventListener('DOMContentLoaded', function() {
+  var savedKey = localStorage.getItem('roboparts_api_key');
+  if (savedKey) {
+    document.getElementById('tryApiKey').value = savedKey;
+  }
+});
+</script>
+</body>
+</html>

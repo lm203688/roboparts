@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>兼容性 Copilot — 用大白话问，秒判机器人零件能不能装 | RoboParts</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="RoboParts 兼容性 Copilot：用自然语言描述你的机器人手腕、夹爪、法兰（如「我手腕 A80-4-M8，夹爪 A50-4-M6，能直接用吗」），AI 一键判定兼容性、生成转接件链接。可调用 Agnes AI 用大白话再解释一遍。">
+<meta name="keywords" content="机器人兼容性,法兰兼容,Copilot,转接件,ISO 9409,AI选型,RoboParts">
+<link rel="canonical" href="https://roboparts.cc/copilot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="兼容性 Copilot：用大白话问，秒判机器人零件能不能装 | RoboParts">
+<meta property="og:description" content="自然语言描述法兰/接口，秒判兼容、自动生成转接件链接。可调用 Agnes AI 大白话解释。">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"RoboParts 兼容性 Copilot","operatingSystem":"Web","applicationCategory":"EngineeringApplication","url":"https://roboparts.cc/copilot","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"description":"自然语言判定机器人法兰/接口兼容性，生成转接件链接与打印估算。","author":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc"},"isAccessibleForFree":true}</script>
+<style>
+:root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--line:#243352;--warn:#ffcf6b;--err:#ff6b6b}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.7}
+a{color:var(--acc2);text-decoration:none}a:hover{text-decoration:underline}
+.nav{border-bottom:1px solid var(--line);background:#0e1530}
+.nav .in{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px}
+.nav .brand{font-weight:800;color:var(--acc);font-size:16px}.nav a{color:var(--mut)}.nav a:hover{color:var(--txt)}
+.wrap{max-width:980px;margin:0 auto;padding:28px 20px 72px}
+.crumb{font-size:13px;color:var(--mut);margin-bottom:12px}
+h1{font-size:30px;line-height:1.35;margin:0 0 8px}
+.lede{background:var(--card);border-left:3px solid var(--acc);border-radius:0 10px 10px 0;padding:14px 16px;color:#c8d2e6;margin:14px 0 22px;font-size:15px}
+.chat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.input-row{display:flex;gap:10px;flex-wrap:wrap}
+#nlInput{flex:1;min-width:260px;background:#0e1530;border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:12px 14px;font-size:15px}
+.btn{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;font-weight:800;border:0;border-radius:10px;padding:11px 18px;font-size:14px;cursor:pointer}
+.btn:hover{opacity:.9}
+.btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+.examples{margin:12px 0 4px;display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:#0c1428;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--mut);cursor:pointer}
+.chip:hover{border-color:var(--acc);color:var(--txt)}
+.bubble{margin-top:16px;padding:14px 16px;border-radius:12px;font-size:14.5px}
+.bubble.user{background:#0e1530;border:1px solid var(--line)}
+.bubble.bot{background:#0c1428;border:1px solid var(--line);border-left:3px solid var(--acc2)}
+.bubble.pending{color:var(--mut);font-size:13px}
+.verdict{display:inline-block;font-weight:900;font-size:18px;padding:2px 0}
+.verdict.ok{color:var(--acc)}.verdict.need{color:var(--warn)}.verdict.bad{color:var(--err)}
+.detail{margin-top:10px;font-size:13.5px;color:var(--mut);white-space:pre-wrap}
+.actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.task{background:#1a1606;border:1px solid #4a3a10;border-left:3px solid var(--warn);border-radius:0 10px 10px 0;padding:12px 14px;color:#e8d9a8;font-size:13px;margin-top:14px}
+.ai-box{margin-top:14px;background:#0a1128;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13.5px;color:#cfe3ff;display:none}
+.ai-box.show{display:block}
+.ai-toggle{margin-top:12px;font-size:13px;color:var(--mut)}
+.ai-toggle button{margin-left:8px}
+.foot{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+.tag{display:inline-block;background:#0e1530;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--mut);margin:2px 4px 2px 0}
+</style>
+</head>
+<body>
+<div class="nav"><div class="in">
+<a class="brand" href="/">RoboParts</a>
+<a href="/adapter-generator">转接件生成器</a>
+<a href="/parts-viewer">3D 预览</a>
+<a href="/bom-checker">BOM 检查</a>
+<a href="/agent-architecture">兼容性架构</a>
+<a href="/build-planner">Build Planner</a>
+<a href="/promotion">推广中心</a>
+</div></div>
+<div class="wrap">
+<div class="crumb"><a href="/">首页</a> › 兼容性 Copilot</div>
+<h1>兼容性 Copilot</h1>
+<div class="lede">用大白话描述你的机器人零件，秒判能不能装。例如：
+<b>「我手腕是 A80-4-M8，夹爪是 A50-4-M6，能直接用吗？」</b> ——
+系统解析两侧 ISO 9409-1 法兰，判定兼容或自动生成转接件链接。<b>可调用 Agnes AI</b> 用大白话再解释一遍。</div>
+
+<div class="chat">
+  <div class="input-row">
+    <input id="nlInput" placeholder="例如：手腕 A80-4-M8，夹爪 A50-4-M6，能直接用吗？" autocomplete="off">
+    <button class="btn" onclick="ask()">判定兼容性</button>
+  </div>
+  <div class="examples">
+    <span class="chip" onclick="fill('我手腕是 A80-4-M8，夹爪是 A50-4-M6，能直接用吗？')">A80 ↔ A50（需转接）</span>
+    <span class="chip" onclick="fill('两个都是 A80-4-M8 法兰，直接装吗？')">A80 ↔ A80（直接装）</span>
+    <span class="chip" onclick="fill('工具端 A100-6-M10，机器人端 A80-4-M8')">A100 ↔ A80</span>
+    <span class="chip" onclick="fill('法兰盘 PCD 80 四孔 M8，对接 PCD 50 四孔 M6')">中文描述</span>
+  </div>
+
+  <div id="conv"></div>
+
+  <div class="ai-toggle">
+    🤖 AI 解释：
+    <button class="btn ghost" id="aiBtn" onclick="explainWithAI()">用 Agnes AI 解释</button>
+    <span id="aiStatus" style="font-size:12px"></span>
+  </div>
+  <div class="ai-box" id="aiBox"></div>
+</div>
+
+<div class="foot">
+© 2026 RoboParts · 兼容性 Copilot 复用 <a href="/adapter-generator">转接件生成器</a> 的法兰参数与 URL 协议 ·
+<a href="/iso-9409-flange">ISO 9409-1 法兰速查</a> · <a href="/llms.txt">llms.txt</a>
+</div>
+</div>
+
+<script>
+// ---- 法兰预设（与 adapter-generator 同口径）----
+const PRESETS = {
+  'A50':  {key:'A50',  label:'ISO9409-1-A50-4-M6',  pcd:50,  holes:4, thread:'M6'},
+  'A80':  {key:'A80',  label:'ISO9409-1-A80-4-M8',  pcd:80,  holes:4, thread:'M8'},
+  'A100': {key:'A100', label:'ISO9409-1-A100-6-M10',pcd:100, holes:6, thread:'M10'},
+  'A160': {key:'A160', label:'ISO9409-1-A160-8-M12',pcd:160, holes:8, thread:'M12'},
+};
+// PCD → 默认孔数（用于仅给 PCD 时的推断）
+const HOLES_BY_PCD = {50:4, 80:4, 100:6, 160:8};
+
+// 解析自然语言，提取最多两个法兰规格
+function parseFlanges(text){
+  const found = [];
+  // 1) 完整写法 A80-4-M8
+  const full = text.match(/A(\d+)[-–](\d+)[-–]M(\d+)/gi) || [];
+  for(const m of full){
+    const p = m.match(/A(\d+)[-–](\d+)[-–]M(\d+)/i);
+    found.push({pcd:+p[1], holes:+p[2], thread:'M'+p[3]});
+  }
+  // 2) 中文「PCD 80 四孔 M8」/「节圆80 4孔 M8」
+  if(found.length < 2){
+    const cn = text.match(/PCD[/\s]*?(\d+)\s*[，,，]?\s*(\d+)\s*孔[^M]*M(\d+)/i)
+            || text.match(/节圆[/\s]*?(\d+)\s*(\d+)\s*孔[^M]*M(\d+)/i);
+    if(cn) found.push({pcd:+cn[1], holes:+cn[2], thread:'M'+cn[3]});
+  }
+  // 3) 仅给「A80」「A50」+ 法兰关键词，且前面未命中
+  if(found.length < 2){
+    const shortTokens = text.match(/A(50|80|100|160)\b/gi) || [];
+    for(const t of shortTokens){
+      const pcd = +t.substring(1);
+      if(PRESETS['A'+pcd]) found.push({...PRESETS['A'+pcd]});
+    }
+  }
+  // 4) 散落螺纹 M8 / M6 推断（若仅识别出一个法兰、且有第二个螺纹）
+  if(found.length === 1){
+    const threads = [...text.matchAll(/M(\d+)/gi)].map(x=>+x[1]);
+    const secondThread = threads.find(t => t !== +found[0].thread.replace('M',''));
+    if(secondThread){
+      // 尝试从文中再找 PCD
+      const pcdM = text.match(/(?:PCD|节圆|法兰)[^0-9]*?(\d{2,3})/gi);
+      // 仅当能区分两个 PCD 时才补第二个；否则保守不补
+    }
+  }
+  return found.slice(0,2);
+}
+
+function fmt(f){ return `A${f.pcd}-${f.holes}-${f.thread}（PCD ${f.pcd}mm, ${f.holes}×${f.thread}）`; }
+
+// 判定两个法兰：返回 {verdict, summary, task, adapter}
+function judgeFlanges(a, b){
+  if(a.pcd===b.pcd && a.holes===b.holes && a.thread===b.thread){
+    return {verdict:'ok', summary:'两侧法兰完全一致，可直接安装，无需转接件。',
+      task:'装机前仍须核对：①螺栓有效旋入深度（过长会顶破腕部油封致减速器漏油）；②螺栓强度 12.9 级（禁用不锈钢/低等级）；③定位销 g6 过渡配合，严禁过盈硬敲。',
+      adapter:null};
+  }
+  if(a.pcd===b.pcd && a.holes===b.holes && a.thread!==b.thread){
+    return {verdict:'need', summary:`孔位节圆与孔数一致（${a.pcd}mm / ${a.holes}孔），仅螺纹不同（${a.thread} vs ${b.thread}）。`,
+      task:`可改用对应螺纹螺栓或加装钢丝螺套（Helicoil）直接装；若不想改螺纹，也可生成一块薄转接板。`,
+      adapter:{a,b,t:6,bore:Math.min(a.pcd,b.pcd)/2-6}};
+  }
+  // PCD 或孔数不同 → 必须转接板
+  return {verdict:'need', summary:`孔位不匹配（${a.pcd}/${a.holes}孔 vs ${b.pcd}/${b.holes}孔），需要转接板才能装上。`,
+    task:'RoboParts 已为你生成转接方案：选两侧法兰、实时 3D 预览，下载 STL 直接 3D 打印或 OpenSCAD 二次编辑。',
+    adapter:{a,b,t:10,bore:Math.min(a.pcd,b.pcd)/2-6}};
+}
+
+function presetKey(f){
+  // 命中标准尺寸族则传 preset key，否则传 CUSTOM
+  for(const k of Object.keys(PRESETS)){
+    const p=PRESETS[k];
+    if(p.pcd===f.pcd && p.holes===f.holes && p.thread===f.thread) return k;
+  }
+  return `CUSTOM:${f.pcd}:${f.holes}:${f.thread}:${ (f.clr||(f.thread==='M6'?6.5:f.thread==='M8'?8.5:f.thread==='M10'?10.5:12.5)) }:0:0`;
+}
+function adapterUrl(ad){
+  const a = presetKey(ad.a), b = presetKey(ad.b);
+  return `https://roboparts.cc/adapter-generator?a=${encodeURIComponent(a)}&b=${encodeURIComponent(b)}&t=${ad.t}&bore=${Math.max(0,Math.round(ad.bore))}`;
+}
+
+// 快速打印估算（与 adapter-generator 同口径，供 Copilot 内联展示）
+function quickEstimate(ad){
+  const mat='PETG', density=1.27, priceKg=95;
+  const outerR = Math.max(ad.a.pcd/2, ad.b.pcd/2)+18, t=ad.t;
+  const gross = Math.PI*outerR*outerR*t;
+  const holeArea = (f)=> f.holes*Math.PI*Math.pow((f.thread==='M6'?6.5:f.thread==='M8'?8.5:f.thread==='M10'?10.5:12.5)/2,2)*t;
+  const removed = Math.PI*Math.pow(ad.bore/2,2)*t + holeArea(ad.a)+holeArea(ad.b);
+  const netCm3 = Math.max(0,(gross-removed))/1000;
+  const grams = netCm3*density*0.56*1.06; // 40% 填充近似
+  const cost = grams*priceKg/1000;
+  const min = Math.ceil((netCm3/density)/0.0008/60);
+  return {grams:grams.toFixed(1), cost:cost.toFixed(2), min: min<60?min+' 分钟':(min/60).toFixed(1)+' 小时'};
+}
+
+let lastJudge = null;
+function fill(t){ document.getElementById('nlInput').value=t; }
+
+function ask(){
+  const text = document.getElementById('nlInput').value.trim();
+  const conv = document.getElementById('conv');
+  if(!text){ return; }
+  conv.innerHTML += `<div class="bubble user">🧑 ${escapeHtml(text)}</div>`;
+  const fl = parseFlanges(text);
+  let botHtml = '';
+  if(fl.length < 2){
+    botHtml = `<div class="bubble bot pending">⚠️ 只识别到 ${fl.length} 个法兰规格（${fl.map(fmt).join('、')||'无'}）。请同时给出<strong>两侧</strong>法兰，例如「手腕 A80-4-M8，夹爪 A50-4-M6」，或写「PCD 80 四孔 M8，对接 PCD 50 四孔 M6」。</div>`;
+    conv.innerHTML += botHtml;
+    scrollConv(); return;
+  }
+  const j = judgeFlanges(fl[0], fl[1]);
+  lastJudge = j;
+  const vClass = j.verdict==='ok'?'ok':j.verdict==='need'?'need':'bad';
+  const vText = j.verdict==='ok'?'✅ 直接兼容':'🔧 需要转接件';
+  let html = `<div class="bubble bot">`;
+  html += `<div><span class="verdict ${vClass}">${vText}</span></div>`;
+  html += `<div class="detail">侧 A：${fmt(fl[0])}\n侧 B：${fmt(fl[1])}\n\n${j.summary}</div>`;
+  if(j.adapter){
+    const est = quickEstimate(j.adapter);
+    html += `<div class="actions"><a class="btn" href="${adapterUrl(j.adapter)}" target="_blank" rel="noopener">➡️ 打开转接件生成器（含打印估算）</a></div>`;
+    html += `<div class="detail" style="margin-top:8px">📦 预估耗材 ≈ ${est.grams} g PETG · 成本 ≈ ¥${est.cost} · 打印 ≈ ${est.min}</div>`;
+  }
+  html += `<div class="task">⚠️ 装配红线：${j.task}</div>`;
+  html += `</div>`;
+  conv.innerHTML += html;
+  document.getElementById('aiBox').className='ai-box';
+  document.getElementById('aiBox').innerHTML='';
+  scrollConv();
+}
+function scrollConv(){ const c=document.getElementById('conv'); c.scrollTop=c.scrollHeight; }
+
+function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ---- Agnes AI 解释（服务端代理，密钥不暴露前端）----
+async function explainWithAI(){
+  if(!lastJudge){ alert('请先做一次兼容性判定'); return; }
+  const box = document.getElementById('aiBox');
+  const st = document.getElementById('aiStatus');
+  box.className='ai-box show';
+  box.innerHTML='🤖 正在调用 Agnes AI 生成解释…';
+  st.textContent='';
+  const prompt = `你是机器人机械装配助手。请用通俗中文解释：为什么这两个 ISO 9409-1 法兰（${lastJudge.adapter?fmt(lastJudge.adapter.a)+' 与 '+fmt(lastJudge.adapter.b):'两侧法兰'}）${lastJudge.verdict==='ok'?'可以直接安装':'需要转接板'}，并给出 2-3 条装机安全提醒。不超过 120 字。`;
+  try{
+    const r = await fetch('/api/copilot', {method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({prompt})});
+    if(!r.ok){ const e=await r.json().catch(()=>({})); throw new Error(e.message||e.error||('HTTP '+r.status)); }
+    const d = await r.json();
+    box.innerHTML = '🤖 <b>Agnes AI 解释：</b><br>'+escapeHtml(d.text||'(空)').replace(/\n/g,'<br>');
+    st.textContent = d.model ? ('模型：'+d.model) : '';
+  }catch(e){ box.innerHTML='⚠️ Agnes AI 调用失败：'+escapeHtml(e.message)+'。规则判定结果已在上文给出，无需联网即可使用。'; }
+}
+
+document.getElementById('nlInput').addEventListener('keydown', e=>{ if(e.key==='Enter') ask(); });
+</script>
+</body>
+</html>

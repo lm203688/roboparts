@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts GEO & MCP 健康仪表盘 | AI 能否找到我们</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="RoboParts GEO/MCP 健康度仪表盘：实时监控 sitemap、llms.txt、agent-discovery.json、MCP Registry、IndexNow 等入口，让「AI 是否提到我们」一目了然。">
+<link rel="canonical" href="https://roboparts.cc/geo-dashboard">
+<meta name="robots" content="index,follow">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"RoboParts GEO/MCP 健康仪表盘","applicationCategory":"BusinessApplication","url":"https://roboparts.cc/geo-dashboard","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"isAccessibleForFree":true,"author":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc"}}</script>
+<style>
+:root{--bg:#0b1020;--card:#141b30;--ok:#37e0a6;--warn:#ffcf6b;--err:#ff6b6b;--acc:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--line:#243352}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.7}
+a{color:var(--acc);text-decoration:none}
+.nav{border-bottom:1px solid var(--line);background:#0e1530}
+.nav .in{max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px}
+.nav .brand{font-weight:800;color:var(--ok);font-size:16px}.nav a{color:var(--mut)}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 20px 72px}
+h1{font-size:28px;margin:0 0 8px}
+.lede{color:var(--mut);margin-bottom:24px}
+.score-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:26px}
+.score-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center}
+.score-card .num{font-size:34px;font-weight:900}
+.score-card .label{font-size:13px;color:var(--mut);margin-top:4px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.panel h2{font-size:16px;margin:0 0 14px;color:var(--ok)}
+.row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px}
+.row:last-child{border-bottom:0}
+.row .name{color:var(--mut)}
+.row .status{font-weight:700}
+.status.ok{color:var(--ok)}.status.warn{color:var(--warn)}.status.err{color:var(--err)}.status.pending{color:var(--mut)}
+.tip{background:#0c1428;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--mut);margin-top:16px}
+.foot{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+#runCheck{background:linear-gradient(135deg,var(--ok),var(--acc));color:#04210f;font-weight:800;border:0;border-radius:9px;padding:10px 18px;font-size:14px;cursor:pointer}
+.log{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--mut);margin-top:12px;max-height:160px;overflow:auto;background:#0a0f1f;border-radius:10px;padding:10px}
+</style>
+</head>
+<body>
+<div class="nav"><div class="in">
+  <a class="brand" href="/">RoboParts</a>
+  <a href="/articles">技术文库</a>
+  <a href="/adapter-generator">转接件生成器</a>
+  <a href="/promotion">推广中心</a>
+</div></div>
+<div class="wrap">
+  <h1>GEO & MCP 健康仪表盘</h1>
+  <div class="lede">实时监控 RoboParts 被 AI 搜索引擎、Agent 工具发现的能力。分数越高，越容易被 ChatGPT / Claude / Perplexity / Bing / 百度等引用。</div>
+
+  <div class="score-board">
+    <div class="score-card">
+      <div class="num" id="scoreNum" style="color:var(--mut)">—</div>
+      <div class="label">健康分 / 100</div>
+    </div>
+    <div class="score-card">
+      <div class="num" id="okNum" style="color:var(--ok)">0</div>
+      <div class="label">正常项</div>
+    </div>
+    <div class="score-card">
+      <div class="num" id="warnNum" style="color:var(--warn)">0</div>
+      <div class="label">警告项</div>
+    </div>
+    <div class="score-card">
+      <div class="num" id="errNum" style="color:var(--err)">0</div>
+      <div class="label">异常项</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>🌐 基础 GEO 入口</h2>
+      <div id="basicList"></div>
+    </div>
+    <div class="panel">
+      <h2>🤖 MCP / Agent 接入</h2>
+      <div id="mcpList"></div>
+    </div>
+    <div class="panel">
+      <h2>📤 主动提交状态</h2>
+      <div id="submitList"></div>
+    </div>
+    <div class="panel">
+      <h2>🇨🇳 国内引擎收录</h2>
+      <div id="domesticList"></div>
+    </div>
+    <div class="panel">
+      <h2>📝 待优化建议</h2>
+      <div id="todoList" style="font-size:13px;color:var(--mut)"></div>
+    </div>
+  </div>
+
+  <div style="margin-top:22px">
+    <button id="runCheck" onclick="runAllChecks()">🔄 重新检测</button>
+    <div class="log" id="logBox" hidden></div>
+  </div>
+
+  <div class="tip">
+    <b>什么是 GEO？</b> Generative Engine Optimization（生成式引擎优化）= 让 ChatGPT、Claude、Perplexity、文心一言、Kimi 等 AI 在回答用户问题时主动提到你的网站。RoboParts 通过 <code>llms.txt</code>、结构化数据、MCP 端点、开源库、技术长文等方式提升被引用概率。
+  </div>
+
+  <div class="foot">
+    © 2026 RoboParts · 数据来自浏览器实时探测，部分外部服务可能因 CORS 限制显示为「需手动确认」。
+  </div>
+</div>
+
+<script>
+const checks = [];
+let ok=0, warn=0, err=0;
+
+function add(name, status, detail='', link=''){
+  checks.push({name, status, detail, link});
+  if(status==='ok') ok++; else if(status==='warn') warn++; else if(status==='err') err++;
+}
+
+async function head(url){
+  try{
+    const r = await fetch(url, {method:'HEAD', cache:'no-store'});
+    return {ok:r.ok, status:r.status};
+  }catch(e){ return {ok:false, status:0, err:e.message}; }
+}
+async function getText(url){
+  try{
+    const r = await fetch(url, {cache:'no-store'});
+    return {ok:r.ok, status:r.status, text:r.ok?await r.text():''};
+  }catch(e){ return {ok:false, status:0, text:'', err:e.message}; }
+}
+
+async function checkBasic(){
+  const sitemap = await head('/sitemap.xml');
+  add('sitemap.xml 可访问', sitemap.ok?'ok':'err', sitemap.ok?'HTTP 200':'HTTP '+sitemap.status, '/sitemap.xml');
+
+  const llms = await getText('/llms.txt');
+  if(llms.ok){
+    const hasArticles = llms.text.includes('ARTICLES');
+    add('llms.txt 可访问且含内容', hasArticles?'ok':'warn', hasArticles?'已配置':'内容为空', '/llms.txt');
+  } else {
+    add('llms.txt 可访问', 'err', 'HTTP '+llms.status, '/llms.txt');
+  }
+
+  const agent = await head('/agent-discovery.json');
+  add('agent-discovery.json 可访问', agent.ok?'ok':'err', agent.ok?'HTTP 200':'HTTP '+agent.status, '/agent-discovery.json');
+
+  const robots = await getText('/robots.txt');
+  if(robots.ok){
+    const allowsAI = /llms\.txt|sitemap|Disallow:\s*$/i.test(robots.text);
+    add('robots.txt 未拦截 AI 爬虫', allowsAI?'ok':'warn', allowsAI?'放行关键入口':'可能有限制', '/robots.txt');
+  } else {
+    add('robots.txt 可访问', 'warn', 'HTTP '+robots.status, '/robots.txt');
+  }
+
+  const idx = await head('/roboparts2026indexnow.txt');
+  add('IndexNow 密钥文件', idx.ok?'ok':'warn', idx.ok?'HTTP 200':'未找到', '/roboparts2026indexnow.txt');
+}
+
+async function checkMCP(){
+  const mcp = await head('/mcp');
+  add('MCP 托管端点 /mcp', mcp.ok?'ok':'err', mcp.ok?'HTTP 200':'HTTP '+mcp.status, '/mcp');
+
+  // 官方 Registry 探测（CORS 限制时常失败，用 no-cors 只测网络可达）
+  try{
+    const reg = await fetch('https://registry.modelcontext.io/servers/cc.roboparts/roboparts', {mode:'no-cors', cache:'no-store'});
+    add('MCP 官方 Registry', 'ok', '网络可达（CORS 隐藏具体状态）', 'https://registry.modelcontext.io/servers/cc.roboparts/roboparts');
+  }catch(e){
+    add('MCP 官方 Registry', 'warn', '探测受限，需手动确认', 'https://registry.modelcontext.io/servers/cc.roboparts/roboparts');
+  }
+
+  try{
+    const glama = await fetch('https://glama.ai/mcp/servers/@cc.roboparts/roboparts', {mode:'no-cors', cache:'no-store'});
+    add('Glama MCP 收录', 'ok', '网络可达（CORS 隐藏具体状态）', 'https://glama.ai/mcp/servers/@cc.roboparts/roboparts');
+  }catch(e){
+    add('Glama MCP 收录', 'warn', '探测受限，需手动确认', 'https://glama.ai/mcp/servers/@cc.roboparts/roboparts');
+  }
+}
+
+async function checkSubmit(){
+  const bing = await head('https://www.bing.com/indexnow?url=https://roboparts.cc/sitemap.xml');
+  // IndexNow endpoint 通常返回 400/200，HEAD 探测不太准，保守给 warn
+  add('Bing IndexNow 接口', 'warn', '需运行 scripts/promote.mjs 主动提交', 'https://www.bing.com/indexnow');
+
+  // 读取最近一次推广脉冲日志（如果公开目录存在）
+  try{
+    const runs = await fetch('/ops/promotion/runs/');
+    add('推广脉冲日志目录', runs.ok?'ok':'warn', runs.ok?'可访问':'目录未公开或为空');
+  }catch(e){
+    add('推广脉冲日志目录', 'warn', '无法探测');
+  }
+}
+
+// 国内引擎收录探测（CORS 限制，用 no-cors 仅测网络可达，并提供站点收录查询入口）
+async function checkDomestic(){
+  const engines = [
+    {name:'百度 Baidu', host:'https://www.baidu.com/s?wd=site%3Aroboparts.cc', submit:'https://ziyuan.baidu.com/site'},
+    {name:'360 搜索', host:'https://www.so.com/s?q=site%3Aroboparts.cc', submit:'https://www.so.com/s?q=site%3Aroboparts.cc'},
+    {name:'搜狗 Sogou', host:'https://www.sogou.com/web?query=site%3Aroboparts.cc', submit:'https://www.sogou.com/web?query=site%3Aroboparts.cc'},
+  ];
+  for(const e of engines){
+    try{
+      await fetch(e.host, {mode:'no-cors', cache:'no-store'});
+      add('国内收录：'+e.name, 'ok', '搜索入口可达，点右侧链接手动确认 site:roboparts.cc 是否出现', e.submit);
+    }catch(err){
+      add('国内收录：'+e.name, 'warn', '探测受限，请手动在 '+e.name+' 搜索 site:roboparts.cc', e.submit);
+    }
+  }
+  // 百度主动推送（需站长 token，未配置时给出入口）
+  add('百度主动推送', 'warn', '需在百度站长平台配置 token 后运行 scripts/promote.mjs（见 DOMESTIC_ENGINES）', 'https://ziyuan.baidu.com/site');
+}
+
+function render(){
+  const groups = {
+    basic: checks.filter(c=>['sitemap.xml','llms.txt','agent-discovery.json','robots.txt','IndexNow'].some(k=>c.name.includes(k))),
+    mcp: checks.filter(c=>c.name.includes('MCP') || c.name.includes('/mcp')),
+    submit: checks.filter(c=>c.name.includes('IndexNow') || c.name.includes('脉冲')),
+    domestic: checks.filter(c=>c.name.includes('国内收录') || c.name.includes('百度主动推送')),
+    todo: []
+  };
+
+  function rows(list, container){
+    container.innerHTML = list.map(c=>`
+      <div class="row">
+        <span class="name">${c.name}</span>
+        <span class="status ${c.status}">${c.status==='ok'?'✅ 正常':c.status==='warn'?'⚠️ '+c.detail:'❌ '+c.detail}</span>
+      </div>
+    `).join('');
+  }
+  rows(groups.basic, document.getElementById('basicList'));
+  rows(groups.mcp, document.getElementById('mcpList'));
+  rows(groups.submit, document.getElementById('submitList'));
+  if(groups.domestic.length) rows(groups.domestic, document.getElementById('domesticList'));
+
+  // 建议
+  const tips = [];
+  if(!checks.find(c=>c.name.includes('llms.txt') && c.status==='ok')) tips.push('补全 llms.txt 内容，让 AI 快速理解站点结构。');
+  if(!checks.find(c=>c.name.includes('/mcp') && c.status==='ok')) tips.push('确保 /mcp 端点稳定，这是被 AI Agent 直接调用的最强入口。');
+  if(!checks.find(c=>c.name.includes('sitemap.xml') && c.status==='ok')) tips.push('sitemap.xml 必须可访问，是搜索引擎与 AI 爬虫的入口地图。');
+  tips.push('国内覆盖：在百度站长平台（ziyuan.baidu.com）完成 DNS TXT 验证后，<code>scripts/promote.mjs</code> 的 DOMESTIC_ENGINES 会自动主动推送；360/搜狗已加入收录探测。');
+  tips.push('每周运行一次 <code>node scripts/promote.mjs</code> 重提 IndexNow 与 ping 搜索引擎。');
+  tips.push('在社区（知乎/Reddit/HN）发布带 roboparts.cc 链接的帖子，增加被 AI 训练数据引用的概率。');
+  document.getElementById('todoList').innerHTML = tips.map(t=>'• '+t).join('<br>');
+
+  const score = Math.round((ok/(ok+warn+err||1))*100);
+  document.getElementById('scoreNum').textContent = score;
+  document.getElementById('scoreNum').style.color = score>=80?varOK():score>=60?varWarn():varErr();
+  document.getElementById('okNum').textContent = ok;
+  document.getElementById('warnNum').textContent = warn;
+  document.getElementById('errNum').textContent = err;
+}
+
+function varOK(){ return getComputedStyle(document.documentElement).getPropertyValue('--ok').trim() }
+function varWarn(){ return getComputedStyle(document.documentElement).getPropertyValue('--warn').trim() }
+function varErr(){ return getComputedStyle(document.documentElement).getPropertyValue('--err').trim() }
+
+async function runAllChecks(){
+  checks.length=0; ok=warn=err=0;
+  document.getElementById('basicList').innerHTML = '<div class="row"><span class="name">检测中…</span></div>';
+  document.getElementById('mcpList').innerHTML = '<div class="row"><span class="name">检测中…</span></div>';
+  document.getElementById('submitList').innerHTML = '<div class="row"><span class="name">检测中…</span></div>';
+  await Promise.all([checkBasic(), checkMCP(), checkSubmit(), checkDomestic()]);
+  render();
+}
+
+runAllChecks();
+</script>
+</body>
+</html>

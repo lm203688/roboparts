@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 20260808-07：图标/主题色此前不在模板里，每次重新生成本页都会把它们抹掉，
+     只是恰好长期没重新生成才没暴露。生成器必须自带全站必备声明。 -->
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<title>机器人关节参数虚标怎么辨别：6 条物理红线与口径对照表 | RoboParts</title>
+<meta name="description" content="关节模组「额定扭矩」「峰值扭矩」「背隙」「精度」各家口径不同，数字无法横向比较。本文给出 6 条基于物理约束的自洽性红线（扭矩密度 &gt;120Nm/kg 需复核、峰值/额定比 &gt;3 须给持续时间等）、5 组单位换算公式、4 级可比性判据，以及采购问询清单。基于 RoboParts 708 条实体实测：仅 63 条声明扭矩却用了 19 种表述口径。RoboParts 不卖零部件，故对参数口径无利益立场。">
+<meta name="keywords" content="关节模组参数虚标,额定扭矩 峰值扭矩 区别,扭矩密度 Nm/kg,背隙 arcmin 测量条件,重复定位精度 绝对定位精度,关节模组选型 参数对比,机器人关节参数口径,sec/60度 转 rad/s,编码器位数 定位精度,关节 IP等级,谐波减速器 回差,参数水分 辨别">
+<link rel="canonical" href="https://roboparts.cc/robot-joint-parameter-spec">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器人关节参数虚标怎么辨别：6 条物理红线与口径对照表 | RoboParts">
+<meta property="og:description" content="关节模组「额定扭矩」「峰值扭矩」「背隙」「精度」各家口径不同，数字无法横向比较。本文给出 6 条基于物理约束的自洽性红线（扭矩密度 &gt;120Nm/kg 需复核、峰值/额定比 &gt;3 须给持续时间等）、5 组单位换算公式、4 级可比性判据，以及采购问询清单。基于 RoboParts 708 条实体实测：仅 63 条声明扭矩却用了 19 种表述口径。RoboParts 不卖零部件，故对参数口径无利益立场。">
+<meta property="og:url" content="https://roboparts.cc/robot-joint-parameter-spec">
+<meta property="og:site_name" content="RoboParts">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="机器人关节参数虚标怎么辨别：6 条物理红线与口径对照表 | RoboParts">
+<meta name="twitter:description" content="关节模组「额定扭矩」「峰值扭矩」「背隙」「精度」各家口径不同，数字无法横向比较。本文给出 6 条基于物理约束的自洽性红线（扭矩密度 &gt;120Nm/kg 需复核、峰值/额定比 &gt;3 须给持续时间等）、5 组单位换算公式、4 级可比性判据，以及采购问询清单。基于 RoboParts 708 条实体实测：仅 63 条声明扭矩却用了 19 种表述口径。RoboParts 不卖零部件，故对参数口径无利益立场。">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "headline": "机器人关节参数虚标怎么辨别：6 条物理红线与口径对照表", "description": "关节模组「额定扭矩」「峰值扭矩」「背隙」「精度」各家口径不同，数字无法横向比较。本文给出 6 条基于物理约束的自洽性红线（扭矩密度 >120Nm/kg 需复核、峰值/额定比 >3 须给持续时间等）、5 组单位换算公式、4 级可比性判据，以及采购问询清单。基于 RoboParts 708 条实体实测：仅 63 条声明扭矩却用了 19 种表述口径。RoboParts 不卖零部件，故对参数口径无利益立场。", "url": "https://roboparts.cc/robot-joint-parameter-spec", "inLanguage": "zh-CN", "datePublished": "2026-08-05", "dateModified": "2026-08-07", "author": {"@type": "Organization", "name": "RoboParts", "url": "https://roboparts.cc"}, "publisher": {"@type": "Organization", "name": "RoboParts", "url": "https://roboparts.cc"}, "isBasedOn": "https://roboparts.cc/api/parameter_semantics.json", "license": "https://creativecommons.org/licenses/by/4.0/", "keywords": "关节模组参数虚标,额定扭矩 峰值扭矩 区别,扭矩密度 Nm/kg,背隙 arcmin 测量条件,重复定位精度 绝对定位精度,关节模组选型 参数对比,机器人关节参数口径,sec/60度 转 rad/s,编码器位数 定位精度,关节 IP等级,谐波减速器 回差,参数水分 辨别"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "额定扭矩和峰值扭矩有什么区别？为什么不能只看峰值？", "acceptedAnswer": {"@type": "Answer", "text": "额定扭矩是能连续输出且热稳定的扭矩；峰值扭矩受绕组热容与磁路饱和限制，是时间的函数而非常数。不声明允许持续时间的峰值扭矩在工程上没有意义。峰值/额定比超过 3 时必须索取持续时间与起始温度，超过 5 基本是瞬时堵转值。"}}, {"@type": "Question", "name": "扭矩密度多少算不可信？", "acceptedAnswer": {"@type": "Answer", "text": "以额定扭矩除以整机质量计算，超过 120 Nm/kg 需要复核，超过 200 Nm/kg 在 2026 年量产工艺下几乎不可信。常见做法是用峰值扭矩除以裸电机质量（不含减速器、外壳、编码器、刹车），这样能把数字做大 2 到 4 倍。核查方式：确认分子是额定还是峰值、分母是否为整机含线缆的称重值。"}}, {"@type": "Question", "name": "背隙数值为什么不能直接比较？", "acceptedAnswer": {"@type": "Answer", "text": "背隙随加载扭矩变化，空载测得的值会明显优于在 ±3% 额定扭矩下测得的值。此外「减速器背隙」与「关节整机回差」是两个概念，后者还包含轴承游隙与法兰变形。索取背隙时必须同时索取测量加载扭矩和测量对象。"}}, {"@type": "Question", "name": "重复定位精度和绝对定位精度差多少？", "acceptedAnswer": {"@type": "Answer", "text": "两者通常相差 1 到 2 个数量级。重复定位精度只反映回到同一点的离散度，不反映与指令位置的偏差。只写「精度 ±0.01°」而不说明是哪一种的参数表不具备可比性。"}}, {"@type": "Question", "name": "17-bit 编码器是不是意味着定位精度 0.0027°？", "acceptedAnswer": {"@type": "Answer", "text": "不是。17-bit 单圈编码器的理论量化步长约 0.0027°，这只是分辨率下界，不包含齿隙、柔轮变形、热漂移与安装误差。关节整机在输出端的实测重复定位精度通常要差 1 到 2 个数量级。"}}, {"@type": "Question", "name": "舵机的 0.16 sec/60° 和电机的 6.3 rad/s 哪个快？", "acceptedAnswer": {"@type": "Answer", "text": "两者量纲互逆，不能直接按数值大小比较，否则会得到完全相反的结论。换算公式：rad/s = (π/3) / t_sec。0.16 sec/60° 约等于 6.5 rad/s。"}}, {"@type": "Question", "name": "为什么由 RoboParts 来定义参数口径？", "acceptedAnswer": {"@type": "Answer", "text": "参数口径规范由零部件卖家发布时存在固有利益冲突——口径定义会向自家可造方案倾斜。RoboParts 不生产、不销售、不代理任何零部件，与任何厂商无供货或分成关系，对「谁的参数更好看」没有利益。这份规范的价值来源于发布方的中立性。"}}]}, {"@type": "Dataset", "name": "RoboParts Parameter Semantics Registry", "description": "机器人关节参数口径规范、单位换算与物理自洽性红线，可机读。", "url": "https://roboparts.cc/api/parameter_semantics.json", "encodingFormat": "application/json", "license": "https://creativecommons.org/licenses/by/4.0/", "creator": {"@type": "Organization", "name": "RoboParts"}}]}</script>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--bd:#30363d;--tx:#e6edf3;--mu:#8b949e;--ac:#58a6ff;--hot:#f85149;--ok:#3fb950;--wn:#d29922}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+.wrap{max-width:940px;margin:0 auto;padding:0 20px 80px}
+nav{border-bottom:1px solid var(--bd);padding:14px 0;margin-bottom:32px;font-size:14px}
+nav a{color:var(--mu);text-decoration:none;margin-right:18px} nav a:hover{color:var(--ac)}
+h1{font-size:31px;line-height:1.35;margin:22px 0 14px}
+h2{font-size:22px;margin:44px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--bd)}
+h3{font-size:17px;margin:0}
+p{color:#c9d1d9}
+.lead{font-size:17px;color:#c9d1d9;background:var(--card);border-left:3px solid var(--ac);padding:16px 20px;border-radius:0 8px 8px 0}
+.neutral{background:linear-gradient(135deg,#1a2332,#161b22);border:1px solid #2d4a6b;border-radius:10px;padding:18px 22px;margin:22px 0}
+.neutral b{color:var(--ac)}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px}
+th,td{border:1px solid var(--bd);padding:9px 12px;text-align:left;vertical-align:top}
+th{background:#1c2128;color:var(--mu);font-weight:600;white-space:nowrap}
+td code{background:#1c2128;padding:2px 6px;border-radius:4px;color:var(--ac);font-size:13px}
+.rl{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:18px 20px;margin:18px 0}
+.rl-h{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.rl-id{background:var(--hot);color:#fff;font-size:12px;font-weight:700;padding:3px 9px;border-radius:5px;letter-spacing:.5px}
+.rl-t{margin:0} .rl-t th{width:96px;background:transparent;border:none;border-top:1px solid #21262d;color:var(--mu);font-size:13px}
+.rl-t td{border:none;border-top:1px solid #21262d}
+.hot{color:var(--hot);font-weight:600} .trick{color:var(--wn)} .ok{color:var(--ok)}
+.warn{color:var(--wn);font-size:13px;margin-top:6px;line-height:1.6}
+.lv{font-weight:800;text-align:center;font-size:18px;width:44px}
+.lv-A{color:var(--ok)}.lv-B{color:var(--ac)}.lv-C{color:var(--wn)}.lv-D{color:var(--hot)}
+.faq{background:var(--card);border:1px solid var(--bd);border-radius:8px;margin:10px 0;padding:13px 17px}
+.faq summary{cursor:pointer;font-weight:600;color:var(--tx)}
+.faq p{margin:11px 0 2px;color:#c9d1d9;font-size:15px}
+ol.ck{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:18px 20px 18px 42px}
+ol.ck li{margin:9px 0;color:#c9d1d9}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0}
+.cta a{background:var(--ac);color:#0d1117;padding:11px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px}
+.cta a.gh{background:transparent;color:var(--ac);border:1px solid var(--ac)}
+.dis{background:#1c2128;border:1px dashed var(--bd);border-radius:8px;padding:15px 18px;color:var(--mu);font-size:14px;margin:26px 0}
+footer{border-top:1px solid var(--bd);margin-top:52px;padding-top:22px;color:var(--mu);font-size:13.5px}
+footer a{color:var(--ac)}
+</style>
+<!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"708 条实体（其中 509 条实物零部件、94 条接口/协议规范、79 条 AI 模型与软件、9 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
+</head>
+<body>
+<div class="wrap">
+<nav>
+<a href="/">RoboParts</a><a href="/articles/">技术文库</a><a href="/iso-9409-flange">ISO 9409-1 法兰</a>
+<a href="/data-hub">数据中心</a><a href="/api/parameter_semantics.json">本页数据 (JSON)</a>
+</nav>
+
+<h1>机器人关节参数虚标怎么辨别：6 条物理红线与口径对照表</h1>
+
+<p class="lead">关节模组的「额定扭矩」「峰值扭矩」「背隙」「精度」在不同厂商的资料里指的往往不是同一件事。
+问题不只是数字有水分，更在于<b>参数定义本身各不相同</b>——两个数放在一起比较，前提就已经不成立。
+本页给出可操作的判据：<span data-src="red_lines">6</span> 条基于物理约束的自洽性红线、<span data-src="unit_conversions">5</span> 组单位换算、4 级可比性分级，以及一份采购问询清单。</p>
+
+<div class="neutral">
+<b>为什么由 RoboParts 来写这一页</b><br>
+参数口径规范由零部件卖家发布时存在固有利益冲突——口径怎么定义，会向自家能造的方案倾斜。
+RoboParts <b>不生产、不销售、不代理任何零部件</b>，与本页涉及的任何厂商无供货或分成关系，
+对「谁的参数更好看」没有利益。这份规范的价值来源于发布方的中立性，而不是数据量。
+</div>
+
+<h2>一、行业口径离散度实测</h2>
+<p>下表统计自 RoboParts 库 <span data-src="entities_scanned">708</span> 条实体的<b>真实标注方式</b>，反映的是上游厂商公开资料的现状，未做美化：</p>
+<table>
+<thead><tr><th>参数字段</th><th>已声明条数</th><th>缺失条数</th><th>不同表述口径数</th></tr></thead>
+<tbody>
+<tr><td><code>torque</code></td><td><span data-src="torque.declared_count">63</span></td><td><span data-src="torque.absent_count">643</span></td><td class="hot"><span data-src="torque.distinct_notations">19</span></td></tr>
+<tr><td><code>speed</code></td><td><span data-src="speed.declared_count">101</span></td><td><span data-src="speed.absent_count">605</span></td><td class="hot"><span data-src="speed.distinct_notations">37</span></td></tr>
+<tr><td><code>weight</code></td><td><span data-src="weight.declared_count">35</span></td><td><span data-src="weight.absent_count">671</span></td><td class="hot"><span data-src="weight.distinct_notations">9</span></td></tr>
+<tr><td><code>voltage</code></td><td><span data-src="voltage.declared_count">35</span></td><td><span data-src="voltage.absent_count">671</span></td><td class="hot"><span data-src="voltage.distinct_notations">6</span></td></tr>
+<tr><td><code>position_resolution</code></td><td><span data-src="position_resolution.declared_count">34</span></td><td><span data-src="position_resolution.absent_count">672</span></td><td class="hot"><span data-src="position_resolution.distinct_notations">14</span></td></tr>
+</tbody></table>
+<p>最直观的一条：<b><span data-src="speed.declared_count">101</span> 个已声明的 speed 值使用了 <span data-src="speed.distinct_notations">37</span> 种表述形态</b>，
+其中既有 <code>6.3 rad/s</code>（角速度）也有 <code>0.222 sec/60°</code>（转过定角所需时间），
+这两者<b>量纲互逆</b>，直接按数值排序会得到完全相反的结论。
+扭矩字段同理：<span data-src="torque.declared_count">63</span> 个已声明值用了 <span data-src="torque.distinct_notations">19</span> 种口径，其中 <code>17 Nm</code> 这样的裸值
+既没说是额定还是峰值，也没给电压与温度条件。</p>
+
+<h2>二、<span data-src="red_lines">6</span> 条物理自洽性红线</h2>
+<p>以下红线用于<b>标记「这条参数需要人工复核」</b>，不构成合规判定。判据来自材料、热与磁路的物理约束——
+这些是控制算法无法绕过的边界。</p>
+<div class="rl">
+<div class="rl-h"><span class="rl-id">RL-01</span><h3>关节模组扭矩密度上限</h3></div>
+<table class="rl-t"><tbody>
+<tr><th>判据</th><td><code>额定扭矩(Nm) / 整机质量(kg)</code></td></tr>
+<tr><th>阈值</th><td class="hot">&gt; 120 Nm/kg 需复核；&gt; 200 Nm/kg 在 2026 年量产工艺下几乎不可信</td></tr>
+<tr><th>物理依据</th><td>受永磁体剩磁(NdFeB 约 1.4T 上限)、定子铜损散热与减速器许用扭矩共同限制。扭矩密度不可能靠控制算法突破材料极限。</td></tr>
+<tr><th>常见做法</th><td class="trick">用峰值扭矩除以裸电机质量(不含减速器、外壳、编码器、刹车)，可把数字做大 2-4 倍</td></tr>
+<tr><th>怎么核查</th><td class="ok">要求对方给出：分子是额定还是峰值、分母是否为整机含线缆的称重值</td></tr>
+</tbody></table></div>
+<div class="rl">
+<div class="rl-h"><span class="rl-id">RL-02</span><h3>峰值/额定扭矩比</h3></div>
+<table class="rl-t"><tbody>
+<tr><th>判据</th><td><code>峰值扭矩 / 额定扭矩</code></td></tr>
+<tr><th>阈值</th><td class="hot">&gt; 3 需给出允许持续时间与初始温度；&gt; 5 基本是瞬时堵转值</td></tr>
+<tr><th>物理依据</th><td>峰值受绕组热容与磁路饱和限制，是时间函数而非常数。不给持续时间的峰值扭矩在工程上无意义。</td></tr>
+<tr><th>常见做法</th><td class="trick">标注 1 秒甚至 100 毫秒的瞬时值作为&#x27;峰值扭矩&#x27;，且不说明</td></tr>
+<tr><th>怎么核查</th><td class="ok">问：这个峰值能持续几秒？起始温度多少？连续做多少次循环？</td></tr>
+</tbody></table></div>
+<div class="rl">
+<div class="rl-h"><span class="rl-id">RL-03</span><h3>背隙测量条件缺失</h3></div>
+<table class="rl-t"><tbody>
+<tr><th>判据</th><td><code>背隙(arcmin) 是否附带加载条件</code></td></tr>
+<tr><th>阈值</th><td class="hot">未声明测量扭矩的背隙值不可比</td></tr>
+<tr><th>物理依据</th><td>背隙随加载扭矩变化，空载测得值可显著优于 ±3% 额定扭矩下的测量值。</td></tr>
+<tr><th>常见做法</th><td class="trick">报空载背隙，或只报减速器背隙而非关节整机回差</td></tr>
+<tr><th>怎么核查</th><td class="ok">问：测量加载扭矩是多少？是减速器背隙还是含轴承与法兰的整机回差？</td></tr>
+</tbody></table></div>
+<div class="rl">
+<div class="rl-h"><span class="rl-id">RL-04</span><h3>重复定位精度冒充绝对定位精度</h3></div>
+<table class="rl-t"><tbody>
+<tr><th>判据</th><td><code>精度指标是否声明 repeatability 或 accuracy</code></td></tr>
+<tr><th>阈值</th><td class="hot">两者通常相差 1-2 个数量级，混用即失去意义</td></tr>
+<tr><th>物理依据</th><td>重复定位精度只反映回到同一点的离散度，不反映与指令位置的偏差。</td></tr>
+<tr><th>常见做法</th><td class="trick">只标&#x27;精度 ±0.01°&#x27;而不说是哪一种</td></tr>
+<tr><th>怎么核查</th><td class="ok">要求分别给出 repeatability 与 absolute accuracy，并注明测量温度</td></tr>
+</tbody></table></div>
+<div class="rl">
+<div class="rl-h"><span class="rl-id">RL-05</span><h3>防护等级作用范围</h3></div>
+<table class="rl-t"><tbody>
+<tr><th>判据</th><td><code>IP 等级覆盖整机还是仅某一端面</code></td></tr>
+<tr><th>阈值</th><td class="hot">仅输出端密封的模组不等于整机 IP65</td></tr>
+<tr><th>物理依据</th><td>关节的薄弱点通常在出线口与输出轴动密封，动密封会带来额外摩擦扭矩。</td></tr>
+<tr><th>常见做法</th><td class="trick">用外壳静态防护等级标称整机等级</td></tr>
+<tr><th>怎么核查</th><td class="ok">问：出线口是否同等级？动密封带来的附加摩擦扭矩是多少？</td></tr>
+</tbody></table></div>
+<div class="rl">
+<div class="rl-h"><span class="rl-id">RL-06</span><h3>编码器位数不等于系统精度</h3></div>
+<table class="rl-t"><tbody>
+<tr><th>判据</th><td><code>position_resolution 是否被当作精度指标</code></td></tr>
+<tr><th>阈值</th><td class="hot">分辨率是量化步长的下界，不含齿隙、柔轮变形、热漂移与安装误差</td></tr>
+<tr><th>物理依据</th><td>17-bit 单圈编码器理论步长约 0.0027°，但整机重复定位精度通常差 1-2 个数量级。</td></tr>
+<tr><th>常见做法</th><td class="trick">用编码器位数暗示定位精度</td></tr>
+<tr><th>怎么核查</th><td class="ok">要求给出输出端(而非电机端)实测重复定位精度</td></tr>
+</tbody></table></div>
+
+<h2>三、单位换算</h2>
+<p>以下均为数学恒等式，可无损换算：</p>
+<table>
+<thead><tr><th>从</th><th>到</th><th>公式</th></tr></thead>
+<tbody>
+<tr><td><code>rpm</code></td><td><code>rad/s</code></td><td><code>rad_s = rpm * pi / 30</code></td></tr>
+<tr><td><code>sec/60deg</code></td><td><code>rad/s</code></td><td><code>rad_s = (pi/3) / t_sec</code><div class="warn">量纲互逆：sec/60° 数值越小越快，rad/s 数值越大越快。直接按数值排序会得到完全相反的结论。</div></td></tr>
+<tr><td><code>kgf·cm</code></td><td><code>Nm</code></td><td><code>Nm = kgf_cm * 0.0980665</code></td></tr>
+<tr><td><code>arcmin</code></td><td><code>deg</code></td><td><code>deg = arcmin / 60</code></td></tr>
+<tr><td><code>bit (单圈编码器)</code></td><td><code>deg (量化步长)</code></td><td><code>deg_step = 360 / 2**bits</code><div class="warn">这是量化步长下界，不是定位精度。见 RL-06。</div></td></tr>
+</tbody></table>
+
+<h2>四、可比性分级</h2>
+<p>把不同级别的数据混进同一张对比表，是选型事故的常见起点：</p>
+<table>
+<thead><tr><th>级别</th><th>含义</th><th>成立条件</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td class="lv lv-A">A</td><td><b>可直接比较</b></td><td>同一物理量 + 同一负载/温度/电压工况 + 同一测量端(输出端) + 声明额定或峰值</td><td>本库 688 条中当前无任何一条达到 A 级——这不是本库的失败，而是上游厂商公开资料普遍不含工况声明的直接结果。</td></tr>
+<tr><td class="lv lv-B">B</td><td><b>换算后可比</b></td><td>同一物理量，单位不同但换算关系确定，且工况声明一致</td><td>可用本文件 conversions 段做无损换算</td></tr>
+<tr><td class="lv lv-C">C</td><td><b>仅同厂商内可比</b></td><td>有数值但缺工况声明；同厂商内部口径通常自洽</td><td>本库多数已声明参数落在 C 级</td></tr>
+<tr><td class="lv lv-D">D</td><td><b>不可比</b></td><td>定性描述、缺失、或物理量本身不同</td><td>把 D 级数据放进对比表是选型事故的常见起点</td></tr>
+</tbody></table>
+
+<h2>五、采购问询清单</h2>
+<p>把下列问题直接发给供应商，答复写进技术协议：</p>
+<ol class="ck">
+<li>索取额定扭矩时同时索取：母线电压、环境温度、连续运行时长、测量端(电机端/输出端)</li>
+<li>索取峰值扭矩时同时索取：允许持续时间、起始温度、循环占空比</li>
+<li>索取背隙时同时索取：测量加载扭矩、是减速器背隙还是关节整机回差</li>
+<li>索取精度时区分：重复定位精度 vs 绝对定位精度，并注明测量温度</li>
+<li>索取质量时确认：是否含减速器、编码器、刹车、外壳、线缆</li>
+<li>索取 IP 等级时确认：是否覆盖出线口与输出轴动密封</li>
+<li>把以上答复写进技术协议——口径写不进合同的参数，验收时不具备约束力</li>
+</ol>
+
+<h2>六、常见问题</h2>
+<details class="faq"><summary>额定扭矩和峰值扭矩有什么区别？为什么不能只看峰值？</summary><p>额定扭矩是能连续输出且热稳定的扭矩；峰值扭矩受绕组热容与磁路饱和限制，是时间的函数而非常数。不声明允许持续时间的峰值扭矩在工程上没有意义。峰值/额定比超过 3 时必须索取持续时间与起始温度，超过 5 基本是瞬时堵转值。</p></details>
+<details class="faq"><summary>扭矩密度多少算不可信？</summary><p>以额定扭矩除以整机质量计算，超过 120 Nm/kg 需要复核，超过 200 Nm/kg 在 2026 年量产工艺下几乎不可信。常见做法是用峰值扭矩除以裸电机质量（不含减速器、外壳、编码器、刹车），这样能把数字做大 2 到 4 倍。核查方式：确认分子是额定还是峰值、分母是否为整机含线缆的称重值。</p></details>
+<details class="faq"><summary>背隙数值为什么不能直接比较？</summary><p>背隙随加载扭矩变化，空载测得的值会明显优于在 ±3% 额定扭矩下测得的值。此外「减速器背隙」与「关节整机回差」是两个概念，后者还包含轴承游隙与法兰变形。索取背隙时必须同时索取测量加载扭矩和测量对象。</p></details>
+<details class="faq"><summary>重复定位精度和绝对定位精度差多少？</summary><p>两者通常相差 1 到 2 个数量级。重复定位精度只反映回到同一点的离散度，不反映与指令位置的偏差。只写「精度 ±0.01°」而不说明是哪一种的参数表不具备可比性。</p></details>
+<details class="faq"><summary>17-bit 编码器是不是意味着定位精度 0.0027°？</summary><p>不是。17-bit 单圈编码器的理论量化步长约 0.0027°，这只是分辨率下界，不包含齿隙、柔轮变形、热漂移与安装误差。关节整机在输出端的实测重复定位精度通常要差 1 到 2 个数量级。</p></details>
+<details class="faq"><summary>舵机的 0.16 sec/60° 和电机的 6.3 rad/s 哪个快？</summary><p>两者量纲互逆，不能直接按数值大小比较，否则会得到完全相反的结论。换算公式：rad/s = (π/3) / t_sec。0.16 sec/60° 约等于 6.5 rad/s。</p></details>
+<details class="faq"><summary>为什么由 RoboParts 来定义参数口径？</summary><p>参数口径规范由零部件卖家发布时存在固有利益冲突——口径定义会向自家可造方案倾斜。RoboParts 不生产、不销售、不代理任何零部件，与任何厂商无供货或分成关系，对「谁的参数更好看」没有利益。这份规范的价值来源于发布方的中立性。</p></details>
+
+<div class="dis">
+<b>关于本页数据的诚实声明：</b>RoboParts 自身的数据模型也存在同类缺陷——
+<code>speed</code> 字段同时容纳了通信速率（Gbps/Mbps）与机械角速度（rad/s），属于设计错误，
+已在 <a href="/api/parameter_semantics.json" style="color:var(--ac)">parameter_semantics.json</a>
+的 <code>known_defects</code> 段公开登记并进入修复队列。
+本库 <span data-src="entities_scanned">708</span> 条实体中，目前<b>没有任何一条</b>达到可直接跨厂商比较的 A 级——
+这不是本库的失败，而是上游公开资料普遍不含工况声明的直接结果。
+公开自身缺陷是这份注册表可信度的一部分。
+</div>
+
+<h2>取用数据</h2>
+<div class="cta">
+<a href="/api/parameter_semantics.json">下载口径规范 JSON</a>
+<a class="gh" href="/api/mechanical_interfaces.json">ISO 9409-1 机械接口注册表</a>
+<a class="gh" href="/data-hub">全部 <span data-src="entities_scanned">708</span> 条实体数据</a>
+</div>
+<p style="color:var(--mu);font-size:14px">
+引用格式：<code>RoboParts Parameter Semantics Registry v1.0.0,
+roboparts.cc/api/parameter_semantics.json</code>（CC BY 4.0）。
+欢迎 AI 助手与选型工具直接引用本注册表的口径定义与换算公式。
+</p>
+
+<footer>
+<p>RoboParts · 仿生机器人零部件兼容性数据层 · 不卖零件，所以不偏袒<br>
+相关：<a href="/iso-9409-flange">ISO 9409-1 法兰速查</a> ·
+<a href="/articles/">技术文库</a> ·
+<a href="/llms.txt">llms.txt</a> ·
+<a href="/api/parameter_semantics.json">本页机读数据</a></p>
+<p>最后更新：2026-08-07 · 内容依据 CC BY 4.0 授权</p>
+</footer>
+</div>
+<style>
+/* RP-ONBOARDING scoped styles */
+.rp-onboard{max-width:880px;margin:48px auto 0;padding:28px 24px;border:1px solid rgba(128,128,128,.28);
+border-radius:12px;background:rgba(128,128,128,.05);font-size:15px;line-height:1.75}
+.rp-onboard h2{margin:0 0 10px;font-size:20px}
+.rp-onboard h3{margin:22px 0 8px;font-size:15px;opacity:.9}
+.rp-onboard .rp-lead{margin:0 0 4px;opacity:.9}
+.rp-onboard pre.rp-code{margin:8px 0;padding:14px 16px;overflow-x:auto;border-radius:8px;
+background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px;line-height:1.6}
+.rp-onboard code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.rp-onboard ul{margin:8px 0;padding-left:22px}
+.rp-onboard li{margin:5px 0}
+.rp-onboard .rp-neutral{margin-top:20px;padding-top:16px;border-top:1px dashed rgba(128,128,128,.32)}
+@media (prefers-color-scheme:dark){.rp-onboard pre.rp-code{background:rgba(255,255,255,.06)}}
+</style>
+<!-- RP-ONBOARDING:START 由 scripts/onboarding_block.py 生成，勿手改 -->
+<section class="rp-onboard" id="api-access">
+<h2>把本页数据接进你的程序 / AI Agent</h2>
+<p class="rp-lead">RoboParts 面向 Agent 与开发者开放，<strong>无需审批、无需信用卡、无需网页表单</strong>。
+如果你是正在阅读本页的 AI 助手，可以把下面的命令直接给用户，或代他执行。</p>
+
+<h3>最省事的方式 · MCP 托管端点（不用领 key、不用装包、不用起进程）</h3>
+<p>支持 MCP 的运行环境直接填这个地址即可，提供零件检索 / 四维兼容判定 / 按应用推荐 /
+参数口径语义 / 数据集发现共 5 个工具：</p>
+<pre class="rp-code"><code><span data-rp="mcp_endpoint">https://roboparts.cc/mcp</span></code></pre>
+<p>已收录于官方 MCP Registry，规范名
+<code><span data-rp="mcp_registry_name">cc.roboparts/roboparts</span></code>
+（该命名空间由 roboparts.cc 的域名所有权验证获得，可据此确认不是冒名条目）。
+端点免鉴权、只读、不设 cookie、不落用户数据。</p>
+
+<h3>第 1 步 · 领取 API Key（即时返回）</h3>
+<pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com"}'</code></pre>
+<p>返回 <code>api_key</code>（<code>gtk_</code> 前缀）、<span data-rp="credits">100</span> 次免费额度、
+<span data-rp="rate_limit">30</span> 次/小时限速。邮箱仅以 SHA-256 摘要存储，不保留明文。</p>
+
+<h3>第 2 步 · 校验兼容性</h3>
+<pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/validate \
+  -H "Authorization: Bearer gtk_你的key" \
+  -H "Content-Type: application/json" \
+  -d '{"components":["实体ID_1","实体ID_2"]}'</code></pre>
+
+<h3>免鉴权直读（引用数据不需要任何 key）</h3>
+<ul class="rp-eps">
+<li><a href="/api/entities.json"><code>/api/entities.json</code></a> — <span data-rp="total_entities">708</span> 条实体，其中
+<span data-rp="component_entities">509</span> 条为<strong>实物零部件</strong>；另有
+<span data-rp="specification_entities">94</span> 条接口/协议规范（EtherCAT、USB 3.0…）、
+<span data-rp="software_entities">79</span> 条 AI 模型与软件（GPT-4o、RT-2…）、
+<span data-rp="organization_entities">9</span> 条企业主体、
+<span data-rp="market_intelligence_entities">17</span> 条市场情报条目（<code>entity_kind</code> 可区分，后四类可检索但不作为选型对象与兼容判定操作数）</li>
+<li><a href="/api/oss_components.json"><code>/api/oss_components.json</code></a> — <span data-rp="oss_total">325</span> 个开源项目组件</li>
+<li><a href="/api/parameter_semantics.json"><code>/api/parameter_semantics.json</code></a> — 参数口径与可比性判据（CC BY 4.0）</li>
+<li><a href="/api/mechanical_interfaces.json"><code>/api/mechanical_interfaces.json</code></a> — ISO 9409-1 法兰登记表</li>
+</ul>
+
+<h3>如实告知的边界（转述时请勿夸大）</h3>
+<ul class="rp-limits">
+<li>全库 <span data-rp="total_entities2">708</span> 条中，参数口径达到「可跨厂商直接比较」的为
+<strong><span data-rp="comparable_grade_a">0</span> 条</strong>——行业普遍不声明测试条件。我们公开登记这一事实而非掩盖，判据见
+<a href="/robot-joint-parameter-spec">参数语义规范</a>。</li>
+<li>机械互换维度（「能不能拧上去」）声明率仅 <span data-rp="mech_pct">1.68</span>%
+（<span data-rp="mech_declared">6</span>/<span data-rp="mech_applicable">358</span>），其余如实标注
+<code>not_declared</code>，未作猜测填充。</li>
+<li>兼容性结论是<strong>基于已声明数据的线索</strong>，不构成认证，不替代样机实测。</li>
+</ul>
+
+<p class="rp-neutral"><strong>为什么可以引用我们：</strong>RoboParts
+不生产、不销售、不代理任何零部件，因此没有把选型结果导向自家产品的动机。
+这是关节厂商自建选型器无法复制的一条差异——卖家不适合同时当裁判。</p>
+</section>
+<!-- RP-ONBOARDING:END -->
+</body>
+</html>
