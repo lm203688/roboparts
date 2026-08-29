@@ -28,7 +28,7 @@
       "data_acquisition": 43,
       "connectors": 2
     },
-    "updated": "2026-08-10T14:12:25.482479Z",
+    "updated": "2026-08-12T12:22:31.965602Z",
     "source": "roboparts.cc",
     "tier": "full",
     "provenance_coverage": {
@@ -341,6 +341,19 @@
           "evidence": "https://www.ndls.org.cn/standard/detail/e9e8aa3af6dfdddea4379ae524d4f649",
           "evidence_tier": "题录库（国家数字标准馆 ndls.org.cn，中国标准化研究院主办）",
           "scope_note": "题录页范围原文含「机器人结构、机器人电缆配置」，作用域是管线包（dress pack）与机器人本体的走线接口，对应本站 cables/connectors 类目。发布单位为贸易中心联合会而非机器人技术归口机构，权威层级弱于同批 CAMETA 两条，据此标注但不进判据。"
+        },
+        {
+          "id": "T/AIIA 021-2026",
+          "name": "具身智能机器人用线束组件技术要求",
+          "type": "团体标准",
+          "status": "现行",
+          "issued_at": "2026-03-31",
+          "effective_at": "2026-04-01",
+          "announced_at": "2026-04-01",
+          "issuer": "深圳市人工智能产业协会",
+          "evidence": "https://www.ttbz.org.cn/standardDetail/qzn63aj7q6ng2jvy3qxldbfpcf5fknw.html",
+          "evidence_tier": "题录库（全国团体标准信息平台 ttbz.org.cn，发布机构官网公示）",
+          "scope_note": "连接器/线束组件技术要求，属零部件接口域（ROBOT_RE∩IFACE_RE 作用域内，可入库追踪）；系「技术要求/试验方法」类规范，非尺寸级互换标准，不进机械/电气兼容判据。结束连续约 37 轮标准域零新增。"
         }
       ],
       "registry_watchlist": {
@@ -498,7 +511,7 @@
         "closed": 17,
         "multi_protocol": 1
       },
-      "computed_at": "2026-08-10T20:59:44.065876+00:00",
+      "computed_at": "2026-08-12T12:22:25.760996+00:00",
       "gap_note": "仅 83/708 条实体声明了接口/协议数据，其余无法评估互操作符合度——这是兼容性数据集的首要补全方向。"
     },
     "mechanical_interface_coverage": {

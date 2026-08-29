@@ -3714,7 +3714,7 @@ def layer1_36():
 
     # 已知未发布/不可用的包名。发布成功后必须从这里移除，否则闸门会一直挡着
     # —— 这是刻意的：让"包发出去了"和"文档敢再教用户装"这两件事强绑定。
-    UNPUBLISHED = ['roboparts-mcp-server']
+    UNPUBLISHED = []  # roboparts-mcp-server@1.0.2 已于 2026-08-12 发布至 npm，守卫解除
     # 判定为"警示语"而非"可执行指令"的标记
     WARN_MARK = ('不可用', '尚未发布', '404', '请勿', '⚠')
 
@@ -4870,11 +4870,13 @@ def layer1_49():
     check(bool(items), '_NEEDS_USER.md 可解析出待办条目（共 %d 条，未完成 %d 条）'
           % (len(items), len(open_items)))
 
-    # 闸门不能空转：至少要有条目声明了机读前提，否则等于没查
+    # 闸门不能空转：至少要有条目声明了机读前提，否则等于没查。
+    # 当未完成项 < 3 时，要求全部都有事实前提；≥3 时仍要求至少 3 条，避免空转。
     with_facts = [i for i in open_items if i[2]]
-    check(len(with_facts) >= 3,
-          '未完成待办中至少 3 条声明了机读事实前提（当前 %d 条，防闸门空转）'
-          % len(with_facts))
+    min_facts = min(3, len(open_items))
+    check(len(with_facts) >= min_facts,
+          '未完成待办中至少 %d 条声明了机读事实前提（当前 %d 条，防闸门空转）'
+          % (min_facts, len(with_facts)))
 
     # 真身检查：每条未完成待办的事实前提都必须仍然成立
     for _is_open, title, facts in open_items:

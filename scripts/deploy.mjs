@@ -200,6 +200,27 @@ snapshotWorkingTree(ROOT);
   else console.warn('   ⚠️ 训练数据集导出失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
 }
 
+// 0b3) 真实需求信号回流（api/demand-signal.json）
+// 20260815-补强：demand_scan.mjs 现算的「真实社区兼容性提问」信号原本是一次性 ops 报告，
+// scoreboard.html 里对应单元格是人工维护日志 —— 监听器产物没回流到站上可读端点（H4/L6 断点）。
+// 这里把最新 ops/demand-signal-*.json 在部署前无条件复制到 api/，让 /api/demand-signal
+// 端点与计分板自动读取，取代手填。部署本就不依赖出网，复制本地文件零风险。
+{
+  const opsDir = path.join(ROOT, 'ops');
+  const sigFiles = fs.existsSync(opsDir)
+    ? fs.readdirSync(opsDir).filter((f) => /^demand-signal-\d{4}-\d{2}-\d{2}\.json$/.test(f))
+        .map((f) => ({ f, t: fs.statSync(path.join(opsDir, f)).mtimeMs }))
+        .sort((a, b) => b.t - a.t)
+    : [];
+  const src = sigFiles[0] ? path.join(opsDir, sigFiles[0].f) : null;
+  if (src) {
+    fs.copyFileSync(src, path.join(ROOT, 'api', 'demand-signal.json'));
+    console.log(`   ✅ 需求信号已回流: ${sigFiles[0].f} → api/demand-signal.json`);
+  } else {
+    console.warn('   ⚠️ 未发现 ops/demand-signal-*.json，跳过回流（端点将返回 404 直至首次扫描）');
+  }
+}
+
 // 0c) 机读接入声明兜底注入（meta.access）
 // 20260808-04：inject_api_access.py 的 docstring 自称「由 deploy 前置与各 build 脚本调用，
 // 不依赖任何人记得手工执行」，但实测 deploy.mjs 里对它的引用是 **0 处** —— 文档写了 ≠ 挂上了，
@@ -226,7 +247,20 @@ snapshotWorkingTree(ROOT);
 
 // 1) 部署（wrangler 以 git 根为源；私有目录靠 _middleware.js 在边缘 404 拦截）
 console.log('[1/3] 部署到 Cloudflare Pages...');
-const dep = spawnSync('npx', ['wrangler', 'pages', 'deploy', '.', '--project-name=' + PROJECT], {
+// 修复（20260814）：npx 会拉取最新 wrangler（实测 4.123），其 pages deploy 在部分账号下
+// 误报 "The Pages project 'robotparts' does not exist"（同账号 project list 却正常列出）。
+// 优先用 WRANGLER_BIN 指定的可复现 wrangler（格式 "node.exe|wrangler.js"），否则回退 npx。
+const WRANGLER_BIN = process.env.WRANGLER_BIN;
+let wranglerCmd, wranglerArgs;
+if (WRANGLER_BIN) {
+  const [wbNode, wbWjs] = WRANGLER_BIN.split('|');
+  wranglerCmd = wbNode;
+  wranglerArgs = [wbWjs, 'pages', 'deploy', '.', '--project-name=' + PROJECT];
+} else {
+  wranglerCmd = 'npx';
+  wranglerArgs = ['wrangler', 'pages', 'deploy', '.', '--project-name=' + PROJECT];
+}
+const dep = spawnSync(wranglerCmd, wranglerArgs, {
   stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8', cwd: ROOT, shell: true,
 });
 const depOut = (dep.stdout || '') + '\n' + (dep.stderr || '');
@@ -303,7 +337,7 @@ async function verify() {
       errs.push(`字段级内容漂移: ${fieldDrift.length} 条实体线上与真相源字段不一致（示例: ${fieldDrift.slice(0, 3).join(', ')}）`);
     }
   } catch (e) { errs.push('读取线上 /api/data.json 失败: ' + e.message); }
-  const pages = ['/', '/selection.html', '/designer.html', '/suppliers.html', '/pricing.html', '/bom-manager.html', '/urdf-library.html', '/data-hub.html', '/bom-checker.html', '/oss.html', '/adapter-generator', '/copilot', '/agent-architecture', '/build-planner', '/geo-dashboard', '/mcp-guide', '/skills/manifest.json'];
+  const pages = ['/', '/selection.html', '/designer.html', '/suppliers.html', '/pricing.html', '/bom-manager.html', '/urdf-library.html', '/data-hub.html', '/bom-checker.html', '/oss.html', '/adapter-generator', '/copilot', '/agent-architecture', '/build-planner', '/geo-dashboard', '/mcp-guide', '/skills/manifest.json', '/waitlist.html', '/scoreboard.html', '/embed/lookup.html'];
   // OSS 数据层一致性（CL1 飞轮产物）
   try {
     const localOss = JSON.parse((await import('node:fs')).readFileSync(path.join(ROOT, 'api/oss_components.json'), 'utf8')).meta.total_entities;
@@ -324,7 +358,7 @@ async function verify() {
    * 的对外通道。等于一边买曝光，一边对来探活的人说"我不在"。
    * 校验只查"不是 404"（405/200 都算活着），避免把方法语义写死。
    */
-  for (const ep of ['/mcp', '/api/register', '/api/validate', '/api/data.json']) {
+  for (const ep of ['/mcp', '/api/register', '/api/validate', '/api/data.json', '/api/waitlist', '/api/badge', '/api/recommend', '/api/demand-signal']) {
     try {
       const r = await fetch(TARGET + ep, { method: 'HEAD', headers: SELFTEST_HEADERS });
       // 【20260807-17 收紧】原先 HEAD 拿到 404 会回退 GET，只要 GET 通就算存活。

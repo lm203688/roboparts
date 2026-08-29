@@ -1,0 +1,23 @@
+Subject: RoboParts — an open compatibility dataset for humanoid/robot parts, looking to fit into the ROS ecosystem
+
+Hi Open Robotics / OSRA team,
+
+I'm building RoboParts (https://www.roboparts.cc), an open dataset and compatibility-matching layer for bionic/humanoid robot parts — actuators, joints, mounts, connectors, sensors. Think "PCPartPicker for robots": we catalog parts with machine-readable mechanical/electrical interface specs so builders can check what fits what before they buy.
+
+Current state (honest):
+- 708 parts across 11 categories, sourced from open catalogs (ROS Discourse, manufacturer docs, OSS).
+- A compatibility engine that matches parts by interface (ISO 9409-1 flange, mating dimensions, electrical protocol).
+- Published openly on ModelScope (https://www.modelscope.cn/datasets/lm203688/roboparts-sync) under CC BY 4.0.
+
+Why I'm emailing: the open humanoid DIY ecosystem is growing fast (Asimov, ROBOTIS AI Sapiens, Berkeley Humanoid Lite, OpenFigure, and many ROS 2 builders), and they keep hitting the same wall — "which actuator/mount actually fits my build?" Today they solve it with BOM lists and manual links, not a compatibility layer. RoboParts is trying to be that layer, and it's naturally ROS-aligned (interface contracts, REP-style specs).
+
+I'm not asking for funding. I'd value your read on:
+1. Whether a parts-compatibility dataset belongs in the ROS/OSRA ecosystem, and how to structure it as a proper REP / interface package.
+2. Whether it could qualify for infra/community support (e.g. Build Farm Backer, or the $250k infrastructure track) as a shared resource for builders.
+3. A community showcase spot so ROS builders can kick the tires.
+
+Happy to contribute it as open infrastructure rather than a closed product. If this isn't a fit, a one-line pointer to the right venue would still help a lot.
+
+Thanks,
+Lexing
+RoboParts — https://www.roboparts.cc

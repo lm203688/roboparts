@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RoboParts · 抢先体验 / 合作意向</title>
+<style>
+  :root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .wrap{width:100%;max-width:560px;background:var(--card);border:1px solid #23304d;border-radius:16px;padding:36px 32px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+  h1{margin:0 0 6px;font-size:24px;letter-spacing:.5px}
+  .sub{color:var(--mut);font-size:14px;margin-bottom:24px}
+  .toggle{display:flex;gap:8px;margin-bottom:18px;background:#0d1426;border-radius:10px;padding:4px}
+  .toggle button{flex:1;border:0;background:transparent;color:var(--mut);padding:10px;border-radius:8px;cursor:pointer;font-size:14px;transition:.15s}
+  .toggle button.on{background:var(--acc);color:#06231a;font-weight:600}
+  label{display:block;font-size:13px;color:var(--mut);margin:14px 0 6px}
+  input,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #2a3a5e;background:#0d1426;color:var(--txt);font-size:15px;outline:none}
+  input:focus,select:focus{border-color:var(--acc)}
+  button.submit{width:100%;margin-top:22px;padding:14px;border:0;border-radius:10px;background:var(--acc);color:#06231a;font-size:16px;font-weight:700;cursor:pointer;transition:.15s}
+  button.submit:hover{filter:brightness(1.08)}
+  button.submit:disabled{opacity:.6;cursor:not-allowed}
+  .msg{margin-top:16px;font-size:14px;min-height:20px}
+  .ok{color:var(--acc)} .err{color:#ff7a7a}
+  .count{margin-top:18px;font-size:13px;color:var(--mut);text-align:center}
+  .count b{color:var(--acc2)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .chips button{border:1px solid #2a3a5e;background:#0d1426;color:var(--mut);padding:8px 12px;border-radius:999px;cursor:pointer;font-size:13px;transition:.15s}
+  .chips button.on{border-color:var(--acc);color:var(--acc);background:rgba(55,224,166,.1)}
+  .foot{margin-top:22px;font-size:12px;color:#5c6781;text-align:center}
+  a{color:var(--acc2);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>RoboParts 抢先体验</h1>
+  <div class="sub">机器人的零部件兼容性数据底座与匹配引擎 —— 留下邮箱，需求被证实时第一时间通知你。</div>
+
+  <div class="toggle">
+    <button id="t-build" class="on" onclick="setRole('builder')">我是 Builder</button>
+    <button id="t-inv" onclick="setRole('investor')">我是投资人</button>
+    <button id="t-sup" onclick="setRole('supplier')">我是供应商</button>
+  </div>
+
+  <label>邮箱</label>
+  <input id="email" type="email" placeholder="you@example.com" autocomplete="email">
+
+  <label>你最想解决的事（可选）</label>
+  <input id="note" type="text" placeholder="例如：给 Asimov v1 找兼容舵机 / 想聊早期投资">
+
+  <label>你最想找哪类零件？（可多选，用于需求热度排序）</label>
+  <div class="chips" id="needs">
+    <button type="button" data-c="actuators" onclick="toggleNeed(this)">执行器</button>
+    <button type="button" data-c="sensors" onclick="toggleNeed(this)">传感器</button>
+    <button type="button" data-c="connectors" onclick="toggleNeed(this)">连接器</button>
+    <button type="button" data-c="controllers" onclick="toggleNeed(this)">控制器</button>
+    <button type="button" data-c="chips" onclick="toggleNeed(this)">芯片</button>
+    <button type="button" data-c="platforms" onclick="toggleNeed(this)">整机平台</button>
+    <button type="button" data-c="interfaces" onclick="toggleNeed(this)">接口/标准</button>
+    <button type="button" data-c="llms" onclick="toggleNeed(this)">大模型</button>
+    <button type="button" data-c="protocols" onclick="toggleNeed(this)">协议</button>
+    <button type="button" data-c="flexible_actuators" onclick="toggleNeed(this)">柔性执行器</button>
+    <button type="button" data-c="data_acquisition" onclick="toggleNeed(this)">数据采集</button>
+    <button type="button" data-c="robot_ai_models" onclick="toggleNeed(this)">机器人AI模型</button>
+  </div>
+
+  <button class="submit" id="btn" onclick="submit()">加入 waitlist</button>
+  <div class="msg" id="msg"></div>
+  <div class="count" id="count">正在读取实时计数…</div>
+
+  <div class="foot">我们只在产品里程碑或需求验证进展时联系你，绝不滥发。<br>RoboParts · <a href="/">返回首页</a></div>
+</div>
+
+<script>
+let role = 'builder';
+const needSet = new Set();
+function setRole(r){
+  role = r;
+  document.getElementById('t-build').className = r==='builder'?'on':'';
+  document.getElementById('t-inv').className   = r==='investor'?'on':'';
+  document.getElementById('t-sup').className   = r==='supplier'?'on':'';
+}
+function toggleNeed(btn){
+  const c = btn.dataset.c;
+  if(needSet.has(c)){ needSet.delete(c); btn.className=''; }
+  else { needSet.add(c); btn.className='on'; }
+}
+async function refresh(){
+  try{
+    const r = await fetch('/api/waitlist');
+    const d = await r.json();
+    let html = `当前 waitlist：<b>${d.total||0}</b> 人（Builder ${d.builders||0} · Investor ${d.investors||0} · Supplier ${d.suppliers||0}）`;
+    const needs = d.needs||{};
+    const keys = Object.keys(needs);
+    if(keys.length){
+      const top = keys.sort((a,b)=>needs[b]-needs[a]).slice(0,3)
+        .map(k=>`${NEED_LABEL[k]||k} ${needs[k]}`).join(' · ');
+      html += `<br>需求热度 Top3：${top}`;
+    }
+    document.getElementById('count').innerHTML = html;
+  }catch(e){ document.getElementById('count').textContent = ''; }
+}
+const NEED_LABEL = {actuators:'执行器',sensors:'传感器',connectors:'连接器',controllers:'控制器',chips:'芯片',platforms:'整机平台',interfaces:'接口/标准',llms:'大模型',protocols:'协议',flexible_actuators:'柔性执行器',data_acquisition:'数据采集',robot_ai_models:'机器人AI模型'};
+async function submit(){
+  const email = document.getElementById('email').value.trim();
+  const note  = document.getElementById('note').value.trim();
+  const msg   = document.getElementById('msg');
+  const btn   = document.getElementById('btn');
+  msg.className='msg'; msg.textContent='';
+  if(!email || !email.includes('@')){ msg.className='msg err'; msg.textContent='请填写有效邮箱'; return; }
+  btn.disabled=true; btn.textContent='提交中…';
+  try{
+    const r = await fetch('/api/waitlist',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email,role,note,need_categories:[...needSet]})
+    });
+    const d = await r.json();
+    if(r.ok && d.success){
+      msg.className='msg ok';
+      msg.textContent='已加入 ✓ '+(d.total?('你是第 '+d.total+' 位'):'');
+      document.getElementById('email').value=''; document.getElementById('note').value='';
+      refresh();
+    }else{ msg.className='msg err'; msg.textContent=d.error||'提交失败，请稍后再试'; }
+  }catch(e){ msg.className='msg err'; msg.textContent='网络错误，请稍后再试'; }
+  btn.disabled=false; btn.textContent='加入 waitlist';
+}
+refresh();
+</script>
+</body>
+</html>

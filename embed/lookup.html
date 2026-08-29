@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RoboParts 零部件检索</title>
+<style>
+  :root{--bg:#0b1020;--panel:#121a33;--line:#243056;--txt:#e5e7eb;--muted:#94a3b8;--accent:#3b82f6}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    padding:12px;font-size:13px}
+  .hd{font-weight:700;font-size:13px;margin-bottom:8px;color:#cbd5e1}
+  .hd a{float:right;font-weight:400;font-size:11px}
+  #q{width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--line);
+    background:var(--panel);color:var(--txt);font-size:13px;outline:none}
+  #q:focus{border-color:var(--accent)}
+  #res{margin-top:8px;max-height:260px;overflow:auto}
+  .item{display:block;padding:8px 10px;border:1px solid var(--line);border-radius:8px;
+    margin-bottom:6px;background:var(--panel);text-decoration:none;color:var(--txt)}
+  .item:hover{border-color:var(--accent)}
+  .item .n{font-weight:600}
+  .item .m{color:var(--muted);font-size:11px;margin-top:2px}
+  .empty{color:var(--muted);padding:8px 2px;font-size:12px}
+  .ft{margin-top:8px;font-size:11px}
+  .ft a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+  <div class="hd">RoboParts 零部件检索<a href="https://www.roboparts.cc" target="_blank" rel="noopener">完整数据库 →</a></div>
+  <input id="q" placeholder="输入关键词，如 harmonic drive / 舵机 / ISO 9409" autocomplete="off" />
+  <div id="res"></div>
+  <div class="ft"><a href="https://www.roboparts.cc/waitlist.html" target="_blank" rel="noopener">想参与早期兼容数据库共建？留邮箱 →</a></div>
+
+<script>
+const BASE = 'https://www.roboparts.cc';
+const q = document.getElementById('q');
+const res = document.getElementById('res');
+let t;
+q.addEventListener('input', () => {
+  clearTimeout(t);
+  const v = q.value.trim();
+  if (v.length < 2) { res.innerHTML = ''; return; }
+  t = setTimeout(async () => {
+    try {
+      const r = await fetch(BASE + '/api/search?q=' + encodeURIComponent(v) + '&limit=8');
+      const d = await r.json();
+      const list = (d.results || []);
+      res.innerHTML = list.length
+        ? list.map(x => `<a class="item" href="${BASE}/api/entity/${encodeURIComponent(x.id)}" target="_blank" rel="noopener">
+            <div class="n">${x.name || x.id}</div>
+            <div class="m">${x.category || ''} · ${x.manufacturer || '未知厂商'}</div></a>`).join('')
+        : '<div class="empty">未找到匹配，换个关键词试试，或去主站浏览全库。</div>';
+    } catch (e) {
+      res.innerHTML = '<div class="empty">检索暂不可用。</div>';
+    }
+  }, 280);
+});
+</script>
+</body>
+</html>

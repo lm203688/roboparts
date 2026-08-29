@@ -1,0 +1,106 @@
+[Showcase] RoboParts — Structured Dataset & Selection Engine for Bionic Robot Components
+
+Hi ROS community,
+
+We're building RoboParts (https://roboparts.cc), an open structured dataset and online selection engine covering the hardware stack for humanoid / bionic robots. Sharing it here because ROS 2 compatibility is one of the dimensions we track — and because we'd like feedback on how we handle missing data, which turned out to be the hardest part.
+
+What is RoboParts?
+
+A curated, structured dataset of 708 entities across 11 categories:
+
+1. Actuators — 217 — Torque, speed, voltage, weight, price range, gear type
+2. Chips — 108 — CPU, AI TOPS, power, interfaces (CAN FD, EtherCAT, …)
+3. Sensors — 90 — Range, precision, interface
+4. Protocols — 64 — Bandwidth, latency, topology, standard conformance
+5. Robot AI Models — 44 — VLA models (GR00T N1.7, LeRobot v0.6.0, π0.5, SmolVLA, InternVLA-A1.5)
+6. Data Acquisition — 43 — Teleoperation, motion capture, tactile (ALOHA, UMI, GELLO, OptiTrack, GelSight)
+7. LLMs — 42 — Parameters, open-source, embodied-AI fine-tuning
+8. Platforms — 40 — Simulation support, ROS 2 compatibility, open-source
+9. Interfaces — 37 — Power rating, connector type, speed
+10. Flexible Actuators — 21 — Series Elastic Actuators, soft robotics, bio-inspired
+11. Connectors — 2 — Current rating, data rate, routing opening, mating orientation
+
+Counts are generated from the dataset itself and verified against the live API on every deploy.
+
+On missing data — please read this part
+
+Most component databases quietly turn "we don't know" into "no". We think that's the single most damaging thing a selection tool can do, so we treat it as a three-state problem — declared yes / declared no / not declared — and never collapse the third into the second.
+
+Concretely, on ROS support:
+- 47 of 708 entities explicitly declare ROS support
+- 27 explicitly declare no ROS support
+- 634 (90%) have never declared it
+
+So if you query an actuator and get no ROS flag, the API tells you "not declared by vendor", not "incompatible". Same rule applies to mechanical, electrical and protocol dimensions, and to our compatibility engine — it returns undecided rather than inventing a verdict.
+
+Field coverage is published rather than hidden:
+- confidence, source_tier, data_quality, standard_conformance — 708/708 (100%)
+- source — 560/708 (79%)
+- last_verified — 490/708 (69%)
+- ros_support — 74/708 (10%)
+
+Filling in the sparse mechanical and ROS fields is our current priority. If you have vendor-confirmed data, contributions are very welcome.
+
+Online Selection Engine
+
+A multi-factor scoring engine for actuator / chip selection:
+
+Input: application scenario, torque requirement, weight limit, budget, protocol preference, ros_required
+Output: ranked list scored across 4 dimensions (100 points total):
+- Performance — torque, weight, voltage, resolution (40)
+- Cost efficiency — price vs. budget (30)
+- Ecosystem compatibility — protocol match, ROS, peer compatibility (20)
+- Maturity — estimated TRL (10)
+
+Try it: https://roboparts.cc/designer
+
+URDF Library + Compatibility Tags
+
+A 60-model URDF library across 6 robot types — arm (24), humanoid (23), quadruped (6), hand (3), AMR (3), gripper (1) — all downloadable via API, each with compatibility tags (ROS 2 full/partial/community/unknown, Gazebo / PyBullet / Isaac Sim / MuJoCo, controller support, mesh format).
+
+GET https://roboparts.cc/api/urdf/library?compatibility=ROS2
+GET https://roboparts.cc/api/urdf/library?sim=Isaac+Sim
+
+Open-Source Robot Compatibility Layer
+
+Normalized component data for 6 open-source robots — TienKung (天工), roboto_origin, LeRobot-Humanoid, Unitree Go2, Unitree G1, OpenArm — 325 components total:
+
+GET https://roboparts.cc/api/oss?stats=1
+
+Localization Analysis
+
+POST https://roboparts.cc/api/localization/analyze
+
+Per-item domestic/import classification, weighted localization rate, category breakdowns, and domestic alternatives for imported components.
+
+Open Source & Access
+
+- Dataset (CC BY 4.0): https://github.com/lm203688/roboparts
+- API (free tier, no key required): https://roboparts.cc/api/data.json
+- MCP Server: lets AI agents query the dataset directly
+- Agent discovery: https://roboparts.cc/llms.txt
+
+Data Sovereignty
+
+Your robot data belongs to you. Our data hub encrypts client-side (AES-256-GCM) before upload, never holds decryption keys, stores emails as SHA-256 hashes, and lets you export encrypted blobs and migrate freely: https://roboparts.cc/data-hub
+
+ROS 2 Integration — work in progress
+
+1. A ROS 2 package consuming the API for runtime hardware lookup
+2. URDF generation from selected actuator + sensor combinations
+3. Gazebo/Ignition plugin auto-matching based on platform specs
+
+These are not shipped yet — listing them as roadmap, not features.
+
+If you're working on humanoid robots and want to collaborate, reply here or email 61960005@qq.com.
+
+Citation
+
+@dataset{roboparts2026,
+  title={RoboParts: A Structured Dataset for Bionic Robot Components},
+  author={RoboParts Team},
+  year={2026},
+  url={https://roboparts.cc}
+}
+
+Feedback welcome — especially on the three-state approach. Does "not declared" surface usefully in your workflow, or would you rather we filtered those out by default?

@@ -26,6 +26,62 @@ export const DIMENSIONS = ['protocol', 'electrical', 'mechanical', 'software'];
 /** 硬兼容约束维度：判定 overall=true 至少需其中一项有双方声明 */
 export const HARD_DIMENSIONS = ['protocol', 'electrical', 'mechanical'];
 
+/**
+ * 【P0 · 20260815】多因子兼容度评分权重与可解释折算。
+ *
+ * 借鉴开源制造零件兼容引擎 asset-intelligence-graph-rag 的「多因子加权 + 可解释」
+ * 思想（其 final_score = 0.35*机械 + 0.25*功能 + 0.25*语义 + 0.15*层级）。
+ * 本引擎实为四维（protocol/electrical/mechanical/software），按"决定性"映射权重：
+ *   mechanical 0.35 ← 物理接口，孔位级最决定性（对应 graph-rag 的机械）
+ *   protocol   0.25 ← 功能/通信接口（对应 graph-rag 的功能）
+ *   electrical 0.25 ← 电气接口
+ *   software   0.15 ← ROS2 生态，最弱（对应 graph-rag 的层级/软性约束）
+ * 权重之和恒为 1；调参只改此处，不动逻辑。
+ *
+ * 不变式（与三态诚实口径一致）：
+ *   · 仅"已裁决"（compatible !== null）的维度参与加权；
+ *   · null（无法判定）维度既不进分子也不进分母 —— 不把"不知道"伪装成结论；
+ *   · 整体无法判定（overall=null）时分数一律 null（见 judgePair）。
+ */
+export const SCORE_WEIGHTS = {
+  mechanical: 0.35,
+  protocol: 0.25,
+  electrical: 0.25,
+  software: 0.15,
+};
+
+/**
+ * 把四维裁决结果折算成多因子加权分 + 可解释分解。
+ * @param {Array<{dimension:string, compatible:boolean|null, relation?:string}>} dimensions
+ * @returns {{weights:object, breakdown:Array, method:string, weight_sum_decided:number, weighted_score:number|null}}
+ */
+export function scoreBreakdown(dimensions) {
+  const breakdown = dimensions.map(d => {
+    const w = SCORE_WEIGHTS[d.dimension] ?? 0;
+    const decided = d.compatible !== null;
+    const s = decided ? (d.compatible ? 1 : 0) : null;
+    return {
+      dimension: d.dimension,
+      weight: w,
+      verdict: d.compatible === true ? 'compatible' : d.compatible === false ? 'conflict' : 'undecided',
+      score: s,
+      contribution: decided ? +(w * s).toFixed(4) : null,
+    };
+  });
+  const decidedParts = breakdown.filter(b => b.contribution !== null);
+  const weightSum = decidedParts.reduce((acc, b) => acc + b.weight, 0);
+  const contribSum = decidedParts.reduce((acc, b) => acc + b.contribution, 0);
+  return {
+    weights: { ...SCORE_WEIGHTS },
+    breakdown,
+    method: '多因子加权：score = Σ(weight_i × s_i) / Σ(weight_i)，仅"已裁决"维度计入；'
+          + 's_i ∈ {1 兼容, 0 冲突}；未裁决(null)维度不进分子也不进分母；'
+          + '整体无法判定(overall=null)时分数置 null',
+    weight_sum_decided: +weightSum.toFixed(4),
+    weighted_score: weightSum > 0 ? Math.round(contribSum / weightSum * 100) : null,
+  };
+}
+
 export function parseVoltageRange(str) {
   if (!str) return null;
   const s = String(str);
@@ -488,6 +544,7 @@ export function judgePair(a, b) {
       })),
       overall_compatible: null,
       compatibility_score: null,
+      score_basis: null,
       applicable: false,
       verdict_reason: note,
       decided_dimensions: 0,
@@ -540,6 +597,7 @@ export function judgePair(a, b) {
     verdict_reason = `${decided.length} 个维度有双方声明且均兼容（含 ${hardDecided.length} 项硬约束）`;
   }
 
+  const sb = scoreBreakdown(dimensions);
   return {
     a: { id: a.id, name: a.name, category: a.category },
     b: { id: b.id, name: b.name, category: b.category },
@@ -548,7 +606,10 @@ export function judgePair(a, b) {
     applicable: true,
     // overall 无法判定时 score 一律 null：给 0 会被读成"完全不兼容"，
     // 给 100 会被读成"完美兼容"，两者都是把证据不足伪装成结论。
-    compatibility_score: overall === null ? null : Math.round(compatibleCount / decided.length * 100),
+    compatibility_score: overall === null ? null : sb.weighted_score,
+    // 【P0】可解释分解：每个因子的权重、裁决、贡献，以及折算方法。
+    // 仅当 overall 有结论时给出（overall=null 时分数 null，分解亦 null，避免假装精确）。
+    score_basis: overall === null ? null : sb,
     verdict_reason,
     decided_dimensions: decided.length,
     undecided_dimensions: dimensions.length - decided.length,

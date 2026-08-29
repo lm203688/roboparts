@@ -37,7 +37,7 @@ const corsHeaders = {
  * mechanical 有 null 分支但用 `!hasA && !hasB` 的 AND，单方缺数据仍落回 false。
  * 现统一改用引擎，副本删除 —— 同一份判据只能有一处实现。
  */
-import { DIMENSIONS, evalDimension } from '../../_lib/compat_engine.js';
+import { DIMENSIONS, evalDimension, scoreBreakdown } from '../../_lib/compat_engine.js';
 import {
   newFailureCollector, loadJsonAsset, upstreamUnavailableResponse,
   resolveAuthState, authUnavailableResponse, authHeaders,
@@ -206,7 +206,9 @@ export async function onRequestPost(context) {
           a: a.ref, b: b.ref,
           dimensions: dims,
           overall_compatible: overall,
-          compatibility_score: decided.length ? Math.round(compatCount / decided.length * 100) : 0,
+          // 【P0 · 20260815】分数走引擎的同一折算函数 scoreBreakdown，
+          // 与 /api/compatibility、/mcp 三方共用一套加权逻辑，杜绝双份实现。
+          compatibility_score: decided.length ? scoreBreakdown(dims).weighted_score : 0,
         });
       }
     }

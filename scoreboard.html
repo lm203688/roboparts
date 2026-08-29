@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RoboParts 验证计分板 · 需求/资本/生态信号融合视图</title>
+<style>
+  :root{
+    --bg:#0b1020; --panel:#121a33; --panel2:#0f1730; --line:#243056;
+    --txt:#e5e7eb; --muted:#94a3b8; --accent:#3b82f6; --green:#22c55e;
+    --amber:#f59e0b; --red:#ef4444;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 18px 60px;}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:22px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:22px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .card .k{color:var(--muted);font-size:12px}
+  .card .v{font-size:30px;font-weight:700;margin-top:6px}
+  .card .v small{font-size:13px;color:var(--muted);font-weight:400}
+  .sec{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px}
+  .sec h2{font-size:15px;margin:0 0 12px;color:#cbd5e1}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
+  .t-wait{background:rgba(245,158,11,.16);color:var(--amber)}
+  .t-done{background:rgba(34,197,94,.16);color:var(--green)}
+  .t-kill{background:rgba(239,68,68,.16);color:var(--red)}
+  .t-live{background:rgba(59,130,246,.16);color:var(--accent)}
+  .note{font-size:12px;color:var(--muted);line-height:1.6}
+  .verdict{border-left:3px solid var(--amber);padding:10px 14px;background:rgba(245,158,11,.08);
+    border-radius:0 8px 8px 0;font-size:13px;line-height:1.7;margin-top:6px}
+  code{background:#1e293b;padding:1px 6px;border-radius:5px;font-size:12px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>RoboParts 验证计分板</h1>
+  <div class="sub">需求 / 资本 / 生态信号的融合视图 · 最后更新 2026-08-14 · 数据来自线上 KV（实时）</div>
+
+  <div class="grid">
+    <div class="card"><div class="k">waitlist · 建造者(builder)</div><div class="v" id="c-builders">…</div></div>
+    <div class="card"><div class="k">waitlist · 投资人(investor)</div><div class="v" id="c-investors">…</div></div>
+    <div class="card"><div class="k">waitlist · 供应商(supplier)</div><div class="v" id="c-suppliers">…</div></div>
+    <div class="card"><div class="k">waitlist · 合计</div><div class="v" id="c-total">…</div></div>
+  </div>
+
+  <div class="sec">
+    <h2>三角验证：三类信号同时有，才算"需求被证实"</h2>
+    <table>
+      <thead><tr><th>信号类别</th><th>来源</th><th>状态</th><th>读数</th></tr></thead>
+      <tbody>
+        <tr><td>① 资本/生态兴趣</td><td>Open Collective（Unincorporated）</td><td><span class="tag t-wait">申请中</span></td><td id="r-oc">backers: 待开通</td></tr>
+        <tr><td>① 资本/生态兴趣</td><td>Open Robotics 直邮 <code>info@openrobotics.org</code></td><td><span class="tag t-wait">已发·待回复</span></td><td id="r-or">2026-08-13 发出</td></tr>
+        <tr><td>① 资本/生态兴趣</td><td>GitHub Sponsors</td><td><span class="tag t-kill">已划掉</span></td><td>Stripe 需美国 SSN，不可用</td></tr>
+        <tr><td>② 用户真实提问</td><td>社区监听（GitHub/ROS/Stack）</td><td><span class="tag t-live">线上·自动</span></td><td id="r-community">读取中…</td></tr>
+        <tr><td>③ 意向邮箱</td><td>waitlist 投资人/建造者分桶</td><td><span class="tag t-live">线上</span></td><td id="r-wl">实时读取中…</td></tr>
+      </tbody>
+    </table>
+    <div class="verdict" id="verdict">诚实结论：② 用户真实提问<b>已通过自动监听捕获真实兼容性提问</b>（非人工、非编造），③ 意向邮箱通道线上可量化；① 资本/生态兴趣仍为零信号。按设计，<b>三者中至少两类出现真实读数</b>才坐实"需求存在"——当前 ②+③ 已达成两类，需求侧"有人问"已被证实；但<b>能答多少</b>仍受机械接口声明率(0.85%)制约，须靠真实 BOM 反喂抬高。① 仍待 Open Collective 开通 / 直邮回复或资本侧进展。</div>
+  </div>
+
+  <div class="sec">
+    <h2>真实需求信号（自动监听回流 · 非人工维护）</h2>
+    <p class="note">取自线上 <code>/api/demand-signal</code>，由 <code>demand_scan.mjs</code> 只读扫描 GitHub / Open Robotics Discourse / Robotics Stack Exchange 现算。<b>Reddit 沙箱不可达时自动降级，绝不把"不可达"当作"零需求"</b>。这是 H2 常驻监听器的产物，取代原先人工维护的社区信号单元格。</p>
+    <div class="grid" style="margin-bottom:14px">
+      <div class="card"><div class="k">捕获真实兼容性提问</div><div class="v" id="c-real">…</div></div>
+      <div class="card"><div class="k">机械接口声明率</div><div class="v" id="c-decl">…</div></div>
+      <div class="card"><div class="k">今日能答(est)</div><div class="v" id="c-answer">…</div></div>
+      <div class="card"><div class="k">通道存活</div><div class="v" id="c-alive">…</div></div>
+    </div>
+    <div class="verdict" id="verdict-demand">读取中…</div>
+  </div>
+
+  <div class="sec">
+    <h2>社区需求热度（waitlist 反喂 · 非编造）</h2>
+    <p class="note">取自线上 <code>/api/waitlist</code> 的 <code>needs</code> 字段——访客提交意向时勾选的「最想找哪类零件」。这是 P2 社区需求信号的第一手、可量化来源（H6/L6 闭环）。样本不足时如实显示「暂无勾选」，绝不伪造热度。</p>
+    <div class="verdict" id="verdict-needs">读取中…</div>
+  </div>
+
+  <div class="sec">
+    <h2>引擎价值诚实标注（最深的逻辑洞）</h2>
+    <p class="note">
+      兼容性匹配引擎的<b>机械接口声明率仅 0.85%</b>——即今天 708 个实体里，绝大多数无法算出"能否互装"。
+      这意味着：即便嫁接带来流量，访客用核心卖点（兼容性查询）时大概率得到"未声明/无法判定"。
+      <b>流量嫁接必须与"可交付价值"绑定</b>：当前可交付的是「数据集(708) / MCP / BOM 工具 / 检索」，
+      而非过度承诺兼容性结论。修复路径见审计报告——优先把 Builder 真实 BOM 反向喂入 ingestion，抬高声明率。
+    </p>
+  </div>
+
+  <div class="sec">
+    <h2>平台嫁接（引流）进度</h2>
+    <table>
+      <thead><tr><th>平台</th><th>类型</th><th>状态</th><th>动作方</th></tr></thead>
+      <tbody>
+        <tr><td>ModelScope 数据集</td><td>国际/数据</td><td><span class="tag t-done">已发布</span></td><td>已完成</td></tr>
+        <tr><td>Glama MCP 连接器</td><td>国际/agent</td><td><span class="tag t-done">已认领</span></td><td>已完成</td></tr>
+        <tr><td>npm roboparts-mcp-server</td><td>国际/开发者</td><td><span class="tag t-done">已发 1.0.2</span></td><td>已完成</td></tr>
+        <tr><td>可嵌入徽章 / 检索挂件</td><td>嫁接组件</td><td><span class="tag t-live">本版新增</span></td><td>已完成（待部署）</td></tr>
+        <tr><td>Open Collective</td><td>国际/开源支持</td><td><span class="tag t-wait">申请中</span></td><td>用户</td></tr>
+        <tr><td>知乎 / 掘金 / CSDN / 少数派</td><td>国内/内容</td><td><span class="tag t-wait">稿已备</span></td><td>用户发帖</td></tr>
+        <tr><td>HN Show / Reddit r-robotics</td><td>国际/社区</td><td><span class="tag t-wait">稿已备</span></td><td>用户发帖</td></tr>
+        <tr><td>Product Hunt / alternative.to</td><td>国际/目录</td><td><span class="tag t-wait">稿已备</span></td><td>用户提交</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="note">计分板只读线上端点、不写任何数据：<code>/api/waitlist</code>（意向邮箱）、<code>/api/demand-signal</code>（真实需求信号，自动监听回流）。资本/生态侧（Open Collective / Open Robotics 直邮）仍为人工维护日志，更新即编辑本页对应单元格。</p>
+</div>
+
+<script>
+fetch('/api/waitlist').then(r=>r.json()).then(d=>{
+  const num = (k)=> (d[k]||0);
+  document.getElementById('c-builders').textContent = num('builders');
+  document.getElementById('c-investors').textContent = num('investors');
+  document.getElementById('c-suppliers').textContent = num('suppliers');
+  document.getElementById('c-total').textContent = num('total');
+  document.getElementById('r-wl').textContent = 'builder '+num('builders')+' / investor '+num('investors')+' / supplier '+num('suppliers');
+}).catch(e=>{
+  ['c-builders','c-investors','c-suppliers','c-total'].forEach(id=>document.getElementById(id).textContent='ERR');
+  document.getElementById('r-wl').textContent='读取失败：'+e.message;
+});
+
+// 社区需求热度（waitlist 反喂）
+fetch('/api/waitlist').then(r=>r.json()).then(d=>{
+  const needs = d.needs || {};
+  const keys = Object.keys(needs);
+  const LABEL = {actuators:'执行器',sensors:'传感器',connectors:'连接器',controllers:'控制器',chips:'芯片',platforms:'整机平台',interfaces:'接口/标准',llms:'大模型',protocols:'协议',flexible_actuators:'柔性执行器',data_acquisition:'数据采集',robot_ai_models:'机器人AI模型'};
+  if(!keys.length){ document.getElementById('verdict-needs').textContent='暂无勾选（waitlist 访客尚未选择零件类目）'; return; }
+  const top = keys.sort((a,b)=>needs[b]-needs[a]).slice(0,5)
+    .map(k=>`${LABEL[k]||k}: ${needs[k]}`).join('　');
+  document.getElementById('verdict-needs').textContent = '需求热度：' + top;
+}).catch(e=>{ document.getElementById('verdict-needs').textContent='读取失败：'+e.message; });
+
+// 真实需求信号（自动监听回流）
+fetch('/api/demand-signal').then(r=>r.json()).then(d=>{
+  if (!d.success) { document.getElementById('verdict-demand').textContent='信号尚未生成'; return; }
+  const alive = Object.values(d.channels||{}).filter(c=>c.alive).length;
+  const total = Object.keys(d.channels||{}).length;
+  document.getElementById('c-real').textContent = d.real_query_count ?? '—';
+  document.getElementById('c-decl').textContent = ((d.can_answer_today?.mech_decl_rate ?? 0)*100).toFixed(2) + '%';
+  document.getElementById('c-answer').textContent = (d.can_answer_today?.mech_declared ?? 0) + '/' + (d.can_answer_today?.total_entities ?? 0);
+  document.getElementById('c-alive').innerHTML = alive + '<small> / ' + total + ' 源可达</small>';
+  document.getElementById('r-community').textContent = '捕获 ' + (d.real_query_count ?? 0) + ' 条真实提问';
+  document.getElementById('verdict-demand').textContent = d.verdict || '（无结论）';
+}).catch(e=>{
+  ['c-real','c-decl','c-answer'].forEach(id=>document.getElementById(id).textContent='ERR');
+  document.getElementById('c-alive').textContent='ERR';
+  document.getElementById('verdict-demand').textContent='读取失败：'+e.message;
+  document.getElementById('r-community').textContent='读取失败';
+});
+</script>
+</body>
+</html>
