@@ -90,7 +90,7 @@ footer{text-align:center;padding:24px 0;color:var(--dim);font-size:.78rem}
       <div class="rule"><span class="tag med">P1</span><div class="name">📊 价格跨度大</div><div class="desc">区间跨度 ≥ 100 倍（如 <code>0-100</code>、<code>0-500</code>），通常意味着数据不精确或来自多档产品合并。</div></div>
       <div class="rule"><span class="tag med">P1</span><div class="name">🔓 未隔离但有价</div><div class="desc">有 <code>price_range</code> 但 <code>quarantine = false</code> 且 <code>source_tier = C</code>：容易被下游当作"有明确价格"的条目采信。</div></div>
       <div class="rule"><span class="tag low">P2</span><div class="name">🏷️ Tier-A 但低价</div><div class="desc"><code>source_tier = "A"</code> + <code>price_range</code> 起点为 0：可能是开源/实验设备，也可能是"起价"写法，需人工复核。</div></div>
-      <div class="rule"><span class="tag low">P2</span><div class="name">🔇 无价格字段</div><div class="desc">库内 <b>约 74% 条目无 price_range</b>（实测 747 条中 73.8%），无法做价格研判。这不是异常，而是**覆盖缺口** —— 数据工程优先项。</div></div>
+      <div class="rule"><span class="tag low">P2</span><div class="name">🔇 无价格字段</div><div class="desc">库内 <b>约 74% 条目无 price_range</b>（实测 767 条中 74.2%），无法做价格研判。这不是异常，而是**覆盖缺口** —— 数据工程优先项。</div></div>
     </div>
     <p class="note">风险等级说明：P0 直接判定可疑，P1 需人工复核，P2 为可选关注。同一条目可命中多条规则。</p>
   </div>

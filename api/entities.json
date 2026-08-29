@@ -1,6 +1,6 @@
 {
   "meta": {
-    "total": 747,
+    "total": 767,
     "total_entities": 767,
     "categories": [
       "actuators",
@@ -74,7 +74,8 @@
       },
       "tier_rule": "source_tier 由证据形态推导，不由录入者自封：A=有深链可点开复核；B=仅根域名/具名标准号/具名厂商目录（知道去哪找，点不开）；C=无来源/无身份聚合/有话无锚点。判据唯一源 scripts/govern_source_tier.py",
       "note": "主指标看 traceable_pct（Tier A 可点开复核）；source_pct 含 Tier B 弱归因，仅作过程指标；Tier C 已显式标注，供 Agent 侧过滤。【2026-08-10 更正】此前实现为「source 字段非空即判 A」，traceable_pct 曾虚报为 47.32%，已按证据重算。原值留在实体的 source_tier_prev 字段供审计。当前值随 tier_a_traceable 实时计算。",
-      "total_clean": 666
+      "total_clean": 666,
+      "total": 767
     },
     "data_quality": {
       "audited_at": "2026-08-09",
