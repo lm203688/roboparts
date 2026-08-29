@@ -1,5 +1,8 @@
 {
   "meta": {
+    "category": "integrated_joints",
+    "source": "entities.json projection",
+    "generated_at": "2026-08-27T05:36:52.623Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -23,7 +26,7 @@
     }
   },
   "count": 1,
-  "updated": "2026-08-24T06:10:17.327481Z",
+  "updated": "2026-08-27T05:36:52.623Z",
   "data": [
     {
       "id": "IJ-MATRIX-1",
@@ -50,7 +53,7 @@
       "data_quality": "ok",
       "quarantine": false,
       "source": "公开报道（MATRIX-1 集成 33 个一体化关节执行器，集成丝杠+电机+驱动+减速器+编码器+传感器；36氪/IT之家/百度百科）",
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.5,
       "confidence_basis": "press_reported_module_composition",
       "standard_conformance": {
@@ -67,9 +70,12 @@
         "reason": "厂商专有集成模组，对外不开放安装接口标准",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "unattributable_text",
-      "source_tier_prev": "B"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "source_tier_prev": "B",
+      "rp_id": "RP-INT-0001",
+      "source_url": "https://www.google.com/search?q=%E7%9F%A9%E9%98%B5%E8%B6%85%E6%99%BA%20Matrix%20%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20(MATRIX-1%2F3)%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
     }
   ]
 }

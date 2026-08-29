@@ -1,5 +1,8 @@
 {
   "meta": {
+    "category": "structural",
+    "source": "entities.json projection",
+    "generated_at": "2026-08-27T05:36:52.623Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -23,7 +26,7 @@
     }
   },
   "count": 3,
-  "updated": "2026-08-24T06:10:17.327481Z",
+  "updated": "2026-08-27T05:36:52.623Z",
   "data": [
     {
       "verified": true,
@@ -41,7 +44,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "STR-001",
       "name": "MISUMI Aluminum Extrusion",
       "name_en": "MISUMI Aluminum Extrusion",
@@ -71,7 +74,8 @@
         "material": "A6N01S-T5 / 6063",
         "customization": "cut-to-length"
       },
-      "source_tier_basis": "deep_link:www.misumi.com.cn/vona2/detail/110302368740/"
+      "source_tier_basis": "deep_link:www.misumi.com.cn/vona2/detail/110302368740/",
+      "rp_id": "RP-STR-0001"
     },
     {
       "verified": true,
@@ -89,7 +93,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "STR-002",
       "name": "80/20 T-slot Framing",
       "name_en": "80/20 T-slot Framing",
@@ -113,7 +117,8 @@
         "type": "T-slot aluminum framing",
         "profiles": "fractional & metric"
       },
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-STR-0002"
     },
     {
       "verified": true,
@@ -131,7 +136,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "STR-003",
       "name": "item MB Building Kit",
       "name_en": "item MB Building Kit System",
@@ -154,7 +159,8 @@
         "type": "aluminum profile system",
         "system": "MB Building Kit"
       },
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-STR-0003"
     }
   ]
 }

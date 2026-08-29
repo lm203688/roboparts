@@ -1,5 +1,8 @@
 {
   "meta": {
+    "category": "flexible_actuators",
+    "source": "entities.json projection",
+    "generated_at": "2026-08-27T05:36:52.623Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -22,8 +25,8 @@
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
-  "count": 23,
-  "updated": "2026-08-24T06:10:17.327481Z",
+  "count": 21,
+  "updated": "2026-08-27T05:36:52.623Z",
   "data": [
     {
       "id": "FA-001",
@@ -37,7 +40,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -59,8 +62,11 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "no_source"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-FLE-0001",
+      "source_url": "https://www.google.com/search?q=DEKA%20DEKA%20Luke%20Arm%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "FA-002",
@@ -74,7 +80,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -96,8 +102,11 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "no_source"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-FLE-0002",
+      "source_url": "https://www.google.com/search?q=Festo%20%20Festo%20DHEF%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "FA-003",
@@ -111,7 +120,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -133,8 +142,11 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "no_source"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-FLE-0003",
+      "source_url": "https://www.google.com/search?q=QMC%20QMC%20Soft%20Gripper%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "FA-004",
@@ -170,8 +182,9 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-FLE-0004"
     },
     {
       "id": "FA-005",
@@ -185,7 +198,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -207,8 +220,11 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "no_source"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-FLE-0005",
+      "source_url": "https://www.google.com/search?q=Various%20Shape%20Memory%20Alloy%20Actuator%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "FA-006",
@@ -222,7 +238,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -244,8 +260,11 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "no_source"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-FLE-0006",
+      "source_url": "https://www.google.com/search?q=CU%20Boulder%20HASEL%20Actuator%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "XFA-001",
@@ -284,11 +303,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0007"
     },
     {
       "id": "XFA-002",
@@ -327,11 +347,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0008"
     },
     {
       "id": "XFA-003",
@@ -370,11 +391,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0009"
     },
     {
       "id": "XFA-004",
@@ -413,11 +435,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0010"
     },
     {
       "id": "XFA-005",
@@ -456,11 +479,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0011"
     },
     {
       "id": "XFA-006",
@@ -499,11 +523,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0012"
     },
     {
       "id": "XFA-007",
@@ -542,11 +567,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0013"
     },
     {
       "id": "XFA-008",
@@ -585,11 +611,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0014"
     },
     {
       "id": "XFA-009",
@@ -628,11 +655,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0015"
     },
     {
       "id": "XFA-010",
@@ -671,11 +699,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0016"
     },
     {
       "id": "XFA-011",
@@ -714,11 +743,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0017"
     },
     {
       "id": "XFA-013",
@@ -757,11 +787,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0018"
     },
     {
       "id": "XFA-014",
@@ -800,11 +831,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0019"
     },
     {
       "id": "XFA-015",
@@ -843,11 +875,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0020"
     },
     {
       "id": "XFA-016",
@@ -886,118 +919,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
-    },
-    {
-      "id": "XFA-017",
-      "name": "UNIST Magnetic Composite Artificial Muscle",
-      "name_en": "UNIST Magnetic Composite Artificial Muscle",
-      "category": "flexible_actuators",
-      "manufacturer": "UNIST (Hoon Eui Jeong)",
-      "type": "magnetic_composite_actuator",
-      "description": "韩国釜山国立大学（UNIST）开发的磁复合人工肌肉。1.13g 自重可举起 5kg（4400 倍自重），工作密度 1150 kJ/m³（人类组织 30 倍），收缩率 86.4%（人类 40% 的 2 倍）。可通过磁场切换软/硬状态——硬态承重、软态收缩。",
-      "application": "humanoid_robots,soft_robotics,prosthetics",
-      "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
-      "source": "UNIST 机械工程系 Prof. Hoon Eui Jeong 团队，发表于 Advanced Functional Materials 期刊。",
-      "source_tier": "B",
-      "source_url": "https://onlinelibrary.wiley.com/journal/16163028",
-      "confidence": 0.7,
-      "confidence_basis": "peer_reviewed_journal",
-      "last_verified": "2026-08-26",
-      "oss": false,
-      "performance_metrics": {
-        "weight_g": 1.13,
-        "lift_kg": 5,
-        "strength_ratio": 4400,
-        "work_density_kJ_per_m3": 1150,
-        "human_work_density_ratio": 30,
-        "strain_pct": 86.4,
-        "human_strain_pct": 40,
-        "dual_mode": "rigid_flexible_via_magnetic_field"
-      },
-      "standard_conformance": {
-        "assessed": false,
-        "bus_class": "unknown",
-        "ros2": null,
-        "interop_stack_20262893": "unknown",
-        "caee060_relevant": true,
-        "interop_posture": "open_research",
-        "iso22166_relevant": true
-      },
-      "mechanical_interface": {
-        "status": "not_declared",
-        "mount_type": "research_prototype",
-        "standard": null,
-        "flange": null,
-        "confidence": 0,
-        "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "研究原型阶段，无标准化接口；未来若商用需跟踪标准化进程"
-      },
-      "entity_kind": "component",
-      "source_scope": "research_paper",
-      "source_tier_basis": "peer_reviewed_journal"
-    },
-    {
-      "id": "XFA-018",
-      "name": "EFM · Electrofluidic Fiber Muscle",
-      "category": "electrofluidic_fiber_muscle",
-      "description": "MIT Media Lab 与意大利巴里理工大学 2026 年发表于 Science Robotics 的电液流体纤维肌肉。将微型电流体动力学（EHD）泵与薄型 McKibben 执行器集成在封闭液压回路中，无需外部空压机/液压站。直径仅 2mm，功率密度 50W/kg（与人体骨骼肌持平），收缩应变 20%，响应时间 0.3s。22g 纤维束可举 4kg（200 倍自重）。",
-      "application": "humanoid_robots,distributed_actuation,exoskeletons,prosthetics,soft_robotics",
-      "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
-      "source": "Afsar et al., \"Electrofluidic fiber muscles,\" Science Robotics, 2026, DOI: 10.1126/scirobotics.ady6438",
-      "source_tier": "A",
-      "source_url": "https://www.media.mit.edu/publications/electrofluidic-fiber-muscles/",
-      "confidence": 0.95,
-      "confidence_basis": "science_robotics_peer_reviewed_top_journal",
-      "last_verified": "2026-08-26",
-      "oss": false,
-      "performance_metrics": {
-        "fiber_diameter_mm": 2,
-        "weight_g": 22,
-        "lift_kg": 4,
-        "strength_ratio": 200,
-        "power_density_W_per_kg": 50,
-        "strain_pct": 20,
-        "response_time_s": 0.3,
-        "max_speed_mm_per_s": 180,
-        "operating_voltage_V": 8000,
-        "bias_pressure_kPa": 75,
-        "configurations": [
-          "lever_fast",
-          "bundle_strong",
-          "woven_compliant"
-        ]
-      },
-      "standard_conformance": {
-        "assessed": false,
-        "bus_class": "unknown",
-        "ros2": null,
-        "interop_stack_20262893": "unknown",
-        "caee060_relevant": true,
-        "interop_posture": "open_research",
-        "iso22166_relevant": true,
-        "note": "柔性纤维驱动无现有兼容性标准，RoboParts 需前瞻跟踪"
-      },
-      "mechanical_interface": {
-        "status": "not_declared",
-        "mount_type": "research_prototype",
-        "standard": null,
-        "flange": null,
-        "confidence": 0,
-        "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "无刚性法兰接口；未来标准化可能催生新的柔性驱动接口标准"
-      },
-      "entity_kind": "component",
-      "source_scope": "research_paper",
-      "source_tier_basis": "peer_reviewed_top_journal"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-FLE-0021"
     }
   ]
 }

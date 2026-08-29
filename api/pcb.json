@@ -1,5 +1,8 @@
 {
   "meta": {
+    "category": "pcb",
+    "source": "entities.json projection",
+    "generated_at": "2026-08-27T05:36:52.623Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -23,7 +26,7 @@
     }
   },
   "count": 2,
-  "updated": "2026-08-24T06:10:17.327481Z",
+  "updated": "2026-08-27T05:36:52.623Z",
   "data": [
     {
       "verified": true,
@@ -41,7 +44,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "PCB-001",
       "name": "SimpleFOC Board",
       "name_en": "SimpleFOC Board",
@@ -66,7 +69,8 @@
         "open_source": "yes",
         "interface": "Arduino/SPI"
       },
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PCB-0001"
     },
     {
       "verified": true,
@@ -84,7 +88,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "PCB-002",
       "name": "PCBWay Robotics PCB Fabrication",
       "name_en": "PCBWay Robotics PCB Fabrication",
@@ -107,7 +111,8 @@
         "type": "PCB fabrication & assembly service",
         "capability": "prototype to production, SMT"
       },
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PCB-0002"
     }
   ]
 }

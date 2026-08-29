@@ -1,5 +1,8 @@
 {
   "meta": {
+    "category": "cables",
+    "source": "entities.json projection",
+    "generated_at": "2026-08-27T05:36:52.623Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -23,7 +26,7 @@
     }
   },
   "count": 2,
-  "updated": "2026-08-24T06:10:17.327481Z",
+  "updated": "2026-08-27T05:36:52.623Z",
   "data": [
     {
       "verified": true,
@@ -41,7 +44,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "CAB-001",
       "name": "igus chainflex Robot Cable",
       "name_en": "igus chainflex Robot Cable",
@@ -67,7 +70,8 @@
         "guarantee": "up to 4 years",
         "series": "CFROBOT"
       },
-      "source_tier_basis": "deep_link:www.igus.com/cables/motor-cables"
+      "source_tier_basis": "deep_link:www.igus.com/cables/motor-cables",
+      "rp_id": "RP-CAB-0001"
     },
     {
       "verified": false,
@@ -85,7 +89,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "CAB-002",
       "name": "LEONI Robot Cable",
       "name_en": "LEONI Robot Cable",
@@ -106,7 +110,8 @@
       "specs": {
         "type": "robot cable / drag-chain cable"
       },
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-CAB-0002"
     }
   ]
 }

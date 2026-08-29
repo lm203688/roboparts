@@ -1,5 +1,8 @@
 {
   "meta": {
+    "category": "bionic_mechanisms",
+    "source": "entities.json projection",
+    "generated_at": "2026-08-27T05:36:52.623Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -23,7 +26,7 @@
     }
   },
   "count": 9,
-  "updated": "2026-08-24T06:10:17.327481Z",
+  "updated": "2026-08-27T05:36:52.623Z",
   "data": [
     {
       "id": "BIONIC-JOINT-001",
@@ -113,7 +116,7 @@
           "BIONIC-SENSOR-001"
         ]
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "verified": false,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
@@ -122,7 +125,8 @@
         "joint_type": "ball_and_socket",
         "range_of_motion": "180deg",
         "load_capacity": "50N"
-      }
+      },
+      "rp_id": "RP-BIO-0001"
     },
     {
       "id": "BIONIC-JOINT-002",
@@ -212,7 +216,7 @@
           "BIONIC-SENSOR-002"
         ]
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "verified": false,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
@@ -221,7 +225,8 @@
         "joint_type": "hinge",
         "range_of_motion": "120deg",
         "load_capacity": "80N"
-      }
+      },
+      "rp_id": "RP-BIO-0002"
     },
     {
       "id": "BIONIC-JOINT-003",
@@ -303,7 +308,7 @@
           "BIONIC-SENSOR-003"
         ]
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "verified": false,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
@@ -312,7 +317,8 @@
         "joint_type": "gliding",
         "range_of_motion": "linear_15mm",
         "load_capacity": "30N"
-      }
+      },
+      "rp_id": "RP-BIO-0003"
     },
     {
       "id": "BIONIC-ACTUATOR-001",
@@ -391,7 +397,7 @@
           "TENDON-001"
         ]
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "verified": false,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
@@ -400,7 +406,8 @@
         "actuator_type": "tendon_driven",
         "force": "20N",
         "stroke": "50mm"
-      }
+      },
+      "rp_id": "RP-BIO-0004"
     },
     {
       "id": "BIONIC-ACTUATOR-002",
@@ -462,7 +469,7 @@
           "BIONIC-SENSOR-001"
         ]
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "verified": false,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
@@ -471,7 +478,8 @@
         "actuator_type": "sma_wire",
         "force": "5N",
         "stroke": "3mm"
-      }
+      },
+      "rp_id": "RP-BIO-0005"
     },
     {
       "id": "BIONIC-SENSOR-001",
@@ -542,7 +550,7 @@
           "BIONIC-ACTUATOR-002"
         ]
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "verified": false,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
@@ -551,7 +559,8 @@
         "sensor_type": "proprioceptive",
         "channels": 6,
         "sampling_rate": "1kHz"
-      }
+      },
+      "rp_id": "RP-BIO-0006"
     },
     {
       "id": "BIONIC-SENSOR-002",
@@ -617,7 +626,7 @@
           "BIONIC-ACTUATOR-002"
         ]
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "verified": false,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
@@ -626,7 +635,8 @@
         "sensor_type": "tactile",
         "resolution": "0.1N",
         "array_size": "4x4"
-      }
+      },
+      "rp_id": "RP-BIO-0007"
     },
     {
       "id": "BIONIC-FRAME-001",
@@ -703,7 +713,7 @@
           "BIONIC-SENSOR-002"
         ]
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "verified": false,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
@@ -712,7 +722,8 @@
         "frame_type": "torso_skeleton",
         "material": "PEEK",
         "weight": "120g"
-      }
+      },
+      "rp_id": "RP-BIO-0008"
     },
     {
       "id": "BIONIC-SKIN-001",
@@ -773,7 +784,7 @@
           "BIONIC-JOINT-002"
         ]
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "verified": false,
       "data_quality": "partial",
       "source_tier_basis": "entity_homepage",
@@ -782,7 +793,8 @@
         "skin_type": "elastic_cover",
         "material": "silicone",
         "thickness": "2mm"
-      }
+      },
+      "rp_id": "RP-BIO-0009"
     }
   ]
 }

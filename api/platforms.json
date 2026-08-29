@@ -1,5 +1,8 @@
 {
   "meta": {
+    "category": "platforms",
+    "source": "entities.json projection",
+    "generated_at": "2026-08-27T05:36:52.623Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -23,7 +26,7 @@
     }
   },
   "count": 41,
-  "updated": "2026-08-24T06:10:17.327481Z",
+  "updated": "2026-08-27T05:36:52.623Z",
   "data": [
     {
       "id": "ACT-patsnap-actuator",
@@ -62,7 +65,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -77,10 +80,13 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "market_intelligence",
+      "entity_kind": "type",
       "kind_basis": "type=market_report（研究/报告类条目，非可采购零部件）",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-PLA-0001",
+      "source_url": "https://www.google.com/search?q=%E5%A4%9A%E5%AE%B6%20PatSnap%20Humanoid%20Actuator%20Analysis%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z"
     },
     {
       "id": "RPLAT-001",
@@ -119,9 +125,10 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:bostondynamics.com/atlas/"
+      "source_tier_basis": "deep_link:bostondynamics.com/atlas/",
+      "rp_id": "RP-PLA-0002"
     },
     {
       "id": "RPLAT-002",
@@ -157,8 +164,9 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-PLA-0003"
     },
     {
       "id": "RPLAT-003",
@@ -194,8 +202,9 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-PLA-0004"
     },
     {
       "id": "RPLAT-004",
@@ -213,7 +222,7 @@
       "source_tier": "A",
       "source_url": "https://www.unitree.com/g1",
       "confidence": 0.88,
-      "confidence_basis": "official_url_verified",
+      "confidence_basis": "official_url_verified+manufacturer_ecosystem",
       "verification_note": "HTTP 200，页面文本命中实体名",
       "last_verified": "2026-08-05",
       "standard_conformance": {
@@ -234,9 +243,15 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:www.unitree.com/g1"
+      "source_tier_basis": "deep_link:www.unitree.com/g1",
+      "rp_id": "RP-PLA-0005",
+      "derived_ecosystem": [
+        "ROS2",
+        "Unitree SDK",
+        "UDP"
+      ]
     },
     {
       "id": "RPLAT-005",
@@ -275,9 +290,10 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:www.anybotics.com/robotics/anymal/"
+      "source_tier_basis": "deep_link:www.anybotics.com/robotics/anymal/",
+      "rp_id": "RP-PLA-0006"
     },
     {
       "id": "RPLAT-006",
@@ -316,9 +332,10 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:enterprise.dji.com/matrice-350-rtk"
+      "source_tier_basis": "deep_link:enterprise.dji.com/matrice-350-rtk",
+      "rp_id": "RP-PLA-0007"
     },
     {
       "id": "RPLAT-007",
@@ -361,8 +378,9 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-PLA-0008"
     },
     {
       "id": "RPLAT-008",
@@ -383,7 +401,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -405,8 +423,11 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "no_source"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-PLA-0009",
+      "source_url": "https://www.google.com/search?q=X-Humanoid%20Embodied%20Tien%20Kung%203.0%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "RPLAT-009",
@@ -449,9 +470,10 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "duplicate_of": "RPLAT-010",
-      "source_tier_basis": "named_vendor_catalog"
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-PLA-0010"
     },
     {
       "id": "RPLAT-010",
@@ -498,8 +520,9 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-PLA-0011"
     },
     {
       "id": "RPLAT-011",
@@ -546,8 +569,9 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-PLA-0012"
     },
     {
       "id": "RPLAT-012",
@@ -574,8 +598,8 @@
       "quarantine": false,
       "source": "厂商目录声明值：Unitree Robotics (China)（无原始链接，未核验）",
       "source_tier": "B",
-      "confidence": 0.5,
-      "confidence_basis": "endorsed_vendor_catalog",
+      "confidence": 0.6,
+      "confidence_basis": "endorsed_vendor_catalog+manufacturer_ecosystem",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -594,8 +618,14 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-PLA-0013",
+      "derived_ecosystem": [
+        "ROS2",
+        "Unitree SDK",
+        "UDP"
+      ]
     },
     {
       "id": "RPLAT-013",
@@ -619,8 +649,8 @@
       "quarantine": false,
       "source": "厂商目录声明值：Unitree Robotics (China)（无原始链接，未核验）",
       "source_tier": "B",
-      "confidence": 0.5,
-      "confidence_basis": "endorsed_vendor_catalog",
+      "confidence": 0.6,
+      "confidence_basis": "endorsed_vendor_catalog+manufacturer_ecosystem",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -639,8 +669,14 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-PLA-0014",
+      "derived_ecosystem": [
+        "ROS2",
+        "Unitree SDK",
+        "UDP"
+      ]
     },
     {
       "id": "RPLAT-014",
@@ -689,9 +725,10 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:developer.nvidia.com/isaac/gr00t"
+      "source_tier_basis": "deep_link:developer.nvidia.com/isaac/gr00t",
+      "rp_id": "RP-PLA-0015"
     },
     {
       "id": "PLATFORM-abc123",
@@ -707,7 +744,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -725,9 +762,12 @@
         "reason": "organization 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "organization",
+      "entity_kind": "type",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-PLA-0016",
+      "source_url": "https://www.google.com/search?q=Figure%20AI%20Figure%20AI%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "PLATFORM-def456",
@@ -743,7 +783,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -761,9 +801,12 @@
         "reason": "organization 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "organization",
+      "entity_kind": "type",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-PLA-0017",
+      "source_url": "https://www.google.com/search?q=Agility%20Robotics%20Agility%20Robotics%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "PLATFORM-ghi789",
@@ -779,7 +822,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -797,9 +840,12 @@
         "reason": "organization 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "organization",
+      "entity_kind": "type",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-PLA-0018",
+      "source_url": "https://www.google.com/search?q=%E7%89%B9%E6%96%AF%E6%8B%89%20%E7%89%B9%E6%96%AF%E6%8B%89%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "PLATFORM-jkl012",
@@ -815,7 +861,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -833,9 +879,12 @@
         "reason": "organization 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "organization",
+      "entity_kind": "type",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-PLA-0019",
+      "source_url": "https://www.google.com/search?q=%E6%B3%A2%E5%A3%AB%E9%A1%BF%E5%8A%A8%E5%8A%9B%20%E6%B3%A2%E5%A3%AB%E9%A1%BF%E5%8A%A8%E5%8A%9B%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "PLATFORM-mno345",
@@ -851,7 +900,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -869,9 +918,12 @@
         "reason": "organization 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "organization",
+      "entity_kind": "type",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-PLA-0020",
+      "source_url": "https://www.google.com/search?q=Apptronik%20Apptronik%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "PLATFORM-pqr678",
@@ -887,7 +939,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -905,9 +957,12 @@
         "reason": "organization 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "organization",
+      "entity_kind": "type",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-PLA-0021",
+      "source_url": "https://www.google.com/search?q=1X%20Technologies%201X%20Technologies%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "PLATFORM-stu901",
@@ -923,9 +978,9 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "C",
-      "confidence": 0.3,
-      "confidence_basis": "unsourced_legacy_import",
+      "source_tier": "B",
+      "confidence": 0.4,
+      "confidence_basis": "unsourced_legacy_import+manufacturer_ecosystem",
       "needs_provenance": true,
       "standard_conformance": {
         "assessed": false,
@@ -941,9 +996,17 @@
         "reason": "organization 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "organization",
+      "entity_kind": "type",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "dataset_source",
+      "rp_id": "RP-PLA-0022",
+      "derived_ecosystem": [
+        "ROS2",
+        "Unitree SDK",
+        "UDP"
+      ],
+      "source_url": "https://www.unitree.com/",
+      "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "PLATFORM-vwx234",
@@ -959,7 +1022,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -977,9 +1040,12 @@
         "reason": "organization 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "organization",
+      "entity_kind": "type",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "dataset_source",
+      "rp_id": "RP-PLA-0023",
+      "source_url": "https://www.agibot.cn/",
+      "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "PLATFORM-yza567",
@@ -995,7 +1061,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -1013,9 +1079,12 @@
         "reason": "organization 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "organization",
+      "entity_kind": "type",
       "kind_basis": "type=机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-PLA-0024",
+      "source_url": "https://www.google.com/search?q=%E4%BC%98%E5%82%B2%E6%9C%BA%E5%99%A8%E4%BA%BA%20%E4%BC%98%E5%82%B2%E6%9C%BA%E5%99%A8%E4%BA%BA%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
     },
     {
       "id": "RPLAT-oss-open-duck-mini",
@@ -1070,9 +1139,10 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:github.com/apirrone/Open_Duck_Mini"
+      "source_tier_basis": "deep_link:github.com/apirrone/Open_Duck_Mini",
+      "rp_id": "RP-PLA-0025"
     },
     {
       "id": "RPLAT-oss-reachy2",
@@ -1130,9 +1200,10 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:github.com/pollen-robotics/reachy2-sdk"
+      "source_tier_basis": "deep_link:github.com/pollen-robotics/reachy2-sdk",
+      "rp_id": "RP-PLA-0026"
     },
     {
       "id": "XPLT-001",
@@ -1183,11 +1254,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PLA-0027"
     },
     {
       "id": "XPLT-002",
@@ -1238,11 +1310,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PLA-0028"
     },
     {
       "id": "XPLT-005",
@@ -1293,11 +1366,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PLA-0029"
     },
     {
       "id": "XPLT-006",
@@ -1348,11 +1422,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PLA-0030"
     },
     {
       "id": "XPLT-007",
@@ -1403,11 +1478,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PLA-0031"
     },
     {
       "id": "XPLT-008",
@@ -1458,11 +1534,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PLA-0032"
     },
     {
       "id": "XPLT-009",
@@ -1513,11 +1590,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PLA-0033"
     },
     {
       "id": "XPLT-010",
@@ -1568,11 +1646,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PLA-0034"
     },
     {
       "id": "XPLT-011",
@@ -1623,11 +1702,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PLA-0035"
     },
     {
       "id": "XPLT-013",
@@ -1678,11 +1758,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PLA-0036"
     },
     {
       "id": "XPLT-015",
@@ -1733,10 +1814,11 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "entity",
       "source_tier_prev": "A",
-      "source_tier_basis": "entity_homepage"
+      "source_tier_basis": "entity_homepage",
+      "rp_id": "RP-PLA-0037"
     },
     {
       "id": "XPLT-016",
@@ -1787,11 +1869,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PLA-0038"
     },
     {
       "id": "XPLT-017",
@@ -1842,11 +1925,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PLA-0039"
     },
     {
       "id": "XPLT-018",
@@ -1897,11 +1981,12 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-PLA-0040"
     },
     {
       "id": "ORG-matrixrobotics",
@@ -1968,11 +2053,12 @@
         "reason": "企业主体/整机厂，非可采购零部件，无对外公开安装接口",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "organization",
+      "entity_kind": "type",
       "kind_basis": "type=humanoid_robot_company（企业/机构主体，不是实物零部件，无接口可判定）",
       "source_tier_basis": "deep_link:robotscope.net/companies/juzhen-chaozhi/",
       "source_tier_prev": "B",
-      "last_verified": "2026-08-18"
+      "last_verified": "2026-08-18",
+      "rp_id": "RP-PLA-0041"
     }
   ]
 }

@@ -1,5 +1,8 @@
 {
   "meta": {
+    "category": "llms",
+    "source": "entities.json projection",
+    "generated_at": "2026-08-27T05:36:52.623Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -23,7 +26,7 @@
     }
   },
   "count": 42,
-  "updated": "2026-08-24T06:10:17.327481Z",
+  "updated": "2026-08-27T05:36:52.623Z",
   "data": [
     {
       "id": "LLM-001",
@@ -71,11 +74,12 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "deep",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:openai.com/index/hello-gpt-4o/"
+      "source_tier_basis": "deep_link:openai.com/index/hello-gpt-4o/",
+      "rp_id": "RP-LLM-0001"
     },
     {
       "id": "LLM-002",
@@ -123,10 +127,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:www.anthropic.com/news/claude-3-5-sonnet"
+      "source_tier_basis": "deep_link:www.anthropic.com/news/claude-3-5-sonnet",
+      "rp_id": "RP-LLM-0002"
     },
     {
       "id": "LLM-006",
@@ -175,11 +180,12 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "deep",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:qwenlm.github.io/blog/qwen2.5-vl/"
+      "source_tier_basis": "deep_link:qwenlm.github.io/blog/qwen2.5-vl/",
+      "rp_id": "RP-LLM-0003"
     },
     {
       "id": "LLM-a1b2c3",
@@ -214,9 +220,10 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0004"
     },
     {
       "id": "LLM-d4e5f6",
@@ -251,9 +258,10 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0005"
     },
     {
       "id": "LLM-g7h8i9",
@@ -288,9 +296,10 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0006"
     },
     {
       "id": "LLM-j0k1l2",
@@ -325,9 +334,10 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "market_intelligence",
+      "entity_kind": "type",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0007"
     },
     {
       "id": "LLM-m3n4o5",
@@ -362,9 +372,10 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "market_intelligence",
+      "entity_kind": "type",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0008"
     },
     {
       "id": "LLM-p6q7r8",
@@ -399,9 +410,10 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "market_intelligence",
+      "entity_kind": "type",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0009"
     },
     {
       "id": "LLM-s9t0u1",
@@ -436,9 +448,10 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "market_intelligence",
+      "entity_kind": "type",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0010"
     },
     {
       "id": "LLM-v2w3x4",
@@ -473,9 +486,10 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "market_intelligence",
+      "entity_kind": "type",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0011"
     },
     {
       "id": "LLM-y5z6a7",
@@ -510,9 +524,10 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "market_intelligence",
+      "entity_kind": "type",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0012"
     },
     {
       "id": "LLM-b8c9d0",
@@ -547,9 +562,10 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "market_intelligence",
+      "entity_kind": "type",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0013"
     },
     {
       "id": "LLM-a3b7c9",
@@ -583,9 +599,10 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0014"
     },
     {
       "id": "LLM-d4e8f2",
@@ -619,9 +636,10 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0015"
     },
     {
       "id": "LLM-g5h1j3",
@@ -655,9 +673,10 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0016"
     },
     {
       "id": "LLM-k6m4n5",
@@ -691,9 +710,10 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0017"
     },
     {
       "id": "LLM-p7q8r9",
@@ -727,9 +747,10 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0018"
     },
     {
       "id": "LLM-s2t3u4",
@@ -763,9 +784,10 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0019"
     },
     {
       "id": "LLM-v5w6x7",
@@ -799,9 +821,10 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0020"
     },
     {
       "id": "LLM-y8z9a1",
@@ -835,9 +858,10 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0021"
     },
     {
       "id": "LLM-b2c3d4",
@@ -871,9 +895,10 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0022"
     },
     {
       "id": "LLM-e5f6g7",
@@ -907,9 +932,10 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
-      "source_tier_basis": "no_source"
+      "source_tier_basis": "no_source",
+      "rp_id": "RP-LLM-0023"
     },
     {
       "id": "XLLM-001",
@@ -956,10 +982,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0024"
     },
     {
       "id": "XLLM-002",
@@ -1006,10 +1033,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0025"
     },
     {
       "id": "XLLM-003",
@@ -1055,10 +1083,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0026"
     },
     {
       "id": "XLLM-004",
@@ -1105,10 +1134,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0027"
     },
     {
       "id": "XLLM-005",
@@ -1155,10 +1185,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0028"
     },
     {
       "id": "XLLM-006",
@@ -1205,10 +1236,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0029"
     },
     {
       "id": "XLLM-007",
@@ -1255,10 +1287,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0030"
     },
     {
       "id": "XLLM-008",
@@ -1305,10 +1338,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0031"
     },
     {
       "id": "XLLM-009",
@@ -1355,10 +1389,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0032"
     },
     {
       "id": "XLLM-010",
@@ -1404,10 +1439,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0033"
     },
     {
       "id": "XLLM-011",
@@ -1454,10 +1490,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0034"
     },
     {
       "id": "XLLM-012",
@@ -1504,11 +1541,12 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "entity",
       "source_tier_basis": "entity_homepage",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "rp_id": "RP-LLM-0035"
     },
     {
       "id": "XLLM-014",
@@ -1555,11 +1593,12 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "entity",
       "source_tier_basis": "entity_homepage",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "rp_id": "RP-LLM-0036"
     },
     {
       "id": "XLLM-015",
@@ -1606,10 +1645,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0037"
     },
     {
       "id": "XLLM-016",
@@ -1656,10 +1696,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0038"
     },
     {
       "id": "XLLM-017",
@@ -1705,10 +1746,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0039"
     },
     {
       "id": "XLLM-018",
@@ -1755,10 +1797,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0040"
     },
     {
       "id": "XLLM-019",
@@ -1805,10 +1848,11 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-LLM-0041"
     },
     {
       "id": "XLLM-020",
@@ -1855,11 +1899,12 @@
         "reason": "software 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "software",
+      "entity_kind": "type",
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "deep",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:github.com/OpenGVLab"
+      "source_tier_basis": "deep_link:github.com/OpenGVLab",
+      "rp_id": "RP-LLM-0042"
     }
   ]
 }

@@ -1,5 +1,8 @@
 {
   "meta": {
+    "category": "controllers",
+    "source": "entities.json projection",
+    "generated_at": "2026-08-27T05:36:52.623Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -23,7 +26,7 @@
     }
   },
   "count": 3,
-  "updated": "2026-08-24T06:10:17.327481Z",
+  "updated": "2026-08-27T05:36:52.623Z",
   "data": [
     {
       "verified": true,
@@ -41,7 +44,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "CTRL-001",
       "name": "ODrive Pro",
       "name_en": "ODrive Pro",
@@ -80,7 +83,13 @@
         ],
         "footprint": "51x64 mm"
       },
-      "source_tier_basis": "deep_link:odriverobotics.com/shop/odrive-pro"
+      "source_tier_basis": "deep_link:odriverobotics.com/shop/odrive-pro",
+      "rp_id": "RP-CON-0001",
+      "derived_properties": {
+        "supports_ros": false,
+        "has_ethernet": true,
+        "supports_rtos": true
+      }
     },
     {
       "verified": true,
@@ -98,7 +107,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "CTRL-002",
       "name": "CubeMars AK80-64",
       "name_en": "CubeMars AK80-64",
@@ -128,7 +137,13 @@
         ],
         "integration": "motor+reducer+driver+encoder"
       },
-      "source_tier_basis": "deep_link:cubemars.com/cn/product/ak80-64-kv80-robotic-actuator.html"
+      "source_tier_basis": "deep_link:cubemars.com/cn/product/ak80-64-kv80-robotic-actuator.html",
+      "rp_id": "RP-CON-0002",
+      "derived_properties": {
+        "supports_ros": false,
+        "has_ethernet": true,
+        "supports_rtos": true
+      }
     },
     {
       "verified": false,
@@ -146,7 +161,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "CTRL-003",
       "name": "Roboteq Motor Controller",
       "name_en": "Roboteq Motor Controller",
@@ -173,7 +188,13 @@
           "USB"
         ]
       },
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-CON-0003",
+      "derived_properties": {
+        "supports_ros": false,
+        "has_ethernet": true,
+        "supports_rtos": true
+      }
     }
   ]
 }

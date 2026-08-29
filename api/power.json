@@ -1,5 +1,8 @@
 {
   "meta": {
+    "category": "power",
+    "source": "entities.json projection",
+    "generated_at": "2026-08-27T05:36:52.623Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -23,7 +26,7 @@
     }
   },
   "count": 2,
-  "updated": "2026-08-24T06:10:17.327481Z",
+  "updated": "2026-08-27T05:36:52.623Z",
   "data": [
     {
       "verified": true,
@@ -41,7 +44,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "PWR-001",
       "name": "Tattu/Grepow Smart LiPo Battery",
       "name_en": "Tattu/Grepow Smart LiPo Battery",
@@ -74,7 +77,8 @@
         "cert": "AS9100D",
         "discharge": "up to 25C"
       },
-      "source_tier_basis": "deep_link:www.grepow.com/products.html"
+      "source_tier_basis": "deep_link:www.grepow.com/products.html",
+      "rp_id": "RP-POW-0001"
     },
     {
       "verified": true,
@@ -92,7 +96,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "PWR-002",
       "name": "MEAN WELL Industrial PSU",
       "name_en": "MEAN WELL Industrial Power Supply",
@@ -115,7 +119,8 @@
         "type": "industrial power supply (SMPS)",
         "form": "DIN-rail / enclosed"
       },
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-POW-0002"
     }
   ]
 }

@@ -1,5 +1,8 @@
 {
   "meta": {
+    "category": "reducers",
+    "source": "entities.json projection",
+    "generated_at": "2026-08-27T05:36:52.623Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -22,8 +25,8 @@
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
-  "count": 3,
-  "updated": "2026-08-24T06:10:17.327481Z",
+  "count": 11,
+  "updated": "2026-08-27T05:36:52.623Z",
   "data": [
     {
       "verified": true,
@@ -41,7 +44,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "RED-001",
       "name": "Harmonic Drive CSF/SHF Series",
       "name_en": "Harmonic Drive CSF/SHF Series",
@@ -73,7 +76,8 @@
           "FHA"
         ]
       },
-      "source_tier_basis": "deep_link:harmonicdrive.net/products/gear-units"
+      "source_tier_basis": "deep_link:harmonicdrive.net/products/gear-units",
+      "rp_id": "RP-RED-0001"
     },
     {
       "verified": true,
@@ -91,7 +95,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "RED-002",
       "name": "Nabtesco RV Reducer",
       "name_en": "Nabtesco RV Reducer",
@@ -115,7 +119,8 @@
         "rigidity": "high",
         "backlash": "near-zero"
       },
-      "source_tier_basis": "deep_link:www.nabtesco-motion.cn/cn/products/introduction/"
+      "source_tier_basis": "deep_link:www.nabtesco-motion.cn/cn/products/introduction/",
+      "rp_id": "RP-RED-0002"
     },
     {
       "verified": true,
@@ -133,7 +138,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "id": "RED-003",
       "name": "Leaderdrive 绿的谐波 Strain Wave Gears",
       "name_en": "Leaderdrive Strain Wave Gears",
@@ -162,7 +167,307 @@
         ],
         "listing": "SSE STAR 688017"
       },
-      "source_tier_basis": "deep_link:www.leaderdrive.com/about.html"
+      "source_tier_basis": "deep_link:www.leaderdrive.com/about.html",
+      "rp_id": "RP-RED-0003"
+    },
+    {
+      "id": "REDUCER-HD-25",
+      "rp_id": "RP-RED-0001",
+      "name": "Harmonic Drive CSF-25-100-H-D",
+      "name_en": "Harmonic Drive CSF-25-100-H-D",
+      "category": "reducers",
+      "entity_kind": "type",
+      "manufacturer": "Harmonic Drive",
+      "type": "harmonic_gear",
+      "reduction_ratio": 100,
+      "output_torque": 32,
+      "backlash": 1,
+      "input_speed": 3600,
+      "weight": 0.5,
+      "flange": "ISO 9409-1 A50 compatible",
+      "source": "https://www.harmonicdrive.net/",
+      "source_tier": "B",
+      "source_tier_basis": "vendor_official",
+      "confidence": 0.9,
+      "confidence_basis": "manufacturer_datasheet",
+      "applications": [
+        "robotics_joint",
+        "precision_positioning"
+      ],
+      "price_range": "¥3000-8000",
+      "verified": true,
+      "data_quality": "good",
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      }
+    },
+    {
+      "id": "REDUCER-HD-32",
+      "rp_id": "RP-RED-0002",
+      "name": "Harmonic Drive CSF-32-100-H-D",
+      "name_en": "Harmonic Drive CSF-32-100-H-D",
+      "category": "reducers",
+      "entity_kind": "type",
+      "manufacturer": "Harmonic Drive",
+      "type": "harmonic_gear",
+      "reduction_ratio": 100,
+      "output_torque": 64,
+      "backlash": 1,
+      "input_speed": 3600,
+      "weight": 1.1,
+      "flange": "ISO 9409-1 A63 compatible",
+      "source": "https://www.harmonicdrive.net/",
+      "source_tier": "B",
+      "source_tier_basis": "vendor_official",
+      "confidence": 0.9,
+      "confidence_basis": "manufacturer_datasheet",
+      "applications": [
+        "robotics_joint",
+        "industrial_automation"
+      ],
+      "price_range": "¥5000-12000",
+      "verified": true,
+      "data_quality": "good",
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      }
+    },
+    {
+      "id": "REDUCER-HD-50",
+      "rp_id": "RP-RED-0003",
+      "name": "Harmonic Drive CSF-50-100-H-D",
+      "name_en": "Harmonic Drive CSF-50-100-H-D",
+      "category": "reducers",
+      "entity_kind": "type",
+      "manufacturer": "Harmonic Drive",
+      "type": "harmonic_gear",
+      "reduction_ratio": 100,
+      "output_torque": 160,
+      "backlash": 1,
+      "input_speed": 3000,
+      "weight": 3.5,
+      "flange": "ISO 9409-1 A100 compatible",
+      "source": "https://www.harmonicdrive.net/",
+      "source_tier": "B",
+      "source_tier_basis": "vendor_official",
+      "confidence": 0.9,
+      "confidence_basis": "manufacturer_datasheet",
+      "applications": [
+        "heavy_duty_robotics",
+        "industrial_automation"
+      ],
+      "price_range": "¥10000-25000",
+      "verified": true,
+      "data_quality": "good",
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      }
+    },
+    {
+      "id": "REDUCER-GH-25",
+      "rp_id": "RP-RED-0004",
+      "name": "Green Harmonic GH25-100-H-D",
+      "name_en": "Green Harmonic GH25-100-H-D",
+      "category": "reducers",
+      "entity_kind": "type",
+      "manufacturer": "Green Harmonic (绿的谐波)",
+      "type": "harmonic_gear",
+      "reduction_ratio": 100,
+      "output_torque": 25,
+      "backlash": 2,
+      "input_speed": 3600,
+      "weight": 0.4,
+      "flange": "ISO 9409-1 A50 compatible",
+      "source": "https://www.greenharmonic.com/",
+      "source_tier": "B",
+      "source_tier_basis": "vendor_official",
+      "confidence": 0.85,
+      "confidence_basis": "manufacturer_datasheet",
+      "applications": [
+        "robotics_joint",
+        "domestic_substitution"
+      ],
+      "domestic_rate": 1,
+      "price_range": "¥1500-4000",
+      "verified": true,
+      "data_quality": "good",
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      }
+    },
+    {
+      "id": "REDUCER-GH-50",
+      "rp_id": "RP-RED-0005",
+      "name": "Green Harmonic GH50-100-H-D",
+      "name_en": "Green Harmonic GH50-100-H-D",
+      "category": "reducers",
+      "entity_kind": "type",
+      "manufacturer": "Green Harmonic (绿的谐波)",
+      "type": "harmonic_gear",
+      "reduction_ratio": 100,
+      "output_torque": 120,
+      "backlash": 2,
+      "input_speed": 3000,
+      "weight": 2.8,
+      "flange": "ISO 9409-1 A100 compatible",
+      "source": "https://www.greenharmonic.com/",
+      "source_tier": "B",
+      "source_tier_basis": "vendor_official",
+      "confidence": 0.85,
+      "confidence_basis": "manufacturer_datasheet",
+      "applications": [
+        "heavy_duty_robotics",
+        "domestic_substitution"
+      ],
+      "domestic_rate": 1,
+      "price_range": "¥5000-12000",
+      "verified": true,
+      "data_quality": "good",
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      }
+    },
+    {
+      "id": "REDUCER-RV-50",
+      "rp_id": "RP-RED-0006",
+      "name": "Nabtesco RV-50CE",
+      "name_en": "Nabtesco RV-50CE",
+      "category": "reducers",
+      "entity_kind": "type",
+      "manufacturer": "Nabtesco",
+      "type": "rv_gear",
+      "reduction_ratio": 100,
+      "output_torque": 500,
+      "backlash": 3,
+      "input_speed": 1800,
+      "weight": 8,
+      "flange": "custom_mount",
+      "source": "https://www.nabtesco.com/",
+      "source_tier": "B",
+      "source_tier_basis": "vendor_official",
+      "confidence": 0.85,
+      "confidence_basis": "manufacturer_datasheet",
+      "applications": [
+        "industrial_robot_base_joint",
+        "heavy_duty"
+      ],
+      "price_range": "¥15000-35000",
+      "verified": true,
+      "data_quality": "good",
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      }
+    },
+    {
+      "id": "REDUCER-RV-200",
+      "rp_id": "RP-RED-0007",
+      "name": "Nabtesco RV-200FS",
+      "name_en": "Nabtesco RV-200FS",
+      "category": "reducers",
+      "entity_kind": "type",
+      "manufacturer": "Nabtesco",
+      "type": "rv_gear",
+      "reduction_ratio": 100,
+      "output_torque": 2000,
+      "backlash": 5,
+      "input_speed": 1500,
+      "weight": 25,
+      "flange": "custom_mount",
+      "source": "https://www.nabtesco.com/",
+      "source_tier": "B",
+      "source_tier_basis": "vendor_official",
+      "confidence": 0.85,
+      "confidence_basis": "manufacturer_datasheet",
+      "applications": [
+        "industrial_robot_base_joint",
+        "heavy_duty"
+      ],
+      "price_range": "¥40000-80000",
+      "verified": true,
+      "data_quality": "good",
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      }
+    },
+    {
+      "id": "REDUCER-LIF-60",
+      "rp_id": "RP-RED-0008",
+      "name": "来福 LIF-60RV-C",
+      "name_en": "Lif-drive LIF-60RV-C",
+      "category": "reducers",
+      "entity_kind": "type",
+      "manufacturer": "来福 (Lif-drive)",
+      "type": "rv_gear",
+      "reduction_ratio": 100,
+      "output_torque": 600,
+      "backlash": 4,
+      "input_speed": 1800,
+      "weight": 7.5,
+      "flange": "custom_mount",
+      "source": "https://www.lif-drive.com/",
+      "source_tier": "B",
+      "source_tier_basis": "vendor_official",
+      "confidence": 0.8,
+      "confidence_basis": "manufacturer_datasheet",
+      "applications": [
+        "industrial_robot_base_joint",
+        "domestic_substitution"
+      ],
+      "domestic_rate": 1,
+      "price_range": "¥8000-18000",
+      "verified": true,
+      "data_quality": "good",
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      }
     }
   ]
 }

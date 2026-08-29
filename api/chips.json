@@ -1,5 +1,8 @@
 {
   "meta": {
+    "category": "chips",
+    "source": "entities.json projection",
+    "generated_at": "2026-08-27T05:36:52.623Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -23,7 +26,7 @@
     }
   },
   "count": 108,
-  "updated": "2026-08-24T06:10:17.327481Z",
+  "updated": "2026-08-27T05:36:52.623Z",
   "data": [
     {
       "id": "CHIP-001",
@@ -76,8 +79,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0001"
     },
     {
       "id": "CHIP-002",
@@ -130,8 +134,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0002"
     },
     {
       "id": "CHIP-003",
@@ -185,10 +190,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.raspberrypi.com/products/raspberry-pi-5/"
+      "source_tier_basis": "deep_link:www.raspberrypi.com/products/raspberry-pi-5/",
+      "rp_id": "RP-CHI-0003"
     },
     {
       "id": "CHIP-004",
@@ -243,9 +249,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:www.st.com/en/microcontrollers-microprocessors/stm32h743-753"
+      "source_tier_basis": "deep_link:www.st.com/en/microcontrollers-microprocessors/stm32h743-753",
+      "rp_id": "RP-CHI-0004"
     },
     {
       "id": "CHIP-005",
@@ -300,9 +307,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:www.espressif.com/en/products/socs/esp32-s3"
+      "source_tier_basis": "deep_link:www.espressif.com/en/products/socs/esp32-s3",
+      "rp_id": "RP-CHI-0005"
     },
     {
       "id": "CHIP-006",
@@ -357,9 +365,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:www.pjrc.com/store/teensy41.html"
+      "source_tier_basis": "deep_link:www.pjrc.com/store/teensy41.html",
+      "rp_id": "RP-CHI-0006"
     },
     {
       "id": "CHIP-007",
@@ -411,8 +420,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0007"
     },
     {
       "id": "CHIP-008",
@@ -465,8 +475,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0008"
     },
     {
       "id": "CHIP-009",
@@ -519,8 +530,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0009"
     },
     {
       "id": "CHIP-010",
@@ -567,8 +579,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0010"
     },
     {
       "id": "CHIP-011",
@@ -618,9 +631,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/"
+      "source_tier_basis": "deep_link:hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/",
+      "rp_id": "RP-CHI-0011"
     },
     {
       "id": "CHIP-012",
@@ -670,10 +684,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:coral.ai/products/"
+      "source_tier_basis": "deep_link:coral.ai/products/",
+      "rp_id": "RP-CHI-0012"
     },
     {
       "id": "CHIP-013",
@@ -708,7 +723,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -726,8 +741,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "no_source"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0013",
+      "source_url": "https://www.google.com/search?q=NXP%20NXP%20i.MX%208M%20Plus%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-014",
@@ -780,8 +798,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0014"
     },
     {
       "id": "CHIP-015",
@@ -814,7 +833,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -832,8 +851,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "no_source"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0015",
+      "source_url": "https://www.google.com/search?q=Infineon%20Infineon%20AURIX%20TC397%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-016",
@@ -886,8 +908,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0016"
     },
     {
       "id": "CHIP-017",
@@ -922,7 +945,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -940,8 +963,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "no_source"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0017",
+      "source_url": "https://www.google.com/search?q=AMD%2FXilinx%20AMD%20Xilinx%20Kria%20K26%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-018",
@@ -996,10 +1022,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.microchip.com/en-us/products/fpgas-and-plds/system-on-ch"
+      "source_tier_basis": "deep_link:www.microchip.com/en-us/products/fpgas-and-plds/system-on-ch",
+      "rp_id": "RP-CHI-0018"
     },
     {
       "id": "CHIP-019",
@@ -1052,8 +1079,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0019"
     },
     {
       "id": "CHIP-020",
@@ -1108,9 +1136,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-CHI-0020"
     },
     {
       "id": "RP-ct21x-gan-encoder",
@@ -1158,9 +1187,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0021"
     },
     {
       "id": "RP-intel-core-ultra-s3",
@@ -1206,9 +1236,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0022"
     },
     {
       "id": "RP-honpine-hpjm",
@@ -1254,9 +1285,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0023"
     },
     {
       "id": "CHIP-qualcomm-iq10",
@@ -1309,7 +1341,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1324,9 +1356,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0024",
+      "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ10%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-qualcomm-iq9",
@@ -1374,7 +1409,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1389,9 +1424,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0025",
+      "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ9%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-edge",
@@ -1440,7 +1478,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1455,9 +1493,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0026",
+      "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Edge%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-nvidia-thor-v2",
@@ -1508,7 +1549,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1523,9 +1564,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0027",
+      "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Jetson%20Thor%20(2026%20BC%20Award)%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-amd-ryzen-ai-2026",
@@ -1573,7 +1617,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1588,9 +1632,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0028",
+      "source_url": "https://www.google.com/search?q=AMD%20AMD%20Ryzen%20AI%20Processor%202026%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-microsoft-braga",
@@ -1636,7 +1683,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1651,9 +1698,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0029",
+      "source_url": "https://www.google.com/search?q=Microsoft%20Microsoft%20Braga%20AI%20Chip%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-gigadevice-gd32h7",
@@ -1702,7 +1752,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1717,9 +1767,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0030",
+      "source_url": "https://www.google.com/search?q=GigaDevice%20GigaDevice%20GD32H7%20Series%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-advantech-iq10",
@@ -1768,7 +1821,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1783,9 +1836,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0031",
+      "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20Qualcomm%20IQ10%20Platform%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-qualcomm-rb6-v2",
@@ -1834,7 +1890,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1849,9 +1905,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0032",
+      "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20RB6%20v2%20(QCS8250)%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-horizon-j6",
@@ -1900,7 +1959,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1915,9 +1974,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0033",
+      "source_url": "https://www.google.com/search?q=Horizon%20Robotics%20Horizon%20Robotics%20J6%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-renesas-rzv2h-v2",
@@ -1967,7 +2029,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1982,9 +2044,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0034",
+      "source_url": "https://www.google.com/search?q=Renesas%20Renesas%20RZ%2FV2H%20v2%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-ti-tda4vp",
@@ -2034,7 +2099,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2049,9 +2114,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0035",
+      "source_url": "https://www.google.com/search?q=Texas%20Instruments%20TI%20TDA4VP%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-mediatek-genio-700",
@@ -2103,7 +2171,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2118,9 +2186,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0036",
+      "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Genio%20700%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-mediatek-edge-ai-7b",
@@ -2170,7 +2241,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2185,9 +2256,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0037",
+      "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Edge%20AI%20Chip%20(Dual%207B)%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-rockchip-rk3588s-v2",
@@ -2241,7 +2315,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -2256,9 +2330,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0038",
+      "source_url": "https://www.google.com/search?q=Rockchip%20Rockchip%20RK3588S%20v2%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-amlogic-a311d2",
@@ -2312,7 +2389,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -2327,9 +2404,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0039",
+      "source_url": "https://www.google.com/search?q=Amlogic%20Amlogic%20A311D2%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-robotics",
@@ -2418,7 +2498,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2433,9 +2513,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0040",
+      "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Robotics%20Edition%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-qualcomm-iq10-advantech",
@@ -2486,7 +2569,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2501,9 +2584,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0041",
+      "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20MIC-710AI%20(IQ10)%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-gigadevice-gd32h7-robot",
@@ -2554,7 +2640,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2569,9 +2655,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0042",
+      "source_url": "https://www.google.com/search?q=GigaDevice%20GigaDevice%20GD32H7%20Robot%20Edition%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-nvidia-t5000",
@@ -2603,9 +2692,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0043"
     },
     {
       "id": "CHIP-qualcomm-robotics-pc",
@@ -2637,9 +2727,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0044"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-robee",
@@ -2671,9 +2762,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0045"
     },
     {
       "id": "CHIP-ms-braga-v2",
@@ -2706,9 +2798,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0046"
     },
     {
       "id": "CHIP-edge-ai-realtime",
@@ -2740,9 +2833,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0047"
     },
     {
       "id": "chip-qualcomm-iq10-pro",
@@ -2789,9 +2883,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0048"
     },
     {
       "id": "chip-nvidia-t5000-v2",
@@ -2838,9 +2933,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0049"
     },
     {
       "id": "chip-mediatek-genio-700-v2",
@@ -2887,9 +2983,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0050"
     },
     {
       "id": "chip-intel-ultra3-robotics-v2",
@@ -2936,9 +3033,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0051"
     },
     {
       "id": "chip-amd-ryzen-ai-v2",
@@ -2985,9 +3083,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0052"
     },
     {
       "id": "chip-nxp-imx95",
@@ -3034,9 +3133,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0053"
     },
     {
       "id": "chip-renesas-rzv2l",
@@ -3083,9 +3183,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0054"
     },
     {
       "id": "chip-horizon-j6e",
@@ -3132,9 +3233,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "aggregation_no_anchor",
+      "rp_id": "RP-CHI-0055"
     },
     {
       "id": "CHIP-snapdragon-x2-plus",
@@ -3183,7 +3285,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3198,9 +3300,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0056",
+      "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Snapdragon%20X2%20Plus%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-intel-ces2026-ai",
@@ -3249,7 +3354,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3264,9 +3369,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0057",
+      "source_url": "https://www.google.com/search?q=Intel%20Intel%20CES%202026%20AI%20Chip%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-turbox-irb10",
@@ -3316,7 +3424,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3331,9 +3439,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0058",
+      "source_url": "https://www.google.com/search?q=Thundercomm%2FQualcomm%20Thundercomm%20TurboX%20IRB10%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-neura-robotics-iq10",
@@ -3382,7 +3493,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3397,9 +3508,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "aggregation_no_anchor"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0059",
+      "source_url": "https://www.google.com/search?q=NEURA%20Robotics%2FQualcomm%20NEURA%20Robotics%20IQ10%20Platform%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-amd-ryzen-ai-400",
@@ -3439,9 +3553,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-CHI-0060"
     },
     {
       "id": "CHIP-nvidia-thor-robotics",
@@ -3487,8 +3602,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0061"
     },
     {
       "id": "CHIP-nvidia-gb10-digits",
@@ -3505,7 +3621,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3520,9 +3636,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "unattributable_text"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0062",
+      "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20GB10%20Grace%20%2B%20Blackwell%20(DIGITS%20Desktop%20AI)%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-a1b2c3",
@@ -3539,7 +3658,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -3557,8 +3676,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "no_source"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0063",
+      "source_url": "https://www.google.com/search?q=%E4%BB%96%E5%B1%B1%E7%A7%91%E6%8A%80%20%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E8%8A%AF%E7%89%87%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-66",
@@ -3588,9 +3710,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "duplicate_of": "CHIP-81",
-      "source_tier_basis": "named_vendor_catalog"
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0064"
     },
     {
       "id": "CHIP-68",
@@ -3620,8 +3743,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0065"
     },
     {
       "id": "CHIP-69",
@@ -3651,8 +3775,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0066"
     },
     {
       "id": "CHIP-70",
@@ -3682,8 +3807,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0067"
     },
     {
       "id": "CHIP-72",
@@ -3713,8 +3839,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0068"
     },
     {
       "id": "CHIP-73",
@@ -3744,8 +3871,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0069"
     },
     {
       "id": "CHIP-74",
@@ -3775,8 +3903,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0070"
     },
     {
       "id": "CHIP-75",
@@ -3806,8 +3935,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0071"
     },
     {
       "id": "CHIP-76",
@@ -3837,8 +3967,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0072"
     },
     {
       "id": "CHIP-77",
@@ -3868,8 +3999,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0073"
     },
     {
       "id": "CHIP-78",
@@ -3899,8 +4031,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0074"
     },
     {
       "id": "CHIP-80",
@@ -3930,8 +4063,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0075"
     },
     {
       "id": "CHIP-81",
@@ -3961,8 +4095,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0076"
     },
     {
       "id": "CHIP-82",
@@ -3992,8 +4127,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0077"
     },
     {
       "id": "CHIP-85",
@@ -4023,8 +4159,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0078"
     },
     {
       "id": "CHIP-86",
@@ -4054,8 +4191,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0079"
     },
     {
       "id": "CHIP-87",
@@ -4085,8 +4223,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0080"
     },
     {
       "id": "CHIP-88",
@@ -4116,8 +4255,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0081"
     },
     {
       "id": "CHIP-89",
@@ -4147,8 +4287,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0082"
     },
     {
       "id": "CHIP-90",
@@ -4178,8 +4319,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0083"
     },
     {
       "id": "CHIP-91",
@@ -4209,9 +4351,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "duplicate_of": "CHIP-68",
-      "source_tier_basis": "named_vendor_catalog"
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0084"
     },
     {
       "id": "CHIP-92",
@@ -4241,8 +4384,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0085"
     },
     {
       "id": "CHIP-93",
@@ -4272,8 +4416,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0086"
     },
     {
       "id": "CHIP-94",
@@ -4303,8 +4448,9 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "named_vendor_catalog"
+      "entity_kind": "type",
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0087"
     },
     {
       "id": "CHIP-95",
@@ -4334,9 +4480,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "duplicate_of": "CHIP-80",
-      "source_tier_basis": "named_vendor_catalog"
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0088"
     },
     {
       "id": "CHIP-096",
@@ -4387,9 +4534,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/"
+      "source_tier_basis": "deep_link:hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/",
+      "rp_id": "RP-CHI-0089"
     },
     {
       "id": "CHIP-097",
@@ -4439,9 +4587,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
-      "source_tier_basis": "deep_link:hailo.ai/products/ai-accelerators/hailo-10h-ai-accelerator/"
+      "source_tier_basis": "deep_link:hailo.ai/products/ai-accelerators/hailo-10h-ai-accelerator/",
+      "rp_id": "RP-CHI-0090"
     },
     {
       "id": "CHIP-098",
@@ -4492,10 +4641,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "deep",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:coral.ai/products/"
+      "source_tier_basis": "deep_link:coral.ai/products/",
+      "rp_id": "RP-CHI-0091"
     },
     {
       "id": "CHIP-099",
@@ -4550,9 +4700,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-CHI-0092"
     },
     {
       "id": "CHIP-100",
@@ -4584,7 +4735,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -4602,8 +4753,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "no_source"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0093",
+      "source_url": "https://www.google.com/search?q=Horizon%20Robotics%20(%E5%9C%B0%E5%B9%B3%E7%BA%BF)%20Horizon%20Robotics%20Journey%20J6M%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-101",
@@ -4653,9 +4807,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_scope": "vendor",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-CHI-0094"
     },
     {
       "id": "CHIP-102",
@@ -4688,7 +4843,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -4706,8 +4861,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "no_source"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0095",
+      "source_url": "https://www.google.com/search?q=Huawei%20(%E5%8D%8E%E4%B8%BA)%20Huawei%20Ascend%20310B%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-103",
@@ -4736,7 +4894,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -4754,8 +4912,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
-      "source_tier_basis": "no_source"
+      "entity_kind": "type",
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0096",
+      "source_url": "https://www.google.com/search?q=Kinara%20(acquired%20by%20NXP)%20Kinara%20Ara-2%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
     },
     {
       "id": "CHIP-axelera-metis-aipu",
@@ -4791,7 +4952,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -4806,9 +4967,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "unattributable_text"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0097",
+      "source_url": "https://www.google.com/search?q=Axelera%20AI%EF%BC%88%E8%8D%B7%E5%85%B0%EF%BC%89%20Axelera%20Metis%20AIPU%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
     },
     {
       "id": "CHIP-axera-ax650n",
@@ -4848,7 +5012,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -4863,9 +5027,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "unattributable_text"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0098",
+      "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%E5%8D%8A%E5%AF%BC%E4%BD%93%20(Axera)%20%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%20AX650N%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
     },
     {
       "id": "CHIP-axera-ax8850",
@@ -4902,7 +5069,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -4917,9 +5084,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "B",
-      "source_tier_basis": "unattributable_text"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0099",
+      "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%E5%8D%8A%E5%AF%BC%E4%BD%93%20(Axera)%20%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%20AX8850%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
     },
     {
       "id": "CHIP-blacksesame-huashan-a2000",
@@ -4956,7 +5126,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -4971,9 +5141,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "B",
-      "source_tier_basis": "unattributable_text"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0100",
+      "source_url": "https://www.google.com/search?q=%E9%BB%91%E8%8A%9D%E9%BA%BB%E6%99%BA%E8%83%BD%20(Black%20Sesame%20Technologies%2C%202533.HK)%20%E9%BB%91%E8%8A%9D%E9%BA%BB%E6%99%BA%E8%83%BD%20%E5%8D%8E%E5%B1%B1%20A2000%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
     },
     {
       "id": "CHIP-sophgo-bm1684x",
@@ -5011,7 +5184,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -5026,9 +5199,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "unattributable_text"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0101",
+      "source_url": "https://www.google.com/search?q=%E7%AE%97%E8%83%BD%E7%A7%91%E6%8A%80%20(SOPHGO)%20%E7%AE%97%E8%83%BD%20SOPHON%20BM1684X%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
     },
     {
       "id": "CHIP-cambricon-mlu370-s4",
@@ -5064,7 +5240,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -5079,9 +5255,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "unattributable_text"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0102",
+      "source_url": "https://www.google.com/search?q=%E4%B8%AD%E7%A7%91%E5%AF%92%E6%AD%A6%E7%BA%AA%20(688256.SH)%20%E5%AF%92%E6%AD%A6%E7%BA%AA%20MLU370-S4%20%E6%8E%A8%E7%90%86%E5%8A%A0%E9%80%9F%E5%8D%A1%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
     },
     {
       "id": "CHIP-rockchip-rk3576",
@@ -5135,9 +5314,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "named_vendor_catalog"
+      "source_tier_basis": "named_vendor_catalog",
+      "rp_id": "RP-CHI-0103"
     },
     {
       "id": "CHIP-simaai-modalix",
@@ -5190,9 +5370,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "root_url_only"
+      "source_tier_basis": "root_url_only",
+      "rp_id": "RP-CHI-0104"
     },
     {
       "id": "CHIP-ambarella-n1-655",
@@ -5231,7 +5412,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -5246,9 +5427,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "unattributable_text"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0105",
+      "source_url": "https://www.google.com/search?q=Ambarella%EF%BC%88%E7%BE%8E%E5%9B%BD%E5%AE%89%E9%9C%B8%EF%BC%89%20Ambarella%20N1-655%20%E8%BE%B9%E7%BC%98%20GenAI%20SoC%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
     },
     {
       "id": "CHIP-ti-am69a",
@@ -5288,7 +5472,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -5303,9 +5487,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "unattributable_text"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0106",
+      "source_url": "https://www.google.com/search?q=Texas%20Instruments%20TI%20AM69A%20%E8%BE%B9%E7%BC%98%20AI%20%E5%A4%84%E7%90%86%E5%99%A8%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
     },
     {
       "id": "CHIP-deepx-dx-m1",
@@ -5341,7 +5528,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -5356,9 +5543,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "A",
-      "source_tier_basis": "unattributable_text"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0107",
+      "source_url": "https://www.google.com/search?q=DEEPX%EF%BC%88%E9%9F%A9%E5%9B%BD%EF%BC%89%20DEEPX%20DX-M1%20%E8%BE%B9%E7%BC%98%20NPU%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
     },
     {
       "id": "CHIP-houmo-manye-m30",
@@ -5394,7 +5584,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -5409,9 +5599,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "component",
+      "entity_kind": "type",
       "source_tier_prev": "B",
-      "source_tier_basis": "unattributable_text"
+      "source_tier_basis": "google_search",
+      "rp_id": "RP-CHI-0108",
+      "source_url": "https://www.google.com/search?q=%E5%90%8E%E6%91%A9%E6%99%BA%E8%83%BD%20(Houmo.AI)%20%E5%90%8E%E6%91%A9%E6%99%BA%E8%83%BD%20%E6%BC%AB%E7%95%8C%20M30%20%E5%AD%98%E7%AE%97%E4%B8%80%E4%BD%93%E8%8A%AF%E7%89%87%20datasheet",
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
     }
   ]
 }

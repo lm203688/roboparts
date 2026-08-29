@@ -26,20 +26,20 @@
     ],
     "category_counts": {
       "actuators": 217,
-      "sensors": 90,
-      "chips": 108,
-      "interfaces": 37,
-      "protocols": 64,
-      "llms": 42,
       "platforms": 41,
-      "flexible_actuators": 21,
+      "chips": 108,
       "robot_ai_models": 46,
+      "sensors": 90,
+      "interfaces": 44,
+      "llms": 42,
+      "protocols": 64,
+      "flexible_actuators": 21,
       "data_acquisition": 46,
       "connectors": 2,
       "integrated_joints": 1,
-      "reducers": 3,
+      "reducers": 11,
       "controllers": 3,
-      "grippers": 8,
+      "grippers": 13,
       "structural": 3,
       "cables": 2,
       "power": 2,
@@ -73,7 +73,8 @@
         "C": "无溯源（历史导入，待补来源，confidence 上限 0.30）"
       },
       "tier_rule": "source_tier 由证据形态推导，不由录入者自封：A=有深链可点开复核；B=仅根域名/具名标准号/具名厂商目录（知道去哪找，点不开）；C=无来源/无身份聚合/有话无锚点。判据唯一源 scripts/govern_source_tier.py",
-      "note": "主指标看 traceable_pct（Tier A 可点开复核）；source_pct 含 Tier B 弱归因，仅作过程指标；Tier C 已显式标注，供 Agent 侧过滤。【2026-08-10 更正】此前实现为「source 字段非空即判 A」，traceable_pct 曾虚报为 47.32%，已按证据重算。原值留在实体的 source_tier_prev 字段供审计。当前值随 tier_a_traceable 实时计算。"
+      "note": "主指标看 traceable_pct（Tier A 可点开复核）；source_pct 含 Tier B 弱归因，仅作过程指标；Tier C 已显式标注，供 Agent 侧过滤。【2026-08-10 更正】此前实现为「source 字段非空即判 A」，traceable_pct 曾虚报为 47.32%，已按证据重算。原值留在实体的 source_tier_prev 字段供审计。当前值随 tier_a_traceable 实时计算。",
+      "total_clean": 666
     },
     "data_quality": {
       "audited_at": "2026-08-09",
@@ -534,17 +535,19 @@
       "gap_note": "仅 83/708 条实体声明了接口/协议数据，其余无法评估互操作符合度——这是兼容性数据集的首要补全方向。"
     },
     "mechanical_interface_coverage": {
-      "schema_version": "1.0.0",
-      "registry": "/api/mechanical_interfaces.json",
-      "applicable": 381,
-      "not_applicable": 366,
+      "total": 767,
       "declared": 2,
       "partial": 4,
       "not_declared": 388,
-      "fill_pct": 1.57,
-      "note": "机械互换维度基线。fill_pct 为已获得厂商声明的比例；not_declared 为显式缺口（可被 agent 查询），非字段缺失。",
-      "total": 767,
-      "n_a": 373
+      "n_a": 373,
+      "coupled_categories": [
+        "actuators",
+        "sensors",
+        "platforms",
+        "flexible_actuators",
+        "connectors"
+      ],
+      "coupled_count": 371
     },
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
@@ -568,19 +571,13 @@
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     },
     "entity_kinds": {
-      "component": 545,
-      "market_intelligence": 17,
-      "organization": 10,
-      "specification": 94,
-      "software": 81,
+      "type": 699,
+      "standard": 68,
       "definition": {
-        "component": "可采购/可选型的实物零部件",
-        "market_intelligence": "市场报告、专利地图、趋势条目 —— 保留供参考，但不作为选型候选返回",
-        "organization": "企业/机构主体条目（如 Figure AI、波士顿动力）—— 保留供检索，但没有物理接口，不进选型候选、不作为兼容性判定操作数",
-        "specification": "接口/协议规范本身（EtherCAT、USB 3.0、MIPI CSI-2…）—— 可被检索、可作为筛选条件，但规范之间不存在装配关系，不作为兼容性判定操作数",
-        "software": "AI 模型 / 软件框架条目（GPT-4o、RT-2、LeRobot…）—— 无机械与电气接口，不进选型候选、不作为兼容性判定操作数"
+        "type": "型号/实例级条目（零部件型号、协议规范、标准条款等）",
+        "standard": "标准/规范类条目（ISO/GB/T 标准等）"
       },
-      "note": "total_entities 仍为全库条数；零件检索、推荐与兼容性判定只认 component"
+      "note": "type = 具体型号/实例，standard = 抽象规范/标准"
     },
     "derivation_rules": {
       "manufacturer_ecosystem": {
@@ -745,7 +742,8 @@
       "grippers_added": 5,
       "total_added": 13,
       "note": "Industry standard data from Harmonic Drive, Green Harmonic, Nabtesco, Lif-drive, OnRobot, Schunk, 正实机器人"
-    }
+    },
+    "clean": 666
   },
   "entities": [
     {
