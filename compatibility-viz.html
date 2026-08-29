@@ -256,16 +256,22 @@ $('#randBom').addEventListener('click', async () => {
 });
 
 /* ── ③ 声明率快照 ────────────────────────────────────────────── */
-function computeRates(entities) {
+function computeRates(entities, meta) {
   const n = entities.length;
+  const mic = (meta && meta.mechanical_interface_coverage) || {};
   const has = (e, fn) => entities.filter(fn).length;
-  return [
-    { label: '机械接口', v: has(e => e.mechanical_interface && !['not_declared','n_a','',null,undefined].includes(e.mechanical_interface.status)) },
-    { label: '电气电压', v: has(e => e.voltage && e.voltage !== 'n_a') },
-    { label: '通信协议', v: has(e => e.protocol && e.protocol !== 'n_a') },
-    { label: 'ROS 支持', v: has(e => e.ros_support === true) },
-    { label: '任一维度', v: has(e => (e.mechanical_interface && !['not_declared','n_a','',null,undefined].includes(e.mechanical_interface.status)) || (e.voltage && e.voltage !== 'n_a') || (e.protocol && e.protocol !== 'n_a') || e.ros_support === true) },
-  ].map(r => ({ ...r, pct: n ? Math.round(r.v * 1000 / n) / 10 : 0, total: n }));
+  // 机械接口声明率用项目官方口径 mech_pct：分子 = declared+partial，分母 = applicable(358)，
+  // 与 onboarding_block.facts()['mech_pct'] 及 regression.py 闸门 truth['mech_pct'] 完全一致。
+  const mechV = (mic.declared || 0) + (mic.partial || 0);
+  const mechDen = mic.applicable || n;
+  const rows = [
+    { label: '机械接口', v: mechV, den: mechDen },
+    { label: '电气电压', v: has(e => e.voltage && e.voltage !== 'n_a'), den: n },
+    { label: '通信协议', v: has(e => e.protocol && e.protocol !== 'n_a'), den: n },
+    { label: 'ROS 支持', v: has(e => e.ros_support === true), den: n },
+    { label: '任一维度', v: has(e => (e.mechanical_interface && !['not_declared','n_a','',null,undefined].includes(e.mechanical_interface.status)) || (e.voltage && e.voltage !== 'n_a') || (e.protocol && e.protocol !== 'n_a') || e.ros_support === true), den: n },
+  ];
+  return rows.map(r => ({ ...r, pct: r.den ? Math.round(r.v * 1000 / r.den) / 10 : 0, total: n }));
 }
 function drawRate(cv, rates) {
   const { ctx, w, h } = setupCanvas(cv);
@@ -282,21 +288,23 @@ function drawRate(cv, rates) {
     ctx.fillText(r.pct + '%', x + bw / 2, padT + plotH - bh - 6);
     ctx.fillStyle = COL.mut; ctx.fillText(r.label, x + bw / 2, padT + plotH + 16);
   });
-  // 基线标线（机械 0.28%）
-  const yBase = padT + plotH - plotH * (0.28 / 100);
+  // 基线标线（机械接口 mech_pct，占 applicable 358）
+  const basePct = (rates.find(r => r.label === '机械接口') || {}).pct || 1.68;
+  const yBase = padT + plotH - plotH * (basePct / 100);
   ctx.strokeStyle = COL.mut; ctx.setLineDash([4, 4]); ctx.beginPath();
   ctx.moveTo(padL, yBase); ctx.lineTo(w - padR, yBase); ctx.stroke(); ctx.setLineDash([]);
   ctx.fillStyle = COL.mut; ctx.font = '10px system-ui'; ctx.textAlign = 'left';
-  ctx.fillText('机械接口真实基线 0.28%', padL + 4, yBase - 4);
+  ctx.fillText('机械接口声明率基线 ' + basePct + '%（占可声明实体 358）', padL + 4, yBase - 4);
 }
 $('#rateBtn').addEventListener('click', async () => {
   $('#rateHint').textContent = '统计中…';
   try {
     const d = await fetchJSON('/api/entities.json');
-    const rates = computeRates(d.entities || []);
+    const rates = computeRates(d.entities || [], d.meta);
     drawRate($('#cvRate'), rates);
     const m = rates.find(r => r.label === '机械接口');
-    $('#rateHint').innerHTML = `库内共 <strong>${rates[0].total}</strong> 条实体。机械接口声明率 <strong class="err">${m.pct}%</strong>（${m.v} 条）—— 极低的数字正是数据飞轮要先补的缺口：随着真实 BOM 提交，本快照将逐次刷新，形成可追踪的声明率时间轴。`;
+    const mic = (d.meta && d.meta.mechanical_interface_coverage) || {};
+    $('#rateHint').innerHTML = `库内共 <strong>${rates[0].total}</strong> 条实体。机械接口声明率 <strong class="err">${m.pct}%</strong>（declared ${mic.declared || 0} + partial ${mic.partial || 0} / applicable ${mic.applicable || rates[0].total}）—— 极低的数字正是数据飞轮要先补的缺口：随着真实 BOM 提交，本快照将逐次刷新，形成可追踪的声明率时间轴。`;
   } catch (e) { $('#rateHint').textContent = '计算失败：' + e.message; }
 });
 
