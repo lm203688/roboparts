@@ -616,7 +616,120 @@ export function judgePair(a, b) {
     hard_dimensions_decided: hardDecided.length,
     source: 'rule-engine (real entity fields)',
     evidence_basis: '基于厂商公开声明字段的规则推断，非实测；未声明维度记为无法判定，不计入分子也不计入分母；判 true 至少需一项硬约束（协议/电气/机械）有双方声明',
+    // 【P1 语义层 · 诚实边界】硬维度全无证据（overall=null）时，附"语义最相近零件"作为
+    // 可核查线索，绝不作为兼容性结论（不会把 similarity 写进 compatibility_score，避免假绿）。
+    ...(overall === null ? { semantic_hint: attachSemanticHint(a, b) } : {}),
   };
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 【P1】本地语义层 —— 构建时预计算的哈希 TF-IDF 向量索引（api/semantic_index.json）
+ *
+ * 索引由 scripts/build_semantic_index.mjs 离线生成（纯 JS、零依赖、零外发）。
+ * 本段只做「加载 + 余弦检索」，不在运行时训练任何模型、不发起任何网络。
+ *
+ * 诚实用途：在机械/电气/协议均无双方声明（overall=null）时，给出"语义上最相近的
+ * 零件"供人工核查，而不是干巴巴返回 null。它**不是**兼容性裁决因子——
+ * 语义相近 ≠ 能装在一起，绝不据此把 verdict 改成 compatible=true。
+ * ═══════════════════════════════════════════════════════════════════════════ */
+let _semIndex = null;   // isolate 级缓存：{ dim, idf, ids, names, vectors }
+
+const SEM_CJK = /[一-鿿]/g;
+const SEM_EN = /[a-z0-9][a-z0-9.+#-]*/g;
+
+/** 与 build_semantic_index.mjs 完全一致的 token 化：英文词 + 中文 uni/bi-gram。 */
+function tokenizeSemantic(text) {
+  if (!text) return [];
+  const t = String(text).toLowerCase();
+  const toks = [];
+  const en = t.match(SEM_EN);
+  if (en) for (const w of en) if (w.length >= 2) toks.push(w);
+  const cjk = t.match(SEM_CJK);
+  if (cjk) {
+    for (const run of cjk) {
+      const chars = run.split('');
+      for (const c of chars) toks.push('c:' + c);
+      for (let i = 0; i < chars.length - 1; i++) toks.push('b:' + chars[i] + chars[i + 1]);
+    }
+  }
+  return toks;
+}
+
+function hashDimSemantic(s, dim) {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+  return h % dim;
+}
+
+/** 预加载语义索引（best-effort，失败静默不影响主流程）。由 loadEntityMap 在启动时触发。 */
+export async function ensureSemanticIndex(env, request) {
+  if (_semIndex) return _semIndex;
+  try {
+    const r = await env.ASSETS.fetch(new URL('/api/semantic_index.json', request.url));
+    if (!r.ok) return null;
+    const doc = await r.json();
+    if (!doc || !Array.isArray(doc.vectors) || !doc.dim) return null;
+    _semIndex = doc;
+  } catch { _semIndex = null; }
+  return _semIndex;
+}
+
+/** 给定实体 id，返回语义最相近的 k 个零件（排除自身）。索引未就绪时返回 []。 */
+function neighborsOf(id, k = 3) {
+  if (!_semIndex) return [];
+  const i = _semIndex.ids.indexOf(id);
+  if (i < 0) return [];
+  const v = _semIndex.vectors[i];
+  const sims = [];
+  for (let j = 0; j < _semIndex.ids.length; j++) {
+    if (j === i) continue;
+    const w = _semIndex.vectors[j];
+    let dot = 0;
+    for (let d = 0; d < _semIndex.dim; d++) dot += v[d] * w[d];
+    sims.push({ id: _semIndex.ids[j], name: _semIndex.names[j], sim: dot });
+  }
+  sims.sort((x, y) => y.sim - x.sim);
+  return sims.slice(0, k).map((s) => ({
+    id: s.id, name: s.name, similarity: Math.round(s.sim * 1000) / 1000,
+  }));
+}
+
+/** 当硬维度无法裁决时，附上双方各自的语义近邻，作为可核查线索。 */
+function attachSemanticHint(a, b) {
+  if (!_semIndex) return undefined;
+  return {
+    note: '四维硬约束均无双方声明，无法判定兼容性；以下为语义最相近零件，供人工核查接口/规格是否可能对齐（语义相近≠兼容）。',
+    a_neighbors: neighborsOf(a.id),
+    b_neighbors: neighborsOf(b.id),
+  };
+}
+
+/**
+ * 自然语言语义检索：把查询词向量化后在索引上做余弦召回。
+ * 索引未就绪时返回 {available:false}（调用方降级为关键词检索）。
+ */
+export async function semanticSearch(env, request, query, k = 5) {
+  const idx = await ensureSemanticIndex(env, request);
+  if (!idx || !idx.vectors || !idx.idf) return { available: false, reason: '语义索引未就绪' };
+  const tf = new Map();
+  for (const tk of tokenizeSemantic(query)) tf.set(tk, (tf.get(tk) || 0) + 1);
+  const vec = new Float64Array(idx.dim);
+  for (const [tk, cnt] of tf) {
+    const d = hashDimSemantic(tk, idx.dim);
+    vec[d] += cnt * (idx.idf[tk] || 1);
+  }
+  let n = 0;
+  for (let i = 0; i < idx.dim; i++) n += vec[i] * vec[i];
+  n = Math.sqrt(n) || 1;
+  const sims = [];
+  for (let j = 0; j < idx.ids.length; j++) {
+    let dot = 0;
+    const w = idx.vectors[j];
+    for (let d = 0; d < idx.dim; d++) dot += (vec[d] / n) * w[d];
+    sims.push({ id: idx.ids[j], name: idx.names[j], similarity: Math.round(dot * 1000) / 1000 });
+  }
+  sims.sort((x, y) => y.similarity - x.similarity);
+  return { available: true, query, dim: idx.dim, count: sims.length, results: sims.slice(0, k) };
 }
 
 /**
@@ -641,6 +754,8 @@ export async function loadEntityMap(env, request) {
   // 贡献层实体若主库已存在则补充其缺失维度（机械接口优先用贡献层，协议/电气/ROS 填空时补），
   // 若不存在（如 OSS-xxx）则作为新实体加入，使开源机器人零件也能被查兼容。
   await mergeFlywheel(env, request, map);
+  // 【P1】预加载语义索引（best-effort）；失败不影响主裁决流（judgePair 会优雅降级）。
+  await ensureSemanticIndex(env, request).catch(() => {});
   return map;
 }
 

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>标准自校验 · RoboParts</title>
+<style>
+  :root { --bg:#0d1117; --card:#161b22; --fg:#e6edf3; --mut:#8b949e; --acc:#2f81f7; --ok:#3fb950; --warn:#d29922; --err:#f85149; --bd:#30363d; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; background:var(--bg); color:var(--fg); padding:32px; }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  p.sub { color: var(--mut); margin: 0 0 22px; font-size: 14px; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap:12px; margin-bottom:22px; }
+  .stat { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:14px; }
+  .stat .n { font-size:24px; font-weight:700; }
+  .stat .l { font-size:12px; color:var(--mut); margin-top:4px; }
+  .card { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:18px; margin-bottom:18px; }
+  .card h2 { font-size:16px; margin:0 0 12px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--bd); }
+  th { color:var(--mut); font-weight:600; }
+  .ok { color:var(--ok); } .warn { color:var(--warn); } .err { color:var(--err); } .mut { color:var(--mut); }
+  code { background:#0d1117; padding:1px 5px; border-radius:4px; font-size:12px; }
+  .tag { display:inline-block; padding:1px 7px; border-radius:20px; font-size:11px; border:1px solid var(--bd); }
+  .tag.ok { color:var(--ok); border-color:var(--ok); }
+  .tag.err { color:var(--err); border-color:var(--err); }
+  .tag.mut { color:var(--mut); }
+  a { color:var(--acc); }
+  .note { font-size:12px; color:var(--mut); margin-top:10px; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>标准自校验 · RoboParts</h1>
+  <p class="sub">标准登记表 ↔ 实体声明 的自动交叉校验。这是<strong>数据质量自检，不是兼容性裁决</strong>——它指出"声明了但出处存疑"的条目，供人工补全证据。</p>
+
+  <div class="grid" id="stats"></div>
+
+  <div class="card">
+    <h2>机械接口声明核验</h2>
+    <table>
+      <thead><tr><th>实体</th><th>声明编码</th><th>状态</th></tr></thead>
+      <tbody id="mechBody"></tbody>
+    </table>
+    <div class="note">实体公开的机械接口编码（如 <code>ISO 9409-1-50-4-M6</code>）若在已知指定集内则视为"已核实"，否则标"未核实"——后者不代表错，只代表本平台暂无权威出处可佐证，需提交 <code>source_url</code>。</div>
+  </div>
+
+  <div class="card">
+    <h2>数据质量冲突（诚实标记）</h2>
+    <table>
+      <thead><tr><th>类型</th><th>实体</th><th>声明</th><th>说明</th></tr></thead>
+      <tbody id="conflictBody"></tbody>
+    </table>
+    <div class="note" id="conflictNote"></div>
+  </div>
+
+  <div class="card">
+    <h2>行业标准覆盖（行标备案库 hbba）</h2>
+    <table>
+      <thead><tr><th>标准号</th><th>名称</th><th>状态</th></tr></thead>
+      <tbody id="hbBody"></tbody>
+    </table>
+    <div class="note">来源：<a href="https://hbba.sacinfo.org.cn" target="_blank" rel="noopener">全国标准信息公共服务平台 · 行业标准备案库</a>（机械行业整表枚举，ROBOT_RE ∩ IFACE_RE 双命中作用域）。</div>
+  </div>
+
+  <div class="note">生成时间：<span id="gen"></span> · 数据口径：机械接口声明率真实基线约 <strong>0.28%</strong>（仅 2 个实体声明机械标准），绝大多数零件尚无机械接口声明——这正是数据飞轮要补的缺口。</div>
+  <p class="sub">相关：<a href="/compatibility-viz.html">兼容性可视化</a> · <a href="/bom-import.html">导入 BOM（数据飞轮入口）</a> · <a href="/bom-checker.html">BOM 兼容性检查</a></p>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+async function load() {
+  let d;
+  try {
+    const r = await fetch('/api/standard-audit.json');
+    d = await r.json();
+  } catch (e) {
+    document.body.insertAdjacentHTML('afterbegin', '<p style="color:var(--err)">加载 /api/standard-audit.json 失败：' + e + '</p>');
+    return;
+  }
+  $('#gen').textContent = d.generated_at || '—';
+
+  const reg = d.registry || {};
+  const mc = d.mechanical_claims || {};
+  const bc = d.bus_claims || {};
+  const stats = [
+    { n: mc.total_declared ?? 0, l: '机械声明总数' },
+    { n: (mc.verified || []).length, l: '已核实', c: 'ok' },
+    { n: (mc.unverified || []).length, l: '未核实', c: 'warn' },
+    { n: (d.conflicts || []).length, l: '数据质量冲突', c: (d.conflicts||[]).length ? 'err' : 'ok' },
+    { n: reg.hb_in_scope_count ?? 0, l: '行标覆盖数' },
+    { n: (d.registry_gaps || []).length, l: '登记表缺口', c: (d.registry_gaps||[]).length ? 'warn' : 'ok' },
+  ];
+  $('#stats').innerHTML = stats.map(s => `<div class="stat"><div class="n ${s.c||''}">${s.n}</div><div class="l">${s.l}</div></div>`).join('');
+
+  const mechRows = [
+    ...(mc.verified || []).map(r => ({ ...r, ok: true })),
+    ...(mc.unverified || []).map(r => ({ ...r, ok: false })),
+  ].map(r => `<tr><td>${r.id || ''} <span class="mut">${r.name||''}</span></td><td><code>${r.declared}</code></td><td>${r.ok ? '<span class="tag ok">已核实</span>' : '<span class="tag err">未核实</span>'}</td></tr>`).join('');
+  $('#mechBody').innerHTML = mechRows || '<tr><td colspan="3" class="mut">无机械接口声明</td></tr>';
+
+  $('#conflictBody').innerHTML = (d.conflicts || []).map(c => `<tr><td><span class="tag err">${c.type}</span></td><td>${c.id||''} <span class="mut">${c.name||''}</span></td><td><code>${c.declared||''}</code></td><td class="mut">${c.note||''}</td></tr>`).join('')
+    || '<tr><td colspan="4" class="ok">无数据质量冲突</td></tr>';
+  $('#conflictNote').textContent = (d.conflicts || []).length
+    ? '以上条目声明的标准编码不在已知指定集中。它们可能完全有效（厂商真实零件），只是本平台暂无可佐证的权威出处——请勿据此判定为"错误"，应引导提交 source_url 补全。'
+    : '全部已声明的机械编码均可被已知指定集核实。';
+
+  $('#hbBody').innerHTML = (d.hb_coverage || []).map(h => `<tr><td><code>${h.std||''}</code></td><td>${h.title||''}</td><td class="mut">${h.status||''}</td></tr>`).join('')
+    || '<tr><td colspan="3" class="mut">无行标覆盖数据</td></tr>';
+}
+load();
+</script>
+</body>
+</html>

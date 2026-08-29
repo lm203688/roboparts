@@ -29,7 +29,7 @@
  * ═══════════════════════════════════════════════════════════════════════════
  */
 
-import { judgePair, loadEntityMap, loadCuratedList } from './_lib/compat_engine.js';
+import { judgePair, loadEntityMap, loadCuratedList, semanticSearch } from './_lib/compat_engine.js';
 
 const SERVER_NAME = 'roboparts';
 const SERVER_VERSION = '1.1.0';
@@ -322,6 +322,65 @@ const TOOLS = [
       '甚至混入 Gbps 与 rad/s）。本工具返回物理红线、单位换算、可比性分级与向厂商问询的清单，' +
       '用于判断两份参数表到底能不能直接比较。',
     inputSchema: { type: 'object', properties: {} },
+  },
+  {
+    name: 'bom_compatibility_check',
+    description:
+      '对一组零部件（BOM，物料清单）做两两兼容性矩阵。输入已有条目 ID（可含开源贡献层 OSS-xxx），' +
+      '返回每个组合在 protocol/electrical/mechanical/software 四维的判定与理由。' +
+      '判定基于厂商公开声明字段的规则推断而非实测；未声明维度记为无法判定，不会为了填满矩阵而编造结论。' +
+      '返回的 verdict_reason 才是结论依据，overall_compatible=null 表示"证据不足"，不等于不兼容。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        component_ids: {
+          type: 'array',
+          description:
+            '待校验的零件 ID 列表，如 ["ACT-001","SENS-001","PROTO-012"]。ID 必须真实存在：' +
+            '先用 search_components 取得，不要自行拼造（ID 前缀与 category 非一一对应）。' +
+            '支持主库零件与开源贡献层 OSS-xxx 混合。至少传 2 个才有意义。',
+          items: { type: 'string' },
+        },
+      },
+      required: ['component_ids'],
+    },
+  },
+  {
+    name: 'semantic_search',
+    description:
+      '用自然语言描述需求（如"人形机器人髋部高扭矩电机"）做语义召回，返回最相近的零部件。' +
+      '语义索引由离线哈希 TF-IDF 向量（构建时预计算、零外发、零外部模型）在 824 条实体上生成，' +
+      '是兼容性判定之外的"发现"通道：当你不确定零件的确切型号或参数名时，用它比关键词子串匹配更稳。' +
+      '索引不可用时自动降级为关键词检索，并明确告知。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        query: {
+          type: 'string',
+          description: '自然语言查询，如"六维力传感器 防水"或"ROS2 通信模组"。中英文均可，建议具体。',
+        },
+        k: { type: 'number', description: '返回条数，默认 5，最大 30。', default: 5 },
+      },
+      required: ['query'],
+    },
+  },
+  {
+    name: 'get_standard_audit',
+    description:
+      '返回标准登记表 ↔ 实体声明 的自动交叉校验结果：哪些机械/总线声明能被已知标准集核实、' +
+      '哪些声明的编码不在已知指定集中（无法核实），以及登记表缺口与行业标准覆盖情况。' +
+      '这是数据质量自检，不是兼容性裁决；其作用是指出"声明了但出处存疑"的条目，供人工补全证据。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        scope: {
+          type: 'string',
+          description: '返回范围：all=完整审计报告（默认）；conflicts=仅数据质量冲突条目。',
+          enum: ['all', 'conflicts'],
+          default: 'all',
+        },
+      },
+    },
   },
 ];
 
@@ -715,6 +774,48 @@ function toolRecommend(list, args) {
   };
 }
 
+/**
+ * 【P4】BOM 两两兼容矩阵：对任意 ID 列表做全配对 judgePair。
+ * 缺失 ID 单列在 missing，不混入判定；overall_compatible=null 如实透传（证据不足≠不兼容）。
+ */
+function toolBomCheck(map, args) {
+  const raw = Array.isArray(args?.component_ids) ? args.component_ids : [];
+  const ids = raw.map(String).filter(Boolean);
+  if (ids.length < 2) {
+    return { error: 'component_ids 至少需要 2 个才能做矩阵校验', error_kind: 'invalid_params',
+      hint: '请传入至少两个真实存在的零件 ID。' };
+  }
+  const nodes = ids.map((id) => {
+    const e = map[id];
+    return { id, found: !!e, name: e ? e.name : null, category: e ? e.category : null };
+  });
+  const missing = nodes.filter((n) => !n.found).map((n) => n.id);
+  const present = nodes.filter((n) => n.found);
+  const pairs = [];
+  for (let i = 0; i < present.length; i++) {
+    for (let j = i + 1; j < present.length; j++) {
+      const r = judgePair(present[i], present[j]);
+      pairs.push({
+        a: present[i].id,
+        b: present[j].id,
+        overall_compatible: r.overall_compatible,
+        verdict_reason: r.verdict_reason,
+        decided_dimensions: r.decided_dimensions,
+        hard_dimensions_decided: r.hard_dimensions_decided,
+        semantic_hint: r.semantic_hint || null,
+      });
+    }
+  }
+  return {
+    input_count: ids.length,
+    found: present.length,
+    missing,
+    pair_count: pairs.length,
+    pairs,
+    note: 'overall_compatible=null 表示双方在该维度上均无声明、证据不足，不等于不兼容；semantic_hint 仅作人工核查线索，非兼容性结论。',
+  };
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
  * JSON-RPC 分发
  * ═══════════════════════════════════════════════════════════════════════════ */
@@ -871,6 +972,33 @@ async function handleRpc(msg, context) {
         } else if (name === 'recommend_for_application') {
           const { list } = await getEntities(env, request);
           payload = toolRecommend(list, args);
+        } else if (name === 'bom_compatibility_check') {
+          const { map } = await getEntities(env, request);
+          payload = toolBomCheck(map, args);
+        } else if (name === 'semantic_search') {
+          const { map, list } = await getEntities(env, request);
+          const query = String(args.query || '');
+          const k = Math.min(Math.max(parseInt(args.k ?? 5, 10) || 5, 1), 30);
+          const sem = await semanticSearch(env, request, query, k);
+          if (!sem.available) {
+            payload = { available: false, reason: sem.reason,
+              fallback_keyword: toolSearch(list, { keyword: query, limit: k }) };
+          } else {
+            const results = sem.results.map((r) => {
+              const e = map[r.id];
+              return { id: r.id, name: r.name, similarity: r.similarity,
+                category: e ? e.category : null, manufacturer: e ? (e.manufacturer || null) : null };
+            });
+            payload = { available: true, query: sem.query, count: results.length, results };
+          }
+        } else if (name === 'get_standard_audit') {
+          const audit = await getJsonAsset(env, request, '/api/standard-audit.json');
+          if (args.scope === 'conflicts') {
+            payload = { scope: 'conflicts', generated_at: audit.generated_at,
+              registry: audit.registry, conflicts: audit.conflicts };
+          } else {
+            payload = audit;
+          }
         } else {
           return rpcError(id, -32602, `未知工具: ${name}`);
         }

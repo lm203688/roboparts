@@ -1,0 +1,155 @@
+{
+  "generated_at": "2026-08-17T09:46:17.667015",
+  "purpose": "标准登记表 ↔ 实体声明 自动交叉校验（数据质量自检，非兼容性裁决）",
+  "registry": {
+    "known_mechanical_designations": 8,
+    "recognized_bus_standards": [
+      "BLE",
+      "BLUETOOTH",
+      "CAN",
+      "CANOPEN",
+      "ETHERCAT",
+      "ETHERNET",
+      "FLEXRAY",
+      "GMSL",
+      "I2C",
+      "I2S",
+      "LIN",
+      "MIPI",
+      "MODBUS",
+      "MQTT",
+      "POWERLINK",
+      "PROFINET",
+      "ROS",
+      "ROS2",
+      "RS232",
+      "RS485",
+      "SERCOS",
+      "SPI",
+      "TCP",
+      "TCP/IP",
+      "UART",
+      "USB",
+      "WIFI"
+    ],
+    "hb_in_scope_count": 4
+  },
+  "mechanical_claims": {
+    "total_declared": 6,
+    "verified": [
+      {
+        "id": "ACT-028",
+        "name": "Robotiq 2F-85 Gripper",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "SENS-31",
+        "name": "Robotiq FT 300 Force-Torque Sensor",
+        "declared": "ISO 9409-1-50-4-M6"
+      }
+    ],
+    "unverified": [
+      {
+        "id": "ACT-028",
+        "name": "Robotiq 2F-85 Gripper",
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+      },
+      {
+        "id": "ACT-028",
+        "name": "Robotiq 2F-85 Gripper",
+        "declared": "ISO 9409-1-40-4-M6",
+        "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+      },
+      {
+        "id": "SENS-31",
+        "name": "Robotiq FT 300 Force-Torque Sensor",
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+      },
+      {
+        "id": "SENS-31",
+        "name": "Robotiq FT 300 Force-Torque Sensor",
+        "declared": "ISO 9409-1-40-4-M6",
+        "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+      }
+    ]
+  },
+  "bus_claims": {
+    "total_declared": 140,
+    "recognized_standard_bus": 78,
+    "non_standard_interface": {
+      "proprietary_or_generic": 37,
+      "signal_level": 6,
+      "unknown_token": 19
+    },
+    "note": "proprietary/analog/PWM/TTL 等非标准或信号级接口属正常品类，不作冲突报告，仅作分布统计。"
+  },
+  "registry_gaps": [],
+  "hb_standard_coverage": [
+    {
+      "code": "JB/T 14109-2020",
+      "name": "包装用关节型搬运机器人通用技术条件",
+      "status": "现行",
+      "evidence": "https://hbba.sacinfo.org.cn/stdDetail/c072763f4d73a45f0debe90f7d0cc4df572fa8d8e00a2f84f1fd187e9964e90e",
+      "evidence_tier": "题录库（全国标准信息公共服务平台 · 行标备案库）",
+      "note": "作用域（机器人∩接口）已确认；实体级\"是否符合\"需其声明该标准，当前库无此链接字段，故仅报告标准存在性与证据等级，不臆造符合判定。"
+    },
+    {
+      "code": "JB/T 14110-2020",
+      "name": "包装用机器人与视觉系统TCP通信接口协议",
+      "status": "现行",
+      "evidence": "https://hbba.sacinfo.org.cn/stdDetail/c072763f4d73a45f0debe90f7d0cc4dfbda04053f4819a6daa1df0da228716a8",
+      "evidence_tier": "题录库（全国标准信息公共服务平台 · 行标备案库）",
+      "note": "作用域（机器人∩接口）已确认；实体级\"是否符合\"需其声明该标准，当前库无此链接字段，故仅报告标准存在性与证据等级，不臆造符合判定。"
+    },
+    {
+      "code": "JB/T 14682-2024",
+      "name": "多关节机器人用伺服电动机技术规范",
+      "status": "现行",
+      "evidence": "https://hbba.sacinfo.org.cn/stdDetail/2101255943bd221a00fccebe895c3cc67cfdfb3e08bbecf52e978e90d114bf33",
+      "evidence_tier": "题录库（全国标准信息公共服务平台 · 行标备案库）",
+      "note": "作用域（机器人∩接口）已确认；实体级\"是否符合\"需其声明该标准，当前库无此链接字段，故仅报告标准存在性与证据等级，不臆造符合判定。"
+    },
+    {
+      "code": "JB/T 15527-2026",
+      "name": "机器人减速器立式综合测试仪",
+      "status": "现行",
+      "evidence": "https://hbba.sacinfo.org.cn/stdDetail/1c10f9064964919c719a6253608297c66451ed7e230aecdf2a2b53889af11be5",
+      "evidence_tier": "题录库（全国标准信息公共服务平台 · 行标备案库）",
+      "note": "作用域（机器人∩接口）已确认；实体级\"是否符合\"需其声明该标准，当前库无此链接字段，故仅报告标准存在性与证据等级，不臆造符合判定。"
+    }
+  ],
+  "conflicts": [
+    {
+      "type": "unverified_mechanical_claim",
+      "id": "ACT-028",
+      "name": "Robotiq 2F-85 Gripper",
+      "declared": "ISO 9409-1-31.5-4-M5",
+      "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+    },
+    {
+      "type": "unverified_mechanical_claim",
+      "id": "ACT-028",
+      "name": "Robotiq 2F-85 Gripper",
+      "declared": "ISO 9409-1-40-4-M6",
+      "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+    },
+    {
+      "type": "unverified_mechanical_claim",
+      "id": "SENS-31",
+      "name": "Robotiq FT 300 Force-Torque Sensor",
+      "declared": "ISO 9409-1-31.5-4-M5",
+      "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+    },
+    {
+      "type": "unverified_mechanical_claim",
+      "id": "SENS-31",
+      "name": "Robotiq FT 300 Force-Torque Sensor",
+      "declared": "ISO 9409-1-40-4-M6",
+      "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+    }
+  ],
+  "conflict_count": 4,
+  "disclaimer": "本审计仅校验\"声明是否可核实\"，不构成兼容性结论；unverified/registry_gap 属数据质量缺口，需用可溯源出处补全，而非直接判定不兼容。"
+}

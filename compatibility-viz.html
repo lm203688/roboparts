@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>兼容性可视化 · RoboParts</title>
+<style>
+  :root { --bg:#0d1117; --card:#161b22; --fg:#e6edf3; --mut:#8b949e; --acc:#2f81f7; --ok:#3fb950; --warn:#d29922; --err:#f85149; --bd:#30363d; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; background:var(--bg); color:var(--fg); padding:32px; }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  p.sub { color: var(--mut); margin: 0 0 22px; font-size: 14px; line-height:1.6; }
+  .card { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:18px; margin-bottom:18px; }
+  .card h2 { font-size:16px; margin:0 0 6px; }
+  .card .desc { font-size:12px; color:var(--mut); margin:0 0 14px; }
+  label { display:block; font-size:13px; color:var(--mut); margin-bottom:6px; }
+  input, textarea { width:100%; background:#0d1117; color:var(--fg); border:1px solid var(--bd); border-radius:8px; padding:10px; font-family: ui-monospace, monospace; font-size:13px; }
+  textarea { height: 90px; resize:vertical; }
+  .row { display:flex; gap:10px; margin-bottom:6px; }
+  .row > * { flex:1; }
+  button { background:var(--acc); color:#fff; border:none; padding:10px 16px; border-radius:8px; font-size:14px; cursor:pointer; margin-top:10px; margin-right:8px; }
+  button.ghost { background:transparent; color:var(--acc); border:1px solid var(--acc); }
+  button:hover { filter: brightness(1.1); }
+  canvas { width:100%; background:#0d1117; border:1px solid var(--bd); border-radius:8px; display:block; }
+  .ok { color:var(--ok); } .warn { color:var(--warn); } .err { color:var(--err); } .mut { color:var(--mut); }
+  code { background:#0d1117; padding:1px 5px; border-radius:4px; font-size:12px; }
+  #tooltip { position:fixed; pointer-events:none; background:#000; border:1px solid var(--bd); border-radius:6px; padding:6px 9px; font-size:12px; display:none; z-index:50; max-width:260px; }
+  .verdict { font-size:15px; margin-top:12px; padding:10px 12px; border-radius:8px; background:#0d1117; border:1px solid var(--bd); }
+  .hint { font-size:12px; color:var(--mut); margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>兼容性可视化 · RoboParts</h1>
+  <p class="sub">借鉴 <strong>rerun.io</strong> 的"可探索可视化"范式（纯前端 Canvas 复刻，不引入 Rust 全栈）：把兼容性裁决引擎的<strong>判定过程</strong>、零件组合的<strong>图谱关系</strong>、以及库内<strong>声明率缺口</strong>三件事变得可看、可点、可懂。所有渲染在浏览器本地完成，零外部依赖。</p>
+
+  <!-- 1. 判定过程 -->
+  <div class="card">
+    <h2>① 兼容性判定过程</h2>
+    <p class="desc">给定两个零件，引擎在 protocol / electrical / mechanical / software 四维逐维裁决，再合成总体结论。这里把"过程"画出来——绿=兼容，红=冲突，灰=双方均无声明（证据不足，<strong>不等于不兼容</strong>）。</p>
+    <div class="row">
+      <div><label>零件 A 的 ID</label><input id="ida" value="ACT-001" /></div>
+      <div><label>零件 B 的 ID</label><input id="idb" value="SENS-001" /></div>
+    </div>
+    <button id="runBtn">判定</button>
+    <button class="ghost" id="randBtn">随机一对</button>
+    <canvas id="cvDecision" height="240"></canvas>
+    <div class="verdict" id="verdict">输入两个真实 ID 后点击"判定"。</div>
+  </div>
+
+  <!-- 2. BOM 图谱 -->
+  <div class="card">
+    <h2>② BOM 兼容图谱</h2>
+    <p class="desc">粘贴一组零件 ID（≤12 个，逗号或换行分隔），引擎计算两两兼容性，绘制力导向图谱：绿边=兼容、红边=冲突、灰边=证据不足。鼠标悬停查看节点详情。</p>
+    <label>零件 ID 列表</label>
+    <textarea id="bomIds" placeholder="ACT-001, SENS-001, PROTO-012, CHIP-001"></textarea>
+    <button id="drawBtn">绘制图谱</button>
+    <button class="ghost" id="randBom">随机示例 BOM</button>
+    <canvas id="cvGraph" height="420" style="margin-top:12px;"></canvas>
+    <div class="hint" id="graphHint"></div>
+  </div>
+
+  <!-- 3. 声明率快照 -->
+  <div class="card">
+    <h2>③ 声明率快照（数据飞轮基线）</h2>
+    <p class="desc">实时统计库内各维度"被声明"的比例。机械/电气接口声明率极低，正是飞轮要补的缺口——本图会随真实 BOM 贡献流入而逐次刷新，成为可追踪的时间轴起点。</p>
+    <button id="rateBtn">计算声明率</button>
+    <canvas id="cvRate" height="260" style="margin-top:12px;"></canvas>
+    <div class="hint" id="rateHint"></div>
+  </div>
+  <p class="sub">相关：<a href="/standard-audit.html">标准自校验</a> · <a href="/bom-import.html">导入 BOM（数据飞轮入口）</a> · <a href="/bom-checker.html">BOM 兼容性检查</a></p>
+</div>
+<div id="tooltip"></div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const COL = { ok:'#3fb950', err:'#f85149', warn:'#d29922', mut:'#8b949e', bd:'#30363d', fg:'#e6edf3', bg:'#0d1117' };
+const DIMS = [
+  { k:'protocol', label:'协议/接口' },
+  { k:'electrical', label:'电气' },
+  { k:'mechanical', label:'机械' },
+  { k:'software', label:'软件(ROS2)' },
+];
+
+async function fetchJSON(url, opts) {
+  const r = await fetch(url, opts);
+  if (!r.ok) throw new Error(url + ' → ' + r.status);
+  return r.json();
+}
+
+function setupCanvas(cv) {
+  const dpr = window.devicePixelRatio || 1;
+  const w = cv.clientWidth, h = cv.clientHeight;
+  cv.width = w * dpr; cv.height = h * dpr;
+  const ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return { ctx, w, h };
+}
+
+/* ── ① 判定过程 ──────────────────────────────────────────────── */
+async function runCompat(a, b) {
+  const v = await fetchJSON('/api/compatibility?a=' + encodeURIComponent(a) + '&b=' + encodeURIComponent(b));
+  return v;
+}
+function drawDecision(cv, v) {
+  const { ctx, w, h } = setupCanvas(cv);
+  ctx.clearRect(0, 0, w, h);
+  const pad = 16, gap = 12;
+  const cellW = (w - pad * 2 - gap * 3) / 4;
+  const cellH = h - pad * 2 - 28;
+  DIMS.forEach((d, i) => {
+    const x = pad + i * (cellW + gap);
+    const dim = (v.dimensions || []).find(x => x.dimension === d.k) || {};
+    const val = dim.compatible;
+    const color = val === true ? COL.ok : val === false ? COL.err : COL.mut;
+    // 圆角矩形
+    ctx.fillStyle = COL.bg; ctx.strokeStyle = COL.bd; ctx.lineWidth = 1;
+    roundRect(ctx, x, pad, cellW, cellH, 10); ctx.fill(); ctx.stroke();
+    // 状态圆点
+    ctx.beginPath(); ctx.arc(x + cellW / 2, pad + cellH / 2 - 10, 26, 0, Math.PI * 2);
+    ctx.fillStyle = color; ctx.fill();
+    ctx.fillStyle = COL.bg; ctx.font = 'bold 22px system-ui'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(val === true ? '✓' : val === false ? '✕' : '?', x + cellW / 2, pad + cellH / 2 - 10);
+    // 标签
+    ctx.fillStyle = COL.fg; ctx.font = '13px system-ui'; ctx.fillText(d.label, x + cellW / 2, pad + cellH - 18);
+    if (dim.score) { ctx.fillStyle = COL.mut; ctx.font = '11px system-ui'; ctx.fillText('score ' + dim.score, x + cellW / 2, pad + cellH - 4); }
+  });
+  // 底部分隔说明
+  ctx.fillStyle = COL.mut; ctx.font = '12px system-ui'; ctx.textAlign = 'left';
+  ctx.fillText('绿=兼容  红=冲突  灰=证据不足(非不兼容)', pad, h - 8);
+}
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+}
+async function doRun() {
+  const a = $('#ida').value.trim(), b = $('#idb').value.trim();
+  if (!a || !b) { $('#verdict').innerHTML = '<span class="warn">请填写两个 ID。</span>'; return; }
+  $('#verdict').textContent = '判定中…';
+  try {
+    const v = await runCompat(a, b);
+    drawDecision($('#cvDecision'), v);
+    const o = v.overall_compatible;
+    const color = o === true ? COL.ok : o === false ? COL.err : COL.warn;
+    const label = o === true ? '兼容' : o === false ? '不兼容' : '证据不足（无法判定）';
+    $('#verdict').innerHTML = `总体：<strong style="color:${color}">${label}</strong> · 已裁决维度 ${v.decided_dimensions||0} / ${v.undecided_dimensions!=null?(v.decided_dimensions+v.undecided_dimensions):4} · ${v.verdict_reason||''}`;
+  } catch (e) { $('#verdict').innerHTML = '<span class="err">判定失败：' + e.message + '</span>'; }
+}
+$('#runBtn').addEventListener('click', doRun);
+$('#randBtn').addEventListener('click', async () => {
+  try {
+    const d = await fetchJSON('/api/entities.json');
+    const ids = (d.entities || []).map(e => e.id).filter(Boolean);
+    $('#ida').value = ids[Math.floor(Math.random()*ids.length)];
+    $('#idb').value = ids[Math.floor(Math.random()*ids.length)];
+    doRun();
+  } catch (e) { $('#verdict').textContent = '随机失败：' + e.message; }
+});
+
+/* ── ② BOM 图谱 ──────────────────────────────────────────────── */
+let graph = { nodes: [], edges: [] };
+async function drawGraph() {
+  const raw = $('#bomIds').value.split(/[\n,]/).map(s => s.trim()).filter(Boolean).slice(0, 12);
+  if (raw.length < 2) { $('#graphHint').innerHTML = '<span class="warn">至少输入 2 个 ID。</span>'; return; }
+  $('#graphHint').textContent = '计算中…';
+  const meta = {};
+  try {
+    const d = await fetchJSON('/api/entities.json');
+    (d.entities || []).forEach(e => { meta[e.id] = e; });
+  } catch (e) {}
+  const nodes = raw.map((id, i) => ({ id, name: (meta[id] && meta[id].name) || id, cat: (meta[id] && meta[id].category) || '?', x: 0, y: 0, vx: 0, vy: 0 }));
+  const edges = [];
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      try {
+        const v = await runCompat(nodes[i].id, nodes[j].id);
+        const o = v.overall_compatible;
+        edges.push({ a: i, b: j, val: o === true ? 1 : o === false ? -1 : 0 });
+      } catch (e) { edges.push({ a: i, b: j, val: 0 }); }
+    }
+  }
+  graph = { nodes, edges };
+  simulate(nodes, edges);
+  renderGraph($('#cvGraph'));
+  const c = edges.filter(e => e.val === 1).length, x = edges.filter(e => e.val === -1).length, u = edges.filter(e => e.val === 0).length;
+  $('#graphHint').innerHTML = `共 ${edges.length} 对：<span class="ok">兼容 ${c}</span> · <span class="err">冲突 ${x}</span> · <span class="mut">证据不足 ${u}</span>。悬停节点查看详情。`;
+}
+const CATCOL = { actuators:'#2f81f7', sensors:'#3fb950', chips:'#d29922', protocols:'#bc8cff', platforms:'#f85149', llms:'#39c5cf', interfaces:'#db61a2', flexible_actuators:'#a371f7', robot_ai_models:'#e3b341', data_acquisition:'#79c0ff', connectors:'#ff7b72' };
+function simulate(nodes, edges) {
+  const cx = 300, cy = 210, R = 150;
+  nodes.forEach((n, i) => { const a = i / nodes.length * Math.PI * 2; n.x = cx + R * Math.cos(a); n.y = cy + R * Math.sin(a); });
+  for (let t = 0; t < 260; t++) {
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        let dx = a.x - b.x, dy = a.y - b.y; let d = Math.hypot(dx, dy) || 1;
+        const rep = 5200 / (d * d);
+        a.vx += dx / d * rep; a.vy += dy / d * rep; b.vx -= dx / d * rep; b.vy -= dy / d * rep;
+      }
+    }
+    edges.forEach(e => {
+      const a = nodes[e.a], b = nodes[e.b];
+      let dx = b.x - a.x, dy = b.y - a.y; let d = Math.hypot(dx, dy) || 1;
+      const rest = 110; const f = (d - rest) * 0.02;
+      a.vx += dx / d * f; a.vy += dy / d * f; b.vx -= dx / d * f; b.vy -= dy / d * f;
+    });
+    nodes.forEach(n => {
+      n.vx += (cx - n.x) * 0.005; n.vy += (cy - n.y) * 0.005;
+      n.vx *= 0.85; n.vy *= 0.85; n.x += n.vx; n.y += n.vy;
+    });
+  }
+}
+function renderGraph(cv) {
+  const { ctx, w, h } = setupCanvas(cv);
+  ctx.clearRect(0, 0, w, h);
+  // 边
+  graph.edges.forEach(e => {
+    const a = graph.nodes[e.a], b = graph.nodes[e.b];
+    ctx.strokeStyle = e.val === 1 ? COL.ok : e.val === -1 ? COL.err : COL.mut;
+    ctx.globalAlpha = e.val === 0 ? 0.3 : 0.8; ctx.lineWidth = e.val === 0 ? 1 : 2.5;
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+  });
+  ctx.globalAlpha = 1;
+  // 节点
+  graph.nodes.forEach(n => {
+    ctx.beginPath(); ctx.arc(n.x, n.y, 11, 0, Math.PI * 2);
+    ctx.fillStyle = CATCOL[n.cat] || COL.acc; ctx.fill();
+    ctx.strokeStyle = COL.bg; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = COL.fg; ctx.font = '11px system-ui'; ctx.textAlign = 'center';
+    ctx.fillText(n.id, n.x, n.y - 16);
+  });
+  cv._nodes = graph.nodes;
+}
+$('#cvGraph').addEventListener('mousemove', (ev) => {
+  const cv = $('#cvGraph'); const tip = $('#tooltip');
+  if (!cv._nodes) return;
+  const r = cv.getBoundingClientRect();
+  const mx = ev.clientX - r.left, my = ev.clientY - r.top;
+  let hit = null;
+  for (const n of cv._nodes) { if (Math.hypot(n.x - mx, n.y - my) < 13) { hit = n; break; } }
+  if (hit) { tip.style.display = 'block'; tip.style.left = (ev.clientX + 12) + 'px'; tip.style.top = (ev.clientY + 12) + 'px';
+    tip.innerHTML = `<strong>${hit.id}</strong><br>${hit.name}<br>品类：${hit.cat}`; }
+  else tip.style.display = 'none';
+});
+$('#cvGraph').addEventListener('mouseleave', () => { $('#tooltip').style.display = 'none'; });
+$('#drawBtn').addEventListener('click', drawGraph);
+$('#randBom').addEventListener('click', async () => {
+  try {
+    const d = await fetchJSON('/api/entities.json');
+    const ids = (d.entities || []).map(e => e.id).filter(Boolean);
+    const pick = []; for (let i = 0; i < 6; i++) pick.push(ids[Math.floor(Math.random()*ids.length)]);
+    $('#bomIds').value = pick.join(', '); drawGraph();
+  } catch (e) { $('#graphHint').textContent = '随机失败：' + e.message; }
+});
+
+/* ── ③ 声明率快照 ────────────────────────────────────────────── */
+function computeRates(entities) {
+  const n = entities.length;
+  const has = (e, fn) => entities.filter(fn).length;
+  return [
+    { label: '机械接口', v: has(e => e.mechanical_interface && !['not_declared','n_a','',null,undefined].includes(e.mechanical_interface.status)) },
+    { label: '电气电压', v: has(e => e.voltage && e.voltage !== 'n_a') },
+    { label: '通信协议', v: has(e => e.protocol && e.protocol !== 'n_a') },
+    { label: 'ROS 支持', v: has(e => e.ros_support === true) },
+    { label: '任一维度', v: has(e => (e.mechanical_interface && !['not_declared','n_a','',null,undefined].includes(e.mechanical_interface.status)) || (e.voltage && e.voltage !== 'n_a') || (e.protocol && e.protocol !== 'n_a') || e.ros_support === true) },
+  ].map(r => ({ ...r, pct: n ? Math.round(r.v * 1000 / n) / 10 : 0, total: n }));
+}
+function drawRate(cv, rates) {
+  const { ctx, w, h } = setupCanvas(cv);
+  ctx.clearRect(0, 0, w, h);
+  const maxPct = 100, padL = 80, padB = 30, padT = 16, padR = 16;
+  const plotW = w - padL - padR, plotH = h - padB - padT;
+  const bw = plotW / rates.length * 0.6;
+  rates.forEach((r, i) => {
+    const x = padL + (i + 0.5) * (plotW / rates.length) - bw / 2;
+    const bh = plotH * (r.pct / maxPct);
+    ctx.fillStyle = r.pct < 5 ? COL.err : r.pct < 30 ? COL.warn : COL.ok;
+    roundRect(ctx, x, padT + plotH - bh, bw, bh, 4); ctx.fill();
+    ctx.fillStyle = COL.fg; ctx.font = '12px system-ui'; ctx.textAlign = 'center';
+    ctx.fillText(r.pct + '%', x + bw / 2, padT + plotH - bh - 6);
+    ctx.fillStyle = COL.mut; ctx.fillText(r.label, x + bw / 2, padT + plotH + 16);
+  });
+  // 基线标线（机械 0.28%）
+  const yBase = padT + plotH - plotH * (0.28 / 100);
+  ctx.strokeStyle = COL.mut; ctx.setLineDash([4, 4]); ctx.beginPath();
+  ctx.moveTo(padL, yBase); ctx.lineTo(w - padR, yBase); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle = COL.mut; ctx.font = '10px system-ui'; ctx.textAlign = 'left';
+  ctx.fillText('机械接口真实基线 0.28%', padL + 4, yBase - 4);
+}
+$('#rateBtn').addEventListener('click', async () => {
+  $('#rateHint').textContent = '统计中…';
+  try {
+    const d = await fetchJSON('/api/entities.json');
+    const rates = computeRates(d.entities || []);
+    drawRate($('#cvRate'), rates);
+    const m = rates.find(r => r.label === '机械接口');
+    $('#rateHint').innerHTML = `库内共 <strong>${rates[0].total}</strong> 条实体。机械接口声明率 <strong class="err">${m.pct}%</strong>（${m.v} 条）—— 极低的数字正是数据飞轮要先补的缺口：随着真实 BOM 提交，本快照将逐次刷新，形成可追踪的声明率时间轴。`;
+  } catch (e) { $('#rateHint').textContent = '计算失败：' + e.message; }
+});
+
+// 初值
+doRun();
+</script>
+</body>
+</html>
