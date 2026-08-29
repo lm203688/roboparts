@@ -636,5 +636,64 @@ export async function loadEntityMap(env, request) {
   }
   const map = {};
   for (const e of arr) map[e.id] = e;
+  // 【P0 · 数据飞轮】合并贡献层 api/entities.contrib.json（开源 BOM 反喂 + 用户提交 BOM）。
+  // 不修改主库文件 api/entities.json（708 真值不变），仅运行时增强裁决覆盖。
+  // 贡献层实体若主库已存在则补充其缺失维度（机械接口优先用贡献层，协议/电气/ROS 填空时补），
+  // 若不存在（如 OSS-xxx）则作为新实体加入，使开源机器人零件也能被查兼容。
+  await mergeFlywheel(env, request, map);
   return map;
+}
+
+/** 合并飞轮贡献层（读 api/entities.contrib.json）。缺失不阻断主流程。 */
+async function mergeFlywheel(env, request, map) {
+  try {
+    const r = await env.ASSETS.fetch(new URL('/api/entities.contrib.json', request.url));
+    if (!r.ok) return;
+    const doc = await r.json();
+    const contrib = doc.entities || [];
+    let merged = 0, added = 0;
+    for (const c of contrib) {
+      if (!c || !c.id) continue;
+      const exist = map[c.id];
+      if (exist) { mergeInto(exist, c); merged++; }
+      else { map[c.id] = c; added++; }
+    }
+    if (merged || added) console.warn(`[flywheel] 合并贡献层: 补充 ${merged} + 新增 ${added} 实体`);
+  } catch {
+    /* 贡献层缺失/解析失败不阻断主流程 */
+  }
+}
+
+/** 把贡献层实体 c 的声明合并进已有实体 dst：只补缺失维度，不覆盖已声明数据。 */
+function mergeInto(dst, src) {
+  const ms = dst.mechanical_interface && String(dst.mechanical_interface.status || '').toLowerCase();
+  if (src.mechanical_interface && (!dst.mechanical_interface || ms === 'not_declared' || ms === 'n_a')) {
+    dst.mechanical_interface = src.mechanical_interface;
+  }
+  if (!dst.protocol && src.protocol) dst.protocol = src.protocol;
+  if (!dst.interface && src.interface) dst.interface = src.interface;
+  if (!dst.voltage && src.voltage) dst.voltage = src.voltage;
+  if (typeof dst.ros_support !== 'boolean' && typeof src.ros_support === 'boolean') dst.ros_support = src.ros_support;
+}
+
+/** 主库收录实体总数（真相源，不含飞轮贡献层），供对外数字口径使用。 */
+export async function getCuratedCount(env, request) {
+  try {
+    const r = await env.ASSETS.fetch(new URL('/api/entities.json', request.url));
+    if (!r.ok) return null;
+    const j = await r.json();
+    return (j.meta && j.meta.total_entities) || (j.entities || j.data || []).length;
+  } catch {
+    return null;
+  }
+}
+
+/** 主库实体数组（不含飞轮贡献层），供对外统计口径与贡献层严格区分。 */
+export async function loadCuratedList(env, request) {
+  const r = await env.ASSETS.fetch(new URL('/api/entities.json', request.url));
+  if (!r.ok) throw new Error(`entities.json 加载失败: HTTP ${r.status}`);
+  const j = await r.json();
+  const arr = j.entities || j.data || [];
+  if (!Array.isArray(arr)) throw new Error('entities.json 解析异常');
+  return arr;
 }

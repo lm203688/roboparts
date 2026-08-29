@@ -29,7 +29,7 @@
  * ═══════════════════════════════════════════════════════════════════════════
  */
 
-import { judgePair, loadEntityMap } from './_lib/compat_engine.js';
+import { judgePair, loadEntityMap, loadCuratedList } from './_lib/compat_engine.js';
 
 const SERVER_NAME = 'roboparts';
 const SERVER_VERSION = '1.1.0';
@@ -340,16 +340,21 @@ export { TOOLS };
  * ═══════════════════════════════════════════════════════════════════════════ */
 let _entityMapCache = null;
 let _entityListCache = null;
+let _curatedListCache = null;
+let _flywheelExtraCache = null;
 
 async function getEntities(env, request) {
   if (_entityMapCache && _entityListCache) {
-    return { map: _entityMapCache, list: _entityListCache };
+    return { map: _entityMapCache, list: _entityListCache, curatedList: _curatedListCache, flywheelExtra: _flywheelExtraCache };
   }
-  const map = await loadEntityMap(env, request);   // 失败会抛错，不会静默返回空
+  const map = await loadEntityMap(env, request);   // 合并飞轮贡献层后的全量（裁决用）
   const list = Object.values(map);
+  const curatedList = await loadCuratedList(env, request);  // 主库真值（对外数字口径，不含贡献层）
   _entityMapCache = map;
   _entityListCache = list;
-  return { map, list };
+  _curatedListCache = curatedList;
+  _flywheelExtraCache = Math.max(0, list.length - curatedList.length);
+  return { map, list, curatedList, flywheelExtra: _flywheelExtraCache };
 }
 
 async function getJsonAsset(env, request, path) {
@@ -395,7 +400,7 @@ function isSelectableComponent(e) {
   return !e.entity_kind || e.entity_kind === 'component';
 }
 
-function datasetFacts(list) {
+function datasetFacts(list, flywheelExtra) {
   const total = list.length;
   const marketIntel = list.filter((e) => e.entity_kind === 'market_intelligence').length;
   const quarantined = list.filter((e) => e.quarantine === true).length;
@@ -414,6 +419,7 @@ function datasetFacts(list) {
   const selectable = list.filter(isSelectableComponent).length;
   return {
     total_entities: total,
+    flywheel_contributions: flywheelExtra || 0,  // 飞轮贡献层额外可查实体（开源 BOM 反喂等），不计入 total_entities
     selectable,                       // 可进检索/推荐的条目（白名单：仅 component）
     market_intelligence: marketIntel, // 专利地图/咨询报告，默认不出现在结果里
     organizations,                    // 企业/机构主体条目，无物理接口，不进选型与兼容判定
@@ -447,8 +453,8 @@ function factsNarrative(f) {
 /** 安全取实况：任何失败都返回 null，由调用方降级为"不提数字"。 */
 async function tryFacts(env, request) {
   try {
-    const { list } = await getEntities(env, request);
-    return datasetFacts(list);
+    const { curatedList, flywheelExtra } = await getEntities(env, request);
+    return datasetFacts(curatedList, flywheelExtra);
   } catch (e) {
     return null;
   }

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>导入 BOM · RoboParts 数据飞轮</title>
+<style>
+  :root { --bg:#0d1117; --card:#161b22; --fg:#e6edf3; --mut:#8b949e; --acc:#2f81f7; --ok:#3fb950; --warn:#d29922; --bd:#30363d; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; background:var(--bg); color:var(--fg); padding:32px; }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  p.sub { color: var(--mut); margin: 0 0 22px; font-size: 14px; }
+  .card { background: var(--card); border:1px solid var(--bd); border-radius: 10px; padding: 18px; margin-bottom: 18px; }
+  label { display:block; font-size:13px; color:var(--mut); margin-bottom:6px; }
+  textarea { width:100%; height: 220px; background:#0d1117; color:var(--fg); border:1px solid var(--bd); border-radius:8px; padding:12px; font-family: ui-monospace, monospace; font-size:12px; resize:vertical; }
+  button { background:var(--acc); color:#fff; border:none; padding:10px 18px; border-radius:8px; font-size:14px; cursor:pointer; margin-top:12px; }
+  button:hover { filter: brightness(1.1); }
+  pre { background:#0d1117; border:1px solid var(--bd); border-radius:8px; padding:12px; font-size:12px; overflow:auto; max-height:320px; }
+  .ok { color:var(--ok); } .warn { color:var(--warn); }
+  code { background:#0d1117; padding:1px 5px; border-radius:4px; }
+  .hint { font-size:12px; color:var(--mut); margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>导入 BOM · RoboParts 数据飞轮</h1>
+  <p class="sub">提交你的机器人 BOM（零件清单 + 接口声明），经审核后合入公开兼容数据库，让更多人受益。机械接口声明须附 <code>source_url</code> 方可采信。</p>
+
+  <div class="card">
+    <label>粘贴 BOM（JSON 数组，或 { "components": [...] }）</label>
+    <textarea id="bom" placeholder='[
+  {
+    "id": "MY-ACT-001",
+    "category": "actuators",
+    "name": "My Smart Servo X1",
+    "protocol": "EtherCAT",
+    "interface": "RS485",
+    "voltage": "24V",
+    "ros_support": true,
+    "mechanical_interface": { "standard": ["ISO 9409-1-50-4-M6"], "source_url": "https://vendor.com/x1-manual" },
+    "source_url": "https://vendor.com/x1"
+  }
+]'></textarea>
+    <button id="submit">提交 BOM</button>
+    <div class="hint" id="status"></div>
+  </div>
+
+  <div class="card" id="resultCard" style="display:none;">
+    <label>提交结果</label>
+    <pre id="result"></pre>
+  </div>
+</div>
+<script>
+const $ = (s) => document.querySelector(s);
+$('#submit').addEventListener('click', async () => {
+  const raw = $('#bom').value.trim();
+  const status = $('#status');
+  status.textContent = '提交中…';
+  let payload;
+  try { payload = JSON.parse(raw); }
+  catch (e) { status.innerHTML = '<span class="warn">JSON 解析失败：' + e.message + '</span>'; return; }
+  try {
+    const r = await fetch('/api/bom/import', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
+    });
+    const data = await r.json();
+    $('#result').textContent = JSON.stringify(data, null, 2);
+    $('#resultCard').style.display = 'block';
+    if (data.accepted) status.innerHTML = '<span class="ok">已接收 ' + data.queued + ' 条，' + data.rejected + ' 条被拒（见结果）。待审核后合入。</span>';
+    else status.innerHTML = '<span class="warn">拒绝：' + (data.error || '未知') + '</span>';
+  } catch (e) {
+    status.innerHTML = '<span class="warn">请求失败：' + e.message + '</span>';
+  }
+});
+</script>
+</body>
+</html>

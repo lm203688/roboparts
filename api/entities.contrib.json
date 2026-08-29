@@ -1,0 +1,3735 @@
+{
+  "meta": {
+    "layer": "flywheel-contrib",
+    "generated_at": "2026-08-16T23:28:07.515Z",
+    "description": "数据飞轮贡献层：开源机器人 BOM(URDF 摄取) + 用户/开源项目提交 BOM。由 compat_engine 运行时合并进主实体表，不修改主库 api/entities.json。",
+    "curated_baseline": 708,
+    "contributions": 142
+  },
+  "entities": [
+    {
+      "id": "OSS-TIENKUNG-001",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-002",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-003",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-004",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-005",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-006",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-007",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-008",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-009",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-010",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-011",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-012",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-013",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-014",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-015",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-016",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-017",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-018",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-019",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-020",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-021",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-022",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-023",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-024",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-025",
+      "name": "BMI088 6轴 IMU",
+      "name_en": "BMI088 6轴 IMU",
+      "category": "sensors",
+      "manufacturer": "Bosch",
+      "type": "imu",
+      "protocol": "SPI/I2C",
+      "interface": "SPI",
+      "voltage": "3.3~3.3V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "Micro-ROS"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-026",
+      "name": "BMI088 6轴 IMU",
+      "name_en": "BMI088 6轴 IMU",
+      "category": "sensors",
+      "manufacturer": "Bosch",
+      "type": "imu",
+      "protocol": "SPI/I2C",
+      "interface": "SPI",
+      "voltage": "3.3~3.3V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "Micro-ROS"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-027",
+      "name": "Intel RealSense D435",
+      "name_en": "Intel RealSense D435",
+      "category": "sensors",
+      "manufacturer": "Intel",
+      "type": "depth_camera",
+      "protocol": "USB3",
+      "interface": "USB",
+      "voltage": "5~5V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "realsense-ros"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-028",
+      "name": "Intel RealSense D435",
+      "name_en": "Intel RealSense D435",
+      "category": "sensors",
+      "manufacturer": "Intel",
+      "type": "depth_camera",
+      "protocol": "USB3",
+      "interface": "USB",
+      "voltage": "5~5V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "realsense-ros"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-029",
+      "name": "Raspberry Pi 5",
+      "name_en": "Raspberry Pi 5",
+      "category": "chips",
+      "manufacturer": "Raspberry Pi",
+      "type": "sbc",
+      "protocol": "Ethernet/CAN",
+      "interface": "Ethernet",
+      "voltage": "5~5V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "Ubuntu"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-030",
+      "name": "CAN FD 总线转接",
+      "name_en": "CAN FD 总线转接",
+      "category": "protocols",
+      "manufacturer": "RoboParts",
+      "type": "bus",
+      "protocol": "CAN FD",
+      "interface": "CAN",
+      "voltage": "12~48V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "SocketCAN"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-031",
+      "name": "CAN FD 总线转接",
+      "name_en": "CAN FD 总线转接",
+      "category": "protocols",
+      "manufacturer": "RoboParts",
+      "type": "bus",
+      "protocol": "CAN FD",
+      "interface": "CAN",
+      "voltage": "12~48V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "SocketCAN"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-032",
+      "name": "CAN FD 总线转接",
+      "name_en": "CAN FD 总线转接",
+      "category": "protocols",
+      "manufacturer": "RoboParts",
+      "type": "bus",
+      "protocol": "CAN FD",
+      "interface": "CAN",
+      "voltage": "12~48V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "SocketCAN"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-033",
+      "name": "天工 谐波减速关节模块",
+      "name_en": "天工 谐波减速关节模块",
+      "category": "actuators",
+      "manufacturer": "NHIC",
+      "type": "harmonic_joint",
+      "protocol": "EtherCAT",
+      "interface": "EtherCAT",
+      "voltage": "48~48V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "EtherCAT"
+      ],
+      "applications": [
+        "tienkung",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-TIENKUNG-034",
+      "name": "天工 灵巧手 (6-DOF)",
+      "name_en": "天工 灵巧手 (6-DOF)",
+      "category": "actuators",
+      "manufacturer": "NHIC",
+      "type": "dexterous_hand",
+      "protocol": "EtherCAT",
+      "interface": "EtherCAT",
+      "voltage": "24~24V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2"
+      ],
+      "applications": [
+        "tienkung",
+        "manipulator"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:天工 TienKung (开源人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-001",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-002",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-003",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-004",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-005",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-006",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-007",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-008",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-009",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-010",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-011",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-012",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-013",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-014",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-015",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-016",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-017",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-018",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-019",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-020",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-021",
+      "name": "BMI088 6轴 IMU",
+      "name_en": "BMI088 6轴 IMU",
+      "category": "sensors",
+      "manufacturer": "Bosch",
+      "type": "imu",
+      "protocol": "SPI/I2C",
+      "interface": "SPI",
+      "voltage": "3.3~3.3V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "Micro-ROS"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-022",
+      "name": "Intel RealSense D435",
+      "name_en": "Intel RealSense D435",
+      "category": "sensors",
+      "manufacturer": "Intel",
+      "type": "depth_camera",
+      "protocol": "USB3",
+      "interface": "USB",
+      "voltage": "5~5V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "realsense-ros"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-023",
+      "name": "Raspberry Pi 5",
+      "name_en": "Raspberry Pi 5",
+      "category": "chips",
+      "manufacturer": "Raspberry Pi",
+      "type": "sbc",
+      "protocol": "Ethernet/CAN",
+      "interface": "Ethernet",
+      "voltage": "5~5V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "Ubuntu"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-024",
+      "name": "CAN FD 总线转接",
+      "name_en": "CAN FD 总线转接",
+      "category": "protocols",
+      "manufacturer": "RoboParts",
+      "type": "bus",
+      "protocol": "CAN FD",
+      "interface": "CAN",
+      "voltage": "12~48V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "SocketCAN"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-025",
+      "name": "CAN FD 总线转接",
+      "name_en": "CAN FD 总线转接",
+      "category": "protocols",
+      "manufacturer": "RoboParts",
+      "type": "bus",
+      "protocol": "CAN FD",
+      "interface": "CAN",
+      "voltage": "12~48V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "SocketCAN"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-ROBOTO_ORIGIN-027",
+      "name": "SimpleFOC 腕部驱动板",
+      "name_en": "SimpleFOC 腕部驱动板",
+      "category": "chips",
+      "manufacturer": "SimpleFOC",
+      "type": "foc_driver",
+      "protocol": "UART",
+      "interface": "UART",
+      "voltage": "12~24V",
+      "ros_support": true,
+      "compatibility": [
+        "Micro-ROS"
+      ],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-001",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-002",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-003",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-004",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-005",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-006",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-007",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-008",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-009",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-010",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-011",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-012",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-013",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-014",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-015",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-016",
+      "name": "DYNAMIXEL XC330-T288-T",
+      "name_en": "DYNAMIXEL XC330-T288-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL",
+      "voltage": "5~7.4V",
+      "ros_support": true,
+      "compatibility": [
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-017",
+      "name": "BMI088 6轴 IMU",
+      "name_en": "BMI088 6轴 IMU",
+      "category": "sensors",
+      "manufacturer": "Bosch",
+      "type": "imu",
+      "protocol": "SPI/I2C",
+      "interface": "SPI",
+      "voltage": "3.3~3.3V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "Micro-ROS"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-018",
+      "name": "Intel RealSense D435",
+      "name_en": "Intel RealSense D435",
+      "category": "sensors",
+      "manufacturer": "Intel",
+      "type": "depth_camera",
+      "protocol": "USB3",
+      "interface": "USB",
+      "voltage": "5~5V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "realsense-ros"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-019",
+      "name": "Intel RealSense D435",
+      "name_en": "Intel RealSense D435",
+      "category": "sensors",
+      "manufacturer": "Intel",
+      "type": "depth_camera",
+      "protocol": "USB3",
+      "interface": "USB",
+      "voltage": "5~5V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "realsense-ros"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-020",
+      "name": "Raspberry Pi 5",
+      "name_en": "Raspberry Pi 5",
+      "category": "chips",
+      "manufacturer": "Raspberry Pi",
+      "type": "sbc",
+      "protocol": "Ethernet/CAN",
+      "interface": "Ethernet",
+      "voltage": "5~5V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "Ubuntu"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-021",
+      "name": "SO-100 低成本机械臂模组",
+      "name_en": "SO-100 低成本机械臂模组",
+      "category": "actuators",
+      "manufacturer": "LeRobot",
+      "type": "arm_module",
+      "protocol": "UART",
+      "interface": "UART",
+      "voltage": "12~12V",
+      "ros_support": true,
+      "compatibility": [
+        "Micro-ROS",
+        "SO-100"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LEROBOT_HUMANOID-022",
+      "name": "Feetech STS3215 总线舵机",
+      "name_en": "Feetech STS3215 总线舵机",
+      "category": "actuators",
+      "manufacturer": "Feetech",
+      "type": "smart_servo",
+      "protocol": "TTL",
+      "interface": "TTL",
+      "voltage": "6~8.4V",
+      "ros_support": true,
+      "compatibility": [
+        "Micro-ROS"
+      ],
+      "applications": [
+        "lerobothumanoid",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:LeRobot-Humanoid (<$5000)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-001",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-002",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-003",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-004",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-005",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-006",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-007",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-008",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-009",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-010",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-011",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-012",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-013",
+      "name": "BMI088 6轴 IMU",
+      "name_en": "BMI088 6轴 IMU",
+      "category": "sensors",
+      "manufacturer": "Bosch",
+      "type": "imu",
+      "protocol": "SPI/I2C",
+      "interface": "SPI",
+      "voltage": "3.3~3.3V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "Micro-ROS"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-014",
+      "name": "Raspberry Pi 5",
+      "name_en": "Raspberry Pi 5",
+      "category": "chips",
+      "manufacturer": "Raspberry Pi",
+      "type": "sbc",
+      "protocol": "Ethernet/CAN",
+      "interface": "Ethernet",
+      "voltage": "5~5V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "Ubuntu"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-015",
+      "name": "CAN FD 总线转接",
+      "name_en": "CAN FD 总线转接",
+      "category": "protocols",
+      "manufacturer": "RoboParts",
+      "type": "bus",
+      "protocol": "CAN FD",
+      "interface": "CAN",
+      "voltage": "12~48V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "SocketCAN"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-016",
+      "name": "CAN FD 总线转接",
+      "name_en": "CAN FD 总线转接",
+      "category": "protocols",
+      "manufacturer": "RoboParts",
+      "type": "bus",
+      "protocol": "CAN FD",
+      "interface": "CAN",
+      "voltage": "12~48V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "SocketCAN"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-017",
+      "name": "Go2 关节电机 (Unitree)",
+      "name_en": "Go2 关节电机 (Unitree)",
+      "category": "actuators",
+      "manufacturer": "Unitree",
+      "type": "joint_motor",
+      "protocol": "CAN",
+      "interface": "CAN",
+      "voltage": "24~30V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "unitree_ros"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_GO2-018",
+      "name": "Go2 激光雷达 (L1)",
+      "name_en": "Go2 激光雷达 (L1)",
+      "category": "sensors",
+      "manufacturer": "Unitree",
+      "type": "lidar",
+      "protocol": "Ethernet",
+      "interface": "Ethernet",
+      "voltage": "12~12V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2"
+      ],
+      "applications": [
+        "unitreego2",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree Go2 (四足)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-001",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-002",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-003",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-004",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-005",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-006",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-007",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-008",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-009",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-010",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-011",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-012",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-013",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-014",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-015",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-016",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-017",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-018",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-019",
+      "name": "BMI088 6轴 IMU",
+      "name_en": "BMI088 6轴 IMU",
+      "category": "sensors",
+      "manufacturer": "Bosch",
+      "type": "imu",
+      "protocol": "SPI/I2C",
+      "interface": "SPI",
+      "voltage": "3.3~3.3V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "Micro-ROS"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-020",
+      "name": "Intel RealSense D435",
+      "name_en": "Intel RealSense D435",
+      "category": "sensors",
+      "manufacturer": "Intel",
+      "type": "depth_camera",
+      "protocol": "USB3",
+      "interface": "USB",
+      "voltage": "5~5V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "realsense-ros"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-021",
+      "name": "Raspberry Pi 5",
+      "name_en": "Raspberry Pi 5",
+      "category": "chips",
+      "manufacturer": "Raspberry Pi",
+      "type": "sbc",
+      "protocol": "Ethernet/CAN",
+      "interface": "Ethernet",
+      "voltage": "5~5V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "Ubuntu"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-022",
+      "name": "CAN FD 总线转接",
+      "name_en": "CAN FD 总线转接",
+      "category": "protocols",
+      "manufacturer": "RoboParts",
+      "type": "bus",
+      "protocol": "CAN FD",
+      "interface": "CAN",
+      "voltage": "12~48V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "SocketCAN"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-023",
+      "name": "CAN FD 总线转接",
+      "name_en": "CAN FD 总线转接",
+      "category": "protocols",
+      "manufacturer": "RoboParts",
+      "type": "bus",
+      "protocol": "CAN FD",
+      "interface": "CAN",
+      "voltage": "12~48V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "SocketCAN"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-024",
+      "name": "G1 力控关节 (Unitree)",
+      "name_en": "G1 力控关节 (Unitree)",
+      "category": "actuators",
+      "manufacturer": "Unitree",
+      "type": "joint_motor",
+      "protocol": "CAN",
+      "interface": "CAN",
+      "voltage": "24~30V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "unitree_ros"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-UNITREE_G1-025",
+      "name": "G1 3D 视觉模组",
+      "name_en": "G1 3D 视觉模组",
+      "category": "sensors",
+      "manufacturer": "Unitree",
+      "type": "depth_camera",
+      "protocol": "USB3",
+      "interface": "USB",
+      "voltage": "5~5V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-OPENARM-001",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "openarm",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:OpenArm 7-DOF",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-OPENARM-002",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "openarm",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:OpenArm 7-DOF",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-OPENARM-003",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "openarm",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:OpenArm 7-DOF",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-OPENARM-004",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "openarm",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:OpenArm 7-DOF",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-OPENARM-005",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "openarm",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:OpenArm 7-DOF",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-OPENARM-006",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "openarm",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:OpenArm 7-DOF",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-OPENARM-007",
+      "name": "DYNAMIXEL XM540-W270-T",
+      "name_en": "DYNAMIXEL XM540-W270-T",
+      "category": "actuators",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "protocol": "DYNAMIXEL Protocol 2.0",
+      "interface": "TTL/RS485",
+      "voltage": "10~14.8V",
+      "ros_support": true,
+      "compatibility": [
+        "U2D2",
+        "OpenCM",
+        "ROS2"
+      ],
+      "applications": [
+        "openarm",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:OpenArm 7-DOF",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-OPENARM-008",
+      "name": "Raspberry Pi 5",
+      "name_en": "Raspberry Pi 5",
+      "category": "chips",
+      "manufacturer": "Raspberry Pi",
+      "type": "sbc",
+      "protocol": "Ethernet/CAN",
+      "interface": "Ethernet",
+      "voltage": "5~5V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "Ubuntu"
+      ],
+      "applications": [
+        "openarm",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:OpenArm 7-DOF",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-OPENARM-009",
+      "name": "CAN FD 总线转接",
+      "name_en": "CAN FD 总线转接",
+      "category": "protocols",
+      "manufacturer": "RoboParts",
+      "type": "bus",
+      "protocol": "CAN FD",
+      "interface": "CAN",
+      "voltage": "12~48V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "SocketCAN"
+      ],
+      "applications": [
+        "openarm",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:OpenArm 7-DOF",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-OPENARM-010",
+      "name": "OpenArm 谐波减速器",
+      "name_en": "OpenArm 谐波减速器",
+      "category": "actuators",
+      "manufacturer": "OpenArm",
+      "type": "harmonic_joint",
+      "protocol": "EtherCAT",
+      "interface": "EtherCAT",
+      "voltage": "48~48V",
+      "ros_support": true,
+      "compatibility": [
+        "ROS2",
+        "EtherCAT"
+      ],
+      "applications": [
+        "openarm",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:OpenArm 7-DOF",
+      "source_url": null,
+      "oss": true
+    },
+    {
+      "id": "OSS-LIVE-A8AFF0B633",
+      "name": "Chaohe HI13 M0-USB",
+      "name_en": "Chaohe HI13 M0-USB",
+      "category": "protocols",
+      "manufacturer": "roboto_origin",
+      "type": "bom_part",
+      "protocol": "USB",
+      "interface": null,
+      "voltage": null,
+      "compatibility": [],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": "https://raw.githubusercontent.com/Roboparty/roboto_origin/main/assets/BOM_EN.md",
+      "oss": true
+    },
+    {
+      "id": "OSS-LIVE-93A15691B5",
+      "name": "USB hub",
+      "name_en": "USB hub",
+      "category": "protocols",
+      "manufacturer": "roboto_origin",
+      "type": "bom_part",
+      "protocol": "USB",
+      "interface": null,
+      "voltage": null,
+      "compatibility": [],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": "https://raw.githubusercontent.com/Roboparty/roboto_origin/main/assets/BOM_EN.md",
+      "oss": true
+    },
+    {
+      "id": "OSS-LIVE-B78CA15DBB",
+      "name": "USB-to-CAN",
+      "name_en": "USB-to-CAN",
+      "category": "protocols",
+      "manufacturer": "roboto_origin",
+      "type": "bom_part",
+      "protocol": "CAN",
+      "interface": null,
+      "voltage": null,
+      "compatibility": [],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": "https://raw.githubusercontent.com/Roboparty/roboto_origin/main/assets/BOM_EN.md",
+      "oss": true
+    },
+    {
+      "id": "OSS-LIVE-C6534E4E72",
+      "name": "CAN adapter board",
+      "name_en": "CAN adapter board",
+      "category": "chips",
+      "manufacturer": "roboto_origin",
+      "type": "bom_part",
+      "protocol": "CAN",
+      "interface": null,
+      "voltage": null,
+      "compatibility": [],
+      "applications": [
+        "robotoorigin",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:roboto_origin (GPLv3 DIY 人形)",
+      "source_url": "https://raw.githubusercontent.com/Roboparty/roboto_origin/main/assets/BOM_EN.md",
+      "oss": true
+    },
+    {
+      "id": "OSS-LIVE-E6E0DF6B4B",
+      "name": "UNITREE_G1 关节 right_little_1_joint",
+      "name_en": "UNITREE_G1 关节 right_little_1_joint",
+      "category": "actuators",
+      "manufacturer": "Unitree G1",
+      "type": "urdf_joint_revolute",
+      "protocol": "TTL",
+      "interface": null,
+      "voltage": null,
+      "compatibility": [
+        "URDF"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": "https://raw.githubusercontent.com/unitreerobotics/unitree_ros/master/robots/g1_description/inspire_hand/FTP_right_hand.urdf",
+      "oss": true
+    },
+    {
+      "id": "OSS-LIVE-D04EE776DB",
+      "name": "UNITREE_G1 关节 right_little_2_joint",
+      "name_en": "UNITREE_G1 关节 right_little_2_joint",
+      "category": "actuators",
+      "manufacturer": "Unitree G1",
+      "type": "urdf_joint_revolute",
+      "protocol": "TTL",
+      "interface": null,
+      "voltage": null,
+      "compatibility": [
+        "URDF"
+      ],
+      "applications": [
+        "unitreeg1",
+        "humanoid"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:Unitree G1 (人形)",
+      "source_url": "https://raw.githubusercontent.com/unitreerobotics/unitree_ros/master/robots/g1_description/inspire_hand/FTP_right_hand.urdf",
+      "oss": true
+    },
+    {
+      "id": "OSS-LIVE-9C2AF6DBF2",
+      "name": "openarm_can CAN Docs Apache-2.0 CAN control library for low-level moto",
+      "name_en": "openarm_can CAN Docs Apache-2.0 CAN control library for low-level moto",
+      "category": "chips",
+      "manufacturer": "OpenArm 7-DOF",
+      "type": "readme_mention",
+      "protocol": "CAN",
+      "interface": null,
+      "voltage": null,
+      "compatibility": [],
+      "applications": [
+        "openarm",
+        "arm"
+      ],
+      "entity_kind": "component",
+      "source_tier": "C",
+      "confidence": "low",
+      "flywheel_source": "oss_urdf:OpenArm 7-DOF",
+      "source_url": "https://api.github.com/repos/enactic/openarm/readme",
+      "oss": true
+    }
+  ]
+}
