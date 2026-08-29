@@ -2,7 +2,7 @@
   "meta": {
     "category": "connectors",
     "source": "entities.json projection",
-    "generated_at": "2026-08-27T05:46:42.969Z",
+    "generated_at": "2026-08-27T14:54:22.415Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -26,7 +26,7 @@
     }
   },
   "count": 2,
-  "updated": "2026-08-27T05:46:42.969Z",
+  "updated": "2026-08-27T14:54:22.415Z",
   "data": [
     {
       "category": "connectors",
@@ -73,7 +73,7 @@
         "gap": "缺对接尺寸与引脚定义、插拔寿命、接触电阻、IP 等级、降额曲线与振动/弯折试验数据 —— 厂商发布明确未披露，无法做互换判定",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "other",
@@ -85,7 +85,8 @@
       },
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.prnewswire.com/news-releases/molex-introduces-minimix-hy",
-      "rp_id": "RP-CON-0001"
+      "rp_id": "RP-CON-0001",
+      "entity_kind_basis": "默认归类"
     },
     {
       "category": "connectors",
@@ -123,7 +124,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -135,7 +136,8 @@
       },
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.prnewswire.com/news-releases/molex-introduces-minimix-hy",
-      "rp_id": "RP-CON-0002"
+      "rp_id": "RP-CON-0002",
+      "entity_kind_basis": "默认归类"
     }
   ]
 }

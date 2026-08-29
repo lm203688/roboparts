@@ -2,7 +2,7 @@
   "meta": {
     "category": "sensors",
     "source": "entities.json projection",
-    "generated_at": "2026-08-27T05:46:42.969Z",
+    "generated_at": "2026-08-27T14:54:22.415Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -26,7 +26,7 @@
     }
   },
   "count": 90,
-  "updated": "2026-08-27T05:46:42.969Z",
+  "updated": "2026-08-27T14:54:22.415Z",
   "data": [
     {
       "id": "CHIP-67",
@@ -60,14 +60,15 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-SEN-0001",
       "derived_properties": {
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "CHIP-71",
@@ -101,14 +102,15 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-SEN-0002",
       "derived_properties": {
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "CHIP-79",
@@ -142,14 +144,15 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-SEN-0003",
       "derived_properties": {
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "CHIP-83",
@@ -183,14 +186,15 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-SEN-0004",
       "derived_properties": {
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "CHIP-84",
@@ -224,14 +228,15 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-SEN-0005",
       "derived_properties": {
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-001",
@@ -255,7 +260,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -274,8 +279,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0006",
       "derived_properties": {
@@ -284,7 +289,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=Velodyne%20(Ouster)%2C%20Luminar%2C%20Hesai%2C%20Livox%2C%20Innoviz%20LiDAR%20(Light%20Detection%20and%20Ranging)%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-002",
@@ -308,7 +314,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -327,8 +333,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0007",
       "derived_properties": {
@@ -337,7 +343,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=Prophesee%20(Metavision)%2C%20iniVation%20(DAVIS)%2C%20CelePixel%20Event%20Camera%20(Neuromorphic%20Vision)%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-003",
@@ -361,7 +368,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -380,8 +387,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0008",
       "derived_properties": {
@@ -390,7 +397,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=GelSight%20(MIT%20spinoff)%2C%20SynTouch%2C%20Pressure%20Profile%20Systems%20Tactile%20Sensor%20(GelSight)%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-004",
@@ -414,7 +422,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -433,8 +441,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0009",
       "derived_properties": {
@@ -443,7 +451,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=Bosch%2C%20InvenSense%20(TDK)%2C%20STMicroelectronics%2C%20Analog%20Devices%20IMU%20(Inertial%20Measurement%20Unit)%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-005",
@@ -467,7 +476,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -486,8 +495,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0010",
       "derived_properties": {
@@ -496,7 +505,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=ATI%20Industrial%20Automation%2C%20OnRobot%2C%20SCHUNK%2C%20ME-Me%C3%9Fsysteme%20Force%2FTorque%20Sensor%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-006",
@@ -520,7 +530,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -539,8 +549,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0011",
       "derived_properties": {
@@ -549,7 +559,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=XELA%20Robotics%20XELA%20uSkin%203-Axis%20Tactile%20Sensor%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-007",
@@ -592,7 +603,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-SEN-0012",
@@ -600,7 +611,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-008",
@@ -625,7 +637,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -644,8 +656,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0013",
       "derived_properties": {
@@ -654,7 +666,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=Multiple%20(Meta%20AI%20Research%2C%20XELA%2C%20academic%20labs)%20Tactile%20Foundation%20Model%20Sensor%20Suite%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-009",
@@ -679,7 +692,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -698,8 +711,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0014",
       "derived_properties": {
@@ -708,7 +721,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=Academic%20research%20(ACS%20Applied%20Materials%20%26%20Interfaces%202025)%20Bioinspired%20Flexible%20Tactile%20Sensor%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-tesla-optimus-g3-suite",
@@ -732,7 +746,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -751,8 +765,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "vendor_url_pattern",
       "rp_id": "RP-SEN-0015",
       "derived_properties": {
@@ -761,7 +775,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://tesla.com/tesla-optimus-gen-3-sensor-suite",
-      "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-unitree-g1-lidar",
@@ -804,7 +819,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "dataset_source",
       "rp_id": "RP-SEN-0016",
@@ -819,7 +834,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.unitree.com/",
-      "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-unitree-h1-360depth",
@@ -862,7 +878,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "dataset_source",
       "rp_id": "RP-SEN-0017",
@@ -877,7 +893,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.unitree.com/",
-      "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-13",
@@ -919,7 +936,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0018",
@@ -927,7 +944,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-14",
@@ -969,7 +987,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0019",
@@ -977,7 +995,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-15",
@@ -1019,7 +1038,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-SEN-0020",
@@ -1027,7 +1046,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-16",
@@ -1069,7 +1089,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-SEN-0021",
@@ -1077,7 +1097,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-17",
@@ -1119,7 +1140,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0022",
@@ -1127,7 +1148,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-18",
@@ -1169,7 +1191,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0023",
@@ -1177,7 +1199,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-19",
@@ -1219,7 +1242,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-SEN-0024",
@@ -1227,7 +1250,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-20",
@@ -1269,7 +1293,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-SEN-0025",
@@ -1277,7 +1301,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-21",
@@ -1319,7 +1344,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0026",
@@ -1327,7 +1352,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-22",
@@ -1369,7 +1395,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0027",
@@ -1377,7 +1403,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-23",
@@ -1419,7 +1446,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-SEN-0028",
@@ -1427,7 +1454,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-24",
@@ -1469,7 +1497,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-SEN-0029",
@@ -1477,7 +1505,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-25",
@@ -1519,7 +1548,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0030",
@@ -1527,7 +1556,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-26",
@@ -1569,7 +1599,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0031",
@@ -1577,7 +1607,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-27",
@@ -1619,7 +1650,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-SEN-0032",
@@ -1627,7 +1658,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-28",
@@ -1669,7 +1701,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0033",
@@ -1677,7 +1709,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-29",
@@ -1719,7 +1752,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0034",
@@ -1727,7 +1760,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-30",
@@ -1769,7 +1803,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0035",
@@ -1777,7 +1811,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-31",
@@ -1826,7 +1861,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "PCD39(8×M3) 无 ISO 编码，未纳入自动比对集合；FT 300（前代）耦合件 SKU 族为 FTS-300-CPL-xxx，与现行 -S 的 FTS-300-S-CPL-xxx 不同，本条未逐一核对前代 SKU 编号，ISO 编码族两代一致但 SKU 不可互引；传感器本体与耦合件之间的对接面（M4 螺钉 + 碟形垫圈压 O 型圈）未单列为可比对标识。"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_url": "https://assets.robotiq.com/website-assets/support_documents/document/FT300-S_Sensor_Manual_OMRON_TM_PDF_20210301.pdf",
       "verification_note": "2026-08-10 核验：FT 300-S 官方手册备件表逐项给出各耦合件的 ISO 9409-1 编码、PCD 与螺纹；前代 FT 300 官方手册 §3.3 佐证「耦合件必需 + 按 ISO 9409-1 编列」。两份出处均为 robotiq.com 官方资产域，实测 HTTP 200。",
       "source_tier_basis": "deep_link:assets.robotiq.com/website-assets/support_documents/document",
@@ -1835,7 +1870,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-32",
@@ -1877,7 +1913,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0037",
@@ -1885,7 +1921,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-33",
@@ -1927,7 +1964,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0038",
@@ -1935,7 +1972,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-34",
@@ -1977,7 +2015,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-SEN-0039",
@@ -1985,7 +2023,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-35",
@@ -2027,7 +2066,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0040",
@@ -2035,7 +2074,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-36",
@@ -2077,7 +2117,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0041",
@@ -2085,7 +2125,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-37",
@@ -2127,7 +2168,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0042",
@@ -2135,7 +2176,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-38",
@@ -2177,7 +2219,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0043",
@@ -2185,7 +2227,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-39",
@@ -2227,7 +2270,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0044",
@@ -2235,7 +2278,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-40",
@@ -2277,7 +2321,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0045",
@@ -2285,7 +2329,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-41",
@@ -2327,7 +2372,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-SEN-0046",
@@ -2335,7 +2380,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-42",
@@ -2377,7 +2423,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0047",
@@ -2385,7 +2431,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "sensor-ft-001",
@@ -2444,7 +2491,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
@@ -2454,7 +2501,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "sensor-ft-002",
@@ -2512,7 +2560,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-SEN-0049",
@@ -2520,7 +2568,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "sensor-tactile-001",
@@ -2578,7 +2627,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
@@ -2588,7 +2637,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "sensor-imu-001",
@@ -2646,7 +2696,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
@@ -2656,7 +2706,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-047",
@@ -2681,7 +2732,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2700,8 +2751,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0052",
       "derived_properties": {
@@ -2710,7 +2761,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=ATI%20Industrial%20Automation%20(Novanta)%20ATI%20Mini40%20%E5%85%AD%E8%BD%B4%E5%8A%9B%2F%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-048",
@@ -2735,7 +2787,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2754,8 +2806,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0053",
       "derived_properties": {
@@ -2764,7 +2816,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=ATI%20Industrial%20Automation%20(Novanta)%20ATI%20Mini45%20%E5%85%AD%E8%BD%B4%E5%8A%9B%2F%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-049",
@@ -2789,7 +2842,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2808,8 +2861,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0054",
       "derived_properties": {
@@ -2818,7 +2871,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=OnRobot%20OnRobot%20HEX-E%20%E5%85%AD%E8%BD%B4%E5%8A%9B%2F%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-050",
@@ -2843,7 +2897,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2862,8 +2916,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0055",
       "derived_properties": {
@@ -2872,7 +2926,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=Bota%20Systems%20Bota%20Systems%20MiniONE%20%E5%85%AD%E8%BD%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-051",
@@ -2897,7 +2952,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2916,8 +2971,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0056",
       "derived_properties": {
@@ -2926,7 +2981,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E8%93%9D%E7%82%B9%E8%A7%A6%E6%8E%A7%20(LinkTouch)%20%E8%93%9D%E7%82%B9%E8%A7%A6%E6%8E%A7%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-052",
@@ -2951,7 +3007,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2970,8 +3026,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0057",
       "derived_properties": {
@@ -2980,7 +3036,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E5%AE%87%E7%AB%8B%E4%BB%AA%E5%99%A8%20(Sunrise%20SRI)%20%E5%AE%87%E7%AB%8B%E4%BB%AA%E5%99%A8%20M4313SXX%20%E5%A4%9A%E8%BD%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-053",
@@ -3005,7 +3062,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3024,8 +3081,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0058",
       "derived_properties": {
@@ -3034,7 +3091,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=GelSight%20Inc.%20(MIT)%20GelSight%20Mini%20%E8%A7%86%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-054",
@@ -3059,7 +3117,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3078,8 +3136,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0059",
       "derived_properties": {
@@ -3088,7 +3146,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=Meta%20AI%20Research%20Meta%20DIGIT%20%E8%A7%86%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-055",
@@ -3113,7 +3172,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3132,8 +3191,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0060",
       "derived_properties": {
@@ -3142,7 +3201,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=Bristol%20Robotics%20Laboratory%20TacTip%20%E4%BB%BF%E7%94%9F%E5%85%89%E5%AD%A6%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-056",
@@ -3167,7 +3227,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3186,8 +3246,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0061",
       "derived_properties": {
@@ -3196,7 +3256,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=SynTouch%20LLC%20SynTouch%20BioTac%20%E4%BB%BF%E7%94%9F%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-057",
@@ -3221,7 +3282,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3240,8 +3301,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0062",
       "derived_properties": {
@@ -3250,7 +3311,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E6%88%B4%E7%9B%9F%E6%9C%BA%E5%99%A8%E4%BA%BA%20(Daimon%20Robotics)%20%E6%88%B4%E7%9B%9F%E6%9C%BA%E5%99%A8%E4%BA%BA%20DM-Tac%20W2%20%E8%A7%86%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-058",
@@ -3275,7 +3337,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3294,8 +3356,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0063",
       "derived_properties": {
@@ -3304,7 +3366,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E5%B8%95%E8%A5%BF%E5%B0%BC%E6%84%9F%E7%9F%A5%E7%A7%91%E6%8A%80%20(PaXini)%20%E5%B8%95%E8%A5%BF%E5%B0%BC%20PX-6AX%20%E5%A4%9A%E7%BB%B4%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-059",
@@ -3329,7 +3392,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3348,8 +3411,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0064",
       "derived_properties": {
@@ -3358,7 +3421,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=Tekscan%20Tekscan%20I-Scan%20%E5%8E%8B%E5%8A%9B%E5%88%86%E5%B8%83%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-060",
@@ -3383,7 +3447,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3402,8 +3466,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0065",
       "derived_properties": {
@@ -3412,7 +3476,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=Pressure%20Profile%20Systems%20(PPS)%20PPS%20TactArray%20%E8%A7%A6%E8%A7%89%E5%8E%8B%E5%8A%9B%E5%88%86%E5%B8%83%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-061",
@@ -3437,7 +3502,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3456,8 +3521,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0066",
       "derived_properties": {
@@ -3466,7 +3531,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E6%B1%89%E5%A8%81%E7%A7%91%E6%8A%80%2F%E8%83%BD%E6%96%AF%E8%BE%BE%E7%94%B5%E5%AD%90%20%E6%B1%89%E5%A8%81%2F%E8%83%BD%E6%96%AF%E8%BE%BE%20ZNS-01%20%E6%9F%94%E6%80%A7%E7%94%B5%E5%AD%90%E7%9A%AE%E8%82%A4%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-062",
@@ -3491,7 +3557,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3510,8 +3576,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0067",
       "derived_properties": {
@@ -3520,7 +3586,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E4%BB%96%E5%B1%B1%E7%A7%91%E6%8A%80%20(%E6%B8%85%E5%8D%8E%E7%B3%BB)%20%E4%BB%96%E5%B1%B1%E7%A7%91%E6%8A%80%20SNN%E8%A7%A6%E8%A7%89%E8%8A%AF%E7%89%87%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-sri-m35xx",
@@ -3570,14 +3637,15 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "deep_link:srisensor.com.cn/product/lzlcgq.html",
       "rp_id": "RP-SEN-0068",
       "derived_properties": {
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-sri-c025xx",
@@ -3626,7 +3694,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "缺法兰节圆/孔数/螺纹规格，无法做孔位级互换判定"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-SEN-0069",
@@ -3634,7 +3702,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-sri-c075xx",
@@ -3685,14 +3754,15 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "缺法兰节圆/孔数/螺纹规格，无法做孔位级互换判定"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "deep_link:srisensor.com.cn/product/lzlcgq.html",
       "rp_id": "RP-SEN-0070",
       "derived_properties": {
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-sri-m221x",
@@ -3740,14 +3810,15 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "deep_link:srisensor.com.cn/product",
       "rp_id": "RP-SEN-0071",
       "derived_properties": {
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-sri-m37xx",
@@ -3800,14 +3871,15 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "deep_link:srisensor.com.cn/product",
       "rp_id": "RP-SEN-0072",
       "derived_properties": {
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-kunwei-kwr-n",
@@ -3847,7 +3919,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3866,8 +3938,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0073",
       "derived_properties": {
@@ -3876,7 +3948,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E5%B8%B8%E5%B7%9E%E5%9D%A4%E7%BB%B4%E7%A7%91%E6%8A%80%20(KunWei)%20%E5%9D%A4%E7%BB%B4%E7%A7%91%E6%8A%80%20KWR-N%20%E9%AB%98%E7%B2%BE%E5%BA%A6%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-hipersen-hpsft",
@@ -3909,7 +3982,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3928,8 +4001,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0074",
       "derived_properties": {
@@ -3938,7 +4011,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E6%B5%B7%E4%BC%AF%E6%A3%AE%E6%8A%80%E6%9C%AF%20(Hipersen)%20%E6%B5%B7%E4%BC%AF%E6%A3%AE%20HPS-FT%20%E7%B3%BB%E5%88%97%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-xjc-ft",
@@ -3970,7 +4044,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3989,8 +4063,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0075",
       "derived_properties": {
@@ -3999,7 +4073,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E9%91%AB%E7%B2%BE%E8%AF%9A%E4%BC%A0%E6%84%9F%E6%8A%80%E6%9C%AF%20(XJC)%20%E9%91%AB%E7%B2%BE%E8%AF%9A%20XJC-FT%20%E7%B3%BB%E5%88%97%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-sysgroup-sysft",
@@ -4031,7 +4106,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4050,8 +4125,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0076",
       "derived_properties": {
@@ -4060,7 +4135,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E5%8D%97%E4%BA%AC%E7%A5%9E%E6%BA%90%E7%94%9F%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80%20(SYS)%20%E7%A5%9E%E6%BA%90%E7%94%9F%20SYS-FT%20%E7%B3%BB%E5%88%97%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-me-k3d",
@@ -4092,7 +4168,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4111,8 +4187,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0077",
       "derived_properties": {
@@ -4121,7 +4197,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=ME-Me%C3%9Fsysteme%20GmbH%20(%E5%BE%B7%E5%9B%BD)%20ME-Systeme%20K3D%20%E7%B3%BB%E5%88%97%E5%A4%9A%E8%BD%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-haozhi-6axis",
@@ -4148,7 +4225,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4167,8 +4244,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0078",
       "derived_properties": {
@@ -4177,7 +4254,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E5%B9%BF%E5%B7%9E%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20(300503.SZ)%20%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20%E5%85%AD%E7%BB%B4%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-keli-6axis",
@@ -4206,7 +4284,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4225,7 +4303,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0079",
@@ -4235,7 +4313,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E5%AE%81%E6%B3%A2%E6%9F%AF%E5%8A%9B%E4%BC%A0%E6%84%9F%E7%A7%91%E6%8A%80%20(603662.SH)%20%E6%9F%AF%E5%8A%9B%E4%BC%A0%E6%84%9F%20%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-anpulong-ceramic",
@@ -4264,7 +4343,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4283,7 +4362,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0080",
@@ -4293,7 +4372,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%AE%89%E5%9F%B9%E9%BE%99%E7%A7%91%E6%8A%80%20(301413.SZ)%20%E5%AE%89%E5%9F%B9%E9%BE%99%20%E9%99%B6%E7%93%B7%E7%94%B5%E5%AE%B9%E5%BC%8F%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-ft-qianfenyi-6axis",
@@ -4323,7 +4403,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4342,7 +4422,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0081",
@@ -4352,7 +4432,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%8D%83%E5%88%86%E4%B8%80%E7%A7%91%E6%8A%80%20(Qianfenyi)%20%E5%8D%83%E5%88%86%E4%B8%80%20%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-strain-avicem",
@@ -4384,7 +4465,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4403,7 +4484,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0082",
@@ -4413,7 +4494,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E4%B8%AD%E8%88%AA%E7%94%B5%E6%B5%8B%E4%BB%AA%E5%99%A8%20(300114.SZ)%20%E4%B8%AD%E8%88%AA%E7%94%B5%E6%B5%8B%20%E5%BA%94%E5%8F%98%E5%BC%8F%E5%8A%9B%2F%E6%89%AD%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-imu-xindonglianke-mems",
@@ -4443,7 +4525,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4462,7 +4544,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0083",
@@ -4472,7 +4554,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E5%AE%89%E5%BE%BD%E8%8A%AF%E5%8A%A8%E8%81%94%E7%A7%91%E5%BE%AE%E7%B3%BB%E7%BB%9F%20(688582.SH)%20%E8%8A%AF%E5%8A%A8%E8%81%94%E7%A7%91%20%E9%AB%98%E6%80%A7%E8%83%BD%20MEMS%20%E9%99%80%E8%9E%BA%2FIMU%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-imu-huayi-automotive",
@@ -4502,7 +4585,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4521,7 +4604,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0084",
@@ -4531,7 +4614,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E5%8D%8E%E4%BE%9D%E7%A7%91%E6%8A%80%20(688071.SH)%20%E5%8D%8E%E4%BE%9D%E7%A7%91%E6%8A%80%20%E8%BD%A6%E8%A7%84%E7%BA%A7%20IMU%20%E6%83%AF%E6%80%A7%E6%A8%A1%E7%BB%84%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-cam-orbbec-gemini335",
@@ -4568,7 +4652,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -4587,8 +4671,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0085",
       "derived_properties": {
@@ -4597,7 +4681,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E5%A5%A5%E6%AF%94%E4%B8%AD%E5%85%89%E7%A7%91%E6%8A%80%20(688322.SH)%20%E5%A5%A5%E6%AF%94%E4%B8%AD%E5%85%89%20Gemini%20335%20%E5%8F%8C%E7%9B%AE%E7%BB%93%E6%9E%84%E5%85%89%E6%B7%B1%E5%BA%A6%E7%9B%B8%E6%9C%BA%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-cam-percipio-fm851",
@@ -4634,7 +4719,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4653,8 +4738,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0086",
       "derived_properties": {
@@ -4663,7 +4748,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E5%9B%BE%E6%BC%BE%E4%BF%A1%E6%81%AF%E7%A7%91%E6%8A%80%20(Percipio.XYZ)%20%E5%9B%BE%E6%BC%BE%E7%A7%91%E6%8A%80%20FM851%20%E5%B7%A5%E4%B8%9A%E7%BA%A7%203D%20%E7%9B%B8%E6%9C%BA%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-lidar-hesai-ft120",
@@ -4699,7 +4785,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4718,8 +4804,8 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0087",
       "derived_properties": {
@@ -4728,7 +4814,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E7%A6%BE%E8%B5%9B%E7%A7%91%E6%8A%80%20(HSAI%20%2F%20688771.SH)%20%E7%A6%BE%E8%B5%9B%E7%A7%91%E6%8A%80%20FT120%20%E7%BA%AF%E5%9B%BA%E6%80%81%E8%A1%A5%E7%9B%B2%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-lidar-robosense-ac1",
@@ -4763,7 +4850,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4782,7 +4869,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-SEN-0088",
@@ -4792,7 +4879,8 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "source_url": "https://www.google.com/search?q=%E9%80%9F%E8%85%BE%E8%81%9A%E5%88%9B%20(RoboSense%2C%202498.HK)%20%E9%80%9F%E8%85%BE%E8%81%9A%E5%88%9B%20Active%20Camera%20AC1%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-oss-anyskin",
@@ -4847,7 +4935,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:github.com/raunaqbhirangi/anyskin",
       "rp_id": "RP-SEN-0089",
@@ -4855,7 +4943,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "SENS-oss-reskin",
@@ -4910,7 +4999,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:github.com/raunaqbhirangi/reskin_sensor",
       "rp_id": "RP-SEN-0090",
@@ -4918,7 +5007,8 @@
         "has_data_output": true,
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     }
   ]
 }

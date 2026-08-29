@@ -219,7 +219,7 @@ PROBE_RE = re.compile(
 BUSINESS_TOOLS = ('search_components', 'get_component_detail',
                   'check_compatibility', 'recommend_for_application',
                   'get_parameter_semantics', 'bom_compatibility_check',
-                  'semantic_search', 'get_standard_audit')
+                  'semantic_search', 'get_standard_audit', 'review_compatibility')
 
 
 def mcp_report(total, n):

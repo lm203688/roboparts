@@ -2,7 +2,7 @@
   "meta": {
     "category": "grippers",
     "source": "entities.json projection",
-    "generated_at": "2026-08-27T05:46:42.969Z",
+    "generated_at": "2026-08-27T14:54:22.415Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -26,7 +26,7 @@
     }
   },
   "count": 13,
-  "updated": "2026-08-27T05:46:42.969Z",
+  "updated": "2026-08-27T14:54:22.415Z",
   "data": [
     {
       "verified": true,
@@ -44,7 +44,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "id": "GRIP-001",
       "name": "OnRobot 2FG7",
       "name_en": "OnRobot 2FG7",
@@ -72,7 +72,8 @@
         "type": "electric parallel"
       },
       "source_tier_basis": "deep_link:onrobot.com/en/products/2fg7",
-      "rp_id": "RP-GRI-0001"
+      "rp_id": "RP-GRI-0001",
+      "entity_kind_basis": "默认归类"
     },
     {
       "verified": true,
@@ -90,7 +91,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "id": "GRIP-002",
       "name": "Robotiq 2F-85",
       "name_en": "Robotiq 2F-85",
@@ -119,7 +120,8 @@
         "type": "adaptive 2-finger"
       },
       "source_tier_basis": "deep_link:robotiq.com/products/2f85-140-adaptive-robot-gripper",
-      "rp_id": "RP-GRI-0002"
+      "rp_id": "RP-GRI-0002",
+      "entity_kind_basis": "默认归类"
     },
     {
       "verified": true,
@@ -137,7 +139,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "id": "GRIP-003",
       "name": "SCHUNK EGP",
       "name_en": "SCHUNK EGP",
@@ -165,7 +167,8 @@
         "type": "electric parallel"
       },
       "source_tier_basis": "deep_link:schunk.com/gb_en/gripping-systems/series/egp/",
-      "rp_id": "RP-GRI-0003"
+      "rp_id": "RP-GRI-0003",
+      "entity_kind_basis": "默认归类"
     },
     {
       "verified": false,
@@ -183,7 +186,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "id": "GRIP-004",
       "name": "DH Robotics 大寰 Electric Gripper",
       "name_en": "DH Robotics Electric Gripper",
@@ -211,7 +214,8 @@
         "note": "force control, real-time feedback"
       },
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-GRI-0004"
+      "rp_id": "RP-GRI-0004",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "PRIMA1-HAND-001",
@@ -248,7 +252,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "verified": false,
       "data_quality": "partial",
       "quarantine": false,
@@ -268,7 +272,8 @@
       "force_control": true,
       "kind_basis": "category=grippers: component entity, no mechanical interface",
       "source_tier_basis": "deep_link:nnets.ru/news/robotizirovannaja-kist-prima1-ot-xynova-poluch",
-      "rp_id": "RP-GRI-0005"
+      "rp_id": "RP-GRI-0005",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DEXHAND021PRO-001",
@@ -305,7 +310,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "verified": false,
       "data_quality": "partial",
       "quarantine": false,
@@ -322,7 +327,8 @@
       "tactile_feedback": true,
       "force_control": true,
       "source_tier_basis": "deep_link:www.prnewswire.com/news-releases/dexrobot-unveils-full-dexte",
-      "rp_id": "RP-GRI-0006"
+      "rp_id": "RP-GRI-0006",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "NEO-HAND-001",
@@ -365,7 +371,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "verified": false,
       "data_quality": "partial",
       "quarantine": false,
@@ -383,7 +389,8 @@
       "force_control": true,
       "force_transparency": true,
       "source_tier_basis": "deep_link:www.1x.tech/discover/neos-hands",
-      "rp_id": "RP-GRI-0007"
+      "rp_id": "RP-GRI-0007",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "PROHAND-001",
@@ -419,7 +426,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "verified": false,
       "data_quality": "partial",
       "quarantine": false,
@@ -434,7 +441,8 @@
       "force_control": false,
       "wearable_data_collection": true,
       "source_tier_basis": "deep_link:www.proception.ai/news/introducing-prohand",
-      "rp_id": "RP-GRI-0008"
+      "rp_id": "RP-GRI-0008",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "GRIPPER-ONR-VG1",
@@ -442,7 +450,7 @@
       "name": "OnRobot VG1 气动夹爪",
       "name_en": "OnRobot VG1 Vacuum Gripper",
       "category": "grippers",
-      "entity_kind": "type",
+      "entity_kind": "component",
       "manufacturer": "OnRobot",
       "type": "vacuum_gripper",
       "max_load": 1,
@@ -451,7 +459,7 @@
       "voltage": "24V",
       "protocol": "IO_Link",
       "source": "https://www.onrobot.com/products/vacuum-grippers/vg1",
-      "source_tier": "B",
+      "source_tier": "A",
       "source_tier_basis": "vendor_official",
       "confidence": 0.9,
       "confidence_basis": "manufacturer_datasheet",
@@ -470,7 +478,9 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
-      }
+      },
+      "entity_kind_basis": "默认归类",
+      "source_tier_prev": "B"
     },
     {
       "id": "GRIPPER-ONR-NG1",
@@ -478,7 +488,7 @@
       "name": "OnRobot NG10 电动夹爪",
       "name_en": "OnRobot NG10 Robotic Gripper",
       "category": "grippers",
-      "entity_kind": "type",
+      "entity_kind": "component",
       "manufacturer": "OnRobot",
       "type": "electric_parallel_gripper",
       "max_load": 10,
@@ -487,7 +497,7 @@
       "voltage": "24V",
       "protocol": "EtherCAT",
       "source": "https://www.onrobot.com/products/robotic-grippers/ng10",
-      "source_tier": "B",
+      "source_tier": "A",
       "source_tier_basis": "vendor_official",
       "confidence": 0.9,
       "confidence_basis": "manufacturer_datasheet",
@@ -506,7 +516,9 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
-      }
+      },
+      "entity_kind_basis": "默认归类",
+      "source_tier_prev": "B"
     },
     {
       "id": "GRIPPER-ONR-NG30",
@@ -514,7 +526,7 @@
       "name": "OnRobot NG30 电动夹爪",
       "name_en": "OnRobot NG30 Robotic Gripper",
       "category": "grippers",
-      "entity_kind": "type",
+      "entity_kind": "component",
       "manufacturer": "OnRobot",
       "type": "electric_parallel_gripper",
       "max_load": 30,
@@ -523,7 +535,7 @@
       "voltage": "24V",
       "protocol": "EtherCAT",
       "source": "https://www.onrobot.com/products/robotic-grippers/ng30",
-      "source_tier": "B",
+      "source_tier": "A",
       "source_tier_basis": "vendor_official",
       "confidence": 0.9,
       "confidence_basis": "manufacturer_datasheet",
@@ -542,7 +554,9 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
-      }
+      },
+      "entity_kind_basis": "默认归类",
+      "source_tier_prev": "B"
     },
     {
       "id": "GRIPPER-SCHUNK-SWG15",
@@ -550,7 +564,7 @@
       "name": "Schunk SWG 15 气动夹爪",
       "name_en": "Schunk SWG 15 Parallel Gripper",
       "category": "grippers",
-      "entity_kind": "type",
+      "entity_kind": "component",
       "manufacturer": "Schunk",
       "type": "pneumatic_parallel_gripper",
       "max_load": 35,
@@ -559,7 +573,7 @@
       "voltage": "pneumatic",
       "protocol": "pneumatic",
       "source": "https://www.schunk.com/products/grippers/swg",
-      "source_tier": "B",
+      "source_tier": "A",
       "source_tier_basis": "vendor_official",
       "confidence": 0.85,
       "confidence_basis": "manufacturer_datasheet",
@@ -577,7 +591,9 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
-      }
+      },
+      "entity_kind_basis": "默认归类",
+      "source_tier_prev": "B"
     },
     {
       "id": "GRIPPER-POS-2F20",
@@ -585,7 +601,7 @@
       "name": "正实 2F-20 电动夹爪",
       "name_en": "ZhenShi 2F-20 Electric Gripper",
       "category": "grippers",
-      "entity_kind": "type",
+      "entity_kind": "component",
       "manufacturer": "正实机器人",
       "type": "electric_parallel_gripper",
       "max_load": 20,
@@ -614,7 +630,8 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     }
   ]
 }

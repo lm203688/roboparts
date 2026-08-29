@@ -77,7 +77,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 .acard p{color:var(--mut);font-size:13.5px;margin:0 0 10px;flex:1}
 @media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
 </style>
-<!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"767 条实体（其中 0 条实物零部件、0 条接口/协议规范、0 条 AI 模型与软件、0 条企业主体、0 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
+<!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"767 条实体（其中 558 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
 </head>
 <body>
 <div class="nav"><div class="in">
@@ -147,11 +147,11 @@ background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px
 <h3>免鉴权直读（引用数据不需要任何 key）</h3>
 <ul class="rp-eps">
 <li><a href="/api/entities.json"><code>/api/entities.json</code></a> — <span data-rp="total_entities">767</span> 条实体，其中
-<span data-rp="component_entities">0</span> 条为<strong>实物零部件</strong>；另有
-<span data-rp="specification_entities">0</span> 条接口/协议规范（EtherCAT、USB 3.0…）、
-<span data-rp="software_entities">0</span> 条 AI 模型与软件（GPT-4o、RT-2…）、
-<span data-rp="organization_entities">0</span> 条企业主体、
-<span data-rp="market_intelligence_entities">0</span> 条市场情报条目（<code>entity_kind</code> 可区分，后四类可检索但不作为选型对象与兼容判定操作数）</li>
+<span data-rp="component_entities">558</span> 条为<strong>实物零部件</strong>；另有
+<span data-rp="specification_entities">101</span> 条接口/协议规范（EtherCAT、USB 3.0…）、
+<span data-rp="software_entities">81</span> 条 AI 模型与软件（GPT-4o、RT-2…）、
+<span data-rp="organization_entities">10</span> 条企业主体、
+<span data-rp="market_intelligence_entities">17</span> 条市场情报条目（<code>entity_kind</code> 可区分，后四类可检索但不作为选型对象与兼容判定操作数）</li>
 <li><a href="/api/oss_components.json"><code>/api/oss_components.json</code></a> — <span data-rp="oss_total">325</span> 个开源项目组件</li>
 <li><a href="/api/parameter_semantics.json"><code>/api/parameter_semantics.json</code></a> — 参数口径与可比性判据（CC BY 4.0）</li>
 <li><a href="/api/mechanical_interfaces.json"><code>/api/mechanical_interfaces.json</code></a> — ISO 9409-1 法兰登记表</li>

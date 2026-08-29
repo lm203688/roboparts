@@ -2,7 +2,7 @@
   "meta": {
     "category": "data_acquisition",
     "source": "entities.json projection",
-    "generated_at": "2026-08-27T05:46:42.969Z",
+    "generated_at": "2026-08-27T14:54:22.415Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -26,7 +26,7 @@
     }
   },
   "count": 46,
-  "updated": "2026-08-27T05:46:42.969Z",
+  "updated": "2026-08-27T14:54:22.415Z",
   "data": [
     {
       "id": "DATA-001",
@@ -78,10 +78,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:tonyzhaozh.github.io/aloha/",
-      "rp_id": "RP-DAT-0001"
+      "rp_id": "RP-DAT-0001",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-002",
@@ -131,11 +132,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "entity",
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
-      "rp_id": "RP-DAT-0002"
+      "rp_id": "RP-DAT-0002",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-003",
@@ -185,10 +187,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:wuphilipp.github.io/gello_site/",
-      "rp_id": "RP-DAT-0003"
+      "rp_id": "RP-DAT-0003",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-004",
@@ -240,11 +243,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "entity",
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
-      "rp_id": "RP-DAT-0004"
+      "rp_id": "RP-DAT-0004",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-005",
@@ -275,7 +279,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -293,11 +297,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0005",
       "source_url": "https://www.google.com/search?q=DexRobot%20DexTele%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类",
+      "source_tier_prev": "B"
     },
     {
       "id": "DATA-006",
@@ -350,11 +356,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "entity",
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
-      "rp_id": "RP-DAT-0006"
+      "rp_id": "RP-DAT-0006",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-007",
@@ -408,11 +415,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "entity",
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
-      "rp_id": "RP-DAT-0007"
+      "rp_id": "RP-DAT-0007",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-008",
@@ -463,11 +471,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "entity",
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
-      "rp_id": "RP-DAT-0008"
+      "rp_id": "RP-DAT-0008",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-009",
@@ -515,9 +524,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
-      "rp_id": "RP-DAT-0009"
+      "rp_id": "RP-DAT-0009",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-010",
@@ -562,9 +572,10 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
-      "rp_id": "RP-DAT-0010"
+      "rp_id": "RP-DAT-0010",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-011",
@@ -593,7 +604,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -611,11 +622,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0011",
       "source_url": "https://www.google.com/search?q=Daimon%20Robotics%20(%E6%88%B4%E7%9B%9F%E6%9C%BA%E5%99%A8%E4%BA%BA)%20DM-Tac%20W%E7%B3%BB%E5%88%97%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类",
+      "source_tier_prev": "B"
     },
     {
       "id": "DATA-012",
@@ -644,7 +657,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -662,11 +675,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0012",
       "source_url": "https://www.google.com/search?q=TachinTech%20(%E9%80%94%E8%A7%81%E7%A7%91%E6%8A%80)%20TachinGlove%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类",
+      "source_tier_prev": "B"
     },
     {
       "id": "DATA-013",
@@ -698,7 +713,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -716,11 +731,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0013",
       "source_url": "https://www.google.com/search?q=TUM%20%2B%20Agile%20Robots%20%2B%20NJU%20%2B%20SHU%20TacUMI%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类",
+      "source_tier_prev": "B"
     },
     {
       "id": "DATA-014",
@@ -749,7 +766,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -767,11 +784,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0014",
       "source_url": "https://www.google.com/search?q=Academic%20Research%20(ICRA%202026)%20PolyUMI%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类",
+      "source_tier_prev": "B"
     },
     {
       "id": "DATA-015",
@@ -801,7 +820,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -819,11 +838,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0015",
       "source_url": "https://www.google.com/search?q=%E7%BA%AC%E9%92%9B%E6%9C%BA%E5%99%A8%E4%BA%BA%20(MIT%20Adelson%20lab)%20GelFinger%20GF225%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类",
+      "source_tier_prev": "B"
     },
     {
       "id": "DATA-tele-mobile-aloha",
@@ -862,7 +883,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -877,12 +898,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0016",
       "source_url": "https://www.google.com/search?q=Stanford%20University%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%8C%E7%A4%BE%E5%8C%BA%E5%8F%AF%E8%87%AA%E5%BB%BA%EF%BC%89%20Mobile%20ALOHA%20%E7%A7%BB%E5%8A%A8%E5%8F%8C%E8%87%82%E9%81%A5%E6%93%8D%E4%BD%9C%E9%87%87%E9%9B%86%E5%B9%B3%E5%8F%B0%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-tele-open-television",
@@ -923,7 +945,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -938,12 +960,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0017",
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%20%2F%20MIT%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20Open-TeleVision%20%E6%B2%89%E6%B5%B8%E5%BC%8F%20VR%20%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-exo-airexo2",
@@ -982,7 +1005,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -997,12 +1020,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0018",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20AirExo-2%20%E4%BD%8E%E6%88%90%E6%9C%AC%E5%8F%AF%E7%A9%BF%E6%88%B4%E5%A4%96%E9%AA%A8%E9%AA%BC%E9%87%87%E9%9B%86%E8%A3%85%E7%BD%AE%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-tele-bunny-visionpro",
@@ -1041,7 +1065,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1056,12 +1080,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0019",
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20Bunny-VisionPro%20%E5%8F%8C%E6%89%8B%E5%AE%9E%E6%97%B6%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-exo-ace-teleop",
@@ -1099,7 +1124,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1114,12 +1139,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0020",
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20ACE%20%E8%B7%A8%E5%B9%B3%E5%8F%B0%E8%A7%86%E8%A7%89-%E5%A4%96%E9%AA%A8%E9%AA%BC%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-glove-doglove",
@@ -1158,7 +1184,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1173,12 +1199,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0021",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20DOGlove%20%E5%8A%9B%E5%8F%8D%E9%A6%88%E6%95%B0%E6%8D%AE%E6%89%8B%E5%A5%97%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-glove-manus-quantum",
@@ -1217,7 +1244,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1232,12 +1259,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0022",
       "source_url": "https://www.google.com/search?q=Manus%EF%BC%88%E8%8D%B7%E5%85%B0%EF%BC%89%20Manus%20Quantum%20Metagloves%20%E5%8A%A8%E6%8D%95%E6%89%8B%E5%A5%97%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-mocap-rokoko-smartsuit2",
@@ -1276,7 +1304,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1291,12 +1319,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0023",
       "source_url": "https://www.google.com/search?q=Rokoko%EF%BC%88%E4%B8%B9%E9%BA%A6%EF%BC%89%20Rokoko%20Smartsuit%20Pro%20II%20%E6%83%AF%E6%80%A7%E5%8A%A8%E6%8D%95%E6%9C%8D%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-mocap-noitom-pn-studio",
@@ -1336,7 +1365,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1351,12 +1380,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0024",
       "source_url": "https://www.google.com/search?q=%E5%8C%97%E4%BA%AC%E8%AF%BA%E4%BA%A6%E8%85%BE%E7%A7%91%E6%8A%80%20(Noitom)%20%E8%AF%BA%E4%BA%A6%E8%85%BE%20Perception%20Neuron%20Studio%20%E6%83%AF%E6%80%A7%E5%8A%A8%E6%8D%95%E7%B3%BB%E7%BB%9F%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-umi-fastumi",
@@ -1395,7 +1425,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1410,12 +1440,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0025",
       "source_url": "https://www.google.com/search?q=%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA%20%2F%20%E5%AD%A6%E6%9C%AF%E5%9B%A2%E9%98%9F%20FastUMI%20%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E5%9E%8B%20UMI%20%E9%87%87%E9%9B%86%E8%A3%85%E7%BD%AE%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-humanoid-humanplus",
@@ -1454,7 +1485,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1469,12 +1500,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
-      "source_tier_prev": "A",
+      "entity_kind": "component",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-DAT-0026",
       "source_url": "https://www.google.com/search?q=Stanford%20University%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20HumanPlus%20%E4%BA%BA%E5%BD%A2%E5%BD%B1%E5%AD%90%E5%AD%A6%E4%B9%A0%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9F%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-neuro-originflow-kit",
@@ -1532,11 +1564,12 @@
         "reason": "腕带式可穿戴设备，无标准机械安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "root_url_only",
       "kind_basis": "category=data_acquisition: neural interface hardware, physical wearable",
       "source_tier_prev": "C",
-      "rp_id": "RP-DAT-0027"
+      "rp_id": "RP-DAT-0027",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-neuro-snoworigin-band",
@@ -1578,7 +1611,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1593,10 +1626,12 @@
         "reason": "腕带式可穿戴设备，无标准机械安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "press_coverage: quantum_bit 2026-08-22",
       "kind_basis": "category=data_acquisition: neural interface hardware, physical wearable",
-      "rp_id": "RP-DAT-0028"
+      "rp_id": "RP-DAT-0028",
+      "entity_kind_basis": "默认归类",
+      "source_tier_prev": "B"
     },
     {
       "id": "DATA-neuro-aemg-ref",
@@ -1637,7 +1672,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -1652,13 +1687,14 @@
         "reason": "软件参考架构，无物理实体",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_basis": "google_search",
       "kind_basis": "category=data_acquisition: neural interface software/reference, no physical hardware",
-      "source_tier_prev": "A",
+      "source_tier_prev": "B",
       "rp_id": "RP-DAT-0029",
       "source_url": "https://www.google.com/search?q=AEMG-series%EF%BC%88CVPR%202026%20%E5%BC%80%E6%BA%90%EF%BC%89%20AEMG%20%E9%80%9A%E7%94%A8%E8%82%8C%E7%94%B5%E9%87%87%E9%9B%86%E5%8F%82%E8%80%83%E5%B9%B3%E5%8F%B0%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "DATA-oss-agibot-world",
@@ -1709,10 +1745,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:github.com/OpenDriveLab/AgiBot-World",
-      "rp_id": "RP-DAT-0030"
+      "rp_id": "RP-DAT-0030",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-002",
@@ -1761,11 +1798,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "entity",
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
-      "rp_id": "RP-DAT-0031"
+      "rp_id": "RP-DAT-0031",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-003",
@@ -1814,12 +1852,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-DAT-0032"
+      "rp_id": "RP-DAT-0032",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-004",
@@ -1868,12 +1907,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-DAT-0033"
+      "rp_id": "RP-DAT-0033",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-005",
@@ -1923,10 +1963,11 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:github.com/huggingface/lerobot",
-      "rp_id": "RP-DAT-0034"
+      "rp_id": "RP-DAT-0034",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-006",
@@ -1975,12 +2016,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-DAT-0035"
+      "rp_id": "RP-DAT-0035",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-007",
@@ -2029,13 +2071,14 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "deep",
       "quarantine_reason": "source_url https://github.com/google-deepmind/puppeteer 经 GitHub API 实证不存在（404）；manufacturer 标 Google 亦无据。原描述系批量模板生成。",
       "needs_provenance": true,
       "source_tier_prev": "C",
       "source_tier_basis": "deep_link:github.com/google-deepmind/puppeteer",
-      "rp_id": "RP-DAT-0036"
+      "rp_id": "RP-DAT-0036",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-008",
@@ -2083,13 +2126,14 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "deep",
       "quarantine_reason": "source_url https://github.com/google-deepmind/telekinesis 经 GitHub API 实证不存在（404）；GitHub 全站搜索 telekinesis+teleoperation+robot 命中 0。原描述系批量模板生成。",
       "needs_provenance": true,
       "source_tier_prev": "C",
       "source_tier_basis": "deep_link:github.com/google-deepmind/telekinesis",
-      "rp_id": "RP-DAT-0037"
+      "rp_id": "RP-DAT-0037",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-009",
@@ -2138,11 +2182,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "entity",
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
-      "rp_id": "RP-DAT-0038"
+      "rp_id": "RP-DAT-0038",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-010",
@@ -2191,11 +2236,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "entity",
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
-      "rp_id": "RP-DAT-0039"
+      "rp_id": "RP-DAT-0039",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-011",
@@ -2244,12 +2290,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-DAT-0040"
+      "rp_id": "RP-DAT-0040",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-012",
@@ -2298,12 +2345,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-DAT-0041"
+      "rp_id": "RP-DAT-0041",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-013",
@@ -2352,12 +2400,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-DAT-0042"
+      "rp_id": "RP-DAT-0042",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-014",
@@ -2406,11 +2455,12 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_scope": "entity",
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
-      "rp_id": "RP-DAT-0043"
+      "rp_id": "RP-DAT-0043",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-015",
@@ -2459,12 +2509,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-DAT-0044"
+      "rp_id": "RP-DAT-0044",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-016",
@@ -2512,12 +2563,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-DAT-0045"
+      "rp_id": "RP-DAT-0045",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XDA-017",
@@ -2566,12 +2618,13 @@
         "reason": "非机械耦合类实体（芯片/协议/模型/数据集/电气总线），无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-DAT-0046"
+      "rp_id": "RP-DAT-0046",
+      "entity_kind_basis": "默认归类"
     }
   ]
 }

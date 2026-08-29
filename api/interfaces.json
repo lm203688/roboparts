@@ -2,7 +2,7 @@
   "meta": {
     "category": "interfaces",
     "source": "entities.json projection",
-    "generated_at": "2026-08-27T05:46:42.969Z",
+    "generated_at": "2026-08-27T14:54:22.415Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -26,7 +26,7 @@
     }
   },
   "count": 44,
-  "updated": "2026-08-27T05:46:42.969Z",
+  "updated": "2026-08-27T14:54:22.415Z",
   "data": [
     {
       "id": "IF-001",
@@ -79,11 +79,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.usb.org/documents",
-      "rp_id": "RP-INT-0001"
+      "rp_id": "RP-INT-0001",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "IF-002",
@@ -136,11 +137,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.mipi.org/specifications/csi-2",
-      "rp_id": "RP-INT-0002"
+      "rp_id": "RP-INT-0002",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "IF-003",
@@ -194,11 +196,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:pcisig.com/specifications",
-      "rp_id": "RP-INT-0003"
+      "rp_id": "RP-INT-0003",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "IF-004",
@@ -249,10 +252,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-INT-0004"
+      "rp_id": "RP-INT-0004",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "IF-005",
@@ -304,10 +308,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-INT-0005"
+      "rp_id": "RP-INT-0005",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "IF-006",
@@ -324,7 +329,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "B",
+      "source_tier": "A",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -339,13 +344,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_prev": "A",
+      "source_tier_prev": "B",
       "source_tier_basis": "google_search",
       "rp_id": "RP-INT-0006",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Isaac%20GR00T%20Platform%20(GR00T%20N1.5%20%2B%20GR00T-Dreams)%20datasheet",
-      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
+      "entity_kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）"
     },
     {
       "id": "INTERFACE-abc123",
@@ -379,12 +385,13 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "dataset_source",
       "rp_id": "RP-INT-0007",
       "source_url": "https://www.unitree.com/",
-      "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.910Z"
+      "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.910Z",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "INTERFACE-def456",
@@ -418,10 +425,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-INT-0008"
+      "rp_id": "RP-INT-0008",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "INTERFACE-ghi789",
@@ -455,10 +463,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-INT-0009"
+      "rp_id": "RP-INT-0009",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "INTERFACE-jkl012",
@@ -492,10 +501,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-INT-0010"
+      "rp_id": "RP-INT-0010",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "INTERFACE-mno345",
@@ -529,10 +539,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-INT-0011"
+      "rp_id": "RP-INT-0011",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "INTERFACE-pqr678",
@@ -566,10 +577,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-INT-0012"
+      "rp_id": "RP-INT-0012",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "INTERFACE-stu901",
@@ -603,10 +615,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-INT-0013"
+      "rp_id": "RP-INT-0013",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "INTERFACE-vwx234",
@@ -640,10 +653,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-INT-0014"
+      "rp_id": "RP-INT-0014",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "XIF-001",
@@ -692,13 +706,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0015"
+      "rp_id": "RP-INT-0015",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-002",
@@ -747,12 +762,13 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "entity",
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
-      "rp_id": "RP-INT-0016"
+      "rp_id": "RP-INT-0016",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-003",
@@ -801,13 +817,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0017"
+      "rp_id": "RP-INT-0017",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-004",
@@ -856,13 +873,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0018"
+      "rp_id": "RP-INT-0018",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-005",
@@ -910,13 +928,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0019"
+      "rp_id": "RP-INT-0019",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-006",
@@ -964,13 +983,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0020"
+      "rp_id": "RP-INT-0020",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-007",
@@ -1018,13 +1038,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0021"
+      "rp_id": "RP-INT-0021",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-010",
@@ -1072,11 +1093,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:en.wikipedia.org/wiki/Universal_asynchronous_receiver-transm",
-      "rp_id": "RP-INT-0022"
+      "rp_id": "RP-INT-0022",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-011",
@@ -1125,11 +1147,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:en.wikipedia.org/wiki/RS-232",
-      "rp_id": "RP-INT-0023"
+      "rp_id": "RP-INT-0023",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-012",
@@ -1178,11 +1201,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:en.wikipedia.org/wiki/RS-485",
-      "rp_id": "RP-INT-0024"
+      "rp_id": "RP-INT-0024",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-014",
@@ -1231,13 +1255,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0025"
+      "rp_id": "RP-INT-0025",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-015",
@@ -1285,13 +1310,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0026"
+      "rp_id": "RP-INT-0026",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-016",
@@ -1339,11 +1365,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:en.wikipedia.org/wiki/Small_Form-factor_Pluggable",
-      "rp_id": "RP-INT-0027"
+      "rp_id": "RP-INT-0027",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-017",
@@ -1391,13 +1418,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0028"
+      "rp_id": "RP-INT-0028",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-018",
@@ -1445,11 +1473,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:en.wikipedia.org/wiki/LVDS",
-      "rp_id": "RP-INT-0029"
+      "rp_id": "RP-INT-0029",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-019",
@@ -1498,13 +1527,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0030"
+      "rp_id": "RP-INT-0030",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-020",
@@ -1552,13 +1582,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0031"
+      "rp_id": "RP-INT-0031",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-021",
@@ -1606,13 +1637,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0032"
+      "rp_id": "RP-INT-0032",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-022",
@@ -1660,13 +1692,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0033"
+      "rp_id": "RP-INT-0033",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-023",
@@ -1715,13 +1748,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0034"
+      "rp_id": "RP-INT-0034",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-024",
@@ -1769,12 +1803,13 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "entity",
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
-      "rp_id": "RP-INT-0035"
+      "rp_id": "RP-INT-0035",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-025",
@@ -1822,11 +1857,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:en.wikipedia.org/wiki/JTAG",
-      "rp_id": "RP-INT-0036"
+      "rp_id": "RP-INT-0036",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "XIF-026",
@@ -1874,13 +1910,14 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-INT-0037"
+      "rp_id": "RP-INT-0037",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "STD-ISO-10218",
@@ -1888,7 +1925,7 @@
       "name": "ISO 10218-1/-2 工业机器人安全",
       "name_en": "ISO 10218-1/-2 Safety of industrial robots",
       "category": "interfaces",
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "type": "safety_standard",
       "description": "工业机器人和机器人系统安全要求，覆盖设计和集成两个层面",
       "scope": "all_industrial_robots",
@@ -1911,7 +1948,9 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "note": "安全标准条目，不适用机械接口规格"
-      }
+      },
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
     },
     {
       "id": "STD-ISO-15066",
@@ -1919,7 +1958,7 @@
       "name": "ISO/TS 15066 协作机器人安全",
       "name_en": "ISO/TS 15066 Collaborative robot safety",
       "category": "interfaces",
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "type": "safety_standard",
       "description": "协作机器人（Cobot）安全技术要求，功率和力限制",
       "scope": "collaborative_robots",
@@ -1941,7 +1980,9 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "note": "安全标准条目，不适用机械接口规格"
-      }
+      },
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
     },
     {
       "id": "STD-ISO-13849",
@@ -1949,7 +1990,7 @@
       "name": "ISO 13849 安全控制系统 PL 等级",
       "name_en": "ISO 13849 Safety of machinery - Safety-related parts of control systems",
       "category": "interfaces",
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "type": "safety_standard",
       "description": "机械安全-控制系统安全相关部件，定义 PLd/PLe 安全等级",
       "scope": "safety_control_systems",
@@ -1971,7 +2012,9 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "note": "安全标准条目，不适用机械接口规格"
-      }
+      },
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
     },
     {
       "id": "STD-ISO-9787",
@@ -1979,7 +2022,7 @@
       "name": "ISO 9787 机器人性能测试",
       "name_en": "ISO 9787 Industrial robots - Performance specifications and testing",
       "category": "interfaces",
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "type": "performance_standard",
       "description": "工业机器人性能测试方法及报告规范，定义负载/精度/速度标定方式",
       "scope": "performance_testing",
@@ -2001,7 +2044,9 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "note": "安全标准条目，不适用机械接口规格"
-      }
+      },
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
     },
     {
       "id": "STD-VDI-3844",
@@ -2009,7 +2054,7 @@
       "name": "VDI 3844 协作机器人评估",
       "name_en": "VDI 3844 Collaborative robots - Human-robot collaborative work",
       "category": "interfaces",
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "type": "evaluation_standard",
       "description": "德国 VDI 协作机器人评估指南，欧洲集成项目高频引用",
       "scope": "collaborative_robot_evaluation",
@@ -2031,7 +2076,9 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "note": "安全标准条目，不适用机械接口规格"
-      }
+      },
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
     },
     {
       "id": "STD-GB-T-11291",
@@ -2039,14 +2086,14 @@
       "name": "GB/T 11291 工业机器人安全（中国国标）",
       "name_en": "GB/T 11291 Safety of industrial robots (China national standard)",
       "category": "interfaces",
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "type": "safety_standard",
       "description": "中国工业机器人安全国家标准，等同采用 ISO 10218",
       "scope": "all_industrial_robots_china",
       "status": "current",
       "year": 2011,
       "source": "https://openstd.samr.gov.cn/",
-      "source_tier": "A",
+      "source_tier": "B",
       "source_tier_basis": "chinese_gov_standard",
       "confidence": 1,
       "confidence_basis": "chinese_gov_publication",
@@ -2062,7 +2109,10 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "note": "安全标准条目，不适用机械接口规格"
-      }
+      },
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source_tier_prev": "A",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
     },
     {
       "id": "STD-GB-T-36008",
@@ -2070,14 +2120,14 @@
       "name": "GB/T 36008 工业机器人验收规范",
       "name_en": "GB/T 36008 Industrial robot acceptance specification",
       "category": "interfaces",
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "type": "acceptance_standard",
       "description": "工业机器人验收规范，国产替代项目实际使用的判定依据",
       "scope": "robot_acceptance_china",
       "status": "current",
       "year": 2018,
       "source": "https://openstd.samr.gov.cn/",
-      "source_tier": "A",
+      "source_tier": "B",
       "source_tier_basis": "chinese_gov_standard",
       "confidence": 1,
       "confidence_basis": "chinese_gov_publication",
@@ -2092,7 +2142,10 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "note": "安全标准条目，不适用机械接口规格"
-      }
+      },
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source_tier_prev": "A",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）"
     }
   ]
 }

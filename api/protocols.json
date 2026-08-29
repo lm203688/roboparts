@@ -2,7 +2,7 @@
   "meta": {
     "category": "protocols",
     "source": "entities.json projection",
-    "generated_at": "2026-08-27T05:46:42.969Z",
+    "generated_at": "2026-08-27T14:54:22.415Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -26,7 +26,7 @@
     }
   },
   "count": 64,
-  "updated": "2026-08-27T05:46:42.969Z",
+  "updated": "2026-08-27T14:54:22.415Z",
   "data": [
     {
       "id": "PROTO-001",
@@ -81,10 +81,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
-      "rp_id": "RP-PRO-0001"
+      "rp_id": "RP-PRO-0001",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-002",
@@ -139,10 +140,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
-      "rp_id": "RP-PRO-0002"
+      "rp_id": "RP-PRO-0002",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-003",
@@ -194,10 +196,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
-      "rp_id": "RP-PRO-0003"
+      "rp_id": "RP-PRO-0003",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-004",
@@ -253,11 +256,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:emanual.robotis.com/docs/en/dxl/protocol2/",
-      "rp_id": "RP-PRO-0004"
+      "rp_id": "RP-PRO-0004",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-005",
@@ -313,11 +317,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:design.ros2.org/articles/ros_on_dds.html",
-      "rp_id": "RP-PRO-0005"
+      "rp_id": "RP-PRO-0005",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-006",
@@ -370,10 +375,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0006"
+      "rp_id": "RP-PRO-0006",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-007",
@@ -427,10 +433,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0007"
+      "rp_id": "RP-PRO-0007",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-008",
@@ -484,10 +491,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0008"
+      "rp_id": "RP-PRO-0008",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-009",
@@ -543,10 +551,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
-      "rp_id": "RP-PRO-0009"
+      "rp_id": "RP-PRO-0009",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-010",
@@ -602,10 +611,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
-      "rp_id": "RP-PRO-0010"
+      "rp_id": "RP-PRO-0010",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-011",
@@ -660,10 +670,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
-      "rp_id": "RP-PRO-0011"
+      "rp_id": "RP-PRO-0011",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-012",
@@ -720,12 +731,13 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:www.modbus.org/specs.php",
-      "rp_id": "RP-PRO-0012"
+      "rp_id": "RP-PRO-0012",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-013",
@@ -783,12 +795,13 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "entity",
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
-      "rp_id": "RP-PRO-0013"
+      "rp_id": "RP-PRO-0013",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-014",
@@ -843,10 +856,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0014"
+      "rp_id": "RP-PRO-0014",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-015",
@@ -903,10 +917,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0015"
+      "rp_id": "RP-PRO-0015",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-016",
@@ -961,10 +976,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
-      "rp_id": "RP-PRO-0016"
+      "rp_id": "RP-PRO-0016",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-017",
@@ -1020,10 +1036,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
-      "rp_id": "RP-PRO-0017"
+      "rp_id": "RP-PRO-0017",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-018",
@@ -1080,10 +1097,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
-      "rp_id": "RP-PRO-0018"
+      "rp_id": "RP-PRO-0018",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-019",
@@ -1143,11 +1161,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.bluetooth.com/specifications/",
-      "rp_id": "RP-PRO-0019"
+      "rp_id": "RP-PRO-0019",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-020",
@@ -1202,10 +1221,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0020"
+      "rp_id": "RP-PRO-0020",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-021",
@@ -1265,11 +1285,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:mavlink.io/en/",
-      "rp_id": "RP-PRO-0021"
+      "rp_id": "RP-PRO-0021",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-023",
@@ -1326,12 +1347,13 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:opcfoundation.org/about/opc-technologies/opc-ua/",
-      "rp_id": "RP-PRO-0022"
+      "rp_id": "RP-PRO-0022",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-024",
@@ -1388,12 +1410,13 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:csa-iot.org/all-solutions/matter/",
-      "rp_id": "RP-PRO-0023"
+      "rp_id": "RP-PRO-0023",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-025",
@@ -1447,10 +1470,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
-      "rp_id": "RP-PRO-0024"
+      "rp_id": "RP-PRO-0024",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-026",
@@ -1504,10 +1528,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0025"
+      "rp_id": "RP-PRO-0025",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-027",
@@ -1562,10 +1587,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0026"
+      "rp_id": "RP-PRO-0026",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-028",
@@ -1622,11 +1648,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.profibus.com/technology/profinet/",
-      "rp_id": "RP-PRO-0027"
+      "rp_id": "RP-PRO-0027",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-029",
@@ -1682,11 +1709,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-PRO-0028"
+      "rp_id": "RP-PRO-0028",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-030",
@@ -1741,10 +1769,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0029"
+      "rp_id": "RP-PRO-0029",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-031",
@@ -1798,10 +1827,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0030"
+      "rp_id": "RP-PRO-0030",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-032",
@@ -1854,10 +1884,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0031"
+      "rp_id": "RP-PRO-0031",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-033",
@@ -1910,10 +1941,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0032"
+      "rp_id": "RP-PRO-0032",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-034",
@@ -1978,11 +2010,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0033"
+      "rp_id": "RP-PRO-0033",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-035",
@@ -2049,11 +2082,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0034"
+      "rp_id": "RP-PRO-0034",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-036",
@@ -2121,11 +2155,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "named_standard",
-      "rp_id": "RP-PRO-0035"
+      "rp_id": "RP-PRO-0035",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-040",
@@ -2189,11 +2224,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0036"
+      "rp_id": "RP-PRO-0036",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-041",
@@ -2259,11 +2295,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "named_standard",
-      "rp_id": "RP-PRO-0037"
+      "rp_id": "RP-PRO-0037",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-042",
@@ -2296,11 +2333,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0038"
+      "rp_id": "RP-PRO-0038",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-043",
@@ -2333,11 +2371,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0039"
+      "rp_id": "RP-PRO-0039",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTO-044",
@@ -2370,11 +2409,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0040"
+      "rp_id": "RP-PRO-0040",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "PROTO-045",
@@ -2407,11 +2447,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0041"
+      "rp_id": "RP-PRO-0041",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "PROTO-046",
@@ -2445,11 +2486,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0042"
+      "rp_id": "RP-PRO-0042",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "rproto-i3c",
@@ -2497,11 +2539,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0043"
+      "rp_id": "RP-PRO-0043",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "rproto-opcua-dds-gateway",
@@ -2548,11 +2591,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0044"
+      "rp_id": "RP-PRO-0044",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "rproto-5g-nr-urllc",
@@ -2593,11 +2637,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-PRO-0045"
+      "rp_id": "RP-PRO-0045",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "rproto-can-xl-v2",
@@ -2644,11 +2689,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0046"
+      "rp_id": "RP-PRO-0046",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "rproto-wifi7-mlo",
@@ -2689,11 +2735,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-PRO-0047"
+      "rp_id": "RP-PRO-0047",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "rproto-ethercat-g",
@@ -2734,11 +2781,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-PRO-0048"
+      "rp_id": "RP-PRO-0048",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "rproto-thread-14",
@@ -2786,11 +2834,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0049"
+      "rp_id": "RP-PRO-0049",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "rproto-ieee8021-tsn-profile",
@@ -2837,11 +2886,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0050"
+      "rp_id": "RP-PRO-0050",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "rproto-robot-comm-electronics",
@@ -2888,11 +2938,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0051"
+      "rp_id": "RP-PRO-0051",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "rproto-delft-comm",
@@ -2939,11 +2990,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0052"
+      "rp_id": "RP-PRO-0052",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "rproto-zenoh-flow",
@@ -2990,11 +3042,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0053"
+      "rp_id": "RP-PRO-0053",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "rproto-robotcore",
@@ -3041,11 +3094,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0054"
+      "rp_id": "RP-PRO-0054",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "rproto-cyclonedds",
@@ -3092,11 +3146,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
-      "rp_id": "RP-PRO-0055"
+      "rp_id": "RP-PRO-0055",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "rproto-thread-1.4",
@@ -3137,11 +3192,12 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "type",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
-      "rp_id": "RP-PRO-0056"
+      "rp_id": "RP-PRO-0056",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "PROTOCOL-a1b2c3",
@@ -3175,10 +3231,11 @@
         "reason": "specification 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0057"
+      "rp_id": "RP-PRO-0057",
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
     },
     {
       "id": "PROTOCOL-d4e5f6",
@@ -3212,10 +3269,11 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "market_intelligence",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0058"
+      "rp_id": "RP-PRO-0058",
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
     },
     {
       "id": "PROTOCOL-g7h8i9",
@@ -3249,10 +3307,11 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "market_intelligence",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0059"
+      "rp_id": "RP-PRO-0059",
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
     },
     {
       "id": "PROTOCOL-j0k1l2",
@@ -3286,10 +3345,11 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "market_intelligence",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0060"
+      "rp_id": "RP-PRO-0060",
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
     },
     {
       "id": "PROTOCOL-m3n4o5",
@@ -3323,10 +3383,11 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "market_intelligence",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0061"
+      "rp_id": "RP-PRO-0061",
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
     },
     {
       "id": "PROTOCOL-p6q7r8",
@@ -3360,10 +3421,11 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "market_intelligence",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0062"
+      "rp_id": "RP-PRO-0062",
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
     },
     {
       "id": "PROTOCOL-s9t0u1",
@@ -3397,10 +3459,11 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "market_intelligence",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0063"
+      "rp_id": "RP-PRO-0063",
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
     },
     {
       "id": "PROTOCOL-v2w3x4",
@@ -3434,10 +3497,11 @@
         "reason": "market_intelligence 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
-      "entity_kind": "standard",
+      "entity_kind": "market_intelligence",
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
-      "rp_id": "RP-PRO-0064"
+      "rp_id": "RP-PRO-0064",
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
     }
   ]
 }

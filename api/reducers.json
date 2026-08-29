@@ -2,7 +2,7 @@
   "meta": {
     "category": "reducers",
     "source": "entities.json projection",
-    "generated_at": "2026-08-27T05:46:42.969Z",
+    "generated_at": "2026-08-27T14:54:22.415Z",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
@@ -26,7 +26,7 @@
     }
   },
   "count": 11,
-  "updated": "2026-08-27T05:46:42.969Z",
+  "updated": "2026-08-27T14:54:22.415Z",
   "data": [
     {
       "verified": true,
@@ -44,7 +44,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "id": "RED-001",
       "name": "Harmonic Drive CSF/SHF Series",
       "name_en": "Harmonic Drive CSF/SHF Series",
@@ -77,7 +77,8 @@
         ]
       },
       "source_tier_basis": "deep_link:harmonicdrive.net/products/gear-units",
-      "rp_id": "RP-RED-0001"
+      "rp_id": "RP-RED-0001",
+      "entity_kind_basis": "默认归类"
     },
     {
       "verified": true,
@@ -95,7 +96,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "id": "RED-002",
       "name": "Nabtesco RV Reducer",
       "name_en": "Nabtesco RV Reducer",
@@ -120,7 +121,8 @@
         "backlash": "near-zero"
       },
       "source_tier_basis": "deep_link:www.nabtesco-motion.cn/cn/products/introduction/",
-      "rp_id": "RP-RED-0002"
+      "rp_id": "RP-RED-0002",
+      "entity_kind_basis": "默认归类"
     },
     {
       "verified": true,
@@ -138,7 +140,7 @@
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
-      "entity_kind": "type",
+      "entity_kind": "component",
       "id": "RED-003",
       "name": "Leaderdrive 绿的谐波 Strain Wave Gears",
       "name_en": "Leaderdrive Strain Wave Gears",
@@ -168,7 +170,8 @@
         "listing": "SSE STAR 688017"
       },
       "source_tier_basis": "deep_link:www.leaderdrive.com/about.html",
-      "rp_id": "RP-RED-0003"
+      "rp_id": "RP-RED-0003",
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "REDUCER-HD-25",
@@ -176,7 +179,7 @@
       "name": "Harmonic Drive CSF-25-100-H-D",
       "name_en": "Harmonic Drive CSF-25-100-H-D",
       "category": "reducers",
-      "entity_kind": "type",
+      "entity_kind": "component",
       "manufacturer": "Harmonic Drive",
       "type": "harmonic_gear",
       "reduction_ratio": 100,
@@ -205,7 +208,8 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "REDUCER-HD-32",
@@ -213,7 +217,7 @@
       "name": "Harmonic Drive CSF-32-100-H-D",
       "name_en": "Harmonic Drive CSF-32-100-H-D",
       "category": "reducers",
-      "entity_kind": "type",
+      "entity_kind": "component",
       "manufacturer": "Harmonic Drive",
       "type": "harmonic_gear",
       "reduction_ratio": 100,
@@ -242,7 +246,8 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "REDUCER-HD-50",
@@ -250,7 +255,7 @@
       "name": "Harmonic Drive CSF-50-100-H-D",
       "name_en": "Harmonic Drive CSF-50-100-H-D",
       "category": "reducers",
-      "entity_kind": "type",
+      "entity_kind": "component",
       "manufacturer": "Harmonic Drive",
       "type": "harmonic_gear",
       "reduction_ratio": 100,
@@ -279,7 +284,8 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "REDUCER-GH-25",
@@ -287,7 +293,7 @@
       "name": "Green Harmonic GH25-100-H-D",
       "name_en": "Green Harmonic GH25-100-H-D",
       "category": "reducers",
-      "entity_kind": "type",
+      "entity_kind": "component",
       "manufacturer": "Green Harmonic (绿的谐波)",
       "type": "harmonic_gear",
       "reduction_ratio": 100,
@@ -317,7 +323,8 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "REDUCER-GH-50",
@@ -325,7 +332,7 @@
       "name": "Green Harmonic GH50-100-H-D",
       "name_en": "Green Harmonic GH50-100-H-D",
       "category": "reducers",
-      "entity_kind": "type",
+      "entity_kind": "component",
       "manufacturer": "Green Harmonic (绿的谐波)",
       "type": "harmonic_gear",
       "reduction_ratio": 100,
@@ -355,7 +362,8 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "REDUCER-RV-50",
@@ -363,7 +371,7 @@
       "name": "Nabtesco RV-50CE",
       "name_en": "Nabtesco RV-50CE",
       "category": "reducers",
-      "entity_kind": "type",
+      "entity_kind": "component",
       "manufacturer": "Nabtesco",
       "type": "rv_gear",
       "reduction_ratio": 100,
@@ -392,7 +400,8 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "REDUCER-RV-200",
@@ -400,7 +409,7 @@
       "name": "Nabtesco RV-200FS",
       "name_en": "Nabtesco RV-200FS",
       "category": "reducers",
-      "entity_kind": "type",
+      "entity_kind": "component",
       "manufacturer": "Nabtesco",
       "type": "rv_gear",
       "reduction_ratio": 100,
@@ -429,7 +438,8 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     },
     {
       "id": "REDUCER-LIF-60",
@@ -437,7 +447,7 @@
       "name": "来福 LIF-60RV-C",
       "name_en": "Lif-drive LIF-60RV-C",
       "category": "reducers",
-      "entity_kind": "type",
+      "entity_kind": "component",
       "manufacturer": "来福 (Lif-drive)",
       "type": "rv_gear",
       "reduction_ratio": 100,
@@ -467,7 +477,8 @@
         "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
-      }
+      },
+      "entity_kind_basis": "默认归类"
     }
   ]
 }
