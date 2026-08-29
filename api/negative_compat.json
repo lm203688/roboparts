@@ -13,6 +13,11 @@
       "adapter_required": 72
     },
     "coverage_note": "本库穷举的是「已登记标号的几何组合」，不等于穷举市场现存的法兰。未登记标号查询应返回 unknown，禁止回退到标号字面猜测。",
+    "honest_limits": {
+      "cross_vendor_comparable_grade_a": 0,
+      "scope": "本裁决库只覆盖已登记的 ISO 9409-1 法兰标号之间的几何组合，不等于穷举市场现存的法兰；未登记标号查询应返回 unknown，禁止按标号字面猜测（A{n} 的 n 在不同厂商可能对应不同几何）。",
+      "derivation": "纯几何现算，无厂商实测复现；裁决依据 PCD 与孔数，非品牌宣传口径"
+    },
     "source_tier_summary": {
       "B": 9
     },
@@ -33,8 +38,7 @@
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
         "mechanical_interface_declared_pct": 1.52,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.52%。请据此判断可信度，不要把声明值当实测值使用。",
-        "negative_compat_scope": "本裁决库只覆盖已登记的 ISO 9409-1 法兰标号之间的几何组合，不等于穷举市场现存的法兰；未登记标号查询应返回 unknown，禁止按标号字面猜测。"
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.52%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }

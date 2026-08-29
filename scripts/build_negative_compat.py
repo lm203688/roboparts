@@ -178,15 +178,10 @@ def load_access_block() -> Dict[str, Any]:
     if not access:
         raise SystemExit(f"{ACCESS_TEMPLATE_SRC} 缺少 meta.access，无法作为模板")
     # 深拷贝，避免改动污染模板对象
-    out = json.loads(json.dumps(access))
-    # 本文件自己的诚实边界（覆盖模板里的全站口径）
-    hl = out.get("honest_limits") or {}
-    hl["negative_compat_scope"] = (
-        "本裁决库只覆盖已登记的 ISO 9409-1 法兰标号之间的几何组合，"
-        "不等于穷举市场现存的法兰；未登记标号查询应返回 unknown，禁止按标号字面猜测。"
-    )
-    out["honest_limits"] = hl
-    return out
+    # 注意：meta.access 是**部署注入器的受管区域**，deploy.mjs 会用标准块整块覆盖，
+    # 任何自定义字段放进去都会在部署时被静默抹掉（2026-08-28 实测踩到）。
+    # 因此本文件自己的边界声明一律写在 meta 顶层，不放 access 里。
+    return json.loads(json.dumps(access))
 
 
 def build(src_path: str) -> Dict[str, Any]:
@@ -262,6 +257,16 @@ def build(src_path: str) -> Dict[str, Any]:
                 "本库穷举的是「已登记标号的几何组合」，不等于穷举市场现存的法兰。"
                 "未登记标号查询应返回 unknown，禁止回退到标号字面猜测。"
             ),
+            # 放在 meta 顶层而非 meta.access 内：access 是部署注入器受管区域，会被整块覆盖
+            "honest_limits": {
+                "cross_vendor_comparable_grade_a": 0,
+                "scope": (
+                    "本裁决库只覆盖已登记的 ISO 9409-1 法兰标号之间的几何组合，"
+                    "不等于穷举市场现存的法兰；未登记标号查询应返回 unknown，"
+                    "禁止按标号字面猜测（A{n} 的 n 在不同厂商可能对应不同几何）。"
+                ),
+                "derivation": "纯几何现算，无厂商实测复现；裁决依据 PCD 与孔数，非品牌宣传口径",
+            },
             "source_tier_summary": {
                 t: sum(1 for d in designations if d["source_tier"] == t)
                 for t in sorted({d["source_tier"] for d in designations})
