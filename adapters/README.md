@@ -39,7 +39,7 @@ python gen_adapter.py --a-preset A50 --b-preset A80 --thick 10 --bore 20
 | `--out-dir` | 输出目录 |
 | `--strict` | 几何告警（干涉/边距不足）升级为错误，不产出 |
 
-导出 `flange-adapter_A50-4-M6__A80-4-M8.step` 与 `.stl`。脚本会主动校验**孔位干涉**与**外缘壁厚**并告警（可用 `--strict` 拒绝出图）。
+导出 `flange-adapter_A50-4-M6__A80-6-M8.step` 与 `.stl`。脚本会主动校验**孔位干涉**与**外缘壁厚**并告警（可用 `--strict` 拒绝出图）。
 
 ## 示例
 

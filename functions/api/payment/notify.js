@@ -78,6 +78,13 @@ export async function onRequestPost(context) {
     // 验证签名
     const secret = env.XUNHU_SECRET;
     if (!secret) {
+      // 生产环境必须有密钥——否则无法验证签名
+      console.error('[PAYMENT] XUNHU_SECRET not configured, rejecting callback');
+      return new Response(JSON.stringify({
+        error: 'Payment verification disabled',
+        error_kind: 'no_secret_configured',
+        message: 'Server configuration error: payment secret not set'
+      }), { status: 503, headers: corsHeaders });
       console.error('XUNHU_SECRET not configured');
       return new Response('fail', { status: 500 });
     }

@@ -221,6 +221,13 @@ footer a{color:var(--accent);text-decoration:none}
     <h2>🤖 选型参数配置</h2>
     <p class="subtitle">填写您的应用场景与技术需求，智能引擎将为您推荐最优零部件方案。每次调用消耗 1 积分。</p>
 
+    <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+      <button class="ghost" onclick="fillTemplate('humanoid','20~30V','2~10Nm','all','30000')" style="padding:6px 12px;font-size:12px">🤖 人形 30kg</button>
+      <button class="ghost" onclick="fillTemplate('quadruped','24V','5~20Nm','CAN FD','15000')" style="padding:6px 12px;font-size:12px">🐕 四足 25kg</button>
+      <button class="ghost" onclick="fillTemplate('robot_arm','24~48V','20~200Nm','EtherCAT','50000')" style="padding:6px 12px;font-size:12px">🦾 六轴机械臂</button>
+      <button class="ghost" onclick="document.getElementById('scenario').value='amr';doSelection()" style="padding:6px 12px;font-size:12px">🚚 AMR 搬运</button>
+    </div>
+
     <form id="selectionForm" onsubmit="return false;">
       <div class="form-grid">
 
@@ -474,6 +481,15 @@ async function runSelection() {
   const originalText = btn.textContent;
   btn.disabled = true;
   btn.textContent = '智能分析中...';
+
+  window.fillTemplate = function(scenario, torque, protocol, budget, weight) {
+    document.getElementById('scenario').value = scenario;
+    const t = document.getElementById('min_torque'); if(t) t.value = torque;
+    const p = document.getElementById('protocol'); if(p) p.value = protocol;
+    const b = document.getElementById('budget'); if(b) b.value = budget;
+    const w = document.getElementById('max_weight'); if(w) w.value = weight;
+    runSelection();
+  };
 
   // 隐藏积分不足提示
   document.getElementById('creditsWarning').style.display = 'none';

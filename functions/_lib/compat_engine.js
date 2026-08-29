@@ -520,7 +520,68 @@ const KIND_HINT = {
   software: '若要问「某算力平台能否跑该模型」，属算力与框架适配问题，不在本引擎的四维硬件兼容范畴',
 };
 
+/**
+ * 【GOAI 对齐 · J2 + J6】证据契约辅助：从四维裁决结果中抽取
+ *   · evidence_sources  : 真正基于数据匹配/冲突的「独立证据源」（≥2 条才给强结论）
+ *   · missing_evidence   : 未裁决维度 + 判不了的原因（报告必须显式列出数据缺口）
+ *   · evidence_strength  : strong(≥2) / weak(=1) / none(=0)
+ *   · data_evidence_tier : 双方实体 source_tier 的较低者（A>B>C>D），反映结论的数据底座强度
+ *
+ * 判定「是否算证据源」必须以 notes 是否给出**具体数据依据**为准，不能用
+ * compatible !== null 等价替换 —— 否则「双方均明确不支持 ROS2」这类定性结论会被漏算，
+ * 而它正是真实存在的兼容证据（无 ROS2 生态冲突）。
+ */
+const EVIDENCE_RE = /(共享|交集|重叠|均支持|均不支持|不重叠|无交集|专有总线|一致|对接)/;
+export function buildEvidenceBlock(dimensions, a, b) {
+  const sources = [];
+  const missing = [];
+  for (const d of dimensions) {
+    if (d.compatible === null) {
+      missing.push({ dimension: d.dimension, reason: d.notes });
+    } else if (EVIDENCE_RE.test(d.notes || '')) {
+      sources.push({ dimension: d.dimension, verdict: d.compatible ? 'match' : 'conflict', detail: d.notes });
+    }
+  }
+  const count = sources.length;
+  const strength = count >= 2 ? 'strong' : count === 1 ? 'weak' : 'none';
+  const TIER_RANK = { A: 4, B: 3, C: 2, D: 1 };
+  const tiers = [a, b]
+    .map((e) => (e && e.source_tier) || null)
+    .filter(Boolean)
+    .map((t) => TIER_RANK[String(t).toUpperCase()] || 0);
+  const minTier = tiers.length ? Math.min(...tiers) : 0;
+  const tierLabel = Object.entries(TIER_RANK).find(([, v]) => v === minTier)?.[0] || 'unknown';
+  return {
+    evidence_sources: sources,
+    evidence_count: count,
+    evidence_strength: strength,
+    missing_evidence: missing,
+    data_evidence_tier: tierLabel,
+  };
+}
+
 export function judgePair(a, b) {
+  // ── 入参防护（BAD-02 badcase 修复）─────────────────────────────────────
+  // 当 b/a 为 undefined/null（如 ID 不存在）时，engine 不应崩溃；统一交回类型闸。
+  if (!a || !b) {
+    const reason = (!a && !b)
+      ? '两个操作数均缺失，无法判定'
+      : `${!a ? '左侧' : '右侧'}操作数缺失（ID 不存在或数据缺失），无法判定`;
+    return {
+      a: a ? { id: a.id, name: a.name, category: a.category, entity_kind: a.entity_kind } : null,
+      b: b ? { id: b.id, name: b.name, category: b.category, entity_kind: b.entity_kind } : null,
+      dimensions: DIMENSIONS.map(d => ({ dimension: d, compatible: null, score: 0, notes: reason })),
+      overall_compatible: null, compatibility_score: null, score_basis: null,
+      applicable: false, verdict_reason: reason,
+      decided_dimensions: 0, undecided_dimensions: DIMENSIONS.length, hard_dimensions_decided: 0,
+      source: 'rule-engine (real entity fields)',
+      ...buildEvidenceBlock(
+        DIMENSIONS.map(d => ({ dimension: d, compatible: null, notes: reason })),
+        a || { source_tier: null }, b || { source_tier: null }
+      ),
+      evidence_basis: '入参缺失（ID 不存在或数据层缺失），非兼容性问题而是数据缺口',
+    };
+  }
   // ── 类型闸（20260809-03）───────────────────────────────────────────────
   // 旧行为：把企业主体（如「Figure AI」，type=人形机器人公司）当零件送进四维裁决，
   // 输出「Figure AI 未声明通信协议，无法判定（无数据 ≠ 不兼容）」。
@@ -551,6 +612,10 @@ export function judgePair(a, b) {
       undecided_dimensions: DIMENSIONS.length,
       hard_dimensions_decided: 0,
       source: 'rule-engine (real entity fields)',
+      ...buildEvidenceBlock(
+        DIMENSIONS.map(d => ({ dimension: d, compatible: null, notes: note })),
+        a, b
+      ),
       evidence_basis: '操作数类型不适用：本引擎只裁决 entity_kind=component 的实物零部件；'
                     + '接口/协议规范、AI 模型与软件、企业主体、市场情报条目均保留在库供检索，'
                     + '但不参与兼容性判定',
@@ -615,6 +680,7 @@ export function judgePair(a, b) {
     undecided_dimensions: dimensions.length - decided.length,
     hard_dimensions_decided: hardDecided.length,
     source: 'rule-engine (real entity fields)',
+    ...buildEvidenceBlock(dimensions, a, b),
     evidence_basis: '基于厂商公开声明字段的规则推断，非实测；未声明维度记为无法判定，不计入分子也不计入分母；判 true 至少需一项硬约束（协议/电气/机械）有双方声明',
     // 【P1 语义层 · 诚实边界】硬维度全无证据（overall=null）时，附"语义最相近零件"作为
     // 可核查线索，绝不作为兼容性结论（不会把 similarity 写进 compatibility_score，避免假绿）。

@@ -1,4 +1,4 @@
-// RoboParts 法兰转接板示例 (ISO9409-1-A50-4-M6 ↔ ISO9409-1-A80-4-M8)
+// RoboParts 法兰转接板示例 (ISO9409-1-A50-4-M6 ↔ ISO9409-1-A80-6-M8)
 // 由 https://roboparts.cc/adapter-generator 生成 · 开源可改
 // 用 OpenSCAD 打开：openscad example_adapter.scad  →  F6 预览  →  F7 导出 STL
 outer_d = 116.00;

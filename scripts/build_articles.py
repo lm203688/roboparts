@@ -667,7 +667,7 @@ def sync_llms(ordered):
 
     known_ref = [
         '- [ISO 9409-1 机器人法兰速查](%s/iso-9409-flange) — designation 语法与解析正则、'
-        'A50-4-M6/A80-4-M8/A100-6-M10/A160-8-M12 四大尺寸族对照、6 条装配红线、'
+        'A50-4-M6/A80-6-M8/A100-6-M10/A160-8-M16 四大尺寸族对照、6 条装配红线、'
         '人形 3DOF 球肩三级负载参数。机读版：%s/api/mechanical_interfaces.json'
         % (BASE, BASE),
     ]

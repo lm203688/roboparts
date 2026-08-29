@@ -13,6 +13,7 @@
       "tool": "search_components",
       "description": "搜索机器人零部件。可按品类、关键词筛选，返回匹配条目的摘要（id/name/category/manufacturer/关键规格/证据等级）。覆盖执行器、传感器、芯片、通信协议、接口、机器人平台、具身智能模型等 10 个品类。库存实时口径（总数/可选型/已隔离）见 initialize 的 instructions 或 GET /mcp 的 dataset 字段 —— 此处不写死数字，避免文案与真实库存漂移。",
       "when_to_use": "用户想找某类机器人零件（执行器/传感器/芯片/协议/平台），或给出型号片段需要补全信息时。",
+      "guardrails": "只读检索，不写库；中英文命中集合可能不重叠，须两种语言都试；未声明字段不得臆测为「无此物」。",
       "params": [
         {
           "name": "category",
@@ -60,6 +61,7 @@
       "tool": "get_component_detail",
       "description": "按 ID 获取单个零部件的完整字段，包含 source_tier（数据来源等级）、confidence（置信度）、data_quality 与 mechanical_interface 等元数据。用于在做出采购/设计决策前核对证据强度。",
       "when_to_use": "已经拿到零部件 ID（如 ACT-001），需要完整规格、厂商、证据等级与数据缺口时。",
+      "guardrails": "只读；source_tier/confidence 仅表示证据强度，非厂商背书；quarantine=true 的条目须明示「不应直接用于决策」。",
       "params": [
         {
           "name": "id",
@@ -76,6 +78,7 @@
       "tool": "check_compatibility",
       "description": "判定两个零部件在 protocol（协议）/ electrical（电气）/ mechanical（机械）/ software（ROS2）四个维度的兼容性，返回逐维结论、总体判定与置信说明。注意：结论基于厂商公开声明字段做规则推断，非实验室实测；厂商未声明的维度记为\"无法判定\"，既不计入兼容也不计入不兼容。",
       "when_to_use": "用户问「A 和 B 能不能装一起」「这两个零件兼容吗」「选型有没有冲突」时。",
+      "guardrails": "只读裁决；overall=null 一律不得表述为「不兼容」；判 true 至少需一项硬约束（协议/电气/机械）有双方声明，不得凭单维证据盖章。",
       "params": [
         {
           "name": "component1_id",
@@ -98,6 +101,7 @@
       "tool": "recommend_for_application",
       "description": "按应用场景推荐零部件组合，可选预算上限（USD）。返回各品类的候选项及推荐理由。这是基于库内字段的启发式筛选，不构成工程选型意见，最终仍需核对厂商原始数据手册。",
       "when_to_use": "用户要「给某类机器人配一套零件」「预算 X 元怎么选」时。",
+      "guardrails": "只读启发式筛选，不构成工程选型意见；price_fit=unknown 不得表述为「符合预算」；预算仅剔除确定超支项。",
       "params": [
         {
           "name": "application",
@@ -133,7 +137,92 @@
       "tool": "get_parameter_semantics",
       "description": "获取参数口径规范：同一个 torque/speed 字段在不同厂商那里含义可能不同（库内 torque 出现 19 种口径、speed 37 种，甚至混入 Gbps 与 rad/s）。本工具返回物理红线、单位换算、可比性分级与向厂商问询的清单，用于判断两份参数表到底能不能直接比较。",
       "when_to_use": "用户问「这个扭矩参数靠谱吗」「不同厂商参数怎么比」「单位怎么换算」时。",
+      "guardrails": "只读；返回物理红线与单位换算，不直接断言跨厂商参数可比，须提示向厂商核对原始手册。",
       "params": []
+    },
+    {
+      "name": "roboparts-bom-compat",
+      "title": "BOM 两两兼容性矩阵",
+      "type": "mcp_tool",
+      "tool": "bom_compatibility_check",
+      "description": "对一组零部件（BOM，物料清单）做两两兼容性矩阵。输入已有条目 ID（可含开源贡献层 OSS-xxx），返回每个组合在 protocol/electrical/mechanical/software 四维的判定与理由。判定基于厂商公开声明字段的规则推断而非实测；未声明维度记为无法判定，不会为了填满矩阵而编造结论。返回的 verdict_reason 才是结论依据，overall_compatible=null 表示\"证据不足\"，不等于不兼容。",
+      "when_to_use": "用户给了一整张零件清单 / BOM（如 [\"ACT-001\",\"SENS-001\"]），问这些零件彼此之间在电气 / 机械 / 协议 / 软件四维是否兼容、冲突在哪时。",
+      "guardrails": "只读；overall_compatible=null 表示证据不足，不等于不兼容；semantic_hint 仅作人工核查线索，非兼容性结论。",
+      "params": [
+        {
+          "name": "component_ids",
+          "type": "array",
+          "required": true,
+          "desc": "待校验的零件 ID 列表，如 [\"ACT-001\",\"SENS-001\",\"PROTO-012\"]。ID 必须真实存在：先用 search_components 取得，不要自行拼造（ID 前缀与 category 非一一对应）。支持主库零件与开源贡献层 OSS-xxx 混合。至少传 2 个才有意义。"
+        }
+      ]
+    },
+    {
+      "name": "roboparts-semantic-search",
+      "title": "自然语言语义召回零部件",
+      "type": "mcp_tool",
+      "tool": "semantic_search",
+      "description": "用自然语言描述需求（如\"人形机器人髋部高扭矩电机\"）做语义召回，返回最相近的零部件。语义索引由离线哈希 TF-IDF 向量（构建时预计算、零外发、零外部模型）在当前全量实体上生成，是兼容性判定之外的\"发现\"通道：当你不确定零件的确切型号或参数名时，用它比关键词子串匹配更稳。索引不可用时自动降级为关键词检索，并明确告知。",
+      "when_to_use": "用户用自然语言描述需求（如「人形机器人髋部高扭矩电机」「六维力传感器 防水」），不确定确切型号或参数名，需要发现式检索而非精确筛选时。",
+      "guardrails": "只读；语义索引为离线 TF-IDF 哈希，索引不可用时须明确降级为关键词检索，不得假装语义检索成功。",
+      "params": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "desc": "自然语言查询，如\"六维力传感器 防水\"或\"ROS2 通信模组\"。中英文均可，建议具体。"
+        },
+        {
+          "name": "k",
+          "type": "number",
+          "required": false,
+          "desc": "语义召回返回的候选零部件条数（top-k），默认 5，取值 1–30；数值越大召回越广但越可能偏离查询意图。"
+        }
+      ]
+    },
+    {
+      "name": "roboparts-standard-audit",
+      "title": "标准符合性自校验",
+      "type": "mcp_tool",
+      "tool": "get_standard_audit",
+      "description": "返回标准登记表 ↔ 实体声明 的自动交叉校验结果：哪些机械/总线声明能被已知标准集核实、哪些声明的编码不在已知指定集中（无法核实），以及登记表缺口与行业标准覆盖情况。这是数据质量自检，不是兼容性裁决；其作用是指出\"声明了但出处存疑\"的条目，供人工补全证据。",
+      "when_to_use": "用户想核对某零件 / 厂商声明的标准符合性，或想知道哪些声明能被已知标准集核实、哪些是出处存疑的条目时。",
+      "guardrails": "只读自检，不裁决；作用是指出「声明了但出处存疑」的条目供人工补全证据，不得据此断言某标准符合/不符合。",
+      "params": [
+        {
+          "name": "scope",
+          "type": "string",
+          "required": false,
+          "desc": "返回范围：all=完整审计报告（默认）；conflicts=仅数据质量冲突条目。",
+          "enum": [
+            "all",
+            "conflicts"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "roboparts-compat-review",
+      "title": "多Agent质保复核兼容性",
+      "type": "mcp_tool",
+      "tool": "review_compatibility",
+      "description": "对两个零部件做「多 Agent 质保复核」：Worker 层执行标准四维兼容性裁决（与 /api/compatibility 同一引擎），Governor 层独立复核结论——按证据强度给出 L0–L3 风险分级、在证据不足 2 条时把\"兼容\"降级为\"需人工确认\"、对无法判定项显式列出缺失证据段。返回四维细节 + 证据契约 + governor_review。只读、免鉴权。",
+      "when_to_use": "对外发布 / 采购决策前要对兼容性结论做第二双眼睛复核时：给出 L0–L3 风险分级、证据不足时降级、缺失证据显式列出。",
+      "guardrails": "只读裁决，不写库、不生成文件；证据不足 2 条时不得向用户输出『确认兼容』，必须附 governor_review.risk_level 与 recommended_next_step。",
+      "params": [
+        {
+          "name": "component1_id",
+          "type": "string",
+          "required": true,
+          "desc": "零件 1 的 ID，形如 ACT-001 / CHIP-001 / PROTO-012。请先用 search_components 取得，不要自行拼造。"
+        },
+        {
+          "name": "component2_id",
+          "type": "string",
+          "required": true,
+          "desc": "零件 2 的 ID，取值方式同 component1_id。两个 ID 可以属于不同品类。"
+        }
+      ]
     },
     {
       "name": "roboparts-adapter-generate",
@@ -142,6 +231,7 @@
       "endpoint": "https://roboparts.cc/adapter-generator",
       "description": "当两侧 ISO 9409-1 法兰（PCD/孔数/螺纹）不一致时，生成可 3D 打印的转接板。支持 URL 参数复现：?a=A80&b=A50&t=10&bore=20（a/b 为 A50/A80/A100/A160 或 CUSTOM:pcd:holes:thread:clr:pins:pinD）。",
       "when_to_use": "兼容性判定为不兼容、且根因是机械法兰不匹配时，直接产出解决方案而非只给结论。",
+      "guardrails": "仅当兼容判定为机械法兰不匹配时使用；生成的是可 3D 打印的几何建议，承载/材料/公差须由工程师核对，不得直接作为量产件。",
       "params": [
         {
           "name": "a",
@@ -176,6 +266,7 @@
       "endpoint": "https://roboparts.cc/agent-discovery.json",
       "description": "发现 RoboParts 公开数据集端点并直接下载原始 JSON。注意：这不是一个 MCP 工具（端点未提供 dataset_discovery 工具），而是一组可直接 GET 的静态数据文件。",
       "when_to_use": "用户想下载/引用原始数据、做二次分析、或确认数据来源时。",
+      "guardrails": "仅公开数据集的直接 GET 下载；不暴露任何内网/付费数据端点；数据集可能含 quarantine=true 条目，使用者须自行过滤；引用须注明 CC BY 4.0 出处。",
       "datasets": [
         {
           "url": "https://roboparts.cc/api/entities.json",
@@ -192,6 +283,29 @@
         {
           "url": "https://roboparts.cc/api/parameter_semantics.json",
           "desc": "参数口径规范与物理红线（CC BY 4.0）"
+        }
+      ]
+    },
+    {
+      "name": "roboparts-supplier-risk",
+      "type": "methodology",
+      "title": "供应商异常研判",
+      "endpoint": "https://roboparts.cc/docs/supplier-risk.html",
+      "description": "基于 source_tier / confidence / quarantine / price_range 对机器人零部件供应商做实时可疑度打分与证据链研判，识别低价可疑、低证据高危、隔离项等风险。对口赛道二「制造供应链异常研判」的方法论页。",
+      "when_to_use": "用户问「这家供应商靠谱吗」「这个价格是不是太低了」「哪些零件数据存疑」时，给出可审计的风险结论而非拍脑袋。",
+      "guardrails": "所有判定基于库内 source_tier/confidence/quarantine/price_range 字段，不引入外部未验证信号；无 price_range 的条目（约 74%）不判风险，只标『数据缺口』；quarantine=true 强制标 critical，不因价格正常而降级。",
+      "params": [
+        {
+          "name": "tier",
+          "type": "string",
+          "required": false,
+          "desc": "最低证据等级过滤：A(官方发布)>B(厂商实测)>C(社区)>D(二手转述)，低于该等级标红"
+        },
+        {
+          "name": "maxRisk",
+          "type": "string",
+          "required": false,
+          "desc": "风险标签过滤：low/warning/critical"
         }
       ]
     }

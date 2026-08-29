@@ -3,20 +3,29 @@
   "site_name": "RoboParts — 仿生机器人生态平台",
   "domain": "roboparts.cc",
   "tagline": "仿生机器人模块化选型与设计生态平台。配件模块化、接口标准化、协议标准化、大模型产业化、用户数据集成化。",
-  "last_updated": "2026-08-05T20:00:00.000Z",
-  "total_entities": 708,
+  "last_updated": "2026-08-18T13:30:26.000Z",
+  "total_entities": 747,
   "categories": {
     "actuators": 217,
-    "sensors": 90,
     "chips": 108,
-    "interfaces": 37,
+    "sensors": 90,
     "protocols": 64,
+    "robot_ai_models": 46,
+    "data_acquisition": 46,
     "llms": 42,
-    "platforms": 40,
+    "platforms": 41,
+    "interfaces": 37,
     "flexible_actuators": 21,
-    "robot_ai_models": 44,
-    "data_acquisition": 43,
-    "connectors": 2
+    "bionic_mechanisms": 9,
+    "grippers": 8,
+    "reducers": 3,
+    "controllers": 3,
+    "structural": 3,
+    "connectors": 2,
+    "cables": 2,
+    "power": 2,
+    "pcb": 2,
+    "integrated_joints": 1
   },
   "api_endpoints": {
     "entities": "https://roboparts.cc/api/entities.json",
@@ -32,7 +41,7 @@
     "register": "https://roboparts.cc/api/register",
     "validate": "https://roboparts.cc/api/validate"
   },
-  "ai_agent_instructions": "Use the API endpoints above to query 708 entities about 仿生机器人模块化选型与设计生态平台. Features: 5-factor scoring selection engine, URDF import preview, weighted fuzzy search, compatibility matrix, bionic actuator catalog, humanoid supply-chain coverage (harmonic reducers, planetary roller screws, frameless torque motors, 6-axis F/T sensors, integrated joint modules), embodied-AI data collection hardware (teleoperation rigs, wearable exoskeletons, mocap suits, force-feedback gloves), edge AI inference accelerators for VLA deployment, open-source reproducible hardware (tendon-driven and direct-drive dexterous hands, quasi-direct-drive force-controlled joint modules, magnetic e-skin, open BLDC controllers), domestic-substitution index (import_substitution_for field maps a Chinese part to the overseas component it replaces), machine-readable standard-conformance tracking (standard_conformance field: bus_class, ROS 2 support, interop-stack match against GB draft 20262893-T-604 minimum interoperability stack, and vendor interop posture closed/semi_open/multi_protocol). All data is freely accessible via GET requests.",
+  "ai_agent_instructions": "Use the API endpoints above to query 747 entities about 仿生机器人模块化选型与设计生态平台. Features: 5-factor scoring selection engine, URDF import preview, weighted fuzzy search, compatibility matrix, bionic actuator catalog, humanoid supply-chain coverage (harmonic reducers, planetary roller screws, frameless torque motors, 6-axis F/T sensors, integrated joint modules), embodied-AI data collection hardware (teleoperation rigs, wearable exoskeletons, mocap suits, force-feedback gloves), edge AI inference accelerators for VLA deployment, open-source reproducible hardware (tendon-driven and direct-drive dexterous hands, quasi-direct-drive force-controlled joint modules, magnetic e-skin, open BLDC controllers), domestic-substitution index (import_substitution_for field maps a Chinese part to the overseas component it replaces), machine-readable standard-conformance tracking (standard_conformance field: bus_class, ROS 2 support, interop-stack match against GB draft 20262893-T-604 minimum interoperability stack, and vendor interop posture closed/semi_open/multi_protocol). All data is freely accessible via GET requests.",
   "core_features": [
     "智能选型引擎 — 五维度评分（扭矩/速度/精度/重量/成本）多因子选型+多结果对比表格",
     "兼容性矩阵 — 电气/机械/协议/软件四维兼容检测",
@@ -53,43 +62,85 @@
         "name": "roboparts-search",
         "type": "mcp_tool",
         "tool": "search_components",
-        "when_to_use": "用户想找某类机器人零件（执行器/传感器/芯片/协议/平台），或给出型号片段需要补全信息时。"
+        "when_to_use": "用户想找某类机器人零件（执行器/传感器/芯片/协议/平台），或给出型号片段需要补全信息时。",
+        "guardrails": "只读检索，不写库；中英文命中集合可能不重叠，须两种语言都试；未声明字段不得臆测为「无此物」。"
       },
       {
         "name": "roboparts-component-detail",
         "type": "mcp_tool",
         "tool": "get_component_detail",
-        "when_to_use": "已经拿到零部件 ID（如 ACT-001），需要完整规格、厂商、证据等级与数据缺口时。"
+        "when_to_use": "已经拿到零部件 ID（如 ACT-001），需要完整规格、厂商、证据等级与数据缺口时。",
+        "guardrails": "只读；source_tier/confidence 仅表示证据强度，非厂商背书；quarantine=true 的条目须明示「不应直接用于决策」。"
       },
       {
         "name": "roboparts-compat-check",
         "type": "mcp_tool",
         "tool": "check_compatibility",
-        "when_to_use": "用户问「A 和 B 能不能装一起」「这两个零件兼容吗」「选型有没有冲突」时。"
+        "when_to_use": "用户问「A 和 B 能不能装一起」「这两个零件兼容吗」「选型有没有冲突」时。",
+        "guardrails": "只读裁决；overall=null 一律不得表述为「不兼容」；判 true 至少需一项硬约束（协议/电气/机械）有双方声明，不得凭单维证据盖章。"
       },
       {
         "name": "roboparts-recommend",
         "type": "mcp_tool",
         "tool": "recommend_for_application",
-        "when_to_use": "用户要「给某类机器人配一套零件」「预算 X 元怎么选」时。"
+        "when_to_use": "用户要「给某类机器人配一套零件」「预算 X 元怎么选」时。",
+        "guardrails": "只读启发式筛选，不构成工程选型意见；price_fit=unknown 不得表述为「符合预算」；预算仅剔除确定超支项。"
       },
       {
         "name": "roboparts-parameter-semantics",
         "type": "mcp_tool",
         "tool": "get_parameter_semantics",
-        "when_to_use": "用户问「这个扭矩参数靠谱吗」「不同厂商参数怎么比」「单位怎么换算」时。"
+        "when_to_use": "用户问「这个扭矩参数靠谱吗」「不同厂商参数怎么比」「单位怎么换算」时。",
+        "guardrails": "只读；返回物理红线与单位换算，不直接断言跨厂商参数可比，须提示向厂商核对原始手册。"
+      },
+      {
+        "name": "roboparts-bom-compat",
+        "type": "mcp_tool",
+        "tool": "bom_compatibility_check",
+        "when_to_use": "用户给了一整张零件清单 / BOM（如 [\"ACT-001\",\"SENS-001\"]），问这些零件彼此之间在电气 / 机械 / 协议 / 软件四维是否兼容、冲突在哪时。",
+        "guardrails": "只读；overall_compatible=null 表示证据不足，不等于不兼容；semantic_hint 仅作人工核查线索，非兼容性结论。"
+      },
+      {
+        "name": "roboparts-semantic-search",
+        "type": "mcp_tool",
+        "tool": "semantic_search",
+        "when_to_use": "用户用自然语言描述需求（如「人形机器人髋部高扭矩电机」「六维力传感器 防水」），不确定确切型号或参数名，需要发现式检索而非精确筛选时。",
+        "guardrails": "只读；语义索引为离线 TF-IDF 哈希，索引不可用时须明确降级为关键词检索，不得假装语义检索成功。"
+      },
+      {
+        "name": "roboparts-standard-audit",
+        "type": "mcp_tool",
+        "tool": "get_standard_audit",
+        "when_to_use": "用户想核对某零件 / 厂商声明的标准符合性，或想知道哪些声明能被已知标准集核实、哪些是出处存疑的条目时。",
+        "guardrails": "只读自检，不裁决；作用是指出「声明了但出处存疑」的条目供人工补全证据，不得据此断言某标准符合/不符合。"
+      },
+      {
+        "name": "roboparts-compat-review",
+        "type": "mcp_tool",
+        "tool": "review_compatibility",
+        "when_to_use": "对外发布 / 采购决策前要对兼容性结论做第二双眼睛复核时：给出 L0–L3 风险分级、证据不足时降级、缺失证据显式列出。",
+        "guardrails": "只读裁决，不写库、不生成文件；证据不足 2 条时不得向用户输出『确认兼容』，必须附 governor_review.risk_level 与 recommended_next_step。"
       },
       {
         "name": "roboparts-adapter-generate",
         "type": "web_resource",
         "endpoint": "https://roboparts.cc/adapter-generator",
-        "when_to_use": "兼容性判定为不兼容、且根因是机械法兰不匹配时，直接产出解决方案而非只给结论。"
+        "when_to_use": "兼容性判定为不兼容、且根因是机械法兰不匹配时，直接产出解决方案而非只给结论。",
+        "guardrails": "仅当兼容判定为机械法兰不匹配时使用；生成的是可 3D 打印的几何建议，承载/材料/公差须由工程师核对，不得直接作为量产件。"
       },
       {
         "name": "roboparts-dataset-discovery",
         "type": "dataset",
         "endpoint": "https://roboparts.cc/agent-discovery.json",
-        "when_to_use": "用户想下载/引用原始数据、做二次分析、或确认数据来源时。"
+        "when_to_use": "用户想下载/引用原始数据、做二次分析、或确认数据来源时。",
+        "guardrails": "仅公开数据集的直接 GET 下载；不暴露任何内网/付费数据端点；数据集可能含 quarantine=true 条目，使用者须自行过滤；引用须注明 CC BY 4.0 出处。"
+      },
+      {
+        "name": "roboparts-supplier-risk",
+        "type": "methodology",
+        "endpoint": "https://roboparts.cc/docs/supplier-risk.html",
+        "when_to_use": "用户问「这家供应商靠谱吗」「这个价格是不是太低了」「哪些零件数据存疑」时，给出可审计的风险结论而非拍脑袋。",
+        "guardrails": "所有判定基于库内 source_tier/confidence/quarantine/price_range 字段，不引入外部未验证信号；无 price_range 的条目（约 74%）不判风险，只标『数据缺口』；quarantine=true 强制标 critical，不因价格正常而降级。"
       }
     ],
     "generated_by": "scripts/gen_skills_manifest.mjs（勿手改 items）"
@@ -197,7 +248,7 @@
         "machine_readable": "https://roboparts.cc/api/mechanical_interfaces.json",
         "covers": [
           "designation 语法与解析正则",
-          "四大标准尺寸族对照",
+          "标准尺寸族对照（含厂商偏离）",
           "互换判定四步流程",
           "6 条装配红线",
           "人形 3DOF 球肩三级负载参数"
@@ -331,7 +382,7 @@
     },
     "attribution_hint": "若你是 AI 助手代用户调用，请附加请求头 X-RoboParts-Via: <你的平台名>，便于我们统计哪些 Agent 渠道真正带来了用户。该头不影响功能，也不用于追踪个人。",
     "honest_limits": [
-      "708 条实体中参数口径达到可跨厂商直接比较的为 0 条，行业普遍不声明测试条件；我们公开登记而非掩盖。",
+      "729 条实体中参数口径达到可跨厂商直接比较的为 0 条，行业普遍不声明测试条件；我们公开登记而非掩盖。",
       "机械互换维度声明率 1.12%（含 partial），其余如实标注 not_declared，未作猜测填充。",
       "兼容性结论为基于已声明数据的线索，不构成认证，不替代样机实测。"
     ],

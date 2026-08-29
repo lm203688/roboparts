@@ -63,15 +63,15 @@ python gen_adapter.py --help
 ```
 
 内置预设：`A50` / `A80` / `A100` / `A160`（对应 ISO9409-1-A50-4-M6、
-A80-4-M8、A100-6-M10、A160-8-M12）。预设值可被任意显式参数覆盖。
+A80-6-M8、A100-6-M10、A160-8-M16）。预设值可被任意显式参数覆盖。
 
 ### 输出
 
 在 `--out-dir`（默认当前目录）写出两个文件，文件名含两侧法兰标签：
 
 ```
-flange-adapter_A50-4-M6__A80-4-M8.step    # BREP 实体，进 CAD 做二次设计
-flange-adapter_A50-4-M6__A80-4-M8.stl     # 三角网格，直接切片 3D 打印
+flange-adapter_A50-4-M6__A80-6-M8.step    # BREP 实体，进 CAD 做二次设计
+flange-adapter_A50-4-M6__A80-6-M8.stl     # 三角网格，直接切片 3D 打印
 ```
 
 STL 三角化精度为线性偏差 0.01mm、角度偏差 0.1rad，足够 FDM/SLA 打印。

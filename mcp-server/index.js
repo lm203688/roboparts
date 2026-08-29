@@ -308,6 +308,106 @@ function getKeySpecs(item, category) {
         manufacturer: item.manufacturer || 'N/A',
         application: fmtSpec(item.application)
       };
+    // 【20260818-W1】新增机械骨架类目 integrated_joints（一体化关节模组）。
+    // 关键规格不是扭矩/转速（厂商未公开零件级参数，不臆造），而是其**高度集成的
+    // 子部件组成**——这恰好是减速器/控制器/传感器等缺失类目的起始脚手架。
+    // 返回 composition 诚实透传（字符串化，杜绝裸对象泄漏），description 取真实摘要。
+    case 'integrated_joints':
+      return {
+        type: item.type || 'N/A',
+        manufacturer: item.manufacturer || 'N/A',
+        composition: Array.isArray(item.composition)
+          ? item.composition.join(' + ')
+          : (item.composition || 'N/A'),
+        applications: fmtSpec(item.applications),
+        description: (item.description || '').substring(0, 120)
+      };
+    // 【20260818-W2】新增 7 个机械骨架类目（reducers / controllers / grippers /
+    // structural / cables / power / pcb）。此前这些品类落到 default 返回 {}，
+    // 在 MCP 响应里 key_specs 恒为空对象 —— 对调用方等同「该实体无任何规格」。
+    // 这里按各自真实公开的 specs 字段诚实透传；无零件级参数的一律 N/A，不臆造。
+    case 'reducers':
+      return {
+        type: item.type || 'N/A',
+        manufacturer: item.manufacturer || 'N/A',
+        gear_type: fmtSpec((item.specs || {}).gear_type),
+        backlash: fmtSpec((item.specs || {}).backlash),
+        families: fmtSpec((item.specs || {}).families || (item.specs || {}).series)
+      };
+    case 'controllers':
+      return {
+        type: item.type || 'N/A',
+        manufacturer: item.manufacturer || 'N/A',
+        continuous_power: fmtSpec((item.specs || {}).continuous_power),
+        peak_power: fmtSpec((item.specs || {}).peak_power),
+        voltage: fmtSpec((item.specs || {}).voltage),
+        control_modes: fmtSpec((item.specs || {}).control_modes),
+        interfaces: fmtSpec((item.specs || {}).interfaces),
+        modes: fmtSpec((item.specs || {}).modes),
+        reduction: fmtSpec((item.specs || {}).reduction)
+      };
+    case 'grippers':
+      return {
+        type: item.type || 'N/A',
+        manufacturer: item.manufacturer || 'N/A',
+        payload: fmtSpec((item.specs || {}).payload),
+        grip_force: fmtSpec((item.specs || {}).grip_force),
+        stroke: fmtSpec((item.specs || {}).stroke),
+        repeatability: fmtSpec((item.specs || {}).repeatability),
+        ip_rating: fmtSpec((item.specs || {}).ip_rating),
+        interface: fmtSpec((item.specs || {}).interface)
+      };
+    case 'structural':
+      return {
+        type: item.type || 'N/A',
+        manufacturer: item.manufacturer || 'N/A',
+        material: fmtSpec((item.specs || {}).material),
+        series: fmtSpec((item.specs || {}).series || (item.specs || {}).system || (item.specs || {}).profiles),
+        customization: fmtSpec((item.specs || {}).customization)
+      };
+    case 'cables':
+      return {
+        type: item.type || 'N/A',
+        manufacturer: item.manufacturer || 'N/A',
+        torsion: fmtSpec((item.specs || {}).torsion),
+        system: fmtSpec((item.specs || {}).system),
+        series: fmtSpec((item.specs || {}).series)
+      };
+    case 'power':
+      return {
+        type: item.type || 'N/A',
+        manufacturer: item.manufacturer || 'N/A',
+        config: fmtSpec((item.specs || {}).config),
+        bms: fmtSpec((item.specs || {}).bms),
+        cert: fmtSpec((item.specs || {}).cert),
+        discharge: fmtSpec((item.specs || {}).discharge),
+        form: fmtSpec((item.specs || {}).form)
+      };
+    case 'pcb':
+      return {
+        type: item.type || 'N/A',
+        manufacturer: item.manufacturer || 'N/A',
+        open_source: fmtSpec((item.specs || {}).open_source),
+        interface: fmtSpec((item.specs || {}).interface),
+        capability: fmtSpec((item.specs || {}).capability),
+        motor: fmtSpec((item.specs || {}).motor)
+      };
+    case 'bionic_mechanisms':
+      return {
+        type: item.type || 'N/A',
+        manufacturer: item.manufacturer || 'N/A',
+        joint_type: fmtSpec((item.key_specs || {}).joint_type),
+        range_of_motion: fmtSpec((item.key_specs || {}).range_of_motion),
+        load_capacity: fmtSpec((item.key_specs || {}).load_capacity),
+        actuator_type: fmtSpec((item.key_specs || {}).actuator_type),
+        force: fmtSpec((item.key_specs || {}).force),
+        stroke: fmtSpec((item.key_specs || {}).stroke),
+        sensor_type: fmtSpec((item.key_specs || {}).sensor_type),
+        resolution: fmtSpec((item.key_specs || {}).resolution),
+        frame_type: fmtSpec((item.key_specs || {}).frame_type),
+        material: fmtSpec((item.key_specs || {}).material),
+        skin_type: fmtSpec((item.key_specs || {}).skin_type)
+      };
     default:
       return {};
   }

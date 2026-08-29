@@ -349,7 +349,7 @@ const TOOLS = [
     name: 'semantic_search',
     description:
       '用自然语言描述需求（如"人形机器人髋部高扭矩电机"）做语义召回，返回最相近的零部件。' +
-      '语义索引由离线哈希 TF-IDF 向量（构建时预计算、零外发、零外部模型）在 824 条实体上生成，' +
+      '语义索引由离线哈希 TF-IDF 向量（构建时预计算、零外发、零外部模型）在当前全量实体上生成，' +
       '是兼容性判定之外的"发现"通道：当你不确定零件的确切型号或参数名时，用它比关键词子串匹配更稳。' +
       '索引不可用时自动降级为关键词检索，并明确告知。',
     inputSchema: {
@@ -359,7 +359,7 @@ const TOOLS = [
           type: 'string',
           description: '自然语言查询，如"六维力传感器 防水"或"ROS2 通信模组"。中英文均可，建议具体。',
         },
-        k: { type: 'number', description: '返回条数，默认 5，最大 30。', default: 5 },
+        k: { type: 'number', description: '语义召回返回的候选零部件条数（top-k），默认 5，取值 1–30；数值越大召回越广但越可能偏离查询意图。', default: 5 },
       },
       required: ['query'],
     },
@@ -380,6 +380,28 @@ const TOOLS = [
           default: 'all',
         },
       },
+    },
+  },
+  {
+    name: 'review_compatibility',
+    description:
+      '对两个零部件做「多 Agent 质保复核」：Worker 层执行标准四维兼容性裁决（与 /api/compatibility 同一引擎），' +
+      'Governor 层独立复核结论——按证据强度给出 L0–L3 风险分级、在证据不足 2 条时把"兼容"降级为"需人工确认"、' +
+      '对无法判定项显式列出缺失证据段。返回四维细节 + 证据契约 + governor_review。只读、免鉴权。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        component1_id: {
+          type: 'string',
+          description:
+            '零件 1 的 ID，形如 ACT-001 / CHIP-001 / PROTO-012。请先用 search_components 取得，不要自行拼造。',
+        },
+        component2_id: {
+          type: 'string',
+          description: '零件 2 的 ID，取值方式同 component1_id。两个 ID 可以属于不同品类。',
+        },
+      },
+      required: ['component1_id', 'component2_id'],
     },
   },
 ];
@@ -817,6 +839,92 @@ function toolBomCheck(map, args) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+ * 【GOAI 对齐 · P1 + J2 + J3 + J9】review_compatibility —— 多 Agent 编排的
+ *   Manager → Worker → Governor 范式，封装成一个只读 MCP 工具。
+ *
+ *   · Worker 层：judgePair（compat_engine，纯规则裁决，唯一真相源）
+ *   · Governor 层：独立复核 judgePair 的结论，不重新裁决，只做「质保」——
+ *       ① 证据契约（J2）：overall=true 但 evidence_count<2 → 降级为需人工确认，
+ *          绝不把"一条证据"当成"盖章通过"；
+ *       ② 风险分级（J3）L0–L3：按证据强度与可判定性给动作级建议；
+ *       ③ 承认局限（J9）：overall=null 明示"证据不足"，附缺失证据段，不假装确定。
+ *
+ * 这是把「一个结论要经得起第二双眼睛复核」落成代码的示范：copilot 单 Agent 之外，
+ * 任何对外发布的兼容性结论都应先过 Governor。后续可把 Manager 拆为「需求解析」、
+ * Worker 扩为「方案生成 / 部署回探」形成完整闭环（见 docs/agent-orchestration.md）。
+ * ═══════════════════════════════════════════════════════════════════════════ */
+function toolReviewCompat(map, args) {
+  const missing = ['component1_id', 'component2_id'].filter((k) => {
+    const v = args?.[k];
+    return v === undefined || v === null || String(v).trim() === '';
+  });
+  if (missing.length) {
+    return { error: `缺少必填参数: ${missing.join(', ')}`, error_kind: 'invalid_params',
+      hint: '请同时传入 component1_id 与 component2_id。' };
+  }
+  const a = map[args.component1_id];
+  const b = map[args.component2_id];
+  if (!a) return { error: `未找到实体: ${args.component1_id}`, error_kind: 'not_found', hint: '请先用 search_components 确认 ID。' };
+  if (!b) return { error: `未找到实体: ${args.component2_id}`, error_kind: 'not_found', hint: '请先用 search_components 确认 ID。' };
+
+  // ── Worker 层：纯规则裁决（与 /api/compatibility 同一实现，无漂移）──
+  const worker = judgePair(a, b);
+
+  // ── Governor 层：质保复核（不重裁，只评级与必要时降级）──
+  const ec = worker.evidence_count ?? 0;
+  const strength = worker.evidence_strength ?? 'none';
+  let riskLevel, action, note, next;
+
+  if (worker.applicable === false) {
+    // J3-L3：操作数本身不是可判定对象（企业/规范/模型/情报），需人改问法。
+    riskLevel = 'L3';
+    action = 'reframe';
+    note = '操作数类型不适配兼容性裁决，本结论不可作为采购/设计依据，须换问法（见 verdict_reason）。';
+    next = '以实物零部件为操作数重新提问；规范/模型类请改用对应的专用查询工具。';
+  } else if (worker.overall_compatible === true && ec < 2) {
+    // J2：证据不足 2 条却判兼容 → 降级，不把单证据当盖章。
+    riskLevel = 'L2';
+    action = 'downgrade';
+    note = `Worker 判为兼容，但仅 ${ec} 条独立证据（<2），依据不足，降级为「需人工确认」。`;
+    next = '核对双方原始 datasheet 的机械/电气/协议规格，补齐第二维证据后再采信。';
+  } else if (worker.overall_compatible === null) {
+    // J9：证据不足，明示局限，给可核查线索。
+    riskLevel = ec >= 1 ? 'L1' : 'L2';
+    action = 'flag_insufficient';
+    note = ec >= 1
+      ? `仅 ${ec} 条维度有证据，硬约束未全部覆盖，无法给出可盖章结论。`
+      : '双方在所有硬约束维度均无声明，完全无法判定。';
+    next = '补充厂商公开规格（机械接口 / 电压 / 协议）后再裁决；或用语义近邻做人工核查。';
+  } else {
+    // overall 已定且证据≥2 → 维持（J3-L0，可高置信采信）。
+    riskLevel = 'L0';
+    action = 'uphold';
+    note = `结论经 ${ec} 条独立证据支撑（强度 ${strength}），Governor 维持 Worker 判定。`;
+    next = '可直接采信；下单前仍建议核对厂商原始数据手册。';
+  }
+
+  return {
+    // 原样透传 Worker 裁决，保证消费方拿到的四维细节不丢。
+    a: worker.a, b: worker.b,
+    overall_compatible: worker.overall_compatible,
+    compatibility_score: worker.compatibility_score,
+    evidence_count: ec,
+    evidence_strength: strength,
+    missing_evidence: worker.missing_evidence,
+    evidence_sources: worker.evidence_sources,
+    data_evidence_tier: worker.data_evidence_tier,
+    governor_review: {
+      risk_level: riskLevel,
+      action,
+      note,
+      recommended_next_step: next,
+      principle: '多 Agent 质保：Worker 裁决 + Governor 独立复核；结论须 ≥2 独立证据方可高置信采信（GOAI J2/J3/J9）。',
+    },
+    source: 'rule-engine + governor-review (GOAI multi-agent pattern)',
+  };
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
  * JSON-RPC 分发
  * ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -999,6 +1107,9 @@ async function handleRpc(msg, context) {
           } else {
             payload = audit;
           }
+        } else if (name === 'review_compatibility') {
+          const { map } = await getEntities(env, request);
+          payload = toolReviewCompat(map, args);
         } else {
           return rpcError(id, -32602, `未知工具: ${name}`);
         }

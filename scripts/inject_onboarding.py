@@ -160,7 +160,11 @@ def refresh_anchors(src, fact_map):
 # 而 L1.62 线上核验当轮报「17 页 0 项未核验」——因为它按 data-rp 锚点解析，
 # 这些裸文本它压根不看。**核验器的覆盖面被当成了全站覆盖**，是本项目
 # "口径≠事实"家族的又一次现形。这里把区块外的裸文本数量断言也纳入机械保鲜。
-BARE_TOTAL_RE = re.compile(r'(?<!\d)(\d{2,5})\s*\+?\s*(个|条)?\s*(机器人零部件实体|零部件实体|实体)')
+# 【20260818-W1】英文 "708 entities" 此前漏网（BARE_TOTAL_RE 只认中文量词）。
+# api-pricing.html 用 "708 entities · 609 clean set" 写法，中文正则匹配不到，
+# 于是 truthy 类目从 708 涨到 710 时它一路陈旧。补英文 entities 别名，
+# 让裸文本保鲜对中英双语声明同效。替换模板保留原文的 suffix（entities/实体）。
+BARE_TOTAL_RE = re.compile(r'(?<!\d)(\d{2,5})\s*\+?\s*(个|条)?\s*(机器人零部件实体|零部件实体|实体|entities)')
 BARE_OSS_RE = re.compile(r'(?<!\d)(\d{2,5})\s*\+?\s*(个|条)?\s*开源(项目)?组件')
 # 锚点内的数字归 refresh_anchors 管，裸文本 pass 必须看不见它们。
 # 曾用 (?<![\d>]) 排除「紧跟 > 的数字」来躲开 </span>——但那把 <td>688 实体、

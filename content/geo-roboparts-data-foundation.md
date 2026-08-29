@@ -49,7 +49,7 @@
 
 截至 2026-08-12 的真值（非估算）：
 
-- **708** 个零部件实体（actuators / connectors / sensors / controllers 等 11 个品类）
+- **747** 个零部件实体（actuators / connectors / sensors / controllers 等 20 个品类）
 - **325** 条开源摄取（OSS）记录，其中 189 条为活跃实时源
 - **19** 条机器人/零部件相关标准登记表（含已证伪与现行状态）
 - 一个已发布的 **MCP server**（`roboparts-mcp-server`，npm 1.0.2）与 BOM 工具集
@@ -72,7 +72,7 @@ Bambot（$300 桌面人形）、OpenLoong（国内开源社区）、orobot.io（
 ## 五、给三类读者的三句话
 
 - **正在攒人形的 builder**：你的 BOM 是我们最缺的输入。留邮箱进早期共建名单，我们一起把"你的零件"变成"能查兼容的零件"。
-- **机器人学研究者**：我们有一个 708 实体的结构化数据集（已发布至 ModelScope），可作为兼容推理 / VLA 管控模型的"零部件事实工具"底座。
+- **机器人学研究者**：我们有一个 747 实体的结构化数据集（已发布至 ModelScope），可作为兼容推理 / VLA 管控模型的"零部件事实工具"底座。
 - **关注机器人数据基建的资本**：需求假设待证，但供应链现实（大厂垂直整合、开源 DIY 爆发）与无人机版 PCPartPicker（uas-forge.com，已商业化）佐证了"兼容数据库"模式的可投资性。
 
 早期共建 / 投资人意向留邮箱 → **https://www.roboparts.cc/waitlist.html**
@@ -91,14 +91,14 @@ A: 部分能。检索、数据集、MCP、BOM 工具已可用；但机械接口�
 A: 不直接实现其算法（RoboParts 无机器人本体 / VLA / 微调权限），但其"轻量机制逼近重模型"与"闭环反馈喂数据"的思想，和 RoboParts 的 `compat_engine` 与数据飞轮结构同构。
 
 **Q: 数据集开源吗？怎么获取？**
-A: 已发布至 ModelScope（命名空间 lm203688，公开，CC BY 4.0），含 708 实体 CSV 与说明卡。
+A: 已发布至 ModelScope（命名空间 lm203688，公开，CC BY 4.0），含 747 实体 CSV 与说明卡。
 
 ---
 
 ## 七、关键事实清单（便于引用）
 
 - RoboParts = 开源机器人零部件兼容数据库 + 匹配层
-- 实体数：708（11 品类）
+- 实体数：747（20 品类）
 - OSS 摄取：325（189 活跃）
 - 标准登记表：19
 - MCP server：roboparts-mcp-server（npm 1.0.2，已发布）

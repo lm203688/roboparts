@@ -1,0 +1,89 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "generated_at": "2026-08-25T10:05:00+08:00",
+    "purpose": "RoboParts 兼容性裁决 Golden/Badcase 评估集（GOAI 对齐 · J7）",
+    "honest_boundary": "本集为规则引擎的**冻结回归锚点**（freeze regression anchors）与少量**手工构造 badcase**，非独立第三方认证真值；随数据集更新需重估。来源：api/entities.json 快照（2026-08-25）+ compat_engine 规则定义。",
+    "total_cases": 6,
+    "freeze_anchors": 4,
+    "badcases": 2
+  },
+  "cases": [
+    {
+      "id": "GOLD-01",
+      "type": "freeze_anchor",
+      "component1_id": "ACT-001",
+      "component2_id": "ACT-002",
+      "rationale": "同厂商（ROBOTIS）、同协议族（DYNAMIXEL Protocol 2.0）、电压区间完全重叠（10.0~14.8V）。期望：四维中电气+协议判兼容，机械/软件未声明 → overall_compatible=true，evidence_count>=2。",
+      "expect": {
+        "applicable": true,
+        "overall_in": ["compatible", "needs_review"],
+        "evidence_count_min": 2,
+        "dimensions_expected": { "electrical": true, "protocol": true, "mechanical": null, "software": null }
+      }
+    },
+    {
+      "id": "GOLD-02",
+      "type": "freeze_anchor",
+      "component1_id": "ACT-006",
+      "component2_id": "ACT-007",
+      "rationale": "同厂商（T-Motor）、同电压（24V）、同协议（CAN bus）。期望：电气+协议判兼容，evidence_count>=2。",
+      "expect": {
+        "applicable": true,
+        "overall_in": ["compatible", "needs_review"],
+        "evidence_count_min": 2,
+        "dimensions_expected": { "electrical": true, "protocol": true }
+      }
+    },
+    {
+      "id": "GOLD-03",
+      "type": "freeze_anchor",
+      "component1_id": "ACT-001",
+      "component2_id": "ACT-003",
+      "rationale": "同为 DYNAMIXEL Protocol 2.0，但 ACT-001=10-14.8V、ACT-003=24-48V，电压区间无重叠（电气硬冲突）。期望：overall_compatible=false，electrical=false，protocol=true。",
+      "expect": {
+        "applicable": true,
+        "overall_in": ["incompatible"],
+        "evidence_count_min": 2,
+        "dimensions_expected": { "electrical": false, "protocol": true }
+      }
+    },
+    {
+      "id": "GOLD-04",
+      "type": "freeze_anchor",
+      "component1_id": "ACT-001",
+      "component2_id": "ACT-004",
+      "rationale": "协议冲突（DYNAMIXEL vs UART/CAN），电压部分重叠（10-14.8V ∩ 12-48V = 12-14.8V）。期望：protocol=false。",
+      "expect": {
+        "applicable": true,
+        "overall_in": ["incompatible", "needs_review"],
+        "evidence_count_min": 2,
+        "dimensions_expected": { "protocol": false }
+      }
+    },
+    {
+      "id": "BAD-01",
+      "type": "badcase",
+      "component1_id": "PROTO-001",
+      "component2_id": "ACT-001",
+      "rationale": "PROTO-001 是 entity_kind=protocol（EtherCAT 协议本体），非 component。期望：engine 类型闸生效，applicable=false，不崩溃。",
+      "expect": {
+        "not_crash": true,
+        "applicable": false,
+        "verdict_reason_contains": ["不适用"]
+      }
+    },
+    {
+      "id": "BAD-02",
+      "type": "badcase",
+      "component1_id": "ACT-001",
+      "component2_id": "ACT-999",
+      "rationale": "ACT-999 不存在。期望：engine 入参防护生效，不崩溃，返回 applicable=false 并标注缺失。",
+      "expect": {
+        "not_crash": true,
+        "applicable": false,
+        "verdict_reason_contains": ["缺失"]
+      }
+    }
+  ]
+}

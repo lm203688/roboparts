@@ -1,0 +1,527 @@
+#!/usr/bin/env python3
+"""
+Add bionic/biomimetic entities and 3D printing support
+Core specialty: 仿生机械 (Bionic Mechanisms)
+"""
+import json, os
+from datetime import datetime
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ENTITIES_FILE = os.path.join(ROOT, "api", "entities.json")
+
+BIONIC_ENTITIES = [
+    # === 仿生关节 ===
+    {
+        "id": "BIONIC-JOINT-001",
+        "name": "球窝仿生关节",
+        "name_en": "Ball-and-Socket Bionic Joint",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_joints",
+        "manufacturer": "RoboParts",
+        "type": "bionic_joint",
+        "description": "仿人类肩关节/髋关节的球窝关节，3自由度，适用于仿人机器人上肢/下肢。",
+        "biomimetic_target": "human_shoulder_hip",
+        "dof": 3,
+        "load_capacity": "50N",
+        "range_of_motion": "360° rotation",
+        "applications": ["humanoid_upper_limb", "humanoid_lower_limb", "prosthetics"],
+        "source": "RoboParts bionic design library",
+        "source_tier": "C",
+        "confidence": 0.6,
+        "specs": {
+            "dof": 3,
+            "joint_type": "ball_and_socket",
+            "load_capacity": "50N",
+            "rotation_range": "360°",
+            "friction_torque": "0.5 Nm",
+            "materials": ["PEEK", "titanium_alloy", "carbon_fiber"]
+        },
+        "mechanical_interface": {
+            "status": "declared",
+            "mount_type": "flange",
+            "standard": "ISO 9409-1",
+            "flange": "64mm",
+            "confidence": 0.8,
+            "registry_ref": "/api/mechanical_interfaces.json"
+        },
+        "3d_printable": True,
+        "stl_files": [
+            {"name": "ball_socket_housing", "url": "/3d/bionic_joint/ball_socket_housing.stl", "scale": "1:1"},
+            {"name": "socket_insert", "url": "/3d/bionic_joint/socket_insert.stl", "scale": "1:1"}
+        ],
+        "print_settings": {
+            "material": ["PETG", "ABS", "Nylon"],
+            "infill": "40%",
+            "layer_height": "0.15mm",
+            "support": True,
+            "print_time": "4.5 hours"
+        },
+        "cad_files": [
+            {"format": "STEP", "url": "/cad/bionic_ball_joint.step"},
+            {"format": "STL", "url": "/cad/bionic_ball_joint.stl"}
+        ],
+        "compatibility": {
+            "mounts_to": ["FRAME-001", "FRAME-002"],
+            "connects_to": ["BIONIC-ACTUATOR-001"],
+            "compatible_with": ["BIONIC-SENSOR-001"]
+        },
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial"
+    },
+    {
+        "id": "BIONIC-JOINT-002",
+        "name": "铰链仿生关节",
+        "name_en": "Hinge Bionic Joint",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_joints",
+        "manufacturer": "RoboParts",
+        "type": "bionic_joint",
+        "description": "仿人类膝关节/肘关节的铰链关节，1自由度，高负载，适用于仿人机器人膝/肘部。",
+        "biomimetic_target": "human_knee_elbow",
+        "dof": 1,
+        "load_capacity": "200N",
+        "range_of_motion": "0-135° flexion",
+        "applications": ["humanoid_knee", "humanoid_elbow", "exoskeleton"],
+        "source": "RoboParts bionic design library",
+        "source_tier": "C",
+        "confidence": 0.6,
+        "specs": {
+            "dof": 1,
+            "joint_type": "hinge",
+            "load_capacity": "200N",
+            "flexion_range": "0-135°",
+            "locking_mechanism": "bi-stable",
+            "materials": ["aluminum_alloy", "PEEK", "steel"]
+        },
+        "mechanical_interface": {
+            "status": "declared",
+            "mount_type": "flange",
+            "standard": "ISO 9409-1",
+            "flange": "80mm",
+            "confidence": 0.8,
+            "registry_ref": "/api/mechanical_interfaces.json"
+        },
+        "3d_printable": True,
+        "stl_files": [
+            {"name": "hinge_housing", "url": "/3d/bionic_joint/hinge_housing.stl", "scale": "1:1"},
+            {"name": "hinge_pin", "url": "/3d/bionic_joint/hinge_pin.stl", "scale": "1:1"}
+        ],
+        "print_settings": {
+            "material": ["PETG", "ABS", "Nylon"],
+            "infill": "50%",
+            "layer_height": "0.15mm",
+            "support": True,
+            "print_time": "3.5 hours"
+        },
+        "cad_files": [
+            {"format": "STEP", "url": "/cad/bionic_hinge_joint.step"},
+            {"format": "STL", "url": "/cad/bionic_hinge_joint.stl"}
+        ],
+        "compatibility": {
+            "mounts_to": ["FRAME-001", "FRAME-002"],
+            "connects_to": ["BIONIC-ACTUATOR-002"],
+            "compatible_with": ["BIONIC-SENSOR-002"]
+        },
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial"
+    },
+    {
+        "id": "BIONIC-JOINT-003",
+        "name": "滑车仿生关节",
+        "name_en": "Gliding Bionic Joint",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_joints",
+        "manufacturer": "RoboParts",
+        "type": "bionic_joint",
+        "description": "仿人类指关节的滑车关节，2自由度，轻量化，适用于灵巧手指。",
+        "biomimetic_target": "human_finger_knuckle",
+        "dof": 2,
+        "load_capacity": "20N",
+        "range_of_motion": "0-90° flexion",
+        "applications": ["dexterous_hand", "prosthetic_finger", "micro_manipulation"],
+        "source": "RoboParts bionic design library",
+        "source_tier": "C",
+        "confidence": 0.6,
+        "specs": {
+            "dof": 2,
+            "joint_type": "gliding",
+            "load_capacity": "20N",
+            "flexion_range": "0-90°",
+            "size": "15mm x 8mm x 6mm",
+            "materials": ["titanium_alloy", "PEEK"]
+        },
+        "mechanical_interface": {
+            "status": "declared",
+            "mount_type": "press_fit",
+            "standard": "custom",
+            "flange": "8mm",
+            "confidence": 0.7,
+            "registry_ref": "/api/mechanical_interfaces.json"
+        },
+        "3d_printable": True,
+        "stl_files": [
+            {"name": "gliding_joint", "url": "/3d/bionic_joint/gliding_joint.stl", "scale": "1:1"}
+        ],
+        "print_settings": {
+            "material": ["Resin", "PEEK"],
+            "infill": "100%",
+            "layer_height": "0.05mm",
+            "support": True,
+            "print_time": "1.5 hours"
+        },
+        "cad_files": [
+            {"format": "STEP", "url": "/cad/bionic_gliding_joint.step"},
+            {"format": "STL", "url": "/cad/bionic_gliding_joint.stl"}
+        ],
+        "compatibility": {
+            "mounts_to": ["BIONIC-ACTUATOR-003"],
+            "connects_to": ["TENDON-001"],
+            "compatible_with": ["BIONIC-SENSOR-003"]
+        },
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial"
+    },
+    # === 仿生驱动器 ===
+    {
+        "id": "BIONIC-ACTUATOR-001",
+        "name": "肌腱驱动仿生驱动器",
+        "name_en": "Tendon-Driven Bionic Actuator",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_actuators",
+        "manufacturer": "RoboParts",
+        "type": "bionic_actuator",
+        "description": "仿人体肌腱的柔性驱动器，通过缆绳传递力，适用于灵巧手和柔性关节。",
+        "biomimetic_target": "human_tendon_muscle",
+        "drive_type": "tendon",
+        "force_output": "50N",
+        "stroke": "30mm",
+        "applications": ["dexterous_hand", "flexible_manipulator", "prosthetics"],
+        "source": "RoboParts bionic design library",
+        "source_tier": "C",
+        "confidence": 0.6,
+        "specs": {
+            "drive_type": "tendon",
+            "force_output": "50N",
+            "stroke": "30mm",
+            "tension_sensing": True,
+            "backdrivable": True,
+            "materials": ["steel_cable", "PEEK_housing"]
+        },
+        "mechanical_interface": {
+            "status": "declared",
+            "mount_type": "flange",
+            "standard": "custom",
+            "flange": "40mm",
+            "confidence": 0.7,
+            "registry_ref": "/api/mechanical_interfaces.json"
+        },
+        "3d_printable": True,
+        "stl_files": [
+            {"name": "tendon_actuator_housing", "url": "/3d/bionic_actuator/tendon_housing.stl", "scale": "1:1"}
+        ],
+        "print_settings": {
+            "material": ["PETG", "Nylon"],
+            "infill": "30%",
+            "layer_height": "0.2mm",
+            "support": True,
+            "print_time": "2.5 hours"
+        },
+        "cad_files": [
+            {"format": "STEP", "url": "/cad/bionic_tendon_actuator.step"}
+        ],
+        "compatibility": {
+            "mounts_to": ["BIONIC-JOINT-001", "BIONIC-JOINT-003"],
+            "connects_to": ["CTRL-001"],
+            "compatible_with": ["TENDON-001"]
+        },
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial"
+    },
+    {
+        "id": "BIONIC-ACTUATOR-002",
+        "name": "人工肌肉驱动器",
+        "name_en": "Artificial Muscle Actuator",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_actuators",
+        "manufacturer": "RoboParts",
+        "type": "bionic_actuator",
+        "description": "仿骨骼肌的人工肌肉驱动器，高功率密度，适用于仿人机器人全身。",
+        "biomimetic_target": "human_skeletal_muscle",
+        "drive_type": "artificial_muscle",
+        "force_output": "100N",
+        "contraction": "40%",
+        "applications": ["humanoid_body", "exoskeleton", "rehabilitation"],
+        "source": "RoboParts bionic design library",
+        "source_tier": "C",
+        "confidence": 0.6,
+        "specs": {
+            "drive_type": "artificial_muscle",
+            "force_output": "100N",
+            "contraction_ratio": "40%",
+            "response_time": "50ms",
+            "power_density": "100W/kg",
+            "materials": ["SMA_wire", "polymer_actuator"]
+        },
+        "mechanical_interface": {
+            "status": "declared",
+            "mount_type": "surface_mount",
+            "standard": "custom",
+            "confidence": 0.6,
+            "registry_ref": "/api/mechanical_interfaces.json"
+        },
+        "3d_printable": False,
+        "print_settings": None,
+        "cad_files": [
+            {"format": "STEP", "url": "/cad/bionic_artificial_muscle.step"}
+        ],
+        "compatibility": {
+            "mounts_to": ["BIONIC-JOINT-001", "BIONIC-JOINT-002"],
+            "connects_to": ["CTRL-001"],
+            "compatible_with": ["BIONIC-SENSOR-001"]
+        },
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial"
+    },
+    # === 仿生传感器 ===
+    {
+        "id": "BIONIC-SENSOR-001",
+        "name": "电子皮肤传感器",
+        "name_en": "Electronic Skin Sensor",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_sensors",
+        "manufacturer": "RoboParts",
+        "type": "bionic_sensor",
+        "description": "仿人类皮肤的多模态传感器，集成触觉、温度、压力感知，适用于机器人全身覆盖。",
+        "biomimetic_target": "human_skin",
+        "sensing_modalities": ["tactile", "temperature", "pressure"],
+        "spatial_resolution": "1mm",
+        "applications": ["humanoid_skin", "prosthetic_sensory", "collaborative_robot"],
+        "source": "RoboParts bionic design library",
+        "source_tier": "C",
+        "confidence": 0.6,
+        "specs": {
+            "sensing_modalities": ["tactile", "temperature", "pressure"],
+            "spatial_resolution": "1mm",
+            "response_time": "10ms",
+            "flexible": True,
+            "stretchable": True,
+            "materials": ["conductive_polymer", "silicone_elastomer"]
+        },
+        "mechanical_interface": {
+            "status": "declared",
+            "mount_type": "adhesive",
+            "standard": "custom",
+            "confidence": 0.7,
+            "registry_ref": "/api/mechanical_interfaces.json"
+        },
+        "3d_printable": False,
+        "print_settings": None,
+        "cad_files": [
+            {"format": "STEP", "url": "/cad/bionic_eskin.step"}
+        ],
+        "compatibility": {
+            "mounts_to": ["BIONIC-JOINT-001", "BIONIC-JOINT-002", "BIONIC-JOINT-003"],
+            "connects_to": ["CTRL-001"],
+            "compatible_with": ["BIONIC-ACTUATOR-001", "BIONIC-ACTUATOR-002"]
+        },
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial"
+    },
+    {
+        "id": "BIONIC-SENSOR-002",
+        "name": "仿生本体感觉传感器",
+        "name_en": "Bionic Proprioception Sensor",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_sensors",
+        "manufacturer": "RoboParts",
+        "type": "bionic_sensor",
+        "description": "仿人体关节感受器的位置/力传感器，集成于关节内部，提供本体感觉。",
+        "biomimetic_target": "human_proprioceptor",
+        "sensing_modalities": ["position", "force", "velocity"],
+        "applications": ["joint_control", "force_feedback", "balance_control"],
+        "source": "RoboParts bionic design library",
+        "source_tier": "C",
+        "confidence": 0.6,
+        "specs": {
+            "sensing_modalities": ["position", "force", "velocity"],
+            "accuracy": "0.1°",
+            "force_resolution": "0.1N",
+            "integrated": True,
+            "miniaturized": True
+        },
+        "mechanical_interface": {
+            "status": "declared",
+            "mount_type": "integrated",
+            "standard": "custom",
+            "confidence": 0.7,
+            "registry_ref": "/api/mechanical_interfaces.json"
+        },
+        "3d_printable": False,
+        "print_settings": None,
+        "cad_files": [
+            {"format": "STEP", "url": "/cad/bionic_proprioceptor.step"}
+        ],
+        "compatibility": {
+            "mounts_to": ["BIONIC-JOINT-001", "BIONIC-JOINT-002", "BIONIC-JOINT-003"],
+            "connects_to": ["CTRL-001"],
+            "compatible_with": ["BIONIC-ACTUATOR-001", "BIONIC-ACTUATOR-002"]
+        },
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial"
+    },
+    # === 仿生结构件 ===
+    {
+        "id": "BIONIC-FRAME-001",
+        "name": "仿生骨骼框架",
+        "name_en": "Bionic Skeleton Frame",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_structures",
+        "manufacturer": "RoboParts",
+        "type": "bionic_frame",
+        "description": "仿人类骨骼的轻量化框架，拓扑优化设计，适用于仿人机器人躯干。",
+        "biomimetic_target": "human_skeleton",
+        "material": "carbon_fiber_composite",
+        "weight": "2.5kg",
+        "load_capacity": "500N",
+        "applications": ["humanoid_torso", "robot_frame", "exoskeleton"],
+        "source": "RoboParts bionic design library",
+        "source_tier": "C",
+        "confidence": 0.6,
+        "specs": {
+            "material": "carbon_fiber_composite",
+            "weight": "2.5kg",
+            "load_capacity": "500N",
+            "design_method": "topology_optimization",
+            "biomimetic_accuracy": "85%"
+        },
+        "mechanical_interface": {
+            "status": "declared",
+            "mount_type": "flange",
+            "standard": "ISO 9409-1",
+            "flange": "120mm",
+            "confidence": 0.8,
+            "registry_ref": "/api/mechanical_interfaces.json"
+        },
+        "3d_printable": True,
+        "stl_files": [
+            {"name": "torso_frame", "url": "/3d/bionic_frame/torso_frame.stl", "scale": "1:1"}
+        ],
+        "print_settings": {
+            "material": ["Carbon_Fiber_Nylon", "PETG"],
+            "infill": "60%",
+            "layer_height": "0.2mm",
+            "support": True,
+            "print_time": "12 hours"
+        },
+        "cad_files": [
+            {"format": "STEP", "url": "/cad/bionic_skeleton_frame.step"}
+        ],
+        "compatibility": {
+            "mounts_to": ["BIONIC-JOINT-001", "BIONIC-JOINT-002"],
+            "connects_to": ["BIONIC-ACTUATOR-001", "BIONIC-ACTUATOR-002"],
+            "compatible_with": ["BIONIC-SENSOR-001", "BIONIC-SENSOR-002"]
+        },
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial"
+    },
+    {
+        "id": "BIONIC-SKIN-001",
+        "name": "仿生皮肤覆盖层",
+        "name_en": "Bionic Skin Cover",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_skin",
+        "manufacturer": "RoboParts",
+        "type": "bionic_skin",
+        "description": "仿人类皮肤的柔性覆盖层，集成传感器，提供触觉反馈和外观仿真。",
+        "biomimetic_target": "human_skin_appearance",
+        "material": "silicone_elastomer",
+        "thickness": "2mm",
+        "applications": ["humanoid_appearance", "prosthetic_cover", "social_robot"],
+        "source": "RoboParts bionic design library",
+        "source_tier": "C",
+        "confidence": 0.6,
+        "specs": {
+            "material": "silicone_elastomer",
+            "thickness": "2mm",
+            "color_options": ["skin_tone_1", "skin_tone_2", "skin_tone_3"],
+            "stretchable": True,
+            "sensor_integrated": True
+        },
+        "mechanical_interface": {
+            "status": "declared",
+            "mount_type": "adhesive",
+            "standard": "custom",
+            "confidence": 0.7,
+            "registry_ref": "/api/mechanical_interfaces.json"
+        },
+        "3d_printable": False,
+        "print_settings": None,
+        "cad_files": [
+            {"format": "STEP", "url": "/cad/bionic_skin_cover.step"}
+        ],
+        "compatibility": {
+            "mounts_to": ["BIONIC-FRAME-001"],
+            "connects_to": ["BIONIC-SENSOR-001"],
+            "compatible_with": ["BIONIC-JOINT-001", "BIONIC-JOINT-002"]
+        },
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial"
+    }
+]
+
+
+def main():
+    print("[ADD-BIONIC] Adding bionic/biomimetic entities...")
+    
+    with open(ENTITIES_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    
+    existing_ids = {e["id"] for e in data["entities"]}
+    added = 0
+    
+    for entity in BIONIC_ENTITIES:
+        if entity["id"] not in existing_ids:
+            data["entities"].append(entity)
+            data["meta"]["total_entities"] += 1
+            data["meta"]["total"] += 1
+            added += 1
+            print(f"  [ADDED] {entity['id']}: {entity['name']}")
+        else:
+            print(f"  [SKIP] {entity['id']} already exists")
+    
+    # Update category counts
+    if added > 0:
+        for entity in BIONIC_ENTITIES:
+            if entity["id"] not in existing_ids:
+                cat = entity["category"]
+                if cat in data["meta"]["category_counts"]:
+                    data["meta"]["category_counts"][cat] += 1
+                else:
+                    data["meta"]["category_counts"][cat] = 1
+                    data["meta"]["categories"].append(cat)
+        
+        data["meta"]["updated"] = datetime.now().isoformat()
+        
+        with open(ENTITIES_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        
+        print(f"\n[OK] Added {added} bionic entities. Total: {data['meta']['total_entities']}")
+        print(f"[INFO] New category: bionic_mechanisms ({added} entities)")
+    else:
+        print("\n[SKIP] No new entities to add")
+    
+    return 0
+
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())

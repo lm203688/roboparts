@@ -41,7 +41,8 @@
       ],
       "outputModes": [
         "application/json"
-      ]
+      ],
+      "guardrails": "只读检索，不写库；中英文命中集合可能不重叠，须两种语言都试；未声明字段不得臆测为「无此物」。"
     },
     {
       "id": "roboparts-component-detail",
@@ -57,7 +58,8 @@
       ],
       "outputModes": [
         "application/json"
-      ]
+      ],
+      "guardrails": "只读；source_tier/confidence 仅表示证据强度，非厂商背书；quarantine=true 的条目须明示「不应直接用于决策」。"
     },
     {
       "id": "roboparts-compat-check",
@@ -73,7 +75,8 @@
       ],
       "outputModes": [
         "application/json"
-      ]
+      ],
+      "guardrails": "只读裁决；overall=null 一律不得表述为「不兼容」；判 true 至少需一项硬约束（协议/电气/机械）有双方声明，不得凭单维证据盖章。"
     },
     {
       "id": "roboparts-recommend",
@@ -89,7 +92,8 @@
       ],
       "outputModes": [
         "application/json"
-      ]
+      ],
+      "guardrails": "只读启发式筛选，不构成工程选型意见；price_fit=unknown 不得表述为「符合预算」；预算仅剔除确定超支项。"
     },
     {
       "id": "roboparts-parameter-semantics",
@@ -105,7 +109,76 @@
       ],
       "outputModes": [
         "application/json"
-      ]
+      ],
+      "guardrails": "只读；返回物理红线与单位换算，不直接断言跨厂商参数可比，须提示向厂商核对原始手册。"
+    },
+    {
+      "id": "roboparts-bom-compat",
+      "name": "BOM 两两兼容性矩阵",
+      "description": "用户给了一整张零件清单 / BOM（如 [\"ACT-001\",\"SENS-001\"]），问这些零件彼此之间在电气 / 机械 / 协议 / 软件四维是否兼容、冲突在哪时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "guardrails": "只读；overall_compatible=null 表示证据不足，不等于不兼容；semantic_hint 仅作人工核查线索，非兼容性结论。"
+    },
+    {
+      "id": "roboparts-semantic-search",
+      "name": "自然语言语义召回零部件",
+      "description": "用户用自然语言描述需求（如「人形机器人髋部高扭矩电机」「六维力传感器 防水」），不确定确切型号或参数名，需要发现式检索而非精确筛选时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "guardrails": "只读；语义索引为离线 TF-IDF 哈希，索引不可用时须明确降级为关键词检索，不得假装语义检索成功。"
+    },
+    {
+      "id": "roboparts-standard-audit",
+      "name": "标准符合性自校验",
+      "description": "用户想核对某零件 / 厂商声明的标准符合性，或想知道哪些声明能被已知标准集核实、哪些是出处存疑的条目时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "guardrails": "只读自检，不裁决；作用是指出「声明了但出处存疑」的条目供人工补全证据，不得据此断言某标准符合/不符合。"
+    },
+    {
+      "id": "roboparts-compat-review",
+      "name": "多Agent质保复核兼容性",
+      "description": "对外发布 / 采购决策前要对兼容性结论做第二双眼睛复核时：给出 L0–L3 风险分级、证据不足时降级、缺失证据显式列出。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "guardrails": "只读裁决，不写库、不生成文件；证据不足 2 条时不得向用户输出『确认兼容』，必须附 governor_review.risk_level 与 recommended_next_step。"
     },
     {
       "id": "roboparts-adapter-generate",
@@ -120,7 +193,8 @@
       ],
       "outputModes": [
         "application/json"
-      ]
+      ],
+      "guardrails": "仅当兼容判定为机械法兰不匹配时使用；生成的是可 3D 打印的几何建议，承载/材料/公差须由工程师核对，不得直接作为量产件。"
     },
     {
       "id": "roboparts-dataset-discovery",
@@ -135,7 +209,24 @@
       ],
       "outputModes": [
         "application/json"
-      ]
+      ],
+      "guardrails": "仅公开数据集的直接 GET 下载；不暴露任何内网/付费数据端点；数据集可能含 quarantine=true 条目，使用者须自行过滤；引用须注明 CC BY 4.0 出处。"
+    },
+    {
+      "id": "roboparts-supplier-risk",
+      "name": "供应商异常研判",
+      "description": "用户问「这家供应商靠谱吗」「这个价格是不是太低了」「哪些零件数据存疑」时，给出可审计的风险结论而非拍脑袋。",
+      "tags": [
+        "robotics",
+        "methodology"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "guardrails": "所有判定基于库内 source_tier/confidence/quarantine/price_range 字段，不引入外部未验证信号；无 price_range 的条目（约 74%）不判风险，只标『数据缺口』；quarantine=true 强制标 critical，不因价格正常而降级。"
     }
   ]
 }

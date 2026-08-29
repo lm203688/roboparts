@@ -16,14 +16,14 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 1.68,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.68%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 1.57,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.57%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
-  "count": 44,
-  "updated": "2026-08-12T12:22:31.965602Z",
+  "count": 46,
+  "updated": "2026-08-24T06:10:17.327481Z",
   "data": [
     {
       "id": "CHIP-nvidia-cosmos-groot",
@@ -2072,6 +2072,107 @@
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only"
+    },
+    {
+      "id": "ACE-VIDIHAND-001",
+      "name": "ACE-ViDiHand",
+      "name_en": "ACE-ViDiHand",
+      "category": "robot_ai_models",
+      "manufacturer": "ACE ROBOTICS",
+      "type": "hand_motion_capture",
+      "description": "4D bimanual motion reconstruction from egocentric video using video diffusion model. #1 on ARCTIC, HOT3D, HOI4D benchmarks. 0.997 frame-level accuracy.",
+      "applications": [
+        "data_collection",
+        "imitation_learning",
+        "robotics_research"
+      ],
+      "source": "ACE ROBOTICS announcement (2026-07-13)",
+      "source_url": "https://www.linkedin.com/posts/acerobotics_embodiedai-robotics-worldmodels-activity-7482290231291863040-GsQp",
+      "source_tier": "A",
+      "confidence": 0.75,
+      "confidence_basis": "linkedin_post",
+      "needs_provenance": true,
+      "specs": {
+        "frame_accuracy": 0.997,
+        "benchmarks": [
+          "ARCTIC",
+          "HOT3D",
+          "HOI4D"
+        ],
+        "model_size": "1.3B",
+        "input": "egocentric_video",
+        "output": "4D_hand_motion"
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "mount_type": "N/A",
+        "standard": null,
+        "flange": null,
+        "confidence": 1.0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "软件工具，无机械接口"
+      },
+      "entity_kind": "software",
+      "verified": false,
+      "data_quality": "partial",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "kind_basis": "category=data_acquisition: software entity, no mechanical interface",
+      "source_tier_basis": "deep_link:www.linkedin.com/posts/acerobotics_embodiedai-robotics-world"
+    },
+    {
+      "id": "ZEST-FRAMEWORK-001",
+      "name": "ZEST Framework",
+      "name_en": "ZEST: Zero-shot Embodied Skill Transfer",
+      "category": "robot_ai_models",
+      "manufacturer": "Boston Dynamics / ETH Zurich",
+      "type": "whole_body_control",
+      "description": "Zero-shot skill transfer framework for humanoid robots. Works with MoCap, video, and animation data. Deployed on Atlas, G1, Spot.",
+      "applications": [
+        "humanoid_control",
+        "motion_imitation",
+        "skill_transfer"
+      ],
+      "source": "arXiv:2602.00401 (2026-01-30)",
+      "source_url": "https://arxiv.org/abs/2602.00401",
+      "source_tier": "A",
+      "confidence": 0.9,
+      "confidence_basis": "peer_reviewed_paper",
+      "needs_provenance": false,
+      "specs": {
+        "data_sources": [
+          "MoCap",
+          "video",
+          "animation"
+        ],
+        "platforms": [
+          "Atlas",
+          "G1",
+          "Spot"
+        ],
+        "training_time": "10 hours on L4 GPU",
+        "zero_shot_deployment": true
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "mount_type": "N/A",
+        "standard": null,
+        "flange": null,
+        "confidence": 1.0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "软件框架，无机械接口"
+      },
+      "entity_kind": "software",
+      "verified": false,
+      "data_quality": "partial",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "kind_basis": "category=robot_ai_models: software entity, no mechanical interface",
+      "source_tier_basis": "deep_link:arxiv.org/abs/2602.00401"
     }
   ],
   "category": "robot_ai_models"

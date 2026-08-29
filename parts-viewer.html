@@ -167,9 +167,9 @@ function partController(){
 // ---------- 零件清单 ----------
 const PARTS = [
   {id:'flange-a50', name:'ISO 9409-1 法兰 · A50-4-M6', sub:'机器人腕部标准接口', build:()=>partFlange({pcd:50,holes:4,thread:'M6',clr:6.5,pins:2,pinPCD:22,bore:14}), tag:'flange', link:'/iso-9409-flange'},
-  {id:'flange-a80', name:'ISO 9409-1 法兰 · A80-4-M8', sub:'最常用中等负载接口', build:()=>partFlange({pcd:80,holes:4,thread:'M8',clr:8.5,pins:2,pinPCD:38,bore:20}), tag:'flange', link:'/iso-9409-flange'},
+  {id:'flange-a80', name:'ISO 9409-1 法兰 · A80-6-M8', sub:'最常用中等负载接口', build:()=>partFlange({pcd:80,holes:6,thread:'M8',clr:8.5,pins:2,pinPCD:38,bore:20}), tag:'flange', link:'/iso-9409-flange'},
   {id:'flange-a100', name:'ISO 9409-1 法兰 · A100-6-M10', sub:'重载接口', build:()=>partFlange({pcd:100,holes:6,thread:'M10',clr:10.5,pins:2,pinPCD:50,bore:30}), tag:'flange', link:'/iso-9409-flange'},
-  {id:'flange-a160', name:'ISO 9409-1 法兰 · A160-8-M12', sub:'大型工业机器人', build:()=>partFlange({pcd:160,holes:8,thread:'M12',clr:12.5,pins:0,pinPCD:0,bore:50}), tag:'flange', link:'/iso-9409-flange'},
+  {id:'flange-a160', name:'ISO 9409-1 法兰 · A160-8-M16', sub:'大型工业机器人', build:()=>partFlange({pcd:160,holes:8,thread:'M16',clr:12.5,pins:0,pinPCD:0,bore:50}), tag:'flange', link:'/iso-9409-flange'},
   {id:'actuator', name:'执行器（DYNAMIXEL 风格）', sub:'旋转模组示意', build:partActuator, tag:'actuator', link:'/selection'},
   {id:'sensor', name:'深度/视觉传感器', sub:'感知模组示意', build:partSensor, tag:'sensor', link:'/selection'},
   {id:'controller', name:'边缘控制器', sub:'算力模组示意', build:partController, tag:'controller', link:'/selection'},

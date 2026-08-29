@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts 组装模拟器 — 智能家具式拖拽组装</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="像搭乐高一样组装机器人。拖拽模块、自动兼容、一键下单、快速打印、即插即用。">
+<style>
+:root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--danger:#ff6b6b;--warn:#ffd93d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);height:100vh;overflow:hidden}
+.app{display:grid;grid-template-columns:280px 1fr 320px;grid-template-rows:56px 1fr 48px;height:100vh}
+header{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid #1c2540;background:rgba(11,16,32,.95)}
+header .logo{font-weight:800;font-size:18px}
+header .logo span{color:var(--acc)}
+header nav{display:flex;gap:12px}
+header nav a{color:var(--mut);text-decoration:none;font-size:13px;padding:6px 12px;border-radius:8px;transition:all .2s}
+header nav a:hover,header nav a.active{color:var(--acc);background:rgba(55,224,166,.1)}
+.toolbar{display:flex;gap:8px;align-items:center}
+.toolbar button{background:var(--card);border:1px solid #233;color:var(--txt);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px;transition:all .2s}
+.toolbar button:hover{border-color:var(--acc);color:var(--acc)}
+.toolbar button.active{background:var(--acc);color:#04210f}
+.sidebar{background:var(--card);border-right:1px solid #1c2540;overflow-y:auto;padding:16px}
+.sidebar h3{font-size:14px;color:var(--mut);margin:16px 0 8px;text-transform:uppercase;letter-spacing:1px}
+.sidebar h3:first-child{margin-top:0}
+.search{width:100%;padding:10px 12px;background:var(--bg);border:1px solid #233;border-radius:8px;color:var(--txt);font-size:13px;margin-bottom:12px}
+.search:focus{outline:none;border-color:var(--acc)}
+.category{margin-bottom:12px}
+.category-header{display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(55,224,166,.05);border-radius:8px;cursor:pointer;transition:all .2s}
+.category-header:hover{background:rgba(55,224,166,.1)}
+.category-header .icon{font-size:16px}
+.category-header .name{flex:1;font-size:13px;font-weight:600}
+.category-header .count{color:var(--mut);font-size:11px}
+.module-list{display:none;padding:4px 0 4px 24px}
+.category.open .module-list{display:block}
+.module-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:6px;cursor:grab;transition:all .2s;margin-bottom:2px}
+.module-item:hover{background:rgba(85,157,255,.1)}
+.module-item:active{cursor:grabbing}
+.module-item .preview{width:32px;height:32px;background:var(--bg);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.module-item .info{flex:1}
+.module-item .info .name{font-size:12px;font-weight:600}
+.module-item .info .spec{font-size:10px;color:var(--mut)}
+.module-item .price{font-size:11px;color:var(--acc);font-weight:600}
+.canvas-container{position:relative;background:var(--bg);overflow:hidden}
+canvas{display:block}
+.drop-zone{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .2s}
+.canvas-container.drag-over .drop-zone{opacity:1}
+.drop-zone-inner{border:2px dashed var(--acc);border-radius:16px;padding:40px 60px;text-align:center}
+.drop-zone-inner .icon{font-size:48px;margin-bottom:12px}
+.drop-zone-inner .text{color:var(--acc);font-size:16px;font-weight:600}
+.stats-bar{position:absolute;bottom:12px;left:12px;right:12px;display:flex;gap:12px;padding:12px 16px;background:rgba(20,27,48,.9);border-radius:12px;backdrop-filter:blur(8px)}
+.stat{display:flex;align-items:center;gap:6px;font-size:12px}
+.stat .label{color:var(--mut)}
+.stat .value{font-weight:600}
+.stat .value.success{color:var(--acc)}
+.stat .value.warning{color:var(--warn)}
+.stat .value.danger{color:var(--danger)}
+.panel{background:var(--card);border-left:1px solid #1c2540;overflow-y:auto;padding:16px}
+.panel h3{font-size:14px;color:var(--mut);margin:16px 0 8px;text-transform:uppercase;letter-spacing:1px}
+.panel h3:first-child{margin-top:0}
+.panel-empty{text-align:center;padding:40px 20px;color:var(--mut)}
+.panel-empty .icon{font-size:48px;margin-bottom:12px}
+.panel-empty .text{font-size:14px}
+.detail-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.detail-header .icon{width:48px;height:48px;background:var(--bg);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px}
+.detail-header .info .name{font-size:16px;font-weight:700}
+.detail-header .info .id{font-size:11px;color:var(--mut)}
+.detail-section{margin-bottom:16px}
+.detail-section .title{font-size:12px;color:var(--mut);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
+.detail-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px}
+.detail-row:last-child{border:none}
+.detail-row .label{color:var(--mut)}
+.detail-row .value{font-weight:600}
+.detail-row .value.success{color:var(--acc)}
+.detail-row .value.danger{color:var(--danger)}
+.compat-list{display:flex;flex-direction:column;gap:6px}
+.compat-item{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg);border-radius:8px;font-size:12px}
+.compat-item .status{font-size:14px}
+.compat-item .name{flex:1}
+.compat-item .action{color:var(--acc2);cursor:pointer;text-decoration:underline}
+.print-settings{display:flex;flex-direction:column;gap:8px}
+.print-setting{display:flex;justify-content:space-between;padding:8px 12px;background:var(--bg);border-radius:8px;font-size:12px}
+.print-setting .label{color:var(--mut)}
+.print-setting .value{font-weight:600}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;border:none;width:100%}
+.btn-primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(55,224,166,.3)}
+.btn-secondary{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+.btn-secondary:hover{background:rgba(55,224,166,.1)}
+.btn-danger{background:transparent;color:var(--danger);border:1px solid var(--danger)}
+.btn-danger:hover{background:rgba(255,107,107,.1)}
+.actions{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+footer{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-top:1px solid #1c2540;background:var(--card);font-size:12px;color:var(--mut)}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);padding:12px 24px;background:var(--card);border:1px solid var(--acc);border-radius:8px;font-size:13px;z-index:100;opacity:0;transition:all .3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.error{border-color:var(--danger)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:200}
+.modal-overlay.show{display:flex}
+.modal{background:var(--card);border:1px solid #233;border-radius:16px;padding:24px;max-width:480px;width:90%}
+.modal h3{margin-bottom:16px}
+.modal .actions{flex-direction:row;gap:12px}
+@media(max-width:1024px){.app{grid-template-columns:1fr;grid-template-rows:56px 1fr 48px}.sidebar,.panel{display:none}}
+</style>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo">🤖 RoboParts <span>组装模拟器</span></div>
+    <nav>
+      <a href="/">首页</a>
+      <a href="/oss.html">开源项目</a>
+      <a href="/assembly.html" class="active">组装模拟器</a>
+      <a href="/bom-checker.html">BOM检查</a>
+      <a href="/compatibility-viz.html">兼容性</a>
+      <a href="/data-hub.html">数据中心</a>
+    </nav>
+    <div class="toolbar">
+      <button id="btnUndo" title="撤销">↩ 撤销</button>
+      <button id="btnRedo" title="重做">↪ 重做</button>
+      <button id="btnGrid" class="active" title="网格">⊞ 网格</button>
+      <button id="btnScreenshot" title="截图">📷 截图</button>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <input type="text" class="search" id="searchInput" placeholder="🔍 搜索模块...">
+    <div id="moduleLibrary"></div>
+  </aside>
+
+  <main class="canvas-container" id="canvasContainer">
+    <canvas id="canvas3d"></canvas>
+    <div class="drop-zone">
+      <div class="drop-zone-inner">
+        <div class="icon">📦</div>
+        <div class="text">拖拽模块到这里开始组装</div>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat"><span class="label">模块:</span><span class="value" id="statModules">0</span></div>
+      <div class="stat"><span class="label">兼容性:</span><span class="value success" id="statCompat">-</span></div>
+      <div class="stat"><span class="label">重量:</span><span class="value" id="statWeight">0g</span></div>
+      <div class="stat"><span class="label">功耗:</span><span class="value" id="statPower">0W</span></div>
+      <div class="stat"><span class="label">成本:</span><span class="value" id="statCost">¥0</span></div>
+    </div>
+  </main>
+
+  <aside class="panel" id="propertyPanel">
+    <div class="panel-empty">
+      <div class="icon">🎯</div>
+      <div class="text">选择一个模块查看详情</div>
+    </div>
+  </aside>
+
+  <footer>
+    <span>RoboParts 组装模拟器 v1.0</span>
+    <span id="footerStatus">就绪</span>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle">确认</h3>
+    <p id="modalContent"></p>
+    <div class="actions">
+      <button class="btn btn-secondary" id="modalCancel">取消</button>
+      <button class="btn btn-primary" id="modalConfirm">确认</button>
+    </div>
+  </div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const CATEGORIES = {
+  bionic_joints: { name: '仿生关节', icon: '🦴', modules: [
+    { id: 'BIONIC-JOINT-001', name: '球窝关节', icon: '🔵', dof: 3, load: 5, weight: 85, price: 89, power: 0, material: 'PLA/PETG', infill: 30, printTime: 2.5, color: 0x37e0a6 },
+    { id: 'BIONIC-JOINT-002', name: '铰链关节', icon: '🔗', dof: 1, load: 10, weight: 60, price: 45, power: 0, material: 'PLA', infill: 25, printTime: 1.5, color: 0x5b9dff },
+    { id: 'BIONIC-JOINT-003', name: '滑动关节', icon: '📐', dof: 1, load: 8, weight: 45, price: 35, power: 0, material: 'PLA', infill: 20, printTime: 1.2, color: 0xffd93d },
+  ]},
+  bionic_actuators: { name: '驱动器', icon: '💪', modules: [
+    { id: 'BIONIC-ACTUATOR-001', name: '肌腱驱动', icon: '🧵', torque: 2.5, weight: 120, price: 150, power: 5, material: 'PETG', infill: 40, printTime: 3.0, color: 0xff6b6b },
+    { id: 'BIONIC-ACTUATOR-002', name: '人工肌肉', icon: '🔬', torque: 1.8, weight: 80, price: 280, power: 3, material: 'TPU', infill: 50, printTime: 4.0, color: 0xc084fc },
+  ]},
+  bionic_sensors: { name: '传感器', icon: '📡', modules: [
+    { id: 'BIONIC-SENSOR-001', name: '电子皮肤', icon: '🖐️', sensitivity: 0.1, weight: 30, price: 220, power: 0.5, material: 'TPU', infill: 60, printTime: 2.0, color: 0xf472b6 },
+    { id: 'BIONIC-SENSOR-002', name: '本体感知', icon: '🎯', accuracy: 0.01, weight: 15, price: 95, power: 0.3, material: 'PLA', infill: 20, printTime: 0.8, color: 0x34d399 },
+  ]},
+  bionic_structures: { name: '结构件', icon: '🏗️', modules: [
+    { id: 'BIONIC-FRAME-001', name: '仿生骨架', icon: '🦴', load: 15, weight: 200, price: 120, power: 0, material: 'PLA/PETG', infill: 35, printTime: 5.0, color: 0x94a3b8 },
+    { id: 'BIONIC-SKIN-001', name: '仿生皮肤', icon: '🧬', thickness: 2, weight: 50, price: 75, power: 0, material: 'TPU', infill: 80, printTime: 3.5, color: 0xfbbf24 },
+  ]},
+  controllers: { name: '控制器', icon: '🧠', modules: [
+    { id: 'CTRL-ESP32-001', name: 'ESP32', icon: '📡', ram: 520, flash: 4, weight: 10, price: 35, power: 0.5, material: null, infill: null, printTime: null, color: 0x22d3ee },
+    { id: 'CTRL-RPI-001', name: '树莓派 4B', icon: '🖥️', ram: 8192, flash: 32, weight: 46, price: 350, power: 5, material: null, infill: null, printTime: null, color: 0xa78bfa },
+  ]},
+  connectors: { name: '连接器', icon: '🔩', modules: [
+    { id: 'CONN-M3-001', name: 'M3 螺栓', icon: '🔩', size: 3, weight: 2, price: 0.5, power: 0, material: 'PLA', infill: 100, printTime: 0.1, color: 0x64748b },
+    { id: 'CONN-M4-001', name: 'M4 螺栓', icon: '🔩', size: 4, weight: 4, price: 0.8, power: 0, material: 'PLA', infill: 100, printTime: 0.15, color: 0x64748b },
+  ]},
+};
+
+const COMPAT_RULES = {
+  'BIONIC-JOINT-001': ['BIONIC-ACTUATOR-001', 'BIONIC-ACTUATOR-002', 'BIONIC-FRAME-001', 'BIONIC-SKIN-001', 'CONN-M3-001'],
+  'BIONIC-JOINT-002': ['BIONIC-ACTUATOR-001', 'BIONIC-FRAME-001', 'CONN-M3-001', 'CONN-M4-001'],
+  'BIONIC-JOINT-003': ['BIONIC-FRAME-001', 'CONN-M3-001'],
+  'BIONIC-ACTUATOR-001': ['BIONIC-JOINT-001', 'BIONIC-JOINT-002', 'CTRL-ESP32-001', 'CTRL-RPI-001'],
+  'BIONIC-ACTUATOR-002': ['BIONIC-JOINT-001', 'CTRL-ESP32-001'],
+  'BIONIC-SENSOR-001': ['BIONIC-FRAME-001', 'CTRL-ESP32-001', 'CTRL-RPI-001'],
+  'BIONIC-SENSOR-002': ['CTRL-ESP32-001', 'CTRL-RPI-001'],
+  'BIONIC-FRAME-001': ['BIONIC-JOINT-001', 'BIONIC-JOINT-002', 'BIONIC-JOINT-003', 'BIONIC-SENSOR-001', 'BIONIC-SKIN-001'],
+  'BIONIC-SKIN-001': ['BIONIC-FRAME-001', 'BIONIC-JOINT-001'],
+  'CTRL-ESP32-001': ['BIONIC-ACTUATOR-001', 'BIONIC-ACTUATOR-002', 'BIONIC-SENSOR-001', 'BIONIC-SENSOR-002'],
+  'CTRL-RPI-001': ['BIONIC-ACTUATOR-001', 'BIONIC-SENSOR-001', 'BIONIC-SENSOR-002'],
+};
+
+let scene, camera, renderer, controls, gridHelper;
+let placedModules = [];
+let selectedModule = null;
+let history = [];
+let historyIndex = -1;
+let isDragging = false;
+let dragModule = null;
+let raycaster = new THREE.Raycaster();
+let mouse = new THREE.Vector2();
+let groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+
+function init() {
+  const container = document.getElementById('canvasContainer');
+  const canvas = document.getElementById('canvas3d');
+
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0b1020);
+  scene.fog = new THREE.Fog(0x0b1020, 20, 50);
+
+  camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
+  camera.position.set(5, 5, 5);
+
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+  controls.maxPolarAngle = Math.PI / 2;
+
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  directionalLight.position.set(5, 10, 5);
+  directionalLight.castShadow = true;
+  directionalLight.shadow.mapSize.width = 2024;
+  directionalLight.shadow.mapSize.height = 2024;
+  scene.add(directionalLight);
+
+  const pointLight = new THREE.PointLight(0x37e0a6, 0.3, 20);
+  pointLight.position.set(-3, 5, -3);
+  scene.add(pointLight);
+
+  gridHelper = new THREE.GridHelper(20, 20, 0x1c2540, 0x141b30);
+  scene.add(gridHelper);
+
+  const groundGeometry = new THREE.PlaneGeometry(20, 20);
+  const groundMaterial = new THREE.MeshStandardMaterial({ color: 0x0b1020, transparent: true, opacity: 0.5 });
+  const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.y = -0.01;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  window.addEventListener('resize', onResize);
+  canvas.addEventListener('mousedown', onCanvasMouseDown);
+  canvas.addEventListener('mousemove', onCanvasMouseMove);
+  canvas.addEventListener('mouseup', onCanvasMouseUp);
+  canvas.addEventListener('dblclick', onCanvasDoubleClick);
+
+  animate();
+}
+
+function onResize() {
+  const container = document.getElementById('canvasContainer');
+  camera.aspect = container.clientWidth / container.clientHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(container.clientWidth, container.clientHeight);
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+function createModuleMesh(module, position = { x: 0, y: 0, z: 0 }) {
+  let geometry;
+  const size = 0.3;
+
+  if (module.id.includes('JOINT')) {
+    geometry = new THREE.SphereGeometry(size, 16, 16);
+  } else if (module.id.includes('ACTUATOR')) {
+    geometry = new THREE.CylinderGeometry(size * 0.5, size * 0.5, size * 1.5, 12);
+  } else if (module.id.includes('SENSOR')) {
+    geometry = new THREE.BoxGeometry(size * 1.5, size * 0.3, size);
+  } else if (module.id.includes('FRAME')) {
+    geometry = new THREE.BoxGeometry(size * 2, size * 0.5, size);
+  } else if (module.id.includes('SKIN')) {
+    geometry = new THREE.TorusGeometry(size, size * 0.15, 8, 24);
+  } else if (module.id.includes('CTRL')) {
+    geometry = new THREE.BoxGeometry(size, size * 0.2, size * 0.8);
+  } else {
+    geometry = new THREE.CylinderGeometry(size * 0.2, size * 0.2, size * 0.5, 8);
+  }
+
+  const material = new THREE.MeshStandardMaterial({
+    color: module.color,
+    metalness: 0.3,
+    roughness: 0.7,
+  });
+
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.position.set(position.x, position.y + size / 2 + 0.1, position.z);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  mesh.userData = { ...module, originalColor: module.color };
+
+  const edges = new THREE.EdgesGeometry(geometry);
+  const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.2 });
+  const wireframe = new THREE.LineSegments(edges, lineMaterial);
+  mesh.add(wireframe);
+
+  scene.add(mesh);
+  return mesh;
+}
+
+function renderModuleLibrary() {
+  const container = document.getElementById('moduleLibrary');
+  const search = document.getElementById('searchInput').value.toLowerCase();
+
+  let html = '';
+  for (const [catId, cat] of Object.entries(CATEGORIES)) {
+    const filteredModules = cat.modules.filter(m =>
+      m.name.toLowerCase().includes(search) || m.id.toLowerCase().includes(search)
+    );
+    if (filteredModules.length === 0) continue;
+
+    html += `
+      <div class="category" data-cat="${catId}">
+        <div class="category-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="icon">${cat.icon}</span>
+          <span class="name">${cat.name}</span>
+          <span class="count">${filteredModules.length}</span>
+        </div>
+        <div class="module-list">
+          ${filteredModules.map(m => `
+            <div class="module-item" draggable="true" data-id="${m.id}">
+              <div class="preview">${m.icon}</div>
+              <div class="info">
+                <div class="name">${m.name}</div>
+                <div class="spec">${m.id}</div>
+              </div>
+              <div class="price">¥${m.price}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+  container.innerHTML = html;
+
+  container.querySelectorAll('.module-item').forEach(item => {
+    item.addEventListener('dragstart', onDragStart);
+    item.addEventListener('click', onModuleClick);
+  });
+}
+
+function onDragStart(e) {
+  const moduleId = e.currentTarget.dataset.id;
+  e.dataTransfer.setData('text/plain', moduleId);
+  e.dataTransfer.effectAllowed = 'copy';
+  isDragging = true;
+  dragModule = findModule(moduleId);
+  document.getElementById('canvasContainer').classList.add('drag-over');
+}
+
+function onDragEnd() {
+  isDragging = false;
+  dragModule = null;
+  document.getElementById('canvasContainer').classList.remove('drag-over');
+}
+
+document.addEventListener('dragend', onDragEnd);
+
+const canvasContainer = document.getElementById('canvasContainer');
+canvasContainer.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'copy';
+});
+
+canvasContainer.addEventListener('drop', (e) => {
+  e.preventDefault();
+  document.getElementById('canvasContainer').classList.remove('drag-over');
+
+  const moduleId = e.dataTransfer.getData('text/plain');
+  const module = findModule(moduleId);
+  if (!module) return;
+
+  const rect = renderer.domElement.getBoundingClientRect();
+  mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersectPoint = new THREE.Vector3();
+  raycaster.ray.intersectPlane(groundPlane, intersectPoint);
+
+  if (intersectPoint) {
+    const pos = {
+      x: Math.round(intersectPoint.x * 2) / 2,
+      y: 0,
+      z: Math.round(intersectPoint.z * 2) / 2
+    };
+    addModule(module, pos);
+  }
+});
+
+function findModule(id) {
+  for (const cat of Object.values(CATEGORIES)) {
+    const found = cat.modules.find(m => m.id === id);
+    if (found) return found;
+  }
+  return null;
+}
+
+function addModule(module, position) {
+  const mesh = createModuleMesh(module, position);
+  placedModules.push({ mesh, module });
+
+  saveHistory();
+  updateStats();
+  selectModule(mesh);
+  showToast(`已添加: ${module.name}`);
+}
+
+function removeModule(mesh) {
+  const index = placedModules.findIndex(p => p.mesh === mesh);
+  if (index === -1) return;
+
+  scene.remove(mesh);
+  placedModules.splice(index, 1);
+
+  if (selectedModule === mesh) {
+    selectedModule = null;
+    renderPropertyPanel();
+  }
+
+  saveHistory();
+  updateStats();
+  showToast(`已移除: ${mesh.userData.name}`);
+}
+
+function selectModule(mesh) {
+  if (selectedModule) {
+    selectedModule.material.emissive.setHex(0x000000);
+  }
+
+  selectedModule = mesh;
+  if (mesh) {
+    mesh.material.emissive.setHex(0x333333);
+    renderPropertyPanel();
+  } else {
+    renderPropertyPanel();
+  }
+}
+
+function renderPropertyPanel() {
+  const panel = document.getElementById('propertyPanel');
+
+  if (!selectedModule) {
+    panel.innerHTML = `
+      <div class="panel-empty">
+        <div class="icon">🎯</div>
+        <div class="text">选择一个模块查看详情</div>
+      </div>
+    `;
+    return;
+  }
+
+  const m = selectedModule.userData;
+  const compatible = getCompatibleModules(m.id);
+  const incompatible = getIncompatibleModules(m.id);
+
+  panel.innerHTML = `
+    <div class="detail-header">
+      <div class="icon">${m.icon}</div>
+      <div class="info">
+        <div class="name">${m.name}</div>
+        <div class="id">${m.id}</div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="title">基本信息</div>
+      <div class="detail-row"><span class="label">类别</span><span class="value">${getCategoryName(m.id)}</span></div>
+      ${m.dof ? `<div class="detail-row"><span class="label">自由度</span><span class="value">${m.dof} DoF</span></div>` : ''}
+      ${m.load ? `<div class="detail-row"><span class="label">负载</span><span class="value">${m.load}kg</span></div>` : ''}
+      ${m.torque ? `<div class="detail-row"><span class="label">扭矩</span><span class="value">${m.torque}Nm</span></div>` : ''}
+      <div class="detail-row"><span class="label">重量</span><span class="value">${m.weight}g</span></div>
+      <div class="detail-row"><span class="label">功耗</span><span class="value">${m.power}W</span></div>
+      <div class="detail-row"><span class="label">价格</span><span class="value" style="color:var(--acc)">¥${m.price}</span></div>
+    </div>
+
+    ${m.material ? `
+    <div class="detail-section">
+      <div class="title">3D 打印</div>
+      <div class="print-settings">
+        <div class="print-setting"><span class="label">材料</span><span class="value">${m.material}</span></div>
+        <div class="print-setting"><span class="label">填充率</span><span class="value">${m.infill}%</span></div>
+        <div class="print-setting"><span class="label">预估时间</span><span class="value">${m.printTime}h</span></div>
+      </div>
+    </div>
+    ` : ''}
+
+    <div class="detail-section">
+      <div class="title">兼容模块 (${compatible.length})</div>
+      <div class="compat-list">
+        ${compatible.length === 0 ? '<div style="color:var(--mut);font-size:12px;padding:8px">无兼容模块</div>' :
+          compatible.map(c => `
+            <div class="compat-item">
+              <span class="status">✅</span>
+              <span class="name">${c.name}</span>
+              <span class="action" onclick="window.addModuleById('${c.id}')">添加</span>
+            </div>
+          `).join('')}
+      </div>
+    </div>
+
+    ${incompatible.length > 0 ? `
+    <div class="detail-section">
+      <div class="title">不兼容模块</div>
+      <div class="compat-list">
+        ${incompatible.map(c => `
+          <div class="compat-item">
+            <span class="status">❌</span>
+            <span class="name">${c.name}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    ` : ''}
+
+    <div class="actions">
+      <button class="btn btn-secondary" onclick="window.duplicateModule()">📋 复制</button>
+      <button class="btn btn-danger" onclick="window.removeSelected()">🗑️ 移除</button>
+    </div>
+  `;
+}
+
+function getCompatibleModules(id) {
+  const compatIds = COMPAT_RULES[id] || [];
+  const modules = [];
+  for (const cat of Object.values(CATEGORIES)) {
+    for (const m of cat.modules) {
+      if (compatIds.includes(m.id)) modules.push(m);
+    }
+  }
+  return modules;
+}
+
+function getIncompatibleModules(id) {
+  const modules = [];
+  for (const cat of Object.values(CATEGORIES)) {
+    for (const m of cat.modules) {
+      if (m.id !== id && !getCompatibleModules(id).find(c => c.id === m.id)) {
+        modules.push(m);
+      }
+    }
+  }
+  return modules.slice(0, 5);
+}
+
+function getCategoryName(moduleId) {
+  for (const [catId, cat] of Object.entries(CATEGORIES)) {
+    if (cat.modules.find(m => m.id === moduleId)) return cat.name;
+  }
+  return '未知';
+}
+
+function updateStats() {
+  const count = placedModules.length;
+  let totalWeight = 0, totalPower = 0, totalCost = 0;
+  let allCompatible = true;
+
+  placedModules.forEach(p => {
+    totalWeight += p.module.weight || 0;
+    totalPower += p.module.power || 0;
+    totalCost += p.module.price || 0;
+  });
+
+  for (let i = 0; i < placedModules.length; i++) {
+    for (let j = i + 1; j < placedModules.length; j++) {
+      const a = placedModules[i].module.id;
+      const b = placedModules[j].module.id;
+      if (!COMPAT_RULES[a]?.includes(b) && !COMPAT_RULES[b]?.includes(a)) {
+        allCompatible = false;
+      }
+    }
+  }
+
+  document.getElementById('statModules').textContent = count;
+  const compatEl = document.getElementById('statCompat');
+  compatEl.textContent = count === 0 ? '-' : (allCompatible ? '✅ 全部兼容' : '⚠️ 有冲突');
+  compatEl.className = 'value ' + (count === 0 ? '' : (allCompatible ? 'success' : 'warning'));
+  document.getElementById('statWeight').textContent = totalWeight + 'g';
+  document.getElementById('statPower').textContent = totalPower + 'W';
+  document.getElementById('statCost').textContent = '¥' + totalCost;
+}
+
+function saveHistory() {
+  history = history.slice(0, historyIndex + 1);
+  history.push(placedModules.map(p => ({
+    module: p.module,
+    position: { x: p.mesh.position.x, y: p.mesh.position.y, z: p.mesh.position.z }
+  })));
+  historyIndex = history.length - 1;
+}
+
+function undo() {
+  if (historyIndex <= 0) return;
+  historyIndex--;
+  restoreHistory();
+  showToast('已撤销');
+}
+
+function redo() {
+  if (historyIndex >= history.length - 1) return;
+  historyIndex++;
+  restoreHistory();
+  showToast('已重做');
+}
+
+function restoreHistory() {
+  placedModules.forEach(p => scene.remove(p.mesh));
+  placedModules = [];
+
+  history[historyIndex].forEach(state => {
+    const mesh = createModuleMesh(state.module, state.position);
+    placedModules.push({ mesh, module: state.module });
+  });
+
+  selectedModule = null;
+  updateStats();
+  renderPropertyPanel();
+}
+
+function showToast(message, isError = false) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => toast.className = 'toast', 2000);
+}
+
+function onCanvasMouseDown(e) {
+  if (e.button !== 0) return;
+
+  const rect = renderer.domElement.getBoundingClientRect();
+  mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const meshes = placedModules.map(p => p.mesh);
+  const intersects = raycaster.intersectObjects(meshes);
+
+  if (intersects.length > 0) {
+    selectModule(intersects[0].object);
+    controls.enabled = false;
+  } else {
+    selectModule(null);
+  }
+}
+
+function onCanvasMouseMove(e) {
+  if (!selectedModule) return;
+
+  const rect = renderer.domElement.getBoundingClientRect();
+  mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersectPoint = new THREE.Vector3();
+  raycaster.ray.intersectPlane(groundPlane, intersectPoint);
+
+  if (intersectPoint) {
+    selectedModule.position.x = Math.round(intersectPoint.x * 2) / 2;
+    selectedModule.position.z = Math.round(intersectPoint.z * 2) / 2;
+  }
+}
+
+function onCanvasMouseUp() {
+  controls.enabled = true;
+}
+
+function onCanvasDoubleClick(e) {
+  const rect = renderer.domElement.getBoundingClientRect();
+  mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const meshes = placedModules.map(p => p.mesh);
+  const intersects = raycaster.intersectObjects(meshes);
+
+  if (intersects.length > 0) {
+    removeModule(intersects[0].object);
+  }
+}
+
+function onModuleClick(e) {
+  const moduleId = e.currentTarget.dataset.id;
+  const module = findModule(moduleId);
+  if (module) {
+    const tempMesh = createModuleMesh(module, { x: 0, y: 0, z: 0 });
+    selectModule(tempMesh);
+  }
+}
+
+window.addModuleById = (id) => {
+  const module = findModule(id);
+  if (module) {
+    const pos = {
+      x: Math.round((Math.random() * 4 - 2) * 2) / 2,
+      y: 0,
+      z: Math.round((Math.random() * 4 - 2) * 2) / 2
+    };
+    addModule(module, pos);
+  }
+};
+
+window.duplicateModule = () => {
+  if (!selectedModule) return;
+  const m = selectedModule.userData;
+  const pos = {
+    x: selectedModule.position.x + 0.5,
+    y: 0,
+    z: selectedModule.position.z + 0.5
+  };
+  addModule(m, pos);
+};
+
+window.removeSelected = () => {
+  if (selectedModule) removeModule(selectedModule);
+};
+
+document.getElementById('btnUndo').addEventListener('click', undo);
+document.getElementById('btnRedo').addEventListener('click', redo);
+document.getElementById('btnGrid').addEventListener('click', () => {
+  gridHelper.visible = !gridHelper.visible;
+  document.getElementById('btnGrid').classList.toggle('active');
+});
+document.getElementById('btnScreenshot').addEventListener('click', () => {
+  renderer.render(scene, camera);
+  const link = document.createElement('a');
+  link.download = 'roboparts-assembly.png';
+  link.href = renderer.domElement.toDataURL('image/png');
+  link.click();
+  showToast('截图已保存');
+});
+document.getElementById('searchInput').addEventListener('input', renderModuleLibrary);
+
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.key === 'z') { e.preventDefault(); undo(); }
+  if (e.ctrlKey && e.key === 'y') { e.preventDefault(); redo(); }
+  if (e.key === 'Delete' || e.key === 'Backspace') {
+    if (selectedModule && document.activeElement.tagName !== 'INPUT') {
+      removeModule(selectedModule);
+    }
+  }
+});
+
+init();
+renderModuleLibrary();
+saveHistory();
+updateStats();
+</script>
+</body>
+</html>

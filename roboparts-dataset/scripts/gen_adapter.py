@@ -96,11 +96,11 @@ SHCS_HEAD_D: Dict[float, float] = {
 PRESETS: Dict[str, Dict] = {
     "A50": dict(label="ISO9409-1-A50-4-M6", pcd=50.0, holes=4, thread="M6",
                 clr=6.5, pins=2, pin_d=6.0, pin_pcd=22.0),
-    "A80": dict(label="ISO9409-1-A80-4-M8", pcd=80.0, holes=4, thread="M8",
+    "A80": dict(label="ISO9409-1-A80-6-M8", pcd=80.0, holes=6, thread="M8",
                 clr=8.5, pins=2, pin_d=8.0, pin_pcd=38.0),
     "A100": dict(label="ISO9409-1-A100-6-M10", pcd=100.0, holes=6, thread="M10",
                  clr=10.5, pins=2, pin_d=10.0, pin_pcd=50.0),
-    "A160": dict(label="ISO9409-1-A160-8-M12", pcd=160.0, holes=8, thread="M12",
+    "A160": dict(label="ISO9409-1-A160-8-M16", pcd=160.0, holes=8, thread="M16",
                  clr=12.5, pins=0, pin_d=0.0, pin_pcd=0.0),
 }
 

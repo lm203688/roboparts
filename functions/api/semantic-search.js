@@ -46,3 +46,10 @@ export async function onRequestPost(context) {
   const res = await semanticSearch(env, request, q, limit);
   return new Response(JSON.stringify(res, null, 2), { status: 200, headers: corsHeaders });
 }
+
+// HEAD 探活：Pages 不把 HEAD 映射到 onRequestGet，缺此导出则一律 404 ——
+// 对外声明过的地址被目录站 / 监控探成「不存在」。复用 GET 的响应状态与头。
+export async function onRequestHead(context) {
+  const r = await onRequestGet(context);
+  return new Response(null, { status: r.status, headers: r.headers });
+}

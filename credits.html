@@ -230,7 +230,7 @@ footer a{color:#06b6d4;text-decoration:none}
       <ul class="features">
         <li>100 次 API 调用积分</li>
         <li>全部 10 大品类数据访问</li>
-        <li>708 机器人零部件实体（482 条已核验）</li>
+        <li>767 机器人零部件实体（482 条已核验）</li>
         <li>REST API + JSON 格式</li>
         <li>7 天技术支持</li>
       </ul>
@@ -249,7 +249,7 @@ footer a{color:#06b6d4;text-decoration:none}
       <ul class="features">
         <li>500 次 API 调用积分</li>
         <li>全部 10 大品类数据访问</li>
-        <li>708 机器人零部件实体（482 条已核验）</li>
+        <li>767 机器人零部件实体（482 条已核验）</li>
         <li class="pro">英文双语字段 (_en)</li>
         <li class="pro">高级搜索与筛选</li>
         <li class="pro">MCP 协议接入支持</li>
@@ -269,7 +269,7 @@ footer a{color:#06b6d4;text-decoration:none}
       <ul class="features">
         <li>无限次 API 调用积分</li>
         <li>全部 10 大品类数据访问</li>
-        <li>708 机器人零部件实体（482 条已核验）</li>
+        <li>767 机器人零部件实体（482 条已核验）</li>
         <li class="pro">英文双语字段 (_en)</li>
         <li class="pro">高级搜索与筛选</li>
         <li class="pro">MCP 协议接入支持</li>
@@ -315,7 +315,7 @@ footer a{color:#06b6d4;text-decoration:none}
     <div class="section-title"><span>❓</span> 常见问题</div>
     <div class="faq-item">
       <div class="faq-q">积分有什么用途？</div>
-      <div class="faq-a">积分用于调用 RoboParts API 接口，每次成功的 API 请求消耗 1 个积分。通过积分可以查询 708 条机器人零部件实体数据（其中 482 条已通过溯源核验，未核验条目默认不进入选型结果）、进行高级搜索、获取跨品类关联信息等。</div>
+      <div class="faq-a">积分用于调用 RoboParts API 接口，每次成功的 API 请求消耗 1 个积分。通过积分可以查询 767 条机器人零部件实体数据（其中 482 条已通过溯源核验，未核验条目默认不进入选型结果）、进行高级搜索、获取跨品类关联信息等。</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">支付后积分多久到账？</div>
@@ -526,9 +526,15 @@ function pollOrderStatus(orderId, apiKey) {
           document.getElementById('modalSpinner').style.display = 'none';
           document.getElementById('modalTitle').textContent = '充值成功！';
           document.getElementById('modalTitle').style.color = '#10b981';
+          const usedKey = localStorage.getItem('roboparts_api_key') || apiKey || '';
           document.getElementById('modalText').innerHTML =
-            `恭喜！您的账户已充值 <strong style="color:#10b981">${data.credits - creditsBeforePayment}</strong> 积分。<br>当前总余额: <strong>${data.credits}</strong> 积分`;
+            `恭喜！您的账户已充值 <strong style="color:#10b981">${data.credits - creditsBeforePayment}</strong> 积分。<br>当前总余额: <strong>${data.credits}</strong> 积分` +
+            `<br><button style="margin-top:12px;padding:10px 16px;background:#06b6d4;color:#06121a;border:none;border-radius:8px;font-weight:700;cursor:pointer" onclick="useApiNow()">🚀 复制 Key 并前往使用 API</button>`;
           document.getElementById('modalOrderInfo').style.display = 'none';
+          // 【20260825】支付成功但用户全程未确认保存过 Key → 重新强提醒保存，避免"付完即丢、联系不到"
+          if (!keyConfirmedSaved && usedKey) {
+            setTimeout(() => showSaveKeyModal(usedKey), 600);
+          }
           return;
         }
       }
@@ -540,6 +546,10 @@ function pollOrderStatus(orderId, apiKey) {
 
 // ============ 保存 API Key 强提示 ============
 let pendingOrderData = null;
+// 【20260824】支付成功后强制提醒保存 Key。若用户未走过 saveKeyModal 流程（已有旧 key），
+// 支付完成也不会提示 —— 用户付完钱就关页面，结果"key 已充但未记" → 联系不到。
+// 记录用户是否已主动确认保存过 Key。
+let keyConfirmedSaved = false;
 
 function showSaveKeyModal(apiKey) {
   // 即使未点确认，也先把 key 落到 localStorage，避免用户直接关闭浏览器后完全丢失
@@ -574,11 +584,23 @@ function copySavedKey() {
 }
 
 function confirmSavedKey() {
+  keyConfirmedSaved = true;
   closeSaveKeyModal();
   if (pendingOrderData) {
     renderOrderQR(pendingOrderData);
     pendingOrderData = null;
   }
+}
+
+// 【20260825】支付成功后"立即使用 API"：复制 Key 并打开 MCP 接入指南
+function useApiNow() {
+  const k = localStorage.getItem('roboparts_api_key') || document.getElementById('apiKeyInput').value.trim();
+  if (k) {
+    try { navigator.clipboard.writeText(k); } catch (e) {
+      const t = document.createElement('textarea'); t.value = k; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t);
+    }
+  }
+  window.open('/mcp-guide', '_blank', 'noopener');
 }
 
 function renderOrderQR(data) {

@@ -16,13 +16,13 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 1.68,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.68%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 1.57,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.57%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
-  "scan_date": "2026-08-16",
+  "scan_date": "2026-08-21",
   "method": "scripts/demand_scan.mjs 只读监听（GitHub/ROS/Stack 可达；Reddit 沙箱不可达已降级）。绝不发帖。",
   "channels": {
     "github": {
@@ -54,112 +54,129 @@
       "hit_count": 0
     }
   },
-  "real_query_count": 10,
-  "explicit_compatibility_pain": 10,
+  "real_query_count": 11,
+  "explicit_compatibility_pain": 11,
   "cross_brand_compat_engine_users": 0,
   "can_answer_today": {
-    "mech_decl_rate": 0.0085,
-    "mech_declared": 6,
-    "total_entities": 708,
+    "mech_decl_rate": 0.0202,
+    "mech_declared": 15,
+    "total_entities": 744,
     "estimate": "极低：跨品牌兼容类提问今天绝大多数答不出（需真实 BOM 反喂抬声明率）"
   },
   "category_counts": {
     "actuators": 217,
-    "platforms": 40,
+    "platforms": 41,
     "chips": 108,
-    "robot_ai_models": 44,
+    "robot_ai_models": 45,
     "sensors": 90,
     "interfaces": 37,
     "llms": 42,
     "protocols": 64,
     "flexible_actuators": 21,
-    "data_acquisition": 43,
-    "connectors": 2
+    "data_acquisition": 44,
+    "connectors": 2,
+    "integrated_joints": 1,
+    "reducers": 3,
+    "controllers": 3,
+    "grippers": 8,
+    "structural": 3,
+    "cables": 2,
+    "power": 2,
+    "pcb": 2,
+    "bionic_mechanisms": 9
   },
-  "verdict": "已捕获 10 条真实兼容性提问信号（跨品牌引擎潜在用户 0 条）。但本站机械接口声明率仅 0.85%，绝大多数今天答不出——需求存在，供给（可计算兼容性）不足。",
+  "verdict": "已捕获 11 条真实兼容性提问信号（跨品牌引擎潜在用户 0 条）。但本站机械接口声明率仅 2.02%，绝大多数今天答不出——需求存在，供给（可计算兼容性）不足。",
   "sources": [
     {
       "name": "github",
-      "url": "https://github.com/siegeon/.prism/issues/1658",
+      "url": "https://github.com/IvorySQL/IvorySQL/pull/1572",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "gamify sim slice replacement (replaces fast), seed=20260815",
+      "evidence": "Add Oracle-compatible SPLIT PARTITION syntax",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/chrischeng-c4/axiom/issues/2002",
+      "url": "https://github.com/tzehon/wardrobe-stylist/pull/21",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "mamba Tier 2: CPython-compatible language core delivery root",
+      "evidence": "docs: record replacement archive evidence",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/chrischeng-c4/axiom/issues/2074",
+      "url": "https://github.com/bestter/ImageGenerator/pull/271",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "mamba Tier 5 hot stdlib: lightweight typing runtime compatible with Force Typed compilation",
+      "evidence": "⚡ Bolt: Use StringBuilder for currentPrompt replacements in TemplateParser",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/chrischeng-c4/axiom/issues/274",
+      "url": "https://github.com/simonoppowa/OpenNutriTracker/issues/732",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "mamba cpython: behavior std-libs codeccallbacks codec callback test  test encode odd bytes replacement",
+      "evidence": "Map: a user-run OpenAI-compatible endpoint as a fourth provider",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/chrischeng-c4/axiom/issues/550",
+      "url": "https://github.com/yujunkong/agent-k/pull/36",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "mamba typing: overload registry and checker signature replacement",
+      "evidence": "feat(providers): PROVIDER-001~014 + custom OpenAI Compatible",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/dominionstarwfg/DominionStar-One/pull/25",
+      "url": "https://github.com/Jhacarreiro/openai-compatible-tool-adapter/pull/18",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "Prove macOS stale-app replacement before publishing v1.1.13",
+      "evidence": "fix: reject invalid OPENAI_COMPATIBLE_ADAPTER_MAX_RETRIES values",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/EffortlessMetrics/perl-lsp-swarm/issues/7256",
+      "url": "https://github.com/FS-GG/.github/issues/2772",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "epic(parser-comparison-current): exact current-upstream evidence and lifecycle-compatible speed",
+      "evidence": "claim --force is not atomic: a transport failure between the destructive eviction and the replacement write leaves the row with NO holder, and the exit code reads like \"nothing happened\"",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/chrischeng-c4/axiom/issues/705",
+      "url": "https://github.com/nintendomustdie/hermes-agent/pull/1",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "mamba readiness: single replacement-readiness report and gate",
+      "evidence": "fix: skip thinking param for MiniMax Anthropic-compatible endpoints",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/chrischeng-c4/axiom/issues/714",
+      "url": "https://github.com/Jhacarreiro/ai-server-commander/pull/20",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "mamba readiness: mambalibs native-kit completeness for replacement path",
+      "evidence": "fix: cap replacements count and edit file size",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     },
     {
       "name": "github",
-      "url": "https://github.com/chrischeng-c4/axiom/issues/1121",
+      "url": "https://github.com/craft-ai-agents/craft-agents-oss/pull/1026",
       "signal_type": "社区兼容性提问",
       "real_signal": true,
-      "evidence": "C-API subset emulation feasibility spike (numpy/psycopg/lxml class) + native-replacement decision table",
+      "evidence": "fix: fast connection test for OpenAI-compatible endpoints, and duplicate /v1 path",
+      "relevance": "中（需判别是否跨品牌兼容痛点）"
+    },
+    {
+      "name": "github",
+      "url": "https://github.com/unixwin/rubash/issues/55",
+      "signal_type": "社区兼容性提问",
+      "real_signal": true,
+      "evidence": "[Compat][BusyBox][ash-signals] Bash-compatible differences",
       "relevance": "中（需判别是否跨品牌兼容痛点）"
     }
   ],
-  "real_demand_signal_count": 10,
+  "real_demand_signal_count": 11,
   "actionable_fixes": [
     "抬机械接口声明率：导入真实开源人形 BOM（天工/lerobot-humanoid/Asimov）反喂 ingestion"
   ]

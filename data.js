@@ -1,5 +1,5 @@
 const DB = {
-  "updated": "2026-08-12T12:22:31.965602Z",
+  "updated": "2026-08-24T06:10:17.327481Z",
   "stats": {
     "actuators": 217,
     "sensors": 90,
@@ -7,11 +7,20 @@ const DB = {
     "interfaces": 37,
     "protocols": 64,
     "llms": 42,
-    "platforms": 40,
+    "platforms": 41,
     "flexible_actuators": 21,
-    "robot_ai_models": 44,
-    "data_acquisition": 43,
-    "connectors": 2
+    "robot_ai_models": 46,
+    "data_acquisition": 46,
+    "connectors": 2,
+    "integrated_joints": 1,
+    "reducers": 3,
+    "controllers": 3,
+    "grippers": 8,
+    "structural": 3,
+    "cables": 2,
+    "power": 2,
+    "pcb": 2,
+    "bionic_mechanisms": 9
   },
   "actuators": [
     {
@@ -63,7 +72,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -119,7 +128,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -174,7 +183,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -231,7 +240,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -290,7 +299,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -345,7 +354,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -398,7 +407,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -454,7 +463,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -508,7 +517,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -560,7 +569,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -612,7 +621,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -664,7 +673,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -714,7 +723,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -764,7 +773,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -817,7 +826,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -870,7 +879,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -924,7 +933,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -977,7 +986,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1030,7 +1039,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1083,7 +1092,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1139,7 +1148,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1196,7 +1205,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1253,7 +1262,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1307,7 +1316,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1360,7 +1369,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1415,7 +1424,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1471,7 +1480,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1587,7 +1596,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1643,7 +1652,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1697,7 +1706,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1749,7 +1758,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1804,7 +1813,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1856,7 +1865,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1917,7 +1926,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1976,7 +1985,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2036,7 +2045,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2096,7 +2105,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2156,7 +2165,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2215,7 +2224,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2274,7 +2283,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2333,7 +2342,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2392,7 +2401,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2451,7 +2460,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2510,7 +2519,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2568,7 +2577,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2627,7 +2636,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2686,7 +2695,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2745,7 +2754,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2865,7 +2874,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2924,7 +2933,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2984,7 +2993,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3044,7 +3053,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3105,7 +3114,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3165,7 +3174,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3224,7 +3233,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3287,7 +3296,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3347,7 +3356,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3407,7 +3416,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3470,7 +3479,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3529,7 +3538,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3589,7 +3598,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3648,7 +3657,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3709,7 +3718,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3768,7 +3777,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3828,7 +3837,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3887,7 +3896,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3926,7 +3935,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -3965,7 +3974,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4004,7 +4013,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4043,7 +4052,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4082,7 +4091,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4121,7 +4130,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4160,7 +4169,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4199,7 +4208,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4253,7 +4262,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4307,7 +4316,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4361,7 +4370,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4415,7 +4424,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4469,7 +4478,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4524,7 +4533,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4578,7 +4587,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4689,7 +4698,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4749,7 +4758,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4809,7 +4818,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4868,7 +4877,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4928,7 +4937,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -4988,7 +4997,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5035,7 +5044,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5081,7 +5090,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5137,7 +5146,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5191,7 +5200,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5229,7 +5238,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5268,7 +5277,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5307,7 +5316,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5348,7 +5357,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5388,7 +5397,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5428,7 +5437,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5468,7 +5477,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5508,7 +5517,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5548,7 +5557,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5588,7 +5597,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5628,7 +5637,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5672,7 +5681,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5716,7 +5725,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5760,7 +5769,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5804,7 +5813,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5847,7 +5856,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5890,7 +5899,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5934,7 +5943,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -5978,7 +5987,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6021,7 +6030,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6064,7 +6073,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6107,7 +6116,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6142,7 +6151,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6177,7 +6186,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6212,7 +6221,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6247,7 +6256,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6282,7 +6291,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6317,7 +6326,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6352,7 +6361,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6387,7 +6396,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6422,7 +6431,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6457,7 +6466,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6492,7 +6501,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6527,7 +6536,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6562,7 +6571,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6597,7 +6606,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6632,7 +6641,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6667,7 +6676,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6702,7 +6711,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6737,7 +6746,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6772,7 +6781,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6807,7 +6816,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6842,7 +6851,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6877,7 +6886,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6912,7 +6921,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6947,7 +6956,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -6982,7 +6991,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7017,7 +7026,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7052,7 +7061,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7087,7 +7096,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7122,7 +7131,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7157,7 +7166,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7215,7 +7224,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7274,7 +7283,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7333,7 +7342,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7391,7 +7400,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7451,7 +7460,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7511,7 +7520,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7572,7 +7581,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7632,7 +7641,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7697,7 +7706,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7754,7 +7763,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7806,7 +7815,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7854,7 +7863,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7908,7 +7917,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -7956,7 +7965,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8003,7 +8012,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8050,7 +8059,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8114,7 +8123,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8173,7 +8182,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8233,7 +8242,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8293,7 +8302,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8351,7 +8360,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8407,7 +8416,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8456,7 +8465,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8511,7 +8520,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8560,7 +8569,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8616,7 +8625,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8665,7 +8674,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8714,7 +8723,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8772,7 +8781,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8825,7 +8834,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8886,7 +8895,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8935,7 +8944,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -8991,7 +9000,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9048,7 +9057,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9103,7 +9112,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9157,7 +9166,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9215,7 +9224,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9267,7 +9276,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9335,7 +9344,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9396,7 +9405,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9457,7 +9466,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9515,7 +9524,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9570,7 +9579,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9625,7 +9634,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9683,7 +9692,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9739,7 +9748,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9790,7 +9799,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9846,7 +9855,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9906,7 +9915,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -9964,7 +9973,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10023,7 +10032,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10082,7 +10091,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10142,7 +10151,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10179,7 +10188,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10278,7 +10287,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10327,7 +10336,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10376,7 +10385,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10425,7 +10434,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10474,7 +10483,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10523,7 +10532,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10572,7 +10581,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10621,7 +10630,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10670,7 +10679,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10719,7 +10728,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10768,7 +10777,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10817,7 +10826,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10866,7 +10875,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10915,7 +10924,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -10964,7 +10973,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11013,7 +11022,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11063,7 +11072,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11098,7 +11107,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11133,7 +11142,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11168,7 +11177,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11203,7 +11212,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11247,7 +11256,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11292,7 +11301,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11337,7 +11346,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11382,7 +11391,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11427,7 +11436,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11472,7 +11481,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11517,7 +11526,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11563,7 +11572,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11609,7 +11618,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11654,7 +11663,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11699,7 +11708,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11744,7 +11753,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11788,7 +11797,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11832,7 +11841,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11876,7 +11885,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11920,7 +11929,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -11964,7 +11973,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12008,7 +12017,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12052,7 +12061,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12096,7 +12105,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12140,7 +12149,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12184,7 +12193,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12228,7 +12237,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12272,7 +12281,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12316,7 +12325,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12360,7 +12369,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12404,7 +12413,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12448,7 +12457,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12492,7 +12501,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12536,7 +12545,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12632,7 +12641,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12676,7 +12685,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12720,7 +12729,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12764,7 +12773,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12808,7 +12817,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12852,7 +12861,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12896,7 +12905,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12940,7 +12949,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -12984,7 +12993,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13028,7 +13037,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13072,7 +13081,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13133,7 +13142,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13195,7 +13204,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13255,7 +13264,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13317,7 +13326,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13365,7 +13374,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13411,7 +13420,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13457,7 +13466,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13503,7 +13512,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13549,7 +13558,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13595,7 +13604,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13641,7 +13650,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13687,7 +13696,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13733,7 +13742,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13779,7 +13788,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13825,7 +13834,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13871,7 +13880,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13917,7 +13926,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -13963,7 +13972,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14009,7 +14018,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14055,7 +14064,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14107,7 +14116,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14259,7 +14268,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14313,7 +14322,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14373,7 +14382,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14427,7 +14436,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14480,7 +14489,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14533,7 +14542,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14586,7 +14595,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14634,7 +14643,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14684,7 +14693,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14734,7 +14743,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14785,7 +14794,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14838,7 +14847,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14889,7 +14898,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14940,7 +14949,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -14998,7 +15007,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -15056,7 +15065,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -15113,7 +15122,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -15169,7 +15178,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -15226,7 +15235,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -15283,7 +15292,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -27775,7 +27784,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -27813,7 +27822,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -27850,7 +27859,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -27890,7 +27899,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -27931,7 +27940,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -27972,7 +27981,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -28017,7 +28026,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -28061,7 +28070,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -28105,7 +28114,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -28154,7 +28163,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -28202,7 +28211,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -28250,7 +28259,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -28295,7 +28304,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -28345,7 +28354,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -28726,7 +28735,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -28786,7 +28795,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -28839,7 +28848,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -28894,7 +28903,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -28949,7 +28958,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29004,7 +29013,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29059,7 +29068,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29114,7 +29123,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29169,7 +29178,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29224,7 +29233,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29279,7 +29288,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29334,7 +29343,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29389,7 +29398,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29443,7 +29452,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29498,7 +29507,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29553,7 +29562,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29562,6 +29571,77 @@ const DB = {
       "tier_cap_reason": "出处仅为站点首页，证明不了该型号/该条目的任何参数；按 meta.tier_definition「官网首页，无原始链接」= Tier B 归位",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only"
+    },
+    {
+      "id": "ORG-matrixrobotics",
+      "name": "矩阵超智 Matrix Robotics",
+      "name_en": "Matrix Robotics (Matrix Intelligence)",
+      "category": "platforms",
+      "manufacturer": "上海矩阵超智集成有限公司",
+      "type": "humanoid_robot_company",
+      "description": "全栈自研人形机器人整机厂：大脑到硬件关节全自研。产品 MATRIX-1(2024-12)、MATRIX-3(2026-05 发布) 量产旗舰。执行「设计即量产」理念，整机螺丝从 1000+ 精简到 <300。非零件平台，与 RoboParts 跨厂商兼容层不在同一层，可作为头部人形样本与数据集来源。",
+      "description_en": "Vertically-integrated humanoid robot OEM (brain to joints in-house). MATRIX-1 (2024-12), MATRIX-3 (flagship, 2026-05). 'Design-for-manufacture' philosophy: screws cut from 1000+ to <300. Not a parts marketplace; orthogonal to RoboParts' cross-vendor compatibility layer.",
+      "applications": [
+        "humanoid",
+        "industrial"
+      ],
+      "price_range": "580000-680000",
+      "founded": "2024-04",
+      "founder": "张海星（前特斯拉中国设计中心负责人，参与 Optimus 相关项目）",
+      "team_background": [
+        "Tesla",
+        "NVIDIA",
+        "OpenAI",
+        "Huawei",
+        "DeepMind"
+      ],
+      "integration": "vertical (self-developed joints, screws, skins, tactile, base model)",
+      "sources": [
+        {
+          "source_type": "web",
+          "url": "https://robotscope.net/companies/juzhen-chaozhi/",
+          "source_credibility": "B",
+          "collected_at": "2026-08-18T13:27:02Z"
+        },
+        {
+          "source_type": "web",
+          "url": "https://www.36kr.com/",
+          "source_credibility": "B",
+          "collected_at": "2026-08-18T13:27:02Z"
+        },
+        {
+          "source_type": "web",
+          "url": "https://baike.baidu.com/item/MATRIX-1/65263038",
+          "source_credibility": "B",
+          "collected_at": "2026-08-18T13:27:02Z"
+        }
+      ],
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "公开报道汇编（界面新闻/36氪/IT之家/腾讯新闻/robotscope，2026）",
+      "source_tier": "A",
+      "confidence": 0.62,
+      "confidence_basis": "multiple_independent_press_coverage",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "reason": "企业主体/整机厂，非可采购零部件，无对外公开安装接口",
+        "registry_ref": "/api/mechanical_interfaces.json"
+      },
+      "entity_kind": "organization",
+      "kind_basis": "type=humanoid_robot_company（企业/机构主体，不是实物零部件，无接口可判定）",
+      "source_tier_basis": "deep_link:robotscope.net/companies/juzhen-chaozhi/",
+      "source_tier_prev": "B",
+      "last_verified": "2026-08-18"
     }
   ],
   "flexible_actuators": [
@@ -29595,7 +29675,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29632,7 +29712,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29669,7 +29749,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29706,7 +29786,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29743,7 +29823,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29780,7 +29860,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29820,7 +29900,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29863,7 +29943,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29906,7 +29986,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29949,7 +30029,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -29992,7 +30072,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -30035,7 +30115,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -30078,7 +30158,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -30121,7 +30201,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -30164,7 +30244,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -30207,7 +30287,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -30250,7 +30330,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -30293,7 +30373,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -30336,7 +30416,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -30379,7 +30459,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -30422,7 +30502,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -32481,6 +32561,107 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only"
+    },
+    {
+      "id": "ACE-VIDIHAND-001",
+      "name": "ACE-ViDiHand",
+      "name_en": "ACE-ViDiHand",
+      "category": "robot_ai_models",
+      "manufacturer": "ACE ROBOTICS",
+      "type": "hand_motion_capture",
+      "description": "4D bimanual motion reconstruction from egocentric video using video diffusion model. #1 on ARCTIC, HOT3D, HOI4D benchmarks. 0.997 frame-level accuracy.",
+      "applications": [
+        "data_collection",
+        "imitation_learning",
+        "robotics_research"
+      ],
+      "source": "ACE ROBOTICS announcement (2026-07-13)",
+      "source_url": "https://www.linkedin.com/posts/acerobotics_embodiedai-robotics-worldmodels-activity-7482290231291863040-GsQp",
+      "source_tier": "A",
+      "confidence": 0.75,
+      "confidence_basis": "linkedin_post",
+      "needs_provenance": true,
+      "specs": {
+        "frame_accuracy": 0.997,
+        "benchmarks": [
+          "ARCTIC",
+          "HOT3D",
+          "HOI4D"
+        ],
+        "model_size": "1.3B",
+        "input": "egocentric_video",
+        "output": "4D_hand_motion"
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "mount_type": "N/A",
+        "standard": null,
+        "flange": null,
+        "confidence": 1.0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "软件工具，无机械接口"
+      },
+      "entity_kind": "software",
+      "verified": false,
+      "data_quality": "partial",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "kind_basis": "category=data_acquisition: software entity, no mechanical interface",
+      "source_tier_basis": "deep_link:www.linkedin.com/posts/acerobotics_embodiedai-robotics-world"
+    },
+    {
+      "id": "ZEST-FRAMEWORK-001",
+      "name": "ZEST Framework",
+      "name_en": "ZEST: Zero-shot Embodied Skill Transfer",
+      "category": "robot_ai_models",
+      "manufacturer": "Boston Dynamics / ETH Zurich",
+      "type": "whole_body_control",
+      "description": "Zero-shot skill transfer framework for humanoid robots. Works with MoCap, video, and animation data. Deployed on Atlas, G1, Spot.",
+      "applications": [
+        "humanoid_control",
+        "motion_imitation",
+        "skill_transfer"
+      ],
+      "source": "arXiv:2602.00401 (2026-01-30)",
+      "source_url": "https://arxiv.org/abs/2602.00401",
+      "source_tier": "A",
+      "confidence": 0.9,
+      "confidence_basis": "peer_reviewed_paper",
+      "needs_provenance": false,
+      "specs": {
+        "data_sources": [
+          "MoCap",
+          "video",
+          "animation"
+        ],
+        "platforms": [
+          "Atlas",
+          "G1",
+          "Spot"
+        ],
+        "training_time": "10 hours on L4 GPU",
+        "zero_shot_deployment": true
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "mount_type": "N/A",
+        "standard": null,
+        "flange": null,
+        "confidence": 1.0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "软件框架，无机械接口"
+      },
+      "entity_kind": "software",
+      "verified": false,
+      "data_quality": "partial",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "kind_basis": "category=robot_ai_models: software entity, no mechanical interface",
+      "source_tier_basis": "deep_link:arxiv.org/abs/2602.00401"
     }
   ],
   "data_acquisition": [
@@ -33873,6 +34054,185 @@ const DB = {
       "source_tier_basis": "unattributable_text"
     },
     {
+      "id": "DATA-neuro-originflow-kit",
+      "name": "OriginFlow OriginKit Gen1 神经肌电腕带",
+      "name_en": "OriginFlow OriginKit Gen1 sEMG Wristband",
+      "category": "data_acquisition",
+      "manufacturer": "OriginFlow（渊澈太初）",
+      "type": "neural_interface",
+      "subcategory": "emg_wristband",
+      "description": "16通道表面肌电腕带，采集前臂运动神经信号，配合 PULSE 基座模型将肌肉激活解码为 Human Tokens（MotionSpace + TactileSpace + TendonSpace），用于具身智能动作数据采集。",
+      "data_modalities": [
+        "sEMG",
+        "IMU",
+        "egocentric_vision"
+      ],
+      "specs": {
+        "channels": 16,
+        "sampling_rate": "6kHz",
+        "bitrate": "96KB/s",
+        "signal_type": "surface EMG",
+        "decoding_model": "PULSE 0.2",
+        "output_format": "Human Tokens",
+        "connectivity": "BLE 5.0",
+        "form_factor": "wristband"
+      },
+      "interfaces": [
+        "BLE API",
+        "Python SDK"
+      ],
+      "open_source": false,
+      "applications": [
+        "embodied_data_collection",
+        "human_robot_interface",
+        "prosthetic_control"
+      ],
+      "source": "官方页面：https://originflow.com（量子位报道 2026-08-22）",
+      "confidence": 0.75,
+      "confidence_basis": "press_coverage_verified",
+      "last_verified": "2026-08-24",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source_tier": "B",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "reason": "腕带式可穿戴设备，无标准机械安装面",
+        "registry_ref": "/api/mechanical_interfaces.json"
+      },
+      "entity_kind": "component",
+      "source_tier_basis": "root_url_only",
+      "kind_basis": "category=data_acquisition: neural interface hardware, physical wearable",
+      "source_tier_prev": "C"
+    },
+    {
+      "id": "DATA-neuro-snoworigin-band",
+      "name": "雪梦未来神经腕带",
+      "name_en": "SnowOrigin Neural Wristband",
+      "category": "data_acquisition",
+      "manufacturer": "雪梦未来（SnowOrigin）",
+      "type": "neural_interface",
+      "subcategory": "emg_wristband",
+      "description": "高通道数表面肌电腕带，配合 NMH（Neural Math Hybrid）AI 解码模型，实时将肌电信号解码为手部全姿态数据（Pose + Force + Micro-control），用于具身智能数据采集。",
+      "data_modalities": [
+        "sEMG",
+        "IMU"
+      ],
+      "specs": {
+        "channels": "8+",
+        "sampling_rate": "200-250Hz",
+        "SNR": "43dB+",
+        "signal_type": "surface EMG",
+        "decoding_model": "NMH",
+        "output_format": "Pose + Force + Micro-control",
+        "connectivity": "BLE",
+        "form_factor": "wristband"
+      },
+      "interfaces": [
+        "BLE API",
+        "Python SDK"
+      ],
+      "open_source": false,
+      "applications": [
+        "embodied_data_collection",
+        "hand_pose_estimation",
+        "prosthetic_control"
+      ],
+      "source": "36氪报道（2026-07-13），龚虹嘉、陆奇投资",
+      "confidence": 0.72,
+      "confidence_basis": "press_coverage_verified",
+      "last_verified": "2026-08-24",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source_tier": "B",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "reason": "腕带式可穿戴设备，无标准机械安装面",
+        "registry_ref": "/api/mechanical_interfaces.json"
+      },
+      "entity_kind": "component",
+      "source_tier_basis": "press_coverage: quantum_bit 2026-08-22",
+      "kind_basis": "category=data_acquisition: neural interface hardware, physical wearable"
+    },
+    {
+      "id": "DATA-neuro-aemg-ref",
+      "name": "AEMG 通用肌电采集参考平台",
+      "name_en": "AEMG Universal EMG Collection Reference Platform",
+      "category": "data_acquisition",
+      "manufacturer": "AEMG-series（CVPR 2026 开源）",
+      "type": "neural_interface",
+      "subcategory": "emg_reference",
+      "description": "基于 CVPR 2026 论文 AEMG 的跨设备通用肌电采集参考架构。采用 NCT（Neural Contraction Tokenizer）能量门控分词，将连续 EMG 信号切分为 8192 个共享运动原语，支持跨设备、跨被试、跨任务零样本迁移。",
+      "data_modalities": [
+        "sEMG"
+      ],
+      "specs": {
+        "channels": "variable（支持任意拓扑）",
+        "sampling_rate": "variable（统一输入空间）",
+        "codebook_size": 8192,
+        "token_type": "Neuromuscular Contraction Token",
+        "pretraining": "masked patch prediction",
+        "zero_shot_accuracy": "89.81% (LOSO)",
+        "open_source": true,
+        "github": "https://github.com/AEMG-series/AEMG"
+      },
+      "interfaces": [
+        "Python API",
+        "PyTorch"
+      ],
+      "open_source": true,
+      "applications": [
+        "gesture_recognition",
+        "embodied_data_collection",
+        "prosthetic_control"
+      ],
+      "source": "CVPR 2026 论文 + GitHub 开源",
+      "confidence": 0.85,
+      "confidence_basis": "peer_reviewed_paper",
+      "last_verified": "2026-08-24",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source_tier": "C",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "reason": "软件参考架构，无物理实体",
+        "registry_ref": "/api/mechanical_interfaces.json"
+      },
+      "entity_kind": "component",
+      "source_tier_basis": "unattributable_text",
+      "kind_basis": "category=data_acquisition: neural interface software/reference, no physical hardware",
+      "source_tier_prev": "A"
+    },
+    {
       "id": "DATA-oss-agibot-world",
       "name": "AgiBot World 智元开源具身数据集平台",
       "name_en": "AgiBot World (Colosseo)",
@@ -34860,7 +35220,7 @@ const DB = {
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0.0,
+        "confidence": 0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -34876,6 +35236,1908 @@ const DB = {
       },
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.prnewswire.com/news-releases/molex-introduces-minimix-hy"
+    }
+  ],
+  "integrated_joints": [
+    {
+      "id": "IJ-MATRIX-1",
+      "name": "Matrix 一体化关节模组 (MATRIX-1/3)",
+      "name_en": "Matrix Integrated Joint Module (MATRIX-1/3)",
+      "category": "integrated_joints",
+      "manufacturer": "矩阵超智",
+      "type": "integrated_joint_module",
+      "description": "高度集成化、模块化的高性能一体化关节执行器。MATRIX-1 全身部署 33 个。本条目仅收录平台级公开结构组成，零件级规格（丝杠导程、电机 KV、减速比等）厂商未公开，不臆造。",
+      "composition": [
+        "planetary_roller_screw（行星滚柱丝杠）",
+        "frameless_torque_motor（无框力矩电机）",
+        "servo_drive（伺服驱动）",
+        "reducer（减速器）",
+        "encoder（编码器）",
+        "sensor（传感器）"
+      ],
+      "composition_note": "该 6 类子部件即 RoboParts 缺失的机械骨架类目（减速器/控制器/传感器等）的起始脚手架；其对应零件级实体待公开数据源补充。",
+      "applications": [
+        "humanoid"
+      ],
+      "price_range": "varies",
+      "verified": false,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "公开报道（MATRIX-1 集成 33 个一体化关节执行器，集成丝杠+电机+驱动+减速器+编码器+传感器；36氪/IT之家/百度百科）",
+      "source_tier": "C",
+      "confidence": 0.5,
+      "confidence_basis": "press_reported_module_composition",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "reason": "厂商专有集成模组，对外不开放安装接口标准",
+        "registry_ref": "/api/mechanical_interfaces.json"
+      },
+      "entity_kind": "component",
+      "source_tier_basis": "unattributable_text",
+      "source_tier_prev": "B"
+    }
+  ],
+  "reducers": [
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "RED-001",
+      "name": "Harmonic Drive CSF/SHF Series",
+      "name_en": "Harmonic Drive CSF/SHF Series",
+      "category": "reducers",
+      "manufacturer": "Harmonic Drive LLC",
+      "type": "strain_wave_gear",
+      "description": "Zero-backlash strain wave (harmonic) gears for robot joints; families include CSF, SHF, SHG, SHD and FHA integrated actuators. Made in USA/Japan/Germany, ISO 9001 / AS9100.",
+      "applications": [
+        "humanoid",
+        "manipulator",
+        "semiconductor",
+        "medical",
+        "aerospace"
+      ],
+      "source": "厂商产品页：Harmonic Drive（gear-units 深链，已核验）",
+      "source_url": "https://harmonicdrive.net/products/gear-units",
+      "source_tier": "A",
+      "confidence": 0.7,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "gear_type": "strain wave (harmonic)",
+        "backlash": "zero-backlash",
+        "families": [
+          "CSF",
+          "SHF",
+          "SHG",
+          "SHD",
+          "FHA"
+        ]
+      },
+      "source_tier_basis": "deep_link:harmonicdrive.net/products/gear-units"
+    },
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "RED-002",
+      "name": "Nabtesco RV Reducer",
+      "name_en": "Nabtesco RV Reducer",
+      "category": "reducers",
+      "manufacturer": "Nabtesco",
+      "type": "cycloidal_pin_reducer",
+      "description": "Cycloidal pin-wheel precision reducer (RV) for industrial robot joints; high rigidity, compact, overload-resistant. Cited as ~60% global industrial-robot reducer share.",
+      "applications": [
+        "industrial_robot",
+        "manipulator",
+        "humanoid"
+      ],
+      "source": "厂商产品页：Nabtesco（RV 介绍页，已核验）",
+      "source_url": "https://www.nabtesco-motion.cn/cn/products/introduction/",
+      "source_tier": "A",
+      "confidence": 0.7,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "gear_type": "cycloidal pin-wheel (RV)",
+        "rigidity": "high",
+        "backlash": "near-zero"
+      },
+      "source_tier_basis": "deep_link:www.nabtesco-motion.cn/cn/products/introduction/"
+    },
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "RED-003",
+      "name": "Leaderdrive 绿的谐波 Strain Wave Gears",
+      "name_en": "Leaderdrive Strain Wave Gears",
+      "category": "reducers",
+      "manufacturer": "Leaderdrive (绿的谐波)",
+      "type": "strain_wave_gear",
+      "description": "China-listed (SSE STAR 688017) harmonic drive maker; 21 series incl. LCD/LCS/LHS/LHD for robot and humanoid joints; ISO 9001/14001.",
+      "applications": [
+        "humanoid",
+        "manipulator",
+        "industrial_robot"
+      ],
+      "source": "厂商产品页：Leaderdrive（about 页，已核验）",
+      "source_url": "https://www.leaderdrive.com/about.html",
+      "source_tier": "A",
+      "confidence": 0.65,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "gear_type": "strain wave (harmonic)",
+        "series": [
+          "LCD",
+          "LCS",
+          "LHS",
+          "LHD"
+        ],
+        "listing": "SSE STAR 688017"
+      },
+      "source_tier_basis": "deep_link:www.leaderdrive.com/about.html"
+    }
+  ],
+  "controllers": [
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "CTRL-001",
+      "name": "ODrive Pro",
+      "name_en": "ODrive Pro",
+      "category": "controllers",
+      "manufacturer": "ODrive Robotics",
+      "type": "servo_motor_controller",
+      "description": "High-performance BLDC/PMAC servo controller with FOC; torque/velocity/position/trajectory control; isolated CAN/CAN-FD, USB, UART, SPI/RS485 encoders.",
+      "applications": [
+        "manipulator",
+        "exoskeleton",
+        "mobile_robot",
+        "humanoid"
+      ],
+      "source": "厂商产品页：ODrive（shop/odrive-pro 深链，已核验规格）",
+      "source_url": "https://odriverobotics.com/shop/odrive-pro",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "continuous_power": "3 kW",
+        "peak_power": "5 kW",
+        "voltage": "14-58 V (14S)",
+        "continuous_current": "70 A",
+        "control_modes": [
+          "torque",
+          "velocity",
+          "position",
+          "trajectory"
+        ],
+        "interfaces": [
+          "CAN/CAN-FD",
+          "USB",
+          "UART",
+          "SPI/RS485"
+        ],
+        "footprint": "51x64 mm"
+      },
+      "source_tier_basis": "deep_link:odriverobotics.com/shop/odrive-pro"
+    },
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "CTRL-002",
+      "name": "CubeMars AK80-64",
+      "name_en": "CubeMars AK80-64",
+      "category": "controllers",
+      "manufacturer": "CubeMars",
+      "type": "integrated_actuator",
+      "description": "Highly integrated robotic actuator: BLDC motor + 64:1 planetary reducer + driver + encoder; supports servo and MIT control modes; used in exoskeletons, cobot arms, legged robots.",
+      "applications": [
+        "humanoid",
+        "quadruped",
+        "exoskeleton",
+        "cobot"
+      ],
+      "source": "厂商产品页：CubeMars（ak80-64 深链，已核验规格）",
+      "source_url": "https://cubemars.com/cn/product/ak80-64-kv80-robotic-actuator.html",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "peak_torque": "120 Nm",
+        "rated_torque": "48 Nm",
+        "reduction": "64:1 planetary",
+        "modes": [
+          "servo",
+          "MIT"
+        ],
+        "integration": "motor+reducer+driver+encoder"
+      },
+      "source_tier_basis": "deep_link:cubemars.com/cn/product/ak80-64-kv80-robotic-actuator.html"
+    },
+    {
+      "verified": false,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "CTRL-003",
+      "name": "Roboteq Motor Controller",
+      "name_en": "Roboteq Motor Controller",
+      "category": "controllers",
+      "manufacturer": "Roboteq",
+      "type": "motor_controller",
+      "description": "Brushed/brushless DC motor controllers for mobile robots and AGVs; CAN, RS232, USB interfaces; single/dual channel drive.",
+      "applications": [
+        "mobile_robot",
+        "AGV",
+        "cobot"
+      ],
+      "source": "厂商主页：Roboteq（根域名，未核验具体型号规格）",
+      "source_url": "https://www.roboteq.com",
+      "source_tier": "B",
+      "confidence": 0.5,
+      "confidence_basis": "named_vendor_catalog",
+      "needs_provenance": true,
+      "specs": {
+        "type": "brushed/brushless DC motor controller",
+        "interfaces": [
+          "CAN",
+          "RS232",
+          "USB"
+        ]
+      },
+      "source_tier_basis": "root_url_only"
+    }
+  ],
+  "grippers": [
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "GRIP-001",
+      "name": "OnRobot 2FG7",
+      "name_en": "OnRobot 2FG7",
+      "category": "grippers",
+      "manufacturer": "OnRobot",
+      "type": "electric_parallel_gripper",
+      "description": "Electric parallel gripper for tight spaces and demanding payloads; IP67, ISO Class 5 cleanroom certified; intelligent grip/lost-grip detection.",
+      "applications": [
+        "machine_tending",
+        "material_handling",
+        "cleanroom"
+      ],
+      "source": "厂商产品页：OnRobot（en/products/2fg7 深链，已核验规格）",
+      "source_url": "https://onrobot.com/en/products/2fg7",
+      "source_tier": "A",
+      "confidence": 0.85,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "payload": "11 kg",
+        "grip_force": "20-140 N",
+        "stroke": "up to 73 mm",
+        "ip_rating": "IP67",
+        "cleanroom": "ISO Class 5",
+        "type": "electric parallel"
+      },
+      "source_tier_basis": "deep_link:onrobot.com/en/products/2fg7"
+    },
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "GRIP-002",
+      "name": "Robotiq 2F-85",
+      "name_en": "Robotiq 2F-85",
+      "category": "grippers",
+      "manufacturer": "Robotiq",
+      "type": "adaptive_gripper",
+      "description": "World best-selling adaptive 2-finger gripper for collaborative robots; internal/external parallel and encompassing grip; plug-and-play with major cobots.",
+      "applications": [
+        "pick_and_place",
+        "machine_tending",
+        "assembly",
+        "quality_testing"
+      ],
+      "source": "厂商产品页：Robotiq（2f85-140 深链，已核验规格）",
+      "source_url": "https://robotiq.com/products/2f85-140-adaptive-robot-gripper",
+      "source_tier": "A",
+      "confidence": 0.85,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "payload": "5 kg",
+        "stroke": "85 mm",
+        "grip_force": "20-235 N",
+        "power": "24 V, 2 A",
+        "cycles": "2,000,000",
+        "type": "adaptive 2-finger"
+      },
+      "source_tier_basis": "deep_link:robotiq.com/products/2f85-140-adaptive-robot-gripper"
+    },
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "GRIP-003",
+      "name": "SCHUNK EGP",
+      "name_en": "SCHUNK EGP",
+      "category": "grippers",
+      "manufacturer": "SCHUNK",
+      "type": "electric_parallel_gripper",
+      "description": "Electric 2-finger parallel gripper for small components; brushless DC servo, IO-Link option, high cycle rate; compact for minimal interference contour.",
+      "applications": [
+        "pick_and_place",
+        "assembly",
+        "electronics_handling",
+        "lab_automation"
+      ],
+      "source": "厂商产品页：SCHUNK（egp 系列深链，已核验规格）",
+      "source_url": "https://schunk.com/gb_en/gripping-systems/series/egp/",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "grip_force": "140-300 N (EGP40/60/64)",
+        "stroke": "6-10 mm",
+        "repeatability": "0.02 mm",
+        "interface": "IO-Link / digital I/O",
+        "type": "electric parallel"
+      },
+      "source_tier_basis": "deep_link:schunk.com/gb_en/gripping-systems/series/egp/"
+    },
+    {
+      "verified": false,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "GRIP-004",
+      "name": "DH Robotics 大寰 Electric Gripper",
+      "name_en": "DH Robotics Electric Gripper",
+      "category": "grippers",
+      "manufacturer": "DH Robotics (大寰)",
+      "type": "electric_gripper",
+      "description": "China-based electric/servo gripper maker; AG series with force control and feedback; used in 3C, automotive and lab automation.",
+      "applications": [
+        "machine_tending",
+        "3c_assembly",
+        "lab_automation"
+      ],
+      "source": "厂商主页：DH Robotics（根域名，未核验具体型号规格）",
+      "source_url": "http://dh-robotics.com/",
+      "source_tier": "B",
+      "confidence": 0.55,
+      "confidence_basis": "named_vendor_catalog",
+      "needs_provenance": true,
+      "specs": {
+        "type": "electric/servo gripper",
+        "examples": [
+          "AG-95",
+          "AG-160"
+        ],
+        "note": "force control, real-time feedback"
+      },
+      "source_tier_basis": "root_url_only"
+    },
+    {
+      "id": "PRIMA1-HAND-001",
+      "name": "Prima1 Dexterous Hand",
+      "name_en": "Prima1 Dexterous Hand",
+      "category": "grippers",
+      "manufacturer": "Xynova",
+      "type": "dexterous_hand",
+      "description": "22-DoF robotic hand with tactile sensors and high-precision force control. Industrial-grade design for precision manipulation tasks. Showcased at WRC 2026 Beijing.",
+      "applications": [
+        "precision_manipulation",
+        "industrial_assembly",
+        "research",
+        "humanoid_robotics"
+      ],
+      "source": "Xynova official announcement (2026-08-18)",
+      "source_url": "https://nnets.ru/news/robotizirovannaja-kist-prima1-ot-xynova-poluchila-22-stepeni-svobody",
+      "source_tier": "A",
+      "confidence": 0.7,
+      "confidence_basis": "press_release",
+      "needs_provenance": true,
+      "specs": {
+        "dof": 22,
+        "tactile_sensors": true,
+        "force_control": true,
+        "target_market": "industrial"
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "verified": false,
+      "data_quality": "partial",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "teleop_support": [
+        "Isaac Teleop",
+        "Spes Teleop"
+      ],
+      "ai_frameworks": [
+        "ACE-ViDiHand",
+        "ZEST",
+        "LeRobot"
+      ],
+      "tactile_feedback": true,
+      "force_control": true,
+      "kind_basis": "category=grippers: component entity, no mechanical interface",
+      "source_tier_basis": "deep_link:nnets.ru/news/robotizirovannaja-kist-prima1-ot-xynova-poluch"
+    },
+    {
+      "id": "DEXHAND021PRO-001",
+      "name": "DexHand021 Pro",
+      "name_en": "DexHand021 Pro",
+      "category": "grippers",
+      "manufacturer": "DexRobot",
+      "type": "dexterous_hand",
+      "description": "Flagship dual-tendon driven dexterous hand with 22 DoF, 50N payload, full-palm multi-modal sensing, and 300K+ durability cycles. One-fifth the cost of comparable systems.",
+      "applications": [
+        "industrial_manipulation",
+        "research",
+        "humanoid_robotics"
+      ],
+      "source": "DexRobot Automate 2026 announcement",
+      "source_url": "https://www.prnewswire.com/news-releases/dexrobot-unveils-full-dexterous-hand-series-and-new-dextele-teleoperation-system-at-automate-2026-302808579.html",
+      "source_tier": "A",
+      "confidence": 0.85,
+      "confidence_basis": "official_press_release",
+      "needs_provenance": false,
+      "specs": {
+        "dof": 22,
+        "payload": "50N",
+        "durability_cycles": 300000,
+        "sensing": "full_palm_multi_modal",
+        "drive_type": "dual_tendon"
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "verified": false,
+      "data_quality": "partial",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "teleop_support": [
+        "DexTele"
+      ],
+      "ai_frameworks": [
+        "ACE-ViDiHand",
+        "ZEST"
+      ],
+      "tactile_feedback": true,
+      "force_control": true,
+      "source_tier_basis": "deep_link:www.prnewswire.com/news-releases/dexrobot-unveils-full-dexte"
+    },
+    {
+      "id": "NEO-HAND-001",
+      "name": "NEO 25-DoF Hand",
+      "name_en": "NEO 25-DoF Hand",
+      "category": "grippers",
+      "manufacturer": "1X Technologies",
+      "type": "dexterous_hand",
+      "description": "25-DoF tendon-driven hand for NEO humanoid. Near human-level dexterity with force transparency. IP68 waterproof, food-safe. 10K units/year production capacity.",
+      "applications": [
+        "humanoid_robotics",
+        "household_tasks",
+        "food_handling",
+        "research"
+      ],
+      "source": "1X Technologies official announcement (2026-07-09)",
+      "source_url": "https://www.1x.tech/discover/neos-hands",
+      "source_tier": "A",
+      "confidence": 0.9,
+      "confidence_basis": "official_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "dof": 25,
+        "dof_fingers_palm": 22,
+        "dof_wrist": 3,
+        "peak_torque_thumb": "3.5 Nm",
+        "peak_torque_finger": "2.6 Nm",
+        "wrist_torque": "17.75 Nm",
+        "positioning_accuracy": "±0.2 mm",
+        "ip_rating": "IP68",
+        "food_safe": true,
+        "production_capacity": "10000/year"
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "verified": false,
+      "data_quality": "partial",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "teleop_support": [
+        "Isaac Teleop"
+      ],
+      "ai_frameworks": [
+        "ZEST",
+        "GR00T"
+      ],
+      "tactile_feedback": true,
+      "force_control": true,
+      "force_transparency": true,
+      "source_tier_basis": "deep_link:www.1x.tech/discover/neos-hands"
+    },
+    {
+      "id": "PROHAND-001",
+      "name": "ProHand 1.0",
+      "name_en": "ProHand 1.0",
+      "category": "grippers",
+      "manufacturer": "Proception",
+      "type": "dexterous_hand",
+      "description": "22-DoF tendon-driven robotic hand with skin-like sensors. Includes ProGlove wearable for human hand data collection. Shipping June 2026.",
+      "applications": [
+        "research",
+        "data_collection",
+        "humanoid_robotics"
+      ],
+      "source": "Proception official announcement (2026-06)",
+      "source_url": "https://www.proception.ai/news/introducing-prohand",
+      "source_tier": "A",
+      "confidence": 0.85,
+      "confidence_basis": "official_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "dof": 22,
+        "sensing": "skin_like_contact",
+        "wearable_data_collection": true,
+        "pro_glove": true
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "verified": false,
+      "data_quality": "partial",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "teleop_support": [],
+      "ai_frameworks": [
+        "LeRobot"
+      ],
+      "tactile_feedback": true,
+      "force_control": false,
+      "wearable_data_collection": true,
+      "source_tier_basis": "deep_link:www.proception.ai/news/introducing-prohand"
+    }
+  ],
+  "structural": [
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "STR-001",
+      "name": "MISUMI Aluminum Extrusion",
+      "name_en": "MISUMI Aluminum Extrusion",
+      "category": "structural",
+      "manufacturer": "MISUMI",
+      "type": "aluminum_extrusion",
+      "description": "T-slot aluminum framing (5/6/8 series) with brackets and connectors; cut-to-length service; used for robot frames, enclosures and workstations.",
+      "applications": [
+        "frame",
+        "enclosure",
+        "workstation",
+        "fixture"
+      ],
+      "source": "厂商产品页：MISUMI（铝合金型材详情页，已核验）",
+      "source_url": "https://www.misumi.com.cn/vona2/detail/110302368740/",
+      "source_tier": "A",
+      "confidence": 0.7,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "type": "T-slot aluminum extrusion",
+        "series": [
+          "5",
+          "6",
+          "8"
+        ],
+        "material": "A6N01S-T5 / 6063",
+        "customization": "cut-to-length"
+      },
+      "source_tier_basis": "deep_link:www.misumi.com.cn/vona2/detail/110302368740/"
+    },
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "STR-002",
+      "name": "80/20 T-slot Framing",
+      "name_en": "80/20 T-slot Framing",
+      "category": "structural",
+      "manufacturer": "80/20 Inc",
+      "type": "aluminum_extrusion",
+      "description": "Modular T-slot aluminum framing system (fractional and metric profiles) for machine frames, guards and custom structures.",
+      "applications": [
+        "frame",
+        "enclosure",
+        "guard",
+        "fixture"
+      ],
+      "source": "厂商主页：80/20（根域名，未核验具体型材编号）",
+      "source_url": "https://8020.net",
+      "source_tier": "B",
+      "confidence": 0.6,
+      "confidence_basis": "named_vendor_catalog",
+      "needs_provenance": true,
+      "specs": {
+        "type": "T-slot aluminum framing",
+        "profiles": "fractional & metric"
+      },
+      "source_tier_basis": "root_url_only"
+    },
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "STR-003",
+      "name": "item MB Building Kit",
+      "name_en": "item MB Building Kit System",
+      "category": "structural",
+      "manufacturer": "item Industrietechnik",
+      "type": "aluminum_profile_system",
+      "description": "Aluminum profile and connector system (MB Building Kit) for machine frames, workstations and automation structures.",
+      "applications": [
+        "frame",
+        "workstation",
+        "automation_structure"
+      ],
+      "source": "厂商主页：item（根域名，未核验具体型材编号）",
+      "source_url": "https://www.item24.com",
+      "source_tier": "B",
+      "confidence": 0.6,
+      "confidence_basis": "named_vendor_catalog",
+      "needs_provenance": true,
+      "specs": {
+        "type": "aluminum profile system",
+        "system": "MB Building Kit"
+      },
+      "source_tier_basis": "root_url_only"
+    }
+  ],
+  "cables": [
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "CAB-001",
+      "name": "igus chainflex Robot Cable",
+      "name_en": "igus chainflex Robot Cable",
+      "category": "cables",
+      "manufacturer": "igus",
+      "type": "robot_cable",
+      "description": "Continuous-flex cables and e-chain energy chains for multi-axis robots; CFROBOT series rated up to ±360°/m torsion; up to 4-year chainflex guarantee.",
+      "applications": [
+        "robot_dress_pack",
+        "cable_chain",
+        "multi_axis"
+      ],
+      "source": "厂商产品页：igus（motor-cables 深链，已核验）",
+      "source_url": "https://www.igus.com/cables/motor-cables",
+      "source_tier": "A",
+      "confidence": 0.75,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "type": "continuous-flex robot cable",
+        "torsion": "up to ±360°/m",
+        "system": "e-chain energy chain",
+        "guarantee": "up to 4 years",
+        "series": "CFROBOT"
+      },
+      "source_tier_basis": "deep_link:www.igus.com/cables/motor-cables"
+    },
+    {
+      "verified": false,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "CAB-002",
+      "name": "LEONI Robot Cable",
+      "name_en": "LEONI Robot Cable",
+      "category": "cables",
+      "manufacturer": "LEONI",
+      "type": "robot_cable",
+      "description": "Cable solutions for robotics: drag-chain and torsion-resistant designs for continuous-motion robot applications.",
+      "applications": [
+        "robot_dress_pack",
+        "cable_chain"
+      ],
+      "source": "厂商主页：LEONI（根域名，未核验具体型号规格）",
+      "source_url": "https://www.leoni.com",
+      "source_tier": "B",
+      "confidence": 0.5,
+      "confidence_basis": "named_vendor_catalog",
+      "needs_provenance": true,
+      "specs": {
+        "type": "robot cable / drag-chain cable"
+      },
+      "source_tier_basis": "root_url_only"
+    }
+  ],
+  "power": [
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "PWR-001",
+      "name": "Tattu/Grepow Smart LiPo Battery",
+      "name_en": "Tattu/Grepow Smart LiPo Battery",
+      "category": "power",
+      "manufacturer": "Tattu (Grepow)",
+      "type": "smart_lipo_battery",
+      "description": "Smart LiPo battery packs (6S/12S/14S/18S) with BMS and DroneCAN for drones/UGV/robotics; AS9100D aerospace-certified; up to 25C discharge.",
+      "applications": [
+        "UGV",
+        "drone",
+        "mobile_robot",
+        "payload"
+      ],
+      "source": "厂商产品页：Grepow/Tattu（products 深链，已核验）",
+      "source_url": "https://www.grepow.com/products.html",
+      "source_tier": "A",
+      "confidence": 0.7,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "type": "smart LiPo battery",
+        "config": [
+          "6S",
+          "12S",
+          "14S",
+          "18S"
+        ],
+        "bms": "yes",
+        "protocol": "DroneCAN",
+        "cert": "AS9100D",
+        "discharge": "up to 25C"
+      },
+      "source_tier_basis": "deep_link:www.grepow.com/products.html"
+    },
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "PWR-002",
+      "name": "MEAN WELL Industrial PSU",
+      "name_en": "MEAN WELL Industrial Power Supply",
+      "category": "power",
+      "manufacturer": "MEAN WELL",
+      "type": "power_supply",
+      "description": "Industrial switching power supplies (DIN-rail and enclosed) commonly used to power robot controllers and actuators.",
+      "applications": [
+        "controller_power",
+        "actuator_power",
+        "enclosure"
+      ],
+      "source": "厂商主页：MEAN WELL（根域名，未核验具体型号规格）",
+      "source_url": "https://www.meanwell.com",
+      "source_tier": "B",
+      "confidence": 0.6,
+      "confidence_basis": "named_vendor_catalog",
+      "needs_provenance": true,
+      "specs": {
+        "type": "industrial power supply (SMPS)",
+        "form": "DIN-rail / enclosed"
+      },
+      "source_tier_basis": "root_url_only"
+    }
+  ],
+  "pcb": [
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "PCB-001",
+      "name": "SimpleFOC Board",
+      "name_en": "SimpleFOC Board",
+      "category": "pcb",
+      "manufacturer": "SimpleFOC",
+      "type": "foc_driver_board",
+      "description": "Open-source Field-Oriented-Control driver boards and Arduino SimpleFOC library for BLDC/PMSM motor control.",
+      "applications": [
+        "bldc_control",
+        "actuator_control",
+        "prototyping"
+      ],
+      "source": "厂商主页：SimpleFOC（根域名，未核验具体板型）",
+      "source_url": "https://www.simplefoc.com",
+      "source_tier": "B",
+      "confidence": 0.6,
+      "confidence_basis": "named_vendor_catalog",
+      "needs_provenance": true,
+      "specs": {
+        "type": "FOC driver board / library",
+        "motor": "BLDC/PMSM",
+        "open_source": "yes",
+        "interface": "Arduino/SPI"
+      },
+      "source_tier_basis": "root_url_only"
+    },
+    {
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "id": "PCB-002",
+      "name": "PCBWay Robotics PCB Fabrication",
+      "name_en": "PCBWay Robotics PCB Fabrication",
+      "category": "pcb",
+      "manufacturer": "PCBWay",
+      "type": "pcb_fabrication_service",
+      "description": "PCB prototyping and assembly service for robot electronics: motor-driver boards, control PCBs, SMT and through-hole.",
+      "applications": [
+        "driver_board",
+        "control_pcb",
+        "prototyping"
+      ],
+      "source": "厂商主页：PCBWay（根域名，未核验具体工艺规格）",
+      "source_url": "https://www.pcbway.com",
+      "source_tier": "B",
+      "confidence": 0.6,
+      "confidence_basis": "named_vendor_catalog",
+      "needs_provenance": true,
+      "specs": {
+        "type": "PCB fabrication & assembly service",
+        "capability": "prototype to production, SMT"
+      },
+      "source_tier_basis": "root_url_only"
+    }
+  ],
+  "bionic_mechanisms": [
+    {
+      "id": "BIONIC-JOINT-001",
+      "name": "球窝仿生关节",
+      "name_en": "Ball-and-Socket Bionic Joint",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_joints",
+      "manufacturer": "RoboParts",
+      "type": "bionic_joint",
+      "description": "仿人类肩关节/髋关节的球窝关节，3自由度，适用于仿人机器人上肢/下肢。",
+      "biomimetic_target": "human_shoulder_hip",
+      "dof": 3,
+      "load_capacity": "50N",
+      "range_of_motion": "360° rotation",
+      "applications": [
+        "humanoid_upper_limb",
+        "humanoid_lower_limb",
+        "prosthetics"
+      ],
+      "source": "https://roboparts.cc",
+      "source_tier": "A",
+      "confidence": 0.6,
+      "specs": {
+        "dof": 3,
+        "joint_type": "ball_and_socket",
+        "load_capacity": "50N",
+        "rotation_range": "360°",
+        "friction_torque": "0.5 Nm",
+        "materials": [
+          "PEEK",
+          "titanium_alloy",
+          "carbon_fiber"
+        ]
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "mount_type": "flange",
+        "standard": "ISO 9409-1",
+        "flange": "64mm",
+        "confidence": 0.8,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+      },
+      "3d_printable": true,
+      "stl_files": [
+        {
+          "name": "ball_socket_housing",
+          "url": "/3d/bionic_joint/ball_socket_housing.stl",
+          "scale": "1:1"
+        },
+        {
+          "name": "socket_insert",
+          "url": "/3d/bionic_joint/socket_insert.stl",
+          "scale": "1:1"
+        }
+      ],
+      "print_settings": {
+        "material": [
+          "PETG",
+          "ABS",
+          "Nylon"
+        ],
+        "infill": "40%",
+        "layer_height": "0.15mm",
+        "support": true,
+        "print_time": "4.5 hours"
+      },
+      "cad_files": [
+        {
+          "format": "STEP",
+          "url": "/cad/bionic_ball_joint.step"
+        },
+        {
+          "format": "STL",
+          "url": "/cad/bionic_ball_joint.stl"
+        }
+      ],
+      "compatibility": {
+        "mounts_to": [
+          "FRAME-001",
+          "FRAME-002"
+        ],
+        "connects_to": [
+          "BIONIC-ACTUATOR-001"
+        ],
+        "compatible_with": [
+          "BIONIC-SENSOR-001"
+        ]
+      },
+      "entity_kind": "component",
+      "verified": false,
+      "data_quality": "partial",
+      "source_tier_basis": "entity_homepage",
+      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
+      "key_specs": {
+        "joint_type": "ball_and_socket",
+        "range_of_motion": "180deg",
+        "load_capacity": "50N"
+      }
+    },
+    {
+      "id": "BIONIC-JOINT-002",
+      "name": "铰链仿生关节",
+      "name_en": "Hinge Bionic Joint",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_joints",
+      "manufacturer": "RoboParts",
+      "type": "bionic_joint",
+      "description": "仿人类膝关节/肘关节的铰链关节，1自由度，高负载，适用于仿人机器人膝/肘部。",
+      "biomimetic_target": "human_knee_elbow",
+      "dof": 1,
+      "load_capacity": "200N",
+      "range_of_motion": "0-135° flexion",
+      "applications": [
+        "humanoid_knee",
+        "humanoid_elbow",
+        "exoskeleton"
+      ],
+      "source": "https://roboparts.cc",
+      "source_tier": "A",
+      "confidence": 0.6,
+      "specs": {
+        "dof": 1,
+        "joint_type": "hinge",
+        "load_capacity": "200N",
+        "flexion_range": "0-135°",
+        "locking_mechanism": "bi-stable",
+        "materials": [
+          "aluminum_alloy",
+          "PEEK",
+          "steel"
+        ]
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "mount_type": "flange",
+        "standard": "ISO 9409-1",
+        "flange": "80mm",
+        "confidence": 0.8,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+      },
+      "3d_printable": true,
+      "stl_files": [
+        {
+          "name": "hinge_housing",
+          "url": "/3d/bionic_joint/hinge_housing.stl",
+          "scale": "1:1"
+        },
+        {
+          "name": "hinge_pin",
+          "url": "/3d/bionic_joint/hinge_pin.stl",
+          "scale": "1:1"
+        }
+      ],
+      "print_settings": {
+        "material": [
+          "PETG",
+          "ABS",
+          "Nylon"
+        ],
+        "infill": "50%",
+        "layer_height": "0.15mm",
+        "support": true,
+        "print_time": "3.5 hours"
+      },
+      "cad_files": [
+        {
+          "format": "STEP",
+          "url": "/cad/bionic_hinge_joint.step"
+        },
+        {
+          "format": "STL",
+          "url": "/cad/bionic_hinge_joint.stl"
+        }
+      ],
+      "compatibility": {
+        "mounts_to": [
+          "FRAME-001",
+          "FRAME-002"
+        ],
+        "connects_to": [
+          "BIONIC-ACTUATOR-002"
+        ],
+        "compatible_with": [
+          "BIONIC-SENSOR-002"
+        ]
+      },
+      "entity_kind": "component",
+      "verified": false,
+      "data_quality": "partial",
+      "source_tier_basis": "entity_homepage",
+      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
+      "key_specs": {
+        "joint_type": "hinge",
+        "range_of_motion": "120deg",
+        "load_capacity": "80N"
+      }
+    },
+    {
+      "id": "BIONIC-JOINT-003",
+      "name": "滑车仿生关节",
+      "name_en": "Gliding Bionic Joint",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_joints",
+      "manufacturer": "RoboParts",
+      "type": "bionic_joint",
+      "description": "仿人类指关节的滑车关节，2自由度，轻量化，适用于灵巧手指。",
+      "biomimetic_target": "human_finger_knuckle",
+      "dof": 2,
+      "load_capacity": "20N",
+      "range_of_motion": "0-90° flexion",
+      "applications": [
+        "dexterous_hand",
+        "prosthetic_finger",
+        "micro_manipulation"
+      ],
+      "source": "https://roboparts.cc",
+      "source_tier": "A",
+      "confidence": 0.6,
+      "specs": {
+        "dof": 2,
+        "joint_type": "gliding",
+        "load_capacity": "20N",
+        "flexion_range": "0-90°",
+        "size": "15mm x 8mm x 6mm",
+        "materials": [
+          "titanium_alloy",
+          "PEEK"
+        ]
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "mount_type": "press_fit",
+        "standard": "custom",
+        "flange": "8mm",
+        "confidence": 0.7,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+      },
+      "3d_printable": true,
+      "stl_files": [
+        {
+          "name": "gliding_joint",
+          "url": "/3d/bionic_joint/gliding_joint.stl",
+          "scale": "1:1"
+        }
+      ],
+      "print_settings": {
+        "material": [
+          "Resin",
+          "PEEK"
+        ],
+        "infill": "100%",
+        "layer_height": "0.05mm",
+        "support": true,
+        "print_time": "1.5 hours"
+      },
+      "cad_files": [
+        {
+          "format": "STEP",
+          "url": "/cad/bionic_gliding_joint.step"
+        },
+        {
+          "format": "STL",
+          "url": "/cad/bionic_gliding_joint.stl"
+        }
+      ],
+      "compatibility": {
+        "mounts_to": [
+          "BIONIC-ACTUATOR-003"
+        ],
+        "connects_to": [
+          "TENDON-001"
+        ],
+        "compatible_with": [
+          "BIONIC-SENSOR-003"
+        ]
+      },
+      "entity_kind": "component",
+      "verified": false,
+      "data_quality": "partial",
+      "source_tier_basis": "entity_homepage",
+      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
+      "key_specs": {
+        "joint_type": "gliding",
+        "range_of_motion": "linear_15mm",
+        "load_capacity": "30N"
+      }
+    },
+    {
+      "id": "BIONIC-ACTUATOR-001",
+      "name": "肌腱驱动仿生驱动器",
+      "name_en": "Tendon-Driven Bionic Actuator",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_actuators",
+      "manufacturer": "RoboParts",
+      "type": "bionic_actuator",
+      "description": "仿人体肌腱的柔性驱动器，通过缆绳传递力，适用于灵巧手和柔性关节。",
+      "biomimetic_target": "human_tendon_muscle",
+      "drive_type": "tendon",
+      "force_output": "50N",
+      "stroke": "30mm",
+      "applications": [
+        "dexterous_hand",
+        "flexible_manipulator",
+        "prosthetics"
+      ],
+      "source": "https://roboparts.cc",
+      "source_tier": "A",
+      "confidence": 0.6,
+      "specs": {
+        "drive_type": "tendon",
+        "force_output": "50N",
+        "stroke": "30mm",
+        "tension_sensing": true,
+        "backdrivable": true,
+        "materials": [
+          "steel_cable",
+          "PEEK_housing"
+        ]
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "mount_type": "flange",
+        "standard": "custom",
+        "flange": "40mm",
+        "confidence": 0.7,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+      },
+      "3d_printable": true,
+      "stl_files": [
+        {
+          "name": "tendon_actuator_housing",
+          "url": "/3d/bionic_actuator/tendon_housing.stl",
+          "scale": "1:1"
+        }
+      ],
+      "print_settings": {
+        "material": [
+          "PETG",
+          "Nylon"
+        ],
+        "infill": "30%",
+        "layer_height": "0.2mm",
+        "support": true,
+        "print_time": "2.5 hours"
+      },
+      "cad_files": [
+        {
+          "format": "STEP",
+          "url": "/cad/bionic_tendon_actuator.step"
+        }
+      ],
+      "compatibility": {
+        "mounts_to": [
+          "BIONIC-JOINT-001",
+          "BIONIC-JOINT-003"
+        ],
+        "connects_to": [
+          "CTRL-001"
+        ],
+        "compatible_with": [
+          "TENDON-001"
+        ]
+      },
+      "entity_kind": "component",
+      "verified": false,
+      "data_quality": "partial",
+      "source_tier_basis": "entity_homepage",
+      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
+      "key_specs": {
+        "actuator_type": "tendon_driven",
+        "force": "20N",
+        "stroke": "50mm"
+      }
+    },
+    {
+      "id": "BIONIC-ACTUATOR-002",
+      "name": "人工肌肉驱动器",
+      "name_en": "Artificial Muscle Actuator",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_actuators",
+      "manufacturer": "RoboParts",
+      "type": "bionic_actuator",
+      "description": "仿骨骼肌的人工肌肉驱动器，高功率密度，适用于仿人机器人全身。",
+      "biomimetic_target": "human_skeletal_muscle",
+      "drive_type": "artificial_muscle",
+      "force_output": "100N",
+      "contraction": "40%",
+      "applications": [
+        "humanoid_body",
+        "exoskeleton",
+        "rehabilitation"
+      ],
+      "source": "https://roboparts.cc",
+      "source_tier": "A",
+      "confidence": 0.6,
+      "specs": {
+        "drive_type": "artificial_muscle",
+        "force_output": "100N",
+        "contraction_ratio": "40%",
+        "response_time": "50ms",
+        "power_density": "100W/kg",
+        "materials": [
+          "SMA_wire",
+          "polymer_actuator"
+        ]
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "mount_type": "surface_mount",
+        "standard": "custom",
+        "confidence": 0.6,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+      },
+      "3d_printable": false,
+      "print_settings": null,
+      "cad_files": [
+        {
+          "format": "STEP",
+          "url": "/cad/bionic_artificial_muscle.step"
+        }
+      ],
+      "compatibility": {
+        "mounts_to": [
+          "BIONIC-JOINT-001",
+          "BIONIC-JOINT-002"
+        ],
+        "connects_to": [
+          "CTRL-001"
+        ],
+        "compatible_with": [
+          "BIONIC-SENSOR-001"
+        ]
+      },
+      "entity_kind": "component",
+      "verified": false,
+      "data_quality": "partial",
+      "source_tier_basis": "entity_homepage",
+      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
+      "key_specs": {
+        "actuator_type": "sma_wire",
+        "force": "5N",
+        "stroke": "3mm"
+      }
+    },
+    {
+      "id": "BIONIC-SENSOR-001",
+      "name": "电子皮肤传感器",
+      "name_en": "Electronic Skin Sensor",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_sensors",
+      "manufacturer": "RoboParts",
+      "type": "bionic_sensor",
+      "description": "仿人类皮肤的多模态传感器，集成触觉、温度、压力感知，适用于机器人全身覆盖。",
+      "biomimetic_target": "human_skin",
+      "sensing_modalities": [
+        "tactile",
+        "temperature",
+        "pressure"
+      ],
+      "spatial_resolution": "1mm",
+      "applications": [
+        "humanoid_skin",
+        "prosthetic_sensory",
+        "collaborative_robot"
+      ],
+      "source": "https://roboparts.cc",
+      "source_tier": "A",
+      "confidence": 0.6,
+      "specs": {
+        "sensing_modalities": [
+          "tactile",
+          "temperature",
+          "pressure"
+        ],
+        "spatial_resolution": "1mm",
+        "response_time": "10ms",
+        "flexible": true,
+        "stretchable": true,
+        "materials": [
+          "conductive_polymer",
+          "silicone_elastomer"
+        ]
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "mount_type": "adhesive",
+        "standard": "custom",
+        "confidence": 0.7,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+      },
+      "3d_printable": false,
+      "print_settings": null,
+      "cad_files": [
+        {
+          "format": "STEP",
+          "url": "/cad/bionic_eskin.step"
+        }
+      ],
+      "compatibility": {
+        "mounts_to": [
+          "BIONIC-JOINT-001",
+          "BIONIC-JOINT-002",
+          "BIONIC-JOINT-003"
+        ],
+        "connects_to": [
+          "CTRL-001"
+        ],
+        "compatible_with": [
+          "BIONIC-ACTUATOR-001",
+          "BIONIC-ACTUATOR-002"
+        ]
+      },
+      "entity_kind": "component",
+      "verified": false,
+      "data_quality": "partial",
+      "source_tier_basis": "entity_homepage",
+      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
+      "key_specs": {
+        "sensor_type": "proprioceptive",
+        "channels": 6,
+        "sampling_rate": "1kHz"
+      }
+    },
+    {
+      "id": "BIONIC-SENSOR-002",
+      "name": "仿生本体感觉传感器",
+      "name_en": "Bionic Proprioception Sensor",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_sensors",
+      "manufacturer": "RoboParts",
+      "type": "bionic_sensor",
+      "description": "仿人体关节感受器的位置/力传感器，集成于关节内部，提供本体感觉。",
+      "biomimetic_target": "human_proprioceptor",
+      "sensing_modalities": [
+        "position",
+        "force",
+        "velocity"
+      ],
+      "applications": [
+        "joint_control",
+        "force_feedback",
+        "balance_control"
+      ],
+      "source": "https://roboparts.cc",
+      "source_tier": "A",
+      "confidence": 0.6,
+      "specs": {
+        "sensing_modalities": [
+          "position",
+          "force",
+          "velocity"
+        ],
+        "accuracy": "0.1°",
+        "force_resolution": "0.1N",
+        "integrated": true,
+        "miniaturized": true
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "mount_type": "integrated",
+        "standard": "custom",
+        "confidence": 0.7,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+      },
+      "3d_printable": false,
+      "print_settings": null,
+      "cad_files": [
+        {
+          "format": "STEP",
+          "url": "/cad/bionic_proprioceptor.step"
+        }
+      ],
+      "compatibility": {
+        "mounts_to": [
+          "BIONIC-JOINT-001",
+          "BIONIC-JOINT-002",
+          "BIONIC-JOINT-003"
+        ],
+        "connects_to": [
+          "CTRL-001"
+        ],
+        "compatible_with": [
+          "BIONIC-ACTUATOR-001",
+          "BIONIC-ACTUATOR-002"
+        ]
+      },
+      "entity_kind": "component",
+      "verified": false,
+      "data_quality": "partial",
+      "source_tier_basis": "entity_homepage",
+      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
+      "key_specs": {
+        "sensor_type": "tactile",
+        "resolution": "0.1N",
+        "array_size": "4x4"
+      }
+    },
+    {
+      "id": "BIONIC-FRAME-001",
+      "name": "仿生骨骼框架",
+      "name_en": "Bionic Skeleton Frame",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_structures",
+      "manufacturer": "RoboParts",
+      "type": "bionic_frame",
+      "description": "仿人类骨骼的轻量化框架，拓扑优化设计，适用于仿人机器人躯干。",
+      "biomimetic_target": "human_skeleton",
+      "material": "carbon_fiber_composite",
+      "weight": "2.5kg",
+      "load_capacity": "500N",
+      "applications": [
+        "humanoid_torso",
+        "robot_frame",
+        "exoskeleton"
+      ],
+      "source": "https://roboparts.cc",
+      "source_tier": "A",
+      "confidence": 0.6,
+      "specs": {
+        "material": "carbon_fiber_composite",
+        "weight": "2.5kg",
+        "load_capacity": "500N",
+        "design_method": "topology_optimization",
+        "biomimetic_accuracy": "85%"
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "mount_type": "flange",
+        "standard": "ISO 9409-1",
+        "flange": "120mm",
+        "confidence": 0.8,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+      },
+      "3d_printable": true,
+      "stl_files": [
+        {
+          "name": "torso_frame",
+          "url": "/3d/bionic_frame/torso_frame.stl",
+          "scale": "1:1"
+        }
+      ],
+      "print_settings": {
+        "material": [
+          "Carbon_Fiber_Nylon",
+          "PETG"
+        ],
+        "infill": "60%",
+        "layer_height": "0.2mm",
+        "support": true,
+        "print_time": "12 hours"
+      },
+      "cad_files": [
+        {
+          "format": "STEP",
+          "url": "/cad/bionic_skeleton_frame.step"
+        }
+      ],
+      "compatibility": {
+        "mounts_to": [
+          "BIONIC-JOINT-001",
+          "BIONIC-JOINT-002"
+        ],
+        "connects_to": [
+          "BIONIC-ACTUATOR-001",
+          "BIONIC-ACTUATOR-002"
+        ],
+        "compatible_with": [
+          "BIONIC-SENSOR-001",
+          "BIONIC-SENSOR-002"
+        ]
+      },
+      "entity_kind": "component",
+      "verified": false,
+      "data_quality": "partial",
+      "source_tier_basis": "entity_homepage",
+      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
+      "key_specs": {
+        "frame_type": "torso_skeleton",
+        "material": "PEEK",
+        "weight": "120g"
+      }
+    },
+    {
+      "id": "BIONIC-SKIN-001",
+      "name": "仿生皮肤覆盖层",
+      "name_en": "Bionic Skin Cover",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_skin",
+      "manufacturer": "RoboParts",
+      "type": "bionic_skin",
+      "description": "仿人类皮肤的柔性覆盖层，集成传感器，提供触觉反馈和外观仿真。",
+      "biomimetic_target": "human_skin_appearance",
+      "material": "silicone_elastomer",
+      "thickness": "2mm",
+      "applications": [
+        "humanoid_appearance",
+        "prosthetic_cover",
+        "social_robot"
+      ],
+      "source": "https://roboparts.cc",
+      "source_tier": "A",
+      "confidence": 0.6,
+      "specs": {
+        "material": "silicone_elastomer",
+        "thickness": "2mm",
+        "color_options": [
+          "skin_tone_1",
+          "skin_tone_2",
+          "skin_tone_3"
+        ],
+        "stretchable": true,
+        "sensor_integrated": true
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "mount_type": "adhesive",
+        "standard": "custom",
+        "confidence": 0.7,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+      },
+      "3d_printable": false,
+      "print_settings": null,
+      "cad_files": [
+        {
+          "format": "STEP",
+          "url": "/cad/bionic_skin_cover.step"
+        }
+      ],
+      "compatibility": {
+        "mounts_to": [
+          "BIONIC-FRAME-001"
+        ],
+        "connects_to": [
+          "BIONIC-SENSOR-001"
+        ],
+        "compatible_with": [
+          "BIONIC-JOINT-001",
+          "BIONIC-JOINT-002"
+        ]
+      },
+      "entity_kind": "component",
+      "verified": false,
+      "data_quality": "partial",
+      "source_tier_basis": "entity_homepage",
+      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
+      "key_specs": {
+        "skin_type": "elastic_cover",
+        "material": "silicone",
+        "thickness": "2mm"
+      }
     }
   ]
 };

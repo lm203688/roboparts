@@ -81,6 +81,9 @@ const mcpSkills = META.mcp_skills.map((s) => {
     tool: s.tool,
     description: oneLine(tool.description),
     when_to_use: s.when_to_use,
+    // 【GOAI J1】guardrails：技能的显式拒绝条件，非 Prompt。缺失则 agent 易越界。
+    // 从 meta 透传，不在此处编造。
+    ...(s.guardrails ? { guardrails: s.guardrails } : {}),
     params: paramsOf(tool),
   };
 });
@@ -116,8 +119,8 @@ const table = [
 
 /* ── 5. agent-discovery.json 的 skills.items（第三处复述） ───────────────── */
 const adItems = [
-  ...mcpSkills.map((s) => ({ name: s.name, type: 'mcp_tool', tool: s.tool, when_to_use: s.when_to_use })),
-  ...nonMcp.map((s) => ({ name: s.name, type: s.type, endpoint: s.endpoint, when_to_use: s.when_to_use })),
+  ...mcpSkills.map((s) => ({ name: s.name, type: 'mcp_tool', tool: s.tool, when_to_use: s.when_to_use, ...(s.guardrails ? { guardrails: s.guardrails } : {}) })),
+  ...nonMcp.map((s) => ({ name: s.name, type: s.type, endpoint: s.endpoint, when_to_use: s.when_to_use, ...(s.guardrails ? { guardrails: s.guardrails } : {}) })),
 ];
 
 /* ── 6. 写入 / 校验 ─────────────────────────────────────────────────────── */
@@ -149,6 +152,20 @@ const ad = JSON.parse(fs.readFileSync(adPath, 'utf8'));
 if (!ad.skills) {
   console.error('❌ agent-discovery.json 缺 skills 段');
   process.exit(1);
+}
+// 【20260818-W2 收尾加固】total_entities 与 ai_agent_instructions 散文里的实体数是
+// 静态字段，gen 只重写 skills.items，故计数漂移（710→729）曾只更新结构化字段、漏掉散文
+// 「query 710 entities」，而回归 L2 又只校 total_entities 字段 → 假绿。这里从 entities.json
+// 真相源现算并回写两处，regen 即保鲜，杜绝再次漂移。
+{
+  let truth = null;
+  try { truth = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'entities.json'), 'utf8')).meta.total_entities; } catch { /* 缺真相源不阻断 regen */ }
+  if (typeof truth === 'number' && truth > 0) {
+    ad.total_entities = truth;
+    if (typeof ad.ai_agent_instructions === 'string') {
+      ad.ai_agent_instructions = ad.ai_agent_instructions.replace(/\b\d+\s+entities\b/i, `${truth} entities`);
+    }
+  }
 }
 ad.skills.items = adItems;
 ad.skills.generated_by = 'scripts/gen_skills_manifest.mjs（勿手改 items）';
@@ -185,6 +202,7 @@ const agentCard = {
       tags: ['robotics', 'compatibility', 'mcp'],
       inputModes: ['application/json'],
       outputModes: ['application/json'],
+      ...(s.guardrails ? { guardrails: s.guardrails } : {}),
     })),
     ...nonMcp.map((s) => ({
       id: s.name,
@@ -193,6 +211,7 @@ const agentCard = {
       tags: ['robotics', s.type],
       inputModes: ['application/json'],
       outputModes: ['application/json'],
+      ...(s.guardrails ? { guardrails: s.guardrails } : {}),
     })),
   ],
 };

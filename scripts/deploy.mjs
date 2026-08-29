@@ -13,7 +13,7 @@
  */
 import path from 'node:path';
 import fs from 'node:fs';
-import { spawnSync } from 'node:child_process';
+import { spawnSync, execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { snapshotWorkingTree } from './lib/deploy_snapshot.mjs';
 
@@ -245,6 +245,27 @@ snapshotWorkingTree(ROOT);
   else console.warn('   ⚠️ 接入区块注入失败:', (ob.stderr || ob.stdout || '').trim().slice(0, 300));
 }
 
+// 【GOAI 对齐 · J8】git tag 回滚锚点：部署前打一个可回滚点（非阻塞）。
+// 格式 deploy-YYYYMMDD-HHmm；保留最近 40 个，超出自动清理最老 tag。
+{
+  try {
+    const now = new Date();
+    const tag = `deploy-${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`;
+    execSync(`git tag -f ${tag}`, { cwd: ROOT, stdio: 'pipe' });
+    console.log('   ✅ 部署回滚锚点:', tag);
+    try {
+      const tags = execSync('git tag -l "deploy-*" --sort=-creatordate', { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim().split('\n').filter(Boolean);
+      if (tags.length > 40) {
+        const toDelete = tags.slice(40);
+        for (const t of toDelete) execSync(`git tag -d ${t}`, { cwd: ROOT, stdio: 'ignore' });
+        console.log(`   (清理 ${toDelete.length} 个过期 deploy tag)`);
+      }
+    } catch { /* 清理失败不影响主流程 */ }
+  } catch (e) {
+    console.log('   ⚠️ 部署回滚锚点创建失败（非阻塞，如不在 git 仓库会跳过）:', e.message.slice(0, 200));
+  }
+}
+
 // 1) 部署（wrangler 以 git 根为源；私有目录靠 _middleware.js 在边缘 404 拦截）
 console.log('[1/3] 部署到 Cloudflare Pages...');
 // 修复（20260814）：npx 会拉取最新 wrangler（实测 4.123），其 pages deploy 在部分账号下
@@ -281,6 +302,12 @@ console.log(`   部署预览: ${TARGET}`);
  */
 const SELFTEST_HEADERS = { 'X-RoboParts-Selftest': '1' };
 
+/**
+ * 【20260818-W2 收尾加固】verify 的 fetch 此前不设超时，Cloudflare 连接挂死会无限等待
+ * （实测 08-18 夜那轮部署因此卡 18 分钟、进程被杀、快照 ref 未写入）。
+ * 给每次校验请求加 AbortSignal 超时，连接不可达时快速失败而非悬停。
+ */
+const fetchT = (u, o = {}) => fetch(u, { ...o, signal: o.signal || AbortSignal.timeout(25000) });
 
 // 2) 校验：私有路径必须 404 + 数据一致 + 页面可用（带重试，等别名传播）
 console.log('[2/3] 线上校验（中间件拦截 / 实体数+内容指纹一致性 / 页面可用性）...');
@@ -289,7 +316,7 @@ async function verify() {
   const today = new Date().toISOString().slice(0, 10);
   for (const p of [`.workbuddy/memory/${today}.md`, 'ops/']) {
     try {
-      const r = await fetch(TARGET + '/' + p, { headers: SELFTEST_HEADERS });
+      const r = await fetchT(TARGET + '/' + p, { headers: SELFTEST_HEADERS });
       if (r.status !== 404) errs.push(`私有路径未拦截: /${p} 返回 ${r.status}（应为 404）`);
     } catch (e) { errs.push(`校验请求异常 /${p}: ${e.message}`); }
   }
@@ -304,7 +331,7 @@ async function verify() {
   try {
     const fs = await import('node:fs');
     const src = JSON.parse(fs.readFileSync(path.join(ROOT, 'api/entities.json'), 'utf8')).entities || [];
-    const d = await (await fetch(TARGET + '/api/data.json', { headers: SELFTEST_HEADERS })).json();
+    const d = await (await fetchT(TARGET + '/api/data.json', { headers: SELFTEST_HEADERS })).json();
     const onlineArr = d?.data || d?.entities || [];
     const online = d?.meta?.total_entities;
     if (online !== localTotal) errs.push(`数据不一致: 线上 ${online} != 本地 ${localTotal}`);
@@ -341,12 +368,12 @@ async function verify() {
   // OSS 数据层一致性（CL1 飞轮产物）
   try {
     const localOss = JSON.parse((await import('node:fs')).readFileSync(path.join(ROOT, 'api/oss_components.json'), 'utf8')).meta.total_entities;
-    const onlineOss = (await (await fetch(TARGET + '/api/oss?stats=1', { headers: SELFTEST_HEADERS })).json()).total;
+    const onlineOss = (await (await fetchT(TARGET + '/api/oss?stats=1', { headers: SELFTEST_HEADERS })).json()).total;
     if (onlineOss !== localOss) errs.push(`OSS 数据层不一致: 线上 ${onlineOss} != 本地 ${localOss}`);
   } catch (e) { errs.push('读取 OSS 数据层失败: ' + e.message); }
   for (const pg of pages) {
     try {
-      const r = await fetch(TARGET + pg, { headers: SELFTEST_HEADERS });
+      const r = await fetchT(TARGET + pg, { headers: SELFTEST_HEADERS });
       if (r.status !== 200) errs.push(`页面异常 ${pg}: ${r.status}`);
     } catch (e) { errs.push(`页面请求异常 ${pg}: ${e.message}`); }
   }
@@ -360,7 +387,7 @@ async function verify() {
    */
   for (const ep of ['/mcp', '/api/register', '/api/validate', '/api/data.json', '/api/waitlist', '/api/badge', '/api/recommend', '/api/demand-signal']) {
     try {
-      const r = await fetch(TARGET + ep, { method: 'HEAD', headers: SELFTEST_HEADERS });
+      const r = await fetchT(TARGET + ep, { method: 'HEAD', headers: SELFTEST_HEADERS });
       // 【20260807-17 收紧】原先 HEAD 拿到 404 会回退 GET，只要 GET 通就算存活。
       // 那条回退正是假修复的温床：线上 HEAD 一直是 404（目录站眼里我们已下线），
       // 部署校验却因为 GET 能通而始终报绿，问题被掩盖了两轮。

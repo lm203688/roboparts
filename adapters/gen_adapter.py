@@ -93,15 +93,25 @@ SHCS_HEAD_D: Dict[float, float] = {
 }
 
 #: ISO 9409-1 型式 A 标准法兰预设（与 adapter-generator.html 的 PRESETS 对齐）。
+#: 注：机器人行业 "A{n}" 中 n = 节圆直径 PCD；pin_pcd 为定位销节圆直径（仅标准梯级填真实值，
+#: 偏离尺寸 A20/A31.5/A100/A160/A250 厂商销孔几何未知，pins=0）。
 PRESETS: Dict[str, Dict] = {
+    "A20": dict(label="ISO9409-1-A20-4-M3", pcd=20.0, holes=4, thread="M3",
+                clr=3.5, pins=0, pin_d=0.0, pin_pcd=0.0),
+    "A31.5": dict(label="ISO9409-1-A31.5-4-M5", pcd=31.5, holes=4, thread="M5",
+                  clr=5.5, pins=0, pin_d=0.0, pin_pcd=0.0),
+    "A40": dict(label="ISO9409-1-A40-4-M6", pcd=40.0, holes=4, thread="M6",
+                clr=6.5, pins=2, pin_d=6.0, pin_pcd=50.0),
     "A50": dict(label="ISO9409-1-A50-4-M6", pcd=50.0, holes=4, thread="M6",
-                clr=6.5, pins=2, pin_d=6.0, pin_pcd=22.0),
-    "A80": dict(label="ISO9409-1-A80-4-M8", pcd=80.0, holes=4, thread="M8",
-                clr=8.5, pins=2, pin_d=8.0, pin_pcd=38.0),
-    "A100": dict(label="ISO9409-1-A100-6-M10", pcd=100.0, holes=6, thread="M10",
-                 clr=10.5, pins=2, pin_d=10.0, pin_pcd=50.0),
-    "A160": dict(label="ISO9409-1-A160-8-M12", pcd=160.0, holes=8, thread="M12",
-                 clr=12.5, pins=0, pin_d=0.0, pin_pcd=0.0),
+                clr=6.5, pins=2, pin_d=6.0, pin_pcd=63.0),
+    "A80": dict(label="ISO9409-1-A80-6-M8", pcd=80.0, holes=6, thread="M8",
+                clr=8.5, pins=2, pin_d=8.0, pin_pcd=100.0),
+    "A100": dict(label="ISO9409-1-A100-4-M8", pcd=100.0, holes=4, thread="M8",
+                 clr=8.5, pins=0, pin_d=0.0, pin_pcd=0.0),
+    "A160": dict(label="ISO9409-1-A160-4-M12", pcd=160.0, holes=4, thread="M12",
+                 clr=13.0, pins=0, pin_d=0.0, pin_pcd=0.0),
+    "A250": dict(label="ISO9409-1-A250-4-M16", pcd=250.0, holes=4, thread="M16",
+                 clr=17.0, pins=0, pin_d=0.0, pin_pcd=0.0),
 }
 
 #: 未指定预设时的自定义侧默认值（对齐 HTML 的 CUSTOM）。

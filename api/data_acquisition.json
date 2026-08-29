@@ -16,14 +16,14 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 1.68,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.68%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 1.57,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.57%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
-  "count": 43,
-  "updated": "2026-08-12T12:22:31.965602Z",
+  "count": 46,
+  "updated": "2026-08-24T06:10:17.327481Z",
   "data": [
     {
       "id": "DATA-001",
@@ -1412,6 +1412,185 @@
       "entity_kind": "component",
       "source_tier_prev": "A",
       "source_tier_basis": "unattributable_text"
+    },
+    {
+      "id": "DATA-neuro-originflow-kit",
+      "name": "OriginFlow OriginKit Gen1 神经肌电腕带",
+      "name_en": "OriginFlow OriginKit Gen1 sEMG Wristband",
+      "category": "data_acquisition",
+      "manufacturer": "OriginFlow（渊澈太初）",
+      "type": "neural_interface",
+      "subcategory": "emg_wristband",
+      "description": "16通道表面肌电腕带，采集前臂运动神经信号，配合 PULSE 基座模型将肌肉激活解码为 Human Tokens（MotionSpace + TactileSpace + TendonSpace），用于具身智能动作数据采集。",
+      "data_modalities": [
+        "sEMG",
+        "IMU",
+        "egocentric_vision"
+      ],
+      "specs": {
+        "channels": 16,
+        "sampling_rate": "6kHz",
+        "bitrate": "96KB/s",
+        "signal_type": "surface EMG",
+        "decoding_model": "PULSE 0.2",
+        "output_format": "Human Tokens",
+        "connectivity": "BLE 5.0",
+        "form_factor": "wristband"
+      },
+      "interfaces": [
+        "BLE API",
+        "Python SDK"
+      ],
+      "open_source": false,
+      "applications": [
+        "embodied_data_collection",
+        "human_robot_interface",
+        "prosthetic_control"
+      ],
+      "source": "官方页面：https://originflow.com（量子位报道 2026-08-22）",
+      "confidence": 0.75,
+      "confidence_basis": "press_coverage_verified",
+      "last_verified": "2026-08-24",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source_tier": "B",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "reason": "腕带式可穿戴设备，无标准机械安装面",
+        "registry_ref": "/api/mechanical_interfaces.json"
+      },
+      "entity_kind": "component",
+      "source_tier_basis": "root_url_only",
+      "kind_basis": "category=data_acquisition: neural interface hardware, physical wearable",
+      "source_tier_prev": "C"
+    },
+    {
+      "id": "DATA-neuro-snoworigin-band",
+      "name": "雪梦未来神经腕带",
+      "name_en": "SnowOrigin Neural Wristband",
+      "category": "data_acquisition",
+      "manufacturer": "雪梦未来（SnowOrigin）",
+      "type": "neural_interface",
+      "subcategory": "emg_wristband",
+      "description": "高通道数表面肌电腕带，配合 NMH（Neural Math Hybrid）AI 解码模型，实时将肌电信号解码为手部全姿态数据（Pose + Force + Micro-control），用于具身智能数据采集。",
+      "data_modalities": [
+        "sEMG",
+        "IMU"
+      ],
+      "specs": {
+        "channels": "8+",
+        "sampling_rate": "200-250Hz",
+        "SNR": "43dB+",
+        "signal_type": "surface EMG",
+        "decoding_model": "NMH",
+        "output_format": "Pose + Force + Micro-control",
+        "connectivity": "BLE",
+        "form_factor": "wristband"
+      },
+      "interfaces": [
+        "BLE API",
+        "Python SDK"
+      ],
+      "open_source": false,
+      "applications": [
+        "embodied_data_collection",
+        "hand_pose_estimation",
+        "prosthetic_control"
+      ],
+      "source": "36氪报道（2026-07-13），龚虹嘉、陆奇投资",
+      "confidence": 0.72,
+      "confidence_basis": "press_coverage_verified",
+      "last_verified": "2026-08-24",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source_tier": "B",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "reason": "腕带式可穿戴设备，无标准机械安装面",
+        "registry_ref": "/api/mechanical_interfaces.json"
+      },
+      "entity_kind": "component",
+      "source_tier_basis": "press_coverage: quantum_bit 2026-08-22",
+      "kind_basis": "category=data_acquisition: neural interface hardware, physical wearable"
+    },
+    {
+      "id": "DATA-neuro-aemg-ref",
+      "name": "AEMG 通用肌电采集参考平台",
+      "name_en": "AEMG Universal EMG Collection Reference Platform",
+      "category": "data_acquisition",
+      "manufacturer": "AEMG-series（CVPR 2026 开源）",
+      "type": "neural_interface",
+      "subcategory": "emg_reference",
+      "description": "基于 CVPR 2026 论文 AEMG 的跨设备通用肌电采集参考架构。采用 NCT（Neural Contraction Tokenizer）能量门控分词，将连续 EMG 信号切分为 8192 个共享运动原语，支持跨设备、跨被试、跨任务零样本迁移。",
+      "data_modalities": [
+        "sEMG"
+      ],
+      "specs": {
+        "channels": "variable（支持任意拓扑）",
+        "sampling_rate": "variable（统一输入空间）",
+        "codebook_size": 8192,
+        "token_type": "Neuromuscular Contraction Token",
+        "pretraining": "masked patch prediction",
+        "zero_shot_accuracy": "89.81% (LOSO)",
+        "open_source": true,
+        "github": "https://github.com/AEMG-series/AEMG"
+      },
+      "interfaces": [
+        "Python API",
+        "PyTorch"
+      ],
+      "open_source": true,
+      "applications": [
+        "gesture_recognition",
+        "embodied_data_collection",
+        "prosthetic_control"
+      ],
+      "source": "CVPR 2026 论文 + GitHub 开源",
+      "confidence": 0.85,
+      "confidence_basis": "peer_reviewed_paper",
+      "last_verified": "2026-08-24",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source_tier": "C",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "n_a",
+        "reason": "软件参考架构，无物理实体",
+        "registry_ref": "/api/mechanical_interfaces.json"
+      },
+      "entity_kind": "component",
+      "source_tier_basis": "unattributable_text",
+      "kind_basis": "category=data_acquisition: neural interface software/reference, no physical hardware",
+      "source_tier_prev": "A"
     },
     {
       "id": "DATA-oss-agibot-world",

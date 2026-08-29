@@ -9,7 +9,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0b1020">
-<meta name="description" content="RoboParts 兼容性 Copilot：用自然语言描述你的机器人手腕、夹爪、法兰（如「我手腕 A80-4-M8，夹爪 A50-4-M6，能直接用吗」），AI 一键判定兼容性、生成转接件链接。可调用 Agnes AI 用大白话再解释一遍。">
+<meta name="description" content="RoboParts 兼容性 Copilot：用自然语言描述你的机器人手腕、夹爪、法兰（如「我手腕 A80-6-M8，夹爪 A50-4-M6，能直接用吗」），AI 一键判定兼容性、生成转接件链接。可调用 Agnes AI 用大白话再解释一遍。">
 <meta name="keywords" content="机器人兼容性,法兰兼容,Copilot,转接件,ISO 9409,AI选型,RoboParts">
 <link rel="canonical" href="https://roboparts.cc/copilot">
 <meta property="og:type" content="article">
@@ -69,19 +69,27 @@ h1{font-size:30px;line-height:1.35;margin:0 0 8px}
 <div class="crumb"><a href="/">首页</a> › 兼容性 Copilot</div>
 <h1>兼容性 Copilot</h1>
 <div class="lede">用大白话描述你的机器人零件，秒判能不能装。例如：
-<b>「我手腕是 A80-4-M8，夹爪是 A50-4-M6，能直接用吗？」</b> ——
+<b>「我手腕是 A80-6-M8，夹爪是 A50-4-M6，能直接用吗？」</b> ——
 系统解析两侧 ISO 9409-1 法兰，判定兼容或自动生成转接件链接。<b>可调用 Agnes AI</b> 用大白话再解释一遍。</div>
 
 <div class="chat">
   <div class="input-row">
-    <input id="nlInput" placeholder="例如：手腕 A80-4-M8，夹爪 A50-4-M6，能直接用吗？" autocomplete="off">
+    <input id="nlInput" placeholder="例如：手腕 A80-6-M8，夹爪 A50-4-M6，能直接用吗？" autocomplete="off">
     <button class="btn" onclick="ask()">判定兼容性</button>
   </div>
   <div class="examples">
-    <span class="chip" onclick="fill('我手腕是 A80-4-M8，夹爪是 A50-4-M6，能直接用吗？')">A80 ↔ A50（需转接）</span>
-    <span class="chip" onclick="fill('两个都是 A80-4-M8 法兰，直接装吗？')">A80 ↔ A80（直接装）</span>
-    <span class="chip" onclick="fill('工具端 A100-6-M10，机器人端 A80-4-M8')">A100 ↔ A80</span>
+    <span class="chip" onclick="fill('我手腕是 A80-6-M8，夹爪是 A50-4-M6，能直接用吗？')">A80 ↔ A50（需转接）</span>
+    <span class="chip" onclick="fill('两个都是 A80-6-M8 法兰，直接装吗？')">A80 ↔ A80（直接装）</span>
+    <span class="chip" onclick="fill('工具端 A100-6-M10，机器人端 A80-6-M8')">A100 ↔ A80</span>
     <span class="chip" onclick="fill('法兰盘 PCD 80 四孔 M8，对接 PCD 50 四孔 M6')">中文描述</span>
+    <span class="chip" onclick="fill('UR5 和 UR20 能装同一个夹爪吗？')">按机器人型号查</span>
+    <span class="chip" onclick="fill('ABB IRB 120 手腕和 OnRobot 夹爪兼容吗？')">品牌组合查</span>
+  </div>
+
+  <div style="margin-top:14px;background:#0c1428;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--mut);line-height:1.7">
+    <b style="color:var(--acc)">💡 怎么用：</b>
+    <br>① 上面有 6 个常用示例，点一下自动填入；② 也可以自己用大白话描述——比如「UR5 手腕接 UR10 的夹爪」；③ 系统会自动识别法兰规格、判定兼容性；④ 不兼容的话，点「生成转接件」链接直接去 3D 打印。
+    <br><b style="color:var(--acc2)">法兰格式：</b>A80-6-M8 = A{节圆直径}-{孔数}-M{螺纹直径}，ISO 9409-1 标准。
   </div>
 
   <div id="conv"></div>
@@ -104,9 +112,9 @@ h1{font-size:30px;line-height:1.35;margin:0 0 8px}
 // ---- 法兰预设（与 adapter-generator 同口径）----
 const PRESETS = {
   'A50':  {key:'A50',  label:'ISO9409-1-A50-4-M6',  pcd:50,  holes:4, thread:'M6'},
-  'A80':  {key:'A80',  label:'ISO9409-1-A80-4-M8',  pcd:80,  holes:4, thread:'M8'},
+  'A80':  {key:'A80',  label:'ISO9409-1-A80-6-M8',  pcd:80,  holes:6, thread:'M8'},
   'A100': {key:'A100', label:'ISO9409-1-A100-6-M10',pcd:100, holes:6, thread:'M10'},
-  'A160': {key:'A160', label:'ISO9409-1-A160-8-M12',pcd:160, holes:8, thread:'M12'},
+  'A160': {key:'A160', label:'ISO9409-1-A160-8-M16',pcd:160, holes:8, thread:'M16'},
 };
 // PCD → 默认孔数（用于仅给 PCD 时的推断）
 const HOLES_BY_PCD = {50:4, 80:4, 100:6, 160:8};
@@ -114,7 +122,7 @@ const HOLES_BY_PCD = {50:4, 80:4, 100:6, 160:8};
 // 解析自然语言，提取最多两个法兰规格
 function parseFlanges(text){
   const found = [];
-  // 1) 完整写法 A80-4-M8
+  // 1) 完整写法 A80-6-M8
   const full = text.match(/A(\d+)[-–](\d+)[-–]M(\d+)/gi) || [];
   for(const m of full){
     const p = m.match(/A(\d+)[-–](\d+)[-–]M(\d+)/i);
@@ -205,7 +213,7 @@ function ask(){
   const fl = parseFlanges(text);
   let botHtml = '';
   if(fl.length < 2){
-    botHtml = `<div class="bubble bot pending">⚠️ 只识别到 ${fl.length} 个法兰规格（${fl.map(fmt).join('、')||'无'}）。请同时给出<strong>两侧</strong>法兰，例如「手腕 A80-4-M8，夹爪 A50-4-M6」，或写「PCD 80 四孔 M8，对接 PCD 50 四孔 M6」。</div>`;
+    botHtml = `<div class="bubble bot pending">⚠️ 只识别到 ${fl.length} 个法兰规格（${fl.map(fmt).join('、')||'无'}）。请同时给出<strong>两侧</strong>法兰，例如「手腕 A80-6-M8，夹爪 A50-4-M6」，或写「PCD 80 四孔 M8，对接 PCD 50 四孔 M6」。</div>`;
     conv.innerHTML += botHtml;
     scrollConv(); return;
   }

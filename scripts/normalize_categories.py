@@ -36,6 +36,19 @@ CANONICAL = [
     # 描述、无任何物理量 → 落回 specification 被静默吞掉，且永不进机械声明率分母。
     # 同族产品分类不一致是结构性缺陷，故独立类目，component 语义稳定。
     'connectors',
+    # 【20260818】W1 机械骨架类目扩展（飞轮覆盖面缺口，见 ops/roboparts-conformance-review-20260818.md）。
+    # 现有 11 类偏"智能/驱动层"，机械/电源/结构/互连骨干从未成为一等类目。
+    # 下列类目当前多为 0 种子（诚实留空），由 Matrix 一体化关节模组 BOM 作为起始脚手架。
+    'integrated_joints',  # 一体化关节模组（集成丝杠+电机+驱动+减速器+编码器+传感器）
+    'reducers',           # 减速器 / 谐波减速器
+    'controllers',        # 控制器 / 驱动器（伺服驱动）
+    'grippers',           # 夹爪 / 末端执行器
+    'structural',         # 结构件 / 机架
+    'cables',             # 线缆 / 线束
+    'power',              # 电源 / 电池
+    'pcb',                # PCB / 电子布线
+    # 【20260821】仿生机械品类
+    'bionic_mechanisms',  # 仿生机械（仿生关节、仿生驱动器、仿生传感器）
 ]
 
 # 原始 category 值 -> 标准类目（覆盖全部 65 种取值）
@@ -81,6 +94,23 @@ MAPPING = {
     'hybrid_connector': 'connectors', 'board_to_board': 'connectors',
     'wire_to_board': 'connectors', 'mezzanine_connector': 'connectors',
     'circular_connector': 'connectors', 'terminal': 'connectors', '接插件': 'connectors',
+    # 【20260818】W1 机械骨架类目别名（原始值 -> 标准类目）
+    'integrated_joint': 'integrated_joints', '一体化关节': 'integrated_joints',
+    '一体化关节模组': 'integrated_joints', 'joint_module': 'integrated_joints',
+    'reducer': 'reducers', '减速器': 'reducers', '谐波减速器': 'reducers',
+    'harmonic_drive': 'reducers',
+    'controller': 'controllers', '控制器': 'controllers', '驱动器': 'controllers',
+    'servo_drive': 'controllers', 'motor_controller': 'controllers',
+    'gripper': 'grippers', '夹爪': 'grippers', '末端执行器': 'grippers',
+    'end_effector': 'grippers',
+    'structural': 'structural', '结构件': 'structural', '机架': 'structural',
+    'chassis': 'structural', 'frame': 'structural',
+    'cable': 'cables', '线缆': 'cables', '线束': 'cables', 'harness': 'cables',
+    'power': 'power', '电源': 'power', '电池': 'power', 'battery': 'power',
+    'pcb': 'pcb', 'PCB': 'pcb', '电路板': 'pcb', '电子布线': 'pcb',
+    # 【20260821】仿生机械品类
+    'bionic_mechanisms': 'bionic_mechanisms', '仿生机械': 'bionic_mechanisms',
+    'bionic': 'bionic_mechanisms',
 }
 
 
@@ -196,9 +226,9 @@ def main():
         f.write('\n')
 
     # 7) 报告
-    print('✅ 归一化完成：修改 category', changed, '条 / 共', len(entities), '条')
-    print('📊 标准类目计数：', json.dumps(stats, ensure_ascii=False))
-    print('📄 已重生成：entities.json + 10 个分类 JSON + data.js + api/data.json')
+    print('[OK] Normalized: modified category', changed, 'items / total', len(entities), 'items')
+    print('[STATS] Category counts:', json.dumps(stats, ensure_ascii=False))
+    print('[REGEN] Regenerated: entities.json + category JSONs + data.js + api/data.json')
 
 
 # --- meta.access 自动重注入 ---

@@ -46,10 +46,10 @@ def build():
 
     title = 'ISO 9409-1 机器人法兰速查：designation 语法、标准尺寸族与互换红线'
     desc = ('ISO 9409-1:2004 圆形法兰（型式A）完整速查：designation 命名语法 '
-            'ISO 9409-1-A{节圆}-{孔数}-M{螺纹} 的读法与正则、A50-4-M6 / A80-4-M8 / '
-            'A100-6-M10 / A160-8-M12 四大标准尺寸族对照、6 条会导致减速器漏油或螺栓咬死的'
+            'ISO 9409-1-A{节圆}-{孔数}-M{螺纹} 的读法与正则、A50-4-M6 / A80-6-M8 / '
+            'A100-6-M10 / A160-8-M16 标准尺寸族（含厂商偏离）对照、6 条会导致减速器漏油或螺栓咬死的'
             '装配红线，以及人形机器人 3DOF 球肩适配规范三级负载参数。数据可机读下载。')
-    kws = ('ISO 9409-1,机器人法兰,机械接口,法兰标准,A50-4-M6,A80-4-M8,A100-6-M10,'
+    kws = ('ISO 9409-1,机器人法兰,机械接口,法兰标准,A50-4-M6,A80-6-M8,A100-6-M10,'
            '螺栓节圆直径,末端执行器安装,法兰互换,机器人手腕法兰,定位销 H7,'
            '人形机器人 3DOF 球肩,一体化关节,法兰尺寸对照表')
 
@@ -67,7 +67,7 @@ def build():
 
     P.append('<div class="toc"><b>本文目录</b><ol>'
              '<li><a href="#grammar">designation 怎么读（含解析正则）</a></li>'
-             '<li><a href="#sizes">四大标准尺寸族对照表</a></li>'
+             '<li><a href="#sizes">标准尺寸族（含厂商偏离）对照表</a></li>'
              '<li><a href="#rule">互换判定流程</a></li>'
              '<li><a href="#pitfalls">6 条装配红线</a></li>'
              '<li><a href="#humanoid">人形机器人 3DOF 球肩适配规范（2026）</a></li>'
@@ -90,8 +90,8 @@ def build():
     P.append('<pre class="code" data-lang="regex"><code>%s</code></pre>' % esc(g['parse_regex']))
 
     # 2 尺寸族
-    P.append('<h2 id="sizes">四大标准尺寸族对照表</h2>')
-    P.append('<p>下表为 ISO 9409-1 型式 A 在工业机器人上最常见的四个尺寸族。'
+    P.append('<h2 id="sizes">标准尺寸族（含厂商偏离）对照表</h2>')
+    P.append('<p>下表为 ISO 9409-1 型式 A 在工业机器人上标准梯级（含厂商偏离，同一 A 标号在不同厂商可能对应不同几何）。'
              '<em>known_hosts</em> 列为已核实采用该法兰的机型，不代表穷举。</p>')
     rows = ''
     for f in flanges:

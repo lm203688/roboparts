@@ -77,6 +77,14 @@ select,input{width:100%;background:#0e1530;border:1px solid var(--line);color:va
 <h1>法兰转接件生成器：把不兼容的机器人法兰变兼容</h1>
 <div class="lede">两侧法兰<b>螺栓节圆 / 孔数 / 螺纹</b>不一致时，RoboParts 自动生成一块可 3D 打印的转接板 —— 浏览器内实时预览，导出 STL（直接打印）或 OpenSCAD 源文件（免费桌面端二次编辑）。这是"兼容无忧"从<b>判定</b>走向<b>解决</b>的一步。（参考开源生态：OpenSCAD / CadQuery / build123d / FreeCAD）</div>
 
+<div style="background:#0c1428;border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:13.5px;color:var(--mut);line-height:1.7">
+  <b style="color:var(--acc)">🚀 三步上手：</b>
+  <br>① 左侧选机器人法兰（如 UR5 的 A80-6-M8），右侧选工具法兰（如 OnRobot 的 A50-4-M6）；
+  ② 调厚度/中心孔（默认值通常已合适）；
+  ③ 点「生成 3D 预览」，下载 STL 直接 3D 打印。
+  <br><b style="color:var(--acc2)">不懂法兰规格？</b> 去看 <a href="/iso-9409-flange">ISO 9409-1 法兰速查表</a>，或先用 <a href="/copilot">兼容性 Copilot</a> 用大白话问。
+</div>
+
 <div class="layout">
   <div class="panel">
     <h2>① 选择两侧法兰</h2>
@@ -185,12 +193,21 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { STLExporter } from 'three/addons/exporters/STLExporter.js';
 
-// ---- 标准法兰预设（ISO 9409-1 型式A）----
+// ---- 标准法兰预设（ISO 9409-1 型式A，与 api/mechanical_interfaces.json 对齐）----
+// 注：机器人行业 "A{n}" 中 n = 节圆直径 PCD。同一 A 标号可能对应不同几何（命名歧义）：
+//   A80 标准态为 6×M8（UR20/UR30）；A100 常见有 ISO 标准 6×M10 与 KUKA 偏离 4×M8 两种；
+//   本预设采用本库实测真实存在的 (PCD,孔数,螺纹)。
+// pinPCD 为定位销节圆直径（参考 ISO 9409-1 标准 d5）：仅对等于标准梯级的尺寸填真实值，
+// 偏离尺寸（A20/A31.5/A100/A160/A250）的厂商销孔几何未知，置 pins:0，请按机器人手册核实。
 const PRESETS = {
-  'A50':  {label:'ISO9409-1-A50-4-M6',  pcd:50,  holes:4, thread:'M6',  clr:6.5, pins:2, pinD:6,  pinPCD:22},
-  'A80':  {label:'ISO9409-1-A80-4-M8',  pcd:80,  holes:4, thread:'M8',  clr:8.5, pins:2, pinD:8,  pinPCD:38},
-  'A100': {label:'ISO9409-1-A100-6-M10',pcd:100, holes:6, thread:'M10', clr:10.5,pins:2, pinD:10, pinPCD:50},
-  'A160': {label:'ISO9409-1-A160-8-M12',pcd:160, holes:8, thread:'M12', clr:12.5,pins:0, pinD:0,  pinPCD:0}
+  'A20':  {label:'ISO9409-1-A20-4-M3',  pcd:20,  holes:4, thread:'M3',  clr:3.5,  pins:0, pinD:0, pinPCD:0},
+  'A31.5':{label:'ISO9409-1-A31.5-4-M5',pcd:31.5,holes:4, thread:'M5',  clr:5.5,  pins:0, pinD:0, pinPCD:0},
+  'A40':  {label:'ISO9409-1-A40-4-M6',  pcd:40,  holes:4, thread:'M6',  clr:6.5,  pins:2, pinD:6, pinPCD:50},
+  'A50':  {label:'ISO9409-1-A50-4-M6',  pcd:50,  holes:4, thread:'M6',  clr:6.5,  pins:2, pinD:6, pinPCD:63},
+  'A80':  {label:'ISO9409-1-A80-6-M8',  pcd:80,  holes:6, thread:'M8',  clr:8.5,  pins:2, pinD:8, pinPCD:100},
+  'A100': {label:'ISO9409-1-A100-6-M10', pcd:100, holes:6, thread:'M10', clr:10.5, pins:0, pinD:0, pinPCD:0},
+  'A160': {label:'ISO9409-1-A160-8-M16',pcd:160, holes:8, thread:'M16', clr:13,   pins:0, pinD:0, pinPCD:0},
+  'A250': {label:'ISO9409-1-A250-4-M16',pcd:250, holes:4, thread:'M16', clr:17,   pins:0, pinD:0, pinPCD:0}
 };
 const CUSTOM = {label:'自定义', pcd:60, holes:4, thread:'M6', clr:6.5, pins:0, pinD:0, pinPCD:0};
 
@@ -247,7 +264,7 @@ function holesOf(s){
   if(s.pins===2){
     for(let i=0;i<2;i++){
       const a = i*180 * Math.PI/180;
-      arr.push({x:s.pinPCD*Math.cos(a), y:s.pinPCD*Math.sin(a), rad:s.pinD/2});
+      arr.push({x:s.pinPCD/2*Math.cos(a), y:s.pinPCD/2*Math.sin(a), rad:s.pinD/2});
     }
   }
   return arr;

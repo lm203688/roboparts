@@ -64,6 +64,17 @@ CATEGORY_ZH = {
     'flexible_actuators': '柔性执行器',
     'data_acquisition': '数据采集设备',
     'connectors': '连接器',
+    # 【20260818】W1 机械骨架类目扩展
+    'integrated_joints': '一体化关节模组',
+    'reducers': '减速器',
+    'controllers': '控制器',
+    'grippers': '夹爪',
+    'structural': '结构件',
+    'cables': '线缆',
+    'power': '电源',
+    'pcb': 'PCB',
+    # 【20260821】仿生机械品类
+    'bionic_mechanisms': '仿生机械',
 }
 
 
@@ -204,15 +215,15 @@ def main():
                 print('   -', n)
             print('   修复：python scripts/inject_api_access.py')
             return 1
-        print('✅ 对外 JSON 接入声明齐备（%d 个已注入 / %d 个按设计跳过）'
+        print('[OK] Access declarations ready (%d injected / %d skipped by design)'
               % (len(already), len(skipped)))
         return 0
 
-    print('✅ 注入完成：新写入 %d 个 / 已最新 %d 个' % (len(injected), len(already)))
+    print('[OK] Injection complete: %d new / %d already current' % (len(injected), len(already)))
     for n in injected:
         print('   +', n)
     for n, why in skipped:
-        print('   ·', n, '——', why)
+        print('   -', n, '--', why)
     return 0
 
 

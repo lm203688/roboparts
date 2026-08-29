@@ -19,8 +19,13 @@
 | `roboparts-compat-check` | mcp_tool | `check_compatibility` | 用户问「A 和 B 能不能装一起」「这两个零件兼容吗」「选型有没有冲突」时。 |
 | `roboparts-recommend` | mcp_tool | `recommend_for_application` | 用户要「给某类机器人配一套零件」「预算 X 元怎么选」时。 |
 | `roboparts-parameter-semantics` | mcp_tool | `get_parameter_semantics` | 用户问「这个扭矩参数靠谱吗」「不同厂商参数怎么比」「单位怎么换算」时。 |
+| `roboparts-bom-compat` | mcp_tool | `bom_compatibility_check` | 用户给了一整张零件清单 / BOM（如 ["ACT-001","SENS-001"]），问这些零件彼此之间在电气 / 机械 / 协议 / 软件四维是否兼容、冲突在哪时。 |
+| `roboparts-semantic-search` | mcp_tool | `semantic_search` | 用户用自然语言描述需求（如「人形机器人髋部高扭矩电机」「六维力传感器 防水」），不确定确切型号或参数名，需要发现式检索而非精确筛选时。 |
+| `roboparts-standard-audit` | mcp_tool | `get_standard_audit` | 用户想核对某零件 / 厂商声明的标准符合性，或想知道哪些声明能被已知标准集核实、哪些是出处存疑的条目时。 |
+| `roboparts-compat-review` | mcp_tool | `review_compatibility` | 对外发布 / 采购决策前要对兼容性结论做第二双眼睛复核时：给出 L0–L3 风险分级、证据不足时降级、缺失证据显式列出。 |
 | `roboparts-adapter-generate` | web_resource | `/adapter-generator` | 兼容性判定为不兼容、且根因是机械法兰不匹配时，直接产出解决方案而非只给结论。 |
 | `roboparts-dataset-discovery` | dataset | `/agent-discovery.json` | 用户想下载/引用原始数据、做二次分析、或确认数据来源时。 |
+| `roboparts-supplier-risk` | methodology | `/docs/supplier-risk.html` | 用户问「这家供应商靠谱吗」「这个价格是不是太低了」「哪些零件数据存疑」时，给出可审计的风险结论而非拍脑袋。 |
 <!-- SKILLS-TABLE:END -->
 
 ## 接入方式
@@ -37,7 +42,7 @@
 `roboparts-adapter-generate` 为 `web_resource` 类，按 `endpoint` + `params` 拼接 URL 打开转接件生成器。
 
 ### 3) 自然语言兜底
-用户说「我手腕 A80-4-M8，夹爪 A50-4-M6，能直接用吗」时，可路由到
+用户说「我手腕 A80-6-M8，夹爪 A50-4-M6，能直接用吗」时，可路由到
 [兼容性 Copilot](https://roboparts.cc/copilot) 或本地用 `roboparts-compat-check` 判定。
 
 ## 诚实性约定（Skill 调用方请遵守）

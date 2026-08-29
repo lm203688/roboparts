@@ -55,6 +55,7 @@
     </div>
     <div class="row" style="margin-top:14px">
       <button onclick="runCheck()">▶ 运行兼容性检查</button>
+      <button class="ghost" onclick="loadSampleBom()">💡 试用示例 BOM（一键体验）</button>
       <button class="ghost" onclick="addCustomSpec()">+ 自定义规格行</button>
     </div>
     <div class="tip" id="limitTip"></div>
@@ -101,6 +102,18 @@ async function init(){
 function addPick(){ const sel=document.getElementById('pick'); if(!sel.value) return; const id=sel.value; rows.push({kind:'id',id}); render(); }
 function addCustom(){ const v=document.getElementById('customId').value.trim(); if(!v) return; rows.push({kind:'id',id:v}); document.getElementById('customId').value=''; render(); }
 function addCustomSpec(){ rows.push({kind:'spec'}); render(); }
+function loadSampleBom(){
+  rows = [
+    {kind:'id',id:'OSS-TIENKUNG-001'},
+    {kind:'id',id:'OSS-LEBOD-HUMANOID-002'},
+    {kind:'id',id:'OSS-UNITREE-G1-003'},
+    {kind:'id',id:'OSS-OP-ARM-004'},
+    {kind:'id',id:'OSS-ROBOT-ORIGIN-005'}
+  ];
+  render();
+  // 自动运行检查
+  setTimeout(runCheck, 800);
+}
 function del(i){ rows.splice(i,1); render(); }
 function render(){
   const c=document.getElementById('rows'); c.innerHTML='';

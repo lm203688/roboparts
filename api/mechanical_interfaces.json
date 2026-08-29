@@ -23,8 +23,8 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 1.68,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.68%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 1.57,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.57%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
@@ -70,6 +70,91 @@
   },
   "flange_designations": [
     {
+      "id": "ISO9409-1-A20-4-M3",
+      "d1_mm": 20,
+      "bolt_count": 4,
+      "thread": "M3",
+      "dowel_holes": "2×φ3H7",
+      "typical_payload_class": "微型",
+      "known_hosts": [
+        "KUKA KR 3 AGILUS",
+        "KUKA KR DELTA",
+        "KUKA KR SCARA R600"
+      ],
+      "is_canonical_iso": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, 不编造规格)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "aliases": [
+        "ISO 9409-1-20-4-M3",
+        "ISO 9409-1-A20-4-M3",
+        "ISO9409-1-20-4-M3",
+        "ISO9409-1-A20-4-M3"
+      ],
+      "source_tier_basis": "third_party_compilation_not_oem_domain",
+      "source_tier_note": "来源为 Industrial Robotics Hub 第三方法兰查表（汇总 OEM 手册，明确不编造），未达一手 OEM 出处 A 级；但其覆盖与 OEM 手册交叉验证，可靠性高于旧 abbpj 汇编页。",
+      "note": "小型臂 PCD20 非 ISO 标准梯级（最近为 PCD18/D25 与 PCD25/D31.5）。"
+    },
+    {
+      "id": "ISO9409-1-A31.5-4-M5",
+      "d1_mm": 31.5,
+      "bolt_count": 4,
+      "thread": "M5",
+      "dowel_holes": "2×φ5H7",
+      "typical_payload_class": "小型",
+      "known_hosts": [
+        "KUKA KR 6 R700 sixx",
+        "KUKA KR 10 R900 sixx",
+        "KUKA LBR iisy 3 R760",
+        "ABB IRB 1010",
+        "ABB IRB 1100",
+        "ABB SWIFTI CRB 1100-4/0.58"
+      ],
+      "is_canonical_iso": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, 不编造规格)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "aliases": [
+        "ISO 9409-1-31.5-4-M5",
+        "ISO 9409-1-A31.5-4-M5",
+        "ISO9409-1-31.5-4-M5",
+        "ISO9409-1-A31.5-4-M5"
+      ],
+      "source_tier_basis": "third_party_compilation_not_oem_domain",
+      "source_tier_note": "来源为 Industrial Robotics Hub 第三方法兰查表（汇总 OEM 手册，明确不编造），未达一手 OEM 出处 A 级；但其覆盖与 OEM 手册交叉验证，可靠性高于旧 abbpj 汇编页。",
+      "note": "偏离 ISO 标准（ISO 9409-1-31.5 标准梯级为 4×M6）；小型协作臂常用 4×M5。"
+    },
+    {
+      "id": "ISO9409-1-A40-4-M6",
+      "d1_mm": 40,
+      "bolt_count": 4,
+      "thread": "M6",
+      "dowel_holes": "2×φ6H7",
+      "typical_payload_class": "小型/协作",
+      "known_hosts": [
+        "ABB IRB 1660ID-6/1.55",
+        "ABB IRB 1200-7/0.7",
+        "ABB IRB 1600-10/1.45",
+        "ABB IRB 1300-11/0.9",
+        "FANUC LR Mate 200iD/7L"
+      ],
+      "is_canonical_iso": true,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, 不编造规格)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "aliases": [
+        "ISO 9409-1-40-4-M6",
+        "ISO 9409-1-A40-4-M6",
+        "ISO9409-1-40-4-M6",
+        "ISO9409-1-A40-4-M6"
+      ],
+      "source_tier_basis": "third_party_compilation_not_oem_domain",
+      "source_tier_note": "来源为 Industrial Robotics Hub 第三方法兰查表（汇总 OEM 手册，明确不编造），未达一手 OEM 出处 A 级；但其覆盖与 OEM 手册交叉验证，可靠性高于旧 abbpj 汇编页。"
+    },
+    {
       "id": "ISO9409-1-A50-4-M6",
       "d1_mm": 50,
       "bolt_count": 4,
@@ -77,16 +162,35 @@
       "dowel_holes": "2×φ6H7",
       "typical_payload_class": "小型/协作",
       "known_hosts": [
+        "KUKA LBR iisy 11 R1300",
+        "KUKA LBR iiwa 14 R820",
+        "KUKA LBR iisy 15 R930",
+        "KUKA KR 20 R1810",
+        "KUKA KR 20 R3100 IONTEC",
+        "KUKA KR 30 R2100",
+        "ABB GoFa CRB 15000 (5 kg)",
+        "ABB GoFa CRB 15000-10/1.52",
+        "ABB GoFa CRB 15000-12/1.27",
+        "Universal Robots UR3e",
         "Universal Robots UR5e",
-        "ABB IRB1100",
-        "ABB IRB1200",
-        "ABB IRB120",
-        "ABB CRB1100",
-        "ABB IRB920/920T"
+        "Universal Robots UR7e",
+        "Universal Robots UR10e",
+        "Universal Robots UR12e",
+        "Universal Robots UR16e",
+        "Universal Robots UR15",
+        "FANUC CRX-10iA",
+        "FANUC CRX-10iA/L",
+        "FANUC CRX-20iA/L",
+        "FANUC CRX-25iA",
+        "Yaskawa Motoman HC10",
+        "Doosan Robotics H2515",
+        "Techman Robot TM12"
       ],
-      "source": "ABB 机型法兰规格对照 (abbpj.weisizhineng.com)",
+      "is_canonical_iso": true,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, 不编造规格)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
       "source_tier": "B",
-      "confidence": 0.9,
+      "confidence": 0.85,
       "aliases": [
         "ISO 9409-1-50-4-M6",
         "ISO 9409-1-A50-4-M6",
@@ -94,7 +198,7 @@
         "ISO9409-1-A50-4-M6"
       ],
       "source_tier_basis": "third_party_compilation_not_oem_domain",
-      "source_tier_note": "原标 source_tier=A，但出处为 abbpj.weisizhineng.com（ABB 集成商汇编页，非 abb.com 官方域），不满足本项目 A 级定义（一手厂商官方出处），20260811 降为 B 并保留数据。",
+      "source_tier_note": "来源为 Industrial Robotics Hub 第三方法兰查表（汇总 OEM 手册，明确不编造），未达一手 OEM 出处 A 级；但其覆盖与 OEM 手册交叉验证，可靠性高于旧 abbpj 汇编页。",
       "known_hosts_evidence": [
         {
           "host": "Universal Robots UR5e",
@@ -123,76 +227,130 @@
       ]
     },
     {
-      "id": "ISO9409-1-A80-4-M8",
+      "id": "ISO9409-1-A63-6-M6",
+      "d1_mm": 63,
+      "bolt_count": 6,
+      "thread": "M6",
+      "dowel_holes": "2×φ6H7",
+      "typical_payload_class": "通用",
+      "known_hosts": [
+        "KUKA LBR iiwa 7 R800"
+      ],
+      "is_canonical_iso": true,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, 不编造规格)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "aliases": [
+        "ISO 9409-1-63-6-M6",
+        "ISO 9409-1-A63-6-M6",
+        "ISO9409-1-63-6-M6",
+        "ISO9409-1-A63-6-M6"
+      ],
+      "source_tier_basis": "third_party_compilation_not_oem_domain",
+      "source_tier_note": "来源为 Industrial Robotics Hub 第三方法兰查表（汇总 OEM 手册，明确不编造），未达一手 OEM 出处 A 级；但其覆盖与 OEM 手册交叉验证，可靠性高于旧 abbpj 汇编页。"
+    },
+    {
+      "id": "ISO9409-1-A80-6-M8",
       "d1_mm": 80,
-      "bolt_count": 4,
+      "bolt_count": 6,
       "thread": "M8",
       "dowel_holes": "2×φ8H7",
       "typical_payload_class": "中型",
       "known_hosts": [
-        "ABB IRB1600",
-        "ABB IRB2600",
-        "ABB IRB4600",
-        "ABB IRB360(部分版本)"
+        "Universal Robots UR20",
+        "Universal Robots UR30"
       ],
-      "source": "ABB 机型法兰规格对照 (abbpj.weisizhineng.com)",
-      "source_tier": "B",
-      "confidence": 0.9,
-      "aliases": [
-        "ISO 9409-1-80-4-M8",
-        "ISO 9409-1-A80-4-M8",
-        "ISO9409-1-80-4-M8",
-        "ISO9409-1-A80-4-M8"
-      ],
-      "source_tier_basis": "third_party_compilation_not_oem_domain",
-      "source_tier_note": "原标 source_tier=A，但出处为 abbpj.weisizhineng.com（ABB 集成商汇编页，非 abb.com 官方域），不满足本项目 A 级定义（一手厂商官方出处），20260811 降为 B 并保留数据。"
-    },
-    {
-      "id": "ISO9409-1-A100-6-M10",
-      "d1_mm": 100,
-      "bolt_count": 6,
-      "thread": "M10",
-      "dowel_holes": "2×φ10H7",
-      "typical_payload_class": "大型",
-      "known_hosts": [
-        "ABB IRB6700",
-        "ABB IRB5700",
-        "ABB IRB760",
-        "ABB IRB460"
-      ],
-      "source": "ABB 机型法兰规格对照 (abbpj.weisizhineng.com)",
-      "source_tier": "B",
-      "confidence": 0.9,
-      "aliases": [
-        "ISO 9409-1-100-6-M10",
-        "ISO 9409-1-A100-6-M10",
-        "ISO9409-1-100-6-M10",
-        "ISO9409-1-A100-6-M10"
-      ],
-      "source_tier_basis": "third_party_compilation_not_oem_domain",
-      "source_tier_note": "原标 source_tier=A，但出处为 abbpj.weisizhineng.com（ABB 集成商汇编页，非 abb.com 官方域），不满足本项目 A 级定义（一手厂商官方出处），20260811 降为 B 并保留数据。"
-    },
-    {
-      "id": "ISO9409-1-A160-8-M12",
-      "d1_mm": 160,
-      "bolt_count": 8,
-      "thread": "M12",
-      "dowel_holes": null,
-      "typical_payload_class": "超大负载",
-      "known_hosts": [
-        "ABB IRB8700"
-      ],
-      "source": "ABB 机型法兰规格对照 (abbpj.weisizhineng.com)",
+      "is_canonical_iso": true,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, 不编造规格)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
       "source_tier": "B",
       "confidence": 0.85,
       "aliases": [
-        "ISO 9409-1-160-8-M12",
-        "ISO 9409-1-A160-8-M12",
-        "ISO9409-1-160-8-M12",
-        "ISO9409-1-A160-8-M12"
+        "ISO 9409-1-80-6-M8",
+        "ISO 9409-1-A80-6-M8",
+        "ISO9409-1-80-6-M8",
+        "ISO9409-1-A80-6-M8"
       ],
       "source_tier_basis": "third_party_compilation_not_oem_domain",
-      "source_tier_note": "原标 source_tier=A，但出处为 abbpj.weisizhineng.com（ABB 集成商汇编页，非 abb.com 官方域），不满足本项目 A 级定义（一手厂商官方出处），20260811 降为 B 并保留数据。"
+      "source_tier_note": "来源为 Industrial Robotics Hub 第三方法兰查表（汇总 OEM 手册，明确不编造），未达一手 OEM 出处 A 级；但其覆盖与 OEM 手册交叉验证，可靠性高于旧 abbpj 汇编页。"
+    },
+    {
+      "id": "ISO9409-1-A100-4-M8",
+      "d1_mm": 100,
+      "bolt_count": 4,
+      "thread": "M8",
+      "dowel_holes": "2×φ8H7",
+      "typical_payload_class": "大型",
+      "known_hosts": [
+        "KUKA KR 70 R2100",
+        "KUKA KR 120 R2700-2",
+        "KUKA KR 210 R2700-2 (QUANTEC)"
+      ],
+      "is_canonical_iso": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, 不编造规格)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "aliases": [
+        "ISO 9409-1-100-4-M8",
+        "ISO 9409-1-A100-4-M8",
+        "ISO9409-1-100-4-M8",
+        "ISO9409-1-A100-4-M8"
+      ],
+      "source_tier_basis": "third_party_compilation_not_oem_domain",
+      "source_tier_note": "来源为 Industrial Robotics Hub 第三方法兰查表（汇总 OEM 手册，明确不编造），未达一手 OEM 出处 A 级；但其覆盖与 OEM 手册交叉验证，可靠性高于旧 abbpj 汇编页。",
+      "note": "KUKA KR70/120/210 实测为 PCD100 4×M8，偏离 ISO 标准梯级（ISO 9409-1-100 为 6×M10）；OnRobot/Gimatic 确有对应转接盘。"
+    },
+    {
+      "id": "ISO9409-1-A160-4-M12",
+      "d1_mm": 160,
+      "bolt_count": 4,
+      "thread": "M12",
+      "dowel_holes": "2×φ12H7",
+      "typical_payload_class": "大型",
+      "known_hosts": [
+        "KUKA KR 500 R2830"
+      ],
+      "is_canonical_iso": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, 不编造规格)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "aliases": [
+        "ISO 9409-1-160-4-M12",
+        "ISO 9409-1-A160-4-M12",
+        "ISO9409-1-160-4-M12",
+        "ISO9409-1-A160-4-M12"
+      ],
+      "source_tier_basis": "third_party_compilation_not_oem_domain",
+      "source_tier_note": "来源为 Industrial Robotics Hub 第三方法兰查表（汇总 OEM 手册，明确不编造），未达一手 OEM 出处 A 级；但其覆盖与 OEM 手册交叉验证，可靠性高于旧 abbpj 汇编页。",
+      "note": "KUKA KR500 实测为 PCD160 4×M12，偏离 ISO 标准梯级（ISO 9409-1-160 为 8×M16）。"
+    },
+    {
+      "id": "ISO9409-1-A250-4-M16",
+      "d1_mm": 250,
+      "bolt_count": 4,
+      "thread": "M16",
+      "dowel_holes": "2×φ16H7",
+      "typical_payload_class": "超重载",
+      "known_hosts": [
+        "KUKA KR 1000 TITAN"
+      ],
+      "is_canonical_iso": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, 不编造规格)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "aliases": [
+        "ISO 9409-1-250-4-M16",
+        "ISO 9409-1-A250-4-M16",
+        "ISO9409-1-250-4-M16",
+        "ISO9409-1-A250-4-M16"
+      ],
+      "source_tier_basis": "third_party_compilation_not_oem_domain",
+      "source_tier_note": "来源为 Industrial Robotics Hub 第三方法兰查表（汇总 OEM 手册，明确不编造），未达一手 OEM 出处 A 级；但其覆盖与 OEM 手册交叉验证，可靠性高于旧 abbpj 汇编页。",
+      "note": "KUKA KR1000 TITAN 实测为 PCD250 4×M16，PCD250 本身非 ISO 标准梯级（最近为 PCD200/8×M20）。"
     }
   ],
   "humanoid_shoulder_3dof_2026": {
@@ -439,5 +597,89 @@
         ]
       }
     ]
-  }
+  },
+  "iso_9409_1_naming_convention": {
+    "note": "机器人行业 de-facto 的 'A{n}' 命名中 n = 节圆直径 PCD（非 ISO 外径 D）。同一 A 标号在不同厂商可能对应不同几何（命名歧义），例如 A80 既可能是 ISO 标准 6×M8，也可能是 ABB 老款 4×M8；A100 既可能是 ISO 标准 6×M10，也可能是 KUKA 的 4×M8。本文件 flange_designations 仅记录实测真实存在的 (PCD,孔数,螺纹) 组合，is_canonical_iso 标记是否等于 ISO 标准梯级。",
+    "pcd_based_label_example": "ISO 9409-1-A50-4-M6 表示 PCD=50mm、4×M6。"
+  },
+  "canonical_ladder_iso_9409_1": [
+    {
+      "pcd": 11,
+      "holes": 4,
+      "thread": "M3",
+      "iso_outer_diameter": 16
+    },
+    {
+      "pcd": 14,
+      "holes": 4,
+      "thread": "M3",
+      "iso_outer_diameter": 20
+    },
+    {
+      "pcd": 18,
+      "holes": 4,
+      "thread": "M4",
+      "iso_outer_diameter": 25
+    },
+    {
+      "pcd": 25,
+      "holes": 4,
+      "thread": "M5",
+      "iso_outer_diameter": 31.5
+    },
+    {
+      "pcd": 31.5,
+      "holes": 4,
+      "thread": "M6",
+      "iso_outer_diameter": 40
+    },
+    {
+      "pcd": 40,
+      "holes": 4,
+      "thread": "M6",
+      "iso_outer_diameter": 50
+    },
+    {
+      "pcd": 50,
+      "holes": 4,
+      "thread": "M6",
+      "iso_outer_diameter": 63
+    },
+    {
+      "pcd": 63,
+      "holes": 6,
+      "thread": "M6",
+      "iso_outer_diameter": 80
+    },
+    {
+      "pcd": 80,
+      "holes": 6,
+      "thread": "M8",
+      "iso_outer_diameter": 100
+    },
+    {
+      "pcd": 100,
+      "holes": 6,
+      "thread": "M10",
+      "iso_outer_diameter": 125
+    },
+    {
+      "pcd": 125,
+      "holes": 8,
+      "thread": "M12",
+      "iso_outer_diameter": 160
+    },
+    {
+      "pcd": 160,
+      "holes": 8,
+      "thread": "M16",
+      "iso_outer_diameter": 200
+    },
+    {
+      "pcd": 200,
+      "holes": 8,
+      "thread": "M20",
+      "iso_outer_diameter": 250
+    }
+  ]
 }
