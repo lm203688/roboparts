@@ -469,8 +469,8 @@ def main():
         # 也就是说：唯一入口把"用错"翻译成了"静默抹掉历史"，而不是报错。
         # 三道闸：① 不认识的旗标直接拒 ② 三段全空必须显式声明 ③ 已有内容不许被空行替换。
         KNOWN = {'--append-summary', '--fixed', '--improved', '--todo',
-                 '--hour', '--allow-empty'}
-        VALUED = {'--fixed', '--improved', '--todo', '--hour'}
+                 '--hour', '--allow-empty', '--now'}
+        VALUED = {'--fixed', '--improved', '--todo', '--hour', '--now'}
         toks, i, unknown = sys.argv[1:], 0, []
         while i < len(toks):
             t = toks[i]
@@ -496,7 +496,15 @@ def main():
             print('   真的是空转轮次请显式加 --allow-empty。')
             return 3
         try:
-            new, line, replaced = append_summary(fixed, improved, todo, hour=_arg('--hour'))
+            now_arg = None
+            if '--now' in sys.argv:
+                try:
+                    now_arg = datetime.strptime(_arg('--now'), '%Y-%m-%dT%H:%M')
+                except ValueError:
+                    print('❌ --now 格式错误，应为 YYYY-MM-DDTHH:MM')
+                    return 3
+            new, line, replaced = append_summary(
+                fixed, improved, todo, hour=_arg('--hour'), now=now_arg)
         except (ValueError, IndexError) as e:
             print('❌ 摘要行被拒: %s' % e)
             return 3

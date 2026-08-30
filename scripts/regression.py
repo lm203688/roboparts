@@ -8510,7 +8510,7 @@ def layer1_81():
     r = _run()
     check(r.returncode == 3 and '三段全空' in (r.stdout + r.stderr),
           '阳性: 三段全空未显式声明时被拒（几乎总是调用姿势错了）')
-    r = _run('--hour', '00', '--allow-empty')
+    r = _run('--hour', '00', '--allow-empty', '--now', '2026-08-29T00:30')
     check(r.returncode == 3 and '棘轮' in (r.stdout + r.stderr),
           '阳性: 棘轮生效——不许用空摘要替换同档位已有的实质内容')
     check(not re.search(r'修复:无 \| 提升:无 \| 待办:无',
