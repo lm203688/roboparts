@@ -64,6 +64,17 @@ def load_entities():
     return json.load(open(os.path.join(ROOT, 'api', 'entities.json'), encoding='utf-8'))
 
 
+def layer_schema_contract():
+    """D1(20260830): 实体 schema 契约闸门（mHarmony 式带类型校验）。
+    缺核心字段或 status 枚举越界 → 判红，杜绝历史『写错层被静默丢弃』类缺陷
+    （PROTO-010 / XFA-017）。契约定义见 scripts/schema_contract.py。"""
+    from schema_contract import SCHEMA_VERSION, validate
+    ents = load_entities().get('entities', [])
+    v = validate(ents)
+    check(len(v) == 0,
+          f"实体 schema 契约 v{SCHEMA_VERSION}：{len(ents)} 实体全部满足核心字段+status 枚举（违规 {len(v)}）")
+
+
 def _git_show_json(relpath, ref='HEAD'):
     """取 git 某版本的 JSON 文件内容；取不到返回 None（调用方须按"无法核验"处理，不得当绿灯）。"""
     try:
@@ -9718,6 +9729,7 @@ def main():
     layer2()
     layer3(url)
     layer4()
+    layer_schema_contract()
     print('\n==============================')
     if failures:
         print(f'❌ 阻断：{len(failures)} 项未通过，禁止发布')
