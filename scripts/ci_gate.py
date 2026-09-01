@@ -376,6 +376,20 @@ def gate_bom_assembly_sequence():
             ['node', os.path.join(ROOT, 'scripts', 'test_bom_assembly.mjs')])
 
 
+def gate_feedback_loop_aggregate():
+    """反馈信号回流聚合（Q-Planning 借鉴·失败数据回流纪律）不得静默退化。
+
+    2026-09-01 把"只采集不消费"的 adapter-feedback / recommend-feedback 改成透明、
+    样本门控的社区信号回流：aggregateCommunityFit（同对反向归并、bad 占比≥0.3→needs_review、
+    样本不足→insufficient_data、adjust 计入不触发、缺 flange 跳过）与 aggregateRecfb
+    （跨 16 分片累加、忽略 _updated 控制键）。本闸门跑 scripts/test_feedback_loop.mjs
+    （10 断言），非零退出即判红。回归风险：配对键写错会静默把"需复核"误标为"适配良好"，
+    或把小样本噪声当信号 —— 两者都直接违反假绿纪律。
+    """
+    run_sub('反馈信号回流聚合',
+            ['node', os.path.join(ROOT, 'scripts', 'test_feedback_loop.mjs')])
+
+
 GATES = [
     ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
@@ -404,6 +418,7 @@ GATES = [
     ('GitHub 配置 YAML 可解析', gate_github_yaml_parses),
     ('无凭据泄漏', gate_no_secrets),
     ('BOM 装配次序拓扑排序', gate_bom_assembly_sequence),
+    ('反馈信号回流聚合', gate_feedback_loop_aggregate),
 ]
 
 
