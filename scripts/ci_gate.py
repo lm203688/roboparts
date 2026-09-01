@@ -312,7 +312,59 @@ def gate_no_secrets():
         ok('仓内无凭据字面量', f'{len([f for f in files if f.strip()])} 个跟踪文件')
 
 
+def gate_semantic_index_covers_entities():
+    """api/semantic_index.json（V-Link 双流·语义流）必须覆盖全部实体 id。
+
+    2026-08-29 事故背景：语义索引由 scripts/build_semantic_index.mjs 离线生成，却从未挂进
+    部署链，长期是手工跑一次的过期派生物（generated_at 2026-08-17，824 ids vs 真相源 768+142）。
+    /api/semantic-search 与 judgePair 的语义近邻全靠它，过期索引会让"语义相近零件"失真。
+    本闸门把"索引 ids ⊇ 实体 ids"定为不变量：任一实体缺失即判红，迫使部署前重建（deploy 0b4）。
+    """
+    ent_paths = [os.path.join(ROOT, 'api', 'entities.json'),
+                 os.path.join(ROOT, 'api', 'entities.contrib.json')]
+    entity_ids = set()
+    for p in ent_paths:
+        if not os.path.exists(p):
+            continue
+        try:
+            with open(p, encoding='utf-8') as f:
+                d = json.load(f)
+        except Exception as ex:
+            bad('语义索引覆盖全部实体', f'读取 {os.path.relpath(p, ROOT)} 失败: {ex}')
+            return
+        for e in (d.get('entities') or []):
+            # 与 build_semantic_index.mjs 同口径：市场情报 / 企业主体不进"零件语义检索"池，
+            # 网关若强行要求它们入索引，会逼 builder 索引非零件（违背检索语义）。
+            kind = e.get('entity_kind')
+            if kind in ('market_intelligence', 'organization'):
+                continue
+            if e.get('id'):
+                entity_ids.add(e['id'])
+    if not entity_ids:
+        ok('语义索引覆盖全部实体', '无实体可校验，跳过')
+        return
+    idx_path = os.path.join(ROOT, 'api', 'semantic_index.json')
+    if not os.path.exists(idx_path):
+        bad('语义索引覆盖全部实体',
+            'api/semantic_index.json 不存在（部署前必须运行 build_semantic_index.mjs）')
+        return
+    try:
+        with open(idx_path, encoding='utf-8') as f:
+            idx = json.load(f)
+    except Exception as ex:
+        bad('语义索引覆盖全部实体', f'索引解析失败: {ex}')
+        return
+    idx_ids = set(idx.get('ids') or [])
+    missing = entity_ids - idx_ids
+    if missing:
+        bad('语义索引覆盖全部实体',
+            f'{len(missing)} 个实体未进索引（索引过期/未重建）：{sorted(missing)[:5]}')
+        return
+    ok('语义索引覆盖全部实体', f'{len(entity_ids)} 实体全部覆盖（索引 {len(idx_ids)} ids）')
+
+
 GATES = [
+    ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
         '实体 schema 契约',
         [sys.executable, os.path.join(ROOT, 'scripts', 'schema_contract.py')])),

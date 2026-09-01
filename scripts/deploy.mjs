@@ -221,6 +221,18 @@ snapshotWorkingTree(ROOT);
   }
 }
 
+// 0b4) 语义索引随真相源重建（api/semantic_index.json）
+// 2026-08-29：V-Link「双流零件发现」的语义流依赖此索引，但它此前是手工跑一次就上线的派生物
+// （generated_at 2026-08-17、824 ids，已严重偏离真相源 768+142 实体）—— 与 0b/0c/0d 同源的病：
+// 派生物一旦对外，就必须和真相源同一时刻更新，否则它就是一份"看起来有出处"的过期快照。
+// /api/semantic-search 与 judgePair 的语义近邻都在用它，过期向量会让"语义相近"的零件失真，
+// 制造看似可用实则失真的发现结果（假绿）。这里把重建挂进部署链，与 0b/0c/0d 同机制。
+{
+  const ex = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'build_semantic_index.mjs')], { cwd: ROOT, encoding: 'utf8' });
+  if (ex.status === 0) console.log('   ✅ 语义索引已随真相源重建（双流发现·语义流；索引覆盖当前全部实体）');
+  else console.warn('   ⚠️ 语义索引重建失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
+}
+
 // 0c) 机读接入声明兜底注入（meta.access）
 // 20260808-04：inject_api_access.py 的 docstring 自称「由 deploy 前置与各 build 脚本调用，
 // 不依赖任何人记得手工执行」，但实测 deploy.mjs 里对它的引用是 **0 处** —— 文档写了 ≠ 挂上了，
