@@ -78,13 +78,18 @@ assertNoPendingRewrite();
 
 let TOKEN = process.env.GITHUB_TOKEN;
 if (!TOKEN) {
-  const cred = execFileSync('git', ['credential', 'fill'], {
-    input: 'protocol=https\nhost=github.com\n',
-    encoding: 'utf8',
-  });
-  TOKEN = (cred.match(/^password=(.+)$/m) || [])[1];
+  // 直接读本地凭据库（纯文件读，不调 `git credential fill` —— 后者会经被墙的
+  // github.com:443 挂起，导致整条推送卡死）。格式：https://x-access-token:<TOKEN>@github.com
+  const credPath = `${os.homedir()}/.git-credentials`;
+  try {
+    const txt = fs.readFileSync(credPath, 'utf8');
+    const m =
+      txt.match(/https:\/\/x-access-token:([^@\s]+)@github\.com/) ||
+      txt.match(/https:\/\/[^:@\s]+:([^@\s]+)@github\.com/);
+    if (m) TOKEN = m[1];
+  } catch {}
 }
-if (!TOKEN) throw new Error('未取到 GitHub token：设置 GITHUB_TOKEN 或先配置 git credential');
+if (!TOKEN) throw new Error('未取到 GitHub token：设置 GITHUB_TOKEN 或确认 ~/.git-credentials 含 github.com 条目');
 
 console.log(`repo=${OWNER}/${REPO} branch=${BRANCH} dry=${DRY}`);
 
