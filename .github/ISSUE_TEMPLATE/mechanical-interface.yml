@@ -1,0 +1,94 @@
+name: 补机械接口声明
+description: 帮某个零件补上「能不能拧上去」的可核验数据。不必会写 JSON，贴出处链接就行。
+title: "[机械接口] "
+labels: ["mechanical-interface", "data-contribution"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        全库 768 个实体里，机械接口有线索的只有 **1.52%**（6 条）。
+        这是本项目最大的缺口，也是最有价值的贡献方向。
+
+        **只要一条带出处的孔位数据，就比整套算法更有用。**
+
+        规矩只有一条：**无出处不收**。我们宁可留着 `not_declared`，也不猜。
+        你不用会写 JSON，也不用懂 ISO 编码 —— 填下面的表，我们代录并署名。
+
+  - type: input
+    id: part
+    attributes:
+      label: 零件是哪个
+      description: 厂商 + 型号即可；若已知 RoboParts ID（如 ACT-028）请一并填上
+      placeholder: 例：Robotiq 2F-85 / 或 ACT-028
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mount_type
+    attributes:
+      label: 安装方式
+      description: |
+        取值口径见 [/api/mechanical_interfaces.json#mount_type_enum](https://roboparts.cc/api/mechanical_interfaces.json)。
+        拿不准就选「不确定」，我们据出处判定 —— 猜错比留空更糟。
+      options:
+        - 不确定（我只提供出处，请你们判定）
+        - flange 法兰安装型（通过法兰面固定）
+        - shaft_sleeve 轴套安装型
+        - embedded 嵌入式（嵌入壳体内部，仍可拆）
+        - direct_mount 直装（厂商声明无需转接法兰）
+        - wire_to_board 线对板（连接器）
+        - press_fit 压装（过盈配合）
+        - surface_mount 表面贴装
+        - adhesive 粘接（柔性皮肤/贴片传感器）
+        - integrated 一体成型（不可分离，无互换标识）
+    validations:
+      required: true
+
+  - type: input
+    id: standard
+    attributes:
+      label: 法兰标号（如果有）
+      description: |
+        格式 `ISO 9409-1-{节圆}-{孔数}-M{螺纹}`，例 `ISO 9409-1-50-4-M6`（节圆 φ50，4 个 M6）。
+        **重要**：如果厂商手册写的是「P.C.D. 56, 8×M4」这种简写而没写 ISO 编码，
+        请**原样照抄简写**，不要替我们翻译成 ISO 编码 —— 我们已经踩过这个坑
+        （ACT-028 的 AGC-CPL-065，厂商两处出处写法不一致，至今悬置未收）。
+      placeholder: 例：ISO 9409-1-50-4-M6 / 或原样照抄：P.C.D. 56, 8×M4
+    validations:
+      required: false
+
+  - type: textarea
+    id: source
+    attributes:
+      label: 出处链接（必填）
+      description: |
+        厂商官方手册 PDF / 官网产品页 / 标准原文。**请给能点开的直链**，
+        并注明是文档的哪一节或哪一页 —— 我们会逐条点开复核。
+        论坛帖、经销商汇编页、二手转述会被降为 Tier C 或直接拒收。
+      placeholder: |
+        https://assets.robotiq.com/.../2F-85_InstructionManual.pdf
+        —— §6.1.1 Couplings 表格
+    validations:
+      required: true
+
+  - type: textarea
+    id: caveat
+    attributes:
+      label: 有什么前提或坑（选填，但很有价值）
+      description: |
+        例如：「必须选配官方耦合件才能装，耦合件是必需件」——
+        这类前提直接决定「可装」这个结论成立与否，我们会原样写进 `declared_note`。
+        又如「手册没给螺纹旋入深度」——我们会写进 `gap`，公开承认这条判不了。
+      placeholder: 例：孔位随官方耦合件型号变化，非单一法兰；耦合件集成电子触点，属必需件。
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: honesty
+    attributes:
+      label: 请确认
+      options:
+        - label: 出处是厂商官方文档或标准原文，不是我的推测、记忆或第三方转述
+          required: true
+        - label: 我理解本库参数是厂商声明值而非实测值，且这条数据会被公开署名收录（CC BY 4.0）
+          required: true

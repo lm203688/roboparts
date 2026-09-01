@@ -23,14 +23,20 @@
     }
   },
   "count": 11,
-  "updated": "2026-08-29T02:42:48.021483Z",
+  "updated": "2026-09-01T00:51:33.984315Z",
   "data": [
     {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -82,7 +88,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -126,7 +138,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -207,7 +225,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-HD-32",
@@ -246,7 +273,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-HD-50",
@@ -285,7 +321,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-GH-25",
@@ -325,7 +370,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-GH-50",
@@ -365,7 +419,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-RV-50",
@@ -404,7 +467,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-RV-200",
@@ -443,7 +515,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-LIF-60",
@@ -483,7 +564,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     }
   ]
 }

@@ -23,7 +23,7 @@
     }
   },
   "count": 46,
-  "updated": "2026-08-29T02:42:48.021483Z",
+  "updated": "2026-09-01T00:51:33.984315Z",
   "data": [
     {
       "id": "CHIP-nvidia-cosmos-groot",
@@ -2203,7 +2203,7 @@
       },
       "mechanical_interface": {
         "status": "n_a",
-        "mount_type": "N/A",
+        "mount_type": null,
         "standard": null,
         "flange": null,
         "confidence": 1,
@@ -2215,7 +2215,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "kind_basis": "category=data_acquisition: software entity, no mechanical interface",
       "source_tier_basis": "deep_link:www.linkedin.com/posts/acerobotics_embodiedai-robotics-world",
@@ -2257,7 +2263,7 @@
       },
       "mechanical_interface": {
         "status": "n_a",
-        "mount_type": "N/A",
+        "mount_type": null,
         "standard": null,
         "flange": null,
         "confidence": 1,
@@ -2269,7 +2275,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "kind_basis": "category=robot_ai_models: software entity, no mechanical interface",
       "source_tier_basis": "deep_link:arxiv.org/abs/2602.00401",

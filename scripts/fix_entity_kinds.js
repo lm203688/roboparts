@@ -156,12 +156,14 @@ Object.keys(kinds).forEach(k => kindCounts[k + '_entities'] = kinds[k]);
 const now = new Date().toISOString();
 
 // Rebuild meta
-e.meta.clean = clean;
+//
+// 【20260831 单一真相源修正】以下派生值此前被同时写在 meta 顶层与嵌套块两处
+// （clean / tier_a_traceable / traceable_pct / breakdown / quarantined）。
+// 顶层副本长期失修（376、631）且与权威值（377、669）矛盾，而所有校验只读嵌套块，
+// 顶层副本遂成无人看管的「假绿盲区」。现改为只写权威嵌套块，顶层禁写这些键，
+// 由 scripts/ci_gate.py 的「meta 单一真相源」闸门强制（顶层出现即阻断）。
 e.meta.total = total;
 e.meta.total_entities = total;
-e.meta.tier_a_traceable = realA;
-e.meta.traceable_pct = parseFloat((realA/total*100).toFixed(2));
-e.meta.breakdown = breakdown;
 
 e.meta.data_quality = {
   audited_at: now,

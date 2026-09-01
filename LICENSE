@@ -1,0 +1,69 @@
+RoboParts 采用双轨许可：代码与数据分别适用不同条款。
+
+================================================================================
+一、代码（MIT License）
+================================================================================
+
+适用范围：本仓库内的 scripts/、functions/、*.js、*.py、*.mjs、页面模板等
+一切软件代码。
+
+MIT License
+
+Copyright (c) 2026 RoboParts (roboparts.cc)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+二、数据（CC BY 4.0）
+================================================================================
+
+适用范围：api/ 下的全部 JSON 数据集（含 entities.json、
+mechanical_interfaces.json、各品类文件）、roboparts-dataset-github/ 分发目录，
+以及经 https://roboparts.cc/api/ 提供的同源数据。
+
+许可：Creative Commons Attribution 4.0 International (CC BY 4.0)
+全文：https://creativecommons.org/licenses/by/4.0/legalcode
+摘要：https://creativecommons.org/licenses/by/4.0/
+
+你可以自由使用、修改、再分发与商用，条件是注明来源。
+建议署名格式：
+
+    数据来源：RoboParts (https://roboparts.cc)，CC BY 4.0
+
+本条与 roboparts-dataset-github/LICENSE 以及 API 响应中
+meta.access.license 声明的许可一致。
+
+--------------------------------------------------------------------------------
+数据使用须知（不是许可条款，是诚实提示）
+--------------------------------------------------------------------------------
+
+引用本库数据前请知悉以下事实，它们同样公开写在 API 响应的 meta 里：
+
+1. 本库参数为**厂商公开声明值，未经我方实测复现**。请勿当作实测数据使用。
+2. 跨厂商可直接横向比较的 A 级条目为 0 条。
+3. 机械接口有线索的实体占 1.52%（截至 2026-08-31，6/395）——
+   「两个零件能否装到一起」这个问题，本库目前多数情况答不了，
+   相关实体标注为 not_declared 而非留空或猜测。
+4. 每条数据带 source_tier（A/B/C）与 confidence，请据此判断可信度。
+   Tier C 为无溯源历史导入，confidence 上限 0.30。
+5. api/mechanical_interfaces.json 中标注 authority 为 "roboparts_internal"
+   的键名（如 mount_type_enum.roboparts_extension 下的取值）**不是任何标准的
+   术语**，是本平台内部建模口径，请勿当作标准编码向下游转述。
+
+本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。

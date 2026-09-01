@@ -1,0 +1,65 @@
+# RoboParts CI 质量闸门
+#
+# 为什么需要：此前项目的全部质量校验（regression.py 1000+ 断言、schema 契约、
+# 分发一致性）**只在本地手工执行**。任何人（含外部 PR）改数据或代码都能绕过，
+# 而 Cloudflare Pages 会照常部署 —— 等于线上没有守门人。
+#
+# 边界（诚实说明）：本工作流跑的是 `scripts/ci_gate.py`，即「不依赖私有 ops/ 仓
+# 的仓内可判定子集」。完整回归（含留痕/棘轮/日报纪律）仍需本地
+# `python scripts/regression.py`，因为那些断言依赖 ops/（在 .gitignore 中）。
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    name: 质量闸门
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 无凭据泄漏闸门要跑 git ls-files
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 安装依赖
+        # 仅 PyYAML：供「GitHub 配置 YAML 可解析」闸门使用（Issue 模板 / workflow
+        # 写坏时 GitHub 是**静默失效**而非报错，必须自己校验）
+        run: python -m pip install --quiet PyYAML
+
+      - name: 列出闸门清单
+        run: python scripts/ci_gate.py --list
+
+      - name: 跑质量闸门
+        run: python scripts/ci_gate.py
+
+      - name: 分发目录漂移诊断（失败时给可执行修复命令）
+        if: failure()
+        run: |
+          echo "::group::分发目录漂移详情"
+          python scripts/sync_dataset_dist.py --check || true
+          echo "::endgroup::"
+          echo "修复方式：本地运行 python scripts/sync_dataset_dist.py 后重新提交。"
+          echo "该目录是 HuggingFace / ModelScope 的发布源，漂移会把错误数字发布出去。"

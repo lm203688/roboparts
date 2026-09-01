@@ -16,13 +16,17 @@
 
 幂等：可重复运行。运行后需再跑 normalize_categories.py 重生成派生文件。
 """
+import copy
 import json
 import os
 import re
+import sys
 import datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ENTITIES_PATH = os.path.join(ROOT, 'api', 'entities.json')
+# RP_ENTITIES_JSON 重定向：闸门可在副本上试算而不碰真实数据（见 ci_gate.py）。
+ENTITIES_PATH = (os.environ.get('RP_ENTITIES_JSON')
+                 or os.path.join(ROOT, 'api', 'entities.json'))
 
 # ---- 总线类别归一 ----------------------------------------------------------
 # 顺序敏感：先匹配更具体的
@@ -655,10 +659,11 @@ def build(entity):
     }
 
 
-def main():
-    with open(ENTITIES_PATH, 'r', encoding='utf-8') as f:
-        doc = json.load(f)
+def rebuild(doc):
+    """在内存里重算 standard_conformance 与覆盖率块，返回 (changed, coverage)。
 
+    不碰磁盘 —— 写入与 --check 共用同一份算法，杜绝「闸门说的」与「生成器做的」分叉。
+    """
     entities = doc.get('entities') or doc.get('data') or []
     changed = 0
     for e in entities:
@@ -667,7 +672,7 @@ def main():
             e['standard_conformance'] = sc
             changed += 1
 
-    # ---- 汇总覆盖率写入 meta ----
+    # ---- 汇总覆盖率 ----
     total = len(entities)
     assessed = sum(1 for e in entities if e['standard_conformance']['assessed'])
     stack = {}
@@ -679,9 +684,7 @@ def main():
         buses[sc['bus_class']] = buses.get(sc['bus_class'], 0) + 1
         postures[sc['interop_posture']] = postures.get(sc['interop_posture'], 0) + 1
 
-    meta = doc.setdefault('meta', {})
-    meta['standard_conformance_spec'] = STANDARDS_SPEC
-    meta['standard_conformance_coverage'] = {
+    coverage = {
         'total': total,
         'assessed': assessed,
         'assessed_pct': round(assessed / total * 100, 2) if total else 0,
@@ -700,17 +703,51 @@ def main():
             '其余无法评估互操作符合度——这是兼容性数据集的首要补全方向。'
         ),
     }
+    return changed, coverage
+
+
+def main():
+    with open(ENTITIES_PATH, 'r', encoding='utf-8') as f:
+        doc = json.load(f)
+
+    if '--check' in sys.argv:
+        # 只试算不落盘：在深拷贝上重算，比对除 computed_at 外的全部字段。
+        _, want = rebuild(copy.deepcopy(doc))
+        cur = (doc.get('meta') or {}).get('standard_conformance_coverage') or {}
+        strip = lambda d: {k: v for k, v in d.items() if k != 'computed_at'}
+        diff = {k: (cur.get(k), want[k]) for k in want if k != 'computed_at'
+                and cur.get(k) != want[k]}
+        if diff:
+            print('❌ standard_conformance_coverage 与现算不一致（跑 '
+                  'python scripts/govern_standard_conformance.py 收敛）')
+            for k, (a, b) in diff.items():
+                if isinstance(a, dict) and isinstance(b, dict):
+                    inner = {kk: (a.get(kk), b.get(kk)) for kk in set(a) | set(b)
+                             if a.get(kk) != b.get(kk)}
+                    print(f'   - {k}: {inner}')
+                else:
+                    print(f'   - {k}: 落盘 {a} → 现算 {b}')
+            return 1
+        print(f'✅ standard_conformance_coverage 一致'
+              f'（total={want["total"]} / assessed={want["assessed"]}）')
+        return 0
+
+    changed, coverage = rebuild(doc)
+    meta = doc.setdefault('meta', {})
+    meta['standard_conformance_spec'] = STANDARDS_SPEC
+    meta['standard_conformance_coverage'] = coverage
 
     with open(ENTITIES_PATH, 'w', encoding='utf-8') as f:
         json.dump(doc, f, ensure_ascii=False, indent=2)
         f.write('\n')
 
-    print(f'✅ standard_conformance 已写入：变更 {changed} 条 / 共 {total} 条')
-    print(f'   可评估：{assessed} ({meta["standard_conformance_coverage"]["assessed_pct"]}%)')
-    print(f'   互操作栈匹配：{stack}')
-    print(f'   总线分布 top: {list(buses.items())[:8]}')
-    print(f'   厂商立场：{postures}')
+    print(f'✅ standard_conformance 已写入：变更 {changed} 条 / 共 {coverage["total"]} 条')
+    print(f'   可评估：{coverage["assessed"]} ({coverage["assessed_pct"]}%)')
+    print(f'   互操作栈匹配：{coverage["interop_stack_distribution"]}')
+    print(f'   总线分布 top: {list(coverage["bus_class_distribution"].items())[:8]}')
+    print(f'   厂商立场：{coverage["interop_posture_distribution"]}')
     print('⚠️  请接着运行 scripts/normalize_categories.py 重生成派生文件')
+    return 0
 
 
 if __name__ == '__main__':

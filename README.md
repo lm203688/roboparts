@@ -61,21 +61,52 @@
 - **数据管线自动化** — 创建数据爬取与更新自动化脚本
 - **SEO自动化** — 实现SEO元数据自动生成与管理
 
-## 7. API
+## 8. API
 - `GET /api/entities.json` — 全部实体列表
 - `GET /api/compatibility_matrix.json` — 兼容性矩阵
 - `GET /api/entity/{id}` — 单个实体详情（免费层字段 + 明列被锁付费字段）
 - `GET /api/search?q=keyword` — 关键词检索（可选 `category` / `limit` / `include_quarantine`）
 
-## 8. 部署
+## 9. 部署
 - **平台**: Cloudflare Pages
 - **项目名**: robotparts
 - **线上地址（正式，对外一律引用此域）**: https://roboparts.cc
 - **预览域（Cloudflare Pages 默认域，非正式入口，勿对外引用）**: https://robotparts-924.pages.dev
 
-## 9. 安全
+## 10. 安全
 - API Token 已从文档中移除，请通过环境变量管理
 - 旧Token已泄露，请务必在Cloudflare Dashboard轮换
 
+## 11. 质量闸门
+本仓的数字与对外发布物由脚本从唯一真相源 `api/entities.json` 现算，禁止手改。
+
+```bash
+python scripts/ci_gate.py     # 仓内可判定的 8 项闸门（GitHub Actions 跑的就是这套）
+```
+
+校验项：实体 schema 契约、`mount_type` 枚举契约、对外数据集分发一致性、
+agent 技能清单一致性、对外 JSON 可解析、`meta` 与实体一致、
+Cloudflare Functions 顶层安全、无凭据泄漏。
+
+改完数据需重生成派生文件：`python scripts/normalize_categories.py`。
+
+## 12. 贡献
+本项目最大的缺口是机械接口声明率仅 **1.52%**（6/395）——
+「两个零件能不能拧到一起」多数情况答不了。补一条带出处的孔位数据，
+比重构算法有用得多。
+
+- [补机械接口声明](https://github.com/lm203688/roboparts/issues/new?template=mechanical-interface.yml)（不必会写 JSON，贴出处链接即可）
+- [报数据错误](https://github.com/lm203688/roboparts/issues/new?template=data-correction.yml)
+- 详细规矩与最小可核验格式：[`CONTRIBUTING.md`](./CONTRIBUTING.md)
+
+唯一的硬规矩：**无出处不收**。我们宁可留着 `not_declared`，也不猜。
+
+## 13. 许可
+双轨许可：**代码 MIT，数据 CC BY 4.0**。详见 [`LICENSE`](./LICENSE)。
+
+引用数据前请知悉：本库参数为厂商公开声明值，**未经我方实测复现**；
+跨厂商可直接横向比较的 A 级条目为 0 条。每条数据带 `source_tier`(A/B/C)
+与 `confidence`，请据此判断可信度。
+
 ---
-生成时间: 2026-08-03
+生成时间: 2026-08-03（章节 11–13 于 2026-08-31 补充）

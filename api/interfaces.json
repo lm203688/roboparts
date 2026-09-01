@@ -23,7 +23,7 @@
     }
   },
   "count": 44,
-  "updated": "2026-08-29T02:42:48.021483Z",
+  "updated": "2026-09-01T00:51:33.984315Z",
   "data": [
     {
       "id": "IF-001",
@@ -1949,7 +1949,16 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     },
     {
       "id": "STD-ISO-15066",
@@ -1982,7 +1991,16 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     },
     {
       "id": "STD-ISO-13849",
@@ -2015,7 +2033,16 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     },
     {
       "id": "STD-ISO-9787",
@@ -2048,7 +2075,16 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     },
     {
       "id": "STD-VDI-3844",
@@ -2081,7 +2117,16 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     },
     {
       "id": "STD-GB-T-11291",
@@ -2116,7 +2161,16 @@
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source_tier_prev": "A",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     },
     {
       "id": "STD-GB-T-36008",
@@ -2150,7 +2204,16 @@
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source_tier_prev": "A",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     }
   ]
 }

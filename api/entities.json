@@ -46,7 +46,7 @@
       "pcb": 2,
       "bionic_mechanisms": 9
     },
-    "updated": "2026-08-29T02:42:48.021483Z",
+    "updated": "2026-09-01T00:51:33.984315Z",
     "source": "roboparts.cc",
     "tier": "full",
     "provenance_coverage": {
@@ -61,11 +61,11 @@
       "verified_false": 358,
       "verify_threshold": 0.6,
       "clean_set": {
-        "total": 667,
-        "source_pct": 96.1,
-        "traceable_pct": 47.98,
+        "total": 669,
+        "source_pct": 96.11,
+        "traceable_pct": 48.13,
         "confidence_pct": 100.0,
-        "last_verified_pct": 64.17
+        "last_verified_pct": 64.28
       },
       "tier_definition": {
         "A": "可点开复核的一手来源（官方规格书/标准文本/带链接厂商文档）",
@@ -76,7 +76,7 @@
       "note": "主指标看 traceable_pct（Tier A 可点开复核）；source_pct 含 Tier B 弱归因，仅作过程指标；Tier C 已显式标注，供 Agent 侧过滤。【2026-08-10 更正】此前实现为「source 字段非空即判 A」，traceable_pct 曾虚报为 47.32%，已按证据重算为 49.09%，原值留在实体的 source_tier_prev 字段供审计。"
     },
     "data_quality": {
-      "audited_at": "2026-08-29",
+      "audited_at": "2026-09-01",
       "total": 768,
       "clean": 669,
       "quarantined": 99,
@@ -501,36 +501,37 @@
       "disclaimer": "本字段由实体已声明的接口/协议数据推导得出，属符合度线索，不构成第三方认证或合规结论；未声明数据的实体一律标记 assessed=false 与 unknown，未作任何推测。"
     },
     "standard_conformance_coverage": {
-      "total": 729,
-      "assessed": 83,
-      "assessed_pct": 11.39,
-      "caee060_relevant": 469,
-      "iso22166_relevant": 315,
+      "total": 768,
+      "assessed": 88,
+      "assessed_pct": 11.46,
+      "caee060_relevant": 478,
+      "iso22166_relevant": 324,
       "interop_stack_distribution": {
-        "unknown": 625,
-        "partial": 42,
-        "none": 30,
+        "unknown": 680,
+        "partial": 44,
+        "none": 33,
         "full": 11
       },
       "bus_class_distribution": {
-        "unknown": 672,
+        "unknown": 727,
         "CAN": 10,
-        "EtherCAT": 8,
+        "EtherCAT": 10,
         "proprietary": 5,
         "RS485": 4,
+        "other": 4,
         "UART": 3,
         "Ethernet": 3,
-        "other": 2,
-        "PROFINET": 1
+        "PROFINET": 1,
+        "Modbus": 1
       },
       "interop_posture_distribution": {
-        "unknown": 670,
+        "unknown": 730,
         "semi_open": 20,
         "closed": 17,
         "multi_protocol": 1
       },
-      "computed_at": "2026-08-12T12:22:25.760996+00:00",
-      "gap_note": "仅 83/708 条实体声明了接口/协议数据，其余无法评估互操作符合度——这是兼容性数据集的首要补全方向。"
+      "computed_at": "2026-09-01T00:44:46.155711+00:00",
+      "gap_note": "仅 88/768 条实体声明了接口/协议数据，其余无法评估互操作符合度——这是兼容性数据集的首要补全方向。"
     },
     "mechanical_interface_coverage": {
       "total": 768,
@@ -746,25 +747,6 @@
       "total_added": 13,
       "note": "Industry standard data from Harmonic Drive, Green Harmonic, Nabtesco, Lif-drive, OnRobot, Schunk, 正实机器人"
     },
-    "clean": 669,
-    "breakdown": {
-      "ok": 631,
-      "placeholder_id": 51,
-      "unverifiable_vendor": 32,
-      "duplicate": 4,
-      "non_entity": 14,
-      "partial": 15,
-      "excellent": 6,
-      "good": 14
-    },
-    "tier_a_traceable": 376,
-    "traceable_pct": 49.02,
-    "tier_definition": {
-      "A": "可点开复核的一手来源（官方规格书/标准文本/带链接厂商文档）",
-      "B": "弱归因（厂商目录声明值、官网首页，无原始链接）",
-      "C": "无溯源（历史导入，待补来源，confidence 上限 0.30）"
-    },
-    "tier_rule": "source_tier 由证据形态推导，不由录入者自封。判据唯一源 scripts/govern_source_tier.py",
     "lost_layer_recoveries": [
       {
         "id": "PROTO-010",
@@ -779,8 +761,7 @@
         "recovered_at": "2026-08-29",
         "note": "字段原先只写在派生层、真相源从未获得或已落后；本轮从 git 历史逐字回填至真相源，未改写任何取值"
       }
-    ],
-    "quarantined": 99
+    ]
   },
   "entities": [
     {
@@ -2500,7 +2481,7 @@
       },
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6",
           "ISO 9409-1-31.5-4-M5",
@@ -22290,7 +22271,7 @@
       },
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6",
           "ISO 9409-1-31.5-4-M5",
@@ -38496,7 +38477,7 @@
       "entity_kind": "component",
       "mechanical_interface": {
         "status": "partial",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": null,
         "flange": null,
         "declared_note": "带安装法兰座，内外圈一体化，无需额外轴承座（厂商产品说明）",
@@ -39590,9 +39571,9 @@
         "bus_class": "unknown",
         "ros2": null,
         "interop_stack_20262893": "unknown",
-        "caee060_relevant": false,
+        "caee060_relevant": true,
         "interop_posture": "unknown",
-        "iso22166_relevant": false
+        "iso22166_relevant": true
       },
       "mechanical_interface": {
         "status": "n_a",
@@ -39662,7 +39643,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -39714,7 +39701,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -39758,7 +39751,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -39807,7 +39806,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -39871,7 +39876,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -39926,7 +39937,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -39978,7 +39995,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -40025,7 +40048,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -40073,7 +40102,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -40120,7 +40155,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -40167,7 +40208,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -40217,7 +40264,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -40261,7 +40314,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -40304,7 +40363,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -40350,7 +40415,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -40391,7 +40462,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -40444,7 +40521,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -40487,7 +40570,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -40532,7 +40621,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -40610,7 +40705,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "teleop_support": [
         "Isaac Teleop",
@@ -40668,7 +40769,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "teleop_support": [
         "DexTele"
@@ -40729,7 +40836,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "teleop_support": [
         "Isaac Teleop"
@@ -40784,7 +40897,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "teleop_support": [],
       "ai_frameworks": [
@@ -40829,7 +40948,7 @@
       },
       "mechanical_interface": {
         "status": "n_a",
-        "mount_type": "N/A",
+        "mount_type": null,
         "standard": null,
         "flange": null,
         "confidence": 1,
@@ -40841,7 +40960,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "kind_basis": "category=data_acquisition: software entity, no mechanical interface",
       "source_tier_basis": "deep_link:www.linkedin.com/posts/acerobotics_embodiedai-robotics-world",
@@ -40883,7 +41008,7 @@
       },
       "mechanical_interface": {
         "status": "n_a",
-        "mount_type": "N/A",
+        "mount_type": null,
         "standard": null,
         "flange": null,
         "confidence": 1,
@@ -40895,7 +41020,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "kind_basis": "category=robot_ai_models: software entity, no mechanical interface",
       "source_tier_basis": "deep_link:arxiv.org/abs/2602.00401",
@@ -41002,7 +41133,16 @@
       },
       "rp_id": "RP-BIO-0001",
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "BIONIC-JOINT-002",
@@ -41104,7 +41244,16 @@
       },
       "rp_id": "RP-BIO-0002",
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "BIONIC-JOINT-003",
@@ -41198,7 +41347,16 @@
       },
       "rp_id": "RP-BIO-0003",
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "BIONIC-ACTUATOR-001",
@@ -41289,7 +41447,16 @@
       },
       "rp_id": "RP-BIO-0004",
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "BIONIC-ACTUATOR-002",
@@ -41363,7 +41530,16 @@
       },
       "rp_id": "RP-BIO-0005",
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "BIONIC-SENSOR-001",
@@ -41446,7 +41622,16 @@
       },
       "rp_id": "RP-BIO-0006",
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "BIONIC-SENSOR-002",
@@ -41524,7 +41709,16 @@
       },
       "rp_id": "RP-BIO-0007",
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "BIONIC-FRAME-001",
@@ -41613,7 +41807,16 @@
       },
       "rp_id": "RP-BIO-0008",
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "BIONIC-SKIN-001",
@@ -41686,7 +41889,16 @@
       },
       "rp_id": "RP-BIO-0009",
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "STD-ISO-10218",
@@ -41720,7 +41932,16 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     },
     {
       "id": "STD-ISO-15066",
@@ -41753,7 +41974,16 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     },
     {
       "id": "STD-ISO-13849",
@@ -41786,7 +42016,16 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     },
     {
       "id": "STD-ISO-9787",
@@ -41819,7 +42058,16 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     },
     {
       "id": "STD-VDI-3844",
@@ -41852,7 +42100,16 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     },
     {
       "id": "STD-GB-T-11291",
@@ -41887,7 +42144,16 @@
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source_tier_prev": "A",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     },
     {
       "id": "STD-GB-T-36008",
@@ -41921,7 +42187,16 @@
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source_tier_prev": "A",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      }
     },
     {
       "id": "REDUCER-HD-25",
@@ -41960,7 +42235,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-HD-32",
@@ -41999,7 +42283,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-HD-50",
@@ -42038,7 +42331,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-GH-25",
@@ -42078,7 +42380,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-GH-50",
@@ -42118,7 +42429,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-RV-50",
@@ -42157,7 +42477,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-RV-200",
@@ -42196,7 +42525,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "REDUCER-LIF-60",
@@ -42236,7 +42574,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "GRIPPER-ONR-VG1",
@@ -42275,7 +42622,16 @@
       },
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": true,
+        "bus_class": "other",
+        "ros2": null,
+        "interop_stack_20262893": "none",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "GRIPPER-ONR-NG1",
@@ -42314,7 +42670,16 @@
       },
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": true,
+        "bus_class": "EtherCAT",
+        "ros2": null,
+        "interop_stack_20262893": "partial",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "GRIPPER-ONR-NG30",
@@ -42353,7 +42718,16 @@
       },
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": true,
+        "bus_class": "EtherCAT",
+        "ros2": null,
+        "interop_stack_20262893": "partial",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "GRIPPER-SCHUNK-SWG15",
@@ -42391,7 +42765,16 @@
       },
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": true,
+        "bus_class": "other",
+        "ros2": null,
+        "interop_stack_20262893": "none",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "GRIPPER-POS-2F20",
@@ -42430,7 +42813,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
-      "quarantine": false
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": true,
+        "bus_class": "Modbus",
+        "ros2": null,
+        "interop_stack_20262893": "none",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
     },
     {
       "id": "XFA-017",
@@ -42467,12 +42859,12 @@
         "ros2": null,
         "interop_stack_20262893": "unknown",
         "caee060_relevant": true,
-        "interop_posture": "open_research",
+        "interop_posture": "unknown",
         "iso22166_relevant": true
       },
       "mechanical_interface": {
         "status": "not_declared",
-        "mount_type": "research_prototype",
+        "mount_type": "unknown",
         "standard": null,
         "flange": null,
         "confidence": 0,

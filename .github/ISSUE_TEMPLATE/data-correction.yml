@@ -1,0 +1,48 @@
+name: 报数据错误
+description: 库里某条数据错了、过期了或与厂商官方口径不符。
+title: "[纠错] "
+labels: ["data-correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        本库参数为**厂商公开声明值，未经我方实测复现**。发现不符请直接开单。
+
+        我们会做两件事：改数据，并在 `api/entities.json` 留下变更痕迹（不静默改数）。
+        如果是我们判断口径本身有问题，会公开说明分歧而不是单方面下结论。
+
+  - type: input
+    id: entity
+    attributes:
+      label: 哪条实体
+      description: RoboParts ID（如 SENS-31），或厂商 + 型号
+      placeholder: 例：SENS-31 / Robotiq FT 300
+    validations:
+      required: true
+
+  - type: input
+    id: field
+    attributes:
+      label: 哪个字段错了
+      placeholder: 例：mechanical_interface.standard / price_range / manufacturer
+    validations:
+      required: true
+
+  - type: textarea
+    id: diff
+    attributes:
+      label: 现在写的是什么，应该是什么
+      placeholder: |
+        现值：ISO 9409-1-50-4-M6
+        应为：ISO 9409-1-40-4-M6
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: 依据（必填）
+      description: 能点开的官方出处直链，注明章节/页码。无出处的纠错我们无法采纳。
+      placeholder: https://... —— §3.3 Mechanical Connections
+    validations:
+      required: true

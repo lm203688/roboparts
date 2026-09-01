@@ -23,14 +23,20 @@
     }
   },
   "count": 3,
-  "updated": "2026-08-29T02:42:48.021483Z",
+  "updated": "2026-09-01T00:51:33.984315Z",
   "data": [
     {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -94,7 +100,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",
@@ -149,7 +161,13 @@
       "data_quality": "ok",
       "quarantine": false,
       "standard_conformance": {
-        "assessed": false
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
       },
       "mechanical_interface": {
         "status": "not_declared",

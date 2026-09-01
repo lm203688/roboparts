@@ -75,6 +75,26 @@ def layer_schema_contract():
           f"实体 schema 契约 v{SCHEMA_VERSION}：{len(ents)} 实体全部满足核心字段+status 枚举（违规 {len(v)}）")
 
 
+def layer_dataset_dist():
+    """20260831-10: 对外数据集分发目录漂移闸门。
+
+    `roboparts-dataset-github/` 是 HuggingFace / ModelScope 两个 workflow 的
+    发布源，但历史上无生成器、纯手工维护 ⇒ 实测漂到「分发 544 实体 / 卡片自称
+    688 / 声明率 0.57%」，而真相源是 768 / 20 品类 / 1.52%。三个互相矛盾的
+    数字全部对外发布，而「唯一真相源」纪律的既有闸门只覆盖页面与 /api，
+    从未覆盖这个目录 —— 本闸门补上这个盲区。
+    """
+    r = subprocess.run([sys.executable,
+                        os.path.join(ROOT, 'scripts', 'sync_dataset_dist.py'),
+                        '--check'],
+                       cwd=ROOT, capture_output=True, timeout=180)
+    out = (r.stdout or b'').decode('utf-8', 'replace').strip()
+    detail = out.replace('\n', ' | ')[:400]
+    check(r.returncode == 0,
+          '对外数据集分发目录与真相源一致（HuggingFace / ModelScope 发布源不得漂移）'
+          + (f'；漂移详情: {detail}' if r.returncode != 0 else ''))
+
+
 def _git_show_json(relpath, ref='HEAD'):
     """取 git 某版本的 JSON 文件内容；取不到返回 None（调用方须按"无法核验"处理，不得当绿灯）。"""
     try:
@@ -9730,6 +9750,7 @@ def main():
     layer3(url)
     layer4()
     layer_schema_contract()
+    layer_dataset_dist()
     print('\n==============================')
     if failures:
         print(f'❌ 阻断：{len(failures)} 项未通过，禁止发布')

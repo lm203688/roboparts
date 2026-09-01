@@ -41,6 +41,9 @@ def build():
     shoulder = d['humanoid_shoulder_3dof_2026']
     gb = d['gb_modular_humanoid']
     taxo = d['mounting_taxonomy']
+    # 全库 mount_type 枚举（含非电机类扩展）；registry 未治理时为 None，页面降级为
+    # 只渲染电机子集并如实说明作用域，不冒充全库口径
+    mt_enum = d.get('mount_type_enum')
     pitfalls = d['pitfalls']
     eco = d['ecosystem_watch']
 
@@ -72,7 +75,7 @@ def build():
              '<li><a href="#pitfalls">6 条装配红线</a></li>'
              '<li><a href="#humanoid">人形机器人 3DOF 球肩适配规范（2026）</a></li>'
              '<li><a href="#gb">《人形机器人模块化通用技术要求》进展</a></li>'
-             '<li><a href="#mount">关节电机安装方式分类</a></li>'
+             '<li><a href="#mount">安装方式分类（mount_type 取值）</a></li>'
              '<li><a href="#eco">2026 年标准化竞争态势</a></li>'
              '<li><a href="#faq">常见问题</a></li>'
              '</ol></div>')
@@ -165,16 +168,49 @@ def build():
     P.append('<p>与机械接口相邻的其他维度同样被纳入：%s</p>' % esc('；'.join(
         '%s —— %s' % (k, v) for k, v in gb['adjacent_interfaces'].items())))
 
-    # 7 安装分类
-    P.append('<h2 id="mount">关节电机安装方式分类</h2>')
-    P.append('<p>%s。RoboParts 数据库中 <code>mechanical_interface.mount_type</code> 字段即取以下枚举值：</p>'
-             % esc(taxo['description']))
+    # 7 安装分类（标准派生组 + 本平台扩展组，两组分开标注权威性）
+    P.append('<h2 id="mount">安装方式分类（mount_type 取值）</h2>')
+    P.append('<p><strong>标准派生组</strong>：%s，出处 %s。'
+             'RoboParts 实体的 <code>mechanical_interface.mount_type</code> 字段'
+             '在关节电机类实体上取以下枚举值：</p>'
+             % (esc(taxo['description']), esc(taxo.get('source') or '见 registry')))
     P.append('<div class="tablebox"><table><thead><tr><th>取值</th><th>名称</th><th>定义</th>'
              '</tr></thead><tbody>'
              + ''.join('<tr><td><code>%s</code></td><td>%s</td><td>%s</td></tr>'
                        % (esc(v['key']), esc(v['label']), esc(v['definition']))
                        for v in taxo['values'])
              + '</tbody></table></div>')
+
+    if mt_enum and mt_enum.get('roboparts_extension', {}).get('values'):
+        ext = mt_enum['roboparts_extension']
+        P.append('<p><strong>本平台扩展组</strong>：上表作用域为关节电机，'
+                 '而本库还收录连接器、轴承、仿生柔性件等非电机实体，'
+                 '其真实安装方式在标准分类里没有位置。为如实记录而不硬塞，'
+                 '本平台另设以下键名 —— <strong>这些不是任何标准的术语</strong>，'
+                 '是 RoboParts 内部建模口径（source_tier %s），'
+                 '引用时请勿当作标准编码转述：</p>'
+                 % esc(ext.get('source_tier', 'C')))
+        P.append('<div class="tablebox"><table><thead><tr><th>取值</th><th>名称</th>'
+                 '<th>定义</th><th>为何标准分类装不下</th></tr></thead><tbody>'
+                 + ''.join('<tr><td><code>%s</code></td><td>%s</td><td>%s</td><td>%s</td></tr>'
+                           % (esc(v['key']), esc(v['label']), esc(v['definition']),
+                              esc(v.get('why_not_in_standard', '—')))
+                           for v in ext['values'])
+                 + '</tbody></table></div>')
+        if mt_enum.get('null_policy'):
+            P.append('<p class="muted">%s</p>' % esc(mt_enum['null_policy']))
+        hist = mt_enum.get('normalization_history') or []
+        if hist:
+            P.append('<p class="muted">口径变更留痕：%s。字段越界由 '
+                     '<code>scripts/schema_contract.py</code> 在回归闸门判红，'
+                     '合法值以 <code>/api/mechanical_interfaces.json#mount_type_enum</code> 为准。</p>'
+                     % esc('；'.join('%s %s（%s）'
+                                     % (h.get('at', ''), h.get('action', ''),
+                                        h.get('reason', ''))
+                                     for h in hist)))
+    else:
+        P.append('<p class="muted">注：上表作用域为关节电机；本库另收录连接器、'
+                 '轴承、柔性件等非电机实体，其安装方式取值未在此页登记。</p>')
 
     # 8 生态
     P.append('<h2 id="eco">2026 年标准化竞争态势</h2>')

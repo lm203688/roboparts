@@ -2,8 +2,8 @@
   "meta": {
     "name": "RoboParts Mechanical Interface Registry",
     "description": "机械互换维度的归一化标准登记表。为『两个零部件能否在物理上装到一起』提供可机读的判定基准：法兰指定命名语法、标准尺寸族、装配红线。本表是规范参考层（normative reference），不是实体库；实体侧通过 entities.json 的 mechanical_interface.standard 引用本表 id。",
-    "version": "1.1.0",
-    "generated_at": "2026-08-11T10:07:55+08:00",
+    "version": "1.2.0",
+    "generated_at": "2026-08-31T10:41:51+08:00",
     "maintainer": "roboparts.cc",
     "rationale": "截至 2026-08-05，本平台 688 个实体中机械互换维度覆盖为 0/688 —— 电气/通信/协议维度已有数据，唯独『能不能拧上去』无法回答。本表为填补该缺口建立标准基线。",
     "coverage_policy": "只登记有公开可溯源出处的规格。无出处的尺寸一律不写，宁可留空，不可臆造。",
@@ -681,5 +681,129 @@
       "thread": "M20",
       "iso_outer_diameter": 250
     }
-  ]
+  ],
+  "mount_type_enum": {
+    "id": "ENUM-MOUNT-TYPE",
+    "description": "mechanical_interface.mount_type 的**全库**合法取值。分两组：standard_derived 逐字派生自 mounting_taxonomy(TAXO-MOTOR-MOUNT)，作用域为关节电机；roboparts_extension 为本平台内部建模扩展，用于标准分类装不下的非电机实体（连接器 / 轴承 / 柔性件等）。",
+    "authority_note": "standard_derived 组有标准出处；roboparts_extension 组**不是**任何标准的术语，是本平台为如实记录非电机实体安装方式而设的内部键名，不得被引用方当作标准编码转述。",
+    "standard_derived": {
+      "authority": "standard",
+      "derived_from": "TAXO-MOTOR-MOUNT",
+      "scope": "关节电机安装方式分类（用于 mechanical_interface.mount_type 取值）",
+      "source": "《人形机器人关节用轴向磁通电机》标准文本 4.1.6 (cssn.net.cn)",
+      "source_tier": "A",
+      "values": [
+        {
+          "key": "flange",
+          "label": "法兰安装型",
+          "definition": "通过法兰面与关节结构固定连接"
+        },
+        {
+          "key": "shaft_sleeve",
+          "label": "轴套安装型",
+          "definition": "通过轴套与关节轴系配合固定"
+        },
+        {
+          "key": "embedded",
+          "label": "嵌入式安装型",
+          "definition": "直接嵌入关节壳体内部，无外露安装结构"
+        },
+        {
+          "key": "direct_mount",
+          "label": "直装型",
+          "definition": "厂商声明无需转接法兰即可直接安装于目标机型"
+        },
+        {
+          "key": "unknown",
+          "label": "未知",
+          "definition": "厂商未公开或尚未采集"
+        }
+      ]
+    },
+    "roboparts_extension": {
+      "authority": "roboparts_internal",
+      "scope": "非关节电机实体（连接器、轴承、仿生柔性件等）的安装方式",
+      "source": "RoboParts 内部建模口径（20260831 mount_type 枚举治理）",
+      "source_tier": "C",
+      "values": [
+        {
+          "key": "wire_to_board",
+          "label": "线对板",
+          "definition": "连接器类实体：线束一侧压接、另一侧焊装于 PCB，无法兰面。",
+          "why_not_in_standard": "TAXO-MOTOR-MOUNT 作用域为关节电机，未涵盖连接器。",
+          "seen_on": [
+            "CONN-molex-minimix"
+          ]
+        },
+        {
+          "key": "press_fit",
+          "label": "压装",
+          "definition": "靠过盈配合压入配合孔固定，无螺纹紧固件。",
+          "why_not_in_standard": "轴承/衬套类装配方式，电机分类未涵盖。",
+          "seen_on": [
+            "BIONIC-JOINT-003"
+          ]
+        },
+        {
+          "key": "surface_mount",
+          "label": "表面贴装",
+          "definition": "贴装于基体表面（含回流焊或结构胶固定的贴装件）。",
+          "why_not_in_standard": "元件级贴装方式，电机分类未涵盖。",
+          "seen_on": [
+            "BIONIC-ACTUATOR-002"
+          ]
+        },
+        {
+          "key": "adhesive",
+          "label": "粘接",
+          "definition": "靠胶粘剂与基体贴合固定，无机械紧固点（柔性皮肤/贴片式传感器常见）。",
+          "why_not_in_standard": "柔性件固定方式，电机分类未涵盖。",
+          "seen_on": [
+            "BIONIC-SENSOR-001",
+            "BIONIC-SKIN-001"
+          ]
+        },
+        {
+          "key": "integrated",
+          "label": "一体成型",
+          "definition": "与本体一体制造、不存在可分离安装界面，故无可比对的互换标识。",
+          "why_not_in_standard": "与 embedded（嵌入关节壳体、仍可拆）区别在于不可分离；电机分类未涵盖。",
+          "seen_on": [
+            "BIONIC-SENSOR-002"
+          ]
+        }
+      ]
+    },
+    "null_policy": "mount_type 为 null 表示「未采集/不适用」。实体是否适用机械接口由 mechanical_interface.status 表达（n_a=不适用），mount_type 不重复承载该语义 —— 故禁止写字符串 \"N/A\"。",
+    "normalization_history": [
+      {
+        "at": "2026-08-31",
+        "action": "flange_mount -> flange",
+        "reason": "同义异写归一至权威 key",
+        "affected": [
+          "ACT-028",
+          "SENS-31",
+          "BRG-crb-iko-crbf"
+        ]
+      },
+      {
+        "at": "2026-08-31",
+        "action": "\"N/A\" -> null",
+        "reason": "status 已表达 n_a，消除双载体",
+        "affected": [
+          "ACE-VIDIHAND-001",
+          "ZEST-FRAMEWORK-001"
+        ]
+      },
+      {
+        "at": "2026-08-31",
+        "action": "research_prototype -> unknown",
+        "reason": "成熟度维度误入安装方式字段；成熟度信息保留在 gap",
+        "affected": [
+          "XFA-017"
+        ]
+      }
+    ],
+    "enforced_by": "scripts/schema_contract.py（越界即判红）"
+  }
 }

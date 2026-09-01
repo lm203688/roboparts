@@ -23,7 +23,7 @@
     }
   },
   "count": 217,
-  "updated": "2026-08-29T02:42:48.021483Z",
+  "updated": "2026-09-01T00:51:33.984315Z",
   "data": [
     {
       "id": "ACT-001",
@@ -1742,7 +1742,7 @@
       },
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6",
           "ISO 9409-1-31.5-4-M5",
@@ -12025,7 +12025,7 @@
       "entity_kind": "component",
       "mechanical_interface": {
         "status": "partial",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": null,
         "flange": null,
         "declared_note": "带安装法兰座，内外圈一体化，无需额外轴承座（厂商产品说明）",

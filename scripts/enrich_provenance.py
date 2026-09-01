@@ -35,7 +35,9 @@ import sys
 import collections
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ENTITIES_PATH = os.path.join(ROOT, 'api', 'entities.json')
+# RP_ENTITIES_JSON 重定向：闸门可在副本上试算而不碰真实数据（见 ci_gate.py）。
+ENTITIES_PATH = (os.environ.get('RP_ENTITIES_JSON')
+                 or os.path.join(ROOT, 'api', 'entities.json'))
 
 # 字符串 confidence -> 数值
 TIER_SCORE = {
