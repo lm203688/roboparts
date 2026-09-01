@@ -1221,7 +1221,11 @@ def layer1_14():
         return
     f = _facts()
 
-    EXEMPT = {'honeypot.json', 'geo-faqs.json'}
+    EXEMPT = {'honeypot.json', 'geo-faqs.json', 'semantic_index.json'}
+    # semantic_index.json 是 V-Link 语义流的**内部检索产物**（由 build_semantic_index.mjs
+    # 离线生成、仅 functions/api/discover.js 内部消费），非对外 API 端点，不承载
+    # 「AI 领 key 入口」语义，故不要求 meta.access。与 inject_api_access.py 的 EXCLUDE
+    # 同口径（内部产物不应被注入接入块，亦不应被本闸门强制要求接入块）。
     CMD = _re.compile(r'curl\s+(?:-[^\s]+\s+|"[^"]*"\s+|\'[^\']*\'\s+)*'
                       r'(?:-X\s+POST\s+)?[^\s"\'<]*roboparts\.cc/api/register')
 
