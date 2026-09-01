@@ -34,6 +34,18 @@ const SITE = `https://${HOST}`;
 const FLYWHEEL_STATE = join(ROOT, 'scripts', 'flywheel_state.py');
 const LEDGER = join(ROOT, 'ops', 'promotion', 'ledger.json');
 
+/** 找到可用的 python 解释器（flywheel_state.py 是 Python 脚本，绝不能用 node 跑）。 */
+function findPython() {
+  for (const c of ['python3', 'python']) {
+    try {
+      const r = spawnSync(c, ['--version'], { stdio: 'ignore' });
+      if (r.status === 0) return c;
+    } catch { /* 试下一个 */ }
+  }
+  return 'python'; // 兜底，失败由 spawnSync 暴露
+}
+const PY = findPython();
+
 const log = [];
 const note = (s) => { console.log(s); log.push(s); };
 
@@ -228,7 +240,7 @@ async function main() {
   // 记录 promote 阶段状态（飞轮幂等/可恢复台账）
   try {
     const fp = fingerprintUrls(urls);
-    spawnSync(process.execPath,
+    spawnSync(PY,
       [FLYWHEEL_STATE, 'record', 'promote', fp, '--ok', '1'],
       { encoding: 'utf8', timeout: 30000 });
   } catch { /* 记录失败不阻塞主流程 */ }

@@ -30,6 +30,18 @@ const SEED = path.join(ROOT, 'ops', 'seed-bom.json');
 const OUT = path.join(ROOT, 'api', 'entities.contrib.json');
 const FLYWHEEL_STATE = path.join(ROOT, 'scripts', 'flywheel_state.py');
 
+/** 找到可用的 python 解释器（flywheel_state.py 是 Python 脚本，绝不能用 node 跑）。 */
+function findPython() {
+  for (const c of ['python3', 'python']) {
+    try {
+      const r = spawnSync(c, ['--version'], { stdio: 'ignore' });
+      if (r.status === 0) return c;
+    } catch { /* 试下一个 */ }
+  }
+  return 'python'; // 兜底，失败由 spawnSync 暴露
+}
+const PY = findPython();
+
 /** 输入指纹：OSS + seed-bom 原始内容拼接待，供「输入未变则跳过重建」判定。 */
 function fingerprintOf(parts) {
   const h = createHash('sha256');
@@ -140,7 +152,7 @@ function main() {
   // 可恢复/幂等：输入未变且上一轮 candidate 阶段 OK → 跳过整个重建
   if (!force && !dry) {
     try {
-      const r = spawnSync(process.execPath,
+      const r = spawnSync(PY,
         [FLYWHEEL_STATE, 'should-run', 'candidate', inputFp],
         { encoding: 'utf8', timeout: 30000 });
       if ((r.stdout || '').trim() === 'skip') {
@@ -216,7 +228,7 @@ function main() {
 
   // 记录 candidate 阶段状态（飞轮幂等/可恢复台账）
   try {
-    spawnSync(process.execPath,
+    spawnSync(PY,
       [FLYWHEEL_STATE, 'record', 'candidate', '--file', OUT, '--ok', '1'],
       { encoding: 'utf8', timeout: 30000 });
   } catch { /* 记录失败不阻塞主流程 */ }
