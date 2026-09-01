@@ -34,6 +34,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # 蜜罐：对外必须保持「一个普通的错误响应」，注入入口等于告诉扫描者这里有真东西
 EXCLUDE = {'honeypot.json'}
+# 语义索引是内部检索产物（compat_engine 读取），非面向 AI 爬虫的用户文档，不应注入
+# meta.access；且它随真相源由 deploy 0b4 重建为单行紧凑格式，被注入器按 indent=2 重写
+# 会造成每次部署 230KB 级格式漂移。故排除。
+EXCLUDE.add('semantic_index.json')
 # 顶层为数组，无处安放 meta；强行包装会破坏所有既有调用方
 SKIP_NON_DICT = {'geo-faqs.json'}
 OPENAPI = 'openapi.json'
