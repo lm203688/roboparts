@@ -20,12 +20,22 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
 const OSS = path.join(ROOT, 'api', 'oss_components.json');
 const SEED = path.join(ROOT, 'ops', 'seed-bom.json');
 const OUT = path.join(ROOT, 'api', 'entities.contrib.json');
+const FLYWHEEL_STATE = path.join(ROOT, 'scripts', 'flywheel_state.py');
+
+/** 输入指纹：OSS + seed-bom 原始内容拼接待，供「输入未变则跳过重建」判定。 */
+function fingerprintOf(parts) {
+  const h = createHash('sha256');
+  for (const p of parts) h.update(typeof p === 'string' ? p : '<<null>>');
+  return h.digest('hex').slice(0, 16);
+}
 
 // OSS 的 category schema（actuators/sensors/controllers/communication/structural/power）
 // 映射到主库 11 类；structural/power 无标准接口，跳过（join 后恒 null，无价值）。
@@ -109,30 +119,59 @@ function fromBom(b, srcLabel) {
 
 function main() {
   const dry = process.argv.includes('--dry-run');
+  const force = process.argv.includes('--force');
   const warnings = [];
   const out = [];
   const seen = new Set();
 
+  // 先读原始内容（既用于合并，也用于「输入指纹」）
+  let ossRaw = null;
+  try { ossRaw = fs.readFileSync(OSS, 'utf8'); }
+  catch { console.warn(`⚠️ 读取 ${path.relative(ROOT, OSS)} 失败`); }
+  let seedRaw = null;
+  if (fs.existsSync(SEED)) {
+    try { seedRaw = fs.readFileSync(SEED, 'utf8'); }
+    catch { console.warn(`⚠️ 读取 ${path.relative(ROOT, SEED)} 失败`); }
+  } else {
+    console.log(`ℹ️ 未发现 ops/seed-bom.json（用户 BOM 入口待提交；管道已就绪）`);
+  }
+
+  const inputFp = fingerprintOf([ossRaw, seedRaw]);
+  // 可恢复/幂等：输入未变且上一轮 candidate 阶段 OK → 跳过整个重建
+  if (!force && !dry) {
+    try {
+      const r = spawnSync(process.execPath,
+        [FLYWHEEL_STATE, 'should-run', 'candidate', inputFp],
+        { encoding: 'utf8', timeout: 30000 });
+      if ((r.stdout || '').trim() === 'skip') {
+        console.log('♻️ candidate 阶段输入未变且上次 OK → 跳过重建（幂等/可恢复）');
+        return 0;
+      }
+    } catch { /* python 不可用则照常重建，不阻塞 */ }
+  }
+
   // 1) OSS 真实反喂
-  try {
-    const oss = JSON.parse(fs.readFileSync(OSS, 'utf8'));
-    const arr = oss.data || oss.entities || [];
-    let added = 0, skipped = 0;
-    for (const e of arr) {
-      const c = fromOss(e);
-      if (!c) { skipped++; continue; }
-      if (seen.has(c.id)) continue;
-      seen.add(c.id); out.push(c); added++;
+  if (ossRaw) {
+    try {
+      const oss = JSON.parse(ossRaw);
+      const arr = oss.data || oss.entities || [];
+      let added = 0, skipped = 0;
+      for (const e of arr) {
+        const c = fromOss(e);
+        if (!c) { skipped++; continue; }
+        if (seen.has(c.id)) continue;
+        seen.add(c.id); out.push(c); added++;
+      }
+      console.log(`📥 OSS 反喂：解析 ${arr.length} 条，纳入贡献层 ${added} 条，跳过 ${skipped} 条（structural/power 或无声明）`);
+    } catch (e) {
+      console.warn(`⚠️ 解析 ${path.relative(ROOT, OSS)} 失败: ${e.message}`);
     }
-    console.log(`📥 OSS 反喂：解析 ${arr.length} 条，纳入贡献层 ${added} 条，跳过 ${skipped} 条（structural/power 或无声明）`);
-  } catch (e) {
-    console.warn(`⚠️ 读取 ${path.relative(ROOT, OSS)} 失败: ${e.message}`);
   }
 
   // 2) 用户/开源 BOM 种子
-  if (fs.existsSync(SEED)) {
+  if (seedRaw) {
     try {
-      const bom = JSON.parse(fs.readFileSync(SEED, 'utf8'));
+      const bom = JSON.parse(seedRaw);
       const items = Array.isArray(bom) ? bom : (bom.components || bom.entities || []);
       let added = 0;
       for (const b of items) {
@@ -144,10 +183,8 @@ function main() {
       }
       console.log(`📥 seed-bom：纳入 ${added} 条`);
     } catch (e) {
-      console.warn(`⚠️ 读取 ${path.relative(ROOT, SEED)} 失败: ${e.message}`);
+      console.warn(`⚠️ 解析 ${path.relative(ROOT, SEED)} 失败: ${e.message}`);
     }
-  } else {
-    console.log(`ℹ️ 未发现 ops/seed-bom.json（用户 BOM 入口待提交；管道已就绪）`);
   }
 
   if (warnings.length) warnings.forEach(w => console.warn('   ⚠️ ' + w));
@@ -176,6 +213,13 @@ function main() {
   };
   fs.writeFileSync(OUT, JSON.stringify(doc, null, 2));
   console.log(`\n✅ 已写入 ${path.relative(ROOT, OUT)}：+${out.length} 贡献实体`);
+
+  // 记录 candidate 阶段状态（飞轮幂等/可恢复台账）
+  try {
+    spawnSync(process.execPath,
+      [FLYWHEEL_STATE, 'record', 'candidate', '--file', OUT, '--ok', '1'],
+      { encoding: 'utf8', timeout: 30000 });
+  } catch { /* 记录失败不阻塞主流程 */ }
   return 0;
 }
 

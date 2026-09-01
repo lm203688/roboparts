@@ -390,6 +390,24 @@ def gate_feedback_loop_aggregate():
             ['node', os.path.join(ROOT, 'scripts', 'test_feedback_loop.mjs')])
 
 
+def gate_flywheel_idempotency():
+    """飞轮幂等/可恢复治理（OpenClaw signal→candidate→promote→effect 借鉴）。
+
+    2026-09-01 新增：共享阶段状态台账 flywheel_state.py（纯函数 + 阴阳自测）、
+    community_listener 信号摄入幂等（ID 去重 + 上限截断 + 原子写，纯自测）、
+    promote 效果台账与阶段状态（fingerprintUrls / buildPromoEntry 纯函数自测）。
+    三者任一退化即判红 —— 它们保证飞轮重跑不产生副作用、崩溃后可按输入指纹跳过重算。
+    """
+    run_sub('飞轮状态台账 flywheel_state 自测',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'flywheel_state.py'),
+             '--self-test'])
+    run_sub('信号摄入幂等 community_listener 自测',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'community_listener.py'),
+             '--self-test'])
+    run_sub('推广效果台账 promote 纯函数自测',
+            ['node', os.path.join(ROOT, 'scripts', 'test_promote_ledger.mjs')])
+
+
 GATES = [
     ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
@@ -419,6 +437,7 @@ GATES = [
     ('无凭据泄漏', gate_no_secrets),
     ('BOM 装配次序拓扑排序', gate_bom_assembly_sequence),
     ('反馈信号回流聚合', gate_feedback_loop_aggregate),
+    ('飞轮幂等/可恢复', gate_flywheel_idempotency),
 ]
 
 
