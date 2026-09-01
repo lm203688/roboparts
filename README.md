@@ -98,6 +98,7 @@ Cloudflare Functions 顶层安全、无凭据泄漏。
 - [补机械接口声明](https://github.com/lm203688/roboparts/issues/new?template=mechanical-interface.yml)（不必会写 JSON，贴出处链接即可）
 - [报数据错误](https://github.com/lm203688/roboparts/issues/new?template=data-correction.yml)
 - 详细规矩与最小可核验格式：[`CONTRIBUTING.md`](./CONTRIBUTING.md)
+- 零件实体权威格式规范（字段表 + 可复制模板 + 闸门清单）：[`docs/part-annotation-spec.md`](./docs/part-annotation-spec.md)
 
 唯一的硬规矩：**无出处不收**。我们宁可留着 `not_declared`，也不猜。
 
