@@ -143,7 +143,11 @@ function main() {
     names.push(d.name);
   }
 
-  const payload = { dim: DIM, generated_at: new Date().toISOString(), idf, ids, names, vectors };
+  // 注意：不写入 generated_at。语义索引是 entities.json 的纯派生物，新鲜度由 deploy 0b4
+  // 每次部署重建保证；若写入时间戳，每次部署都会造成 1 行级差异、工作树持续脏，且毫无
+  // 诊断价值（时间戳只表示"何时跑的脚本"，不代表"与真相源是否一致"——一致性由
+  // ci_gate 的 gate_semantic_index_covers_entities 判定）。故仅保留派生内容本身。
+  const payload = { dim: DIM, idf, ids, names, vectors };
   const outPath = path.join(ROOT, 'api/semantic_index.json');
   fs.writeFileSync(outPath, JSON.stringify(payload), 'utf8');
 
