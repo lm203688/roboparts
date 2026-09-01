@@ -363,6 +363,19 @@ def gate_semantic_index_covers_entities():
     ok('语义索引覆盖全部实体', f'{len(entity_ids)} 实体全部覆盖（索引 {len(idx_ids)} ids）')
 
 
+def gate_bom_assembly_sequence():
+    """BOM 有序装配步骤（GRASP 借鉴）的拓扑排序逻辑不得静默退化。
+
+    2026-09-01 新增 functions/api/bom/check.js 的 buildAssemblySequence：由机械对接关系
+    （mateable 对方向 attachment.tool ∩ base.robot）构建挂载 DAG，Kahn 拓扑排序得安装次序。
+    回归风险：方向判定/循环检测/启发式 fallback 任一写错，会在无告警下产出错误装配次序。
+    本闸门跑 scripts/test_bom_assembly.mjs（12 断言：依赖顺序、挂载方向、basis 标注、
+    全启发式、双向 ambiguous 不误判 cycle），非零退出即判红。
+    """
+    run_sub('BOM 装配次序拓扑排序',
+            ['node', os.path.join(ROOT, 'scripts', 'test_bom_assembly.mjs')])
+
+
 GATES = [
     ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
@@ -390,6 +403,7 @@ GATES = [
     ('Functions 顶层安全', gate_functions_toplevel_safe),
     ('GitHub 配置 YAML 可解析', gate_github_yaml_parses),
     ('无凭据泄漏', gate_no_secrets),
+    ('BOM 装配次序拓扑排序', gate_bom_assembly_sequence),
 ]
 
 

@@ -37,7 +37,7 @@ const corsHeaders = {
  * mechanical 有 null 分支但用 `!hasA && !hasB` 的 AND，单方缺数据仍落回 false。
  * 现统一改用引擎，副本删除 —— 同一份判据只能有一处实现。
  */
-import { DIMENSIONS, evalDimension, scoreBreakdown } from '../../_lib/compat_engine.js';
+import { DIMENSIONS, evalDimension, scoreBreakdown, mechanicalEvidence } from '../../_lib/compat_engine.js';
 import {
   newFailureCollector, loadJsonAsset, upstreamUnavailableResponse,
   resolveAuthState, authUnavailableResponse, authHeaders,
@@ -128,12 +128,92 @@ function getPurchaseOptions(component, seed, kvByCat) {
   return [...opts.values()];
 }
 
+// ============ GRASP 借鉴：BOM → 有序装配步骤 ============
+// GRASP 的 bom-manager/checker 能产出"有序安装步骤"。本平台此前只给兼容性矩阵与可互换组，
+// 缺安装次序。现从机械对接关系（mateable 对的方向：attachment.tool ∩ base.robot）构建挂载 DAG，
+// Kahn 拓扑排序得安装次序；无挂载关系的组件按品类层级 fallback。
+// 诚实边界：当前机械接口声明率 ~1.52%，绝大多数 BOM 无足够对接数据，此时次序纯为品类层级
+// 推测，必须显式标注 basis=category_heuristic，不得伪装成由物理约束推导。
+const CATEGORY_LAYER = {
+  structures: 0, platforms: 0,
+  controllers: 1,
+  actuators: 2, 'flexible_actuators': 2,
+  sensors: 3, 'data_acquisition': 3,
+  chips: 4, llms: 4, 'robot_ai_models': 4,
+  protocols: 5, interfaces: 5, communication: 5,
+  '3d_printing': 6,
+};
+function catLayer(cat) { return CATEGORY_LAYER[String(cat || '').toLowerCase()] ?? 2; }
+
+export function buildAssemblySequence(resolved, matrix) {
+  const n = resolved.length;
+  const mech = resolved.map(r => mechanicalEvidence(r));
+  const edges = [];          // {base, attach}: base 先装，attach 装在 base 上
+  const dataDerived = new Set();
+  for (const m of matrix) {
+    if (m.overall_compatible !== true) continue;
+    const mechDim = m.dimensions.find(d => d.dimension === 'mechanical');
+    if (!mechDim || mechDim.relation !== 'mateable') continue;   // 仅"可对接"能定方向；可互换不暗示堆叠
+    const ia = resolved.findIndex(r => r.ref === m.a);
+    const ib = resolved.findIndex(r => r.ref === m.b);
+    if (ia < 0 || ib < 0) continue;
+    const ea = mech[ia], eb = mech[ib];
+    const aOnB = ea.tool.some(t => eb.robot.includes(t));
+    const bOnA = eb.tool.some(t => ea.robot.includes(t));
+    if (aOnB && !bOnA) { edges.push({ base: ib, attach: ia }); dataDerived.add(ia); dataDerived.add(ib); }
+    else if (bOnA && !aOnB) { edges.push({ base: ia, attach: ib }); dataDerived.add(ia); dataDerived.add(ib); }
+    // 双向或双向无（ambiguous）→ 跳过方向，避免编造装配约束
+  }
+  // Kahn 拓扑排序（队列按品类层级稳定排序，保证无约束时结构→控制→执行器→传感器）
+  const indeg = new Array(n).fill(0);
+  const adj = Array.from({ length: n }, () => []);
+  for (const { base, attach } of edges) { adj[base].push(attach); indeg[attach]++; }
+  const orderKey = i => catLayer(resolved[i].category) * 1000 + i;
+  let q = [];
+  for (let i = 0; i < n; i++) if (indeg[i] === 0) q.push(i);
+  q.sort((a, b) => orderKey(a) - orderKey(b));
+  const order = [];
+  while (q.length) {
+    const u = q.shift();
+    order.push(u);
+    for (const v of adj[u]) { indeg[v]--; if (indeg[v] === 0) { q.push(v); q.sort((a, b) => orderKey(a) - orderKey(b)); } }
+  }
+  const cyclic = order.length < n;
+  if (cyclic) {
+    const rest = [];
+    for (let i = 0; i < n; i++) if (!order.includes(i)) rest.push(i);
+    rest.sort((a, b) => orderKey(a) - orderKey(b));
+    order.push(...rest);
+  }
+  const seq = order.map((idx, step) => {
+    const r = resolved[idx];
+    const mountsOn = edges.filter(e => e.attach === idx).map(e => resolved[e.base].ref);
+    const basis = dataDerived.has(idx) ? 'mount_relation' : 'category_heuristic';
+    const reason = basis === 'mount_relation'
+      ? (mountsOn.length ? `依机械对接关系：安装在 ${mountsOn.join(' / ')} 之上` : '机械接口数据定位的基座件（无上游挂载）')
+      : '无机械接口声明，按品类层级推测（结构/控制先于执行器/传感器）';
+    return { step: step + 1, ref: r.ref, name: r.name, category: normalizeCategory(r.category), mounts_on: mountsOn, basis, reason };
+  });
+  const dataCount = dataDerived.size;
+  const notes = {
+    data_derived_steps: dataCount,
+    heuristic_steps: n - dataCount,
+    basis: dataCount > 0 ? 'partial_data_derived' : 'fully_heuristic',
+    honesty: dataCount > 0
+      ? '安装次序部分由真实机械对接关系（工具侧/安装侧）推导，其余按品类层级推测。'
+      : '当前机械接口声明率极低（~1.52%），无足够对接数据，安装次序按品类层级推测（结构→控制→执行器→传感器），仅作排布参考，非物理装配约束。',
+    cycle_detected: cyclic,
+    method: '挂载 DAG 由 mateable 对方向（attachment.tool ∩ base.robot）构建，Kahn 拓扑排序；无挂载关系的组件按品类层级 fallback。',
+  };
+  return { sequence: seq, notes };
+}
+
 export async function onRequestOptions() { return new Response(null, { headers: corsHeaders }); }
 
 export async function onRequestGet() {
   return new Response(JSON.stringify({
     endpoint: '/api/bom/check', method: 'POST',
-    description: 'BOM 兼容性检查器：输入一组组件（库内 ID 或自定义规格），返回两两兼容性矩阵、可互换组与冲突告警。免费层 ≤12 组件，Pro 无限制。',
+    description: 'BOM 兼容性检查器：输入一组组件（库内 ID 或自定义规格），返回两两兼容性矩阵、可互换组、冲突告警，以及由机械对接关系推导的有序装配步骤（assembly_sequence / assembly_notes）。免费层 ≤12 组件，Pro 无限制。',
     request_body: { items: 'array - 组件列表，每项 {id} 或 {protocol,interface,voltage,ros_support,name}' },
     example: { items: [ { id: 'OSS-TIENKUNG-001' }, { id: 'OSS-UNITREE_G1-001' }, { protocol: 'EtherCAT', interface: 'EtherCAT', voltage: '48~48V', ros_support: true, name: '自定义 EtherCAT 关节' } ] },
   }, null, 2), { status: 200, headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=3600' } });
@@ -245,6 +325,9 @@ export async function onRequestPost(context) {
       return `组件 ${m.a} 与 ${m.b} 在 ${bad.join('/')} 维度存在实际冲突（双方均有声明且不匹配）`;
     });
 
+    // GRASP 借鉴：从兼容性矩阵推导有序装配步骤（挂载 DAG 拓扑排序）
+    const assembly = buildAssemblySequence(resolved, matrix);
+
     // CL5：采购建议聚合（构建者「检查→采购」转化闭环）
     const sumMap = new Map();
     resolved.forEach(r => {
@@ -282,6 +365,8 @@ export async function onRequestPost(context) {
       matrix,
       interchangeable_groups,
       warnings,
+      assembly_sequence: assembly.sequence,
+      assembly_notes: assembly.notes,
       purchase_summary,
     }, null, 2), {
       status: 200,

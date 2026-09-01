@@ -35,6 +35,10 @@
   #result{display:none}
   .tip{color:var(--mut);font-size:12px}
   a{color:var(--acc2)}
+  ol.asm{margin:8px 0;padding-left:4px;list-style:none;counter-reset:none}
+  ol.asm li{background:#0e1530;border-left:3px solid var(--mut);padding:8px 12px;border-radius:6px;margin:6px 0}
+  ol.asm li.asm-data{border-left-color:var(--acc2)}   /* 依真实机械对接关系推导 */
+  ol.asm li.asm-heur{border-left-color:var(--mut)}   /* 按品类层级推测（无对接数据） */
 </style>
 </head>
 <body>
@@ -70,6 +74,8 @@
     <div id="groups"></div>
     <h4>冲突告警</h4>
     <div id="warns"></div>
+    <h4>🔧 建议装配次序 <span class="tip">GRASP 借鉴：由机械对接关系推导有序安装步骤（蓝=依物理对接，灰=按品类推测）</span></h4>
+    <div id="asm"></div>
     <h4>🛒 采购建议（检查→采购转化）<span class="tip">标注可购性，点击直达寻源</span></h4>
     <div id="purchase"></div>
     <div class="row" style="margin-top:10px">
@@ -179,6 +185,25 @@ async function runCheck(){
   document.getElementById('warns').innerHTML = j.warnings.length
     ? j.warnings.map(w=>`<div class="warn">⚠ ${w}</div>`).join('')
     : '<div class="tip">无明确冲突。</div>';
+
+  // 建议装配次序（GRASP 借鉴）
+  let ash = '';
+  if (j.assembly_notes) {
+    ash += `<div class="tip" style="margin-bottom:8px">${j.assembly_notes.honesty}</div>`;
+    if (j.assembly_notes.cycle_detected) ash += `<div class="warn">⚠ 检测到循环挂载依赖，部分步骤次序按品类层级兜底，仅供参考。</div>`;
+  }
+  if (j.assembly_sequence && j.assembly_sequence.length) {
+    ash += '<ol class="asm">';
+    j.assembly_sequence.forEach(s => {
+      const cls = s.basis === 'mount_relation' ? 'asm-data' : 'asm-heur';
+      const mo = s.mounts_on && s.mounts_on.length ? ` → 装在 ${s.mounts_on.join(' / ')}` : '';
+      ash += `<li class="${cls}"><b>步骤 ${s.step}</b> · ${s.name} <span class="tip">(${s.category}${mo})</span><br><span class="tip">${s.reason}</span></li>`;
+    });
+    ash += '</ol>';
+  } else {
+    ash += '<div class="tip">无装配步骤数据。</div>';
+  }
+  document.getElementById('asm').innerHTML = ash;
 
   // 采购建议（CL5：构建者检查→采购转化）
   let ph='';
