@@ -4,13 +4,13 @@
   "domain": "roboparts.cc",
   "tagline": "仿生机器人模块化选型与设计生态平台。配件模块化、接口标准化、协议标准化、大模型产业化、用户数据集成化。",
   "last_updated": "2026-08-18T13:30:26.000Z",
-  "total_entities": 768,
+  "total_entities": 798,
   "categories": {
-    "actuators": 217,
+    "actuators": 220,
     "platforms": 41,
     "chips": 108,
     "robot_ai_models": 46,
-    "sensors": 90,
+    "sensors": 95,
     "interfaces": 44,
     "llms": 42,
     "protocols": 64,
@@ -18,14 +18,14 @@
     "data_acquisition": 46,
     "connectors": 2,
     "integrated_joints": 1,
-    "reducers": 11,
-    "controllers": 3,
-    "grippers": 13,
+    "reducers": 14,
+    "controllers": 4,
+    "grippers": 23,
     "structural": 3,
     "cables": 2,
     "power": 2,
     "pcb": 2,
-    "bionic_mechanisms": 9
+    "bionic_mechanisms": 17
   },
   "api_endpoints": {
     "entities": "https://roboparts.cc/api/entities.json",
@@ -41,7 +41,7 @@
     "register": "https://roboparts.cc/api/register",
     "validate": "https://roboparts.cc/api/validate"
   },
-  "ai_agent_instructions": "Use the API endpoints above to query 768 entities about 仿生机器人模块化选型与设计生态平台. Features: 5-factor scoring selection engine, URDF import preview, weighted fuzzy search, compatibility matrix, bionic actuator catalog, humanoid supply-chain coverage (harmonic reducers, planetary roller screws, frameless torque motors, 6-axis F/T sensors, integrated joint modules), embodied-AI data collection hardware (teleoperation rigs, wearable exoskeletons, mocap suits, force-feedback gloves), edge AI inference accelerators for VLA deployment, open-source reproducible hardware (tendon-driven and direct-drive dexterous hands, quasi-direct-drive force-controlled joint modules, magnetic e-skin, open BLDC controllers), domestic-substitution index (import_substitution_for field maps a Chinese part to the overseas component it replaces), machine-readable standard-conformance tracking (standard_conformance field: bus_class, ROS 2 support, interop-stack match against GB draft 20262893-T-604 minimum interoperability stack, and vendor interop posture closed/semi_open/multi_protocol). All data is freely accessible via GET requests.",
+  "ai_agent_instructions": "Use the API endpoints above to query 798 entities about 仿生机器人模块化选型与设计生态平台. Features: 5-factor scoring selection engine, URDF import preview, weighted fuzzy search, compatibility matrix, bionic actuator catalog, humanoid supply-chain coverage (harmonic reducers, planetary roller screws, frameless torque motors, 6-axis F/T sensors, integrated joint modules), embodied-AI data collection hardware (teleoperation rigs, wearable exoskeletons, mocap suits, force-feedback gloves), edge AI inference accelerators for VLA deployment, open-source reproducible hardware (tendon-driven and direct-drive dexterous hands, quasi-direct-drive force-controlled joint modules, magnetic e-skin, open BLDC controllers), domestic-substitution index (import_substitution_for field maps a Chinese part to the overseas component it replaces), machine-readable standard-conformance tracking (standard_conformance field: bus_class, ROS 2 support, interop-stack match against GB draft 20262893-T-604 minimum interoperability stack, and vendor interop posture closed/semi_open/multi_protocol). All data is freely accessible via GET requests.",
   "core_features": [
     "智能选型引擎 — 五维度评分（扭矩/速度/精度/重量/成本）多因子选型+多结果对比表格",
     "兼容性矩阵 — 电气/机械/协议/软件四维兼容检测",

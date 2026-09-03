@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>仿生 / 软体末端执行器兼容层：RoboParts 的差异化护城河 | RoboParts</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="当机器人开始装上「人肌手」，仿生 / 软体末端执行器的机械接口成了兼容性领域最大的空白。RoboParts 已覆盖 ISO 9409-1 九法兰 100% 需转接的阴性兼容引擎，现在把维度延伸到仿生手：腱锚点、肌挂载点、软套接口、带供电法兰通信四大非标接口。8 款真实灵巧手横向对比，数据可机读下载。">
+<meta name="keywords" content="仿生机械,灵巧手,软体夹爪,末端执行器,机械接口,ISO 9409-1,Clone Hand,Shadow Hand,腱驱,人工肌肉,兼容性引擎,转接生成器,RoboParts">
+<link rel="canonical" href="https://roboparts.cc/bionic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="仿生 / 软体末端执行器兼容层：RoboParts 的差异化护城河 | RoboParts">
+<meta property="og:description" content="当机器人开始装上「人肌手」，仿生 / 软体末端执行器的机械接口成了兼容性领域最大的空白。RoboParts 把阴性兼容引擎延伸到仿生手：腱锚点、肌挂载点、软套接口、带供电法兰通信四大非标接口，8 款真实灵巧手横向对比。">
+<meta property="og:url" content="https://roboparts.cc/bionic">
+<meta property="og:site_name" content="RoboParts">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="仿生 / 软体末端执行器兼容层：RoboParts 的差异化护城河 | RoboParts">
+<meta name="twitter:description" content="仿生 / 软体末端执行器的机械接口是兼容性领域最大的空白。RoboParts 把阴性兼容引擎延伸到仿生手：腱锚点 / 肌挂载点 / 软套接口 / 带供电法兰通信四大非标接口。">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"仿生 / 软体末端执行器兼容层：RoboParts 的差异化护城河","description":"当机器人开始装上「人肌手」，仿生 / 软体末端执行器的机械接口成了兼容性领域最大的空白。RoboParts 把阴性兼容引擎延伸到仿生手四大非标接口。","keywords":"仿生机械,灵巧手,软体夹爪,末端执行器,机械接口,ISO 9409-1,Clone Hand,Shadow Hand,腱驱,人工肌肉,兼容性引擎,转接生成器","inLanguage":"zh-CN","url":"https://roboparts.cc/bionic","mainEntityOfPage":{"@type":"WebPage","@id":"https://roboparts.cc/bionic"},"author":{"@type":"Organization","name":"RoboParts Research","url":"https://roboparts.cc"},"publisher":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc"},"dateModified":"2026-09-03","isAccessibleForFree":true,"about":[{"@type":"Thing","name":"仿生机械接口兼容性"},{"@type":"Thing","name":"灵巧手末端执行器"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"为什么仿生 / 软体末端执行器是兼容性空白？","acceptedAnswer":{"@type":"Answer","text":"ISO 9409-1 只定义了刚性圆形法兰。而仿生手（腱驱、人工肌肉、软体）需要腱锚点、肌挂载点、软套接口、带供电法兰通信等 ISO 尚未标准化的接口。目前几乎没有兼容性平台覆盖这一维度，这是 RoboParts 的开放赛道。"}},{"@type":"Question","name":"RoboParts 与 orobot.io 的区别是什么？","acceptedAnswer":{"@type":"Answer","text":"orobot.io 是联盟分成的零部件市场，不是兼容性引擎。RoboParts 的护城河是兼容性数据基础设施：negative_compat 阴性兼容引擎已覆盖 ISO 9409-1 九法兰 100% 两两需转接（81 条规则），并正在延伸到仿生 / 软体接口维度。"}},{"@type":"Question","name":"真实灵巧手的机械接口数据从哪来？","acceptedAnswer":{"@type":"Answer","text":"每条仿生实体都带真实可溯源的厂商声明（供应商官网 / 开源项目页），标注 source_tier 与置信度。凡是厂商未公开的接口，一律诚实标 n_a（不适用）而非编造，例如 Clone Hand、Shadow Hand、Allegro 等均无 ISO 法兰声明。"}},{"@type":"Question","name":"这些数据能程序化调用吗？","acceptedAnswer":{"@type":"Answer","text":"可以。完整数据集以 JSON 形式发布在 https://roboparts.cc/api/entities.json（免鉴权），仿生手实体位于 category=bionic_mechanisms / subcategory=bionic_hands，含 bionic_interface 四维度字段。"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 仿生末端执行器兼容数据集","description":"8 款真实灵巧手（Clone / Yeah / Shadow / Psyonic / Open Bionics / Unitree Dex5 / Inspire / Allegro）的 DOF、驱动方式、触觉、ISO 9409-1 法兰状态与仿生接口四维度（腱锚点 / 肌挂载点 / 软套接口 / 带供电法兰通信）标注。","url":"https://roboparts.cc/bionic","distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"}],"license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc"},"isAccessibleForFree":true,"inLanguage":"zh-CN"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://roboparts.cc"},{"@type":"ListItem","position":2,"name":"仿生兼容层","item":"https://roboparts.cc/bionic"}]}</script>
+<style>
+:root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--line:#243352}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.8}
+a{color:var(--acc2);text-decoration:none}a:hover{text-decoration:underline}
+.nav{border-bottom:1px solid var(--line);background:#0e1530}
+.nav .in{max-width:960px;margin:0 auto;padding:12px 20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px}
+.nav .brand{font-weight:800;color:var(--acc);font-size:16px}
+.nav a{color:var(--mut)}.nav a:hover{color:var(--txt)}
+.wrap{max-width:960px;margin:0 auto;padding:28px 20px 72px}
+.crumb{font-size:13px;color:var(--mut);margin-bottom:14px}
+h1{font-size:30px;line-height:1.4;margin:0 0 14px}
+h2{font-size:22px;margin:34px 0 12px;padding-top:8px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:24px 0 10px;color:var(--acc)}
+h4{font-size:16px;margin:18px 0 8px}
+.meta{color:var(--mut);font-size:13px;margin-bottom:18px}
+.lede{background:var(--card);border-left:3px solid var(--acc);border-radius:0 10px 10px 0;padding:14px 16px;color:#c8d2e6;margin:18px 0 24px;font-size:15px}
+.tags{margin:10px 0 0}
+.badge{display:inline-block;background:#0e1530;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--mut);margin:2px 4px 2px 0}
+.tablebox{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:680px}
+th,td{border-bottom:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:#0e1530;color:var(--acc);font-weight:700;white-space:nowrap}
+tbody tr:hover{background:#111a33}
+.yes{color:var(--acc);font-weight:700}
+.no{color:#ff7a8a;font-weight:700}
+.partial{color:#ffcf6b;font-weight:700}
+blockquote{margin:16px 0;padding:10px 16px;background:#101830;border-left:3px solid var(--acc2);border-radius:0 8px 8px 0;color:#c2cde3}
+blockquote p{margin:6px 0}
+pre.code{background:#0a1128;border:1px solid var(--line);border-radius:10px;padding:14px;overflow-x:auto;font-size:13px;line-height:1.6}
+code{background:#0e1530;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:13px;color:var(--acc)}
+pre.code code{background:0;border:0;padding:0;color:#cfe3ff}
+ul,ol{padding-left:22px}li{margin:6px 0}
+hr{border:0;border-top:1px solid var(--line);margin:26px 0}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:22px 0}
+.toc b{color:var(--acc);font-size:14px}
+.toc ol{margin:8px 0 0;padding-left:20px;font-size:14px}
+.toc li{margin:4px 0}.toc a{color:#b9c6de}
+.cta{background:linear-gradient(135deg,#13233f,#152b3a);border:1px solid #2b6;border-radius:14px;padding:18px 20px;margin:30px 0 10px}
+.cta h3{margin:0 0 8px;color:var(--acc);border:0;padding:0}
+.cta p{margin:6px 0;font-size:14.5px;color:#c8d2e6}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;font-weight:800;border-radius:9px;padding:9px 18px;margin:10px 8px 0 0;font-size:14px}
+.btn:hover{text-decoration:none;opacity:.9}
+.btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+.rel{margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+.rel h3{border:0;padding:0;margin:0 0 10px}
+.rel li{margin:8px 0;font-size:14.5px}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:18px}
+.acard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.acard h4{margin:0 0 6px;color:var(--acc);font-size:15px}
+.acard p{color:var(--mut);font-size:13px;margin:0}
+@media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
+</style>
+</head>
+<body>
+<div class="nav"><div class="in">
+<a class="brand" href="/">RoboParts</a>
+<a href="/articles">技术文库</a>
+<a href="/oss">开源数据层</a>
+<a href="/bionic">仿生兼容层</a>
+<a href="/bom-checker">BOM 兼容检查</a>
+<a href="/selection">智能选型</a>
+<a href="/data-hub">数据中心</a>
+<a href="/pricing">定价</a>
+</div></div>
+<div class="wrap">
+<div class="crumb"><a href="/">首页</a> › 仿生 / 软体末端执行器兼容层</div>
+<h1>仿生 / 软体末端执行器兼容层：RoboParts 的差异化护城河</h1>
+<div class="meta">最后核验 2026-09-03 · 数据源等级 A/B（厂商官方页 / 开源项目页）· 可机读版本：<a href="/api/entities.json">/api/entities.json</a></div>
+<div class="lede">一句话结论：<strong>当机器人开始装上「人肌手」，仿生 / 软体末端执行器的机械接口成了整个兼容性领域最大的空白。</strong> ISO 9409-1 只定义了刚性圆形法兰；而腱锚点、肌挂载点、软套接口、带供电法兰通信这些仿生手真正需要的接口，<u>至今没有标准</u>。RoboParts 的阴性兼容引擎（negative_compat）已经覆盖 ISO 9409-1 九法兰 100% 两两需转接，现在把同一套「非标即需转接」的方法论延伸到仿生域——这是相对零件市场类竞品（orobot.io）真正的护城河。</div>
+
+<div class="toc"><b>本文目录</b><ol>
+<li><a href="#why">为什么这是我们的护城河</a></li>
+<li><a href="#hands">8 款真实灵巧手横向对比</a></li>
+<li><a href="#dims">仿生接口四维度：标准缺口在哪</a></li>
+<li><a href="#engine">转接生成器如何延伸到仿生域</a></li>
+<li><a href="#data">数据可机读</a></li>
+<li><a href="#faq">常见问题</a></li>
+</ol></div>
+
+<h2 id="why">为什么这是我们的护城河</h2>
+<p>机器人正在从刚性伺服手转向仿生手。最前沿的公开样本是 <strong>Clone Robotics</strong>：37 根 McKibben 水驱人工肌肉、单指负载约 7 kg、650k 次作动寿命。但这类手的「接口」是腱锚点、肌挂载点、软套接口——<strong>ISO 9409-1 一个都没定义</strong>。</p>
+<div class="tablebox"><table><thead><tr><th>细分</th><th>代表玩家</th><th>挂载方式</th></tr></thead><tbody>
+<tr><td>刚性电动 / 伺服手</td><td>Tesla Optimus、Figure、AgiBot X2、Shadow、Allegro、Inspire</td><td>ISO 9409-1 法兰（RoboParts 已覆盖）</td></tr>
+<tr><td>软体 / 柔顺夹爪</td><td>Soft Robotics (mGrip)、Festo FinGripper</td><td>ISO 9409-1 或厂商自定义</td></tr>
+<tr><td><strong>肌肉驱动</strong></td><td><strong>Clone Robotics（几乎唯一的公开领先者）</strong></td><td><span class="no">无标准</span></td></tr>
+</tbody></table></div>
+<blockquote><p><strong>谁是我们必须打败的：</strong>orobot.io 是一个联盟分成的<strong>零部件市场</strong>，不是兼容性引擎。RoboParts 的护城河是<strong>兼容性数据基础设施</strong>——negative_compat 阴性兼容引擎（81 条规则，ISO 9409-1 九法兰两两 100% 需转接）。<strong>几乎没有人覆盖仿生 / 软体末端执行器接口</strong>，这就是开放的赛道。</p></blockquote>
+
+<h2 id="hands">8 款真实灵巧手横向对比</h2>
+<p>下表 8 款均为真实市售 / 研究级灵巧手，数据源自厂商官方页或开源项目页，逐条标注 <code>source_tier</code> 与置信度。<strong>凡厂商未公开的接口一律诚标 <span class="no">n_a</span>（不适用），绝不编造。</strong></p>
+<div class="tablebox"><table><thead><tr><th>灵巧手</th><th>厂商</th><th>DOF</th><th>驱动方式</th><th>触觉</th><th>ISO 9409-1 法兰</th><th>仿生接口标准化</th></tr></thead><tbody>
+<tr><td><strong>Clone Hand</strong></td><td>Clone Robotics</td><td>24</td><td>液压 McKibben 人工肌肉</td><td>掌压垫 + 70 惯性传感</td><td><span class="no">n_a</span></td><td><span class="no">全专有</span></td></tr>
+<tr><td><strong>Yeah Robotic Hand</strong><br><small>(原 Rebelia)</small></td><td>Yeah Robotics / Public Invention</td><td>15</td><td>伺服 + 腱绳</td><td>指根扭矩传感</td><td><span class="yes">ISO 9409-1-50-4-M6</span></td><td><span class="partial">开源腱锚（非标）</span></td></tr>
+<tr><td><strong>Shadow Dexterous Hand</strong></td><td>Shadow Robot</td><td>24 (20 主动)</td><td>腱驱（Air Muscle）</td><td>指端压力触觉</td><td><span class="no">n_a</span></td><td><span class="no">全专有</span></td></tr>
+<tr><td><strong>Psyonic Ability Hand</strong></td><td>Psyonic</td><td>6</td><td>无刷直流 + 肌电</td><td>触压 + 振动反馈</td><td><span class="no">n_a</span></td><td><span class="no">全专有</span></td></tr>
+<tr><td><strong>Open Bionics Hero PRO</strong></td><td>Open Bionics</td><td>6</td><td>无刷直流 + 肌电</td><td>定制硅胶接受腔</td><td><span class="no">n_a</span></td><td><span class="no">全专有</span></td></tr>
+<tr><td><strong>Unitree Dex5</strong></td><td>Unitree</td><td>20 (16+4 被动)</td><td>直驱 + 减速</td><td>94 触觉传感</td><td><span class="no">n_a</span></td><td><span class="no">专有腕部总线</span></td></tr>
+<tr><td><strong>Inspire RH56</strong></td><td>Inspire-Robots</td><td>12</td><td>连杆 / 直线</td><td>指端力控</td><td><span class="no">n_a</span></td><td><span class="no">专有腕部</span></td></tr>
+<tr><td><strong>Allegro Hand</strong></td><td>Wonik Robotics</td><td>16</td><td>直驱</td><td>—</td><td><span class="no">n_a</span></td><td><span class="no">专有腕部</span></td></tr>
+</tbody></table></div>
+<p class="meta">要点：8 款中仅 Yeah Hand 公开声明了 ISO 9409-1 法兰（50-4-M6，与 UR3 同款）；其余 7 款腕部均为厂商专有接口，且无任何公开的腱锚 / 肌挂 / 软套 / 带供电通信标准。<strong>这正是兼容性引擎的价值所在。</strong></p>
+
+<h2 id="dims">仿生接口四维度：标准缺口在哪</h2>
+<p>一个仿生 / 软体末端执行器要装到机器人手腕上，需要 ISO 9409-1 完全没定义的四类接口。RoboParts 在数据模型里为每个仿生实体记录这四个维度（<code>bionic_interface</code> 字段），诚实标注「专有 / 无 / 不适用」：</p>
+<div class="cards">
+<div class="acard"><h4>① 腱锚点模式</h4><p>tendon_anchor_pattern：腱绳在腕 / 前臂挂载处的布局。Yeah Hand 用开源线轴 + M3 螺栓；Clone / Shadow 均为专有走线。</p></div>
+<div class="acard"><h4>② 肌挂载点模式</h4><p>muscle_mount_pattern：Myofiber 式人工肌肉的挂载点。无标准；Clone 集成专有，Shadow 前臂外置 Air Muscle。</p></div>
+<div class="acard"><h4>③ 软套接口</h4><p>soft_socket：硅胶皮肤 / 接受腔的附着方式。假肢类（Psyonic / Open Bionics）为定制硅胶接受腔；刚性手标 n/a。</p></div>
+<div class="acard"><h4>④ 带供电法兰通信</h4><p>powered_flange_comms：经法兰供电 + 数据（OnRobot / ATI QuickChanger 列为头号集成摩擦点）。仿生手多为专有腕部总线或无线。</p></div>
+</div>
+<blockquote><p>RoboParts 可以成为<strong>仿生 / 软体末端执行器兼容性权威</strong>——在现有 negative_compat 引擎之上叠加的新维度。每当出现「Clone 式肌肉手 + UR5e 法兰」这类组合，引擎回答的不是「能不能装」，而是「需要哪种腱锚转接 / 肌挂支架」。</p></blockquote>
+
+<h2 id="engine">转接生成器如何延伸到仿生域</h2>
+<p>现有 <code>negative_compat</code> 引擎（81 条规则）处理的是刚性法兰：designation 不同 → 必出转接盘。把维度延伸到仿生手后，转接生成器可回答：</p>
+<ul>
+<li>给定 <strong>Clone 式肌肉手</strong> + <strong>UR5e 法兰</strong>，需要什么腱锚转接 / 肌挂支架？</li>
+<li>给定 <strong>Yeah 开源手（已带 50-4-M6）</strong> + <strong>Fanuc / KUKA / Techman 腕</strong>，仅补定位销与螺纹即可，无需全新法兰。</li>
+<li>给定 <strong>Shadow / Allegro 专有腕</strong>，引擎诚实返回「需厂商专用快换 / 定制支架」，并列出摩擦点。</li>
+</ul>
+<p>这自然把已有的阴性兼容方法论扩展到仿生域，而不需要编造任何不存在的标准——凡是厂商未公开，引擎就返回「未知 / 需人工确认」。</p>
+
+<h2 id="data">数据可机读</h2>
+<p>全部 <span data-rp="total_entities">798</span> 条实体（含 17 条仿生机构、8 款灵巧手）以 CC BY 4.0 发布，免鉴权直读：</p>
+<pre class="code"><code>curl -s https://roboparts.cc/api/entities.json \
+  | jq '.entities[] | select(.category=="bionic_mechanisms" and .subcategory=="bionic_hands")'</code></pre>
+<p>每条仿生实体含 <code>bionic_interface</code> 四维度字段与 <code>source_tier</code> / <code>source_url</code>，可程序化接入选型、BOM 检查与 Agent 工作流。</p>
+
+<div class="cta"><h3>把仿生兼容数据接进你的程序 / Agent</h3>
+<p>RoboParts 面向开发者与 AI Agent 开放，无需审批、无需信用卡。把本页数据集接入选型、BOM 兼容检查或 MCP 工作流。</p>
+<a class="btn" href="/data-hub">前往数据中心</a><a class="btn ghost" href="/bom-checker">BOM 兼容检查</a></div>
+
+<h2 id="faq">常见问题</h2>
+<h3>为什么仿生 / 软体末端执行器是兼容性空白？</h3>
+<p>ISO 9409-1 只定义了刚性圆形法兰。而仿生手（腱驱、人工肌肉、软体）需要腱锚点、肌挂载点、软套接口、带供电法兰通信等 ISO 尚未标准化的接口。目前几乎没有兼容性平台覆盖这一维度，这是 RoboParts 的开放赛道。</p>
+<h3>RoboParts 与 orobot.io 的区别是什么？</h3>
+<p>orobot.io 是联盟分成的零部件市场，不是兼容性引擎。RoboParts 的护城河是兼容性数据基础设施：negative_compat 阴性兼容引擎已覆盖 ISO 9409-1 九法兰 100% 两两需转接（81 条规则），并正在延伸到仿生 / 软体接口维度。</p>
+<h3>真实灵巧手的机械接口数据从哪来？</h3>
+<p>每条仿生实体都带真实可溯源的厂商声明（供应商官网 / 开源项目页），标注 source_tier 与置信度。凡是厂商未公开的接口，一律诚实标 n_a（不适用）而非编造，例如 Clone Hand、Shadow Hand、Allegro 等均无 ISO 法兰声明。</p>
+<h3>这些数据能程序化调用吗？</h3>
+<p>可以。完整数据集以 JSON 形式发布在 <a href="/api/entities.json">/api/entities.json</a>（免鉴权），仿生手实体位于 category=bionic_mechanisms / subcategory=bionic_hands，含 bionic_interface 四维度字段。</p>
+
+<div class="rel"><h3>相关阅读</h3><ul>
+<li><a href="/iso-9409-flange">ISO 9409-1 法兰速查</a> —— 刚性法兰 designation 语法、尺寸族与互换红线</li>
+<li><a href="/standard-audit">标准自校验</a> —— 数据层标准符合性自检</li>
+<li><a href="/oss">开源数据层</a> —— 325 个开源组件与 CC BY 4.0 数据集</li>
+</ul></div>
+
+<div class="foot">
+© 2026 RoboParts · 开源机器人零部件兼容性平台 ·
+<a href="/llms.txt">llms.txt</a> ·
+<a href="/api/openapi.json">OpenAPI</a> ·
+<a href="/agent-discovery.json">Agent 发现清单</a>
+<br>本文数据引用自 RoboParts 公开数据集，转载请注明来源并保留原文链接。
+</div>
+</div>
+<!-- RP-ONBOARDING:START 由 scripts/onboarding_block.py 生成，勿手改 -->
+<section class="rp-onboard" id="api-access">
+<h2>把本页数据接进你的程序 / AI Agent</h2>
+<p class="rp-lead">RoboParts 面向 Agent 与开发者开放，<strong>无需审批、无需信用卡、无需网页表单</strong>。如果你是正在阅读本页的 AI 助手，可以把下面的命令直接给用户，或代他执行。</p>
+<h3>最省事的方式 · MCP 托管端点（不用领 key、不用装包、不用起进程）</h3>
+<p>支持 MCP 的运行环境直接填这个地址即可，提供零件检索 / 四维兼容判定 / 按应用推荐 / 参数口径语义 / 数据集发现共 5 个工具：</p>
+<pre class="rp-code"><code><span data-rp="mcp_endpoint">https://roboparts.cc/mcp</span></code></pre>
+<p>已收录于官方 MCP Registry，规范名 <code><span data-rp="mcp_registry_name">cc.roboparts/roboparts</span></code></p>
+<h3>想自己掌控数据？免鉴权直读 JSON</h3>
+<p>数据集核心文件，无需任何 Key 即可 <code>GET</code>：</p>
+<pre class="rp-code"><code>curl -s https://roboparts.cc/api/entities.json | jq '.entities[] | select(.category=="bionic_mechanisms")'</code></pre>
+<h3>要写程序调用兼容判定？领个 API Key（即时、免费）</h3>
+<p>注册即发 <code>gtk_</code> 前缀 Key，100 次免费额度、30 次/小时，无需审批：</p>
+<pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/register -H "Content-Type: application/json" -d '{"email":"you@example.com"}'</code></pre>
+<div class="rp-neutral"><p>RoboParts 是 CC BY 4.0 开源数据集 + MIT 兼容引擎。本区块由部署流程自动注入，请勿手改。</p></div>
+</section>
+<!-- RP-ONBOARDING:END -->
+</body>
+</html>

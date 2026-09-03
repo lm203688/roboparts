@@ -6,24 +6,24 @@
     "homepage": "https://roboparts.cc",
     "github": "https://github.com/lm203688/roboparts",
     "license": "CC-BY-4.0",
-    "description": "Structured dataset of bionic / humanoid robot components. 768 entities across 20 categories (actuators, bionic_mechanisms, cables, chips, connectors, controllers, data_acquisition, flexible_actuators, grippers, integrated_joints, interfaces, llms, pcb, platforms, power, protocols, reducers, robot_ai_models, sensors, structural). Generated from the single source of truth (api/entities.json) by scripts/sync_dataset_dist.py — all counts computed, never hand-written.",
-    "total_entities": 768,
+    "description": "Structured dataset of bionic / humanoid robot components. 798 entities across 20 categories (actuators, bionic_mechanisms, cables, chips, connectors, controllers, data_acquisition, flexible_actuators, grippers, integrated_joints, interfaces, llms, pcb, platforms, power, protocols, reducers, robot_ai_models, sensors, structural). Generated from the single source of truth (api/entities.json) by scripts/sync_dataset_dist.py — all counts computed, never hand-written.",
+    "total_entities": 798,
     "category_count": 20,
     "category_counts": {
-      "actuators": 217,
+      "actuators": 220,
       "chips": 108,
-      "sensors": 90,
+      "sensors": 95,
       "protocols": 64,
       "robot_ai_models": 46,
       "data_acquisition": 46,
       "interfaces": 44,
       "llms": 42,
       "platforms": 41,
+      "grippers": 23,
       "flexible_actuators": 22,
-      "grippers": 13,
-      "reducers": 11,
-      "bionic_mechanisms": 9,
-      "controllers": 3,
+      "bionic_mechanisms": 17,
+      "reducers": 14,
+      "controllers": 4,
       "structural": 3,
       "connectors": 2,
       "cables": 2,
@@ -31,20 +31,20 @@
       "pcb": 2,
       "integrated_joints": 1
     },
-    "mechanical_interface_declared_rate_pct": 1.52,
+    "mechanical_interface_declared_rate_pct": 1.67,
     "mechanical_interface_counts": {
       "declared": 2,
-      "partial": 4,
-      "not_declared": 389,
-      "not_applicable": 373,
-      "applicable_denominator": 395
+      "partial": 5,
+      "not_declared": 411,
+      "not_applicable": 380,
+      "applicable_denominator": 418
     },
     "source_tier_counts": {
-      "A": 377,
-      "B": 241,
+      "A": 402,
+      "B": 246,
       "C": 150
     },
-    "updated": "2026-09-01T08:51:41+0800",
+    "updated": "2026-09-03T15:06:55+0800",
     "generated_by": "scripts/sync_dataset_dist.py",
     "truth_source": "api/entities.json"
   },
@@ -30215,7 +30215,6 @@
       },
       "entity_kind": "component",
       "source_tier_basis": "root_url_only",
-      "kind_basis": "category=data_acquisition: neural interface hardware, physical wearable",
       "source_tier_prev": "C",
       "rp_id": "RP-DAT-0027",
       "entity_kind_basis": "默认归类"
@@ -30277,7 +30276,6 @@
       },
       "entity_kind": "component",
       "source_tier_basis": "unattributable_text",
-      "kind_basis": "category=data_acquisition: neural interface hardware, physical wearable",
       "rp_id": "RP-DAT-0028",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B"
@@ -30338,7 +30336,6 @@
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.google.com/search",
-      "kind_basis": "category=data_acquisition: neural interface software/reference, no physical hardware",
       "source_tier_prev": "B",
       "rp_id": "RP-DAT-0029",
       "source_url": "https://www.google.com/search?q=AEMG-series%EF%BC%88CVPR%202026%20%E5%BC%80%E6%BA%90%EF%BC%89%20AEMG%20%E9%80%9A%E7%94%A8%E8%82%8C%E7%94%B5%E9%87%87%E9%9B%86%E5%8F%82%E8%80%83%E5%B9%B3%E5%8F%B0%20datasheet",
@@ -40009,7 +40006,6 @@
       ],
       "tactile_feedback": true,
       "force_control": true,
-      "kind_basis": "category=grippers: component entity, no mechanical interface",
       "source_tier_basis": "deep_link:nnets.ru/news/robotizirovannaja-kist-prima1-ot-xynova-poluch",
       "rp_id": "RP-GRI-0005",
       "entity_kind_basis": "默认归类"
@@ -40253,7 +40249,7 @@
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "kind_basis": "category=data_acquisition: software entity, no mechanical interface",
+      "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "deep_link:www.linkedin.com/posts/acerobotics_embodiedai-robotics-world",
       "rp_id": "RP-ROB-0045",
       "entity_kind_basis": "默认归类"
@@ -40313,7 +40309,7 @@
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "kind_basis": "category=robot_ai_models: software entity, no mechanical interface",
+      "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "deep_link:arxiv.org/abs/2602.00401",
       "rp_id": "RP-ROB-0046",
       "entity_kind_basis": "默认归类"
@@ -40410,7 +40406,6 @@
       "verified": true,
       "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
-      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
         "joint_type": "ball_and_socket",
         "range_of_motion": "180deg",
@@ -40521,7 +40516,6 @@
       "verified": true,
       "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
-      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
         "joint_type": "hinge",
         "range_of_motion": "120deg",
@@ -40624,7 +40618,6 @@
       "verified": true,
       "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
-      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
         "joint_type": "gliding",
         "range_of_motion": "linear_15mm",
@@ -40724,7 +40717,6 @@
       "verified": true,
       "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
-      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
         "actuator_type": "tendon_driven",
         "force": "20N",
@@ -40807,7 +40799,6 @@
       "verified": true,
       "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
-      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
         "actuator_type": "sma_wire",
         "force": "5N",
@@ -40899,7 +40890,6 @@
       "verified": true,
       "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
-      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
         "sensor_type": "proprioceptive",
         "channels": 6,
@@ -40986,7 +40976,6 @@
       "verified": true,
       "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
-      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
         "sensor_type": "tactile",
         "resolution": "0.1N",
@@ -41084,7 +41073,6 @@
       "verified": true,
       "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
-      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
         "frame_type": "torso_skeleton",
         "material": "PEEK",
@@ -41166,7 +41154,6 @@
       "verified": true,
       "data_quality": "ok",
       "source_tier_basis": "entity_homepage",
-      "kind_basis": "category=bionic_mechanisms: bionic joint/actuator/sensor/frame, physical hardware",
       "key_specs": {
         "skin_type": "elastic_cover",
         "material": "silicone",
@@ -41216,7 +41203,7 @@
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false,
@@ -41258,7 +41245,7 @@
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false,
@@ -41300,7 +41287,7 @@
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false,
@@ -41342,7 +41329,7 @@
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false,
@@ -41384,7 +41371,7 @@
         "note": "安全标准条目，不适用机械接口规格"
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false,
@@ -41428,7 +41415,7 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source_tier_prev": "A",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false,
@@ -41471,7 +41458,7 @@
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source_tier_prev": "A",
-      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件）",
+      "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "quarantine": false,
       "standard_conformance": {
         "assessed": false,
@@ -42163,6 +42150,1599 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "tier_cap_reason": "来源为同行评审期刊（Advanced Functional Materials）报道的 UNIST 研究原型，非厂商量产规格页；按 source_tier_basis=peer_reviewed_journal 归 B。研究原型阶段无标准化机械接口，mechanical_interface 保持 not_declared。"
+    },
+    {
+      "id": "BIONIC-HAND-001",
+      "rp_id": "RP-BIO-0010",
+      "name": "Clone Hand",
+      "name_en": "Clone Hand (myofiber anthropomorphic hand)",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_hands",
+      "manufacturer": "Clone Robotics",
+      "type": "bionic_hand",
+      "description": "肌纤维驱动仿人灵巧手：37 根 McKibben Myofiber 水驱人工肌肉、24 DOF，单指负载约 7kg，650k 次作动寿命，Neural Joint V2 神经网络关节控制器。公开资料未声明任何机械接口标准（腱锚点 / 肌挂载点 / 软套接口 / 带供电法兰通信均无 ISO）。",
+      "biomimetic_target": "human_hand_myofiber",
+      "dof": 24,
+      "actuators": 37,
+      "load_capacity": "7kg per finger (vendor-stated)",
+      "cycle_life": "650000 actuation cycles (vendor-stated)",
+      "controller": "Neural Joint V2 (neural-network joint controller)",
+      "actuation_type": "hydraulic_mckibben_muscle",
+      "applications": [
+        "humanoid_hand",
+        "android",
+        "prosthetics_research"
+      ],
+      "source": "Clone Robotics 官方产品页（公开厂商声明）",
+      "source_url": "https://www.clonerobotics.com/hand",
+      "source_tier": "A",
+      "confidence": 0.7,
+      "confidence_basis": "vendor_public_claims_unverified_independent",
+      "mechanical_interface": {
+        "status": "n_a",
+        "note": "no public ISO standard for tendon_anchor_pattern / muscle_mount_pattern / soft_socket / powered_flange_comms; all proprietary, unstandardized"
+      },
+      "bionic_interface": {
+        "actuation_type": "hydraulic_mckibben_muscle",
+        "tendon_anchor_pattern": "proprietary_unnamed (non-standard, no ISO)",
+        "muscle_mount_pattern": "integrated_proprietary",
+        "soft_socket": "silicone_skin_socket_proprietary",
+        "powered_flange_comms": "proprietary (no standard)"
+      },
+      "compatibility": {
+        "mounts_to": [],
+        "connects_to": [],
+        "compatible_with": []
+      },
+      "entity_kind": "component",
+      "verified": true,
+      "data_quality": "ok",
+      "source_tier_basis": "deep_link:www.clonerobotics.com/hand",
+      "entity_kind_basis": "默认归类",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
+    },
+    {
+      "id": "BIONIC-HAND-002",
+      "rp_id": "RP-BIO-0011",
+      "name": "Yeah Robotic Hand (formerly Rebelia)",
+      "name_en": "Yeah Robotic Hand (formerly Rebelia)",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_hands",
+      "manufacturer": "Vittorio Lumare (Yeah Robotics) / Public Invention",
+      "type": "bionic_hand",
+      "description": "低成本开源腱驱灵巧手：5 个 WaveShare ST3215HS 伺服 + 腱绳（Hercules 8 股 0.75mm）屈伸，15 DOF，单指扭矩 20 kg·cm，指根扭矩传感。挂载声明 ISO 9409-1-50-4-M6（UR3 同款法兰），但腱锚点布局为自有开源设计（非标准）；硅胶指垫（Dragon Skin）。CERN-OHL-S-2.0，V1 已 OSHWA 认证。",
+      "biomimetic_target": "human_hand_tendon",
+      "dof": 15,
+      "actuators": 5,
+      "torque_per_finger": "20 kg*cm (vendor-stated)",
+      "sensors": [
+        "torque_per_finger"
+      ],
+      "applications": [
+        "humanoid_hand",
+        "manipulator",
+        "prosthetic_transradial",
+        "research"
+      ],
+      "source": "Hackaday.io 开源项目页（含 BOM / 装配说明）",
+      "source_url": "https://hackaday.io/project/204373-rebelia-robotic-hand",
+      "source_tier": "A",
+      "confidence": 0.6,
+      "confidence_basis": "community_open_source_project_bom",
+      "mechanical_interface": {
+        "status": "partial",
+        "source": "https://hackaday.io/project/204373-rebelia-robotic-hand",
+        "mount_type": "flange",
+        "standard": "ISO 9409-1",
+        "flange": "50mm",
+        "confidence": 0.8,
+        "registry_ref": "/api/mechanical_interfaces.json"
+      },
+      "bionic_interface": {
+        "actuation_type": "servo_tendon_driven",
+        "tendon_anchor_pattern": "proprietary spool + M3 bolts (open-source, non-standard)",
+        "muscle_mount_pattern": "servo-mounted spools (replaceable)",
+        "soft_socket": "silicone finger pads (Dragon Skin 10)",
+        "powered_flange_comms": "none (servo bus + external ESP32 driver board)"
+      },
+      "compatibility": {
+        "mounts_to": [],
+        "connects_to": [],
+        "compatible_with": []
+      },
+      "entity_kind": "component",
+      "verified": true,
+      "data_quality": "ok",
+      "source_tier_basis": "deep_link:hackaday.io/project/204373-rebelia-robotic-hand",
+      "entity_kind_basis": "默认归类",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
+    },
+    {
+      "id": "BIONIC-HAND-003",
+      "rp_id": "RP-BIO-0012",
+      "name": "Shadow Dexterous Hand",
+      "name_en": "Shadow Dexterous Hand (research-grade anthropomorphic hand)",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_hands",
+      "manufacturer": "Shadow Robot Company",
+      "type": "bionic_hand",
+      "description": "研究级仿人灵巧手：24 DOF（20 主动），腱驱（Shadow Air Muscle），5 指，指端标配压力触觉。重 4.3kg，标称负载 5kg，被视为灵巧手领域黄金基准。腕部为厂商专有接口，无 ISO 法兰声明；腱锚点/肌挂载/软套/带供电通信均无开放标准。",
+      "biomimetic_target": "human_hand_tendon",
+      "dof": 24,
+      "actuators": 20,
+      "load_capacity": "5kg (vendor-stated)",
+      "tactile_sensors": "pressure_tactile_per_fingertip",
+      "weight": "4.3kg",
+      "applications": [
+        "research",
+        "in_hand_manipulation",
+        "humanoid_hand",
+        "teleoperation"
+      ],
+      "source": "Shadow Robot Company 官方产品页（公开厂商声明）",
+      "source_url": "https://www.shadowrobot.com/dexterous-hand-series/",
+      "source_tier": "A",
+      "confidence": 0.7,
+      "confidence_basis": "vendor_public_claims_unverified_independent",
+      "mechanical_interface": {
+        "status": "n_a",
+        "note": "proprietary wrist mount; no ISO 9409-1; tendon_anchor_pattern / muscle_mount_pattern / soft_socket / powered_flange_comms all proprietary, unstandardized"
+      },
+      "bionic_interface": {
+        "actuation_type": "tendon_driven",
+        "tendon_anchor_pattern": "proprietary cable routing (non-standard, no ISO)",
+        "muscle_mount_pattern": "forearm-mounted Shadow Air Muscle actuators",
+        "soft_socket": "n/a (rigid fingers)",
+        "powered_flange_comms": "n/a"
+      },
+      "compatibility": {
+        "mounts_to": [],
+        "connects_to": [],
+        "compatible_with": []
+      },
+      "entity_kind": "component",
+      "verified": true,
+      "data_quality": "ok",
+      "source_tier_basis": "deep_link:www.shadowrobot.com/dexterous-hand-series/",
+      "entity_kind_basis": "默认归类",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
+    },
+    {
+      "id": "BIONIC-HAND-004",
+      "rp_id": "RP-BIO-0013",
+      "name": "Psyonic Ability Hand",
+      "name_en": "Psyonic Ability Hand (myoelectric bionic hand)",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_hands",
+      "manufacturer": "Psyonic",
+      "type": "bionic_hand",
+      "description": "肌电仿生手（原为假肢，后开放给机器人研究）：6 无刷直流电机、6 DOF，32 种抓取模式，功率抓取 66N，指端触压传感 + 振动触觉反馈（首个商售带触觉反馈的仿生手）。重约 490g，开放 API（BLE/I2C/UART/RS485）。残肢 EMG 解码驱动。腕部为残肢/专有接口，无 ISO 法兰。",
+      "biomimetic_target": "human_hand_myoelectric",
+      "dof": 6,
+      "actuators": 6,
+      "load_capacity": "79 lbs max (vendor-stated, ~36kg axial)",
+      "grasp_force": "66N power grasp (vendor-stated)",
+      "grip_patterns": 32,
+      "tactile_sensors": "pressure_tactile_thumb_index_pinky",
+      "weight": "490g",
+      "applications": [
+        "prosthetics",
+        "humanoid_hand",
+        "research",
+        "teleoperation"
+      ],
+      "source": "Psyonic 官方产品页（公开厂商声明）",
+      "source_url": "https://www.psyonic.io/",
+      "source_tier": "B",
+      "confidence": 0.7,
+      "confidence_basis": "vendor_public_claims_unverified_independent",
+      "mechanical_interface": {
+        "status": "n_a",
+        "note": "prosthetic/robot wrist, no ISO 9409-1; mounts via proprietary quick-disconnect or short wrist option"
+      },
+      "bionic_interface": {
+        "actuation_type": "brushless_dc_motor_myoelectric",
+        "tendon_anchor_pattern": "n/a (direct-drive finger joints)",
+        "muscle_mount_pattern": "n/a (EMG decoded to motor commands)",
+        "soft_socket": "silicone overmolded fingertips (compliant, impact-tolerant)",
+        "powered_flange_comms": "n/a (prosthetic wrist; BLE/I2C/UART/RS485 to host)"
+      },
+      "compatibility": {
+        "mounts_to": [],
+        "connects_to": [],
+        "compatible_with": []
+      },
+      "entity_kind": "component",
+      "verified": true,
+      "data_quality": "ok",
+      "source_tier_basis": "root_url_only",
+      "entity_kind_basis": "默认归类",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
+    },
+    {
+      "id": "BIONIC-HAND-005",
+      "rp_id": "RP-BIO-0014",
+      "name": "Open Bionics Hero PRO",
+      "name_en": "Open Bionics Hero PRO (myoelectric bionic hand)",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_hands",
+      "manufacturer": "Open Bionics",
+      "type": "bionic_hand",
+      "description": "肌电仿生手（假肢消费级）：多抓握模式、全无线、防水，2025-04 发布的 Hero RGD(Rugged)/Hero PRO 主打更快交付与耐用。残肢 EMG 驱动，定制 3D 打印接受腔。腕部为残肢专有接口，无 ISO 法兰；软套为定制硅胶接受腔。",
+      "biomimetic_target": "human_hand_myoelectric",
+      "dof": 6,
+      "actuators": 6,
+      "grip_patterns": "multi-grip (vendor-stated)",
+      "ip_rating": "waterproof (vendor-stated)",
+      "applications": [
+        "prosthetics",
+        "humanoid_hand",
+        "research"
+      ],
+      "source": "Open Bionics 官方产品页（公开厂商声明）",
+      "source_url": "https://openbionics.com/",
+      "source_tier": "B",
+      "confidence": 0.65,
+      "confidence_basis": "vendor_public_claims_unverified_independent",
+      "mechanical_interface": {
+        "status": "n_a",
+        "note": "prosthetic wrist, no ISO 9409-1"
+      },
+      "bionic_interface": {
+        "actuation_type": "brushless_dc_motor_myoelectric",
+        "tendon_anchor_pattern": "n/a",
+        "muscle_mount_pattern": "n/a (EMG electrodes on residual limb)",
+        "soft_socket": "custom silicone socket liner (3D-printed)",
+        "powered_flange_comms": "n/a (prosthetic wrist, wireless)"
+      },
+      "compatibility": {
+        "mounts_to": [],
+        "connects_to": [],
+        "compatible_with": []
+      },
+      "entity_kind": "component",
+      "verified": true,
+      "data_quality": "ok",
+      "source_tier_basis": "root_url_only",
+      "entity_kind_basis": "默认归类",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
+    },
+    {
+      "id": "BIONIC-HAND-006",
+      "rp_id": "RP-BIO-0015",
+      "name": "Unitree Dex5",
+      "name_en": "Unitree Dex5 (dexterous robot hand)",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_hands",
+      "manufacturer": "Unitree Robotics",
+      "type": "bionic_hand",
+      "description": "高自由度灵巧手：20 DOF（16 主动 + 4 被动），直驱 + 减速，94 个触觉传感器，可反向驱动。用于 Unitree 人形机器人（G1/H2 等），该生态采用 NVIDIA 栈（Cosmos/GR00T）。腕部为厂商专有总线，无 ISO 法兰。",
+      "biomimetic_target": "human_hand_dexterous",
+      "dof": 20,
+      "actuators": 16,
+      "tactile_sensors": "94 tactile sensors (vendor-stated)",
+      "weight": "~1.0kg",
+      "backdrivable": true,
+      "applications": [
+        "humanoid_hand",
+        "dexterous_manipulation",
+        "research"
+      ],
+      "source": "Unitree 官方产品页（公开厂商声明）",
+      "source_url": "https://www.unitree.com/",
+      "source_tier": "B",
+      "confidence": 0.7,
+      "confidence_basis": "vendor_public_claims_unverified_independent",
+      "mechanical_interface": {
+        "status": "n_a",
+        "note": "proprietary wrist bus, no ISO 9409-1"
+      },
+      "bionic_interface": {
+        "actuation_type": "direct_drive_gear",
+        "tendon_anchor_pattern": "n/a (integrated joint motors)",
+        "muscle_mount_pattern": "n/a",
+        "soft_socket": "n/a (rigid links; 94 tactile sensors)",
+        "powered_flange_comms": "n/a (proprietary wrist bus)"
+      },
+      "compatibility": {
+        "mounts_to": [],
+        "connects_to": [],
+        "compatible_with": []
+      },
+      "entity_kind": "component",
+      "verified": true,
+      "data_quality": "ok",
+      "source_tier_basis": "root_url_only",
+      "entity_kind_basis": "默认归类",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
+    },
+    {
+      "id": "BIONIC-HAND-007",
+      "rp_id": "RP-BIO-0016",
+      "name": "Inspire RH56 Series",
+      "name_en": "Inspire RH56 Series (dexterous robot hand)",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_hands",
+      "manufacturer": "Inspire-Robots",
+      "type": "bionic_hand",
+      "description": "高性价比灵巧手：6 主动 DOF、12 关节，连杆/直线驱动，指端力控。2025 年出货约 10,000 台（按台数计为最大量供应商）。腕部为厂商专有接口，无 ISO 法兰。",
+      "biomimetic_target": "human_hand_dexterous",
+      "dof": 12,
+      "actuators": 6,
+      "grip_force": "4N (RH56BFX) / 10N (RH56DFX) (vendor-stated)",
+      "weight": "540g",
+      "applications": [
+        "humanoid_hand",
+        "dexterous_manipulation",
+        "industrial"
+      ],
+      "source": "Inspire-Robots 官方产品页（公开厂商声明）",
+      "source_url": "https://www.inspire-robots.com/",
+      "source_tier": "B",
+      "confidence": 0.65,
+      "confidence_basis": "vendor_public_claims_unverified_independent",
+      "mechanical_interface": {
+        "status": "n_a",
+        "note": "proprietary wrist mount, no ISO 9409-1"
+      },
+      "bionic_interface": {
+        "actuation_type": "linkage_linear",
+        "tendon_anchor_pattern": "n/a",
+        "muscle_mount_pattern": "n/a",
+        "soft_socket": "n/a",
+        "powered_flange_comms": "n/a (proprietary wrist bus)"
+      },
+      "compatibility": {
+        "mounts_to": [],
+        "connects_to": [],
+        "compatible_with": []
+      },
+      "entity_kind": "component",
+      "verified": true,
+      "data_quality": "ok",
+      "source_tier_basis": "root_url_only",
+      "entity_kind_basis": "默认归类",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
+    },
+    {
+      "id": "BIONIC-HAND-008",
+      "rp_id": "RP-BIO-0017",
+      "name": "Allegro Hand",
+      "name_en": "Allegro Hand (Wonik Robotics dexterous hand)",
+      "category": "bionic_mechanisms",
+      "subcategory": "bionic_hands",
+      "manufacturer": "Wonik Robotics",
+      "type": "bionic_hand",
+      "description": "四指灵巧手：16 DOF，直驱电机，轻量（约 1.0kg），广泛用作机器人操作研究基准平台。腕部为厂商专有接口，无 ISO 法兰。",
+      "biomimetic_target": "human_hand_dexterous",
+      "dof": 16,
+      "actuators": 16,
+      "weight": "1.0kg",
+      "applications": [
+        "research",
+        "dexterous_manipulation",
+        "humanoid_hand"
+      ],
+      "source": "Wonik Robotics 官方产品页（公开厂商声明）",
+      "source_url": "https://www.wonikrobotics.com/allegro-hand",
+      "source_tier": "A",
+      "confidence": 0.65,
+      "confidence_basis": "vendor_public_claims_unverified_independent",
+      "mechanical_interface": {
+        "status": "n_a",
+        "note": "proprietary wrist mount, no ISO 9409-1"
+      },
+      "bionic_interface": {
+        "actuation_type": "direct_drive",
+        "tendon_anchor_pattern": "n/a",
+        "muscle_mount_pattern": "n/a",
+        "soft_socket": "n/a",
+        "powered_flange_comms": "n/a (proprietary wrist bus)"
+      },
+      "compatibility": {
+        "mounts_to": [],
+        "connects_to": [],
+        "compatible_with": []
+      },
+      "entity_kind": "component",
+      "verified": true,
+      "data_quality": "ok",
+      "source_tier_basis": "deep_link:www.wonikrobotics.com/allegro-hand",
+      "entity_kind_basis": "默认归类",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      }
+    },
+    {
+      "category": "grippers",
+      "name": "Robotiq Hand-E",
+      "name_en": "Robotiq Hand-E",
+      "manufacturer": "Robotiq",
+      "type": "adaptive_gripper",
+      "description": "大行程自适应夹爪，可包络异形工件；业界最大行程之一。",
+      "applications": [
+        "machine_tending",
+        "bin_picking",
+        "assembly"
+      ],
+      "source": "厂商产品页：Robotiq（https://robotiq.com/products/hand-e-adaptive-gripper）",
+      "source_url": "https://robotiq.com/products/hand-e-adaptive-gripper",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "stroke": "150 mm",
+        "payload": "up to 10 kg",
+        "grip_force": "25-185 N",
+        "type": "adaptive"
+      },
+      "source_tier_basis": "deep_link:robotiq.com/products/hand-e-adaptive-gripper",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-006",
+      "rp_id": "RP-GRI-0010"
+    },
+    {
+      "category": "grippers",
+      "name": "OnRobot RG2",
+      "name_en": "OnRobot RG2",
+      "manufacturer": "OnRobot",
+      "type": "collaborative_gripper",
+      "description": "协作机器人专用电动平行夹爪，内置力控与自动识别；IP54。",
+      "applications": [
+        "collaborative",
+        "machine_tending",
+        "material_handling"
+      ],
+      "source": "厂商产品页：OnRobot（https://onrobot.com/en/products/rg2）",
+      "source_url": "https://onrobot.com/en/products/rg2",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "payload": "2 kg",
+        "stroke": "110 mm",
+        "weight": "0.9 kg",
+        "ip_rating": "IP54",
+        "type": "collaborative parallel"
+      },
+      "source_tier_basis": "deep_link:onrobot.com/en/products/rg2",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-007",
+      "rp_id": "RP-GRI-0011"
+    },
+    {
+      "category": "grippers",
+      "name": "Schunk WSG 050",
+      "name_en": "Schunk WSG 050",
+      "manufacturer": "Schunk",
+      "type": "electric_parallel_gripper",
+      "description": "高精度电动平行夹爪，每爪独立力控；IP40。",
+      "applications": [
+        "precision_assembly",
+        "lab_automation",
+        "electronics"
+      ],
+      "source": "厂商产品页：Schunk（https://schunk.com/us/en/gripping-systems/parallel-grippers/wsg-050）",
+      "source_url": "https://schunk.com/us/en/gripping-systems/parallel-grippers/wsg-050",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "stroke": "50 mm (2x25)",
+        "force": "up to 40 N per jaw",
+        "payload": "4 kg",
+        "ip_rating": "IP40",
+        "type": "electric parallel"
+      },
+      "source_tier_basis": "deep_link:schunk.com/us/en/gripping-systems/parallel-grippers/wsg-050",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-008",
+      "rp_id": "RP-GRI-0012"
+    },
+    {
+      "category": "grippers",
+      "name": "Schunk Co-act EGP 64",
+      "name_en": "Schunk Co-act EGP 64",
+      "manufacturer": "Schunk",
+      "type": "electric_parallel_gripper",
+      "description": "协作级电动平行夹爪，IP67 防护，适合严苛环境。",
+      "applications": [
+        "collaborative",
+        "machine_tending",
+        "food",
+        "industrial"
+      ],
+      "source": "厂商产品页：Schunk（https://schunk.com/us/en/gripping-systems/parallel-grippers/co-act-egp-64）",
+      "source_url": "https://schunk.com/us/en/gripping-systems/parallel-grippers/co-act-egp-64",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "stroke": "64 mm",
+        "force": "140 N",
+        "payload": "5 kg",
+        "ip_rating": "IP67",
+        "type": "electric parallel cobot"
+      },
+      "source_tier_basis": "deep_link:schunk.com/us/en/gripping-systems/parallel-grippers/co-act-e",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-009",
+      "rp_id": "RP-GRI-0013"
+    },
+    {
+      "category": "grippers",
+      "name": "Festo DHAS",
+      "name_en": "Festo DHAS",
+      "manufacturer": "Festo",
+      "type": "pneumatic_parallel_gripper",
+      "description": "气动平行夹爪，紧凑轻量，适合高速拾放。",
+      "applications": [
+        "pick_and_place",
+        "packaging",
+        "high_speed"
+      ],
+      "source": "厂商产品页：Festo（https://www.festo.com/cat/en-us_us/products_DHAS）",
+      "source_url": "https://www.festo.com/cat/en-us_us/products_DHAS",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "stroke": "12 mm",
+        "force": "35 N",
+        "weight": "0.45 kg",
+        "type": "pneumatic parallel"
+      },
+      "source_tier_basis": "deep_link:www.festo.com/cat/en-us_us/products_DHAS",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-010",
+      "rp_id": "RP-GRI-0014"
+    },
+    {
+      "category": "grippers",
+      "name": "Soft Robotics mGrip",
+      "name_en": "Soft Robotics mGrip",
+      "manufacturer": "Soft Robotics (now Quantos)",
+      "type": "soft_adaptive_gripper",
+      "description": "软体自适应夹爪，气驱包络易碎/异形件；IP69K、食品级。",
+      "applications": [
+        "food",
+        "packaging",
+        "bin_picking",
+        "fragile"
+      ],
+      "source": "厂商产品页：Soft Robotics (now Quantos)（https://www.softroboticsinc.com/mgrip）",
+      "source_url": "https://www.softroboticsinc.com/mgrip",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "ip_rating": "IP69K",
+        "food_safe": true,
+        "actuation": "pneumatic soft",
+        "type": "soft adaptive"
+      },
+      "source_tier_basis": "deep_link:www.softroboticsinc.com/mgrip",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-011",
+      "rp_id": "RP-GRI-0015"
+    },
+    {
+      "category": "grippers",
+      "name": "OnRobot VGC10",
+      "name_en": "OnRobot VGC10",
+      "manufacturer": "OnRobot",
+      "type": "electric_vacuum_gripper",
+      "description": "紧凑型电动真空夹爪，无需外置气源；可换吸盘适配多形状。",
+      "applications": [
+        "collaborative",
+        "packaging",
+        "pick_and_place"
+      ],
+      "source": "厂商产品页：OnRobot（https://onrobot.com/en/products/vgc10）",
+      "source_url": "https://onrobot.com/en/products/vgc10",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "payload": "up to 15 kg (depends on cups)",
+        "weight": "0.58 kg",
+        "type": "electric vacuum"
+      },
+      "source_tier_basis": "deep_link:onrobot.com/en/products/vgc10",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-012",
+      "rp_id": "RP-GRI-0016"
+    },
+    {
+      "category": "grippers",
+      "name": "Barrett Hand BH8-282",
+      "name_en": "Barrett Hand BH8-282",
+      "manufacturer": "Barrett Technology",
+      "type": "multi_fingered_gripper",
+      "description": "三指八自由度欠驱动手，可抓握多种形状；研究/医疗常用。",
+      "applications": [
+        "dexterous_grasp",
+        "research",
+        "prosthetics_research"
+      ],
+      "source": "厂商产品页：Barrett Technology（https://www.barrett.com/products/hand/）",
+      "source_url": "https://www.barrett.com/products/hand/",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "dof": 8,
+        "fingers": 3,
+        "payload": "2.5 kg",
+        "weight": "1.1 kg",
+        "type": "multi-fingered underactuated"
+      },
+      "source_tier_basis": "deep_link:www.barrett.com/products/hand/",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-013",
+      "rp_id": "RP-GRI-0017"
+    },
+    {
+      "category": "grippers",
+      "name": "Robotiq EPick",
+      "name_en": "Robotiq EPick",
+      "manufacturer": "Robotiq",
+      "type": "electric_vacuum_gripper",
+      "description": "电动真空夹爪，即插即用、无需气路；轻量。",
+      "applications": [
+        "collaborative",
+        "pick_and_place",
+        "packaging"
+      ],
+      "source": "厂商产品页：Robotiq（https://robotiq.com/products/epick）",
+      "source_url": "https://robotiq.com/products/epick",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "type": "electric vacuum",
+        "air_compressor": false
+      },
+      "source_tier_basis": "deep_link:robotiq.com/products/epick",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-014",
+      "rp_id": "RP-GRI-0018"
+    },
+    {
+      "category": "grippers",
+      "name": "ROBOTIS RH-P12-RN",
+      "name_en": "ROBOTIS RH-P12-RN",
+      "manufacturer": "ROBOTIS",
+      "type": "adaptive_gripper",
+      "description": "大行程自适应夹爪，力控实时反馈；ROS 友好。",
+      "applications": [
+        "manipulation",
+        "research",
+        "service_robot"
+      ],
+      "source": "厂商产品页：ROBOTIS（https://emanual.robotis.com/docs/en/platform/rh_p12_rn/）",
+      "source_url": "https://emanual.robotis.com/docs/en/platform/rh_p12_rn/",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "stroke": "106 mm",
+        "force": "170 N",
+        "weight": "0.59 kg",
+        "type": "adaptive"
+      },
+      "source_tier_basis": "deep_link:emanual.robotis.com/docs/en/platform/rh_p12_rn/",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-015",
+      "rp_id": "RP-GRI-0019"
+    },
+    {
+      "category": "sensors",
+      "name": "ATI Axia80",
+      "name_en": "ATI Axia80",
+      "manufacturer": "ATI Industrial Automation",
+      "type": "force_torque_sensor",
+      "description": "六维力/力矩传感器，IP65，量程覆盖到 5000 N 级（依型号）；工业机器人标配级。",
+      "applications": [
+        "force_control",
+        "assembly",
+        "research",
+        "polishing"
+      ],
+      "source": "厂商产品页：ATI Industrial Automation（https://www.ati-ia.com/products/ft/axia80.aspx）",
+      "source_url": "https://www.ati-ia.com/products/ft/axia80.aspx",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "axes": 6,
+        "ip_rating": "IP65",
+        "rated_force": "up to 5000 N (model dependent)",
+        "type": "6-axis F/T"
+      },
+      "source_tier_basis": "deep_link:www.ati-ia.com/products/ft/axia80.aspx",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "SENS-852",
+      "rp_id": "RP-SEN-0091"
+    },
+    {
+      "category": "sensors",
+      "name": "ATI Mini45",
+      "name_en": "ATI Mini45",
+      "manufacturer": "ATI Industrial Automation",
+      "type": "force_torque_sensor",
+      "description": "紧凑型六维力/力矩传感器，IP65，适合小负载协作臂。",
+      "applications": [
+        "collaborative",
+        "force_control",
+        "research"
+      ],
+      "source": "厂商产品页：ATI Industrial Automation（https://www.ati-ia.com/products/ft/mini45.aspx）",
+      "source_url": "https://www.ati-ia.com/products/ft/mini45.aspx",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "axes": 6,
+        "ip_rating": "IP65",
+        "rated_force": "up to 2000 N (model dependent)",
+        "type": "6-axis F/T compact"
+      },
+      "source_tier_basis": "deep_link:www.ati-ia.com/products/ft/mini45.aspx",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "SENS-853",
+      "rp_id": "RP-SEN-0092"
+    },
+    {
+      "category": "sensors",
+      "name": "OnRobot HEX-H",
+      "name_en": "OnRobot HEX-H",
+      "manufacturer": "OnRobot",
+      "type": "force_torque_sensor",
+      "description": "协作臂专用六维力/力矩传感器，即插即用；H 为高载荷型。",
+      "applications": [
+        "collaborative",
+        "force_control",
+        "hand_guiding"
+      ],
+      "source": "厂商产品页：OnRobot（https://onrobot.com/en/products/hex-s）",
+      "source_url": "https://onrobot.com/en/products/hex-s",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "axes": 6,
+        "payload": "up to 15 kg (H model)",
+        "type": "6-axis F/T cobot"
+      },
+      "source_tier_basis": "deep_link:onrobot.com/en/products/hex-s",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "SENS-854",
+      "rp_id": "RP-SEN-0093"
+    },
+    {
+      "category": "sensors",
+      "name": "Robotiq FT 300-S",
+      "name_en": "Robotiq FT 300-S",
+      "manufacturer": "Robotiq",
+      "type": "force_torque_sensor",
+      "description": "协作臂六维力/力矩传感器，IP67，支持力控装配与打磨。",
+      "applications": [
+        "collaborative",
+        "force_control",
+        "assembly",
+        "sanding"
+      ],
+      "source": "厂商产品页：Robotiq（https://robotiq.com/products/ft-300-force-torque-sensor）",
+      "source_url": "https://robotiq.com/products/ft-300-force-torque-sensor",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "axes": 6,
+        "force": "300 N",
+        "torque": "30 N·m",
+        "ip_rating": "IP67",
+        "type": "6-axis F/T cobot"
+      },
+      "source_tier_basis": "deep_link:robotiq.com/products/ft-300-force-torque-sensor",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "SENS-855",
+      "rp_id": "RP-SEN-0094"
+    },
+    {
+      "category": "sensors",
+      "name": "Robotiq Fingertip",
+      "name_en": "Robotiq Fingertip",
+      "manufacturer": "Robotiq",
+      "type": "tactile_sensor",
+      "description": "夹爪指端触觉传感器，每指端 15 个传感点，支持过压检测。",
+      "applications": [
+        "tactile_grasp",
+        "dexterous",
+        "collaborative"
+      ],
+      "source": "厂商产品页：Robotiq（https://robotiq.com/products/fingertip）",
+      "source_url": "https://robotiq.com/products/fingertip",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "sensors_per_fingertip": 15,
+        "feature": "overpressure_detection",
+        "type": "tactile"
+      },
+      "source_tier_basis": "deep_link:robotiq.com/products/fingertip",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "SENS-856",
+      "rp_id": "RP-SEN-0095"
+    },
+    {
+      "category": "actuators",
+      "name": "T-Motor AK80-9",
+      "name_en": "T-Motor AK80-9",
+      "manufacturer": "T-Motor (X-TEAM)",
+      "type": "robot_joint_motor",
+      "description": "机器人关节一体化电机，高扭矩密度，常用于足式/人形机器人关节模组。",
+      "applications": [
+        "humanoid_joint",
+        "legged_robot",
+        "manipulator"
+      ],
+      "source": "厂商产品页：T-Motor (X-TEAM)（https://www.tmotor.com/product/ak80）",
+      "source_url": "https://www.tmotor.com/product/ak80",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "torque": "9 N·m",
+        "voltage": "24 V",
+        "weight": "0.44 kg",
+        "type": "integrated joint motor"
+      },
+      "source_tier_basis": "deep_link:www.tmotor.com/product/ak80",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "ACT-3275",
+      "rp_id": "RP-ACT-0218"
+    },
+    {
+      "category": "actuators",
+      "name": "maxon EC 45 flat",
+      "name_en": "maxon EC 45 flat",
+      "manufacturer": "maxon",
+      "type": "bldc_motor",
+      "description": "盘式无刷直流电机，高功率密度，医疗/仪器级可靠性。",
+      "applications": [
+        "medical",
+        "instrumentation",
+        "precision_actuation"
+      ],
+      "source": "厂商产品页：maxon（https://www.maxongroup.com/maxon/view/product/motor/ecmotor/ecflat/EC45flat）",
+      "source_url": "https://www.maxongroup.com/maxon/view/product/motor/ecmotor/ecflat/EC45flat",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "power": "90 W",
+        "voltage": "24 V",
+        "type": "BLDC flat"
+      },
+      "source_tier_basis": "deep_link:www.maxongroup.com/maxon/view/product/motor/ecmotor/ecflat/E",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "ACT-3276",
+      "rp_id": "RP-ACT-0219"
+    },
+    {
+      "category": "actuators",
+      "name": "Elmo Whistle",
+      "name_en": "Elmo Whistle",
+      "manufacturer": "Elmo Motion Control",
+      "type": "servo_drive",
+      "description": "超小型智能伺服驱动器，高电流密度，支持 EtherCAT。",
+      "applications": [
+        "servo_control",
+        "robot_actuation",
+        "agv"
+      ],
+      "source": "厂商产品页：Elmo Motion Control（https://www.elmomc.com/products/whistle-servo-drive.htm）",
+      "source_url": "https://www.elmomc.com/products/whistle-servo-drive.htm",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "current": "up to 100 A",
+        "voltage": "up to 100 V",
+        "bus": "EtherCAT",
+        "type": "smart servo drive"
+      },
+      "source_tier_basis": "deep_link:www.elmomc.com/products/whistle-servo-drive.htm",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "ACT-3277",
+      "rp_id": "RP-ACT-0220"
+    },
+    {
+      "category": "controllers",
+      "name": "ROBOTIS Dynamixel XM540-W270",
+      "name_en": "ROBOTIS Dynamixel XM540-W270",
+      "manufacturer": "ROBOTIS",
+      "type": "smart_servo",
+      "description": "智能伺服舵机，内置控制器与反馈，RS485 菊花链；人形/教育常用。",
+      "applications": [
+        "humanoid",
+        "education",
+        "manipulator"
+      ],
+      "source": "厂商产品页：ROBOTIS（https://emanual.robotis.com/docs/en/dxl/x/xm540-w270/）",
+      "source_url": "https://emanual.robotis.com/docs/en/dxl/x/xm540-w270/",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "stall_torque": "16.6 N·m",
+        "voltage": "12 V",
+        "bus": "RS485 (TTL optional)",
+        "type": "smart servo"
+      },
+      "source_tier_basis": "deep_link:emanual.robotis.com/docs/en/dxl/x/xm540-w270/",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "CTRL-005",
+      "rp_id": "RP-CON-0005"
+    },
+    {
+      "category": "reducers",
+      "name": "Harmonic Drive CSF-8",
+      "name_en": "Harmonic Drive CSF-8",
+      "manufacturer": "Harmonic Drive",
+      "type": "harmonic_drive",
+      "description": "谐波减速机，零背隙，高减速比；精密关节与转台核心。",
+      "applications": [
+        "precision_actuation",
+        "joint",
+        "semiconductor",
+        "aerospace"
+      ],
+      "source": "厂商产品页：Harmonic Drive（https://www.harmonicdrive.net/products）",
+      "source_url": "https://www.harmonicdrive.net/products",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "ratio": "100:1 (typical)",
+        "backlash": "zero",
+        "type": "strain wave gear"
+      },
+      "source_tier_basis": "deep_link:www.harmonicdrive.net/products",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "RED-004",
+      "rp_id": "RP-RED-0009"
+    },
+    {
+      "category": "reducers",
+      "name": "Nidec-Shimpo VRS-060",
+      "name_en": "Nidec-Shimpo VRS-060",
+      "manufacturer": "Nidec-Shimpo",
+      "type": "precision_reducer",
+      "description": "精密摆线/谐波减速机，低振动高刚性；自动化设备常用。",
+      "applications": [
+        "precision_actuation",
+        "joint",
+        "factory_automation"
+      ],
+      "source": "厂商产品页：Nidec-Shimpo（https://www.nidec-shimpo.eu/products/reducers/）",
+      "source_url": "https://www.nidec-shimpo.eu/products/reducers/",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "size": "60 mm",
+        "type": "precision reducer"
+      },
+      "source_tier_basis": "deep_link:www.nidec-shimpo.eu/products/reducers/",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "RED-005",
+      "rp_id": "RP-RED-0010"
+    },
+    {
+      "category": "reducers",
+      "name": "Leaderdrive LHD-20",
+      "name_en": "Leaderdrive LHD-20",
+      "manufacturer": "Leaderdrive (绿地谐波)",
+      "type": "harmonic_drive",
+      "description": "国产谐波减速机，高性价比，人形/协作机器人量产常用。",
+      "applications": [
+        "humanoid",
+        "collaborative",
+        "joint"
+      ],
+      "source": "厂商产品页：Leaderdrive (绿地谐波)（https://www.leaderdrive.com/）",
+      "source_url": "https://www.leaderdrive.com/",
+      "source_tier": "B",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "size": "20 mm",
+        "type": "strain wave gear (harmonic)"
+      },
+      "source_tier_basis": "root_url_only",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "RED-006",
+      "rp_id": "RP-RED-0011"
     }
   ]
 }

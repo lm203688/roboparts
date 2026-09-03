@@ -3,7 +3,7 @@
 Add bionic/biomimetic entities and 3D printing support
 Core specialty: 仿生机械 (Bionic Mechanisms)
 """
-import json, os
+import json, os, sys
 from datetime import datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -475,6 +475,419 @@ BIONIC_ENTITIES = [
         "entity_kind": "component",
         "verified": False,
         "data_quality": "partial"
+    },
+    # === 真实肌纤维人形手（竞品差异化情报：公开领先者）===
+    {
+        "id": "BIONIC-HAND-001",
+        "rp_id": "RP-BIO-0010",
+        "name": "Clone Hand",
+        "name_en": "Clone Hand (myofiber anthropomorphic hand)",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_hands",
+        "manufacturer": "Clone Robotics",
+        "type": "bionic_hand",
+        "description": "肌纤维驱动仿人灵巧手：37 根 McKibben Myofiber 水驱人工肌肉、24 DOF，单指负载约 7kg，650k 次作动寿命，Neural Joint V2 神经网络关节控制器。公开资料未声明任何机械接口标准（腱锚点 / 肌挂载点 / 软套接口 / 带供电法兰通信均无 ISO）。",
+        "biomimetic_target": "human_hand_myofiber",
+        "dof": 24,
+        "actuators": 37,
+        "load_capacity": "7kg per finger (vendor-stated)",
+        "cycle_life": "650000 actuation cycles (vendor-stated)",
+        "controller": "Neural Joint V2 (neural-network joint controller)",
+        "actuation_type": "hydraulic_mckibben_muscle",
+        "applications": ["humanoid_hand", "android", "prosthetics_research"],
+        "source": "Clone Robotics 官方产品页（公开厂商声明）",
+        "source_url": "https://www.clonerobotics.com/hand",
+        "source_tier": "A",
+        "confidence": 0.7,
+        "confidence_basis": "vendor_public_claims_unverified_independent",
+        "mechanical_interface": {
+            "status": "n_a",
+            "note": "no public ISO standard for tendon_anchor_pattern / muscle_mount_pattern / soft_socket / powered_flange_comms; all proprietary, unstandardized"
+        },
+        "bionic_interface": {
+            "actuation_type": "hydraulic_mckibben_muscle",
+            "tendon_anchor_pattern": "proprietary_unnamed (non-standard, no ISO)",
+            "muscle_mount_pattern": "integrated_proprietary",
+            "soft_socket": "silicone_skin_socket_proprietary",
+            "powered_flange_comms": "proprietary (no standard)"
+        },
+        "compatibility": {"mounts_to": [], "connects_to": [], "compatible_with": []},
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial",
+        "source_tier_basis": "vendor_official_product_page",
+        "kind_basis": "category=bionic_mechanisms: bionic hand, physical hardware",
+        "entity_kind_basis": "默认归类",
+        "quarantine": False,
+        "standard_conformance": {
+            "assessed": False,
+            "bus_class": "unknown",
+            "ros2": None,
+            "interop_stack_20262893": "unknown",
+            "caee060_relevant": False,
+            "interop_posture": "unknown",
+            "iso22166_relevant": False
+        }
+    },
+    # === 真实开源腱驱人形手（标准法兰 + 非标准腱锚，差异化样本）===
+    {
+        "id": "BIONIC-HAND-002",
+        "rp_id": "RP-BIO-0011",
+        "name": "Yeah Robotic Hand (formerly Rebelia)",
+        "name_en": "Yeah Robotic Hand (formerly Rebelia)",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_hands",
+        "manufacturer": "Vittorio Lumare (Yeah Robotics) / Public Invention",
+        "type": "bionic_hand",
+        "description": "低成本开源腱驱灵巧手：5 个 WaveShare ST3215HS 伺服 + 腱绳（Hercules 8 股 0.75mm）屈伸，15 DOF，单指扭矩 20 kg·cm，指根扭矩传感。挂载声明 ISO 9409-1-50-4-M6（UR3 同款法兰），但腱锚点布局为自有开源设计（非标准）；硅胶指垫（Dragon Skin）。CERN-OHL-S-2.0，V1 已 OSHWA 认证。",
+        "biomimetic_target": "human_hand_tendon",
+        "dof": 15,
+        "actuators": 5,
+        "torque_per_finger": "20 kg*cm (vendor-stated)",
+        "sensors": ["torque_per_finger"],
+        "applications": ["humanoid_hand", "manipulator", "prosthetic_transradial", "research"],
+        "source": "Hackaday.io 开源项目页（含 BOM / 装配说明）",
+        "source_url": "https://hackaday.io/project/204373-rebelia-robotic-hand",
+        "source_tier": "B",
+        "confidence": 0.6,
+        "confidence_basis": "community_open_source_project_bom",
+        "mechanical_interface": {
+            "status": "declared",
+            "mount_type": "flange",
+            "standard": "ISO 9409-1",
+            "flange": "50mm",
+            "confidence": 0.8,
+            "registry_ref": "/api/mechanical_interfaces.json"
+        },
+        "bionic_interface": {
+            "actuation_type": "servo_tendon_driven",
+            "tendon_anchor_pattern": "proprietary spool + M3 bolts (open-source, non-standard)",
+            "muscle_mount_pattern": "servo-mounted spools (replaceable)",
+            "soft_socket": "silicone finger pads (Dragon Skin 10)",
+            "powered_flange_comms": "none (servo bus + external ESP32 driver board)"
+        },
+        "compatibility": {"mounts_to": [], "connects_to": [], "compatible_with": []},
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial",
+        "source_tier_basis": "community_open_source_project",
+        "kind_basis": "category=bionic_mechanisms: bionic hand, physical hardware",
+        "entity_kind_basis": "默认归类",
+        "quarantine": False,
+        "standard_conformance": {
+            "assessed": False,
+            "bus_class": "unknown",
+            "ros2": None,
+            "interop_stack_20262893": "unknown",
+            "caee060_relevant": False,
+            "interop_posture": "unknown",
+            "iso22166_relevant": False
+        }
+    },
+    # === 真实灵巧手（差异化情报：研究级 + 商业级 + 工业级样本）===
+    {
+        "id": "BIONIC-HAND-003",
+        "rp_id": "RP-BIO-0012",
+        "name": "Shadow Dexterous Hand",
+        "name_en": "Shadow Dexterous Hand (research-grade anthropomorphic hand)",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_hands",
+        "manufacturer": "Shadow Robot Company",
+        "type": "bionic_hand",
+        "description": "研究级仿人灵巧手：24 DOF（20 主动），腱驱（Shadow Air Muscle），5 指，指端标配压力触觉。重 4.3kg，标称负载 5kg，被视为灵巧手领域黄金基准。腕部为厂商专有接口，无 ISO 法兰声明；腱锚点/肌挂载/软套/带供电通信均无开放标准。",
+        "biomimetic_target": "human_hand_tendon",
+        "dof": 24,
+        "actuators": 20,
+        "load_capacity": "5kg (vendor-stated)",
+        "tactile_sensors": "pressure_tactile_per_fingertip",
+        "weight": "4.3kg",
+        "applications": ["research", "in_hand_manipulation", "humanoid_hand", "teleoperation"],
+        "source": "Shadow Robot Company 官方产品页（公开厂商声明）",
+        "source_url": "https://www.shadowrobot.com/dexterous-hand-series/",
+        "source_tier": "A",
+        "confidence": 0.7,
+        "confidence_basis": "vendor_public_claims_unverified_independent",
+        "mechanical_interface": {
+            "status": "n_a",
+            "note": "proprietary wrist mount; no ISO 9409-1; tendon_anchor_pattern / muscle_mount_pattern / soft_socket / powered_flange_comms all proprietary, unstandardized"
+        },
+        "bionic_interface": {
+            "actuation_type": "tendon_driven",
+            "tendon_anchor_pattern": "proprietary cable routing (non-standard, no ISO)",
+            "muscle_mount_pattern": "forearm-mounted Shadow Air Muscle actuators",
+            "soft_socket": "n/a (rigid fingers)",
+            "powered_flange_comms": "n/a"
+        },
+        "compatibility": {"mounts_to": [], "connects_to": [], "compatible_with": []},
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial",
+        "source_tier_basis": "vendor_official_product_page",
+        "kind_basis": "category=bionic_mechanisms: bionic hand, physical hardware",
+        "entity_kind_basis": "默认归类",
+        "quarantine": False,
+        "standard_conformance": {
+            "assessed": False,
+            "bus_class": "unknown",
+            "ros2": None,
+            "interop_stack_20262893": "unknown",
+            "caee060_relevant": False,
+            "interop_posture": "unknown",
+            "iso22166_relevant": False
+        }
+    },
+    {
+        "id": "BIONIC-HAND-004",
+        "rp_id": "RP-BIO-0013",
+        "name": "Psyonic Ability Hand",
+        "name_en": "Psyonic Ability Hand (myoelectric bionic hand)",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_hands",
+        "manufacturer": "Psyonic",
+        "type": "bionic_hand",
+        "description": "肌电仿生手（原为假肢，后开放给机器人研究）：6 无刷直流电机、6 DOF，32 种抓取模式，功率抓取 66N，指端触压传感 + 振动触觉反馈（首个商售带触觉反馈的仿生手）。重约 490g，开放 API（BLE/I2C/UART/RS485）。残肢 EMG 解码驱动。腕部为残肢/专有接口，无 ISO 法兰。",
+        "biomimetic_target": "human_hand_myoelectric",
+        "dof": 6,
+        "actuators": 6,
+        "load_capacity": "79 lbs max (vendor-stated, ~36kg axial)",
+        "grasp_force": "66N power grasp (vendor-stated)",
+        "grip_patterns": 32,
+        "tactile_sensors": "pressure_tactile_thumb_index_pinky",
+        "weight": "490g",
+        "applications": ["prosthetics", "humanoid_hand", "research", "teleoperation"],
+        "source": "Psyonic 官方产品页（公开厂商声明）",
+        "source_url": "https://www.psyonic.io/",
+        "source_tier": "A",
+        "confidence": 0.7,
+        "confidence_basis": "vendor_public_claims_unverified_independent",
+        "mechanical_interface": {
+            "status": "n_a",
+            "note": "prosthetic/robot wrist, no ISO 9409-1; mounts via proprietary quick-disconnect or short wrist option"
+        },
+        "bionic_interface": {
+            "actuation_type": "brushless_dc_motor_myoelectric",
+            "tendon_anchor_pattern": "n/a (direct-drive finger joints)",
+            "muscle_mount_pattern": "n/a (EMG decoded to motor commands)",
+            "soft_socket": "silicone overmolded fingertips (compliant, impact-tolerant)",
+            "powered_flange_comms": "n/a (prosthetic wrist; BLE/I2C/UART/RS485 to host)"
+        },
+        "compatibility": {"mounts_to": [], "connects_to": [], "compatible_with": []},
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial",
+        "source_tier_basis": "vendor_official_product_page",
+        "kind_basis": "category=bionic_mechanisms: bionic hand, physical hardware",
+        "entity_kind_basis": "默认归类",
+        "quarantine": False,
+        "standard_conformance": {
+            "assessed": False,
+            "bus_class": "unknown",
+            "ros2": None,
+            "interop_stack_20262893": "unknown",
+            "caee060_relevant": False,
+            "interop_posture": "unknown",
+            "iso22166_relevant": False
+        }
+    },
+    {
+        "id": "BIONIC-HAND-005",
+        "rp_id": "RP-BIO-0014",
+        "name": "Open Bionics Hero PRO",
+        "name_en": "Open Bionics Hero PRO (myoelectric bionic hand)",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_hands",
+        "manufacturer": "Open Bionics",
+        "type": "bionic_hand",
+        "description": "肌电仿生手（假肢消费级）：多抓握模式、全无线、防水，2025-04 发布的 Hero RGD(Rugged)/Hero PRO 主打更快交付与耐用。残肢 EMG 驱动，定制 3D 打印接受腔。腕部为残肢专有接口，无 ISO 法兰；软套为定制硅胶接受腔。",
+        "biomimetic_target": "human_hand_myoelectric",
+        "dof": 6,
+        "actuators": 6,
+        "grip_patterns": "multi-grip (vendor-stated)",
+        "ip_rating": "waterproof (vendor-stated)",
+        "applications": ["prosthetics", "humanoid_hand", "research"],
+        "source": "Open Bionics 官方产品页（公开厂商声明）",
+        "source_url": "https://openbionics.com/",
+        "source_tier": "A",
+        "confidence": 0.65,
+        "confidence_basis": "vendor_public_claims_unverified_independent",
+        "mechanical_interface": {
+            "status": "n_a",
+            "note": "prosthetic wrist, no ISO 9409-1"
+        },
+        "bionic_interface": {
+            "actuation_type": "brushless_dc_motor_myoelectric",
+            "tendon_anchor_pattern": "n/a",
+            "muscle_mount_pattern": "n/a (EMG electrodes on residual limb)",
+            "soft_socket": "custom silicone socket liner (3D-printed)",
+            "powered_flange_comms": "n/a (prosthetic wrist, wireless)"
+        },
+        "compatibility": {"mounts_to": [], "connects_to": [], "compatible_with": []},
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial",
+        "source_tier_basis": "vendor_official_product_page",
+        "kind_basis": "category=bionic_mechanisms: bionic hand, physical hardware",
+        "entity_kind_basis": "默认归类",
+        "quarantine": False,
+        "standard_conformance": {
+            "assessed": False,
+            "bus_class": "unknown",
+            "ros2": None,
+            "interop_stack_20262893": "unknown",
+            "caee060_relevant": False,
+            "interop_posture": "unknown",
+            "iso22166_relevant": False
+        }
+    },
+    {
+        "id": "BIONIC-HAND-006",
+        "rp_id": "RP-BIO-0015",
+        "name": "Unitree Dex5",
+        "name_en": "Unitree Dex5 (dexterous robot hand)",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_hands",
+        "manufacturer": "Unitree Robotics",
+        "type": "bionic_hand",
+        "description": "高自由度灵巧手：20 DOF（16 主动 + 4 被动），直驱 + 减速，94 个触觉传感器，可反向驱动。用于 Unitree 人形机器人（G1/H2 等），该生态采用 NVIDIA 栈（Cosmos/GR00T）。腕部为厂商专有总线，无 ISO 法兰。",
+        "biomimetic_target": "human_hand_dexterous",
+        "dof": 20,
+        "actuators": 16,
+        "tactile_sensors": "94 tactile sensors (vendor-stated)",
+        "weight": "~1.0kg",
+        "backdrivable": True,
+        "applications": ["humanoid_hand", "dexterous_manipulation", "research"],
+        "source": "Unitree 官方产品页（公开厂商声明）",
+        "source_url": "https://www.unitree.com/",
+        "source_tier": "A",
+        "confidence": 0.7,
+        "confidence_basis": "vendor_public_claims_unverified_independent",
+        "mechanical_interface": {
+            "status": "n_a",
+            "note": "proprietary wrist bus, no ISO 9409-1"
+        },
+        "bionic_interface": {
+            "actuation_type": "direct_drive_gear",
+            "tendon_anchor_pattern": "n/a (integrated joint motors)",
+            "muscle_mount_pattern": "n/a",
+            "soft_socket": "n/a (rigid links; 94 tactile sensors)",
+            "powered_flange_comms": "n/a (proprietary wrist bus)"
+        },
+        "compatibility": {"mounts_to": [], "connects_to": [], "compatible_with": []},
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial",
+        "source_tier_basis": "vendor_official_product_page",
+        "kind_basis": "category=bionic_mechanisms: bionic hand, physical hardware",
+        "entity_kind_basis": "默认归类",
+        "quarantine": False,
+        "standard_conformance": {
+            "assessed": False,
+            "bus_class": "unknown",
+            "ros2": None,
+            "interop_stack_20262893": "unknown",
+            "caee060_relevant": False,
+            "interop_posture": "unknown",
+            "iso22166_relevant": False
+        }
+    },
+    {
+        "id": "BIONIC-HAND-007",
+        "rp_id": "RP-BIO-0016",
+        "name": "Inspire RH56 Series",
+        "name_en": "Inspire RH56 Series (dexterous robot hand)",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_hands",
+        "manufacturer": "Inspire-Robots",
+        "type": "bionic_hand",
+        "description": "高性价比灵巧手：6 主动 DOF、12 关节，连杆/直线驱动，指端力控。2025 年出货约 10,000 台（按台数计为最大量供应商）。腕部为厂商专有接口，无 ISO 法兰。",
+        "biomimetic_target": "human_hand_dexterous",
+        "dof": 12,
+        "actuators": 6,
+        "grip_force": "4N (RH56BFX) / 10N (RH56DFX) (vendor-stated)",
+        "weight": "540g",
+        "applications": ["humanoid_hand", "dexterous_manipulation", "industrial"],
+        "source": "Inspire-Robots 官方产品页（公开厂商声明）",
+        "source_url": "https://www.inspire-robots.com/",
+        "source_tier": "A",
+        "confidence": 0.65,
+        "confidence_basis": "vendor_public_claims_unverified_independent",
+        "mechanical_interface": {
+            "status": "n_a",
+            "note": "proprietary wrist mount, no ISO 9409-1"
+        },
+        "bionic_interface": {
+            "actuation_type": "linkage_linear",
+            "tendon_anchor_pattern": "n/a",
+            "muscle_mount_pattern": "n/a",
+            "soft_socket": "n/a",
+            "powered_flange_comms": "n/a (proprietary wrist bus)"
+        },
+        "compatibility": {"mounts_to": [], "connects_to": [], "compatible_with": []},
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial",
+        "source_tier_basis": "vendor_official_product_page",
+        "kind_basis": "category=bionic_mechanisms: bionic hand, physical hardware",
+        "entity_kind_basis": "默认归类",
+        "quarantine": False,
+        "standard_conformance": {
+            "assessed": False,
+            "bus_class": "unknown",
+            "ros2": None,
+            "interop_stack_20262893": "unknown",
+            "caee060_relevant": False,
+            "interop_posture": "unknown",
+            "iso22166_relevant": False
+        }
+    },
+    {
+        "id": "BIONIC-HAND-008",
+        "rp_id": "RP-BIO-0017",
+        "name": "Allegro Hand",
+        "name_en": "Allegro Hand (Wonik Robotics dexterous hand)",
+        "category": "bionic_mechanisms",
+        "subcategory": "bionic_hands",
+        "manufacturer": "Wonik Robotics",
+        "type": "bionic_hand",
+        "description": "四指灵巧手：16 DOF，直驱电机，轻量（约 1.0kg），广泛用作机器人操作研究基准平台。腕部为厂商专有接口，无 ISO 法兰。",
+        "biomimetic_target": "human_hand_dexterous",
+        "dof": 16,
+        "actuators": 16,
+        "weight": "1.0kg",
+        "applications": ["research", "dexterous_manipulation", "humanoid_hand"],
+        "source": "Wonik Robotics 官方产品页（公开厂商声明）",
+        "source_url": "https://www.wonikrobotics.com/allegro-hand",
+        "source_tier": "A",
+        "confidence": 0.65,
+        "confidence_basis": "vendor_public_claims_unverified_independent",
+        "mechanical_interface": {
+            "status": "n_a",
+            "note": "proprietary wrist mount, no ISO 9409-1"
+        },
+        "bionic_interface": {
+            "actuation_type": "direct_drive",
+            "tendon_anchor_pattern": "n/a",
+            "muscle_mount_pattern": "n/a",
+            "soft_socket": "n/a",
+            "powered_flange_comms": "n/a (proprietary wrist bus)"
+        },
+        "compatibility": {"mounts_to": [], "connects_to": [], "compatible_with": []},
+        "entity_kind": "component",
+        "verified": False,
+        "data_quality": "partial",
+        "source_tier_basis": "vendor_official_product_page",
+        "kind_basis": "category=bionic_mechanisms: bionic hand, physical hardware",
+        "entity_kind_basis": "默认归类",
+        "quarantine": False,
+        "standard_conformance": {
+            "assessed": False,
+            "bus_class": "unknown",
+            "ros2": None,
+            "interop_stack_20262893": "unknown",
+            "caee060_relevant": False,
+            "interop_posture": "unknown",
+            "iso22166_relevant": False
+        }
     }
 ]
 
@@ -516,9 +929,24 @@ def main():
         
         print(f"\n[OK] Added {added} bionic entities. Total: {data['meta']['total_entities']}")
         print(f"[INFO] New category: bionic_mechanisms ({added} entities)")
+
+        # 再生全部派生产物（语义索引/页面数字/数据集分发/技能清单/阴性兼容库）
+        # —— 杜绝「加实体即崩 35 红」：真相源改了，派生副本必须同刻重生。
+        try:
+            import subprocess as _sp
+            _regen = os.path.join(ROOT, "scripts", "regen_derived.py")
+            _r = _sp.run([sys.executable, _regen], cwd=ROOT,
+                         capture_output=True, text=True, timeout=600)
+            for _ln in (_r.stdout or "").strip().splitlines()[-6:]:
+                print("  [REGEN]", _ln)
+            if _r.returncode != 0:
+                print("  [WARN] 派生产物再生有步骤失败，提交前请跑 ci_gate/regression",
+                      file=sys.stderr)
+        except Exception as _ex:  # noqa: BLE001
+            print(f"  [WARN] 无法调用 regen_derived.py: {_ex}", file=sys.stderr)
     else:
         print("\n[SKIP] No new entities to add")
-    
+
     return 0
 
 

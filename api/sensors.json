@@ -16,14 +16,14 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 1.52,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.52%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 1.67,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.67%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
-  "count": 90,
-  "updated": "2026-09-01T00:51:33.984315Z",
+  "count": 95,
+  "updated": "2026-09-03T07:03:25.481189Z",
   "data": [
     {
       "id": "CHIP-67",
@@ -5006,6 +5006,262 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类"
+    },
+    {
+      "category": "sensors",
+      "name": "ATI Axia80",
+      "name_en": "ATI Axia80",
+      "manufacturer": "ATI Industrial Automation",
+      "type": "force_torque_sensor",
+      "description": "六维力/力矩传感器，IP65，量程覆盖到 5000 N 级（依型号）；工业机器人标配级。",
+      "applications": [
+        "force_control",
+        "assembly",
+        "research",
+        "polishing"
+      ],
+      "source": "厂商产品页：ATI Industrial Automation（https://www.ati-ia.com/products/ft/axia80.aspx）",
+      "source_url": "https://www.ati-ia.com/products/ft/axia80.aspx",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "axes": 6,
+        "ip_rating": "IP65",
+        "rated_force": "up to 5000 N (model dependent)",
+        "type": "6-axis F/T"
+      },
+      "source_tier_basis": "deep_link:www.ati-ia.com/products/ft/axia80.aspx",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "SENS-852",
+      "rp_id": "RP-SEN-0091"
+    },
+    {
+      "category": "sensors",
+      "name": "ATI Mini45",
+      "name_en": "ATI Mini45",
+      "manufacturer": "ATI Industrial Automation",
+      "type": "force_torque_sensor",
+      "description": "紧凑型六维力/力矩传感器，IP65，适合小负载协作臂。",
+      "applications": [
+        "collaborative",
+        "force_control",
+        "research"
+      ],
+      "source": "厂商产品页：ATI Industrial Automation（https://www.ati-ia.com/products/ft/mini45.aspx）",
+      "source_url": "https://www.ati-ia.com/products/ft/mini45.aspx",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "axes": 6,
+        "ip_rating": "IP65",
+        "rated_force": "up to 2000 N (model dependent)",
+        "type": "6-axis F/T compact"
+      },
+      "source_tier_basis": "deep_link:www.ati-ia.com/products/ft/mini45.aspx",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "SENS-853",
+      "rp_id": "RP-SEN-0092"
+    },
+    {
+      "category": "sensors",
+      "name": "OnRobot HEX-H",
+      "name_en": "OnRobot HEX-H",
+      "manufacturer": "OnRobot",
+      "type": "force_torque_sensor",
+      "description": "协作臂专用六维力/力矩传感器，即插即用；H 为高载荷型。",
+      "applications": [
+        "collaborative",
+        "force_control",
+        "hand_guiding"
+      ],
+      "source": "厂商产品页：OnRobot（https://onrobot.com/en/products/hex-s）",
+      "source_url": "https://onrobot.com/en/products/hex-s",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "axes": 6,
+        "payload": "up to 15 kg (H model)",
+        "type": "6-axis F/T cobot"
+      },
+      "source_tier_basis": "deep_link:onrobot.com/en/products/hex-s",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "SENS-854",
+      "rp_id": "RP-SEN-0093"
+    },
+    {
+      "category": "sensors",
+      "name": "Robotiq FT 300-S",
+      "name_en": "Robotiq FT 300-S",
+      "manufacturer": "Robotiq",
+      "type": "force_torque_sensor",
+      "description": "协作臂六维力/力矩传感器，IP67，支持力控装配与打磨。",
+      "applications": [
+        "collaborative",
+        "force_control",
+        "assembly",
+        "sanding"
+      ],
+      "source": "厂商产品页：Robotiq（https://robotiq.com/products/ft-300-force-torque-sensor）",
+      "source_url": "https://robotiq.com/products/ft-300-force-torque-sensor",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "axes": 6,
+        "force": "300 N",
+        "torque": "30 N·m",
+        "ip_rating": "IP67",
+        "type": "6-axis F/T cobot"
+      },
+      "source_tier_basis": "deep_link:robotiq.com/products/ft-300-force-torque-sensor",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "SENS-855",
+      "rp_id": "RP-SEN-0094"
+    },
+    {
+      "category": "sensors",
+      "name": "Robotiq Fingertip",
+      "name_en": "Robotiq Fingertip",
+      "manufacturer": "Robotiq",
+      "type": "tactile_sensor",
+      "description": "夹爪指端触觉传感器，每指端 15 个传感点，支持过压检测。",
+      "applications": [
+        "tactile_grasp",
+        "dexterous",
+        "collaborative"
+      ],
+      "source": "厂商产品页：Robotiq（https://robotiq.com/products/fingertip）",
+      "source_url": "https://robotiq.com/products/fingertip",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "sensors_per_fingertip": 15,
+        "feature": "overpressure_detection",
+        "type": "tactile"
+      },
+      "source_tier_basis": "deep_link:robotiq.com/products/fingertip",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "SENS-856",
+      "rp_id": "RP-SEN-0095"
     }
   ]
 }

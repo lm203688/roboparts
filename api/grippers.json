@@ -16,14 +16,14 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 1.52,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.52%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 1.67,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.67%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
-  "count": 13,
-  "updated": "2026-09-01T00:51:33.984315Z",
+  "count": 23,
+  "updated": "2026-09-03T07:03:25.481189Z",
   "data": [
     {
       "verified": true,
@@ -297,7 +297,6 @@
       ],
       "tactile_feedback": true,
       "force_control": true,
-      "kind_basis": "category=grippers: component entity, no mechanical interface",
       "source_tier_basis": "deep_link:nnets.ru/news/robotizirovannaja-kist-prima1-ot-xynova-poluch",
       "rp_id": "RP-GRI-0005",
       "entity_kind_basis": "默认归类"
@@ -727,6 +726,519 @@
         "interop_posture": "unknown",
         "iso22166_relevant": false
       }
+    },
+    {
+      "category": "grippers",
+      "name": "Robotiq Hand-E",
+      "name_en": "Robotiq Hand-E",
+      "manufacturer": "Robotiq",
+      "type": "adaptive_gripper",
+      "description": "大行程自适应夹爪，可包络异形工件；业界最大行程之一。",
+      "applications": [
+        "machine_tending",
+        "bin_picking",
+        "assembly"
+      ],
+      "source": "厂商产品页：Robotiq（https://robotiq.com/products/hand-e-adaptive-gripper）",
+      "source_url": "https://robotiq.com/products/hand-e-adaptive-gripper",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "stroke": "150 mm",
+        "payload": "up to 10 kg",
+        "grip_force": "25-185 N",
+        "type": "adaptive"
+      },
+      "source_tier_basis": "deep_link:robotiq.com/products/hand-e-adaptive-gripper",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-006",
+      "rp_id": "RP-GRI-0010"
+    },
+    {
+      "category": "grippers",
+      "name": "OnRobot RG2",
+      "name_en": "OnRobot RG2",
+      "manufacturer": "OnRobot",
+      "type": "collaborative_gripper",
+      "description": "协作机器人专用电动平行夹爪，内置力控与自动识别；IP54。",
+      "applications": [
+        "collaborative",
+        "machine_tending",
+        "material_handling"
+      ],
+      "source": "厂商产品页：OnRobot（https://onrobot.com/en/products/rg2）",
+      "source_url": "https://onrobot.com/en/products/rg2",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "payload": "2 kg",
+        "stroke": "110 mm",
+        "weight": "0.9 kg",
+        "ip_rating": "IP54",
+        "type": "collaborative parallel"
+      },
+      "source_tier_basis": "deep_link:onrobot.com/en/products/rg2",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-007",
+      "rp_id": "RP-GRI-0011"
+    },
+    {
+      "category": "grippers",
+      "name": "Schunk WSG 050",
+      "name_en": "Schunk WSG 050",
+      "manufacturer": "Schunk",
+      "type": "electric_parallel_gripper",
+      "description": "高精度电动平行夹爪，每爪独立力控；IP40。",
+      "applications": [
+        "precision_assembly",
+        "lab_automation",
+        "electronics"
+      ],
+      "source": "厂商产品页：Schunk（https://schunk.com/us/en/gripping-systems/parallel-grippers/wsg-050）",
+      "source_url": "https://schunk.com/us/en/gripping-systems/parallel-grippers/wsg-050",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "stroke": "50 mm (2x25)",
+        "force": "up to 40 N per jaw",
+        "payload": "4 kg",
+        "ip_rating": "IP40",
+        "type": "electric parallel"
+      },
+      "source_tier_basis": "deep_link:schunk.com/us/en/gripping-systems/parallel-grippers/wsg-050",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-008",
+      "rp_id": "RP-GRI-0012"
+    },
+    {
+      "category": "grippers",
+      "name": "Schunk Co-act EGP 64",
+      "name_en": "Schunk Co-act EGP 64",
+      "manufacturer": "Schunk",
+      "type": "electric_parallel_gripper",
+      "description": "协作级电动平行夹爪，IP67 防护，适合严苛环境。",
+      "applications": [
+        "collaborative",
+        "machine_tending",
+        "food",
+        "industrial"
+      ],
+      "source": "厂商产品页：Schunk（https://schunk.com/us/en/gripping-systems/parallel-grippers/co-act-egp-64）",
+      "source_url": "https://schunk.com/us/en/gripping-systems/parallel-grippers/co-act-egp-64",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "stroke": "64 mm",
+        "force": "140 N",
+        "payload": "5 kg",
+        "ip_rating": "IP67",
+        "type": "electric parallel cobot"
+      },
+      "source_tier_basis": "deep_link:schunk.com/us/en/gripping-systems/parallel-grippers/co-act-e",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-009",
+      "rp_id": "RP-GRI-0013"
+    },
+    {
+      "category": "grippers",
+      "name": "Festo DHAS",
+      "name_en": "Festo DHAS",
+      "manufacturer": "Festo",
+      "type": "pneumatic_parallel_gripper",
+      "description": "气动平行夹爪，紧凑轻量，适合高速拾放。",
+      "applications": [
+        "pick_and_place",
+        "packaging",
+        "high_speed"
+      ],
+      "source": "厂商产品页：Festo（https://www.festo.com/cat/en-us_us/products_DHAS）",
+      "source_url": "https://www.festo.com/cat/en-us_us/products_DHAS",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "stroke": "12 mm",
+        "force": "35 N",
+        "weight": "0.45 kg",
+        "type": "pneumatic parallel"
+      },
+      "source_tier_basis": "deep_link:www.festo.com/cat/en-us_us/products_DHAS",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-010",
+      "rp_id": "RP-GRI-0014"
+    },
+    {
+      "category": "grippers",
+      "name": "Soft Robotics mGrip",
+      "name_en": "Soft Robotics mGrip",
+      "manufacturer": "Soft Robotics (now Quantos)",
+      "type": "soft_adaptive_gripper",
+      "description": "软体自适应夹爪，气驱包络易碎/异形件；IP69K、食品级。",
+      "applications": [
+        "food",
+        "packaging",
+        "bin_picking",
+        "fragile"
+      ],
+      "source": "厂商产品页：Soft Robotics (now Quantos)（https://www.softroboticsinc.com/mgrip）",
+      "source_url": "https://www.softroboticsinc.com/mgrip",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "ip_rating": "IP69K",
+        "food_safe": true,
+        "actuation": "pneumatic soft",
+        "type": "soft adaptive"
+      },
+      "source_tier_basis": "deep_link:www.softroboticsinc.com/mgrip",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-011",
+      "rp_id": "RP-GRI-0015"
+    },
+    {
+      "category": "grippers",
+      "name": "OnRobot VGC10",
+      "name_en": "OnRobot VGC10",
+      "manufacturer": "OnRobot",
+      "type": "electric_vacuum_gripper",
+      "description": "紧凑型电动真空夹爪，无需外置气源；可换吸盘适配多形状。",
+      "applications": [
+        "collaborative",
+        "packaging",
+        "pick_and_place"
+      ],
+      "source": "厂商产品页：OnRobot（https://onrobot.com/en/products/vgc10）",
+      "source_url": "https://onrobot.com/en/products/vgc10",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "payload": "up to 15 kg (depends on cups)",
+        "weight": "0.58 kg",
+        "type": "electric vacuum"
+      },
+      "source_tier_basis": "deep_link:onrobot.com/en/products/vgc10",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-012",
+      "rp_id": "RP-GRI-0016"
+    },
+    {
+      "category": "grippers",
+      "name": "Barrett Hand BH8-282",
+      "name_en": "Barrett Hand BH8-282",
+      "manufacturer": "Barrett Technology",
+      "type": "multi_fingered_gripper",
+      "description": "三指八自由度欠驱动手，可抓握多种形状；研究/医疗常用。",
+      "applications": [
+        "dexterous_grasp",
+        "research",
+        "prosthetics_research"
+      ],
+      "source": "厂商产品页：Barrett Technology（https://www.barrett.com/products/hand/）",
+      "source_url": "https://www.barrett.com/products/hand/",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "dof": 8,
+        "fingers": 3,
+        "payload": "2.5 kg",
+        "weight": "1.1 kg",
+        "type": "multi-fingered underactuated"
+      },
+      "source_tier_basis": "deep_link:www.barrett.com/products/hand/",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-013",
+      "rp_id": "RP-GRI-0017"
+    },
+    {
+      "category": "grippers",
+      "name": "Robotiq EPick",
+      "name_en": "Robotiq EPick",
+      "manufacturer": "Robotiq",
+      "type": "electric_vacuum_gripper",
+      "description": "电动真空夹爪，即插即用、无需气路；轻量。",
+      "applications": [
+        "collaborative",
+        "pick_and_place",
+        "packaging"
+      ],
+      "source": "厂商产品页：Robotiq（https://robotiq.com/products/epick）",
+      "source_url": "https://robotiq.com/products/epick",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "type": "electric vacuum",
+        "air_compressor": false
+      },
+      "source_tier_basis": "deep_link:robotiq.com/products/epick",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-014",
+      "rp_id": "RP-GRI-0018"
+    },
+    {
+      "category": "grippers",
+      "name": "ROBOTIS RH-P12-RN",
+      "name_en": "ROBOTIS RH-P12-RN",
+      "manufacturer": "ROBOTIS",
+      "type": "adaptive_gripper",
+      "description": "大行程自适应夹爪，力控实时反馈；ROS 友好。",
+      "applications": [
+        "manipulation",
+        "research",
+        "service_robot"
+      ],
+      "source": "厂商产品页：ROBOTIS（https://emanual.robotis.com/docs/en/platform/rh_p12_rn/）",
+      "source_url": "https://emanual.robotis.com/docs/en/platform/rh_p12_rn/",
+      "source_tier": "A",
+      "confidence": 0.8,
+      "confidence_basis": "verified_product_page",
+      "needs_provenance": false,
+      "specs": {
+        "stroke": "106 mm",
+        "force": "170 N",
+        "weight": "0.59 kg",
+        "type": "adaptive"
+      },
+      "source_tier_basis": "deep_link:emanual.robotis.com/docs/en/platform/rh_p12_rn/",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
+      },
+      "entity_kind": "component",
+      "entity_kind_basis": "默认归类",
+      "id": "GRIP-015",
+      "rp_id": "RP-GRI-0019"
     }
   ]
 }

@@ -228,7 +228,8 @@ snapshotWorkingTree(ROOT);
 // /api/semantic-search 与 judgePair 的语义近邻都在用它，过期向量会让"语义相近"的零件失真，
 // 制造看似可用实则失真的发现结果（假绿）。这里把重建挂进部署链，与 0b/0c/0d 同机制。
 {
-  const ex = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'build_semantic_index.mjs')], { cwd: ROOT, encoding: 'utf8' });
+  const py = process.platform === 'win32' ? 'python' : 'python3';
+  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'regen_derived.py')], { cwd: ROOT, encoding: 'utf8' });
   if (ex.status === 0) console.log('   ✅ 语义索引已随真相源重建（双流发现·语义流；索引覆盖当前全部实体）');
   else console.warn('   ⚠️ 语义索引重建失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
 }
