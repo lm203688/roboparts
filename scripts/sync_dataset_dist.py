@@ -8,7 +8,7 @@
 发布的是 `roboparts-dataset-github/`，但该目录历史上**没有任何生成器**，
 纯手工维护 ⇒ 必然漂移。20260831-10 实测漂移量：
 
-    真相源 api/entities.json          768 实体 / 20 品类
+    真相源 api/entities.json          798 实体 / 20 品类
     data/roboparts_full.json          544 实体 / 10 品类（updated 2026-08-04）
     README.md（对外数据集卡片）        自称 688 实体 / 10 品类 / 声明率 0.57%
 

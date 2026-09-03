@@ -3,7 +3,7 @@
 """Schema 治理：mechanical_interface.mount_type 枚举统一（单一真相源 + 归一化 + 闸门）。
 
 发现经过（20260831 项目完整性评估实测）：
-  全库 768 实体的 mount_type 出现 **12 种写法**，而 registry 的权威分类
+  全库 798 实体的 mount_type 出现 **12 种写法**，而 registry 的权威分类
   `mounting_taxonomy`(TAXO-MOTOR-MOUNT) 只定义 5 个合法 key。三类问题：
 
   A. 同义异写（真违规，高危）

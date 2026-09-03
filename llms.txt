@@ -18,7 +18,7 @@
 - 🔍 加权模糊搜索：多字段权重排序 + 匹配高亮
 
 ## 溯源分级（Provenance Tier）— Agent 取数前请先读本节
-全库 768 条实体 **100% 已显式标注 `source_tier` 与 `confidence`**，供自动化系统按可信度过滤：
+全库 798 条实体 **100% 已显式标注 `source_tier` 与 `confidence`**，供自动化系统按可信度过滤：
 - `source_tier: "A"` — 一手可复核来源（官方规格书 / 标准文本 / 带链接厂商文档），376 条（49.02%）。**建议 Agent 默认只采信 Tier A。**
 - `source_tier: "B"` — 弱归因（厂商目录声明值、二手摘录，无原始链接），241 条。可参考，需二次核验。
 - `source_tier: "C"` — 无溯源（历史导入待补来源），150 条，`confidence` 上限 0.30，且带 `needs_provenance: true`。**不建议直接引用。**
@@ -46,7 +46,7 @@
 产业前提：EtherCAT / CAN·CANopen / RS-485 三线并行，各厂 ROS2 二次开发接口互不通用，接口不兼容显著推高跨场景落地开发成本 —— 这正是本库兼容性矩阵存在的意义。
 
 ## 机械互换维度（Mechanical Interface）— 2026-08-05 新增
-兼容性判定的四个维度中，电气 / 协议 / 软件三维已有数据，**机械维（"能不能拧上去"）此前为 0/768 空白**。本次建立标准登记表填补该缺口，并对全库 768 条实体标注显式状态。
+兼容性判定的四个维度中，电气 / 协议 / 软件三维已有数据，**机械维（"能不能拧上去"）此前为 0/798 空白**。本次建立标准登记表填补该缺口，并对全库 798 条实体标注显式状态。
 
 登记表端点：`https://roboparts.cc/api/mechanical_interfaces.json`
 
@@ -90,7 +90,7 @@
 - [2026年VLA模型全景图：开源机器人构建者该给自己的机器人装哪个大脑？](https://roboparts.cc/articles/vla-model-landscape-2026)（2026-07-27） — WAIC 2026成为VLA模型爆发拐点。本文面向开源机器人构建者，系统对比腾讯Hy-Embodied、面壁MiniCPM-Robot、大晓Kairos 3.1、银河通用AstraBrain、蚂蚁LingBot-VLA 
 - [为你的开源机器人选算力板卡：Jetson Thor / Orin Nano / Dragonwing IQ10 全对比](https://roboparts.cc/articles/robot-edge-chip-selection-2026)（2026-07-27） — 2026年机器人端侧AI芯片形成三强格局。本文面向开源机器人构建者，基于NVIDIA、高通、Intel官方规格，系统对比Jetson Thor T5000/T3000/T2000、Dragonwing IQ10、Jets
 - [WAIC 2026 硬件洞察：产线级需求对开源机器人构建者意味着什么](https://roboparts.cc/articles/waic2026-hardware-insights)（2026-07-27） — WAIC 2026成为具身智能从Demo转向量产的拐点。本文基于161家参展企业、314项展品和5大产线落地案例，系统分析VLA模型部署对执行器精度、传感器类型、芯片算力的需求传导，拆解执行器占BOM 40-60%的供应
-- [为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配](https://roboparts.cc/articles/open-source-humanoid-knee-actuator-selection) — 从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 217 款执行器实测参数，给出可直接套用的选型与兼容性
+- [为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配](https://roboparts.cc/articles/open-source-humanoid-knee-actuator-selection) — 从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 220 款执行器实测参数，给出可直接套用的选型与兼容性
 - [开源人形机器人硬件栈全景：构建者视角的 7 层架构与选型清单](https://roboparts.cc/articles/open-source-humanoid-hardware-stack) — 从执行器到 VLA 模型，拆解开源人形机器人的完整硬件栈。结合天工 TienKung、Unitree G1、OpenArm、LeRobot-Humanoid 等真实开源项目，给出每一层的选型要点与兼容性校验方法。
 - [为开源足式与人形机器人选 SEA：串联弹性执行器的力控核心与替换指南](https://roboparts.cc/articles/open-source-robot-sea-actuator-guide) — SEA 是开源足式/人形机器人实现柔顺力控的关键。本文拆解弹性体刚度设计、SEA 与刚性执行器的取舍，并结合 Unitree Go2、天工 TienKung、OpenTorque 等开源项目给出可落地的选型与等效替换方法
 - [开源机器人的数据主权：你采的每一条轨迹，都应该属于你](https://roboparts.cc/articles/open-source-robot-data-sovereignty) — 用 LeRobot、Unitree G1、OpenArm 采集的遥操作数据，究竟归谁？本文解释机器人数据的特殊风险、主流平台的三个数据陷阱，以及 RoboParts 的零知识加密架构如何让开源构建者完全掌控自己的数据。
