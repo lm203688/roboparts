@@ -9,20 +9,20 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0b1020">
-<meta name="description" content="从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 217 款执行器实测参数，给出可直接套用的选型与兼容性校验方法。">
+<meta name="description" content="从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 220 款执行器实测参数，给出可直接套用的选型与兼容性校验方法。">
 <meta name="keywords" content="开源人形机器人, 膝关节执行器, 执行器选型, 惯量比, 谐波减速器, SEA, CAN FD, 天工机器人, Unitree G1, LeRobot">
 <link rel="canonical" href="https://roboparts.cc/articles/open-source-humanoid-knee-actuator-selection">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配 | RoboParts">
-<meta property="og:description" content="从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 217 款执行器实测参数，给出可直接套用的选型与兼容性校验方法。">
+<meta property="og:description" content="从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 220 款执行器实测参数，给出可直接套用的选型与兼容性校验方法。">
 <meta property="og:url" content="https://roboparts.cc/articles/open-source-humanoid-knee-actuator-selection">
 <meta property="og:site_name" content="RoboParts">
 <meta property="og:locale" content="zh_CN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配 | RoboParts">
-<meta name="twitter:description" content="从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 217 款执行器实测参数，给出可直接套用的选型与兼容性校验方法。">
+<meta name="twitter:description" content="从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 220 款执行器实测参数，给出可直接套用的选型与兼容性校验方法。">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配","description":"从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 217 款执行器实测参数，给出可直接套用的选型与兼容性校验方法。","keywords":"开源人形机器人, 膝关节执行器, 执行器选型, 惯量比, 谐波减速器, SEA, CAN FD, 天工机器人, Unitree G1, LeRobot","inLanguage":"zh-CN","url":"https://roboparts.cc/articles/open-source-humanoid-knee-actuator-selection","mainEntityOfPage":{"@type":"WebPage","@id":"https://roboparts.cc/articles/open-source-humanoid-knee-actuator-selection"},"author":{"@type":"Organization","name":"RoboParts Research","url":"https://roboparts.cc"},"publisher":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc"},"isAccessibleForFree":true,"citation":{"@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","url":"https://roboparts.cc/api/data.json"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配","description":"从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 220 款执行器实测参数，给出可直接套用的选型与兼容性校验方法。","keywords":"开源人形机器人, 膝关节执行器, 执行器选型, 惯量比, 谐波减速器, SEA, CAN FD, 天工机器人, Unitree G1, LeRobot","inLanguage":"zh-CN","url":"https://roboparts.cc/articles/open-source-humanoid-knee-actuator-selection","mainEntityOfPage":{"@type":"WebPage","@id":"https://roboparts.cc/articles/open-source-humanoid-knee-actuator-selection"},"author":{"@type":"Organization","name":"RoboParts Research","url":"https://roboparts.cc"},"publisher":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc"},"isAccessibleForFree":true,"citation":{"@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","url":"https://roboparts.cc/api/data.json"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://roboparts.cc"},{"@type":"ListItem","position":2,"name":"技术文库","item":"https://roboparts.cc/articles"},{"@type":"ListItem","position":3,"name":"为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配","item":"https://roboparts.cc/articles/open-source-humanoid-knee-actuator-selection"}]}</script>
 <style>
 :root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--line:#243352}
@@ -88,11 +88,11 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <a href="/pricing">定价</a>
 </div></div>
 <div class="wrap">
-<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹</div><h1>为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配</h1><div class="meta">RoboParts Research · 约 4423 字 · RoboParts 开源机器人兼容性平台</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">actuators</span><span class="badge">bom</span></div><div class="lede">从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 217 款执行器实测参数，给出可直接套用的选型与兼容性校验方法。</div><div class="toc"><b>本文目录</b><ol><li><a href="#为你的开源人形机器人选膝关节执行器-扭矩-惯量比与协议匹配">为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配</a></li><li><a href="#一-膝关节的核心技术指标">一、膝关节的核心技术指标</a></li><li><a href="#二-执行器类型对比">二、执行器类型对比</a></li><li><a href="#三-通信协议选择">三、通信协议选择</a></li><li><a href="#四-在线选型实操">四、在线选型实操</a></li><li><a href="#五-数据集开源">五、数据集开源</a></li><li><a href="#引用">引用</a></li></ol></div><article><h2 id="为你的开源人形机器人选膝关节执行器-扭矩-惯量比与协议匹配">为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配</h2>
+<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹</div><h1>为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配</h1><div class="meta">RoboParts Research · 约 4423 字 · RoboParts 开源机器人兼容性平台</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">actuators</span><span class="badge">bom</span></div><div class="lede">从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 220 款执行器实测参数，给出可直接套用的选型与兼容性校验方法。</div><div class="toc"><b>本文目录</b><ol><li><a href="#为你的开源人形机器人选膝关节执行器-扭矩-惯量比与协议匹配">为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配</a></li><li><a href="#一-膝关节的核心技术指标">一、膝关节的核心技术指标</a></li><li><a href="#二-执行器类型对比">二、执行器类型对比</a></li><li><a href="#三-通信协议选择">三、通信协议选择</a></li><li><a href="#四-在线选型实操">四、在线选型实操</a></li><li><a href="#五-数据集开源">五、数据集开源</a></li><li><a href="#引用">引用</a></li></ol></div><article><h2 id="为你的开源人形机器人选膝关节执行器-扭矩-惯量比与协议匹配">为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配</h2>
 <blockquote><p>本文首发于 <a href="https://roboparts.cc">RoboParts 开源机器人兼容性平台</a>，数据集与在线选型工具均已开源。</p></blockquote>
 <p>如果你正在复刻 <strong>天工 TienKung</strong>、基于 <strong>Unitree G1</strong> 做二次开发，或者从零搭一台 <strong>LeRobot-Humanoid</strong>，膝关节几乎一定是你第一个卡住的地方。</p>
 <p>原因很简单：膝关节是全身负载最高的关节之一。一个 70kg 级人形机器人在下蹲或上楼梯时，膝关节瞬时峰值扭矩可达 <strong>100-150Nm</strong>。选错执行器，轻则控制带宽不足导致抖动，重则减速器过载报废——而开源项目的 BOM 往往只给了一个型号名，没有告诉你换成手边能买到的替代品之后，扭矩、惯量比、协议还对不对得上。</p>
-<p>本文基于 RoboParts 数据集收录的 <strong>217 款执行器</strong>实测参数，给出膝关节选型的系统化方法论。如果你只想快速验证手上这份 BOM 能不能装，可以直接用免费的 <a href="https://roboparts.cc/bom-checker.html">BOM 兼容性检查</a>。</p>
+<p>本文基于 RoboParts 数据集收录的 <strong>220 款执行器</strong>实测参数，给出膝关节选型的系统化方法论。如果你只想快速验证手上这份 BOM 能不能装，可以直接用免费的 <a href="https://roboparts.cc/bom-checker.html">BOM 兼容性检查</a>。</p>
 <hr>
 <h2 id="一-膝关节的核心技术指标">一、膝关节的核心技术指标</h2>
 <h3 id="1-1-扭矩需求计算">1.1 扭矩需求计算</h3>
@@ -171,7 +171,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <li>协议偏好：CAN FD</li>
 <li>勾选：仿生优先、国标合规</li>
 </ol>
-<p>系统会在 <strong>217 款执行器</strong>中自动筛选，并按多因子评分排序：</p>
+<p>系统会在 <strong>220 款执行器</strong>中自动筛选，并按多因子评分排序：</p>
 <ul>
 <li>扭矩/价格比（30%）</li>
 <li>轻量化（20%）</li>

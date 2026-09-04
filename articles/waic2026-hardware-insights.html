@@ -237,7 +237,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <p>上面三张表是产线标准。如果你在搭开源机器人，下面这版更贴近现实：</p>
 <div class="tablebox"><table><thead><tr><th>你在搭什么</th><th>执行器</th><th>传感器</th><th>算力</th><th>大致定位</th></tr></thead><tbody><tr><td>Trossen OpenArm 类机械臂</td><td>中扭矩模组，1mm 精度足够</td><td>单目RGB + 可选 DIGIT 触觉</td><td>Orin Nano 8GB 或 x86</td><td>抓取教学、VLA 数据采集</td></tr><tr><td>LeRobot-Humanoid / roboto_origin</td><td>低成本关节模组，CAN</td><td>RGB + IMU</td><td>Orin Nano 8GB</td><td>跑通全流程，成本优先</td></tr><tr><td>Unitree Go2 / G1 二次开发</td><td>沿用原厂</td><td>原厂 + 外挂相机</td><td>原厂 + 外挂 Orin NX</td><td>算法研究、快速验证</td></tr><tr><td>天工 TienKung 全尺寸复刻</td><td>高扭矩谐波+力矩电机，EtherCAT</td><td>双目 + IMU + 足底力</td><td>Thor T3000 级</td><td>双足行走研究</td></tr></tbody></table></div>
 <p><strong>核心原则</strong>：产线追求的是"稳定跑三个月"，你追求的是"这周能跑起来"。这两个目标对应的 BOM 差异巨大，照抄产线配置只会让预算翻几倍而不提升你的迭代速度。</p>
-<p>RoboParts数据集覆盖 20 大分类、798 个实体条目，含 217 款执行器、108 款芯片、64 款通信协议、46 个机器人AI模型。用 <a href="https://roboparts.cc/bom-checker.html">BOM 兼容性检查</a>可交叉校验执行器-传感器-芯片-协议的兼容性矩阵；按开源项目查已验证的组件清单，走<a href="https://roboparts.cc/oss.html">开源组件兼容性数据层</a>。</p>
+<p>RoboParts数据集覆盖 20 大分类、798 个实体条目，含 220 款执行器、108 款芯片、64 款通信协议、46 个机器人AI模型。用 <a href="https://roboparts.cc/bom-checker.html">BOM 兼容性检查</a>可交叉校验执行器-传感器-芯片-协议的兼容性矩阵；按开源项目查已验证的组件清单，走<a href="https://roboparts.cc/oss.html">开源组件兼容性数据层</a>。</p>
 <pre class="code" data-lang="python"><code># 查询工业产线级执行器（力控+高精度）
 import requests
 db = requests.get("https://roboparts.cc/api/data.json").json()
