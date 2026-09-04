@@ -46,6 +46,41 @@ const BASE = 'https://roboparts.cc';
  * 故改为下面这条**独占一行**的 sentinel，用行锚定正则匹配：文件"是占位" ≠ 文件"提到占位"。
  */
 const STUB_SENTINEL = '<!-- ROBOPARTS-RUN-TRACE:AUTO-STUB -->';
+
+// ---- 预部署护栏（20260904 新增）----
+// 防止重演「脏工作树 / 本地过期数字」被上线 → 部署后 verify 报 RED → 被迫二次闭环。
+// 7c63b7e 部署上线了文章里过期的 217 款执行器，verify 报 RED，被迫用 b6252cc 二次闭环；
+// 03-16 部署更是在未提交改动的工作树上运行（被占位痕迹如实记录）。两件事都应在部署前被拦下。
+function resolvePython() {
+  const cands = [
+    process.env.PYTHON_BIN,
+    'python3',
+    'python',
+    'C:\\Users\\xing\\.workbuddy\\binaries\\python\\versions\\3.13.12\\python.exe',
+  ].filter(Boolean);
+  for (const c of cands) {
+    try { execSync(`"${c}" --version`, { stdio: 'ignore' }); return c; } catch { /* try next */ }
+  }
+  return 'python3';
+}
+function preflight() {
+  console.log('[preflight] 部署前护栏检查...');
+  // 1) 工作树必须干净：部署须基于已提交状态，禁止把未提交改动带上线（曾导致 03-16 脏部署）
+  const dirty = execSync('git status --porcelain', { cwd: ROOT, encoding: 'utf8' }).trim();
+  if (dirty) {
+    console.error('[preflight] ❌ 工作树有未提交改动，拒绝部署。请先 commit/push：\n' + dirty);
+    process.exit(1);
+  }
+  // 2) 本地内容数字必须与真相源一致（防止过期硬编码品类数被上线，重演 7c63b7e→RED→b6252cc）
+  const py = resolvePython();
+  try {
+    execSync(`"${py}" scripts/pre_deploy_check.py`, { stdio: 'inherit', cwd: ROOT });
+  } catch (e) {
+    console.error('[preflight] ❌ 本地数字护栏失败，拒绝部署（详见上方）。先修复源文件再部署。');
+    process.exit(1);
+  }
+  console.log('[preflight] ✅ 通过（工作树干净 + 本地数字与真相源一致）');
+}
 function ensureRunTrace() {
   const now = new Date();
   const p2 = (n) => String(n).padStart(2, '0');
@@ -182,6 +217,8 @@ function ensureRunTrace() {
   console.log(`   ⚠️ ${slotNote ? '本轮 slot' : '本小时'}无报告，已落自动占位: ops/results/roboparts-${day}-${hh}.md`);
 }
 
+// 0) 预部署护栏须先于留痕/部署：否则护栏失败时仍会写下占位痕迹，反而污染闸门前因
+preflight();
 // 0) 留痕先于部署：任何工作上线前，先保证这一小时在 ops/results/ 留下痕迹
 console.log('[0/3] 运行留痕检查...');
 ensureRunTrace();
