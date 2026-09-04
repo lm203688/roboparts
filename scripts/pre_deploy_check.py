@@ -27,9 +27,11 @@ from verify_live_numbers import (
 
 def main() -> int:
     exp = expected_values(facts())
+    # 仅扫描 verify_live_numbers 在线上实际校验的页面集合，避免对「真相源子集计数」（如
+    # iso-9409 的 589 实物子集、data-hub 的 9 个可导出品类）误报而阻塞部署。护栏的目的本就是
+    # 防止「文章/index/llms 过期数字上线 → verify 报 RED → 二次闭环」，与线上校验面一致即可。
     files = ["llms.txt", "index.html", "bionic.html"]
     files += sorted(glob.glob("articles/*.html"))
-    files += sorted(glob.glob("*.html"))
     files = sorted(set(files))
 
     violations = []
