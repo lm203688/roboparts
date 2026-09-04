@@ -25,7 +25,7 @@
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     },
-    "updated": "2026-09-03T08:16:29.116226Z",
+    "updated": "2026-09-04T02:44:38.543982Z",
     "categories": [
       "actuators",
       "sensors",
@@ -97,7 +97,7 @@
       "note": "主指标看 traceable_pct（Tier A 可点开复核）；source_pct 含 Tier B 弱归因，仅作过程指标；Tier C 已显式标注，供 Agent 侧过滤。【2026-08-10 更正】此前实现为「source 字段非空即判 A」，traceable_pct 曾虚报为 47.32%，已按证据重算为 50.38%，原值留在实体的 source_tier_prev 字段供审计。"
     },
     "data_quality": {
-      "audited_at": "2026-09-03",
+      "audited_at": "2026-09-04",
       "total": 798,
       "clean": 699,
       "quarantined": 99,

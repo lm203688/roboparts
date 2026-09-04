@@ -63,13 +63,47 @@ function resolvePython() {
   }
   return 'python3';
 }
+// deploy.mjs 自己在 preflight 之后跑 regen_derived.py / inject_*.py / export_training_dataset.mjs，
+// 这些步骤会刷新派生产物的 `updated` 时间戳。若脏工作树闸门对**所有**未提交改动一刀切，
+// 上一次部署自己制造的派生漂移就会让下一次部署永久被拦（20260905 实测命中：
+// 25 个 api/*.json + data.js + 数据集镜像，每个只改 1 行时间戳）。
+// 故闸门分两级：① 源内容改动一律拒绝；② 派生产物仅在「diff 纯为时间戳」时放行。
+const DERIVED_RE = /^(api\/[^/]+\.json|data\.js|roboparts-dataset-github\/.+)/;
+const TS_PAT = /\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z?|\s\d{2}:\d{2}(?::\d{2})?)/g;
+function diffIsTimestampOnly(p) {
+  const out = execSync(`git diff --unified=0 -- "${p}"`, { cwd: ROOT, encoding: 'utf8' });
+  const rem = [], add = [];
+  for (const ln of out.split('\n')) {
+    if (ln.startsWith('---') || ln.startsWith('+++')) continue;
+    if (ln.startsWith('-')) rem.push(ln.slice(1));
+    else if (ln.startsWith('+')) add.push(ln.slice(1));
+  }
+  if (!rem.length || rem.length !== add.length) return true; // 纯新增/无内容 diff 视为无害
+  for (let i = 0; i < rem.length; i++) {
+    if (rem[i] === add[i]) return false;
+    if (rem[i].replace(TS_PAT, '') !== add[i].replace(TS_PAT, '')) return false;
+  }
+  return true;
+}
 function preflight() {
   console.log('[preflight] 部署前护栏检查...');
-  // 1) 工作树必须干净：部署须基于已提交状态，禁止把未提交改动带上线（曾导致 03-16 脏部署）
+  // 1) 工作树：源内容改动拒绝；派生产物的纯时间戳漂移（本脚本自身 regen 产物）放行
   const dirty = execSync('git status --porcelain', { cwd: ROOT, encoding: 'utf8' }).trim();
   if (dirty) {
-    console.error('[preflight] ❌ 工作树有未提交改动，拒绝部署。请先 commit/push：\n' + dirty);
-    process.exit(1);
+    const paths = dirty.split('\n').map((l) => l.slice(3));
+    const content = paths.filter((p) => !DERIVED_RE.test(p));
+    if (content.length) {
+      console.error('[preflight] ❌ 工作树有未提交的**源内容**改动，拒绝部署。请先 commit/push：\n'
+        + content.map((p) => '   ' + p).join('\n'));
+      process.exit(1);
+    }
+    const nonTs = paths.filter((p) => !diffIsTimestampOnly(p));
+    if (nonTs.length) {
+      console.error('[preflight] ❌ 派生产物有非时间戳改动（疑似手改生成物或真相源漂移），拒绝部署：\n'
+        + nonTs.map((p) => '   ' + p).join('\n'));
+      process.exit(1);
+    }
+    console.log(`[preflight] 派生时间戳漂移 ${paths.length} 个文件（deploy 自身 regen 产物，放行）`);
   }
   // 2) 本地内容数字必须与真相源一致（防止过期硬编码品类数被上线，重演 7c63b7e→RED→b6252cc）
   const py = resolvePython();
