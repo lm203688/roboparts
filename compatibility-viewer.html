@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>法兰兼容性查看器 · RoboParts（PoC）</title>
+<meta name="description" content="ISO 9409-1 法兰对接可视化：选择两侧法兰标号，查看直接可装或转接盘方案的三维示意。几何参数镜像 build_negative_compat.py 现算真相源。">
+<!-- 数据来源：scripts/build_negative_compat.py 的 9 档 canonical 标号表（唯一真相源，本页仅镜像用于示意，禁手改口径）。
+     本页为 PoC：几何为示意（未含止口直径/厚度/沉头孔），非加工图纸。 -->
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.164.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.164.0/examples/jsm/"}}
+</script>
+<style>
+:root{--bg:#0f1115;--panel:#171a21;--ink:#e8eaf0;--mut:#9aa3b2;--line:#262b36;
+  --ok:#e5484d;--bad:#3dd68c;--acc:#6ea8fe}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;display:flex;flex-direction:column}
+header{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+header h1{font-size:18px;font-weight:600}
+header .tag{font-size:12px;color:var(--mut);border:1px solid var(--line);padding:2px 8px;border-radius:99px}
+main{flex:1;display:flex;min-height:0}
+#stage{flex:1;min-width:0}
+aside{width:340px;border-left:1px solid var(--line);padding:18px;overflow:auto;background:var(--panel)}
+.row{margin-bottom:14px}
+.row label{display:block;font-size:12px;color:var(--mut);margin-bottom:6px}
+select{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px}
+.verdict{border-radius:10px;padding:12px 14px;font-size:14px;line-height:1.5;margin-bottom:14px;border:1px solid}
+.verdict.direct{border-color:var(--bad);background:rgba(61,214,140,.08)}
+.verdict.adapter{border-color:var(--acc);background:rgba(110,168,254,.08)}
+.verdict b{font-size:15px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px}
+td,th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left}
+th{color:var(--mut);font-weight:500;font-size:12px}
+.adapt{font-size:13px;line-height:1.7;color:var(--mut)}
+.adapt code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:12px}
+.foot{margin-top:18px;font-size:12px;color:var(--mut);line-height:1.7;border-top:1px solid var(--line);padding-top:12px}
+.foot a{color:var(--acc)}
+#fallback{padding:40px;color:var(--mut);font-size:14px;line-height:1.8}
+</style>
+</head>
+<body>
+<header>
+  <h1>法兰兼容性查看器</h1>
+  <span class="tag">PoC · ISO 9409-1</span>
+  <span class="tag" id="verdictTag">—</span>
+</header>
+<main>
+  <div id="stage"><div id="fallback">正在加载三维场景（three.js CDN）……若长时间空白，请检查网络后刷新。</div></div>
+  <aside>
+    <div class="row">
+      <label>机器人侧法兰（输出端）</label>
+      <select id="selA"></select>
+    </div>
+    <div class="row">
+      <label>零件侧法兰（输入端）</label>
+      <select id="selB"></select>
+    </div>
+    <div id="verdict" class="verdict"></div>
+    <table id="params"></table>
+    <div class="adapt" id="adaptSpec"></div>
+    <div class="foot">
+      几何为<b>示意</b>（未含止口直径、厚度、沉头孔），非加工图纸。<br>
+      裁决规则：PCD 与螺栓孔数<b>同时</b>对齐 → direct（螺纹不同仅换螺栓）；任一不同 → adapter_required。
+      数据镜像 <code>scripts/build_negative_compat.py</code> 现算真相源，完整裁决库见 <a href="/api/negative_compat.json">/api/negative_compat.json</a>。
+    </div>
+  </aside>
+</main>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+
+/* ===== 数据：镜像 scripts/build_negative_compat.py DESIGNATIONS（勿在此改口径） ===== */
+const FL = [
+  {id:'ISO9409-1-A20-4-M3',   pcd:20,   holes:4, thread:3},
+  {id:'ISO9409-1-A31.5-4-M5', pcd:31.5, holes:4, thread:5},
+  {id:'ISO9409-1-A40-4-M6',   pcd:40,   holes:4, thread:6},
+  {id:'ISO9409-1-A50-4-M6',   pcd:50,   holes:4, thread:6},
+  {id:'ISO9409-1-A63-6-M6',   pcd:63,   holes:6, thread:6},
+  {id:'ISO9409-1-A80-6-M8',   pcd:80,   holes:6, thread:8},
+  {id:'ISO9409-1-A100-4-M8',  pcd:100,  holes:4, thread:8},
+  {id:'ISO9409-1-A160-4-M12', pcd:160,  holes:4, thread:12},
+  {id:'ISO9409-1-A250-4-M16', pcd:250,  holes:4, thread:16},
+];
+const byId = Object.fromEntries(FL.map(f=>[f.id,f]));
+const selA=document.getElementById('selA'), selB=document.getElementById('selB');
+FL.forEach(f=>{selA.add(new Option(f.id,f.id)); selB.add(new Option(f.id,f.id));});
+selA.value='ISO9409-1-A100-4-M8'; selB.value='ISO9409-1-A50-4-M6';
+
+/* ===== 三维场景 ===== */
+const stage=document.getElementById('stage');
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x0f1115);
+const camera=new THREE.PerspectiveCamera(45,1,0.1,5000);
+const renderer=new THREE.WebGLRenderer({antialias:true});
+stage.innerHTML='';stage.appendChild(renderer.domElement);
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;
+scene.add(new THREE.HemisphereLight(0xffffff,0x223044,1.1));
+const dl=new THREE.DirectionalLight(0xffffff,1.4);dl.position.set(120,220,160);scene.add(dl);
+
+const MAT={
+  flA:new THREE.MeshStandardMaterial({color:0x6ea8fe,metalness:.55,roughness:.4}),
+  flB:new THREE.MeshStandardMaterial({color:0xe5a13d,metalness:.55,roughness:.4}),
+  adp:new THREE.MeshStandardMaterial({color:0x8fd3a8,metalness:.35,roughness:.55,transparent:true,opacity:.92}),
+  bolt:new THREE.MeshStandardMaterial({color:0xc8cdd8,metalness:.8,roughness:.3}),
+};
+const boltHoleDia=t=>t*1.08;   // 螺栓过孔 ≈ 螺纹公称 ×1.08（示意）
+function boltRing(pcd,n,thread,y,mat,up){
+  const g=new THREE.Group();
+  const boltR=boltHoleDia(thread)/2, h=thread*4;
+  for(let i=0;i<n;i++){
+    const a=i/n*Math.PI*2;
+    const b=new THREE.Mesh(new THREE.CylinderGeometry(boltR,boltR,h,20),mat);
+    b.position.set(pcd/2*Math.cos(a),y+(up?h/2:-h/2),pcd/2*Math.sin(a));
+    g.add(b);
+  }
+  return g;
+}
+function flange(f,y,thick,mat,up){
+  const g=new THREE.Group();
+  const R=f.pcd/2+f.thread*2.6;
+  const disc=new THREE.Mesh(new THREE.CylinderGeometry(R,R,thick,64),mat);
+  disc.position.y=y;g.add(disc);
+  const boss=new THREE.Mesh(new THREE.CylinderGeometry(f.pcd*0.32,f.pcd*0.32,thick*1.6,48),mat);
+  boss.position.y=y;g.add(boss);
+  g.add(boltRing(f.pcd,f.holes,f.thread,y+ (up?thick*0.5:-thick*0.5),MAT.bolt,up));
+  return g;
+}
+let group=new THREE.Group();scene.add(group);
+function build(){
+  group.clear();
+  const A=byId[selA.value],B=byId[selB.value];
+  const needAdapter=!(A.pcd===B.pcd&&A.holes===B.holes);
+  const tA=Math.max(8,A.thread*2.2), tB=Math.max(8,B.thread*2.2);
+  let span;
+  if(needAdapter){
+    const tAd=Math.max(10,Math.max(A.thread,B.thread)*2.4);
+    group.add(flange(A, (tA+tAd)/2, tA, MAT.flA, true));
+    const ad=new THREE.Mesh(new THREE.CylinderGeometry(Math.max(A.pcd,B.pcd)/2+A.thread*2.6,Math.max(A.pcd,B.pcd)/2+A.thread*2.6,tAd,64),MAT.adp);
+    ad.position.y=0;group.add(ad);
+    group.add(boltRing(A.pcd,A.holes,A.thread,-tAd/2,MAT.bolt,false));
+    group.add(boltRing(B.pcd,B.holes,B.thread, tAd/2,MAT.bolt,true));
+    group.add(flange(B,-(tB+tAd)/2,tB,MAT.flB,false));
+    span=A.pcd+B.pcd+160;
+  }else{
+    group.add(flange(A, tA/2+2,tA,MAT.flA,true));
+    group.add(flange(B,-(tB/2+2),tB,MAT.flB,false));
+    span=A.pcd+B.pcd+120;
+  }
+  const d=Math.max(span,120);
+  camera.position.set(d*1.05,d*0.72,d*1.15);
+  controls.target.set(0,0,0);
+  updatePanel(A,B,needAdapter);
+}
+function updatePanel(A,B,needAdapter){
+  const v=document.getElementById('verdict'),tag=document.getElementById('verdictTag');
+  if(!needAdapter){
+    const sameThread=A.thread===B.thread;
+    v.className='verdict direct';
+    v.innerHTML=`<b>✓ direct · 直接可装</b><br>PCD ${A.pcd}mm 与孔数 ${A.holes} 对齐。`+
+      (sameThread?`螺纹一致（M${A.thread}），标准螺栓直装。`:`螺纹不同（M${A.thread} vs M${B.thread}）：不阻塞，换对应规格螺栓即可。`);
+    tag.textContent='direct';tag.style.color='#3dd68c';
+    document.getElementById('adaptSpec').textContent='';
+  }else{
+    v.className='verdict adapter';
+    v.innerHTML=`<b>→ adapter_required · 需转接盘</b><br>PCD ${A.pcd}→${B.pcd}mm / 孔数 ${A.holes}→${B.holes} 不同，螺栓孔在圆周上对不上，必须加转接盘。`;
+    tag.textContent='adapter_required';tag.style.color='#6ea8fe';
+    document.getElementById('adaptSpec').innerHTML=
+      `转接盘规格（示意）：<br>上表面开孔 <code>${A.holes}×M${A.thread}</code> @ PCD <code>${A.pcd}mm</code><br>`+
+      `下表面开孔 <code>${B.holes}×M${B.thread}</code> @ PCD <code>${B.pcd}mm</code><br>`+
+      `厚度 ≥ <code>${Math.max(10,Math.max(A.thread,B.thread)*2.4)}mm</code>（按大螺纹 2.4×估）`;
+  }
+  document.getElementById('params').innerHTML=
+    `<tr><th>参数</th><th>机器人侧</th><th>零件侧</th></tr>
+     <tr><td>标号</td><td>${A.id}</td><td>${B.id}</td></tr>
+     <tr><td>PCD</td><td>${A.pcd} mm</td><td>${B.pcd} mm</td></tr>
+     <tr><td>孔数</td><td>${A.holes}</td><td>${B.holes}</td></tr>
+     <tr><td>螺纹</td><td>M${A.thread}</td><td>M${B.thread}</td></tr>`;
+}
+selA.addEventListener('change',build);
+selB.addEventListener('change',build);
+function resize(){
+  const w=stage.clientWidth,h=stage.clientHeight;
+  renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();
+}
+window.addEventListener('resize',resize);
+document.getElementById('fallback').remove();
+resize();build();
+(function loop(){requestAnimationFrame(loop);controls.update();renderer.render(scene,camera);})();
+</script>
+</body>
+</html>
