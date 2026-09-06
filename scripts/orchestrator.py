@@ -21,7 +21,7 @@ RESULTS = os.path.join(ROOT, "ops", "results")
 PIPELINE = [
     # Phase 1: Monitoring & Detection
     {"name": "1占位追平", "script": "auto_fill_stubs.py", "critical": False, "phase": "monitoring"},
-    {"name": "2状态刷新", "script": "refresh_status.py", "critical": False, "phase": "monitoring"},
+    {"name": "2状态刷新", "script": "closure_status.py", "critical": False, "phase": "monitoring"},
     {"name": "3数字保鲜自愈", "script": "auto_freshness_heal.py", "critical": True, "phase": "monitoring"},
     {"name": "4部署漂移自愈", "script": "auto_drift_heal.py", "critical": True, "phase": "monitoring"},
     {"name": "5回归门禁", "script": "regression.py", "critical": True, "phase": "monitoring"},

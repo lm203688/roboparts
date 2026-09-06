@@ -63,7 +63,7 @@ for path, desc in output_files.items():
 # 3. Check scripts
 print("\n--- SCRIPTS ---")
 scripts = [
-    "auto_fill_stubs.py", "refresh_status.py", "auto_freshness_heal.py",
+    "auto_fill_stubs.py", "closure_status.py", "auto_freshness_heal.py",
     "auto_drift_heal.py", "community_listener.py", "kpi_daily_report.py",
     "bom_backfill.py", "urdf_auto_extractor.py", "social_auto_poster.py",
     "notify_webhook.py", "deploy_token_setup.py", "dns_auto_config.py",

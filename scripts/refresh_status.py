@@ -1,8 +1,30 @@
 #!/usr/bin/env python3
 """
-_STATUS.md 自动刷新器
-从 facts() + _NEEDS_USER + _LATEST 重算统一状态视图，覆写 _STATUS.md。
-目标：确保"给人看的统一视图"永远与真相源同步。
+【已停用 / SUPERSEDED —— 请勿调用】
+
+自 20260906 起，`_STATUS.md` 的唯一生成器是 `scripts/closure_status.py`。
+本脚本保留代码但**拒绝写入**，以免重新生成一份口径更窄的状态文件，
+让"一个口子"退化回"多头对账"。
+
+停用的三个具体缺陷（都已修进 closure_status.py）：
+
+1. **品类数恒为 0**：读 `facts_data.get("categories", [])`，而
+   `onboarding_block.facts()` 根本没有 `categories` 这个键（真实键是
+   `category_counts`，且是 dict）。于是 _STATUS.md 三周一直显示
+   "729 实体 / 0 品类"，与真值 798 / 20 完全不符，无人发现。
+
+2. **口径漂移**：`mech_pct` 用 `meta.mechanical_interface_coverage.fill_pct`，
+   与 facts() 现算的 `declared+partial / applicable` 不是同一分母。
+   _STATUS.md 因此显示 1.59%，而对外唯一口径是 1.52% —— 三个数字并存。
+
+3. **待办不去重**：_NEEDS_USER.md 曾把同一条「部署漂移自愈器升级项」在
+   15:59/16:07/16:19/16:25/16:26 追加 5 次，本脚本原样抄进 _STATUS.md，
+   把一个故障放大成"5 个待办"。
+
+此外它只看 facts()，不看 git 状态 / regression 门禁 / 未填写占位，
+所以"能不能发布"这个核心问题它永远答不了。
+
+请用：  python scripts/closure_status.py --write
 """
 import os, sys, json
 from datetime import datetime
@@ -118,25 +140,15 @@ def generate_status(facts_data, pending_count, pending_items, latest_run):
 
 
 def main():
-    print("[STATUS-REFRESH] Loading facts...")
-    facts_data = load_facts()
-    
-    print("[STATUS-REFRESH] Counting pending items...")
-    pending_count, pending_items = count_pending_items()
-    
-    print("[STATUS-REFRESH] Getting latest run time...")
-    latest_run = get_latest_run_time()
-    
-    print(f"[STATUS-REFRESH] Facts: {facts_data.get('total_entities', 0)} entities, "
-          f"{len(facts_data.get('categories', []))} cats, "
-          f"{pending_count} pending")
-    
-    status_content = generate_status(facts_data, pending_count, pending_items, latest_run)
-    
-    with open(STATUS_PATH, "w", encoding="utf-8") as f:
-        f.write(status_content)
-    
-    print(f"[STATUS-REFRESH] DONE: _STATUS.md refreshed at {datetime.now().isoformat()}")
+    """停用：只提示，不写文件。
+
+    故意**不**写 _STATUS.md —— 一旦恢复写入，就会重新产生一份口径更窄的
+    "统一状态"，让 closure_status.py 的单一对外接口失效。这是刻意的失败关闭。
+    """
+    print("[STATUS-REFRESH] 已停用（SUPERSEDED 20260906）。")
+    print("    _STATUS.md 的唯一生成器现为 scripts/closure_status.py")
+    print("    运行：python scripts/closure_status.py --write")
+    print("    本脚本保留代码仅作历史参考，不会再写入任何文件。")
     return 0
 
 
