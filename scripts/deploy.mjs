@@ -69,7 +69,10 @@ function resolvePython() {
 // 25 个 api/*.json + data.js + 数据集镜像，每个只改 1 行时间戳）。
 // 故闸门分两级：① 源内容改动一律拒绝；② 派生产物仅在「diff 纯为时间戳」时放行。
 const DERIVED_RE = /^(api\/[^/]+\.json|data\.js|roboparts-dataset-github\/.+)/;
-const TS_PAT = /\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z?|\s\d{2}:\d{2}(?::\d{2})?)/g;
+// 时间部分必须可选：派生产物里存在**纯日期**形态（"audited_at": "2026-09-06"、
+// README 的「2026-09-06 更新」），旧正则要求日期后必跟 T/空格+时分，匹配不到就
+// 被当成内容改动拒部署（20260908 实测 3 个文件命中）。
+const TS_PAT = /\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?Z?)?/g;
 function diffIsTimestampOnly(p) {
   const out = execSync(`git diff --unified=0 -- "${p}"`, { cwd: ROOT, encoding: 'utf8' });
   const rem = [], add = [];
@@ -88,7 +91,13 @@ function diffIsTimestampOnly(p) {
 function preflight() {
   console.log('[preflight] 部署前护栏检查...');
   // 1) 工作树：源内容改动拒绝；派生产物的纯时间戳漂移（本脚本自身 regen 产物）放行
-  const dirty = execSync('git status --porcelain', { cwd: ROOT, encoding: 'utf8' }).trim();
+  // 注意：porcelain 每行格式为 XY<SP><path>，前 3 字符是状态位。这里**只能去掉行尾换行**，
+  // 绝不能对整个输出 .trim() —— 首行 X 位是空格（未暂存改动写作 " M path"），整体 trim 会
+  // 把它吃掉，导致 slice(3) 少切一位、首个文件路径被截成 "pi/actuators.json"，
+  // 从而误判为源内容改动并拒绝部署（20260908 实测：api/actuators.json 字母序第一，必踩）。
+  const raw = execSync('git status --porcelain', { cwd: ROOT, encoding: 'utf8' })
+    .replace(/\r/g, '').replace(/\n+$/, '');
+  const dirty = raw.trim() ? raw : '';
   if (dirty) {
     const paths = dirty.split('\n').map((l) => l.slice(3));
     const content = paths.filter((p) => !DERIVED_RE.test(p));
