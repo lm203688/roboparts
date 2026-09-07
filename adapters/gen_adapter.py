@@ -53,6 +53,7 @@ A100 预设 pinPCD=50 恰好等于其螺栓节圆半径 50，两个销孔会正�
 from __future__ import annotations
 
 import argparse
+import json
 import math
 import os
 import re
@@ -104,6 +105,11 @@ PRESETS: Dict[str, Dict] = {
                 clr=6.5, pins=2, pin_d=6.0, pin_pcd=50.0),
     "A50": dict(label="ISO9409-1-A50-4-M6", pcd=50.0, holes=4, thread="M6",
                 clr=6.5, pins=2, pin_d=6.0, pin_pcd=63.0),
+    # A63 此前缺失：裁决库（api/negative_compat.json，唯一真相源）登记 9 档含 A63-6-M6，
+    # 而本预设表只有 8 档 —— 用户查到「A63 必须转接」却选不到该预设，判定与产出断了链。
+    # 销孔一律置 0：pin_pcd 属厂商自定义尺寸，无公开依据不得按 A40/A50 的规律外推编造。
+    "A63": dict(label="ISO9409-1-A63-6-M6", pcd=63.0, holes=6, thread="M6",
+                clr=6.5, pins=0, pin_d=0.0, pin_pcd=0.0),
     "A80": dict(label="ISO9409-1-A80-6-M8", pcd=80.0, holes=6, thread="M8",
                 clr=8.5, pins=2, pin_d=8.0, pin_pcd=100.0),
     "A100": dict(label="ISO9409-1-A100-4-M8", pcd=100.0, holes=4, thread="M8",
@@ -513,6 +519,9 @@ def build_parser() -> argparse.ArgumentParser:
                    help="输出目录，默认当前目录（不存在会自动创建）")
     g.add_argument("--name", type=str, default="flange-adapter", metavar="NAME",
                    help="输出文件名前缀，默认 flange-adapter")
+    g.add_argument("--bom", action="store_true",
+                   help="同时输出螺栓物料清单 JSON（同目录 bolting.py，"
+                        "含 ISO 标准件型号与外链；不依赖 step.parts 库存也能给出长度）")
     g.add_argument("--strict", action="store_true",
                    help="把几何告警（干涉/边距不足）升级为错误，不产出文件")
     g.add_argument("--quiet", action="store_true", help="只输出产出文件路径")
@@ -594,6 +603,42 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(path)
         else:
             print(f"    {path}  ({size:,} bytes)")
+
+    # 螺栓物料清单：几何只回答"板长什么样"，采购还需要"买哪颗螺丝"。
+    # 单独模块 bolting.py 承担，避免本文件掺入库存/标准件逻辑。
+    if args.bom:
+        try:
+            import bolting
+            sides = []
+            for s in (side_a, side_b):
+                sides.append(bolting.bolt_line(
+                    {"id": s.label, "pcd_mm": s.pcd,
+                     "bolt_count": s.holes, "thread": s.thread},
+                    args.thick))
+            bom = {
+                "schema": "adapter_bolting/v1",
+                "plate": base,
+                "plate_thickness_mm": args.thick,
+                "engagement_rule": "1.2×d（ISO 262 常用下限区间），未计垫圈/孔深",
+                "lines": sides,
+                "honest_limits": [
+                    "螺栓长度按板厚 + 旋合现算，未计垫圈、被连接件孔深与倒角",
+                    "板厚由调用方给定，本工具不判断其强度是否足够",
+                ],
+            }
+            bom_path = os.path.join(args.out_dir, base + ".bom.json")
+            with open(bom_path, "w", encoding="utf-8") as fh:
+                json.dump(bom, fh, ensure_ascii=False, indent=1)
+            written.append(bom_path)
+            if not args.quiet:
+                print("  螺栓清单:")
+                for ln in sides:
+                    f = ln["fastener"]
+                    who = f["name"] if f else "（无库存匹配，先跑 scripts/ingest_step_parts.py）"
+                    print(f"    {ln['count']}×{ln['thread']} 需长≥{ln['min_length_mm']}mm → {who}")
+                print(f"    {bom_path}")
+        except Exception as exc:  # 库存缺失/JSON 损坏不得拖垮几何产出
+            print(f"警告: 螺栓清单生成失败（几何文件已正常产出）: {exc}", file=sys.stderr)
 
     return 0
 

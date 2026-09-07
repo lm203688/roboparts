@@ -90,3 +90,6 @@ __pycache__/
 # 可复现性由「生成器 + 输入(api/entities.json) 都在库」保证；
 # 部署前由 deploy.mjs 0b2 无条件重生成，一致性由回归 L1.80 硬校验。
 api/training_dataset.json
+
+# 扫描/摄取临时目录（含 10MB step.parts 索引与测试产物）
+.tmp_scan/

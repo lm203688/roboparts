@@ -204,9 +204,16 @@ const PRESETS = {
   'A31.5':{label:'ISO9409-1-A31.5-4-M5',pcd:31.5,holes:4, thread:'M5',  clr:5.5,  pins:0, pinD:0, pinPCD:0},
   'A40':  {label:'ISO9409-1-A40-4-M6',  pcd:40,  holes:4, thread:'M6',  clr:6.5,  pins:2, pinD:6, pinPCD:50},
   'A50':  {label:'ISO9409-1-A50-4-M6',  pcd:50,  holes:4, thread:'M6',  clr:6.5,  pins:2, pinD:6, pinPCD:63},
+  // A63 原缺失：裁决库（api/negative_compat.json，唯一真相源）登记 9 档含 A63-6-M6，
+  // 本页只有 8 档 —— 用户查到「A63 必须转接」却在下拉里选不到，判定与产出断了链。
+  // 销孔属厂商自定义尺寸，无公开依据一律置 0，不得按 A40/A50 的 pinPCD 规律外推。
+  'A63':  {label:'ISO9409-1-A63-6-M6',  pcd:63,  holes:6, thread:'M6',  clr:6.5,  pins:0, pinD:0, pinPCD:0},
   'A80':  {label:'ISO9409-1-A80-6-M8',  pcd:80,  holes:6, thread:'M8',  clr:8.5,  pins:2, pinD:8, pinPCD:100},
-  'A100': {label:'ISO9409-1-A100-6-M10', pcd:100, holes:6, thread:'M10', clr:10.5, pins:0, pinD:0, pinPCD:0},
-  'A160': {label:'ISO9409-1-A160-8-M16',pcd:160, holes:8, thread:'M16', clr:13,   pins:0, pinD:0, pinPCD:0},
+  // A100 / A160 原为 6×M10 / 8×M16，与真相源登记的 4×M8 / 4×M12 冲突 —— 同标号在本页与
+  // 裁决库两种几何，用户按裁决查到「A100 需转接」再回本页生成会得到一块孔位错误的板。
+  // 现按唯一真相源对齐（裁决以 pcd_mm / bolt_count 实测值为准，不认标号字面）。
+  'A100': {label:'ISO9409-1-A100-4-M8', pcd:100, holes:4, thread:'M8',  clr:8.5,  pins:0, pinD:0, pinPCD:0},
+  'A160': {label:'ISO9409-1-A160-4-M12',pcd:160, holes:4, thread:'M12', clr:13,   pins:0, pinD:0, pinPCD:0},
   'A250': {label:'ISO9409-1-A250-4-M16',pcd:250, holes:4, thread:'M16', clr:17,   pins:0, pinD:0, pinPCD:0}
 };
 const CUSTOM = {label:'自定义', pcd:60, holes:4, thread:'M6', clr:6.5, pins:0, pinD:0, pinPCD:0};
