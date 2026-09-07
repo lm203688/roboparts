@@ -1221,7 +1221,11 @@ def layer1_14():
         return
     f = _facts()
 
-    EXEMPT = {'honeypot.json', 'geo-faqs.json', 'semantic_index.json'}
+    EXEMPT = {'honeypot.json', 'geo-faqs.json', 'semantic_index.json', 'reference_builds.json'}
+    # reference_builds.json 是**公开静态数据集（CC-BY-4.0 构型描述，无 API key、
+    # 无限速、无注册入口）**，与 geo-faqs/semantic_index 同类，不承载「AI 领 key
+    # 入口」语义，故豁免本闸门的强制接入块要求。其 meta.access 仅作诚实的公开
+    # 数据集声明（注明无需 key），不得含 /api/register 领 key 命令。
     # semantic_index.json 是 V-Link 语义流的**内部检索产物**（由 build_semantic_index.mjs
     # 离线生成、仅 functions/api/discover.js 内部消费），非对外 API 端点，不承载
     # 「AI 领 key 入口」语义，故不要求 meta.access。与 inject_api_access.py 的 EXCLUDE

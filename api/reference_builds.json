@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "title": "RoboParts 参考构型（开源机器人兼容性样板）",
+    "description": "将主流开源机器人作为「参考构型」，逐件映射到 RoboParts 兼容分类，验证本平台的接口判定对真实硬件的覆盖能力。每条构型的 BOM 均来自一手公开来源，待确认项显式标注，不臆造。",
+    "generated": "2026-09-08",
+    "registry_ref": "/api/mechanical_interfaces.json",
+    "adapter_generator_ref": "/adapter-generator",
+    "compatibility_viewer_ref": "/compatibility-viewer",
+    "access": {
+      "endpoint": "/api/reference_builds.json",
+      "machine_readable": true,
+      "license": "CC-BY-4.0（构型描述，非硬件本身）",
+      "auth": "none（公开静态数据集，无需 API key，无限速）",
+      "note": "BOM 与规格为公开文档摘录，机械接口缺项以 status=partial 标注并附 gap。"
+    }
+  },
+  "builds": [
+    {
+      "id": "RB-OMY",
+      "name": "Robotis OpenManipulator (Dynamixel X 系列基座)",
+      "type": "research_manipulator",
+      "vendor": "ROBOTIS",
+      "source": {
+        "emanual": "https://emanual.robotis.com/docs/en/platform/openmanipulator/",
+        "shop": "https://en.robotis.com/shop_en/",
+        "verified_at": "2026-09-08",
+        "note": "OpenManipulator 家族（P/X/Y）均基于 Dynamixel X 系列智能执行器，本文以 X 系列通用构型为样板。"
+      },
+      "summary": "教育/研究级 4 自由度机械臂，节点为 Dynamixel X 系列智能执行器（集成电机+控制器+编码器+总线），前法兰经 horn 与外设/工具连接。",
+      "actuators": [
+        {
+          "role": "关节执行器 ×4",
+          "model": "DYNAMIXEL XM430-W350-T / XL430-W250-T",
+          "rp_ref": "ACT-002",
+          "in_roboparts_db": true,
+          "torque": "XM430-W350: 4.1 N·m @12V；XL430-W250: 1.5 N·m @12V",
+          "weight_g": 82,
+          "case_mm": "28.5 × 46.5 × 34",
+          "interface": "TTL/RS485 (DYNAMIXEL Protocol 2.0)"
+        }
+      ],
+      "controller": {
+        "model": "OpenCR1.0 / OpenCM9.04",
+        "role": "主控 + Dynamixel 总线桥接"
+      },
+      "fasteners": [
+        {"item": "标准 horn HN12-N101（X430 系列）", "qty": 4, "note": "执行器前法兰输出盘，带螺栓圈"},
+        {"item": "WB M2.5×4 / M2.5×6 / M2×3 螺栓", "qty": "随包", "category": "fasteners"},
+        {"item": "推力垫圈（horn 装配）", "qty": 4}
+      ],
+      "mechanical_interface": {
+        "status": "partial",
+        "mount_type": "servo_horn",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.4,
+        "known_facts": [
+          "X 系列（XM/XL/XH430）采用相同机械结构，前法兰经 horn（HN12-N101 为 X430 标准 horn）输出",
+          "外壳 28.5×46.5×34 mm，空心背壳走线，JST 连接器（区别于旧款 Molex）",
+          "horn 螺栓圈为 Robotis 私有尺寸，非 ISO 9409-1"
+        ],
+        "gap": "HN12-N101 的 PCD 与孔径为厂商私有规格，公开 emanual 未列明确数值；需按实物或官方 horn 图纸确认后才能生成「Dynamixel horn → ISO 9409-1 法兰」转接盘。",
+        "adapter_opportunity": "在 adapter-generator 现有 A20–A250 之外，新增「X-series horn ↔ ISO flange」接口对，可解锁「Dynamixel 臂 + 标准工具快换」场景。"
+      },
+      "roboparts_coverage": {
+        "actuators": "已收录（ACT-002 等 ROBOTIS 条目，但 mechanical_interface 仍为 not_declared）。本构型核实到的 emanual 公开事实（horn HN12-N101、X 系列同结构、28.5×46.5×34mm、空心背壳 JST）可用于后续将其升 partial——须走真相源派生流程，不得手改分类 JSON（regression 门禁禁止）。",
+        "fasteners": "M2/M2.5 螺栓属 step.parts 白名单（2,118 紧固件可供应）",
+        "controller": "未纳入部件库（控制板类，非机械接口对象）",
+        "interface_judgement": "当前 negative_compat 仅覆盖 ISO 9409-1 九档；Dynamixel horn 为第十类待补接口"
+      }
+    },
+    {
+      "id": "RB-ODM",
+      "name": "Open Duck Mini v2（BDX 风格双足）",
+      "type": "biped_educational",
+      "vendor": "apirrone (开源社区)",
+      "source": {
+        "github": "https://github.com/apirrone/Open_Duck_Mini",
+        "orobot": "https://orobot.io/o/program/BROKER-2/open-duck-mini",
+        "deepwiki": "https://deepwiki.com/apirrone/Open_Duck_Mini",
+        "verified_at": "2026-09-08",
+        "note": "BOM 以来源 orobot.io 与 deepwiki 2026-09 快照为准；社区存在多种舵机选型（Feetech STS3215 / MG996R），本文取 v2 主流 Feetech 方案。"
+      },
+      "summary": "约 42 cm 双足，BOM < $400，14 个总线伺服 + 2 微型舵机，Raspberry Pi Zero 2W 机载，Onshape CAD，44+ 个 3D 打印件。",
+      "actuators": [
+        {
+          "role": "关节总线伺服 ×14",
+          "model": "Feetech STS3215（7.4V, 19.5 kg·cm 串行总线）",
+          "rp_ref": "feetech 系列（step.parts 收录 69 条）",
+          "in_roboparts_db": true,
+          "torque": "19.5 kg·cm",
+          "interface": "半双工串行总线"
+        },
+        {
+          "role": "微型舵机 ×2",
+          "model": "SG90 / FS90（9g）",
+          "rp_ref": "generic-servo / springrc 等（step.parts 有收录）",
+          "in_roboparts_db": true,
+          "torque": "约 1.8 kg·cm",
+          "interface": "PWM"
+        }
+      ],
+      "electronics": [
+        {"item": "Raspberry Pi Zero 2 W", "qty": 1, "role": "机载计算"},
+        {"item": "BNO055 IMU (I²C)", "qty": 1, "role": "姿态"},
+        {"item": "Waveshare 总线伺服驱动板", "qty": 1, "role": "STS3215 半双工桥接"},
+        {"item": "18650 电芯 (高倍率) ×2 + 2S BMS + 5V UBEC", "qty": 1, "role": "供电"},
+        {"item": "SS-10 微动开关 ×4", "qty": 4, "role": "脚底触地检测"}
+      ],
+      "fasteners_mech": [
+        {"item": "M3 热熔嵌件（heat-set insert）", "qty": "多", "category": "fasteners", "note": "全机模块化连接"},
+        {"item": "608ZZ 深沟球轴承 (8×22×7)", "qty": 3, "category": "bearings", "note": "髋部枢轴"},
+        {"item": "M3 螺丝若干 + 螺纹胶 Loctite 243", "qty": "多", "category": "fasteners"}
+      ],
+      "mechanical_interface": {
+        "status": "partial",
+        "mount_type": "3d_printed_servo_bracket",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.5,
+        "known_facts": [
+          "伺服以 3D 打印支架 + M3 嵌件固定，无统一 ISO 法兰",
+          "髋部旋转点用 608ZZ 标准轴承（8×22×7，ISO 15:2011 尺寸系列 08/18/07）",
+          "整体为参数化 Onshape 设计，可改尺寸"
+        ],
+        "gap": "舵机到连杆的输出盘螺栓圈为 Feetech/厂商私有；608ZZ 为标准件（step.parts 紧固件/轴承类可供应），但需确认本库轴承子类是否收录 608ZZ。",
+        "adapter_opportunity": "「伺服输出盘 ↔ 连杆标准孔位」为低成本人形常见适配点；参考构型可沉淀为模板。"
+      },
+      "roboparts_coverage": {
+        "actuators": "Feetech STS3215 属 step.parts feetech 家族（69 条）已收录；SG90 属通用舵机已收录",
+        "fasteners": "M3 嵌件/螺丝属 step.parts 白名单（2,118 紧固件）",
+        "bearings": "608ZZ 为 ISO 标准轴承；需确认本库 bearings 子类覆盖",
+        "interface_judgement": "人形常用「伺服私有盘 ↔ 标准连杆」适配，目前 negative_compat 未覆盖，属可扩展参考范式"
+      }
+    }
+  ],
+  "insights": {
+    "tnkr_alignment": "Tnkr（tnkr.ai，机器人界 GitHub）以「统一项目包 + remix + 数据贡献闭环 + Leonardo 视频转文档 + BOM 管理与零件供应商直连」组织开源机器人生态。其 BOM 管理缺「机械接口兼容性判定」这一层——正是 RoboParts 定位。本参考构型即 RoboParts 接入 Tnkr 式贡献工作流的「样板内容」：把 OpenManipulator / Open Duck Mini 这类 Tnkr 社区热门构型，做成带兼容性判定的可重建包，从「做衔接」走向「成为其生态一环」。",
+    "clap_assessment": "CLAP（omni-CLAP/CLAP，Princeton，arXiv 2608.27406）是跨本体动作条件视频世界模型，让 Franka/WidowX/人形共享物理先验。属策略/感知基础模型，非零件库，对零件兼容平台直接可借鉴度低；概念层启发：RoboParts 的「跨本体物理接口」在机械层，CLAP 在学习层，二者正交。",
+    "priority_actions": [
+      "P1: 将 ACT-002 等 ROBOTIS 执行器 mechanical_interface 由 not_declared 升 partial（拟用 emanual 公开事实，PCD 留待实物确认；须走真相源派生流程，禁手改分类 JSON）",
+      "P1: adapter-generator 新增「Dynamixel X-series horn ↔ ISO 9409-1 法兰」接口对（第十类），解锁 Dynamixel 臂+标准工具",
+      "P2: 参考构型沉淀为模板，发布到 Tnkr 式贡献社区作为 RoboParts 入口内容",
+      "P3: 608ZZ 等标准轴承纳入 bearings 子类覆盖核查"
+    ]
+  }
+}

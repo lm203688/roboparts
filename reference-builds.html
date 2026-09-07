@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RoboParts · 开源机器人参考构型</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+</head>
+<body>
+<header class="hd">
+  <h1>开源机器人参考构型</h1>
+  <p class="sub">把主流开源机器人做成「参考构型」，逐件映射到 RoboParts 兼容分类，验证接口判定对真实硬件的覆盖能力。
+     数据来自一手公开来源，待确认项显式标注。</p>
+  <nav class="nav">
+    <a href="/adapter-generator">转接盘生成器</a>
+    <a href="/compatibility-viewer">兼容性查看器</a>
+    <a href="/api/reference_builds.json">JSON 数据</a>
+  </nav>
+</header>
+
+<main id="app">
+  <p class="loading">载入参考构型…</p>
+</main>
+
+<footer class="ft">
+  <p>每条构型的 BOM 与规格均为公开文档摘录；机械接口缺项以 <code>status=partial</code> 标注并附 gap，不臆造。
+     本页为 RoboParts 接入 Tnkr 式「统一项目包 + 数据贡献闭环」贡献工作流的样板内容。</p>
+</footer>
+
+<script>
+const C = {
+  partial: '#f5a623', declared: '#3ddc84', none: '#ff5c7a', ok: '#3ddc84', warn: '#f5a623'
+};
+async function load() {
+  let data;
+  try {
+    const r = await fetch('/api/reference_builds.json', {headers:{'X-RoboParts-Selftest':'1'}});
+    data = await r.json();
+  } catch (e) {
+    document.getElementById('app').innerHTML =
+      '<p class="err">无法载入 /api/reference_builds.json（'+e.message+'）。请确认部署已包含该文件。</p>';
+    return;
+  }
+  render(data);
+}
+function cov(s){ return s==='partial' ? C.partial : s==='declared' ? C.declared : C.none; }
+function render(d){
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+  for (const b of d.builds) {
+    const card = document.createElement('section');
+    card.className = 'card';
+    const mi = b.mechanical_interface || {};
+    card.innerHTML = `
+      <h2>${b.name} <span class="tag">${b.type}</span></h2>
+      <p class="src"><a href="${b.source.github||b.source.emanual||'#'}" target="_blank" rel="noopener">${b.vendor}</a> · 核实 ${b.source.verified_at}</p>
+      <p>${b.summary}</p>
+      <div class="mi">
+        <span class="dot" style="background:${cov(mi.status)}"></span>
+        机械接口：<b>${mi.status||'unknown'}</b> · ${mi.mount_type||'-'}
+        ${mi.gap?`<div class="gap">⚠ ${mi.gap}</div>`:''}
+        ${mi.adapter_opportunity?`<div class="opp">➜ ${mi.adapter_opportunity}</div>`:''}
+      </div>
+      <h3>执行器</h3><ul>${b.actuators.map(a=>`<li><b>${a.model}</b>（${a.role}）— ${a.in_roboparts_db?'<span style="color:'+C.ok+'">已在库</span> '+ (a.rp_ref||''):'未收录'}${a.torque?` · ${a.torque}`:''}</li>`).join('')}</ul>
+      ${b.electronics?`<h3>电子</h3><ul>${b.electronics.map(x=>`<li>${x.item} ×${x.qty} — ${x.role||''}</li>`).join('')}</ul>`:''}
+      ${b.fasteners?`<h3>紧固件/机构</h3><ul>${b.fasteners.map(x=>`<li>${x.item}${x.qty&&x.qty!=='随包'?` ×${x.qty}`:''}${x.category?` · <span class="cat">${x.category}</span>`:''}${x.note?` — ${x.note}`:''}</li>`).join('')}</ul>`:''}
+      ${b.fasteners_mech?`<h3>紧固件/机构</h3><ul>${b.fasteners_mech.map(x=>`<li>${x.item}${x.qty?` ×${x.qty}`:''}${x.category?` · <span class="cat">${x.category}</span>`:''}${x.note?` — ${x.note}`:''}</li>`).join('')}</ul>`:''}
+      <details><summary>RoboParts 覆盖评估</summary>
+        <div class="cov">${(b.roboparts_coverage?Object.entries(b.roboparts_coverage).map(([k,v])=>`<p><b>${k}：</b>${v}</p>`).join(''):'')}</div>
+      </details>`;
+    app.appendChild(card);
+  }
+  if (d.insights) {
+    const ins = document.createElement('section');
+    ins.className = 'card insights';
+    ins.innerHTML = `
+      <h2>生态衔接洞察</h2>
+      <p><b>Tnkr 对齐：</b>${d.insights.tnkr_alignment}</p>
+      <p><b>CLAP 评估：</b>${d.insights.clap_assessment}</p>
+      <h3>优先级行动</h3><ul>${d.insights.priority_actions.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+    app.appendChild(ins);
+  }
+}
+load();
+</script>
+<style>
+  :root{--bg:#0b1020;--card:#141b2e;--fg:#e8edf6;--mut:#9aa7bd;--acc:#5b8cff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 system-ui,'Segoe UI',Roboto,'PingFang SC','Microsoft YaHei',sans-serif}
+  .hd{padding:32px 24px 8px;max-width:920px;margin:0 auto}
+  h1{margin:0 0 6px;font-size:26px}
+  .sub{color:var(--mut);margin:0 0 12px}
+  .nav a{color:var(--acc);text-decoration:none;margin-right:16px;font-size:14px}
+  main{max-width:920px;margin:0 auto;padding:8px 24px 40px;display:grid;gap:20px}
+  .card{background:var(--card);border:1px solid #233;border-radius:14px;padding:20px 22px}
+  .card h2{margin:0 0 4px;font-size:20px}
+  .tag{font-size:12px;background:#223;color:var(--mut);padding:2px 8px;border-radius:20px;vertical-align:middle}
+  .src{color:var(--mut);font-size:13px;margin:0 0 10px}
+  .src a{color:var(--acc)}
+  .mi{background:#0f1626;border-left:3px solid #5b8cff;padding:10px 12px;border-radius:8px;margin:10px 0;font-size:14px}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  .gap{color:#ffd27a;font-size:13px;margin-top:6px}
+  .opp{color:#9fe6c0;font-size:13px;margin-top:6px}
+  h3{margin:16px 0 6px;font-size:15px;color:#cdd8ee}
+  ul{margin:6px 0;padding-left:20px}
+  li{margin:3px 0}
+  .cat{background:#233;color:#9fe6c0;padding:1px 7px;border-radius:10px;font-size:12px}
+  details{margin-top:12px}
+  summary{cursor:pointer;color:var(--acc);font-size:14px}
+  .cov b{color:#cdd8ee}
+  .cov p{margin:6px 0;font-size:14px}
+  .insights{border-color:#3a4a7a}
+  .loading,.err{color:var(--mut);padding:20px}
+  .err{color:#ff5c7a}
+  .ft{max-width:920px;margin:0 auto;padding:0 24px 40px;color:var(--mut);font-size:13px}
+  code{background:#1b2440;padding:1px 5px;border-radius:4px}
+</style>
+</body>
+</html>
