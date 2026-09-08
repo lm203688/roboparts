@@ -55,6 +55,22 @@ function render(d){
     const card = document.createElement('section');
     card.className = 'card';
     const mi = b.mechanical_interface || {};
+    const ei = b.electrical_interface || {};
+    const JUDGE_COLOR = j => j==='incompatible' ? C.none : j==='direct' ? C.ok : C.partial;
+    const eiHtml = ei.status ? `
+      <div class="mi" style="margin-top:10px">
+        <span class="dot" style="background:${cov(ei.status)}"></span>
+        电气接口：<b>${ei.status}</b>${ei.note?` · <span class="src">${ei.note}</span>`:''}
+        ${(ei.power_domains||[]).length?`<div class="opp">⚡ 供电轨：${ei.power_domains.map(p=>`${p.domain} <b>${p.voltage_v}V</b>（${p.applies_to}）`).join(' ｜ ')}</div>`:''}
+        ${ei.bus&&!Array.isArray(ei.bus)?`<div class="opp">🔌 总线：${ei.bus.protocol||ei.bus.bus} · ${ei.bus.physical_layer||''} · ${ei.bus.topology||''}</div>`:''}
+        ${Array.isArray(ei.bus)?`<div class="opp">🔌 总线：${ei.bus.map(x=>`${x.bus}${x.baud?`（${x.baud}）`:''}`).join(' ｜ ')}</div>`:''}
+        ${(ei.connectors||[]).length?`<div class="opp">🔧 连接器：${ei.connectors.map(c=>`${c.part||c.variant} <b>${c.connector||c.housing}</b> [${(c.pinout||[]).join(', ')}]`).join(' ｜ ')}</div>`:''}
+        ${ei.level_shift?`<div class="gap">⚠ 电平：${ei.level_shift}</div>`:''}
+        ${ei.power_budget_note?`<div class="opp">🔋 ${ei.power_budget_note}</div>`:''}
+        ${(ei.judgements||[]).length?`<details style="margin-top:6px"><summary>电气判定 ${ei.judgements.length} 条</summary>${ei.judgements.map(j=>`<div class="cov" style="margin:4px 0"><p><span class="dot" style="display:inline-block;background:${JUDGE_COLOR(j.electrical_verdict)}"></span> <b>${j.pair}</b> → <b>${j.electrical_verdict}</b> <span class="src">(${j.severity||'-'})</span></p><p>${j.reason}</p>${j.mechanical_only_verdict?`<p class="src">纯协议/机械判定：${j.mechanical_only_verdict}</p>`:''}</div>`).join('')}</details>`:''}
+        ${(ei.unverified||[]).length?`<div class="gap">未核实：${ei.unverified.join('；')}</div>`:''}
+        ${ei.gap?`<div class="gap">⚠ ${ei.gap}</div>`:''}
+      </div>` : '';
     card.innerHTML = `
       <h2>${b.name} <span class="tag">${b.type}</span></h2>
       <p class="src"><a href="${b.source.github||b.source.emanual||'#'}" target="_blank" rel="noopener">${b.vendor}</a> · 核实 ${b.source.verified_at}</p>
@@ -69,6 +85,7 @@ function render(d){
       ${b.electronics?`<h3>电子</h3><ul>${b.electronics.map(x=>`<li>${x.item} ×${x.qty} — ${x.role||''}</li>`).join('')}</ul>`:''}
       ${b.fasteners?`<h3>紧固件/机构</h3><ul>${b.fasteners.map(x=>`<li>${x.item}${x.qty&&x.qty!=='随包'?` ×${x.qty}`:''}${x.category?` · <span class="cat">${x.category}</span>`:''}${x.note?` — ${x.note}`:''}</li>`).join('')}</ul>`:''}
       ${b.fasteners_mech?`<h3>紧固件/机构</h3><ul>${b.fasteners_mech.map(x=>`<li>${x.item}${x.qty?` ×${x.qty}`:''}${x.category?` · <span class="cat">${x.category}</span>`:''}${x.note?` — ${x.note}`:''}</li>`).join('')}</ul>`:''}
+      ${eiHtml}
       <details><summary>RoboParts 覆盖评估</summary>
         <div class="cov">${(b.roboparts_coverage?Object.entries(b.roboparts_coverage).map(([k,v])=>`<p><b>${k}：</b>${v}</p>`).join(''):'')}</div>
       </details>`;
