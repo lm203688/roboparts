@@ -43,7 +43,7 @@ curl -X POST https://roboparts.cc/api/validate \
 在你决定是否使用这份数据前，这些事实值得先知道（数字均由生成器现算，不是宣传口径）：
 
 1. **798 条实体中，参数口径达到"可跨厂商直接比较"的是 0 条。** 行业普遍不声明测试条件——扭矩不给温升与持续时间、背隙不给加载条件。我们把这个缺陷公开登记（含我方自身数据的同类问题），而不是用漂亮数字掩盖。判据见 [参数口径规范](https://roboparts.cc/robot-joint-parameter-spec)。
-2. **机械互换维度（"能不能拧上去"）声明率仅 1.67%。** 适用分母 418 条（总数 798 减去 380 条本身无机械接口的实体）中，仅 2 条完整声明 + 5 条部分声明；其余 411 条如实标注 `not_declared`，我们不做猜测填充。
+2. **机械互换维度（"能不能拧上去"）声明率仅 2.76%。** 适用分母 435 条（总数 798 减去 363 条本身无机械接口的实体）中，仅 2 条完整声明 + 10 条部分声明；其余 423 条如实标注 `not_declared`，我们不做猜测填充。
 3. **溯源分布是公开的**：A 402 条（50.4%） · B 246 条（30.8%） · C 150 条（18.8%）。Tier C 为无溯源历史导入，`confidence` 上限 0.30。有原始链接（`source_url`）的实体 511 条（64.0%）——**意味着约 36.0% 的实体目前无法一键回溯到原始文档**。
 4. **兼容性结论是基于已声明数据的线索，不是认证，不替代样机实测。**
 
@@ -150,7 +150,7 @@ curl -o roboparts-data.json https://roboparts.cc/api/data.json
     "total_entities": 798,
     "category_count": 20,
     "category_counts": { "...": 0 },
-    "mechanical_interface_declared_rate_pct": 1.67,
+    "mechanical_interface_declared_rate_pct": 2.76,
     "truth_source": "api/entities.json",
     "generated_by": "scripts/sync_dataset_dist.py"
   },
@@ -171,7 +171,7 @@ curl -o roboparts-data.json https://roboparts.cc/api/data.json
 
 ## 贡献
 
-数据缺口是公开的（尤其机械接口声明率 1.67%），欢迎补数据：
+数据缺口是公开的（尤其机械接口声明率 2.76%），欢迎补数据：
 
 1. **补机械接口声明**（最缺、门槛最低）——
    用 [机械接口声明 Issue 模板](https://github.com/lm203688/roboparts/issues/new?template=mechanical-interface.yml)

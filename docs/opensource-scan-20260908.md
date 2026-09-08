@@ -94,3 +94,23 @@
 - HN12-N101 的精确 PCD/孔径：公开 emanual 未列，**未填入数值**，仅标 partial + gap。
 - Open Duck Mini 舵机选型存在多方案（Feetech STS3215 / MG996R），本文取 v2 主流 Feetech 方案并标注来源快照日期。
 - CLAP 不进入工程；仅作产品哲学佐证。
+
+---
+
+## 8. 实施记录（2026-09-08 追加）
+
+用户授权"全面实施"后当轮落地：
+
+- **P1✅ mi 升级**：ACT-001 / ACT-002 / ACT-003 / CTRL-005 / GRIP-015 五条 ROBOTIS 条目
+  mechanical_interface 由 not_declared 升 partial（`scripts/upgrade_robotis_mi_20260908.py`，
+  官方商店页 / e-Manual / UR 版手册一手核实）。**ACT-robotis-20dof-hand 无公开安装声明，
+  保持 not_declared（不臆造）**——修正本文 §6 中"余 3 条待补"的估算：逐条核实后为 5 条可升、1 条不可升。
+- **P1✅ 第十类接口**：`mechanical_interfaces.json` 新增 `robotis_x_horn` 专有接口段
+  （PROPRIETARY-ROBOTIS-XHORN），登记 X 系列 horn / P 系列 FRP54 框架一手事实与
+  adapter_required 判定；horn PCD 官方未公开，标 `pending_verification`。
+  `adapter-generator.html` 新增第 10 档「ROBOTIS Horn（专有·几何待实测）」引导项
+  （不预填几何，选中提示按官方图纸实测）。`negative_compat` 几何穷举（9 档 ISO）不受影响。
+- **声明率更新**：机械接口有线索率由 1.67% → **2.76%**（12/435，declared 2 + partial 10），
+  经 `regen_derived.py` 全量再生，meta.access honest_limits 全站同步。
+- **P2 启动**：Tnkr 式贡献发布包已沉淀为 `docs/tnkr-publish-kit.md`（RB-OMY / RB-ODM
+  双包 + 投递 runbook）；tnkr.ai 实际发布需用户账号（硬阻塞）。

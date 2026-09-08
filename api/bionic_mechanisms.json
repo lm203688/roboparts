@@ -16,14 +16,14 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 1.67,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.67%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 2.76,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 2.76%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
   "count": 17,
-  "updated": "2026-09-07T22:45:51.592898Z",
+  "updated": "2026-09-08T00:44:44.693553Z",
   "data": [
     {
       "id": "BIONIC-JOINT-001",
@@ -59,13 +59,13 @@
         ]
       },
       "mechanical_interface": {
-        "status": "n_a",
-        "mount_type": "flange",
-        "standard": "ISO 9409-1",
-        "flange": "64mm",
-        "confidence": 0.8,
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "3d_printable": true,
       "stl_files": [
@@ -169,13 +169,13 @@
         ]
       },
       "mechanical_interface": {
-        "status": "n_a",
-        "mount_type": "flange",
-        "standard": "ISO 9409-1",
-        "flange": "80mm",
-        "confidence": 0.8,
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "3d_printable": true,
       "stl_files": [
@@ -278,13 +278,13 @@
         ]
       },
       "mechanical_interface": {
-        "status": "n_a",
-        "mount_type": "press_fit",
-        "standard": "custom",
-        "flange": "8mm",
-        "confidence": 0.7,
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "3d_printable": true,
       "stl_files": [
@@ -380,13 +380,13 @@
         ]
       },
       "mechanical_interface": {
-        "status": "n_a",
-        "mount_type": "flange",
-        "standard": "custom",
-        "flange": "40mm",
-        "confidence": 0.7,
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "3d_printable": true,
       "stl_files": [
@@ -479,12 +479,13 @@
         ]
       },
       "mechanical_interface": {
-        "status": "n_a",
-        "mount_type": "surface_mount",
-        "standard": "custom",
-        "confidence": 0.6,
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "3d_printable": false,
       "print_settings": null,
@@ -568,12 +569,13 @@
         ]
       },
       "mechanical_interface": {
-        "status": "n_a",
-        "mount_type": "adhesive",
-        "standard": "custom",
-        "confidence": 0.7,
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "3d_printable": false,
       "print_settings": null,
@@ -654,12 +656,13 @@
         "miniaturized": true
       },
       "mechanical_interface": {
-        "status": "n_a",
-        "mount_type": "integrated",
-        "standard": "custom",
-        "confidence": 0.7,
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "3d_printable": false,
       "print_settings": null,
@@ -734,13 +737,13 @@
         "biomimetic_accuracy": "85%"
       },
       "mechanical_interface": {
-        "status": "n_a",
-        "mount_type": "flange",
-        "standard": "ISO 9409-1",
-        "flange": "120mm",
-        "confidence": 0.8,
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "3d_printable": true,
       "stl_files": [
@@ -834,12 +837,13 @@
         "sensor_integrated": true
       },
       "mechanical_interface": {
-        "status": "n_a",
-        "mount_type": "adhesive",
-        "standard": "custom",
-        "confidence": 0.7,
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "note": "RoboParts bionic design - no standard ISO mechanical interface reference"
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "3d_printable": false,
       "print_settings": null,
@@ -911,8 +915,13 @@
       "confidence": 0.7,
       "confidence_basis": "vendor_public_claims_unverified_independent",
       "mechanical_interface": {
-        "status": "n_a",
-        "note": "no public ISO standard for tendon_anchor_pattern / muscle_mount_pattern / soft_socket / powered_flange_comms; all proprietary, unstandardized"
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "bionic_interface": {
         "actuation_type": "hydraulic_mckibben_muscle",
@@ -1035,8 +1044,13 @@
       "confidence": 0.7,
       "confidence_basis": "vendor_public_claims_unverified_independent",
       "mechanical_interface": {
-        "status": "n_a",
-        "note": "proprietary wrist mount; no ISO 9409-1; tendon_anchor_pattern / muscle_mount_pattern / soft_socket / powered_flange_comms all proprietary, unstandardized"
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "bionic_interface": {
         "actuation_type": "tendon_driven",
@@ -1096,8 +1110,13 @@
       "confidence": 0.7,
       "confidence_basis": "vendor_public_claims_unverified_independent",
       "mechanical_interface": {
-        "status": "n_a",
-        "note": "prosthetic/robot wrist, no ISO 9409-1; mounts via proprietary quick-disconnect or short wrist option"
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "bionic_interface": {
         "actuation_type": "brushless_dc_motor_myoelectric",
@@ -1153,8 +1172,13 @@
       "confidence": 0.65,
       "confidence_basis": "vendor_public_claims_unverified_independent",
       "mechanical_interface": {
-        "status": "n_a",
-        "note": "prosthetic wrist, no ISO 9409-1"
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "bionic_interface": {
         "actuation_type": "brushless_dc_motor_myoelectric",
@@ -1211,8 +1235,13 @@
       "confidence": 0.7,
       "confidence_basis": "vendor_public_claims_unverified_independent",
       "mechanical_interface": {
-        "status": "n_a",
-        "note": "proprietary wrist bus, no ISO 9409-1"
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "bionic_interface": {
         "actuation_type": "direct_drive_gear",
@@ -1268,8 +1297,13 @@
       "confidence": 0.65,
       "confidence_basis": "vendor_public_claims_unverified_independent",
       "mechanical_interface": {
-        "status": "n_a",
-        "note": "proprietary wrist mount, no ISO 9409-1"
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "bionic_interface": {
         "actuation_type": "linkage_linear",
@@ -1324,8 +1358,13 @@
       "confidence": 0.65,
       "confidence_basis": "vendor_public_claims_unverified_independent",
       "mechanical_interface": {
-        "status": "n_a",
-        "note": "proprietary wrist mount, no ISO 9409-1"
+        "status": "not_declared",
+        "mount_type": "unknown",
+        "standard": null,
+        "flange": null,
+        "confidence": 0.0,
+        "registry_ref": "/api/mechanical_interfaces.json",
+        "gap": "未归类类目 bionic_mechanisms"
       },
       "bionic_interface": {
         "actuation_type": "direct_drive",

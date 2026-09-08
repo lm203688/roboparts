@@ -16,14 +16,14 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 1.67,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 1.67%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 2.76,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 2.76%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
   "count": 41,
-  "updated": "2026-09-07T22:45:51.592898Z",
+  "updated": "2026-09-08T00:44:44.693553Z",
   "data": [
     {
       "id": "ACT-patsnap-actuator",
@@ -119,7 +119,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -159,7 +159,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -198,7 +198,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -240,7 +240,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -288,7 +288,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -331,7 +331,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -378,7 +378,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -424,7 +424,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -474,7 +474,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -525,7 +525,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -575,7 +575,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -625,7 +625,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -677,7 +677,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -734,7 +734,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1175,7 +1175,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1237,7 +1237,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1292,7 +1292,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1349,7 +1349,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1406,7 +1406,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1463,7 +1463,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1520,7 +1520,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1577,7 +1577,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1634,7 +1634,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1691,7 +1691,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1748,7 +1748,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1805,7 +1805,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1862,7 +1862,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1918,7 +1918,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -1975,7 +1975,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2032,7 +2032,7 @@
         "mount_type": "unknown",
         "standard": null,
         "flange": null,
-        "confidence": 0,
+        "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
@@ -2106,7 +2106,7 @@
       },
       "mechanical_interface": {
         "status": "n_a",
-        "reason": "企业主体/整机厂，非可采购零部件，无对外公开安装接口",
+        "reason": "organization 条目（企业主体/市场情报），不是实物零部件，无物理安装面",
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "organization",

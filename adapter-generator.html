@@ -219,6 +219,11 @@ const PRESETS = {
   'A250': {label:'ISO9409-1-A250-4-M16',pcd:250, holes:4, thread:'M16', clr:17,   pins:0, pinD:0, pinPCD:0}
 };
 const CUSTOM = {label:'自定义', pcd:60, holes:4, thread:'M6', clr:6.5, pins:0, pinD:0, pinPCD:0};
+// 第 10 档：ROBOTIS Horn（专有接口，非 ISO 9409-1）—— 登记于 api/mechanical_interfaces.json 的
+// robotis_x_horn 段（PROPRIETARY-ROBOTIS-XHORN）。官方公开页面只给 Drawing 下载入口，未给出
+// horn 孔位 PCD/孔数/螺纹 —— 禁臆造：本档不预填任何几何，选中后展开自定义表单并显示提示，
+// 请按官方图纸实测后填写再生成。判定层面：ROBOTIS horn 对一切 ISO 9409-1 法兰 = adapter_required。
+const HORN = {label:'ROBOTIS Horn（专有·几何待实测）'};
 
 function fillSelect(id){
   const s = document.getElementById(id);
@@ -226,6 +231,7 @@ function fillSelect(id){
   for(const k of Object.keys(PRESETS)){
     const o=document.createElement('option'); o.value=k; o.textContent=PRESETS[k].label; s.appendChild(o);
   }
+  const oh=document.createElement('option'); oh.value='HORN'; oh.textContent=HORN.label; s.appendChild(oh);
   const o=document.createElement('option'); o.value='CUSTOM'; o.textContent='自定义…'; s.appendChild(o);
 }
 fillSelect('sideA'); fillSelect('sideB');
@@ -235,10 +241,13 @@ document.getElementById('sideB').value='A80';
 function onPreset(side){
   const sel = document.getElementById('side'+side).value;
   const box = document.getElementById('cust'+side);
-  if(sel==='CUSTOM'){
+  if(sel==='CUSTOM' || sel==='HORN'){
     box.classList.add('show');
     if(!box.dataset.built){
-      box.innerHTML = `<div class="row">
+      box.innerHTML = `<div id="${side}_hornnote" class="hornnote" style="display:none">
+        <b>ROBOTIS Horn 为厂商专有接口（非 ISO 9409-1）</b>：官方公开页面未给出孔位 PCD/孔数/螺纹（仅 Drawing 下载入口），本工具不预填猜测值。
+        请下载 <a href="https://en.robotis.com/shop_en/item.php?it_id=903-0238-000" target="_blank" rel="noopener">官方 Drawing</a> 实测后，在下方填写真实尺寸再生成；
+        对一切 ISO 9409-1 法兰的裁决为 <b>adapter_required</b>（见 api/mechanical_interfaces.json robotis_x_horn 段）。</div>` + `<div class="row">
         <div><div class="field">节圆直径 PCD(mm)</div><input id="${side}_pcd" type="number" value="60" min="10" max="300"></div>
         <div><div class="field">螺栓孔数</div><input id="${side}_holes" type="number" value="4" min="1" max="16"></div></div>
         <div class="row">
@@ -249,6 +258,8 @@ function onPreset(side){
         <div><div class="field">销径(mm)</div><input id="${side}_pinD" type="number" value="6" step="0.5"></div></div>`;
       box.dataset.built='1';
     }
+    const note = document.getElementById(side+'_hornnote');
+    if(note) note.style.display = (sel==='HORN') ? 'block' : 'none';
   } else {
     box.classList.remove('show');
   }
@@ -256,10 +267,11 @@ function onPreset(side){
 
 function getSide(side){
   const sel = document.getElementById('side'+side).value;
-  if(sel!=='CUSTOM') return {...PRESETS[sel], key:sel};
+  if(sel!=='CUSTOM' && sel!=='HORN') return {...PRESETS[sel], key:sel};
   const g = id => parseFloat(document.getElementById(side+'_'+id).value)||0;
   const thread = document.getElementById(side+'_thread').value || 'M6';
-  return {key:'CUSTOM', label:'自定义', pcd:g('pcd'), holes:g('holes'), thread, clr:g('clr'), pins:g('pins'), pinD:g('pinD'),
+  const lbl = sel==='HORN' ? 'ROBOTIS Horn（实测值）' : '自定义';
+  return {key:sel, label:lbl, pcd:g('pcd'), holes:g('holes'), thread, clr:g('clr'), pins:g('pins'), pinD:g('pinD'),
           pinPCD: (g('pcd')/2 - 14) > g('pinD')/2+6 ? g('pcd')/2 - 14 : g('pinD')/2+6};
 }
 
