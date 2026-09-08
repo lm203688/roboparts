@@ -88,6 +88,16 @@ def expected_values(facts_obj):
     exp.update(cats)
     if facts_obj.get('oss_total') is not None:      # OSS 层总数（供接口核验用）
         exp['OSS_TOTAL'] = facts_obj['oss_total']
+    # llms.txt 子集口径（20260908-22 补盲区）：键未注入时断言侧放行（宁漏勿假红）
+    if facts_obj.get('mech_applicable') is not None:
+        exp['MI_APPLICABLE'] = facts_obj['mech_applicable']
+        exp['MI_FULL'] = facts_obj.get('mech_full_declared')
+        exp['MI_PARTIAL'] = facts_obj.get('mech_partial')
+        exp['MI_NOT_DECLARED'] = facts_obj.get('mech_not_declared')
+        exp['MI_NA'] = facts_obj.get('mech_n_a')
+        exp['MI_PCT'] = facts_obj.get('mech_pct')
+    if facts_obj.get('assessed') is not None:
+        exp['ASSESSED'] = facts_obj['assessed']
     # 种类档：键名与 facts() 一致，靠 _KIND_NOUNS 反查，不在此写死档数
     for key in set(_KIND_NOUNS.values()):
         if facts_obj.get(key) is not None:
@@ -205,6 +215,67 @@ def claim_mismatches(lines, expected):
             if want is None:
                 continue
             out.append((i, line.strip(), frag, got, want))
+    return out
+
+
+def llms_subset_mismatches(text, expected):
+    """llms.txt 子集口径断言（20260908-22 补盲区）。
+
+    起因（_NEEDS_USER P1）：总数有 L2「七处一致」闸门盯，子集数谁都不盯 ——
+    assessed 83/768、机械覆盖行 372 与 395 两套分母混用、not_declared 389、
+    声明率 2.82% 全部静默漂移三轮，verify 却报 17 页全绿。
+    期望值全部来自 facts() 现算（经 expected_values 注入），本函数不写死数字；
+    期望键未注入时放行（宁漏勿假红）。返回 [(片段, 名词, 线上值, 真值)]。
+    """
+    if not text:
+        return []
+    out = []
+
+    # ① assessed 可评估行：当前 **88/798（11.03%）** 可评估
+    m = re.search(r'当前\s*\*{0,2}(\d+)/(\d+)（([\d.]+)%）\*{0,2}\s*可评估', text)
+    if m and expected.get('ASSESSED') is not None:
+        if int(m.group(1)) != expected['ASSESSED'] or int(m.group(2)) != expected['TOTAL']:
+            out.append((m.group(0), '可评估',
+                        '%s/%s' % (m.group(1), m.group(2)),
+                        '%s/%s' % (expected['ASSESSED'], expected['TOTAL'])))
+
+    # ② 机械可耦合行（单一 applicable 口径；旧文案曾把类目和与 applicable 混用）
+    m = re.search(r'(\d+)\s*条中\s*(\d+)\s*条为机械可耦合实体', text)
+    if m and expected.get('MI_APPLICABLE') is not None:
+        if int(m.group(1)) != expected['TOTAL'] or int(m.group(2)) != expected['MI_APPLICABLE']:
+            out.append((m.group(0), '机械可耦合',
+                        '%s/%s' % (m.group(1), m.group(2)),
+                        '%s/%s' % (expected['TOTAL'], expected['MI_APPLICABLE'])))
+    m = re.search(r'尺寸级已声明 (\d+) 条、partial (\d+) 条（声明率 ([\d.]+)%，含 partial），'
+                  r'not_declared (\d+) 条，n_a (\d+) 条', text)
+    if m and expected.get('MI_FULL') is not None:
+        got = (int(m.group(1)), int(m.group(2)), float(m.group(3)),
+               int(m.group(4)), int(m.group(5)))
+        want = (expected.get('MI_FULL'), expected.get('MI_PARTIAL'),
+                expected.get('MI_PCT'), expected.get('MI_NOT_DECLARED'),
+                expected.get('MI_NA'))
+        bad = False
+        for g, w in zip(got, want):
+            if w is None:
+                continue
+            if isinstance(w, float):
+                if abs(g - w) > 0.005:
+                    bad = True
+            elif g != w:
+                bad = True
+        if bad:
+            out.append((m.group(0), '机械覆盖', str(got), str(want)))
+
+    # ③ 「全库 N 条中」边界行分母
+    m = re.search(r'全库 (\d+) 条中，参数口径达到「可跨厂商直接比较」的为', text)
+    if m and expected.get('TOTAL') is not None and int(m.group(1)) != expected['TOTAL']:
+        out.append((m.group(0), '全库分母', m.group(1), str(expected['TOTAL'])))
+
+    # ④ 「声明率仅 X%」（与 onboarding_block html_block 同一 mech_pct 源）
+    m = re.search(r'声明率仅 ([\d.]+)%', text)
+    if m and expected.get('MI_PCT') is not None \
+            and abs(float(m.group(1)) - expected['MI_PCT']) > 0.005:
+        out.append((m.group(0), '声明率', m.group(1), str(expected['MI_PCT'])))
     return out
 
 
@@ -422,6 +493,36 @@ def self_test():
     check(live_violations([('t', '<p>收录 688 个实体</p>')], EXP)['t'].__len__() == 1,
           '两趟不重复计数：同一句同一数字只报一次')
 
+    # --- llms.txt 子集口径这一趟（20260908-22 补的盲区）--------------------
+    # 阳性片段取自 2026-09-08 线上真实存在的过期写法（83/768、双分母混用、2.82%）。
+    EXP_SUB = {'TOTAL': 798, 'ASSESSED': 88, 'MI_APPLICABLE': 435, 'MI_FULL': 2,
+               'MI_PARTIAL': 10, 'MI_NOT_DECLARED': 423, 'MI_NA': 363, 'MI_PCT': 2.76}
+    llms_pos = [
+        ('assessed 子集停在旧库时代',
+         '当前 **83/768（10.81%）** 可评估，其余如实标记 `false` + `unknown`。'),
+        ('机械覆盖整行过期（372 与 395 双分母混用的旧文案）',
+         '**覆盖率如实披露**：768 条中 372 条为机械可耦合实体（x）。现状：'
+         '尺寸级已声明 2 条、partial 4 条（声明率 1.52%，含 partial），'
+         'not_declared 389 条，n_a 373 条。'),
+        ('全库分母过期', '全库 768 条中，参数口径达到「可跨厂商直接比较」的为 **0 条**'),
+        ('声明率漂移到另一口径', '机械互换维度声明率仅 2.82%，其余如实标注。'),
+    ]
+    for why, src in llms_pos:
+        check(bool(llms_subset_mismatches(src, EXP_SUB)),
+              '阳性(llms子集): 判红（%s）' % why)
+    llms_neg = ('当前 **88/798（11.03%）** 可评估，其余如实标记。'
+                '798 条中 435 条为机械可耦合实体（具备物理安装面的实物零部件）。'
+                '现状：尺寸级已声明 2 条、partial 10 条（声明率 2.76%，含 partial），'
+                'not_declared 423 条，n_a 363 条。'
+                '全库 798 条中，参数口径达到「可跨厂商直接比较」的为 **0 条**。'
+                '机械互换维度声明率仅 2.76%，其余如实标注。')
+    check(not llms_subset_mismatches(llms_neg, EXP_SUB),
+          '阴性(llms子集): 全部等于现算真值放行')
+    check(not llms_subset_mismatches('这一页没有任何子集口径句子。', EXP_SUB),
+          '阴性(llms子集): 无子集行放行')
+    check(not llms_subset_mismatches('当前 **88/798（11.03%）** 可评估', {'TOTAL': 798}),
+          '阴性(llms子集): 期望键未注入时放行（宁漏勿假红）')
+
     # 本脚本唯一的自有逻辑：HTML→行。断错了会让检测器整体假绿，必须单独测。
     two = html_to_lines('<p>甲</p><p>乙</p>')
     check('甲' in two and '乙' in two and not any('甲' in x and '乙' in x for x in two),
@@ -560,6 +661,13 @@ def main():
 
     bad = live_violations(pages, expected)
 
+    # llms.txt 子集口径（20260908-22 补盲区）：总数闸门之外的第二轴
+    llms_bad = []
+    for name, text in pages:
+        if name == '/llms.txt':
+            llms_bad = llms_subset_mismatches(text, expected)
+            break
+
     # 对外 JSON 接口总数（页面正文核验够不着的那一轴）
     api_payloads, api_unknown = [], []
     for path, keypath, exp_key in _API_TOTALS:
@@ -578,7 +686,7 @@ def main():
 
     code, state = verdict(len(pages) + len(api_payloads),
                           len(unknown) + len(api_unknown),
-                          len(bad) + len(api_bad))
+                          len(bad) + len(api_bad) + len(llms_bad))
 
     if as_json:
         print(json.dumps({
@@ -589,6 +697,8 @@ def main():
             'api_checked': [p for p, _, _, _ in api_payloads],
             'api_unknown': api_unknown,
             'api_violations': ['%s: %s' % (p, m) for p, m in api_bad],
+            'llms_subset_violations': ['%s: 线上%s ≠ 真相源%s' % (n, a, e)
+                                       for _, n, a, e in llms_bad],
         }, ensure_ascii=False, indent=2))
     else:
         print('=== 线上对外数字核验 · %s · 隔离头已带 ===' % TARGET)
@@ -602,6 +712,8 @@ def main():
             print('❌ %-58s %s' % (name, '；'.join(pairs[:4])))
         for path, msg in api_bad:
             print('❌ %-58s %s' % (path, msg))
+        for _, noun, got, want in llms_bad:
+            print('❌ %-58s llms.txt 子集 %s 线上%s ≠ 真相源%s' % ('/llms.txt', noun, got, want))
         if state == 'RED':
             print('\n❌ 页面失配 %d/%d；对外接口失配 %d/%d。'
                   % (len(bad), len(pages), len(api_bad), len(api_payloads)))

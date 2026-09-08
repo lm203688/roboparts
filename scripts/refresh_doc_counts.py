@@ -145,6 +145,98 @@ def refresh_llms_clean(d):
     return False
 
 
+def refresh_llms_subsets(d, ents):
+    """llms.txt 子集口径四段现算回填（20260908-22，P1 数据保鲜）。
+
+    起因（_NEEDS_USER「llms.txt 子集口径大面积过期」）：总数有 L2 七处一致闸门盯，
+    子集数谁都不盯 —— assessed 83/768、机械可耦合 372/395 两套分母混用、
+    not_declared 389、全库 768、声明率 2.82% 全部停在旧库时代，静默漂移三轮。
+
+    修法与既有纪律一致：数字一律由真相源现算后正则回填（幂等），措辞仅
+    在"旧文案两套分母自相矛盾"处收敛为单一口径，禁手改数字。
+    """
+    path = LLMS_PATH
+    if not os.path.exists(path):
+        print("  ⚠️ llms.txt 不存在，子集刷新跳过")
+        return False
+    meta = d.get("meta", {})
+    mic = meta.get("mechanical_interface_coverage") or {}
+    total = len(ents)
+    applicable = mic.get("applicable")
+    declared = mic.get("declared")
+    partial = mic.get("partial")
+    not_decl = mic.get("not_declared")
+    na = mic.get("not_applicable")
+    if None in (applicable, declared, partial, not_decl, na):
+        print("  ⚠️ llms.txt 子集刷新跳过：meta.mechanical_interface_coverage 不完整")
+        return False
+    # 一致性自检：分母必须自洽，否则说明 meta 与实体库脱钩，停下来而不是写错数
+    if declared + partial + not_decl != applicable or applicable + na != total:
+        print("  ❌ 机械覆盖分母不自洽（declared+partial+not_declared=%d ≠ applicable=%d 或 applicable+n_a=%d ≠ total=%d），拒绝回填"
+              % (declared + partial + not_decl, applicable, applicable + na, total))
+        return False
+    pct_mech = round((declared + partial) * 100.0 / applicable, 2) if applicable else 0.0
+    # assessed 不信任 meta.standard_conformance_coverage（其 total/pct 曾停在 768 时代），
+    # 直接从实体现算
+    assessed = sum(
+        1 for e in ents
+        if isinstance(e.get("standard_conformance"), dict)
+        and e["standard_conformance"].get("assessed") is True)
+    pct_assessed = round(assessed * 100.0 / total, 2) if total else 0.0
+
+    text = open(path, encoding="utf-8").read()
+    changed = False
+
+    # ① assessed 可评估行：当前 **83/768（10.81%）** 可评估
+    pat = re.compile(r"当前 \*\*\d+/\d+（[\d.]+%）\*\* 可评估")
+    new_seg = f"当前 **{assessed}/{total}（{pct_assessed}%）** 可评估"
+    if pat.search(text):
+        text2 = pat.sub(new_seg, text, count=1)
+        if text2 != text:
+            changed = True
+        text = text2
+
+    # ② 机械可耦合行：旧文案「768 条中 372 条…」把类目和(372)与 applicable(395)
+    #    两套分母混进同一句 —— 收敛为单一 applicable 口径，括注改为不举类目的写法
+    pat = re.compile(
+        r"\*\*覆盖率如实披露\*\*：\d+ 条中 \d+ 条为机械可耦合实体（[^）]*）。"
+        r"现状：尺寸级已声明 \d+ 条、partial \d+ 条（声明率 [\d.]+%，含 partial），"
+        r"not_declared \d+ 条，n_a \d+ 条(?:（[^）]*）)?。")
+    new_seg = (f"**覆盖率如实披露**：{total} 条中 {applicable} 条为机械可耦合实体"
+               f"（具备物理安装面的实物零部件）。现状：尺寸级已声明 {declared} 条、"
+               f"partial {partial} 条（声明率 {pct_mech}%，含 partial），"
+               f"not_declared {not_decl} 条，n_a {na} 条。")
+    if pat.search(text):
+        text2 = pat.sub(new_seg, text, count=1)
+        if text2 != text:
+            changed = True
+        text = text2
+
+    # ③ 「全库 N 条中」边界行
+    pat = re.compile(r"全库 (\d+) 条中，参数口径达到「可跨厂商直接比较」的为")
+    m = pat.search(text)
+    if m and int(m.group(1)) != total:
+        text = pat.sub(f"全库 {total} 条中，参数口径达到「可跨厂商直接比较」的为", text, count=1)
+        changed = True
+
+    # ④ 「声明率仅 X%」边界行（与 onboarding_block html_block 同一口径源）
+    pat = re.compile(r"声明率仅 [\d.]+%")
+    new_seg = f"声明率仅 {pct_mech}%"
+    if pat.search(text):
+        text2 = pat.sub(new_seg, text, count=1)
+        if text2 != text:
+            changed = True
+        text = text2
+
+    if changed:
+        open(path, "w", encoding="utf-8").write(text)
+        print(f"  ✅ llms.txt 子集行已刷新（assessed {assessed}/{total}={pct_assessed}%；"
+              f"机械 {declared}+{partial}/{applicable}={pct_mech}%，nd {not_decl}/na {na}）")
+    else:
+        print("  ✅ llms.txt 子集行已与真相源一致（无需改动）")
+    return changed
+
+
 def main():
     d, ents, counts = load_counts()
     total = len(ents)
@@ -152,6 +244,7 @@ def main():
     refresh_data_qty(README_PATH, counts, total)
     refresh_data_qty(LLMS_PATH, counts, total)
     refresh_llms_clean(d)
+    refresh_llms_subsets(d, ents)
     return 0
 
 

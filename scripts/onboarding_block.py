@@ -56,6 +56,7 @@ def facts():
     # 分子取 declared+partial（对外只敢说「有线索」，不敢说「已完整声明」）。
     KNOWN = {'declared', 'partial', 'not_declared', 'n_a'}
     applicable = declared_any = full_declared = 0
+    partial_n = not_declared_n = na_n = 0
     unknown = set()
     for e in items:
         mi = e.get('mechanical_interface')
@@ -66,12 +67,17 @@ def facts():
             unknown.add(st)
             continue
         if st == 'n_a':
+            na_n += 1
             continue
         applicable += 1
         if st in ('declared', 'partial'):
             declared_any += 1
         if st == 'declared':
             full_declared += 1
+        if st == 'partial':
+            partial_n += 1
+        if st == 'not_declared':
+            not_declared_n += 1
     if unknown:
         # 字段取值一旦漂移就必须停下来，而不是静默算出一个好看的数字。
         raise SystemExit('!! mechanical_interface.status 出现未知取值 %s，接入区块拒绝生成' % unknown)
@@ -120,9 +126,18 @@ def facts():
         if ((e.get('standard_conformance') or {}) if isinstance(e.get('standard_conformance'), dict) else {})
         .get('caee060_relevant') is True)
 
+    # 【20260908-22】llms.txt 子集口径断言所需（P1 数据保鲜）：assessed 与
+    # partial/not_declared/n_a 一律从实体现算——meta.standard_conformance_coverage
+    # 的 total/assessed_pct 曾停在 768 时代（88/768=11.46%），子集分母同样会静默漂移。
+    assessed_n = sum(
+        1 for e in items
+        if ((e.get('standard_conformance') or {}) if isinstance(e.get('standard_conformance'), dict) else {})
+        .get('assessed') is True)
+
     return {
         'credits': credits,
         'caee060_relevant': caee060_n,
+        'assessed': assessed_n,
         'rate_limit': rate,
         'total_entities': total,
         'component_entities': comp_n,
@@ -134,6 +149,9 @@ def facts():
         'oss_total': oss_total,
         'mech_declared': declared,
         'mech_full_declared': full_declared,
+        'mech_partial': partial_n,
+        'mech_not_declared': not_declared_n,
+        'mech_n_a': na_n,
         'mech_applicable': applicable,
         'mech_pct': pct,
         'comparable_grade_a': 0,   # 见 KD-01：全库无一条达到跨厂商可比 A 级
