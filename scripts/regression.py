@@ -1221,7 +1221,10 @@ def layer1_14():
         return
     f = _facts()
 
-    EXEMPT = {'honeypot.json', 'geo-faqs.json', 'semantic_index.json', 'reference_builds.json'}
+    EXEMPT = {'honeypot.json', 'geo-faqs.json', 'semantic_index.json', 'reference_builds.json', 'electrical_interfaces.json'}
+    # electrical_interfaces.json 是公开静态数据集（CC-BY-4.0 电气接口事实与判定规则登记，
+    # 无 API key、无限速、无注册入口），与 geo-faqs / semantic_index / reference_builds 同类，
+    # 不承载「AI 领 key 入口」语义，故豁免本闸门的强制接入块要求。
     # reference_builds.json 是**公开静态数据集（CC-BY-4.0 构型描述，无 API key、
     # 无限速、无注册入口）**，与 geo-faqs/semantic_index 同类，不承载「AI 领 key
     # 入口」语义，故豁免本闸门的强制接入块要求。其 meta.access 仅作诚实的公开

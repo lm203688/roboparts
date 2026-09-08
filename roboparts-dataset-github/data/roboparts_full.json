@@ -44,7 +44,7 @@
       "B": 246,
       "C": 150
     },
-    "updated": "2026-09-08T17:07:50+0800",
+    "updated": "2026-09-08T17:33:07+0800",
     "generated_by": "scripts/sync_dataset_dist.py",
     "truth_source": "api/entities.json"
   },
@@ -112,7 +112,9 @@
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "connector": "JST EHR-03（TTL 3-pin；PCB header B3B-EH-A）",
+      "last_verified": "2026-09-08"
     },
     {
       "id": "ACT-002",
@@ -177,7 +179,9 @@
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "connector": "JST EHR-03（TTL 3-pin；PCB header B3B-EH-A）",
+      "last_verified": "2026-09-08"
     },
     {
       "id": "ACT-003",
@@ -241,7 +245,9 @@
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "connector": "JST EHR-04（RS-485 4-pin；PCB header B4B-EH-A）",
+      "last_verified": "2026-09-08"
     },
     {
       "id": "ACT-004",
@@ -1036,7 +1042,9 @@
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "connector": "XT30PW-M（电源/CAN）+ A1257WR-S-3P（UART 调试）",
+      "last_verified": "2026-09-08"
     },
     {
       "id": "ACT-017",

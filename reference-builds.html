@@ -61,6 +61,7 @@ function render(d){
       <div class="mi" style="margin-top:10px">
         <span class="dot" style="background:${cov(ei.status)}"></span>
         电气接口：<b>${ei.status}</b>${ei.note?` · <span class="src">${ei.note}</span>`:''}
+        ${ei.disclaimer?`<div class="gap" style="border-left:3px solid ${C.none};padding-left:8px;margin-top:6px"><b>免责</b> ${ei.disclaimer}</div>`:''}
         ${(ei.power_domains||[]).length?`<div class="opp">⚡ 供电轨：${ei.power_domains.map(p=>`${p.domain} <b>${p.voltage_v}V</b>（${p.applies_to}）`).join(' ｜ ')}</div>`:''}
         ${ei.bus&&!Array.isArray(ei.bus)?`<div class="opp">🔌 总线：${ei.bus.protocol||ei.bus.bus} · ${ei.bus.physical_layer||''} · ${ei.bus.topology||''}</div>`:''}
         ${Array.isArray(ei.bus)?`<div class="opp">🔌 总线：${ei.bus.map(x=>`${x.bus}${x.baud?`（${x.baud}）`:''}`).join(' ｜ ')}</div>`:''}

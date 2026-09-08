@@ -46,14 +46,14 @@
       "pcb": 2,
       "bionic_mechanisms": 17
     },
-    "updated": "2026-09-08T09:07:54.232731Z",
+    "updated": "2026-09-08T09:33:15.254514Z",
     "source": "roboparts.cc",
     "tier": "full",
     "provenance_coverage": {
       "source_pct": 92.36,
       "traceable_pct": 50.38,
       "confidence_pct": 100.0,
-      "last_verified_pct": 62.03,
+      "last_verified_pct": 62.53,
       "tier_a_traceable": 402,
       "tier_b_attributable": 246,
       "tier_c_none": 150,
@@ -65,7 +65,7 @@
         "source_pct": 96.28,
         "traceable_pct": 49.64,
         "confidence_pct": 100.0,
-        "last_verified_pct": 61.52
+        "last_verified_pct": 62.09
       },
       "tier_definition": {
         "A": "可点开复核的一手来源（官方规格书/标准文本/带链接厂商文档）",
@@ -824,7 +824,9 @@
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "connector": "JST EHR-03（TTL 3-pin；PCB header B3B-EH-A）",
+      "last_verified": "2026-09-08"
     },
     {
       "id": "ACT-002",
@@ -889,7 +891,9 @@
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "connector": "JST EHR-03（TTL 3-pin；PCB header B3B-EH-A）",
+      "last_verified": "2026-09-08"
     },
     {
       "id": "ACT-003",
@@ -953,7 +957,9 @@
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "connector": "JST EHR-04（RS-485 4-pin；PCB header B4B-EH-A）",
+      "last_verified": "2026-09-08"
     },
     {
       "id": "ACT-004",
@@ -1748,7 +1754,9 @@
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "connector": "XT30PW-M（电源/CAN）+ A1257WR-S-3P（UART 调试）",
+      "last_verified": "2026-09-08"
     },
     {
       "id": "ACT-017",

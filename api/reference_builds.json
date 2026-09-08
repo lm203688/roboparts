@@ -265,6 +265,7 @@
  "electrical_interface": {
   "status": "partial",
   "note": "本构型同时踩中「连接器 / 电平 / 跨电压域」三类电气坑，是建立电气接口判定层（L1）的最佳样板。",
+  "disclaimer": "⚠ 协议/机械兼容 ≠ 电气兼容：Feetech STS3215（5264-3P，2.54mm，6~7.4V）与 Dynamixel X（JST EHR-03，2.5mm，10~14.8V）同为 3-pin 但不兼容且外观相似；RPi GPIO 3.3V 直驱 Dynamixel 须加 Level Shifter。本电气轴为 partial 样板，仅覆盖已核实条目，请勿据此对外宣称具备完整电气兼容判定。",
   "power_domains": [
    {
     "domain": "servo_rail_7v4",

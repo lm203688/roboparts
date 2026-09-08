@@ -1,5 +1,5 @@
 const DB = {
-  "updated": "2026-09-08T09:07:54.232731Z",
+  "updated": "2026-09-08T09:33:15.254514Z",
   "stats": {
     "actuators": 220,
     "sensors": 95,
@@ -86,7 +86,9 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "connector": "JST EHR-03（TTL 3-pin；PCB header B3B-EH-A）",
+      "last_verified": "2026-09-08"
     },
     {
       "id": "ACT-002",
@@ -151,7 +153,9 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "connector": "JST EHR-03（TTL 3-pin；PCB header B3B-EH-A）",
+      "last_verified": "2026-09-08"
     },
     {
       "id": "ACT-003",
@@ -215,7 +219,9 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "connector": "JST EHR-04（RS-485 4-pin；PCB header B4B-EH-A）",
+      "last_verified": "2026-09-08"
     },
     {
       "id": "ACT-004",
@@ -1010,7 +1016,9 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "connector": "XT30PW-M（电源/CAN）+ A1257WR-S-3P（UART 调试）",
+      "last_verified": "2026-09-08"
     },
     {
       "id": "ACT-017",
