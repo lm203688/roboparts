@@ -48,7 +48,19 @@ export async function onRequestOptions() {
 function attribute(req) {
   const ua = (req.headers.get('user-agent') || '').toLowerCase();
   const ref = req.headers.get('referer') || '';
-  const via = (req.headers.get('x-roboparts-via') || '').slice(0, 40); // 渠道自带标记
+
+  // 【20260909-25】渠道标记原只认 HTTP 头 x-roboparts-via。
+  // 头只能由 curl / Agent 带上，而「社区发帖 → 用户用浏览器点链接」这条
+  // 外溢流量主路径里，浏览器不会带自定义头 —— 标记必然丢失。
+  // 补 URL 查询参数 ?via=，两者并存：头优先（Agent 场景），参数兜底（点击场景）。
+  let via = (req.headers.get('x-roboparts-via') || '').slice(0, 40);
+  if (!via) {
+    try {
+      via = (new URL(req.url).searchParams.get('via') || '').slice(0, 40);
+    } catch { /* URL 畸形则放弃参数归因 */ }
+  }
+  // 只接受安全字符：渠道名会落进 KV 键，不能被用来撑爆键空间或注入分隔符
+  via = via.replace(/[^a-z0-9._-]/gi, '').toLowerCase();
 
   if (via) return { source: 'channel', detail: via };
 
@@ -175,6 +187,17 @@ export async function onRequestPost(context) {
         const srcKey = `stat:src:${attr.source}`;
         const sc = await env.USER_CREDITS.get(srcKey);
         await env.USER_CREDITS.put(srcKey, String(((sc ? parseInt(sc, 10) : 0) || 0) + 1));
+
+        // 【20260909-25】此前只按 source 五类分桶（channel/web/agent/referral/unknown），
+        // 具体渠道名（detail）只存进单条用户记录、从不聚合 —— 于是「古月居来了几个人」
+        // 这种问题根本答不出，外溢流量也就无从评估 ROI。补 detail 级计数。
+        // 键空间可控：channel 的 detail 已在 attribute() 做过白名单清洗；
+        // referral 的 detail 是域名，长度已截断。
+        if (attr.detail) {
+          const viaKey = `stat:via:${attr.source}:${attr.detail}`;
+          const vc = await env.USER_CREDITS.get(viaKey);
+          await env.USER_CREDITS.put(viaKey, String(((vc ? parseInt(vc, 10) : 0) || 0) + 1));
+        }
         // 保留首个真实注册的完整现场，只写一次，供人工复盘
         if (!(await env.USER_CREDITS.get('stat:first_signup'))) {
           await env.USER_CREDITS.put('stat:first_signup', JSON.stringify({

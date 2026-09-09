@@ -285,6 +285,16 @@ function record(context, url, status) {
       } catch { /* 非法 referer 忽略 */ }
     }
 
+    // 【20260909-25】渠道点击侧计数。注册端已有 stat:via: 聚合注册数，
+    // 但只有注册、没有点击，就算不出转化率 —— 无法判断某个渠道「没人来」
+    // 还是「来了留不住」。点击与注册必须成对，漏斗才有意义。
+    // 同一清洗规则：渠道名进 KV 键，只留安全字符。
+    try {
+      const viaRaw = new URL(req.url).searchParams.get('via') || '';
+      const viaCh = viaRaw.replace(/[^a-z0-9._-]/gi, '').toLowerCase().slice(0, 40);
+      if (viaCh) bump(`via:${viaCh}`);
+    } catch { /* URL 畸形忽略 */ }
+
     // 分级落盘：爬虫命中是 GEO 曝光的核心证据且天然低频，必须立即落盘，
     // 否则在零流量站点上会因等不到下一个请求而永久丢失（见 MAX_WRITES 处注释）。
     const highValue = (kind === 'ai' || kind === 'search');
