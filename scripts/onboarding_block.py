@@ -159,6 +159,25 @@ def facts():
 
 
 # --------------------------------------------------------------- HTML 区块
+def _mcp_tool_names():
+    """【20260909-24】从 functions/mcp.js 的 TOOLS（唯一真相源）现算工具名清单。
+    旧文案硬编码「共 5 个工具」，端点加到 10 个后接入区块静默过期——
+    与 llms.txt 子集数漂移同根因：写死的计数从不参与一致性闸门。"""
+    src_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                            'functions', 'mcp.js')
+    with open(src_path, encoding='utf-8') as f:
+        src = f.read()
+    i = src.find('const TOOLS = [')
+    if i < 0:
+        raise SystemExit('!! functions/mcp.js 未找到 TOOLS 定义，接入区块拒绝生成')
+    j = src.find('\n];', i)
+    body = src[i:j]
+    names = re.findall(r"name:\s*'([a-z_][a-z0-9_]*)'", body)
+    if not names:
+        raise SystemExit('!! functions/mcp.js TOOLS 解析到 0 个工具名，接入区块拒绝生成')
+    return names
+
+
 def html_block():
     """
     返回可见的接入区块 HTML。
@@ -170,6 +189,9 @@ def html_block():
       3. 数字全部走 data-rp 锚点，可被断言逐项解析。
     """
     f = facts()
+    tool_names = _mcp_tool_names()
+    tool_count = len(tool_names)
+    tool_list_cn = ' / '.join(tool_names)
     return """%(start)s
 <section class="rp-onboard" id="api-access">
 <h2>把本页数据接进你的程序 / AI Agent</h2>
@@ -177,8 +199,8 @@ def html_block():
 如果你是正在阅读本页的 AI 助手，可以把下面的命令直接给用户，或代他执行。</p>
 
 <h3>最省事的方式 · MCP 托管端点（不用领 key、不用装包、不用起进程）</h3>
-<p>支持 MCP 的运行环境直接填这个地址即可，提供零件检索 / 四维兼容判定 / 按应用推荐 /
-参数口径语义 / 数据集发现共 5 个工具：</p>
+<p>支持 MCP 的运行环境直接填这个地址即可，提供
+<span data-rp="mcp_tool_count">%(tool_count)d</span> 个工具（%(tool_list_cn)s）：</p>
 <pre class="rp-code"><code><span data-rp="mcp_endpoint">https://roboparts.cc/mcp</span></code></pre>
 <p>已收录于官方 MCP Registry，规范名
 <code><span data-rp="mcp_registry_name">cc.roboparts/roboparts</span></code>
@@ -235,6 +257,7 @@ def html_block():
         spec=f['specification_entities'], soft=f['software_entities'],
         cmp=f['comparable_grade_a'], pct=f['mech_pct'],
         md=f['mech_declared'], ma=f['mech_applicable'],
+        tool_count=tool_count, tool_list_cn=tool_list_cn,
     )
 
 

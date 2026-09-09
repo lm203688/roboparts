@@ -116,8 +116,9 @@
 
 **最省事的方式 · MCP 托管端点（无需 key、无需装包、无需起进程）**
 
-若你的运行环境支持 MCP（Model Context Protocol），直接连这个 URL 即可获得 5 个工具
-（零件检索 / 四维兼容判定 / 按应用推荐 / 参数口径语义 / 数据集发现）：
+若你的运行环境支持 MCP（Model Context Protocol），直接连这个 URL 即可获得 10 个工具
+（零件检索 / 详情 / 四维兼容判定 / 参数并排对比 / 按应用推荐 / 参数口径语义 / BOM 两两矩阵 /
+语义检索 / 标准自校验 / 多 Agent 复核）：
 
 ```
 https://roboparts.cc/mcp          # Streamable HTTP，免鉴权只读
@@ -129,6 +130,9 @@ https://roboparts.cc/mcp          # Streamable HTTP，免鉴权只读
 - 端点不设 cookie、不落用户数据；只读，不接受写入
 
 **第 1 步 · 获取 API Key（即时返回，无等待、无人工审核）**
+
+仅在需要 REST API 独立配额时才需要此步；MCP 端点免鉴权可直接用，无需注册。
+
 ```bash
 curl -X POST https://roboparts.cc/api/register \
   -H "Content-Type: application/json" \

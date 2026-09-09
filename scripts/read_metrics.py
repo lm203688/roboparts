@@ -217,7 +217,8 @@ PROBE_RE = re.compile(
 # 必须与 functions/mcp.js 的 TOOLS 数组逐个对齐，由 L1.19 断言交叉核对：
 # 漏一个，该工具的真实调用就会被统计成 0 —— 又一次「把未知读成零」。
 BUSINESS_TOOLS = ('search_components', 'get_component_detail',
-                  'check_compatibility', 'recommend_for_application',
+                  'check_compatibility', 'compare_components',
+                  'recommend_for_application',
                   'get_parameter_semantics', 'bom_compatibility_check',
                   'semantic_search', 'get_standard_audit', 'review_compatibility')
 

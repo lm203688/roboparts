@@ -18,6 +18,7 @@
 | `roboparts-component-detail` | mcp_tool | `get_component_detail` | 已经拿到零部件 ID（如 ACT-001），需要完整规格、厂商、证据等级与数据缺口时。 |
 | `roboparts-compat-check` | mcp_tool | `check_compatibility` | 用户问「A 和 B 能不能装一起」「这两个零件兼容吗」「选型有没有冲突」时。 |
 | `roboparts-recommend` | mcp_tool | `recommend_for_application` | 用户要「给某类机器人配一套零件」「预算 X 元怎么选」时。 |
+| `roboparts-compare` | mcp_tool | `compare_components` | 用户要在 2~6 个零部件之间横向比较参数（扭矩/电压/协议/价格等），或说「帮我对比这几个型号」时，一次调用替代连发多次 get_component_detail。 |
 | `roboparts-parameter-semantics` | mcp_tool | `get_parameter_semantics` | 用户问「这个扭矩参数靠谱吗」「不同厂商参数怎么比」「单位怎么换算」时。 |
 | `roboparts-bom-compat` | mcp_tool | `bom_compatibility_check` | 用户给了一整张零件清单 / BOM（如 ["ACT-001","SENS-001"]），问这些零件彼此之间在电气 / 机械 / 协议 / 软件四维是否兼容、冲突在哪时。 |
 | `roboparts-semantic-search` | mcp_tool | `semantic_search` | 用户用自然语言描述需求（如「人形机器人髋部高扭矩电机」「六维力传感器 防水」），不确定确切型号或参数名，需要发现式检索而非精确筛选时。 |

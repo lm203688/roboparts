@@ -87,6 +87,13 @@
         "guardrails": "只读启发式筛选，不构成工程选型意见；price_fit=unknown 不得表述为「符合预算」；预算仅剔除确定超支项。"
       },
       {
+        "name": "roboparts-compare",
+        "type": "mcp_tool",
+        "tool": "compare_components",
+        "when_to_use": "用户要在 2~6 个零部件之间横向比较参数（扭矩/电压/协议/价格等），或说「帮我对比这几个型号」时，一次调用替代连发多次 get_component_detail。",
+        "guardrails": "只读；缺失字段以 null 呈现，不得表述为「不支持该特性」；跨厂商数值比较须配合 get_parameter_semantics 与厂商规格书核对，不得直接断言优劣。"
+      },
+      {
         "name": "roboparts-parameter-semantics",
         "type": "mcp_tool",
         "tool": "get_parameter_semantics",

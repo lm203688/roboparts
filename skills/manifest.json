@@ -131,6 +131,23 @@
       ]
     },
     {
+      "name": "roboparts-compare",
+      "title": "多零部件参数并排对比",
+      "type": "mcp_tool",
+      "tool": "compare_components",
+      "description": "并排对比 2~6 个零部件的关键参数（torque/speed/voltage/protocol/interface/weight/price），相同值自动标注，替代为同一目的连发多次 get_component_detail。缺失字段以 null 呈现，不代表不支持该特性；跨厂商数值比较请配合 get_parameter_semantics。",
+      "when_to_use": "用户要在 2~6 个零部件之间横向比较参数（扭矩/电压/协议/价格等），或说「帮我对比这几个型号」时，一次调用替代连发多次 get_component_detail。",
+      "guardrails": "只读；缺失字段以 null 呈现，不得表述为「不支持该特性」；跨厂商数值比较须配合 get_parameter_semantics 与厂商规格书核对，不得直接断言优劣。",
+      "params": [
+        {
+          "name": "ids",
+          "type": "array",
+          "required": true,
+          "desc": "待对比零部件 ID 数组（2~6 个），形如 [\"ACT-001\", \"ACT-002\"]。请先用 search_components 确认 ID。"
+        }
+      ]
+    },
+    {
       "name": "roboparts-parameter-semantics",
       "title": "参数口径语义查询",
       "type": "mcp_tool",

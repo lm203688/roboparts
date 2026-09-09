@@ -13,6 +13,9 @@ import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprot
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+// 【20260909-24】审查采纳 P0-3：dialects 孤岛接入调用链（reputation.js 因依赖
+// Node fs、Workers 端无法复用且当前无贡献写入链，接入即空转，暂不接）。
+import { dialectManager } from './dialects.js';
 
 // ============================================================
 // 路径与常量配置
@@ -33,7 +36,7 @@ const API_DIR = join(__dirname, '..', 'api');
 // 每一次 Agent 调用都会在边缘遥测里留下 mcp 来源记录，
 // 这正是当前唯一缺失的「AI 通道是否真被使用」的可测量信号。
 // ------------------------------------------------------------
-const PKG_VERSION = '1.0.2';
+const PKG_VERSION = '1.1.0';
 const REMOTE_BASE = (process.env.ROBOPARTS_API_BASE || 'https://roboparts.cc/api')
   .replace(/\/+$/, '');
 const USER_AGENT = `roboparts-mcp-server/${PKG_VERSION} (+https://roboparts.cc; mcp)`;
@@ -67,8 +70,12 @@ const FILE_MAP = {
   'interfaces': 'interfaces.json',
   'flexible_actuators': 'flexible_actuators.json',
   'robot_ai_models': 'robot_ai_models.json',
-  'data_acquisition': 'data_acquisition.json'
+  'data_acquisition': 'data_acquisition.json',
+  'connectors': 'connectors.json'
 };
+
+// 搜索/筛选的默认品类集合：直接从 FILE_MAP 派生，新增品类不再漏同步。
+const ALL_CATEGORIES = Object.keys(FILE_MAP);
 
 /**
  * 取一个 JSON 资源：先远程（带退避重试），失败再回退本地（仅在仓库内运行时存在）。
@@ -119,7 +126,11 @@ async function fetchJSON(filename) {
           `[RoboParts MCP] ${filename} 第 ${attempt}/${FETCH_RETRIES} 次拉取失败` +
           `（${e.message}），退避重试中…`
         );
-        await new Promise(r => setTimeout(r, RETRY_BASE_MS * Math.pow(2, attempt - 1)));
+        // 指数退避 + 随机抖动：11 路并发同时失败时，确定性退避会让三路
+        // 在同一毫秒醒来再次互撞（惊群）。±50% 抖动打散重试时刻（审查采纳 P0-4）。
+        const backoff = RETRY_BASE_MS * Math.pow(2, attempt - 1);
+        const jittered = Math.round(backoff * (0.5 + Math.random()));
+        await new Promise(r => setTimeout(r, jittered));
       }
     }
   }
@@ -539,9 +550,7 @@ function searchComponents(args) {
   const { category, keyword, limit } = args;
   const maxResults = typeof limit === 'number' && limit > 0 ? limit : 10;
 
-  const categories = category
-    ? [category]
-    : ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces'];
+  const categories = category ? [category] : ALL_CATEGORIES;
 
   const results = [];
 
@@ -558,7 +567,14 @@ function searchComponents(args) {
           JSON.stringify(item.compatibility || [])
         ].filter(Boolean).join(' ').toLowerCase();
 
-        if (!searchText.includes(keyword.toLowerCase())) {
+        // 【20260909-24】多词短语兜底：纯子串匹配下 "harmonic drive 20Nm"
+        // 会因字段分散而 0 命中。改为分词后全部命中即算匹配（AND 语义，
+        // 不引入假阳性）；单词行为与之前完全一致。
+        const tokens = keyword.toLowerCase().split(/\s+/).filter(Boolean);
+        const hit = tokens.length > 1
+          ? tokens.every(t => searchText.includes(t))
+          : searchText.includes(keyword.toLowerCase());
+        if (!hit) {
           continue;
         }
       }
@@ -573,7 +589,11 @@ function searchComponents(args) {
     query: { category: category || 'all', keyword: keyword || '', limit: maxResults },
     total_found: results.length,
     returned: limited.length,
-    components: limited
+    components: limited,
+    // 0 命中时给调用方可执行的下一步，而不是让它猜为什么搜不到。
+    ...(results.length === 0 && keyword ? {
+      hint: '0 命中。本端为子串匹配（多词 AND），请尝试：① 拆成单个词重试；② 只用型号/厂商名（如 "XM430"、"ROBOTIS"）；③ 免鉴权端点 https://roboparts.cc/mcp 的 semantic_search 工具支持场景语义匹配。'
+    } : {})
   };
 }
 
@@ -845,11 +865,117 @@ function checkCompatibility(args) {
     component1: { id: c1.id, name: c1.name, category: component1_category },
     component2: { id: c2.id, name: c2.name, category: component2_category },
     compatible,
+    // 【20260909-24】字段名与 functions 端 judgePair 统一（overall_compatible），
+    // 调用方不再需要两端适配两个名字。本端规则覆盖不到时上面已回退为
+    // reasons 里的"建议人工确认"，此字段仍为布尔而非 null——与 functions 端
+    // "证据不足返回 null" 的语义差异已在本端描述中声明（审查采纳 U-4）。
+    overall_compatible: compatible,
     reasons,
     warnings,
     summary: compatible
       ? `兼容性检查通过: ${c1.name} 与 ${c2.name} 可以配合使用`
       : `兼容性检查未通过: ${c1.name} 与 ${c2.name} 存在兼容性问题, 请查看 reasons 和 warnings 了解详情`
+  };
+}
+
+/**
+ * 工具3.5: compare_components
+ * 【20260909-24】审查采纳 U-5：一键并排对比 2~6 个零部件的关键参数，
+ * 省去调用方为同一目的连发 N 次 get_component_detail。
+ */
+function compareComponents(args) {
+  // 【20260909-24】入参与 functions 端统一为 ids: string[]（2~6 个）；
+  // npm 端数据按品类分文件，这里自动跨品类解析 ID，调用方无需填 category。
+  let ids = Array.isArray(args?.ids) ? args.ids.map(String) : [];
+  if (!ids.length && Array.isArray(args?.components)) {
+    // 兼容旧形态 {components:[{id,category}]}
+    ids = args.components.map(c => String(c?.id || '')).filter(Boolean);
+  }
+  if (ids.length < 2 || ids.length > 6) {
+    return { error: 'ids 需为 2~6 个零部件 ID 的数组', hint: '示例：{"ids": ["ACT-001", "ACT-002"]}' };
+  }
+
+  const loaded = [];
+  const notFound = [];
+  for (const id of ids) {
+    let comp = null, cat = null;
+    for (const c of ALL_CATEGORIES) {
+      const hit = findComponent(id, c);
+      if (hit) { comp = hit; cat = c; break; }
+    }
+    if (!comp) notFound.push(id);
+    else loaded.push({ item: comp, category: cat });
+  }
+
+  if (loaded.length < 2) {
+    return {
+      error: '有效零部件不足 2 个，无法对比',
+      not_found: notFound,
+      suggestion: '请先用 search_components 确认 ID 后再试。'
+    };
+  }
+
+  // 并排表：行 = 规格键（并集），列 = 零件；同键不同值一眼可见
+  const specKeys = [];
+  for (const { item } of loaded) {
+    for (const k of Object.keys(getKeySpecs(item, item.category || loaded[0].category) || {})) {
+      if (!specKeys.includes(k)) specKeys.push(k);
+    }
+  }
+  const columns = loaded.map(({ item, category }) => ({
+    id: item.id,
+    name: item.name,
+    category,
+    manufacturer: item.manufacturer || 'N/A',
+    price_range: item.price_range || item.price || 'N/A',
+    specs: getKeySpecs(item, category) || {}
+  }));
+  const rows = specKeys.map(k => {
+    const row = { spec: k, values: columns.map(c => c.specs[k] ?? '—') };
+    const present = row.values.filter(v => v !== '—');
+    row.all_equal = present.length > 1 && present.every(v => String(v) === String(present[0]));
+    return row;
+  });
+
+  return {
+    compared: columns.map(({ id, name, category }) => ({ id, name, category })),
+    not_found: notFound.length ? notFound : undefined,
+    dimensions: rows,
+    note: '对比基于 key_specs 现有字段；缺失规格以 "—" 呈现，不代表该零件不支持该特性。' +
+      '注意：库内参数语义可比性当前为 0 条（跨厂商同名义参数口径未声明），数值差异需回查厂商规格书。'
+  };
+}
+
+/**
+ * 工具3.6: dialects_list / dialects_evaluate
+ * 【20260909-24】审查采纳 P0-3：把领域方言模板暴露为工具——按场景
+ * （人形/工业/灵巧手/移动/科研）给单一零件打分并给出配置建议。
+ * 评分只基于库内有证据的字段，无证据维度返回 null 不冒充 50 分。
+ */
+function dialectsList() {
+  return { dialects: dialectManager.listDialects() };
+}
+
+function dialectsEvaluate(args) {
+  const { component_id, category, dialect } = args;
+  if (!component_id || !category || !dialect) {
+    return { error: '参数缺失: component_id / category / dialect 均为必填项' };
+  }
+  const comp = findComponent(String(component_id), String(category));
+  if (!comp) {
+    return {
+      error: `未找到零部件: ${component_id}`,
+      suggestion: '请先用 search_components 确认 ID 与品类。'
+    };
+  }
+  const evaluation = dialectManager.evaluateComponent(comp, String(category), String(dialect));
+  if (evaluation.error) {
+    return evaluation;
+  }
+  return {
+    ...evaluation,
+    note: '评分为场景启发式参考，不替代 check_compatibility 的接口级判定；' +
+      '总分仅基于库内有证据的维度加权（无证据维度不计分）。'
   };
 }
 
@@ -1133,8 +1259,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
         properties: {
           category: {
             type: 'string',
-            description: '品类: actuators(执行器) / sensors(传感器) / chips(芯片) / protocols(通信协议) / platforms(机器人平台) / llms(大语言模型) / interfaces(接口)',
-            enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition']
+            description: '品类: actuators(执行器) / sensors(传感器) / chips(芯片) / protocols(通信协议) / platforms(机器人平台) / llms(大语言模型) / interfaces(接口) / connectors(连接器)等 11 类',
+            enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition', 'connectors']
           },
           keyword: {
             type: 'string',
@@ -1161,7 +1287,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
           category: {
             type: 'string',
             description: '品类: actuators / sensors / chips / protocols / platforms / llms / interfaces',
-            enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition']
+            enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition', 'connectors']
           }
         },
         required: ['id', 'category']
@@ -1180,7 +1306,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
           component1_category: {
             type: 'string',
             description: '零件1品类',
-            enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition']
+            enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition', 'connectors']
           },
           component2_id: {
             type: 'string',
@@ -1189,10 +1315,45 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
           component2_category: {
             type: 'string',
             description: '零件2品类',
-            enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition']
+            enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition', 'connectors']
           }
         },
         required: ['component1_id', 'component1_category', 'component2_id', 'component2_category']
+      }
+    },
+    {
+      name: 'compare_components',
+      description: '并排对比 2~6 个零部件的关键参数（规格键并集，相同值自动标注），替代为同一目的连发多次 get_component_detail。ID 自动跨品类解析。',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          ids: {
+            type: 'array',
+            description: '待对比零部件 ID 数组（2~6 个），形如 ["ACT-001", "ACT-002"]',
+            items: { type: 'string' },
+            minItems: 2,
+            maxItems: 6
+          }
+        },
+        required: ['ids']
+      }
+    },
+    {
+      name: 'dialects_list',
+      description: '列出可用的领域方言模板（人形/工业机械臂/灵巧手/移动机器人/科研教育），用于按应用场景评估零部件。',
+      inputSchema: { type: 'object', properties: {} }
+    },
+    {
+      name: 'dialects_evaluate',
+      description: '按领域方言对单个零部件做场景化评分。总分仅基于库内有证据的维度加权，无证据维度不计分（返回 null），不冒充 50 分。',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          component_id: { type: 'string', description: '零部件ID' },
+          category: { type: 'string', description: '品类', enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition', 'connectors'] },
+          dialect: { type: 'string', description: '方言ID（先用 dialects_list 查询）', enum: ['humanoid', 'industrial', 'dexterous_hand', 'mobile_robot', 'research'] }
+        },
+        required: ['component_id', 'category', 'dialect']
       }
     },
     {
@@ -1242,7 +1403,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
                 category: {
                   type: 'string',
                   description: '品类',
-                  enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition']
+                  enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition', 'connectors']
                 },
                 quantity: {
                   type: 'number',
@@ -1281,6 +1442,18 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       case 'check_compatibility':
         result = checkCompatibility(args || {});
+        break;
+
+      case 'compare_components':
+        result = compareComponents(args || {});
+        break;
+
+      case 'dialects_list':
+        result = dialectsList();
+        break;
+
+      case 'dialects_evaluate':
+        result = dialectsEvaluate(args || {});
         break;
 
       case 'recommend_for_application':

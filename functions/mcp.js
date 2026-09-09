@@ -285,6 +285,26 @@ const TOOLS = [
     },
   },
   {
+    name: 'compare_components',
+    description:
+      '并排对比 2~6 个零部件的关键参数（torque/speed/voltage/protocol/interface/weight/price），' +
+      '相同值自动标注，替代为同一目的连发多次 get_component_detail。缺失字段以 null 呈现，' +
+      '不代表不支持该特性；跨厂商数值比较请配合 get_parameter_semantics。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        ids: {
+          type: 'array',
+          description: '待对比零部件 ID 数组（2~6 个），形如 ["ACT-001", "ACT-002"]。请先用 search_components 确认 ID。',
+          items: { type: 'string' },
+          minItems: 2,
+          maxItems: 6,
+        },
+      },
+      required: ['ids'],
+    },
+  },
+  {
     name: 'recommend_for_application',
     description:
       '按应用场景推荐零部件组合，可选预算上限（USD）。返回各品类的候选项及推荐理由。' +
@@ -622,6 +642,59 @@ function toolDetail(map, args) {
     evidence_note:
       'source_tier 与 confidence 表示该条目的证据强度，非厂商背书。' +
       'quarantine 为 true 表示该条数据存在已知疑点，已被隔离，不应直接用于决策。',
+  };
+}
+
+function toolCompare(map, args) {
+  // 【20260909-24】审查采纳 U-5：一键并排对比 2~6 个零部件，替代连发 N 次
+  // get_component_detail。行 = 规格键并集，同键同值自动标注，缺失以 null 呈现
+  // （缺失 ≠ 不支持，仅库内无该字段）。
+  const ids = Array.isArray(args?.ids) ? args.ids.map(String) : [];
+  if (ids.length < 2 || ids.length > 6) {
+    return {
+      error: 'ids 需为 2~6 个零部件 ID 的数组',
+      error_kind: 'invalid_params',
+      hint: '示例：{"ids": ["ACT-001", "ACT-002", "ACT-003"]}。请先用 search_components 确认 ID。',
+    };
+  }
+  const found = [];
+  const notFound = [];
+  for (const id of ids) {
+    const e = map[id];
+    if (e) found.push(e);
+    else notFound.push(id);
+  }
+  if (found.length < 2) {
+    return {
+      error: '有效零部件不足 2 个，无法对比',
+      error_kind: 'not_found',
+      not_found: notFound,
+      hint: '请先用 search_components 确认 ID。ID 大小写与连字符需完全匹配。',
+    };
+  }
+  const specKeys = [];
+  for (const e of found) {
+    for (const k of ['torque', 'speed', 'voltage', 'protocol', 'interface', 'weight', 'price_range']) {
+      if (e[k] !== undefined && e[k] !== null && !specKeys.includes(k)) specKeys.push(k);
+    }
+  }
+  const dimensions = specKeys.map((k) => {
+    const values = found.map((e) => e[k] ?? null);
+    const present = values.filter((v) => v !== null).map(String);
+    return {
+      spec: k,
+      values,
+      all_equal: present.length > 1 && present.every((v) => v === present[0]),
+    };
+  });
+  return {
+    compared: found.map(summarize),
+    not_found: notFound.length ? notFound : undefined,
+    dimensions,
+    evidence_note:
+      '对比基于库内现有字段，缺失以 null 呈现，不代表该零件不支持该特性。' +
+      '注意：库内参数语义可比性当前为 0 条（跨厂商同名义参数口径未声明），' +
+      '数值差异请配合 get_parameter_semantics 与厂商规格书核对。',
   };
 }
 
@@ -1074,6 +1147,9 @@ async function handleRpc(msg, context) {
         } else if (name === 'get_component_detail') {
           const { map } = await getEntities(env, request);
           payload = toolDetail(map, args);
+        } else if (name === 'compare_components') {
+          const { map } = await getEntities(env, request);
+          payload = toolCompare(map, args);
         } else if (name === 'check_compatibility') {
           const { map } = await getEntities(env, request);
           payload = toolCompat(map, args);
