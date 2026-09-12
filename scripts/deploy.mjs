@@ -22,6 +22,33 @@ const PROJECT = 'robotparts';
 const BASE = 'https://roboparts.cc';
 
 /**
+ * 【20260912 新增】加载 .env.local 到 process.env。
+ *
+ * 起因：本轮部署卡死。诊断结论——`deploy.mjs` 从不读 `.env.local`，于是
+ * `CLOUDFLARE_API_TOKEN` 不在环境里，wrangler 退回到**已过期的 OAuth 会话**；
+ * 且 `npx wrangler` 这条路径在本机实测会**无限挂死**（上传阶段 CPU=0 冻结，
+ * 与脚本 398 行注释记载的 08-18「卡 18 分钟」同形）。修复：① 这里补上 .env.local
+ * 读取，让 token/account 真正到达 wrangler；② 下方优先用**全局安装的 wrangler**
+ * 绕开 npx；③ 给 wrangler spawnSync 加超时，防止再次无限挂死。
+ * 不覆盖已存在的环境变量（显式 export 优先于文件）。
+ */
+function loadDotEnvLocal() {
+  try {
+    const p = path.join(ROOT, '.env.local');
+    if (!fs.existsSync(p)) return;
+    for (const raw of fs.readFileSync(p, 'utf8').split(/\r?\n/)) {
+      const line = raw.trim();
+      if (!line || line.startsWith('#') || !line.includes('=')) continue;
+      const i = line.indexOf('=');
+      const k = line.slice(0, i).trim();
+      const v = line.slice(i + 1).trim().replace(/^["']|["']$/g, '');
+      if (k && !(k in process.env)) process.env[k] = v;
+    }
+  } catch { /* .env.local 不可读不应阻断部署 */ }
+}
+loadDotEnvLocal();
+
+/**
  * 【20260806-17 新增】运行留痕：部署前确保「本小时」已有报告文件。
  *
  * 真实事故（本函数的存在理由）：08-06 15:46 与 16:10 两次运行各自完成了实质工作
@@ -371,11 +398,24 @@ if (WRANGLER_BIN) {
   wranglerCmd = wbNode;
   wranglerArgs = [wbWjs, 'pages', 'deploy', '.', '--project-name=' + PROJECT];
 } else {
-  wranglerCmd = 'npx';
-  wranglerArgs = ['wrangler', 'pages', 'deploy', '.', '--project-name=' + PROJECT];
+  // 【20260912】npx 路径本机实测会无限挂死（拉包/缓存锁，上传期 CPU=0 冻结）。
+  // 优先用全局安装的 wrangler.js，直接由 node 执行，绕开 npx。
+  const globalWr = path.join(process.env.APPDATA || '', 'npm', 'node_modules',
+    'wrangler', 'bin', 'wrangler.js');
+  if (process.env.APPDATA && fs.existsSync(globalWr)) {
+    wranglerCmd = process.execPath;
+    wranglerArgs = [globalWr, 'pages', 'deploy', '.', '--project-name=' + PROJECT];
+    console.log('   (使用全局 wrangler:', globalWr, ')');
+  } else {
+    wranglerCmd = 'npx';
+    wranglerArgs = ['wrangler', 'pages', 'deploy', '.', '--project-name=' + PROJECT];
+  }
 }
 const dep = spawnSync(wranglerCmd, wranglerArgs, {
   stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8', cwd: ROOT, shell: true,
+  // 【20260912】防无限挂死：wrangler 上传阶段曾在 08-18（18 分钟）与本轮（>15 分钟，
+  // CPU=0 冻结）两次静默卡住。给硬超时，超时即失败退出而非悬停。
+  timeout: 8 * 60 * 1000,
 });
 const depOut = (dep.stdout || '') + '\n' + (dep.stderr || '');
 process.stdout.write(depOut);
