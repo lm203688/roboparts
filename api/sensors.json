@@ -16,14 +16,14 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 2.76,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 2.76%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 3.68,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 3.68%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
   "count": 95,
-  "updated": "2026-09-09T09:42:02.375457Z",
+  "updated": "2026-09-11T00:43:03.201305Z",
   "data": [
     {
       "id": "CHIP-67",
@@ -5200,13 +5200,21 @@
         "iso22166_relevant": false
       },
       "mechanical_interface": {
-        "status": "not_declared",
-        "mount_type": "unknown",
-        "standard": null,
+        "status": "declared",
+        "mount_type": "flange",
+        "standard": [
+          "ISO 9409-1-50-4-M6",
+          "ISO 9409-1-31.5-4-M5",
+          "ISO 9409-1-40-4-M6"
+        ],
         "flange": null,
-        "confidence": 0.0,
+        "declared_note": "孔位随官方耦合件可变，非单一法兰：FTS-300-S-CPL-014=ISO 9409-1-50-4-M6、FTS-300-S-CPL-029=ISO 9409-1-31.5-4-M5、FTS-300-S-CPL-030=ISO 9409-1-40-4-M6、FTS-300-S-CPL-031=PCD Ø39 上 8×M3；非标法兰可用 FTS-300-S-CPL-BLANK 空白耦合件自加工，或标准耦合件配 AGC-APL-XXX-002 转接盘。",
+        "source": "Robotiq 官方知识库《Integrating Robotiq Products on Non-Supported Robots》FT-300-S 耦合件对照表（检索 2026-09-11）｜ https://blog.robotiq.com/knowledge/integration-on-non-supported-robot-5-1736280738706",
+        "source_url": "https://blog.robotiq.com/knowledge/integration-on-non-supported-robot-5-1736280738706",
+        "confidence": 0.95,
+        "retrieved": "2026-09-11",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "厂商未公开或尚未采集机械安装接口规格"
+        "gap": "PCD Ø39 上 8×M3 无 ISO 9409-1 编码，未纳入自动比对集合；传感器两侧（机器人侧/工具侧）孔位是否相同未在知识库单列，需对照官方 Drawing。"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",

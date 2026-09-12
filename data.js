@@ -1,5 +1,5 @@
 const DB = {
-  "updated": "2026-09-09T09:42:02.375457Z",
+  "updated": "2026-09-11T00:43:03.201305Z",
   "stats": {
     "actuators": 220,
     "sensors": 95,
@@ -18293,13 +18293,21 @@ const DB = {
         "iso22166_relevant": false
       },
       "mechanical_interface": {
-        "status": "not_declared",
-        "mount_type": "unknown",
-        "standard": null,
+        "status": "declared",
+        "mount_type": "flange",
+        "standard": [
+          "ISO 9409-1-50-4-M6",
+          "ISO 9409-1-31.5-4-M5",
+          "ISO 9409-1-40-4-M6"
+        ],
         "flange": null,
-        "confidence": 0.0,
+        "declared_note": "孔位随官方耦合件可变，非单一法兰：FTS-300-S-CPL-014=ISO 9409-1-50-4-M6、FTS-300-S-CPL-029=ISO 9409-1-31.5-4-M5、FTS-300-S-CPL-030=ISO 9409-1-40-4-M6、FTS-300-S-CPL-031=PCD Ø39 上 8×M3；非标法兰可用 FTS-300-S-CPL-BLANK 空白耦合件自加工，或标准耦合件配 AGC-APL-XXX-002 转接盘。",
+        "source": "Robotiq 官方知识库《Integrating Robotiq Products on Non-Supported Robots》FT-300-S 耦合件对照表（检索 2026-09-11）｜ https://blog.robotiq.com/knowledge/integration-on-non-supported-robot-5-1736280738706",
+        "source_url": "https://blog.robotiq.com/knowledge/integration-on-non-supported-robot-5-1736280738706",
+        "confidence": 0.95,
+        "retrieved": "2026-09-11",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "厂商未公开或尚未采集机械安装接口规格"
+        "gap": "PCD Ø39 上 8×M3 无 ISO 9409-1 编码，未纳入自动比对集合；传感器两侧（机器人侧/工具侧）孔位是否相同未在知识库单列，需对照官方 Drawing。"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -39798,7 +39806,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "id": "RED-001",
@@ -39856,7 +39864,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "id": "RED-002",
@@ -39906,7 +39914,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "id": "RED-003",
@@ -39975,7 +39983,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
       "quarantine": false,
@@ -40023,7 +40031,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
       "quarantine": false,
@@ -40071,7 +40079,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
       "quarantine": false,
@@ -40120,7 +40128,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
       "quarantine": false,
@@ -40169,7 +40177,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
       "quarantine": false,
@@ -40217,7 +40225,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
       "quarantine": false,
@@ -40265,7 +40273,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
       "quarantine": false,
@@ -40314,7 +40322,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
       "quarantine": false,
@@ -40372,7 +40380,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -40421,7 +40429,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -40470,7 +40478,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 reducers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -40499,7 +40507,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 controllers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "id": "CTRL-001",
@@ -40569,7 +40577,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 controllers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "id": "CTRL-002",
@@ -40630,7 +40638,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 controllers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "id": "CTRL-003",
@@ -40743,7 +40751,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "id": "GRIP-001",
@@ -40790,13 +40798,21 @@ const DB = {
         "iso22166_relevant": false
       },
       "mechanical_interface": {
-        "status": "not_declared",
-        "mount_type": "unknown",
-        "standard": null,
+        "status": "declared",
+        "mount_type": "flange",
+        "standard": [
+          "ISO 9409-1-50-4-M6",
+          "ISO 9409-1-31.5-4-M5",
+          "ISO 9409-1-40-4-M6"
+        ],
         "flange": null,
-        "confidence": 0.0,
+        "declared_note": "孔位随官方耦合件可变，非单一法兰：GRP-CPL-062=ISO 9409-1-50-4-M6（PCD Ø50，4×M6-1.0，配 1×Ø6 定位销）、GRP-CPL-063=ISO 9409-1-31.5-4-M5（PCD Ø31.5，4×M5-0.8，配 1×Ø5 定位销）、GRP-CPL-064=ISO 9409-1-40-4-M6（PCD Ø40，4×M6-1.0，配 1×Ø6 定位销）；另有 AGC-CPL-065-002（PCD Ø56，8×M4-0.7，62 mm 内嵌）、AGC-CPL-066-002（PCD Ø56，6×M4，42 mm 外嵌）、AGC-CPL-067-002（PCD Ø60，4×M5，34 mm 外嵌）与 AGC-CPL-068-002（PCD Ø63，6×M6 + 2×Ø6 销）为非 ISO 编码孔位；非标法兰可用 GRP-CPL-BLANK 空白耦合件自加工，或标准耦合件配 AGC-APL-XXX-002 转接盘。耦合件为必需件（集成电子与电触点），故「可装」的前提是选配对应型号耦合件。",
+        "source": "Robotiq 官方知识库《Integrating Robotiq Products on Non-Supported Robots》（适用于 2F-85 / 2F-140 / Hand-E / Hand-E C10 / EPick，检索 2026-09-11）＋《Hand-E Instruction Manual》§6.1.1 Couplings ｜ https://blog.robotiq.com/knowledge/integration-on-non-supported-robot-5-1736280738706 ｜ https://assets.robotiq.com/website-assets/support_documents/document/online/Hand-E_Instruction_Manual_Web_20190306.zip/Hand-E_Instruction_Manual_Web/Content/6.%20Specifications.htm",
+        "source_url": "https://blog.robotiq.com/knowledge/integration-on-non-supported-robot-5-1736280738706",
+        "confidence": 0.95,
+        "retrieved": "2026-09-11",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "AGC-CPL-066/067/068 的 PCD56(6×M4) / PCD60(4×M5) / PCD63(6×M6) 无 ISO 9409-1 编码，未纳入自动比对集合；夹爪本体与耦合件之间的止口配合尺寸未单列为可比对标识。【已知厂商命名分歧】AGC-CPL-065 在 2019 版手册 §6.1.1 记作「P.C.D. 56, 8×M4」（无 ISO 编码），Robotiq 现行知识库记作「ISO 9409-1-56-8-M4」；本条按**保守口径**只收录三处出处一致给出 ISO 编码的 3 个标号。"
       },
       "entity_kind": "component",
       "id": "GRIP-002",
@@ -40850,7 +40866,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "id": "GRIP-003",
@@ -40903,7 +40919,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "id": "GRIP-004",
@@ -40969,7 +40985,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "verified": true,
@@ -41032,7 +41048,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "verified": true,
@@ -41099,7 +41115,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "verified": true,
@@ -41160,7 +41176,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "verified": true,
@@ -41219,7 +41235,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
@@ -41267,7 +41283,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
@@ -41315,7 +41331,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
@@ -41362,7 +41378,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
@@ -41411,7 +41427,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind_basis": "默认归类",
       "quarantine": false,
@@ -41463,13 +41479,21 @@ const DB = {
         "iso22166_relevant": false
       },
       "mechanical_interface": {
-        "status": "not_declared",
-        "mount_type": "unknown",
-        "standard": null,
+        "status": "declared",
+        "mount_type": "flange",
+        "standard": [
+          "ISO 9409-1-50-4-M6",
+          "ISO 9409-1-31.5-4-M5",
+          "ISO 9409-1-40-4-M6"
+        ],
         "flange": null,
-        "confidence": 0.0,
+        "declared_note": "孔位随官方耦合件可变，非单一法兰：GRP-CPL-062=ISO 9409-1-50-4-M6（PCD Ø50，4×M6-1.0，配 1×Ø6 定位销）、GRP-CPL-063=ISO 9409-1-31.5-4-M5（PCD Ø31.5，4×M5-0.8，配 1×Ø5 定位销）、GRP-CPL-064=ISO 9409-1-40-4-M6（PCD Ø40，4×M6-1.0，配 1×Ø6 定位销）；另有 AGC-CPL-065-002（PCD Ø56，8×M4-0.7，62 mm 内嵌）、AGC-CPL-066-002（PCD Ø56，6×M4，42 mm 外嵌）、AGC-CPL-067-002（PCD Ø60，4×M5，34 mm 外嵌）与 AGC-CPL-068-002（PCD Ø63，6×M6 + 2×Ø6 销）为非 ISO 编码孔位；非标法兰可用 GRP-CPL-BLANK 空白耦合件自加工，或标准耦合件配 AGC-APL-XXX-002 转接盘。耦合件为必需件（集成电子与电触点），故「可装」的前提是选配对应型号耦合件。",
+        "source": "Robotiq 官方知识库《Integrating Robotiq Products on Non-Supported Robots》（适用于 2F-85 / 2F-140 / Hand-E / Hand-E C10 / EPick，检索 2026-09-11）＋《Hand-E Instruction Manual》§6.1.1 Couplings ｜ https://blog.robotiq.com/knowledge/integration-on-non-supported-robot-5-1736280738706 ｜ https://assets.robotiq.com/website-assets/support_documents/document/online/Hand-E_Instruction_Manual_Web_20190306.zip/Hand-E_Instruction_Manual_Web/Content/6.%20Specifications.htm",
+        "source_url": "https://blog.robotiq.com/knowledge/integration-on-non-supported-robot-5-1736280738706",
+        "confidence": 0.95,
+        "retrieved": "2026-09-11",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "AGC-CPL-066/067/068 的 PCD56(6×M4) / PCD60(4×M5) / PCD63(6×M6) 无 ISO 9409-1 编码，未纳入自动比对集合；夹爪本体与耦合件之间的止口配合尺寸未单列为可比对标识。【已知厂商命名分歧】AGC-CPL-065 在 2019 版手册 §6.1.1 记作「P.C.D. 56, 8×M4」（无 ISO 编码），Robotiq 现行知识库记作「ISO 9409-1-56-8-M4」；本条按**保守口径**只收录三处出处一致给出 ISO 编码的 3 个标号。"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -41521,7 +41545,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -41573,7 +41597,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -41626,7 +41650,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -41677,7 +41701,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -41729,7 +41753,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -41779,7 +41803,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -41831,7 +41855,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -41874,13 +41898,21 @@ const DB = {
         "iso22166_relevant": false
       },
       "mechanical_interface": {
-        "status": "not_declared",
-        "mount_type": "unknown",
-        "standard": null,
+        "status": "declared",
+        "mount_type": "flange",
+        "standard": [
+          "ISO 9409-1-50-4-M6",
+          "ISO 9409-1-31.5-4-M5",
+          "ISO 9409-1-40-4-M6"
+        ],
         "flange": null,
-        "confidence": 0.0,
+        "declared_note": "孔位随官方耦合件可变，非单一法兰：GRP-CPL-062=ISO 9409-1-50-4-M6（PCD Ø50，4×M6-1.0，配 1×Ø6 定位销）、GRP-CPL-063=ISO 9409-1-31.5-4-M5（PCD Ø31.5，4×M5-0.8，配 1×Ø5 定位销）、GRP-CPL-064=ISO 9409-1-40-4-M6（PCD Ø40，4×M6-1.0，配 1×Ø6 定位销）；另有 AGC-CPL-065-002（PCD Ø56，8×M4-0.7，62 mm 内嵌）、AGC-CPL-066-002（PCD Ø56，6×M4，42 mm 外嵌）、AGC-CPL-067-002（PCD Ø60，4×M5，34 mm 外嵌）与 AGC-CPL-068-002（PCD Ø63，6×M6 + 2×Ø6 销）为非 ISO 编码孔位；非标法兰可用 GRP-CPL-BLANK 空白耦合件自加工，或标准耦合件配 AGC-APL-XXX-002 转接盘。耦合件为必需件（集成电子与电触点），故「可装」的前提是选配对应型号耦合件。",
+        "source": "Robotiq 官方知识库《Integrating Robotiq Products on Non-Supported Robots》（适用于 2F-85 / 2F-140 / Hand-E / Hand-E C10 / EPick，检索 2026-09-11）＋《Hand-E Instruction Manual》§6.1.1 Couplings ｜ https://blog.robotiq.com/knowledge/integration-on-non-supported-robot-5-1736280738706 ｜ https://assets.robotiq.com/website-assets/support_documents/document/online/Hand-E_Instruction_Manual_Web_20190306.zip/Hand-E_Instruction_Manual_Web/Content/6.%20Specifications.htm",
+        "source_url": "https://blog.robotiq.com/knowledge/integration-on-non-supported-robot-5-1736280738706",
+        "confidence": 0.95,
+        "retrieved": "2026-09-11",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 grippers"
+        "gap": "AGC-CPL-066/067/068 的 PCD56(6×M4) / PCD60(4×M5) / PCD63(6×M6) 无 ISO 9409-1 编码，未纳入自动比对集合；夹爪本体与耦合件之间的止口配合尺寸未单列为可比对标识。【已知厂商命名分歧】AGC-CPL-065 在 2019 版手册 §6.1.1 记作「P.C.D. 56, 8×M4」（无 ISO 编码），Robotiq 现行知识库记作「ISO 9409-1-56-8-M4」；本条按**保守口径**只收录三处出处一致给出 ISO 编码的 3 个标号。"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -41962,7 +41994,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 structural"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "id": "STR-001",
@@ -42018,7 +42050,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 structural"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "id": "STR-002",
@@ -42068,7 +42100,7 @@ const DB = {
         "flange": null,
         "confidence": 0.0,
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "未归类类目 structural"
+        "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
       "id": "STR-003",

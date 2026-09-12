@@ -22,7 +22,18 @@ REGISTRY_REF = '/api/mechanical_interfaces.json'
 # 【20260809-07】connectors 属机械可耦合：连接器有对接面、防呆/极性、安装方向与
 # 板端占位尺寸 —— 正是"接口兼容"最物理的那一层。它必须进机械声明率分母，
 # 否则新录的连接器哪怕一条尺寸都没有也不显示为缺口（记 n_a = 宣称"本来就不需要"）。
-MECH_RELEVANT = {'actuators', 'flexible_actuators', 'sensors', 'platforms', 'connectors'}
+MECH_RELEVANT = {
+    'actuators', 'flexible_actuators', 'sensors', 'platforms', 'connectors',
+    # 【20260911】补显式归类：夹爪 / 减速器 / 结构件 / 控制器同样存在物理安装面
+    # （夹爪靠机器人腕法兰 ISO 9409-1 安装，减速器有输出/输入法兰螺栓圈，
+    #  结构件有安装孔位，控制器有 DIN 导轨或法兰安装面）。
+    # 此前它们既不在 MECH_RELEVANT 也不在 MECH_NA，只能落进文件末尾的
+    # 「未知类目按未声明处理」兜底分支，gap 被写成「未归类类目 <cat>」——
+    # 语义是"我们没判过"，而非"厂商没公开"，既误导补数据的人，也让类目
+    # 一旦被误加进 MECH_NA 就会静默掉出分母。显式归入后统计数字不变
+    # （原本就计 not_declared），但语义与可维护性归位。
+    'grippers', 'reducers', 'structural', 'controllers',
+}
 # 非机械耦合类目：软件/半导体/协议/总线/数据集
 MECH_NA = {'chips', 'protocols', 'llms', 'robot_ai_models', 'data_acquisition', 'interfaces'}
 

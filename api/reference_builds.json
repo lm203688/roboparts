@@ -22,8 +22,8 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 2.76,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 2.76%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 3.68,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 3.68%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
@@ -85,86 +85,95 @@
           "horn 螺栓圈为 Robotis 私有尺寸，非 ISO 9409-1"
         ],
         "gap": "HN12-N101 的 PCD 与孔径为厂商私有规格，公开 emanual 未列明确数值；需按实物或官方 horn 图纸确认后才能生成「Dynamixel horn → ISO 9409-1 法兰」转接盘。",
-  "adapter_opportunity": "在 adapter-generator 现有 A20–A250 之外，新增「X-series horn ↔ ISO flange」接口对，可解锁「Dynamixel 臂 + 标准工具快换」场景。"
- },
- "electrical_interface": {
-  "status": "partial",
-  "note": "机械接口之外的第二个判定轴。当前本库 connector 字段在 actuators 上覆盖为 0，电气轴仍为碎片，不可对外宣称具备完整电气兼容判定。",
-  "power_domains": [
-   {
-    "domain": "servo_rail_12v",
-    "voltage_v": "10.0~14.8",
-    "applies_to": "XM430 / XM540（ACT-001 / ACT-002，库内已核实字段）",
-    "typical_supply": "12V SMPS"
-   },
-   {
-    "domain": "servo_rail_24_48v",
-    "voltage_v": "24.0~48.0",
-    "applies_to": "PH54 等 P 系列（ACT-003）",
-    "typical_supply": "独立高压轨（不可与 12V 轨共链）"
-   }
-  ],
-  "bus": {
-   "protocol": "DYNAMIXEL Protocol 2.0",
-   "physical_layer": "UART 半双工（TTL 或 RS-485，视型号后缀）",
-   "topology": "daisy-chain"
-  },
-  "connectors": [
-   {
-    "variant": "TTL / 3-pin",
-    "applies_to": "型号以 T 结尾（如 XM430-W350-T）",
-    "housing": "JST EHR-03",
-    "pcb_header": "JST B3B-EH-A",
-    "crimp": "JST SEH-001T-P0.6",
-    "wire_awg": 21,
-    "pinout": ["1 GND", "2 VDD", "3 DATA"]
-   },
-   {
-    "variant": "RS-485 / 4-pin",
-    "applies_to": "型号以 R 结尾及 P 系列（如 PH54-200-S500-R）",
-    "housing": "JST EHR-04",
-    "pcb_header": "JST B4B-EH-A",
-    "crimp": "JST SEH-001T-P0.6",
-    "wire_awg": 21,
-    "pinout": ["1 GND", "2 VDD", "3 DATA+", "4 DATA-"]
-   }
-  ],
-  "controller": {
-   "model": "OpenCR1.0 / OpenCM9.04",
-   "role": "主控 + Dynamixel 总线桥接（UART → 半双工转换）"
-  },
-  "level_shift": "官方推荐电路 NOTE：为 5V 或 5V-tolerant MCU 设计；3.3V 逻辑主控（如 RPi GPIO）须加 Level Shifter。",
-  "power_wiring": "DYNAMIXEL 供电经 Pin1(−) / Pin2(+) 供给。",
-  "judgements": [
-   {
-    "pair": "XM430-W350-T ↔ PH54-200-S500-R",
-    "mechanical_only_verdict": "两者同为 DYNAMIXEL Protocol 2.0 → 现有（纯机械/协议）判定会显示为兼容",
-    "electrical_verdict": "incompatible（不可共链）",
-    "reason": "① 连接器针数不同（T = 3-pin TTL vs R = 4-pin RS-485）；② 供电轨不同（10~14.8V vs 24~48V）",
-    "severity": "high",
-    "note": "这是当前判定会误判为兼容、实际可能损坏器件的责任缺口——机械轴判不出电气不兼容。"
-   },
-   {
-    "pair": "Dynamixel X（JST EHR-03） ↔ Feetech STS3215（5264-3P）",
-    "electrical_verdict": "incompatible",
-    "reason": "同为 3-pin 但连接器型号与间距不同（JST EH 2.5mm vs 5264 杜邦系 2.54mm），外观相似易误插",
-    "severity": "medium"
-   },
-   {
-    "pair": "Raspberry Pi Zero 2W（GPIO 3.3V） ↔ Dynamixel TTL 总线",
-    "electrical_verdict": "level_shift_required",
-    "reason": "ROBOTIS 官方推荐电路按 5V / 5V-tolerant MCU 设计，3.3V GPIO 需电平转换",
-    "severity": "medium"
-   }
-  ],
-  "gap": "尚未建立电气接口判定层（L1 待授权）。当前仅能给出「已核实的电气事实」，不能对全库任意两件给出电气兼容判定。",
-  "source": {
-   "emanual": "https://emanual.robotis.com/docs/en/dxl/x/xm540-w150/",
-   "tech_tips": "https://robotis.us/tech-tips-picking-the-right-cables-for-your-dynamixel",
-   "verified_at": "2026-09-08"
-  }
- },
- "roboparts_coverage": {
+        "adapter_opportunity": "在 adapter-generator 现有 A20–A250 之外，新增「X-series horn ↔ ISO flange」接口对，可解锁「Dynamixel 臂 + 标准工具快换」场景。"
+      },
+      "electrical_interface": {
+        "status": "partial",
+        "note": "机械接口之外的第二个判定轴。当前本库 connector 字段在 actuators 上覆盖为 0，电气轴仍为碎片，不可对外宣称具备完整电气兼容判定。",
+        "power_domains": [
+          {
+            "domain": "servo_rail_12v",
+            "voltage_v": "10.0~14.8",
+            "applies_to": "XM430 / XM540（ACT-001 / ACT-002，库内已核实字段）",
+            "typical_supply": "12V SMPS"
+          },
+          {
+            "domain": "servo_rail_24_48v",
+            "voltage_v": "24.0~48.0",
+            "applies_to": "PH54 等 P 系列（ACT-003）",
+            "typical_supply": "独立高压轨（不可与 12V 轨共链）"
+          }
+        ],
+        "bus": {
+          "protocol": "DYNAMIXEL Protocol 2.0",
+          "physical_layer": "UART 半双工（TTL 或 RS-485，视型号后缀）",
+          "topology": "daisy-chain"
+        },
+        "connectors": [
+          {
+            "variant": "TTL / 3-pin",
+            "applies_to": "型号以 T 结尾（如 XM430-W350-T）",
+            "housing": "JST EHR-03",
+            "pcb_header": "JST B3B-EH-A",
+            "crimp": "JST SEH-001T-P0.6",
+            "wire_awg": 21,
+            "pinout": [
+              "1 GND",
+              "2 VDD",
+              "3 DATA"
+            ]
+          },
+          {
+            "variant": "RS-485 / 4-pin",
+            "applies_to": "型号以 R 结尾及 P 系列（如 PH54-200-S500-R）",
+            "housing": "JST EHR-04",
+            "pcb_header": "JST B4B-EH-A",
+            "crimp": "JST SEH-001T-P0.6",
+            "wire_awg": 21,
+            "pinout": [
+              "1 GND",
+              "2 VDD",
+              "3 DATA+",
+              "4 DATA-"
+            ]
+          }
+        ],
+        "controller": {
+          "model": "OpenCR1.0 / OpenCM9.04",
+          "role": "主控 + Dynamixel 总线桥接（UART → 半双工转换）"
+        },
+        "level_shift": "官方推荐电路 NOTE：为 5V 或 5V-tolerant MCU 设计；3.3V 逻辑主控（如 RPi GPIO）须加 Level Shifter。",
+        "power_wiring": "DYNAMIXEL 供电经 Pin1(−) / Pin2(+) 供给。",
+        "judgements": [
+          {
+            "pair": "XM430-W350-T ↔ PH54-200-S500-R",
+            "mechanical_only_verdict": "两者同为 DYNAMIXEL Protocol 2.0 → 现有（纯机械/协议）判定会显示为兼容",
+            "electrical_verdict": "incompatible（不可共链）",
+            "reason": "① 连接器针数不同（T = 3-pin TTL vs R = 4-pin RS-485）；② 供电轨不同（10~14.8V vs 24~48V）",
+            "severity": "high",
+            "note": "这是当前判定会误判为兼容、实际可能损坏器件的责任缺口——机械轴判不出电气不兼容。"
+          },
+          {
+            "pair": "Dynamixel X（JST EHR-03） ↔ Feetech STS3215（5264-3P）",
+            "electrical_verdict": "incompatible",
+            "reason": "同为 3-pin 但连接器型号与间距不同（JST EH 2.5mm vs 5264 杜邦系 2.54mm），外观相似易误插",
+            "severity": "medium"
+          },
+          {
+            "pair": "Raspberry Pi Zero 2W（GPIO 3.3V） ↔ Dynamixel TTL 总线",
+            "electrical_verdict": "level_shift_required",
+            "reason": "ROBOTIS 官方推荐电路按 5V / 5V-tolerant MCU 设计，3.3V GPIO 需电平转换",
+            "severity": "medium"
+          }
+        ],
+        "gap": "尚未建立电气接口判定层（L1 待授权）。当前仅能给出「已核实的电气事实」，不能对全库任意两件给出电气兼容判定。",
+        "source": {
+          "emanual": "https://emanual.robotis.com/docs/en/dxl/x/xm540-w150/",
+          "tech_tips": "https://robotis.us/tech-tips-picking-the-right-cables-for-your-dynamixel",
+          "verified_at": "2026-09-08"
+        }
+      },
+      "roboparts_coverage": {
         "actuators": "已收录（ACT-002 等 ROBOTIS 条目）。20260908 已将 5 条有公开出处的 ROBOTIS 条目 mechanical_interface 升 partial（官方 horn/FRP 框架事实，检索 2026-09-08）；horn 孔位 PCD 公开页面未给出，待官方 Drawing 实测后可升 declared/接入转接盘生成。",
         "fasteners": "M2/M2.5 螺栓属 step.parts 白名单（2,118 紧固件可供应）",
         "controller": "未纳入部件库（控制板类，非机械接口对象）",
@@ -260,89 +269,93 @@
           "整体为参数化 Onshape 设计，可改尺寸"
         ],
         "gap": "舵机到连杆的输出盘螺栓圈为 Feetech/厂商私有；608ZZ 为标准件（step.parts 紧固件/轴承类可供应），但需确认本库轴承子类是否收录 608ZZ。",
-  "adapter_opportunity": "「伺服输出盘 ↔ 连杆标准孔位」为低成本人形常见适配点；参考构型可沉淀为模板。"
- },
- "electrical_interface": {
-  "status": "partial",
-  "note": "本构型同时踩中「连接器 / 电平 / 跨电压域」三类电气坑，是建立电气接口判定层（L1）的最佳样板。",
-  "disclaimer": "⚠ 协议/机械兼容 ≠ 电气兼容：Feetech STS3215（5264-3P，2.54mm，6~7.4V）与 Dynamixel X（JST EHR-03，2.5mm，10~14.8V）同为 3-pin 但不兼容且外观相似；RPi GPIO 3.3V 直驱 Dynamixel 须加 Level Shifter。本电气轴为 partial 样板，仅覆盖已核实条目，请勿据此对外宣称具备完整电气兼容判定。",
-  "power_domains": [
-   {
-    "domain": "servo_rail_7v4",
-    "voltage_v": "6~7.4",
-    "applies_to": "Feetech STS3215 ×14",
-    "typical_supply": "2S 18650（7.4V，高倍率）+ 2S BMS",
-    "caveat": "STS3215 电压范围随 C 编号变化，装机前须按具体 C 编号核对规格书（本轮未核实 Open Duck Mini 所用具体 C 编号）"
-   },
-   {
-    "domain": "logic_5v",
-    "voltage_v": "5",
-    "applies_to": "Raspberry Pi Zero 2 W",
-    "typical_supply": "5V UBEC"
-   },
-   {
-    "domain": "logic_3v3",
-    "voltage_v": "3.3",
-    "applies_to": "BNO055 IMU"
-   }
-  ],
-  "bus": [
-   {
-    "bus": "Feetech 半双工串行总线",
-    "physical_layer": "TTL 异步半双工",
-    "baud": "38400bps ~ 1 Mbps",
-    "applies_to": "STS3215 ×14"
-   },
-   {
-    "bus": "I²C",
-    "applies_to": "BNO055 IMU"
-   },
-   {
-    "bus": "PWM",
-    "applies_to": "SG90 / FS90 ×2"
-   }
-  ],
-  "connectors": [
-   {
-    "part": "Feetech STS3215",
-    "connector": "5264-3P",
-    "pinout": ["1 GND", "2 VCC", "3 Signal/TTL"],
-    "note": "2.54mm 杜邦系；与 Dynamixel X 的 JST EHR-03（2.5mm EH 系）同为 3-pin 但互不兼容"
-   }
-  ],
-  "power_budget_note": "STS3215 规格书 stall 电流 2A（rated 500mA）。多舵机须并联配电，官方建议不要经舵机连接器串联取电。",
-  "judgements": [
-   {
-    "pair": "STS3215（5264-3P） ↔ Dynamixel X（JST EHR-03）",
-    "electrical_verdict": "incompatible",
-    "reason": "同为 3-pin 但连接器型号/间距不同，外观相似易误插",
-    "severity": "medium"
-   },
-   {
-    "pair": "STS3215 舵机轨（6~7.4V） ↔ Raspberry Pi Zero 2W（5V）",
-    "electrical_verdict": "separate_rail_required",
-    "reason": "跨电压域，不可共轨；本构型以 5V UBEC 从 2S 电池独立降压给 RPi",
-    "severity": "medium"
-   },
-   {
-    "pair": "BNO055（3.3V I²C） ↔ RPi Zero 2W（3.3V GPIO）",
-    "electrical_verdict": "direct",
-    "reason": "同电压域、同为 I²C"
-   }
-  ],
-  "unverified": [
-   "Open Duck Mini 所用 STS3215 的具体 C 编号",
-   "电池 / BMS / UBEC 的具体型号与额定电流",
-   "Waveshare 总线伺服驱动板的半双工桥接电平（是否 5V-tolerant）"
-  ],
-  "gap": "同上：电气判定层（L1）未建立，本段仅给出已核实电气事实与人工判定，未对全库任意两件生效。",
-  "source": {
-   "sts3215_spec": "Feetech STS3215 官方规格书（7.4V 19kg·cm 串行总线版）",
-   "hardware_setup": "https://deepwiki.com/beam-bots/feetech/2.2-hardware-setup",
-   "verified_at": "2026-09-08"
-  }
- },
- "roboparts_coverage": {
+        "adapter_opportunity": "「伺服输出盘 ↔ 连杆标准孔位」为低成本人形常见适配点；参考构型可沉淀为模板。"
+      },
+      "electrical_interface": {
+        "status": "partial",
+        "note": "本构型同时踩中「连接器 / 电平 / 跨电压域」三类电气坑，是建立电气接口判定层（L1）的最佳样板。",
+        "disclaimer": "⚠ 协议/机械兼容 ≠ 电气兼容：Feetech STS3215（5264-3P，2.54mm，6~7.4V）与 Dynamixel X（JST EHR-03，2.5mm，10~14.8V）同为 3-pin 但不兼容且外观相似；RPi GPIO 3.3V 直驱 Dynamixel 须加 Level Shifter。本电气轴为 partial 样板，仅覆盖已核实条目，请勿据此对外宣称具备完整电气兼容判定。",
+        "power_domains": [
+          {
+            "domain": "servo_rail_7v4",
+            "voltage_v": "6~7.4",
+            "applies_to": "Feetech STS3215 ×14",
+            "typical_supply": "2S 18650（7.4V，高倍率）+ 2S BMS",
+            "caveat": "STS3215 电压范围随 C 编号变化，装机前须按具体 C 编号核对规格书（本轮未核实 Open Duck Mini 所用具体 C 编号）"
+          },
+          {
+            "domain": "logic_5v",
+            "voltage_v": "5",
+            "applies_to": "Raspberry Pi Zero 2 W",
+            "typical_supply": "5V UBEC"
+          },
+          {
+            "domain": "logic_3v3",
+            "voltage_v": "3.3",
+            "applies_to": "BNO055 IMU"
+          }
+        ],
+        "bus": [
+          {
+            "bus": "Feetech 半双工串行总线",
+            "physical_layer": "TTL 异步半双工",
+            "baud": "38400bps ~ 1 Mbps",
+            "applies_to": "STS3215 ×14"
+          },
+          {
+            "bus": "I²C",
+            "applies_to": "BNO055 IMU"
+          },
+          {
+            "bus": "PWM",
+            "applies_to": "SG90 / FS90 ×2"
+          }
+        ],
+        "connectors": [
+          {
+            "part": "Feetech STS3215",
+            "connector": "5264-3P",
+            "pinout": [
+              "1 GND",
+              "2 VCC",
+              "3 Signal/TTL"
+            ],
+            "note": "2.54mm 杜邦系；与 Dynamixel X 的 JST EHR-03（2.5mm EH 系）同为 3-pin 但互不兼容"
+          }
+        ],
+        "power_budget_note": "STS3215 规格书 stall 电流 2A（rated 500mA）。多舵机须并联配电，官方建议不要经舵机连接器串联取电。",
+        "judgements": [
+          {
+            "pair": "STS3215（5264-3P） ↔ Dynamixel X（JST EHR-03）",
+            "electrical_verdict": "incompatible",
+            "reason": "同为 3-pin 但连接器型号/间距不同，外观相似易误插",
+            "severity": "medium"
+          },
+          {
+            "pair": "STS3215 舵机轨（6~7.4V） ↔ Raspberry Pi Zero 2W（5V）",
+            "electrical_verdict": "separate_rail_required",
+            "reason": "跨电压域，不可共轨；本构型以 5V UBEC 从 2S 电池独立降压给 RPi",
+            "severity": "medium"
+          },
+          {
+            "pair": "BNO055（3.3V I²C） ↔ RPi Zero 2W（3.3V GPIO）",
+            "electrical_verdict": "direct",
+            "reason": "同电压域、同为 I²C"
+          }
+        ],
+        "unverified": [
+          "Open Duck Mini 所用 STS3215 的具体 C 编号",
+          "电池 / BMS / UBEC 的具体型号与额定电流",
+          "Waveshare 总线伺服驱动板的半双工桥接电平（是否 5V-tolerant）"
+        ],
+        "gap": "同上：电气判定层（L1）未建立，本段仅给出已核实电气事实与人工判定，未对全库任意两件生效。",
+        "source": {
+          "sts3215_spec": "Feetech STS3215 官方规格书（7.4V 19kg·cm 串行总线版）",
+          "hardware_setup": "https://deepwiki.com/beam-bots/feetech/2.2-hardware-setup",
+          "verified_at": "2026-09-08"
+        }
+      },
+      "roboparts_coverage": {
         "actuators": "Feetech STS3215 属 step.parts feetech 家族（69 条）已收录；SG90 属通用舵机已收录",
         "fasteners": "M3 嵌件/螺丝属 step.parts 白名单（2,118 紧固件）",
         "bearings": "608ZZ 为 ISO 标准轴承；需确认本库 bearings 子类覆盖",
@@ -352,19 +365,19 @@
   ],
   "insights": {
     "tnkr_alignment": "Tnkr（tnkr.ai，机器人界 GitHub）以「统一项目包 + remix + 数据贡献闭环 + Leonardo 视频转文档 + BOM 管理与零件供应商直连」组织开源机器人生态。其 BOM 管理缺「机械接口兼容性判定」这一层——正是 RoboParts 定位。本参考构型即 RoboParts 接入 Tnkr 式贡献工作流的「样板内容」：把 OpenManipulator / Open Duck Mini 这类 Tnkr 社区热门构型，做成带兼容性判定的可重建包，从「做衔接」走向「成为其生态一环」。",
-  "clap_assessment": "CLAP（omni-CLAP/CLAP，Princeton，arXiv 2608.27406）是跨本体动作条件视频世界模型，让 Franka/WidowX/人形共享物理先验。属策略/感知基础模型，非零件库，对零件兼容平台直接可借鉴度低；概念层启发：RoboParts 的「跨本体物理接口」在机械层，CLAP 在学习层，二者正交。",
-  "kicad_ai_assessment": "OpenAI 于 GPT-6 Astra 发布（2026-09-07）演示 AI 在 KiCad 内做器件布局与走线——机制真实但走的是 computer-use 操作 GUI，非官方集成。一手实测边界：社区复现六层 CM5 载板耗时 2h20m/15% 周额度/第 5 版仍未完成且大量依赖 Freerouting；EEBench（atopile 团队，13 项 SPICE 物理仿真任务）最强模型 Claude Opus 5 仅 61.6%，即近四成设计不可投产，且 GPT-6 Astra 尚无该基准成绩。结论：**不自己做 PCB 设计**（能力栈/责任栈不同，且 atopile(MIT)+KiCad MCP 生态已免费铺完这条路）；真正机会在「AI 画板子最怕选错件、连不通」，而真实器件数据正是我们所有——定位应为 AI-PCB 流水线的**机电接口规格上游**（输出规格，不输出 Gerber）。详见 docs/kicad-ai-integration-20260908.md。",
-  "electrical_axis": "机器人 BOM 的兼容判定目前只有「机械」一个轴，电气（供电轨 / 总线 / 连接器 / 电平）是同一个问题的另一半且无人连起两半。本轮已在 RB-OMY / RB-ODM 落地 electrical_interface 段作为样板。已核实的责任缺口示例：XM430-W350-T（TTL 3-pin，10~14.8V）与 PH54-200-S500-R（RS-485 4-pin，24~48V）同为 DYNAMIXEL Protocol 2.0，纯协议判定会显示兼容，实际连接器针数与供电轨均不同、共链可能损坏器件；Feetech STS3215（5264-3P，2.54mm）与 Dynamixel X（JST EHR-03，2.5mm）同为 3-pin 但不兼容且外观相似；RPi GPIO 3.3V 直驱 Dynamixel 需 Level Shifter（官方电路按 5V/5V-tolerant 设计）。数据缺口：本库 connector 字段在 actuators 上覆盖为 0（全库 28/798），voltage/protocol 各 40（5.0%），current 仅 1——电气轴仍是碎片，不可对外宣称具备电气兼容判定。",
-  "priority_actions": [
+    "clap_assessment": "CLAP（omni-CLAP/CLAP，Princeton，arXiv 2608.27406）是跨本体动作条件视频世界模型，让 Franka/WidowX/人形共享物理先验。属策略/感知基础模型，非零件库，对零件兼容平台直接可借鉴度低；概念层启发：RoboParts 的「跨本体物理接口」在机械层，CLAP 在学习层，二者正交。",
+    "kicad_ai_assessment": "OpenAI 于 GPT-6 Astra 发布（2026-09-07）演示 AI 在 KiCad 内做器件布局与走线——机制真实但走的是 computer-use 操作 GUI，非官方集成。一手实测边界：社区复现六层 CM5 载板耗时 2h20m/15% 周额度/第 5 版仍未完成且大量依赖 Freerouting；EEBench（atopile 团队，13 项 SPICE 物理仿真任务）最强模型 Claude Opus 5 仅 61.6%，即近四成设计不可投产，且 GPT-6 Astra 尚无该基准成绩。结论：**不自己做 PCB 设计**（能力栈/责任栈不同，且 atopile(MIT)+KiCad MCP 生态已免费铺完这条路）；真正机会在「AI 画板子最怕选错件、连不通」，而真实器件数据正是我们所有——定位应为 AI-PCB 流水线的**机电接口规格上游**（输出规格，不输出 Gerber）。详见 docs/kicad-ai-integration-20260908.md。",
+    "electrical_axis": "机器人 BOM 的兼容判定目前只有「机械」一个轴，电气（供电轨 / 总线 / 连接器 / 电平）是同一个问题的另一半且无人连起两半。本轮已在 RB-OMY / RB-ODM 落地 electrical_interface 段作为样板。已核实的责任缺口示例：XM430-W350-T（TTL 3-pin，10~14.8V）与 PH54-200-S500-R（RS-485 4-pin，24~48V）同为 DYNAMIXEL Protocol 2.0，纯协议判定会显示兼容，实际连接器针数与供电轨均不同、共链可能损坏器件；Feetech STS3215（5264-3P，2.54mm）与 Dynamixel X（JST EHR-03，2.5mm）同为 3-pin 但不兼容且外观相似；RPi GPIO 3.3V 直驱 Dynamixel 需 Level Shifter（官方电路按 5V/5V-tolerant 设计）。数据缺口：本库 connector 字段在 actuators 上覆盖为 0（全库 28/798），voltage/protocol 各 40（5.0%），current 仅 1——电气轴仍是碎片，不可对外宣称具备电气兼容判定。",
+    "priority_actions": [
       "P1✅(20260908): ACT-001/ACT-002/ACT-003/CTRL-005/GRIP-015 五条 ROBOTIS 条目 mechanical_interface 已由 not_declared 升 partial——经官方商店页/e-Manual/UR 版手册一手核实（检索 2026-09-08），走真相源派生流程（scripts/upgrade_robotis_mi_20260908.py）；ACT-robotis-20dof-hand 无公开安装声明，保持 not_declared 不臆造",
       "P1✅(20260908): mechanical_interfaces.json 新增 robotis_x_horn 专有接口段（PROPRIETARY-ROBOTIS-XHORN，第十类接口），登记 X 系列 horn / P 系列 FRP 框架事实与 adapter_required 判定；horn 几何 PCD 官方未公开，标 pending_verification 禁臆造；adapter-generator.html 新增第 10 档「ROBOTIS Horn（专有·几何待实测）」引导项",
       "P1(后续): 取得官方 Drawing/CAD 实测 horn PCD 后回填 robotis_x_horn.geometry，并把该档升级为一键生成",
-  "P2(20260908 启动): 参考构型已沉淀为 Tnkr 式贡献发布包（docs/tnkr-publish-kit.md，含投递 runbook），tnkr.ai 实际发布需用户账号",
-  "P0(新增·建议): 全库补 connector 字段（actuators 当前 0 覆盖）；Dynamixel X = JST EHR-03/EHR-04、Feetech STS3215 = 5264-3P 等型号均已一手核实可采，且连接器是线束/载板设计的硬输入",
-  "P1(新增·待授权): 建立电气接口轴 api/electrical_interfaces.json——机械 negative_compat 的电气孪生，先做 Dynamixel / Feetech / CAN / I²C 四族，判定输出 identity/direct/adapter_required/level_shift_required/separate_rail_required/incompatible",
-  "P1(新增·风险): 修正现有协议级判定的责任缺口——同为 DYNAMIXEL Protocol 2.0 但连接器针数与供电轨不同的型号，当前会被判为兼容，需补电气判定后再对外",
-  "P2(新增): L1 数据成型后导出 atopile .ato 草案 / kicad-copilot 可读 BOM+net-intent，使 AI 拿到已判定的确定规格而非自己猜件",
-  "P3: 608ZZ 等标准轴承纳入 bearings 子类覆盖核查"
+      "P2(20260908 启动): 参考构型已沉淀为 Tnkr 式贡献发布包（docs/tnkr-publish-kit.md，含投递 runbook），tnkr.ai 实际发布需用户账号",
+      "P0(新增·建议): 全库补 connector 字段（actuators 当前 0 覆盖）；Dynamixel X = JST EHR-03/EHR-04、Feetech STS3215 = 5264-3P 等型号均已一手核实可采，且连接器是线束/载板设计的硬输入",
+      "P1(新增·待授权): 建立电气接口轴 api/electrical_interfaces.json——机械 negative_compat 的电气孪生，先做 Dynamixel / Feetech / CAN / I²C 四族，判定输出 identity/direct/adapter_required/level_shift_required/separate_rail_required/incompatible",
+      "P1(新增·风险): 修正现有协议级判定的责任缺口——同为 DYNAMIXEL Protocol 2.0 但连接器针数与供电轨不同的型号，当前会被判为兼容，需补电气判定后再对外",
+      "P2(新增): L1 数据成型后导出 atopile .ato 草案 / kicad-copilot 可读 BOM+net-intent，使 AI 拿到已判定的确定规格而非自己猜件",
+      "P3: 608ZZ 等标准轴承纳入 bearings 子类覆盖核查"
     ]
   }
 }
