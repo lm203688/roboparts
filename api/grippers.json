@@ -16,14 +16,14 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 3.68,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 3.68%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 5.75,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 5.75%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
   "count": 23,
-  "updated": "2026-09-12T05:27:48.723968Z",
+  "updated": "2026-09-13T02:29:02.354892Z",
   "data": [
     {
       "verified": true,
@@ -39,13 +39,19 @@
         "iso22166_relevant": false
       },
       "mechanical_interface": {
-        "status": "not_declared",
-        "mount_type": "unknown",
-        "standard": null,
+        "status": "declared",
+        "mount_type": "flange",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
         "flange": null,
-        "confidence": 0.0,
+        "declared_note": "OnRobot 工具法兰为 ISO 9409-1-50-4-M6（PCD Ø50，4×M6，配 1×Ø6 定位销）；其 EOAT 经 Quick Changer / 工具法兰连接件直接安装于 UR e-Series 等 ISO 9409-1-50-4-M6 腕法兰。",
+        "source": "OnRobot 2FG7 规格（Mounting Interface ISO 9409-1-50-4-M6，检索 2026-09-13）＋ OnRobot UR Tool Flange Connection（列出 2FG7 兼容 UR e-Series 法兰）｜ https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243 ｜ https://unchainedrobotics.de/en/products/end-of-arm-effectors/grippers/finger-grippers/onrobot-2fg7",
+        "source_url": "https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243",
+        "confidence": 0.95,
+        "retrieved": "2026-09-13",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "厂商未公开或尚未采集机械安装接口规格"
+        "gap": "OnRobot 仅声明工具侧 ISO 9409-1-50-4-M6；机器人侧如需其它 PCD 经其转接件适配。"
       },
       "entity_kind": "component",
       "id": "GRIP-001",
@@ -833,13 +839,19 @@
         "iso22166_relevant": false
       },
       "mechanical_interface": {
-        "status": "not_declared",
-        "mount_type": "unknown",
-        "standard": null,
+        "status": "declared",
+        "mount_type": "flange",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
         "flange": null,
-        "confidence": 0.0,
+        "declared_note": "OnRobot 工具法兰为 ISO 9409-1-50-4-M6（PCD Ø50，4×M6，配 1×Ø6 定位销）；其 EOAT 经 Quick Changer / 工具法兰连接件直接安装于 UR e-Series 等 ISO 9409-1-50-4-M6 腕法兰。",
+        "source": "OnRobot UR Tool Flange Connection（列出 RG2 兼容 UR e-Series 工具法兰 = ISO 9409-1-50-4-M6，检索 2026-09-13）｜ https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243",
+        "source_url": "https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243",
+        "confidence": 0.95,
+        "retrieved": "2026-09-13",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "厂商未公开或尚未采集机械安装接口规格"
+        "gap": "OnRobot 仅声明工具侧 ISO 9409-1-50-4-M6；机器人侧如需其它 PCD 经其转接件适配。"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -938,13 +950,20 @@
         "iso22166_relevant": false
       },
       "mechanical_interface": {
-        "status": "not_declared",
-        "mount_type": "unknown",
-        "standard": null,
+        "status": "declared",
+        "mount_type": "flange",
+        "standard": [
+          "ISO 9409-1-50-4-M6",
+          "ISO 9409-1-31.5-4-M5"
+        ],
         "flange": null,
-        "confidence": 0.0,
+        "declared_note": "Schunk Co-act EGP-C 本体提供两种 ISO 9409-1 安装：ISO 9409-1-50-4-M6（PCD Ø50，4×M6×10，定位销 Ø6）与 ISO 9409-1-31.5-4-M5（PCD Ø31.5，4×M5×10，定位销 Ø5），随附中心套与安装螺钉。",
+        "source": "Schunk Co-act EGP-C 装配与操作手册（§安装：ISO 9409-1-50-4-M6 与 ISO 9409-1-31.5-4-M5 双 PCD，检索 2026-09-13）｜ https://ramcoi.s3.us-east-2.amazonaws.com/Schunk/schunk_co-act_egp-c_user_manual-compressed.pdf",
+        "source_url": "https://ramcoi.s3.us-east-2.amazonaws.com/Schunk/schunk_co-act_egp-c_user_manual-compressed.pdf",
+        "confidence": 0.95,
+        "retrieved": "2026-09-13",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "厂商未公开或尚未采集机械安装接口规格"
+        "gap": "Co-act EGP-C 两种 PCD 均原生支持，无需额外转接盘即可对接对应 ISO 9409-1 腕法兰。"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
@@ -1091,13 +1110,19 @@
         "iso22166_relevant": false
       },
       "mechanical_interface": {
-        "status": "not_declared",
-        "mount_type": "unknown",
-        "standard": null,
+        "status": "declared",
+        "mount_type": "flange",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
         "flange": null,
-        "confidence": 0.0,
+        "declared_note": "OnRobot 工具法兰为 ISO 9409-1-50-4-M6（PCD Ø50，4×M6，配 1×Ø6 定位销）；其 EOAT 经 Quick Changer / 工具法兰连接件直接安装于 UR e-Series 等 ISO 9409-1-50-4-M6 腕法兰。",
+        "source": "OnRobot UR Tool Flange Connection（列出 VGC10 兼容 UR e-Series 工具法兰 = ISO 9409-1-50-4-M6，检索 2026-09-13）｜ https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243",
+        "source_url": "https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243",
+        "confidence": 0.95,
+        "retrieved": "2026-09-13",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "gap": "厂商未公开或尚未采集机械安装接口规格"
+        "gap": "OnRobot 仅声明工具侧 ISO 9409-1-50-4-M6；机器人侧如需其它 PCD 经其转接件适配。"
       },
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
