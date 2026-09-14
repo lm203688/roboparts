@@ -497,7 +497,7 @@ async function verify() {
       errs.push(`字段级内容漂移: ${fieldDrift.length} 条实体线上与真相源字段不一致（示例: ${fieldDrift.slice(0, 3).join(', ')}）`);
     }
   } catch (e) { errs.push('读取线上 /api/data.json 失败: ' + e.message); }
-  const pages = ['/', '/selection.html', '/designer.html', '/suppliers.html', '/pricing.html', '/bom-manager.html', '/urdf-library.html', '/data-hub.html', '/bom-checker.html', '/oss.html', '/adapter-generator', '/copilot', '/agent-architecture', '/build-planner', '/geo-dashboard', '/mcp-guide', '/skills/manifest.json', '/waitlist.html', '/scoreboard.html', '/embed/lookup.html'];
+  const pages = ['/', '/selection.html', '/designer.html', '/suppliers.html', '/pricing.html', '/bom-manager.html', '/urdf-library.html', '/data-hub.html', '/bom-checker.html', '/oss.html', '/adapter-generator', '/copilot', '/spec-declare', '/agent-architecture', '/build-planner', '/geo-dashboard', '/mcp-guide', '/skills/manifest.json', '/waitlist.html', '/scoreboard.html', '/embed/lookup.html'];
   // OSS 数据层一致性（CL1 飞轮产物）
   try {
     const localOss = JSON.parse((await import('node:fs')).readFileSync(path.join(ROOT, 'api/oss_components.json'), 'utf8')).meta.total_entities;

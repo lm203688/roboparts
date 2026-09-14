@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>规格书 → 机械接口声明 | RoboParts</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="把厂商规格书文本拖进来，RoboParts 自动提取 ISO 9409-1 法兰几何（PCD/孔数/螺纹），生成待人工核实的机械接口声明（partial）。借鉴 heyclicky「文档即上下文」思路。">
+<meta name="robots" content="index,follow">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"RoboParts 规格书提取","operatingSystem":"Web","applicationCategory":"EngineeringApplication","url":"https://roboparts.cc/spec-declare","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"description":"从规格书文本提取机器人法兰机械接口，生成待核实的 partial 声明。","author":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc"},"isAccessibleForFree":true}</script>
+<style>
+:root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--line:#243352;--warn:#ffcf6b;--err:#ff6b6b}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.7}
+a{color:var(--acc2);text-decoration:none}a:hover{text-decoration:underline}
+.nav{border-bottom:1px solid var(--line);background:#0e1530}
+.nav .in{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px}
+.nav .brand{font-weight:800;color:var(--acc);font-size:16px}.nav a{color:var(--mut)}.nav a:hover{color:var(--txt)}
+.wrap{max-width:980px;margin:0 auto;padding:28px 20px 72px}
+.crumb{font-size:13px;color:var(--mut);margin-bottom:12px}
+h1{font-size:30px;line-height:1.35;margin:0 0 8px}
+.lede{background:var(--card);border-left:3px solid var(--acc);border-radius:0 10px 10px 0;padding:14px 16px;color:#c8d2e6;margin:14px 0 22px;font-size:15px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+#spec{width:100%;min-height:160px;background:#0e1530;border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:12px 14px;font-size:14px;font-family:ui-monospace,Menlo,Consolas,monospace;resize:vertical}
+.btn{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;font-weight:800;border:0;border-radius:10px;padding:11px 18px;font-size:14px;cursor:pointer}
+.btn:hover{opacity:.9}.btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+.input-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.hint{font-size:12.5px;color:var(--mut);margin-top:8px}
+.examples{margin:12px 0 4px;display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:#0c1428;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--mut);cursor:pointer}
+.chip:hover{border-color:var(--acc);color:var(--txt)}
+#drop{margin-top:12px;border:1.5px dashed var(--line);border-radius:12px;padding:18px;text-align:center;color:var(--mut);font-size:13.5px;transition:.15s}
+#drop.over{border-color:var(--acc);color:var(--acc);background:#0c1428}
+.cand{margin-top:14px;background:#0c1428;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13.5px}
+.cand b{color:var(--acc)}
+pre{background:#0a1128;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:12.5px;color:#cfe3ff;overflow:auto;white-space:pre-wrap;word-break:break-all}
+.refs{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.tag{display:inline-block;background:#0e1530;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--mut);margin:2px 4px 2px 0}
+.task{background:#1a1606;border:1px solid #4a3a10;border-left:3px solid var(--warn);border-radius:0 10px 10px 0;padding:12px 14px;color:#e8d9a8;font-size:13px;margin-top:14px}
+.foot{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+</style>
+</head>
+<body>
+<div class="nav"><div class="in">
+<a class="brand" href="/">RoboParts</a>
+<a href="/copilot">Copilot</a>
+<a href="/adapter-generator">转接件生成器</a>
+<a href="/iso-9409-flange">ISO 9409-1 速查</a>
+<a href="/agent-architecture">兼容性架构</a>
+<a href="/promotion">推广中心</a>
+</div></div>
+<div class="wrap">
+<div class="crumb"><a href="/">首页</a> › 规格书 → 机械接口声明</div>
+<h1>规格书 → 机械接口声明</h1>
+<div class="lede">把厂商规格书文本<b>粘贴或拖进来</b>，RoboParts 自动提取 ISO 9409-1 法兰几何（PCD / 孔数 / 螺纹），生成一份<b>待人工核实</b>的机械接口声明（<code>status: "partial"</code>）。
+<b>借鉴自 heyclicky「文档拖入即上下文」</b>：让 AI 直接吃进你手头的规格书，而不用靠人脑复述参数。
+<span style="color:var(--warn)">诚实边界：AI 只判 partial，升 declared 必须由你补厂商官域 source_url 并逐字核对（遵守「AI 不编」纪律）。</span></div>
+
+<div class="box">
+  <div id="drop">📄 把 .txt / .md 规格书拖到这里，或直接在下方粘贴</div>
+  <textarea id="spec" placeholder="例如：&#10;Tool flange according to ISO 9409-1-50-4-M6.&#10;Pitch circle diameter 50 mm, 4 threaded holes M6, centering diameter 40 mm.&#10;或中文：安装法兰 ISO 9409-1-80-6-M8，节圆 80mm，6 孔 M8。"></textarea>
+  <div class="input-row">
+    <button class="btn" onclick="run()">解析并生成声明</button>
+    <button class="btn ghost" onclick="copyJSON()">复制 JSON 声明</button>
+    <span id="status" style="font-size:12px;color:var(--mut)"></span>
+  </div>
+  <div class="examples">
+    <span class="chip" onclick="fill('Tool flange ISO 9409-1-50-4-M6. Pitch circle diameter 50 mm, 4 holes M6.')">ISO 标号</span>
+    <span class="chip" onclick="fill('安装法兰 A80-6-M8，节圆 80mm，6 孔 M8，定位孔 g6。')">厂商 A 记号</span>
+    <span class="chip" onclick="fill('PCD 100 六孔 M10，法兰面平面度 0.02，配 ISO 9409-1。')">中文散落几何</span>
+  </div>
+
+  <div id="out"></div>
+</div>
+
+<div class="foot">
+© 2026 RoboParts · 规格书提取复用 <a href="/copilot">Copilot</a> 的法兰口径 ·
+<a href="/iso-9409-flange">ISO 9409-1 法兰速查</a> · <a href="/llms.txt">llms.txt</a>
+</div>
+</div>
+
+<script>
+let lastJSON = null;
+function fill(t){ document.getElementById('spec').value = t; }
+function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+const drop = document.getElementById('drop');
+['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over');}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over');}));
+drop.addEventListener('drop', e=>{
+  const f = e.dataTransfer.files[0];
+  if(!f) return;
+  const rd = new FileReader();
+  rd.onload = ()=>{ document.getElementById('spec').value = rd.result; };
+  rd.readAsText(f);
+});
+
+async function run(){
+  const text = document.getElementById('spec').value.trim();
+  const out = document.getElementById('out');
+  const st = document.getElementById('status');
+  if(!text){ st.textContent='请先粘贴或拖入规格书文本'; return; }
+  st.textContent = '解析中…'; out.innerHTML='';
+  try{
+    const r = await fetch('/api/spec_declare', {method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({text})});
+    if(!r.ok){ const e=await r.json().catch(()=>({})); throw new Error(e.error||('HTTP '+r.status)); }
+    const d = await r.json();
+    lastJSON = d.proposed;
+    if(!d.parsed){
+      out.innerHTML = `<div class="task">⚠️ 未在文本中识别到 ISO 9409-1 法兰几何（PCD/孔数/螺纹）。请确认规格书含完整的节圆直径、孔数与螺纹标注，或贴入 ISO 9409-1 标号原文。</div>`;
+      st.textContent = '未命中'; return;
+    }
+    let h = `<div style="margin-top:14px;font-weight:800;color:var(--acc)">✅ 提取到 ${d.count} 个法兰候选</div>`;
+    for(const c of d.candidates){
+      h += `<div class="cand"><b>${escapeHtml(c.iso_code)}</b> · PCD ${c.pcd}mm · ${c.holes} 孔 · ${c.thread} · 置信度 ${c.confidence} · 命中规则 [${c.rules.join(', ')}]<br><span style="color:var(--mut)">原文片段：${escapeHtml(c.raw||'')}</span></div>`;
+    }
+    if(d.proposed){
+      h += `<div style="margin-top:14px;font-weight:800">📋 建议机械接口声明（status: <span style="color:var(--warn)">partial</span>，待你补官域 source_url）</div>`;
+      h += `<pre>${escapeHtml(JSON.stringify(d.proposed, null, 2))}</pre>`;
+      h += `<div class="task">⚠️ 升 <b>declared</b> 前：① 在 <code>source_url</code> 填入厂商<b>官域</b>深链（L1.78 白名单：robotiq/onrobot/schunk/ati-ia/universal-robots/iso.org/openstd.samr.gov.cn）；② 逐字核对 PCD/孔数/螺纹与厂商 Drawing 一致；③ 把 status 改为 declared。此步需人工，AI 不代编。</div>`;
+    }
+    if(Array.isArray(d.references) && d.references.length){
+      h += `<div class="refs"><b style="color:var(--acc2)">🔗 指给你看：</b>` + d.references.map(r=>`<a class="chip" href="${r.url}" target="_blank" rel="noopener">${escapeHtml(r.label)}</a>`).join('') + `</div>`;
+    }
+    out.innerHTML = h;
+    st.textContent = '完成';
+  }catch(e){ out.innerHTML = `<div class="task">⚠️ 解析失败：${escapeHtml(e.message)}</div>`; st.textContent='错误'; }
+}
+
+function copyJSON(){
+  if(!lastJSON){ alert('请先点「解析并生成声明」'); return; }
+  navigator.clipboard.writeText(JSON.stringify(lastJSON, null, 2))
+    .then(()=>{ document.getElementById('status').textContent='已复制到剪贴板'; })
+    .catch(()=>{ alert('复制失败，请手动选取上方 JSON'); });
+}
+</script>
+</body>
+</html>
