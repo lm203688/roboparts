@@ -205,6 +205,8 @@ function quickEstimate(ad){
 }
 
 let lastJudge = null;
+let lastInput = '';
+let lastFlanges = null;
 function fill(t){ document.getElementById('nlInput').value=t; }
 
 function ask(){
@@ -221,6 +223,8 @@ function ask(){
   }
   const j = judgeFlanges(fl[0], fl[1]);
   lastJudge = j;
+  lastInput = text;
+  lastFlanges = fl;
   const vClass = j.verdict==='ok'?'ok':j.verdict==='need'?'need':'bad';
   const vText = j.verdict==='ok'?'✅ 直接兼容':'🔧 需要转接件';
   let html = `<div class="bubble bot">`;
@@ -242,6 +246,14 @@ function scrollConv(){ const c=document.getElementById('conv'); c.scrollTop=c.sc
 
 function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
+// 从用户原话中抽取品牌/型号关键词，交给后端反查真实实体（“指给你看”的实体引用来源）。
+function extractMentions(t){
+  const pats=[/\bUR\d+\b/gi,/\bIRB[\s-]?\d+/gi,/\bABB\b/gi,/\bKUKA\b/gi,/\bFanuc\b/gi,/\bYaskawa\b/gi,/OnRobot/gi,/Robotiq/gi,/Schunk/gi,/\bATI\b/gi,/\bEOAT\b/gi];
+  const out=new Set();
+  for(const p of pats){ const m=t.match(p)||[]; for(const x of m) out.add(x.trim()); }
+  return [...out];
+}
+
 // ---- Agnes AI 解释（服务端代理，密钥不暴露前端）----
 async function explainWithAI(){
   if(!lastJudge){ alert('请先做一次兼容性判定'); return; }
@@ -251,12 +263,23 @@ async function explainWithAI(){
   box.innerHTML='🤖 正在调用 Agnes AI 生成解释…';
   st.textContent='';
   const prompt = `你是机器人机械装配助手。请用通俗中文解释：为什么这两个 ISO 9409-1 法兰（${lastJudge.adapter?fmt(lastJudge.adapter.a)+' 与 '+fmt(lastJudge.adapter.b):'两侧法兰'}）${lastJudge.verdict==='ok'?'可以直接安装':'需要转接板'}，并给出 2-3 条装机安全提醒。不超过 120 字。`;
+  // heyclicky 借鉴：把当前判定的法兰/裁决/提到的品牌作为上下文带给后端，让解释“指到这一例”。
+  const context = {
+    flanges: lastFlanges ? lastFlanges.map(f=>({pcd:f.pcd, holes:f.holes, thread:f.thread})) : [],
+    verdict: lastJudge.verdict,
+    mentions: extractMentions(lastInput),
+    adapterUrl: lastJudge.adapter ? adapterUrl(lastJudge.adapter) : null
+  };
   try{
     const r = await fetch('/api/copilot', {method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({prompt})});
+      body: JSON.stringify({prompt, context})});
     if(!r.ok){ const e=await r.json().catch(()=>({})); throw new Error(e.message||e.error||('HTTP '+r.status)); }
     const d = await r.json();
     box.innerHTML = '🤖 <b>Agnes AI 解释：</b><br>'+escapeHtml(d.text||'(空)').replace(/\n/g,'<br>');
+    if(Array.isArray(d.references) && d.references.length){
+      const chips = d.references.map(r=>`<a class="chip" href="${r.url}" ${/^https?:/.test(r.url)?'target="_blank" rel="noopener"':''}>${escapeHtml(r.label)}</a>`).join('');
+      box.innerHTML += `<div style="margin-top:10px"><b>🔗 指给你看：</b><br>${chips}</div>`;
+    }
     st.textContent = d.model ? ('模型：'+d.model) : '';
   }catch(e){ box.innerHTML='⚠️ Agnes AI 调用失败：'+escapeHtml(e.message)+'。规则判定结果已在上文给出，无需联网即可使用。'; }
 }

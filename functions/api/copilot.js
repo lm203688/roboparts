@@ -111,6 +111,85 @@ async function buildSystemPrompt(request) {
   }
 }
 
+// ---- heyclicky 借鉴：上下文感知 + “指给你看”结构化引用 ----
+// 缓存 entities.json（5 分钟），用于按品牌/型号名反查真实实体，做“指向具体零件”的引用。
+let _entitiesCache = { at: 0, data: null };
+async function loadEntities(host) {
+  const now = Date.now();
+  if (_entitiesCache.data && now - _entitiesCache.at < 300000) return _entitiesCache.data;
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), GROUNDING_TIMEOUT_MS);
+    const r = await fetch(`https://${host}/api/entities.json`, {
+      signal: ctrl.signal,
+      headers: { 'X-RoboParts-Selftest': '1' },
+    });
+    clearTimeout(t);
+    if (!r.ok) return _entitiesCache.data; // 拉取失败则沿用旧缓存，不阻断
+    const d = await r.json();
+    _entitiesCache = { at: now, data: (d && d.entities) || [] };
+    return _entitiesCache.data;
+  } catch {
+    return _entitiesCache.data;
+  }
+}
+
+// 把用户当前判定的法兰 + 裁决 + 提到的品牌，拼成系统提示里的“上下文块”，
+// 让 AI 解释「这一例」而非复述通用规则（对应 heyclicky「AI 看见你正在看的东西」）。
+function contextBlock(ctx) {
+  if (!ctx) return '';
+  const parts = [];
+  if (Array.isArray(ctx.flanges) && ctx.flanges.length) {
+    const desc = ctx.flanges
+      .map((f) => `A${f.pcd}-${f.holes}-${f.thread}（PCD ${f.pcd}mm/${f.holes}×${f.thread}）`)
+      .join(' 与 ');
+    parts.push(`用户当前正在判定的法兰：${desc}。`);
+  }
+  if (ctx.verdict) parts.push(`本例规则裁决：${ctx.verdict === 'ok' ? '直接兼容' : '需要转接件'}。`);
+  if (Array.isArray(ctx.mentions) && ctx.mentions.length) {
+    parts.push(`用户在问题中提到了这些品牌/型号关键词：${ctx.mentions.join('、')}。若平台有对应实体，请在解释中指向其数据页。`);
+  }
+  return parts.length ? '【当前上下文】\n' + parts.join('\n') : '';
+}
+
+// 生成“指给你看”的引用：canonical 法兰梯级 + ISO 9409-1 速查 + 转接件 + 命中的真实实体。
+// 这是 heyclicky「屏幕光标点」的 Web 原生等价物——把答案锚定到可点击的真实数据。
+function buildReferences(ctx, entities) {
+  const refs = [];
+  if (ctx && Array.isArray(ctx.flanges)) {
+    for (const f of ctx.flanges) {
+      const line = CANONICAL_FLANGE.find((l) => l.startsWith('A' + f.pcd + '='));
+      if (line) refs.push({ kind: 'flange', label: `${line}（canonical 梯级）`, url: '/iso-9409-flange' });
+    }
+  }
+  refs.push({ kind: 'ref', label: 'ISO 9409-1 法兰速查', url: '/iso-9409-flange' });
+  if (ctx && ctx.adapterUrl) refs.push({ kind: 'tool', label: '打开转接件生成器', url: ctx.adapterUrl });
+  if (ctx && Array.isArray(ctx.mentions) && ctx.mentions.length && Array.isArray(entities)) {
+    const seen = new Set();
+    const ents = refs.filter((r) => r.kind === 'entity');
+    for (const m of ctx.mentions) {
+      if (ents.length >= 3) break;
+      const token = m.toLowerCase();
+      for (const e of entities) {
+        if (seen.has(e.id)) continue;
+        const hay = [e.id, e.name, e.brand || ''].filter(Boolean).join(' ').toLowerCase();
+        if (hay.includes(token)) {
+          refs.push({ kind: 'entity', label: `${e.name || e.id}（${e.id}）`, url: '/bionic' });
+          seen.add(e.id);
+          if (refs.filter((r) => r.kind === 'entity').length >= 3) break;
+        }
+      }
+    }
+  }
+  const uniq = [];
+  const keys = new Set();
+  for (const r of refs) {
+    const k = r.kind + '|' + r.label;
+    if (!keys.has(k)) { keys.add(k); uniq.push(r); }
+  }
+  return uniq;
+}
+
 export async function onRequestOptions() {
   return new Response(null, { status: 204, headers: CORS });
 }
@@ -121,17 +200,6 @@ export async function onRequestPost({ request, env }) {
   if (!origin.includes('roboparts.cc')) {
     return new Response(JSON.stringify({ error: 'forbidden_origin' }),
       { status: 403, headers: { ...CORS, 'Content-Type': 'application/json' } });
-  }
-
-  const backends = buildBackends(env);
-  if (backends.length === 0) {
-    // 未配置任何后端：直接降级，不抛 5xx
-    return new Response(JSON.stringify({
-      text: 'Copilot 推理后端未配置（维护中）。兼容性裁决仍可在平台数据与 ISO 9409-1 法兰库中查证。',
-      model: 'maintenance',
-      degraded: true,
-      detail: 'no_backend_configured',
-    }), { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
   }
 
   let body;
@@ -145,9 +213,29 @@ export async function onRequestPost({ request, env }) {
       { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } });
   }
 
-  const system = await buildSystemPrompt(request);
-  const timeoutMs = Number(env.COPILOT_UPSTREAM_TIMEOUT_MS) || 25000;
+  // heyclicky 借鉴（必须在后端可行性判断之前算好，供降级分支也携带引用）：
+  // 解析上下文 → 反查命中实体 → 生成“指给你看”的引用链。
+  const context = (body && body.context && typeof body.context === 'object') ? body.context : null;
+  let _entitiesForRef = null;
+  if (context && Array.isArray(context.mentions) && context.mentions.length) {
+    _entitiesForRef = await loadEntities(new URL(request.url).host);
+  }
+  const references = buildReferences(context, _entitiesForRef);
+  const system = (await buildSystemPrompt(request)) + '\n' + contextBlock(context);
 
+  const backends = buildBackends(env);
+  if (backends.length === 0) {
+    // 未配置任何后端：直接降级，不抛 5xx（仍携带 references 让前端可点）
+    return new Response(JSON.stringify({
+      text: 'Copilot 推理后端未配置（维护中）。兼容性裁决仍可在平台数据与 ISO 9409-1 法兰库中查证。',
+      model: 'maintenance',
+      degraded: true,
+      detail: 'no_backend_configured',
+      references,
+    }), { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
+  }
+
+  const timeoutMs = Number(env.COPILOT_UPSTREAM_TIMEOUT_MS) || 25000;
   let lastDetail = null;
   for (const b of backends) {
     const controller = new AbortController();
@@ -181,7 +269,7 @@ export async function onRequestPost({ request, env }) {
         lastDetail = `upstream_${b.name}_empty`;
         continue;
       }
-      return new Response(JSON.stringify({ text, model: `${b.name}:${b.model}` }),
+      return new Response(JSON.stringify({ text, model: `${b.name}:${b.model}`, references }),
         { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
     } catch (e) {
       lastDetail = (e && e.name === 'AbortError')
@@ -193,11 +281,12 @@ export async function onRequestPost({ request, env }) {
     }
   }
 
-  // 全部后端不可用：结构化降级，前端展示友好文案而非报错
+  // 全部后端不可用：结构化降级，前端展示友好文案而非报错（仍携带 references）
   return new Response(JSON.stringify({
     text: 'Copilot 暂时不可用（推理后端维护中）。兼容性裁决仍可在平台数据与 ISO 9409-1 法兰库中查证。',
     model: 'maintenance',
     degraded: true,
     detail: lastDetail,
+    references,
   }), { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
 }
