@@ -7642,16 +7642,32 @@ def layer1_74():
         "const n6=wk.compatible===null&&/仅声明安装方式/.test(wk.notes||'');"
         # 阴性：全库真实配对不得因本改动冒出「无支撑假绿」
         # 真绿=共享至少一个机械身份键(standard/flange token)；假绿=判兼容却无任何共享身份键
+        # 【20260914-08】两个分支必须走**同一归一化**：数组分支若保持原大小写而标量分支
+        # 转小写，则任何「单孔位标量 × 多孔位数组」配对都永不判为共享 —— 8×7=56 对
+        # 全部误判成假绿（20260913 EOAT 升 declared 后首次出现标量条目即暴露）。
+        # 同时标量必须包成 [x]：直接 spread 字符串会按**字符**炸开，集合里全是单字符。
+        # 引擎侧 idValues 本就做了 Array.isArray(v)?v:[v]，本探针只是漏了同一个处理。
         "const idset=e=>{const m=(e&&e.mechanical_interface)||{};"
-        "const arr=x=>Array.isArray(x)?x:(x?String(x).toLowerCase():[]);"
-        "return new Set([...arr(m.standard),...arr(m.flange)].filter(Boolean));};"
+        "const arr=x=>(Array.isArray(x)?x:[x])"
+        ".map(v=>v?String(v).toLowerCase():'').filter(Boolean);"
+        "return new Set([...arr(m.standard),...arr(m.flange)]);};"
         "let tt=0,tb=0;"
         "for(let i=0;i<E.length;i++)for(let j=i+1;j<E.length;j++){"
         "if(ev('mechanical',E[i],E[j]).compatible===true){"
         "const A=idset(E[i]),B=idset(E[j]);let sh=false;"
         "for(const t of A)if(B.has(t)){sh=true;break;}"
         "if(sh)tb++;else tt++;}}"
-        "console.log(JSON.stringify({p1,p2,p3,p4,p5,prefix_hit,n1,n2,n3,n4,n5,n6,tt,tb,"
+        # 非空转自证：探针自身的标量×数组归一化必须正确，否则本判据会静默漏计真绿
+        # （20260914-08 曾因此报出 56 对「假绿」，实为单孔位标量 × 多孔位数组的全组合）
+        "const s1=mk('S1',{status:'declared',standard:'ISO 9409-1-50-4-M6'});"
+        "const s2=mk('S2',{status:'declared',"
+        "standard:['ISO 9409-1-50-4-M6','ISO 9409-1-31.5-4-M5']});"
+        "const p6=ev('mechanical',s1,s2).compatible===true;"
+        "const A6=idset(s1);"
+        "const p7=A6.size===1&&[...A6][0]==='iso 9409-1-50-4-m6';"
+        "let sh6=false;for(const t of A6)if(idset(s2).has(t)){sh6=true;break;}"
+        "const p8=sh6===true;"
+        "console.log(JSON.stringify({p1,p2,p3,p4,p5,p6,p7,p8,prefix_hit,n1,n2,n3,n4,n5,n6,tt,tb,"
         "nreal:real.length}));"
     )
     try:
@@ -7668,6 +7684,11 @@ def layer1_74():
     check(out['p4'],
           '阳性: 库内真实多值条目确实被正确展开（实得 %d 条）' % out['nreal'])
     check(out['p5'], '阳性: 多值声明必须带 source（无出处的已声明＝凭空断言，L1.64 族）')
+    check(out['p6'], '阳性: 单孔位标量 × 多孔位数组 判 true（单值是集合的退化情形，不得判无交集）')
+    check(out['p7'],
+          '非空转自证: idset 对标量产出 1 个完整 token（未 spread 成字符、且与数组侧同一归一化）')
+    check(out['p8'],
+          '非空转自证: 标量×数组配对被本探针判为「有支撑」—— 漏计即 56 对假绿回退')
     check(out['prefix_hit'],
           '非空转自证: 修复前原版归一化对同一输入确实塌缩成 1 个 token 且与 50-4-M6 无交集')
     check(out['n1'], '阴性: 真无交集仍判 false（未矫枉过正成"总是兼容"）')

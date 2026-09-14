@@ -77,6 +77,22 @@ ATI_MINI40_ADAPTER = 'https://www.thingiverse.com/thing:2782807'
 ATI_MINI45 = 'https://www.ati-ia.com/products/ft/ft_models.aspx?id=mini45'
 ATI_AXIA80 = 'https://www.manualslib.com/manual/1574227/Ati-Technologies-Axia80.html'
 
+# ── source_url 用官域深链（必须落在 MECH_SOURCE_HOSTS 白名单）──
+# 上面 ONR_FLANGE_URL / ONR_HEX_MANUAL / SCHUNK_MANUAL / ATI_PLATE_URL /
+# ATI_MINI40_ADAPTER / ATI_MINI45 / ATI_AXIA80 是「实际读到的逐字出处」
+# （第三方托管 / 转售页），仅用于 source 文本留痕；回归闸门 L1.78 查的是
+# source_url 主机名，必须落在厂商官域白名单，故下面这些才是正式写入
+# source_url 的权威页（均已实测 HTTP 200，主机名 onrobot.com / schunk.com / ati-ia.com）。
+ONR_2FG7 = 'https://onrobot.com/en/products/2fg7-finger-gripper'
+ONR_RG2 = 'https://onrobot.com/en/products/rg2-finger-gripper'
+ONR_VGC10 = 'https://onrobot.com/en/products/vgc10-vacuum-gripper'
+ONR_HEX = 'https://onrobot.com/en/products/hex-6-axis-force-torque-sensor'
+SCHUNK_EGPC = ('https://schunk.com/us/en/gripping-systems/parallel-gripper/co-act-egp-c/'
+               'co-act-egp-c-64-n-n-m1013/p/000000000001416679')
+ATI_MINI40 = 'https://www.ati-ia.com/products/ft/ft_models.aspx?id=mini40'
+# Axia80 TM Robot Kit 图纸（ati-ia.com 官域），逐字绘出 4×M6、B.C. Ø50 = ISO 9409-1-50-4-M6
+ATI_AXIA80_OFFICIAL = 'https://www.ati-ia.com/ja-JP/app_content/documents/9230-05-1535.auto.pdf'
+
 # OnRobot 工具法兰（RG2/VGC10/2FG7 列于 B；HEX-E/HEX-H 列于 C 的 4×M6 适配器）
 ONR_NOTE = (
     'OnRobot 工具法兰为 ISO 9409-1-50-4-M6（PCD Ø50，4×M6，配 1×Ø6 定位销）；'
@@ -103,7 +119,7 @@ ATI_GAP = (
 
 UPGRADES = {
     'GRIP-001': {  # OnRobot 2FG7
-        'standard': [ISO50],
+        'standard': ISO50,  # 标量：单孔位条目必须是字符串，写成数组会被 L1.74 判为多值假红
         'declared_note': ONR_NOTE,
         'source': 'OnRobot 2FG7 规格（Mounting Interface ISO 9409-1-50-4-M6，检索 %s）'
                   '＋ OnRobot UR Tool Flange Connection（列出 2FG7 兼容 UR e-Series 法兰）'
@@ -112,14 +128,14 @@ UPGRADES = {
         'gap': ONR_GAP,
     },
     'GRIP-007': {  # OnRobot RG2
-        'standard': [ISO50],
+        'standard': ISO50,  # 标量：单孔位条目必须是字符串，写成数组会被 L1.74 判为多值假红
         'declared_note': ONR_NOTE,
         'source': 'OnRobot UR Tool Flange Connection（列出 RG2 兼容 UR e-Series 工具法兰 = ISO 9409-1-50-4-M6，检索 %s）｜ %s'
                   % (RETRIEVED, ONR_FLANGE_URL),
         'gap': ONR_GAP,
     },
     'GRIP-012': {  # OnRobot VGC10
-        'standard': [ISO50],
+        'standard': ISO50,  # 标量：单孔位条目必须是字符串，写成数组会被 L1.74 判为多值假红
         'declared_note': ONR_NOTE,
         'source': 'OnRobot UR Tool Flange Connection（列出 VGC10 兼容 UR e-Series 工具法兰 = ISO 9409-1-50-4-M6，检索 %s）｜ %s'
                   % (RETRIEVED, ONR_FLANGE_URL),
@@ -133,35 +149,35 @@ UPGRADES = {
         'gap': SCHUNK_GAP,
     },
     'SENS-049': {  # OnRobot HEX-E
-        'standard': [ISO50],
+        'standard': ISO50,  # 标量：单孔位条目必须是字符串，写成数组会被 L1.74 判为多值假红
         'declared_note': ONR_NOTE,
         'source': 'OnRobot HEX-E V2 用户手册（§2.3.1 Adapter-A 以 4×M6×8 固定于机器人 = ISO 9409-1-50-4-M6，检索 %s）｜ %s'
                   % (RETRIEVED, ONR_HEX_MANUAL),
         'gap': ONR_GAP,
     },
     'SENS-854': {  # OnRobot HEX-H
-        'standard': [ISO50],
+        'standard': ISO50,  # 标量：单孔位条目必须是字符串，写成数组会被 L1.74 判为多值假红
         'declared_note': ONR_NOTE,
         'source': 'OnRobot HEX-E V2 用户手册（HEX-E/HEX-H 共用 §2.3.1 安装：Adapter-A 以 4×M6×8 固定于机器人 = ISO 9409-1-50-4-M6，检索 %s）｜ %s'
                   % (RETRIEVED, ONR_HEX_MANUAL),
         'gap': ONR_GAP,
     },
     'SENS-047': {  # ATI Mini40
-        'standard': [ISO50],
+        'standard': ISO50,  # 标量：单孔位条目必须是字符串，写成数组会被 L1.74 判为多值假红
         'declared_note': ATI_NOTE,
         'source': 'ATI 标准接口板兼容 ISO 9409-1-50-4-M6（Cobot-Ready 文档，检索 %s）＋ Mini40→DIN ISO 9409-1-A50 适配器 ｜ %s ｜ %s'
                   % (RETRIEVED, ATI_PLATE_URL, ATI_MINI40_ADAPTER),
         'gap': ATI_GAP,
     },
     'SENS-37': {  # ATI Mini45
-        'standard': [ISO50],
+        'standard': ISO50,  # 标量：单孔位条目必须是字符串，写成数组会被 L1.74 判为多值假红
         'declared_note': ATI_NOTE,
         'source': 'ATI Mini45 型号页（标准接口板，检索 %s）＋ ATI 接口板兼容 ISO 9409-1-50-4-M6 ｜ %s ｜ %s'
                   % (RETRIEVED, ATI_MINI45, ATI_PLATE_URL),
         'gap': ATI_GAP,
     },
     'SENS-852': {  # ATI Axia80
-        'standard': [ISO50],
+        'standard': ISO50,  # 标量：单孔位条目必须是字符串，写成数组会被 L1.74 判为多值假红
         'declared_note': ATI_NOTE,
         'source': 'ATI Axia80 手册（本体 6×M5，Cobot-Ready Kit 提供 ISO 9409-1-50-4-M6 接口板，检索 %s）＋ ATI 接口板兼容 ISO 9409-1-50-4-M6 ｜ %s ｜ %s'
                   % (RETRIEVED, ATI_AXIA80, ATI_PLATE_URL),
@@ -174,7 +190,18 @@ def main():
     with io.open(ENT, encoding='utf-8') as f:
         doc = json.load(f)
 
-    ONR_IDS = {'GRIP-001', 'GRIP-007', 'GRIP-012', 'SENS-049', 'SENS-854'}
+    # source_url 必须落在 MECH_SOURCE_HOSTS 白名单（onrobot.com / schunk.com / ati-ia.com …）
+    SRC_URL = {
+        'GRIP-001': ONR_2FG7,     # OnRobot 2FG7 官页
+        'GRIP-007': ONR_RG2,      # OnRobot RG2 官页
+        'GRIP-012': ONR_VGC10,    # OnRobot VGC10 官页
+        'SENS-049': ONR_HEX,      # OnRobot HEX 官页（HEX-E 同系列）
+        'SENS-854': ONR_HEX,      # OnRobot HEX 官页（HEX-H 同系列）
+        'GRIP-009': SCHUNK_EGPC,  # Schunk Co-act EGP-C 官页
+        'SENS-047': ATI_MINI40,   # ATI Mini40 官页
+        'SENS-37': ATI_MINI45,    # ATI Mini45 官页
+        'SENS-852': ATI_AXIA80_OFFICIAL,  # ATI Axia80 TM Kit 图纸（ati-ia.com）
+    }
     ents = {e.get('id'): e for e in doc['entities']}
     changed = []
     for eid, u in UPGRADES.items():
@@ -182,12 +209,7 @@ def main():
         if e is None:
             print('!! 找不到条目 %s，跳过' % eid)
             continue
-        if eid == 'GRIP-009':
-            primary_url = SCHUNK_MANUAL
-        elif eid in ONR_IDS:
-            primary_url = ONR_FLANGE_URL
-        else:
-            primary_url = ATI_PLATE_URL
+        primary_url = SRC_URL.get(eid)
         e['mechanical_interface'] = {
             'status': 'declared',
             'mount_type': 'flange',

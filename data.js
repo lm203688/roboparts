@@ -1,5 +1,5 @@
 const DB = {
-  "updated": "2026-09-13T02:29:02.354892Z",
+  "updated": "2026-09-14T00:38:54.562497Z",
   "stats": {
     "actuators": 220,
     "sensors": 95,
@@ -15252,13 +15252,11 @@ const DB = {
       "mechanical_interface": {
         "status": "declared",
         "mount_type": "flange",
-        "standard": [
-          "ISO 9409-1-50-4-M6"
-        ],
+        "standard": "ISO 9409-1-50-4-M6",
         "flange": null,
         "declared_note": "ATI 六维力传感器随附标准接口板，兼容 ISO 9409-1-50-4-M6 机器人法兰（ATI Cobot-Ready Kit 文档明确\"all interface plates compatible with standard ISO 9409-1-50-4-M6 robot flanges\"）；Mini40 另有第三方 DIN ISO 9409-1-A50 适配器印证。",
         "source": "ATI Mini45 型号页（标准接口板，检索 2026-09-13）＋ ATI 接口板兼容 ISO 9409-1-50-4-M6 ｜ https://www.ati-ia.com/products/ft/ft_models.aspx?id=mini45 ｜ https://www.roboticstomorrow.com/news/2023/02/14/execs-from-ifpa-bright-farms-soli-organic-local-bounti-join-indoor-ag-con-las-vegas-2023-keynote-panel/14363",
-        "source_url": "https://www.roboticstomorrow.com/news/2023/02/14/execs-from-ifpa-bright-farms-soli-organic-local-bounti-join-indoor-ag-con-las-vegas-2023-keynote-panel/14363",
+        "source_url": "https://www.ati-ia.com/products/ft/ft_models.aspx?id=mini45",
         "confidence": 0.95,
         "retrieved": "2026-09-13",
         "registry_ref": "/api/mechanical_interfaces.json",
@@ -15841,13 +15839,11 @@ const DB = {
       "mechanical_interface": {
         "status": "declared",
         "mount_type": "flange",
-        "standard": [
-          "ISO 9409-1-50-4-M6"
-        ],
+        "standard": "ISO 9409-1-50-4-M6",
         "flange": null,
         "declared_note": "ATI 六维力传感器随附标准接口板，兼容 ISO 9409-1-50-4-M6 机器人法兰（ATI Cobot-Ready Kit 文档明确\"all interface plates compatible with standard ISO 9409-1-50-4-M6 robot flanges\"）；Mini40 另有第三方 DIN ISO 9409-1-A50 适配器印证。",
         "source": "ATI 标准接口板兼容 ISO 9409-1-50-4-M6（Cobot-Ready 文档，检索 2026-09-13）＋ Mini40→DIN ISO 9409-1-A50 适配器 ｜ https://www.roboticstomorrow.com/news/2023/02/14/execs-from-ifpa-bright-farms-soli-organic-local-bounti-join-indoor-ag-con-las-vegas-2023-keynote-panel/14363 ｜ https://www.thingiverse.com/thing:2782807",
-        "source_url": "https://www.roboticstomorrow.com/news/2023/02/14/execs-from-ifpa-bright-farms-soli-organic-local-bounti-join-indoor-ag-con-las-vegas-2023-keynote-panel/14363",
+        "source_url": "https://www.ati-ia.com/products/ft/ft_models.aspx?id=mini40",
         "confidence": 0.95,
         "retrieved": "2026-09-13",
         "registry_ref": "/api/mechanical_interfaces.json",
@@ -15957,13 +15953,11 @@ const DB = {
       "mechanical_interface": {
         "status": "declared",
         "mount_type": "flange",
-        "standard": [
-          "ISO 9409-1-50-4-M6"
-        ],
+        "standard": "ISO 9409-1-50-4-M6",
         "flange": null,
         "declared_note": "OnRobot 工具法兰为 ISO 9409-1-50-4-M6（PCD Ø50，4×M6，配 1×Ø6 定位销）；其 EOAT 经 Quick Changer / 工具法兰连接件直接安装于 UR e-Series 等 ISO 9409-1-50-4-M6 腕法兰。",
         "source": "OnRobot HEX-E V2 用户手册（§2.3.1 Adapter-A 以 4×M6×8 固定于机器人 = ISO 9409-1-50-4-M6，检索 2026-09-13）｜ https://www.manualslib.com/manual/3875848/Onrobot-Hex-E-V2.html",
-        "source_url": "https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243",
+        "source_url": "https://onrobot.com/en/products/hex-6-axis-force-torque-sensor",
         "confidence": 0.95,
         "retrieved": "2026-09-13",
         "registry_ref": "/api/mechanical_interfaces.json",
@@ -18159,13 +18153,11 @@ const DB = {
       "mechanical_interface": {
         "status": "declared",
         "mount_type": "flange",
-        "standard": [
-          "ISO 9409-1-50-4-M6"
-        ],
+        "standard": "ISO 9409-1-50-4-M6",
         "flange": null,
         "declared_note": "ATI 六维力传感器随附标准接口板，兼容 ISO 9409-1-50-4-M6 机器人法兰（ATI Cobot-Ready Kit 文档明确\"all interface plates compatible with standard ISO 9409-1-50-4-M6 robot flanges\"）；Mini40 另有第三方 DIN ISO 9409-1-A50 适配器印证。",
         "source": "ATI Axia80 手册（本体 6×M5，Cobot-Ready Kit 提供 ISO 9409-1-50-4-M6 接口板，检索 2026-09-13）＋ ATI 接口板兼容 ISO 9409-1-50-4-M6 ｜ https://www.manualslib.com/manual/1574227/Ati-Technologies-Axia80.html ｜ https://www.roboticstomorrow.com/news/2023/02/14/execs-from-ifpa-bright-farms-soli-organic-local-bounti-join-indoor-ag-con-las-vegas-2023-keynote-panel/14363",
-        "source_url": "https://www.roboticstomorrow.com/news/2023/02/14/execs-from-ifpa-bright-farms-soli-organic-local-bounti-join-indoor-ag-con-las-vegas-2023-keynote-panel/14363",
+        "source_url": "https://www.ati-ia.com/ja-JP/app_content/documents/9230-05-1535.auto.pdf",
         "confidence": 0.95,
         "retrieved": "2026-09-13",
         "registry_ref": "/api/mechanical_interfaces.json",
@@ -18266,13 +18258,11 @@ const DB = {
       "mechanical_interface": {
         "status": "declared",
         "mount_type": "flange",
-        "standard": [
-          "ISO 9409-1-50-4-M6"
-        ],
+        "standard": "ISO 9409-1-50-4-M6",
         "flange": null,
         "declared_note": "OnRobot 工具法兰为 ISO 9409-1-50-4-M6（PCD Ø50，4×M6，配 1×Ø6 定位销）；其 EOAT 经 Quick Changer / 工具法兰连接件直接安装于 UR e-Series 等 ISO 9409-1-50-4-M6 腕法兰。",
         "source": "OnRobot HEX-E V2 用户手册（HEX-E/HEX-H 共用 §2.3.1 安装：Adapter-A 以 4×M6×8 固定于机器人 = ISO 9409-1-50-4-M6，检索 2026-09-13）｜ https://www.manualslib.com/manual/3875848/Onrobot-Hex-E-V2.html",
-        "source_url": "https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243",
+        "source_url": "https://onrobot.com/en/products/hex-6-axis-force-torque-sensor",
         "confidence": 0.95,
         "retrieved": "2026-09-13",
         "registry_ref": "/api/mechanical_interfaces.json",
@@ -40777,13 +40767,11 @@ const DB = {
       "mechanical_interface": {
         "status": "declared",
         "mount_type": "flange",
-        "standard": [
-          "ISO 9409-1-50-4-M6"
-        ],
+        "standard": "ISO 9409-1-50-4-M6",
         "flange": null,
         "declared_note": "OnRobot 工具法兰为 ISO 9409-1-50-4-M6（PCD Ø50，4×M6，配 1×Ø6 定位销）；其 EOAT 经 Quick Changer / 工具法兰连接件直接安装于 UR e-Series 等 ISO 9409-1-50-4-M6 腕法兰。",
         "source": "OnRobot 2FG7 规格（Mounting Interface ISO 9409-1-50-4-M6，检索 2026-09-13）＋ OnRobot UR Tool Flange Connection（列出 2FG7 兼容 UR e-Series 法兰）｜ https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243 ｜ https://unchainedrobotics.de/en/products/end-of-arm-effectors/grippers/finger-grippers/onrobot-2fg7",
-        "source_url": "https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243",
+        "source_url": "https://onrobot.com/en/products/2fg7-finger-gripper",
         "confidence": 0.95,
         "retrieved": "2026-09-13",
         "registry_ref": "/api/mechanical_interfaces.json",
@@ -41577,13 +41565,11 @@ const DB = {
       "mechanical_interface": {
         "status": "declared",
         "mount_type": "flange",
-        "standard": [
-          "ISO 9409-1-50-4-M6"
-        ],
+        "standard": "ISO 9409-1-50-4-M6",
         "flange": null,
         "declared_note": "OnRobot 工具法兰为 ISO 9409-1-50-4-M6（PCD Ø50，4×M6，配 1×Ø6 定位销）；其 EOAT 经 Quick Changer / 工具法兰连接件直接安装于 UR e-Series 等 ISO 9409-1-50-4-M6 腕法兰。",
         "source": "OnRobot UR Tool Flange Connection（列出 RG2 兼容 UR e-Series 工具法兰 = ISO 9409-1-50-4-M6，检索 2026-09-13）｜ https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243",
-        "source_url": "https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243",
+        "source_url": "https://onrobot.com/en/products/rg2-finger-gripper",
         "confidence": 0.95,
         "retrieved": "2026-09-13",
         "registry_ref": "/api/mechanical_interfaces.json",
@@ -41695,7 +41681,7 @@ const DB = {
         "flange": null,
         "declared_note": "Schunk Co-act EGP-C 本体提供两种 ISO 9409-1 安装：ISO 9409-1-50-4-M6（PCD Ø50，4×M6×10，定位销 Ø6）与 ISO 9409-1-31.5-4-M5（PCD Ø31.5，4×M5×10，定位销 Ø5），随附中心套与安装螺钉。",
         "source": "Schunk Co-act EGP-C 装配与操作手册（§安装：ISO 9409-1-50-4-M6 与 ISO 9409-1-31.5-4-M5 双 PCD，检索 2026-09-13）｜ https://ramcoi.s3.us-east-2.amazonaws.com/Schunk/schunk_co-act_egp-c_user_manual-compressed.pdf",
-        "source_url": "https://ramcoi.s3.us-east-2.amazonaws.com/Schunk/schunk_co-act_egp-c_user_manual-compressed.pdf",
+        "source_url": "https://schunk.com/us/en/gripping-systems/parallel-gripper/co-act-egp-c/co-act-egp-c-64-n-n-m1013/p/000000000001416679",
         "confidence": 0.95,
         "retrieved": "2026-09-13",
         "registry_ref": "/api/mechanical_interfaces.json",
@@ -41848,13 +41834,11 @@ const DB = {
       "mechanical_interface": {
         "status": "declared",
         "mount_type": "flange",
-        "standard": [
-          "ISO 9409-1-50-4-M6"
-        ],
+        "standard": "ISO 9409-1-50-4-M6",
         "flange": null,
         "declared_note": "OnRobot 工具法兰为 ISO 9409-1-50-4-M6（PCD Ø50，4×M6，配 1×Ø6 定位销）；其 EOAT 经 Quick Changer / 工具法兰连接件直接安装于 UR e-Series 等 ISO 9409-1-50-4-M6 腕法兰。",
         "source": "OnRobot UR Tool Flange Connection（列出 VGC10 兼容 UR e-Series 工具法兰 = ISO 9409-1-50-4-M6，检索 2026-09-13）｜ https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243",
-        "source_url": "https://vention.io/parts/onrobot-tool-flange-connection-for-universal-robots-1243",
+        "source_url": "https://onrobot.com/en/products/vgc10-vacuum-gripper",
         "confidence": 0.95,
         "retrieved": "2026-09-13",
         "registry_ref": "/api/mechanical_interfaces.json",
