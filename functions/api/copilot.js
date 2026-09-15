@@ -190,6 +190,89 @@ function buildReferences(ctx, entities) {
   return uniq;
 }
 
+// ---- archify 借鉴：验证式兼容图（typed IR + 数据校验 + 确定性渲染 + fail-closed）----
+// 借鉴开源 Agent skill Archify（tt-a1i/archify，MIT）的核心范式：Agent 只产出结构化
+// 中间表示（IR），由校验器对照**真实数据**逐项核验，无背书即丢弃（fail-closed，绝不让
+// 图里冒出数据中不存在的零件），渲染交给确定性编译器。区别在于：这里的 IR 生产者不是
+// LLM，而是规则引擎本身 —— 更彻底地不给「AI 编造接口」留位置。
+// 规则：一个节点/边，只有能被 canonical 法兰梯级、用户显式给出的三要素、平台实体库、
+//       或可构造的转接件 URL 背书时才进图；否则进 dropped[] 并如实回传（不静默）。
+function buildCompatIR(ctx, entities) {
+  const ir = { kind: 'roboparts.compat-graph', version: 1, subject: null, nodes: [], edges: [], dropped: [] };
+  if (!ctx) return ir;
+  const canon = (f) => CANONICAL_FLANGE.find((l) => l.startsWith('A' + f.pcd + '=')) || null;
+  const mkFlangeNode = (f, side) => {
+    const c = canon(f);
+    return {
+      id: 'side' + side,
+      type: 'flange',
+      label: `A${f.pcd}-${f.holes}-${f.thread}`,
+      evidence: c
+        ? { source: 'canonical_flange', ref: c, tier: 'canonical' }
+        : { source: 'user_input', ref: `${f.pcd}mm/${f.holes}孔/${f.thread}`, tier: 'user_supplied' },
+    };
+  };
+  const fl = Array.isArray(ctx.flanges) ? ctx.flanges : [];
+  if (fl.length >= 2) {
+    const [a, b] = fl;
+    ir.subject = `A${a.pcd}-${a.holes}-${a.thread} ↔ A${b.pcd}-${b.holes}-${b.thread}`;
+    ir.nodes.push(mkFlangeNode(a, 'A'), mkFlangeNode(b, 'B'));
+    const ok = ctx.verdict === 'ok';
+    ir.edges.push({
+      from: 'sideA', to: 'sideB', kind: 'verdict',
+      label: ok ? '直接兼容' : '需转接件',
+      evidence: { source: 'iso9409-1', ref: '节圆/孔数/螺纹逐项比对（judgeFlanges）' },
+    });
+    if (!ok) {
+      if (ctx.adapterUrl && /^https?:\/\//.test(ctx.adapterUrl)) {
+        ir.nodes.push({
+          id: 'adapter', type: 'adapter', label: '转接板',
+          evidence: { source: 'adapter_generator', ref: ctx.adapterUrl, tier: 'rule' },
+        });
+        ir.edges.push(
+          { from: 'sideA', to: 'adapter', kind: 'mediated', label: '生成', evidence: { source: 'rule', ref: 'adapterUrl' } },
+          { from: 'adapter', to: 'sideB', kind: 'mediated', label: '对接', evidence: { source: 'rule', ref: 'adapterUrl' } },
+        );
+      } else {
+        ir.dropped.push({ candidate: 'adapter', reason: '裁决需转接件，但未能生成有效转接件 URL —— 不画无背书节点' });
+      }
+    }
+  } else if (fl.length === 1) {
+    ir.nodes.push(mkFlangeNode(fl[0], 'A'));
+    ir.dropped.push({ candidate: 'sideB', reason: '仅识别到一侧法兰，无法成图（需两侧）' });
+  }
+  // 实体引用：只有命中平台真实实体才进图；未命中如实进 dropped（不臆造实体引用）
+  if (Array.isArray(ctx.mentions) && ctx.mentions.length) {
+    const ents = Array.isArray(entities) ? entities : [];
+    for (const m of ctx.mentions.slice(0, 6)) {
+      const token = String(m).toLowerCase();
+      const hit = ents.find((e) =>
+        [e.id, e.name, e.brand || ''].filter(Boolean).join(' ').toLowerCase().includes(token));
+      if (hit) {
+        ir.nodes.push({
+          id: 'ent:' + hit.id, type: 'entity', label: `${hit.name || hit.id}`,
+          evidence: { source: 'entities.json', ref: hit.id, tier: 'platform_data' },
+        });
+      } else {
+        ir.dropped.push({ candidate: String(m), reason: '平台实体库无匹配 —— 不臆造实体引用' });
+      }
+    }
+  }
+  return ir;
+}
+
+// 把已校验的 IR 作为「唯一可信节点集」喂给模型，锁死它只能引用图中节点（对应 Archify 的
+// 「AI 只描述、编译器渲染」——这里进一步要求 AI 连描述都不得越出已核验的节点集）。
+function irGrounding(ir) {
+  if (!ir || !ir.nodes.length) return '';
+  const lines = ir.nodes.map((n) => `- ${n.id}: ${n.label}（${n.type}；出处 ${n.evidence.source}）`);
+  const dropped = ir.dropped.length
+    ? '\n以下提及因**缺少数据背书已被拒绝**，回答中不得补全或猜测：' + ir.dropped.map((d) => d.candidate).join('、') + '。'
+    : '';
+  return '\n【兼容性图（唯一可信节点集，禁止越出）】\n' + lines.join('\n')
+    + '\n仅可引用以上节点；不得臆造图中不存在的零件、接口或尺寸。' + dropped;
+}
+
 export async function onRequestOptions() {
   return new Response(null, { status: 204, headers: CORS });
 }
@@ -221,7 +304,10 @@ export async function onRequestPost({ request, env }) {
     _entitiesForRef = await loadEntities(new URL(request.url).host);
   }
   const references = buildReferences(context, _entitiesForRef);
-  const system = (await buildSystemPrompt(request)) + '\n' + contextBlock(context);
+  // archify 借鉴：先由规则引擎产出「已校验 IR」，再拿它同时喂给模型（锁死可引用节点集）
+  // 与回传给前端（确定性渲染）。计算必须在任何 return 之前 —— 降级分支也要携带它。
+  const ir = buildCompatIR(context, _entitiesForRef);
+  const system = (await buildSystemPrompt(request)) + '\n' + contextBlock(context) + irGrounding(ir);
 
   const backends = buildBackends(env);
   if (backends.length === 0) {
@@ -232,6 +318,7 @@ export async function onRequestPost({ request, env }) {
       degraded: true,
       detail: 'no_backend_configured',
       references,
+      ir,
     }), { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
   }
 
@@ -269,7 +356,7 @@ export async function onRequestPost({ request, env }) {
         lastDetail = `upstream_${b.name}_empty`;
         continue;
       }
-      return new Response(JSON.stringify({ text, model: `${b.name}:${b.model}`, references }),
+      return new Response(JSON.stringify({ text, model: `${b.name}:${b.model}`, references, ir }),
         { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
     } catch (e) {
       lastDetail = (e && e.name === 'AbortError')
@@ -288,5 +375,6 @@ export async function onRequestPost({ request, env }) {
     degraded: true,
     detail: lastDetail,
     references,
+    ir,
   }), { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
 }

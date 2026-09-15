@@ -91,6 +91,19 @@ if (!TOKEN) {
 }
 if (!TOKEN) throw new Error('未取到 GitHub token：设置 GITHUB_TOKEN 或确认 ~/.git-credentials 含 github.com 条目');
 
+// ---------- 1c. 日志脱敏（PAT 绝不进日志）----------
+// 20260914 实测：curl 子进程失败时 execFileSync 抛出的 Error.message 形如
+//   "Command failed: curl … -H 'Authorization: Bearer <TOKEN>' …"
+// —— 整条命令行含明文 PAT，经 console.log / 未捕获异常直接落 stdout 与日志文件。
+// 本仓历史上已泄露 4 次（两次实测），故此后**任何外发的错误串先过 redact()**。
+function redact(s) {
+  let out = String(s == null ? '' : s);
+  if (TOKEN) out = out.split(TOKEN).join('***');
+  out = out.replace(/(Authorization:\s*Bearer\s+)\S+/gi, '$1***');
+  out = out.replace(/(\bBearer\s+)[A-Za-z0-9_\-.]{20,}/g, '$1***');
+  return out;
+}
+
 console.log(`repo=${OWNER}/${REPO} branch=${BRANCH} dry=${DRY}`);
 
 // ---------- 2. API 封装（curl 子进程；已验证可达通道 TLS1.3 + 硬超时）----------
@@ -121,18 +134,24 @@ async function api(method, path, body, retries = 3) {
       let text = '';
       try { text = fs.readFileSync(tmp, 'utf8'); } catch {}
       fs.rmSync(tmp, { force: true });
-      if (status >= 500 || status === 429) throw new Error(`${status}: ${text.slice(0, 200)}`);
+      if (status >= 500 || status === 429) throw new Error(redact(`${status}: ${text.slice(0, 200)}`));
       if (status < 200 || status >= 300) {
-        const e = new Error(`GitHub API ${method} ${path} -> ${status}: ${text.slice(0, 400)}`);
+        const e = new Error(redact(`GitHub API ${method} ${path} -> ${status}: ${text.slice(0, 400)}`));
         e.fatal = true;
         throw e;
       }
       return text ? JSON.parse(text) : null;
     } catch (e) {
       fs.rmSync(tmp, { force: true });
-      if (e.fatal || i === retries) throw e;
+      // execFileSync 的 Error.message 含完整命令行（含 Authorization 头）→ 必须脱敏后再外发
+      const safeMsg = redact(e && e.message ? e.message : e);
+      if (e.fatal || i === retries) {
+        const err = new Error(safeMsg);
+        err.fatal = !!(e && e.fatal);
+        throw err;
+      }
       const wait = 1500 * 2 ** i;
-      console.log(`  ! ${e.message.slice(0, 120)} — ${wait}ms 后重试`);
+      console.log(`  ! ${safeMsg.slice(0, 120)} — ${wait}ms 后重试`);
       await new Promise((r) => setTimeout(r, wait));
     }
   }

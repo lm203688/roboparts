@@ -8015,6 +8015,10 @@ MECH_STD_TOKEN_EVIDENCE = {
 MECH_SOURCE_HOSTS = (
     'robotiq.com', 'onrobot.com', 'schunk.com', 'ati-ia.com',
     'universal-robots.com', 'iso.org', 'openstd.samr.gov.cn',
+    # 20260915：新增国产力传感器厂商官域。仅为「允许引用」的白名单扩容 ——
+    # 白名单里有这个域 ≠ 已收录任何 declared 条目；鑫精诚的机械安装接口尚未
+    # 一手核实，故只作供应链候选（见 api/suppliers_seed.json），不产生声明。
+    'xjcsensor.cn',
 )
 
 

@@ -191,6 +191,71 @@ function adapterUrl(ad){
   return `https://roboparts.cc/adapter-generator?a=${encodeURIComponent(a)}&b=${encodeURIComponent(b)}&t=${ad.t}&bore=${Math.max(0,Math.round(ad.bore))}`;
 }
 
+// ---- archify 借鉴：验证式兼容图（typed IR + 数据校验 + 确定性渲染 + fail-closed）----
+// IR 由**规则引擎**产出（不是 LLM）→ 每个节点/边必须被 canonical 梯级 / 用户显式三要素
+// / 可构造的转接件 URL 背书，否则进 dropped[] 并如实展示。同一 IR 必渲染出同一张图。
+function irCanon(f){
+  for(const k of Object.keys(PRESETS)){ const p=PRESETS[k]; if(p.pcd===f.pcd&&p.holes===f.holes&&p.thread===f.thread) return p.label; }
+  return null;
+}
+function buildCompatIRLocal(a,b,j,adUrl){
+  const ir={kind:'roboparts.compat-graph',version:1,
+    subject:`A${a.pcd}-${a.holes}-${a.thread} ↔ A${b.pcd}-${b.holes}-${b.thread}`,
+    nodes:[],edges:[],dropped:[]};
+  const mk=(f,side)=>{ const c=irCanon(f); return {id:'side'+side,type:'flange',label:`A${f.pcd}-${f.holes}-${f.thread}`,
+    evidence: c?{source:'canonical_flange',ref:c,tier:'canonical'}:{source:'user_input',ref:`${f.pcd}mm/${f.holes}孔/${f.thread}`,tier:'user_supplied'}}; };
+  ir.nodes.push(mk(a,'A'), mk(b,'B'));
+  const ok = j.verdict==='ok';
+  ir.edges.push({from:'sideA',to:'sideB',kind:'verdict',label: ok?'直接兼容':'需转接件',
+    evidence:{source:'iso9409-1',ref:'节圆/孔数/螺纹逐项比对（judgeFlanges）'}});
+  if(!ok){
+    if(adUrl && /^https?:/.test(adUrl)){
+      ir.nodes.push({id:'adapter',type:'adapter',label:'转接板',evidence:{source:'adapter_generator',ref:'URL',tier:'rule'}});
+      ir.edges.push({from:'sideA',to:'adapter',kind:'mediated',label:'生成',evidence:{source:'rule',ref:'adapterUrl'}});
+      ir.edges.push({from:'adapter',to:'sideB',kind:'mediated',label:'对接',evidence:{source:'rule',ref:'adapterUrl'}});
+    }else{
+      ir.dropped.push({candidate:'adapter',reason:'需转接件但无有效转接件 URL —— 不画无背书节点'});
+    }
+  }
+  return ir;
+}
+// 确定性渲染：只画 IR 里已核验的节点/边；dropped 单独列出（fail-closed 透明）
+function renderCompatGraph(ir){
+  if(!ir || !ir.nodes || !ir.nodes.length) return '';
+  const W=660, rowY=34, boxW=160, boxH=56, pad=40;
+  const core=ir.nodes.filter(x=>x.type!=='entity');
+  const ents=ir.nodes.filter(x=>x.type==='entity');
+  const H=170 + (ents.length?20:0);
+  const n=core.length;
+  const gap = n>1 ? (W-2*pad-boxW)/(n-1) : 0;
+  const xy={}; core.forEach((nd,i)=>{ xy[nd.id]={x: pad + i*gap, y: rowY}; });
+  const col=t=> t==='flange'?'#37e0a6': t==='adapter'?'#ffcf6b':'#5b9dff';
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:${W}px" role="img" aria-label="兼容性图（已验证）">`;
+  s+=`<defs><marker id="cg-arw" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 z" fill="#8a96b0"/></marker></defs>`;
+  for(const e of ir.edges){
+    const A=xy[e.from], B=xy[e.to]; if(!A||!B) continue;
+    const x1=A.x+boxW, y1=A.y+boxH/2, x2=B.x, y2=B.y+boxH/2;
+    const d = e.kind==='mediated'
+      ? `M${x1} ${y1} C ${(x1+x2)/2} ${y1}, ${(x1+x2)/2} ${y2}, ${x2} ${y2}`
+      : `M${x1} ${y1} L ${x2} ${y2}`;
+    s+=`<path d="${d}" fill="none" stroke="#8a96b0" stroke-width="1.6" marker-end="url(#cg-arw)"/>`;
+    s+=`<text x="${(x1+x2)/2}" y="${Math.min(y1,y2)-8}" fill="#8a96b0" font-size="12" text-anchor="middle">${escapeHtml(e.label)}</text>`;
+  }
+  for(const nd of core){
+    const p=xy[nd.id];
+    s+=`<rect x="${p.x}" y="${p.y}" width="${boxW}" height="${boxH}" rx="10" fill="#0e1530" stroke="${col(nd.type)}" stroke-width="1.5"/>`;
+    s+=`<text x="${p.x+boxW/2}" y="${p.y+24}" fill="#e7ecf5" font-size="14" font-weight="700" text-anchor="middle">${escapeHtml(nd.label)}</text>`;
+    s+=`<text x="${p.x+boxW/2}" y="${p.y+42}" fill="#8a96b0" font-size="11" text-anchor="middle">${escapeHtml(nd.type)} · ${escapeHtml(nd.evidence.source)}</text>`;
+  }
+  if(ents.length){
+    let tx=pad+64;
+    s+=`<text x="${pad}" y="${H-22}" fill="#8a96b0" font-size="12">已核验实体：</text>`;
+    for(const nd of ents){ s+=`<text x="${tx}" y="${H-22}" fill="#5b9dff" font-size="12">${escapeHtml(nd.label)}</text>`; tx+=nd.label.length*13+18; }
+  }
+  s+=`</svg>`;
+  return s;
+}
+
 // 快速打印估算（与 adapter-generator 同口径，供 Copilot 内联展示）
 function quickEstimate(ad){
   const mat='PETG', density=1.27, priceKg=95;
@@ -237,6 +302,12 @@ function ask(){
     html += `<div class="detail" style="margin-top:8px">📦 预估耗材 ≈ ${est.grams} g PETG · 成本 ≈ ¥${est.cost} · 打印 ≈ ${est.min}</div>`;
   }
   html += `<div class="task">⚠️ 装配红线：${j.task}</div>`;
+  // archify 借鉴：附一张「已验证兼容图」——节点/边全部有数据背书，无背书项如实列出（fail-closed）。
+  const _ir = buildCompatIRLocal(fl[0], fl[1], j, j.adapter?adapterUrl(j.adapter):null);
+  html += `<div style="margin-top:14px">${renderCompatGraph(_ir)}</div>`;
+  if(_ir.dropped.length){
+    html += `<div class="detail" style="color:var(--warn)">⛔ fail-closed：${_ir.dropped.map(d=>escapeHtml(d.candidate)+'（'+escapeHtml(d.reason)+'）').join('；')}</div>`;
+  }
   html += `</div>`;
   conv.innerHTML += html;
   document.getElementById('aiBox').className='ai-box';
