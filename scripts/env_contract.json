@@ -1,0 +1,76 @@
+{
+  "_note": "环境密钥契约的**唯一源**。regression.py 的 L1.94 与 loop_matrix.py 都读本文件；禁止在别处另抄一份清单（两份语义必然分叉——20260815-17 就是靠手抄清单才让 BAIDU_PUSH_TOKEN 消失 18 天无人发现）。",
+  "_why": "2026-08-20 一次 .env.local 重生成把 8/8 加进去的 BAIDU_PUSH_TOKEN 冲掉了。实测：`ops/promotion/runs/2026-08-20-08-28.md`（= 北京 08-20 16:28，与 `.env.local` 头部 `Generated: 2026-08-20` 同一刻）是最后一次成功推送，此后连续 40 次脉冲全部 skipped-no-token，静默停摆 26.0 天（625 小时）直到 2026-09-15 17:25 恢复。仓库里唯一提到该 token 的闸门只断言「promote.mjs 源码里出现 BAIDU_PUSH_TOKEN 字样」（即'代码会读它'），断言不到「它真的配了」，于是全程绿灯。本契约把「谁需要什么、缺了算不算阻断」写成机读事实。",
+  "version": 1,
+  "updated": "2026-09-15",
+  "required": {
+    "CLOUDFLARE_API_TOKEN": {
+      "consumer": "scripts/deploy_api.py, scripts/deploy.mjs",
+      "why": "Cloudflare Pages 上传 + DNS 管理；缺失即无法部署",
+      "stage": "deploy"
+    },
+    "CLOUDFLARE_ACCOUNT_ID": {
+      "consumer": "scripts/deploy_api.py",
+      "why": "定位 Cloudflare 账户（多账户环境下不可省略）",
+      "stage": "deploy"
+    },
+    "BAIDU_PUSH_TOKEN": {
+      "consumer": "scripts/promote.mjs",
+      "why": "百度主动推送推送凭据；缺失时该分支静默跳过，国内收录通道整体失效",
+      "stage": "promote"
+    }
+  },
+  "optional": {
+    "APPDATA": { "consumer": "scripts/deploy.mjs", "why": "Windows 全局 npm 目录探测；取不到则回退 npx wrangler" },
+    "BAIDU_LIMIT": { "consumer": "scripts/promote.mjs", "why": "每日推送配额上限，默认 10" },
+    "BAIDU_SITE": { "consumer": "scripts/promote.mjs", "why": "百度已验证主机；默认取 HOST" },
+    "CF_API_TOKEN": { "consumer": "scripts/deploy_token_setup.py, scripts/dns_auto_config.py", "why": "旧脚本的 token 别名回退；主线统一用 CLOUDFLARE_API_TOKEN" },
+    "CLOUDFLARE_ZONE_ID": { "consumer": "scripts/dns_auto_config.py", "why": "可改用 API 现查，非必填" },
+    "CLOUDFLARE_PAGES_PROJECT": { "consumer": "scripts/deploy_api.py (默认 robotparts)", "why": "部署项目名覆盖；不设时用内置默认" },
+    "LIVE": { "consumer": "scripts/ingest_oss.mjs, scripts/regression.py", "why": "联机模式开关" },
+    "RESET_LIVE": { "consumer": "scripts/ingest_oss.mjs", "why": "缓存重置开关" },
+    "NODE_TLS_REJECT_UNAUTHORIZED": { "consumer": "scripts/push-gitdata.mjs", "why": "TLS 校验开关（调试用）" },
+    "OSS_CANDIDATES_LEDGER": { "consumer": "scripts/check_oss_candidates.mjs", "why": "台账路径覆盖" },
+    "PROBE_RETRIES": { "consumer": "scripts/probe.mjs", "why": "探测重试次数，有默认值" },
+    "PROBE_TARGET": { "consumer": "scripts/probe.mjs, scripts/verify_live_numbers.py", "why": "目标站点，默认线上域" },
+    "PYTHON_BIN": { "consumer": "scripts/deploy.mjs", "why": "解释器路径覆盖；不设则自行探测" },
+    "ROBOPARTS_ACTOR": { "consumer": "scripts/deploy.mjs", "why": "部署发起方标注（留痕用）" },
+    "ROBOPARTS_NODE": { "consumer": "scripts/regen_derived.py, scripts/regression.py", "why": "node 路径覆盖；不设则自行探测" },
+    "ROBOPARTS_RUN_SLOT": { "consumer": "scripts/deploy.mjs", "why": "运行档位标注（留痕用）" },
+    "RP_ENTITIES_JSON": { "consumer": "scripts/audit_data_quality.py 等", "why": "实体库路径覆盖（测试用）" },
+    "RP_SNAP_NOINJECT": { "consumer": "scripts/verify_deploy_snapshot.mjs", "why": "快照校验跳过注入（调试用）" },
+    "SP_CACHE": { "consumer": "scripts/ingest_step_parts.py", "why": "step.parts 缓存目录覆盖" },
+    "WRANGLER_BIN": { "consumer": "scripts/deploy.mjs", "why": "wrangler 可执行路径覆盖" }
+  },
+  "worker_secrets": {
+    "_note": "**本契约不校验这一节**（诚实边界）：这些键由 functions/ 在 Cloudflare Pages 运行时读取，只存在于 Cloudflare 项目环境变量里，本机 .env.local 是否有它无关。列在这里只为让「谁需要什么」有一份完整台账，避免把「本机没配」误读成「线上没配」（ECS_API_KEY 正是此例：本机 .env.local 有、Cloudflare 侧未设）。",
+    "XUNHU_APPID": { "consumer": "functions/api/payment/create.js", "why": "虎皮椒支付下单" },
+    "XUNHU_SECRET": { "consumer": "functions/api/payment/{create,notify}.js", "why": "虎皮椒支付验签" },
+    "API_KEYS": { "consumer": "functions/api/payment/notify.js, functions/api/register.js", "why": "内部 API 键白名单" },
+    "ADMIN_API_KEYS": { "consumer": "functions/api/suppliers/{approve,quote}.js", "why": "供应商审批/报价后台" },
+    "ECS_API_KEY": { "consumer": "functions/api/copilot.js", "why": "腾讯云 ECS 网关（本机已配、CF 侧未设 ⇒ 路由落 Agnes）" },
+    "ECS_BASE_URL": { "consumer": "functions/api/copilot.js", "why": "同上" },
+    "ECS_MODEL": { "consumer": "functions/api/copilot.js", "why": "同上" },
+    "AGNES_API_KEY": { "consumer": "functions/api/copilot.js", "why": "Agnes 上游备选" },
+    "AGNES_BASE_URL": { "consumer": "functions/api/copilot.js", "why": "同上" },
+    "AGNES_MODEL": { "consumer": "functions/api/copilot.js", "why": "同上" },
+    "COPILOT_UPSTREAM_TIMEOUT_MS": { "consumer": "functions/api/copilot.js", "why": "上游超时（非密钥）" },
+    "CREEM_API_KEY": { "consumer": "functions/_lib/upstream.js 等", "why": "旧支付通道，已由虎皮椒取代（pricing.html 断言 not-contains creem）" },
+    "CREEM_WEBHOOK_SECRET": { "consumer": "functions/api/credits/webhook.js", "why": "同上" }
+  },
+  "dormant": {
+    "DINGTALK_WEBHOOK": { "consumer": "scripts/notify_webhook.py", "why": "通知通道未接入飞轮；脚本在本机保留但不在任何轮次调用" },
+    "FEISHU_WEBHOOK": { "consumer": "scripts/notify_webhook.py", "why": "同上" },
+    "SLACK_WEBHOOK": { "consumer": "scripts/notify_webhook.py", "why": "同上" },
+    "WECOM_WEBHOOK": { "consumer": "scripts/notify_webhook.py", "why": "同上" },
+    "GH_TOKEN": { "consumer": "scripts/check_oss_candidates.mjs", "why": "推送实际走 ~/.git-credentials + Contents API，不读环境变量" },
+    "GITHUB_TOKEN": { "consumer": "scripts/push-gitdata*.mjs", "why": "同上；远端 ref 由 Git Data API 重放" },
+    "HN_USERNAME": { "consumer": "scripts/social_auto_poster.py", "why": "社交自动发帖未启用" },
+    "HN_PASSWORD": { "consumer": "scripts/social_auto_poster.py", "why": "同上" },
+    "REDDIT_CLIENT_ID": { "consumer": "scripts/social_auto_poster.py", "why": "同上（且 reddit.com 本机网络不可达）" },
+    "REDDIT_CLIENT_SECRET": { "consumer": "scripts/social_auto_poster.py", "why": "同上" },
+    "REDDIT_USERNAME": { "consumer": "scripts/social_auto_poster.py", "why": "同上" },
+    "REDDIT_PASSWORD": { "consumer": "scripts/social_auto_poster.py", "why": "同上" },
+    "MODELSCOPE_API_TOKEN": { "consumer": "scripts/publish_modelscope.py", "why": "ModelScope 发布通道未接入主线" }
+  }
+}

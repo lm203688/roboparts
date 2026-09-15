@@ -8282,6 +8282,230 @@ def layer1_93():
     check(not _scan('电气接口声明率 1.80%，与机械轴无关。', 'self-elec'),
           '阳性: 电气轴的声明率不被误当机械轴（同一词形、不同轴）')
 
+    # ── d) 机制断言：回流必须走「按真相源重算」而非「原样复制快照」 ──────
+    # 20260915 实测：deploy.mjs 原 0b3 步骤把 ops 里最新快照原样复制到 api/，而最新快照
+    # 停在 2026-08-28（18 天未更新）⇒ 每次部署都把冻结的旧声明率重新灌回对外端点，
+    # 使手工修 api/demand-signal.json 变成白工。上面 c) 的数值断言虽能抓到症状，
+    # 但回归跑在部署之前 ⇒ 存在一轮检测延迟。故把机制也一并锁死。
+    _rf = os.path.join(ROOT, 'scripts', 'reflow_demand_signal.mjs')
+    check(os.path.exists(_rf), '需求信号回流器存在（scripts/reflow_demand_signal.mjs）')
+    if os.path.exists(_rf):
+        _rfs = read_text(_rf)
+        check('can_answer_today' in _rfs and 'mech_decl_rate' in _rfs,
+              '回流器会按真相源重算 can_answer_today.mech_decl_rate（而非继承快照字段）')
+
+    _dps = read_text(os.path.join(ROOT, 'scripts', 'deploy.mjs'))
+    check('reflow_demand_signal.mjs' in _dps,
+          'deploy.mjs 的回流步骤调用回流器（而非自行复制快照）')
+
+    _OLD_SIG = "copyFileSync(src, path.join(ROOT, 'api', 'demand-signal.json'))"
+
+    def _raw_snapshot_copy(txt):
+        return _OLD_SIG in txt
+
+    check(not _raw_snapshot_copy(_dps),
+          'deploy.mjs 不再原样复制快照（该写法曾把冻结的旧声明率灌回线上）')
+    check(_raw_snapshot_copy('  ' + _OLD_SIG + ';'),
+          '阴性对照: 旧的原样复制写法必被识别（防机制断言恒真）')
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# L1.94 —— 环境密钥契约（20260915-17 新增）
+#
+# 起因：P0 审计时顺手核了百度主动推送，发现 `ops/promotion/runs/*` 最后一次成功推送停在
+# `2026-08-20-08-28.md`（= 北京 08-20 16:28，恰是 `.env.local` 头部 `Generated: 2026-08-20`
+# 那一刻），此后**连续 40 次推广脉冲全部** `skipped-no-token`，直到 2026-09-15 17:25 才恢复
+# —— 静默停摆 **26.0 天 / 625 小时**。（注：run 报告文件名是 UTC 戳，勿按北京时间读。）
+#
+# 它为什么能绿 18 天：仓库里唯一提到该 token 的闸门只断言
+#     `<!-- assert: file:scripts/promote.mjs contains BAIDU_PUSH_TOKEN -->`
+# —— 断言的是「代码会去读这个变量」，**断言不到「这个变量真的配了」**。
+# 闸门粒度小于被检事实时，绿灯的含义被悄悄放大：它只证明了"通路存在"，
+# 却被读成"通路在跑"。同类错配本仓已第 3 次出现（另两次：llms.txt 子集口径、
+# 子集数与总数混判）。故本层不再依赖"源码里出现过某个字符串"，
+# 而是直接向 `.env.local` 要事实，并要求**所有**被脚本引用的 env 键都在契约里登记。
+#
+# 三件事，缺一不可：
+#   ① 覆盖性（环境无关，任何机器都跑）：scripts/ 里出现的每个 env 键必须在
+#      scripts/env_contract.json 登记为 required / optional / dormant ——
+#      没登记的判红，堵住"新加了一个 token 却没人管它配没配"。
+#   ② 真实性（本机有 .env.local 时跑）：required 键必须存在且非空。
+#      无 .env.local 的机器（CI / 他机）显式打印 ⏭️ 跳过，**不假装绿**。
+#   ③ 反静默：契约说"该配的配了"、而最新一份推广报告却记着 `skipped-no-token`
+#      时判红 —— 这才是"配置与实跑矛盾"，也正是 8/20 之后本该立刻亮的那盏灯。
+# ══════════════════════════════════════════════════════════════════════════
+
+_ENV_REF_RE = re.compile(
+    r'process\.env\.([A-Z][A-Z0-9_]{2,})'
+    r"|process\.env\[\s*'([A-Z][A-Z0-9_]{2,})'\s*\]"
+    r'|process\.env\[\s*"([A-Z][A-Z0-9_]{2,})"\s*\]'
+    r"|os\.environ(?:\.get)?\s*[\(\[]\s*'([A-Z][A-Z0-9_]{2,})'"
+    r'|os\.environ(?:\.get)?\s*[\(\[]\s*"([A-Z][A-Z0-9_]{2,})"'
+    r"|getenv\s*\(\s*'([A-Z][A-Z0-9_]{2,})'"
+    r'|getenv\s*\(\s*"([A-Z][A-Z0-9_]{2,})"')
+
+
+def _env_refs(scripts_dir=None):
+    """扫 scripts/ 下 .mjs/.js/.cjs/.py，返回 {ENV_KEY: [文件名, ...]}。"""
+    d = scripts_dir or os.path.join(ROOT, 'scripts')
+    out = {}
+    if not os.path.isdir(d):
+        return out
+    for fn in sorted(os.listdir(d)):
+        if not fn.endswith(('.mjs', '.js', '.cjs', '.py')):
+            continue
+        try:
+            with io.open(os.path.join(d, fn), encoding='utf-8', errors='replace') as f:
+                txt = f.read()
+        except OSError:
+            continue
+        for m in _ENV_REF_RE.finditer(txt):
+            key = next((g for g in m.groups() if g), None)
+            if key:
+                out.setdefault(key, []).append(fn)
+    return out
+
+
+def _load_env_contract(path=None):
+    """读 scripts/env_contract.json —— 环境密钥契约唯一源。"""
+    p = path or os.path.join(ROOT, 'scripts', 'env_contract.json')
+    with io.open(p, encoding='utf-8') as f:
+        c = json.load(f)
+    return {g: (c.get(g) or {}) for g in ('required', 'optional', 'dormant')}
+
+
+def _required_missing(contract, env_local_vars):
+    """返回 [key, ...]：契约为 required、却在 .env.local 里缺失或为空白的键。"""
+    return [k for k, _meta in (contract.get('required') or {}).items()
+            if not str((env_local_vars or {}).get(k, '') or '').strip()]
+
+
+def _env_local_vars(path=None):
+    """读 .env.local 键值。**值只在内存里参与布尔比较，绝不进任何输出**。
+    文件不存在返回 None（区别于"存在但空"）。"""
+    p = path or os.path.join(ROOT, '.env.local')
+    if not os.path.exists(p):
+        return None
+    with io.open(p, encoding='utf-8-sig', errors='replace') as f:
+        raw = f.read()
+    out = {}
+    for ln in raw.splitlines():
+        s = ln.strip()
+        if not s or s.startswith('#') or '=' not in s:
+            continue
+        k, v = s.split('=', 1)
+        out[k.strip()] = v.strip()
+    return out
+
+
+def _promo_baidu_verdict(txt):
+    """从一份推广运行报告判定「百度主动推送」通道状态：'skipped-no-token' / 'ok' / 'other'。
+
+    **两种写法都必须认**，这是本检测器唯一容易做错的地方：
+      · 机读行 `<!-- PROMO-STATUS: baidu=skipped-no-token -->`（20260915-17 起产出）；
+      · 历史报告里的中文 note「未配置 BAIDU_PUSH_TOKEN…跳过」（8/20–9/15 那 40 份全是此形）。
+    只认机读字段 ⇒ 对历史 40 份报告恒判 ok，闸门恒真（本轮要防的假绿）；
+    只认中文 ⇒ 以后改文案即失效。故两种都认，并用阴阳用例把它钉住。
+    """
+    if 'baidu=skipped-no-token' in txt or '未配置 BAIDU_PUSH_TOKEN' in txt:
+        return 'skipped-no-token'
+    if re.search(r'baidu=(?:200|2[0-9][0-9])\b', txt) \
+            or re.search(r'\[百度主动推送\]\s*HTTP 200', txt):
+        return 'ok'
+    return 'other'
+
+
+def layer1_94():
+    """环境密钥契约：scripts/ 引用的 env 键须登记在案，required 须真配于 .env.local。"""
+    print('\n[L1.94] 环境密钥契约：scripts/ 引用的 env 键须登记，required 须真配于 .env.local')
+
+    try:
+        contract = _load_env_contract()
+    except (OSError, ValueError) as e:
+        check(False, 'scripts/env_contract.json 可解析（%s）' % e)
+        return
+    check(True, 'scripts/env_contract.json 可解析（required %d / optional %d / dormant %d）'
+          % (len(contract['required']), len(contract['optional']), len(contract['dormant'])))
+
+    # ── ① 覆盖性 ────────────────────────────────────────────────────────
+    refs = _env_refs()
+    check(len(refs) >= 10,
+          '扫描面够宽（scripts/ 实测引用 %d 个 env 键；防把扫描面缩到 1 个文件造成假绿）'
+          % len(refs))
+
+    registered = set(contract['required']) | set(contract['optional']) | set(contract['dormant'])
+    unregistered = sorted(k for k in refs if k not in registered)
+    check(not unregistered,
+          '所有被引用的 env 键都已在契约中登记（未登记 %d 个: %s —— 新键必须显式归入 '
+          'required/optional/dormant，否则就是下一个"没人管配没配"）'
+          % (len(unregistered),
+             ['%s(%s)' % (k, ','.join(refs[k][:2])) for k in unregistered[:6]] or '无'))
+
+    zombie = sorted(k for k in contract['required'] if k not in refs)
+    check(not zombie,
+          'required 键均有真实消费方（防僵尸条目把契约写胖：%s）' % (zombie or '无'))
+
+    # ── ② 真实性 ────────────────────────────────────────────────────────
+    env_local = _env_local_vars()
+    if env_local is None:
+        print('   ⏭️  跳过真实性检查：本机无 .env.local（CI / 他机属正常）。'
+              '本条目**未验证**，不得当绿灯读。')
+    else:
+        missing = _required_missing(contract, env_local)
+        check(not missing,
+              'required 密钥已真配于 .env.local（缺失 %d 个: %s —— 缺它不是"少个可选开关"，'
+              '对应通道会静默跳过；2026-08-20 冲掉 BAIDU_PUSH_TOKEN 后国内收录停摆 26.0 天、'
+              '连续 40 次脉冲全数空转）'
+              % (len(missing), missing or '无'))
+
+    # ── ③ 反静默：配置与实跑不得互相矛盾 ────────────────────────────────
+    if env_local is not None:
+        runs_dir = os.path.join(ROOT, 'ops', 'promotion', 'runs')
+        files = sorted(f for f in os.listdir(runs_dir) if f.endswith('.md')) \
+            if os.path.isdir(runs_dir) else []
+        if files:
+            newest = files[-1]
+            with io.open(os.path.join(runs_dir, newest), encoding='utf-8',
+                         errors='replace') as f:
+                txt = f.read()
+            has_token = bool(str(env_local.get('BAIDU_PUSH_TOKEN', '') or '').strip())
+            state = _promo_baidu_verdict(txt)
+            check(not (has_token and state == 'skipped-no-token'),
+                  '配置与实跑不自相矛盾（最新推广报告 %s：.env.local token %s / 报告判定 %s —— '
+                  '这就是 8/20–9/15 本该立刻亮的那盏灯）'
+                  % (newest, '已配' if has_token else '未配', state))
+        else:
+            print('   ⏭️  无推广报告可比对（ops/promotion/runs 为空）')
+
+    # ── 阴阳自证（喂合成数据，不依赖本机环境）──────────────────────────
+    syn = {'required': {'SYNTH_TOKEN': {'why': 'x'}}, 'optional': {}, 'dormant': {}}
+    check(_required_missing(syn, {'SYNTH_TOKEN': 'v'}) == [],
+          '阳性: 合成 env 含 required 键时判定通过')
+    check(_required_missing(syn, {}) == ['SYNTH_TOKEN'],
+          '阴性: 合成 env 缺 required 键时必被命中（防闸门恒真）')
+    check(_required_missing(syn, {'SYNTH_TOKEN': '   '}) != [],
+          '阴性: required 键值为空白视同未配（防"占位空值"骗过闸门）')
+    _fake = dict(refs)
+    _fake['TOTALLY_NEW_SECRET'] = ['example.mjs']
+    check(sorted(k for k in _fake if k not in registered) == ['TOTALLY_NEW_SECRET'],
+          '阴性: 未登记的 env 键必被判红、且只命中未登记项（防覆盖性闸门恒真）')
+    check(_env_local_vars(os.path.join(ROOT, 'scripts', '__no_such_env_file__')) is None,
+          '阳性: 路径不存在时返回 None（必须与"存在但空"可分辨，否则"没配"和"跳过"混为一谈）')
+
+    # ③ 的检测器本身要有阴阳用例（它错了整层就恒真/恒红）
+    check(_promo_baidu_verdict('…[百度主动推送] 未配置 BAIDU_PUSH_TOKEN（显式 env 或 '
+                               '.env.local），跳过…') == 'skipped-no-token',
+          '阳性: 历史中文写法（8/20–9/15 那 40 份的实际形态）必被识别为缺 token')
+    check(_promo_baidu_verdict('<!-- PROMO-STATUS: baidu=skipped-no-token indexnow=200 -->')
+          == 'skipped-no-token',
+          '阳性: 新机读状态行必被识别为缺 token')
+    check(_promo_baidu_verdict('<!-- PROMO-STATUS: baidu=200 indexnow=200 -->') == 'ok',
+          '阴性: 推送成功的报告不得被判成缺 token（防检测器恒红）')
+    check(_promo_baidu_verdict('[百度主动推送] HTTP 200 · {"remain":0,"success":10}') == 'ok',
+          '阴性: 历史成功形态同样判 ok（两种写法语义一致）')
+    check(_promo_baidu_verdict('今日已推送（每日节流），跳过') == 'other',
+          '阳性: 节流跳过不得被误判成缺 token（否则每天必然假红）')
+
 
 def layer1_92():
     """贡献层与主库的机械证据判据必须**同源**，且反造假能力要有行为证据。
@@ -10136,6 +10360,7 @@ def main():
     _run_layer(layer1_91)
     _run_layer(layer1_92)
     _run_layer(layer1_93)
+    _run_layer(layer1_94)
     _run_layer(layer2)
     _run_layer(lambda: layer3(url))
     _run_layer(layer4)

@@ -235,34 +235,56 @@ def main():
     print("  4. Set HTTP_PROXY env var if proxy available")
 
     print("\n=== CREDENTIALS STATUS ===")
-    envs = [
-        ("CLOUDFLARE_API_TOKEN", "Deploy + DNS"),
-        ("CLOUDFLARE_ZONE_ID", "DNS management"),
-        ("DINGTALK_WEBHOOK", "Notifications"),
-        ("FEISHU_WEBHOOK", "Notifications"),
-        ("SLACK_WEBHOOK", "Notifications"),
-        ("REDDIT_CLIENT_ID", "Reddit posting"),
-        ("REDDIT_CLIENT_SECRET", "Reddit posting"),
-        ("XUNHU_SECRET", "Payment verification"),
-    ]
-    
+    # 【20260915-17】清单不再手抄：唯一源是 scripts/env_contract.json，与 regression
+    # 的 L1.94 共用同一份。本处原先硬编码 8 项 —— 其中 XUNHU_SECRET 早已不用（支付走
+    # 虎皮椒自有密钥），而真正消失 26 天（连续 40 次脉冲空转）的 BAIDU_PUSH_TOKEN 从未入选。
+    # 手抄清单的典型下场：该看的没看、不该看的年年报 UNSET。
+    contract = {}
+    _cp = os.path.join(ROOT, "scripts", "env_contract.json")
+    if os.path.exists(_cp):
+        with open(_cp, encoding="utf-8") as f:
+            contract = json.load(f)
+    else:
+        print("  !! scripts/env_contract.json 缺失 —— 密钥清单唯一源不在，请先恢复")
+
+    envs = []
+    for _k, _meta in sorted((contract.get("required") or {}).items()):
+        envs.append((_k, "REQUIRED · " + ((_meta or {}).get("why") or "")))
+    for _k, _meta in sorted((contract.get("optional") or {}).items()):
+        envs.append((_k, "optional · " + ((_meta or {}).get("why") or "")))
+
     # Also check .env.local
     env_local = os.path.join(ROOT, ".env.local")
     env_local_vars = {}
     if os.path.exists(env_local):
-        with open(env_local, "r") as f:
+        with open(env_local, "r", encoding="utf-8-sig", errors="replace") as f:
             for line in f:
                 line = line.strip()
                 if "=" in line and not line.startswith("#"):
                     k, v = line.split("=", 1)
                     env_local_vars[k.strip()] = v.strip()
-    
-    for env, purpose in envs:
-        val = os.environ.get(env, "") or env_local_vars.get(env, "")
-        status = "SET" if val else "UNSET"
-        print("  [{status}] {env} ({purpose})".format(
-            status=status, env=env, purpose=purpose
+
+    missing_required = []
+    for name, purpose in envs:
+        val = os.environ.get(name, "") or env_local_vars.get(name, "")
+        required = purpose.startswith("REQUIRED")
+        status = "SET" if val else ("MISSING" if required else "UNSET")
+        if required and not val:
+            missing_required.append(name)
+        print("  [{status}] {name} ({purpose})".format(
+            status=status, name=name, purpose=purpose
         ))
+
+    print("  (dormant %d 项未列出：脚本在仓但不在任何轮次调用，见 env_contract.json)"
+          % len(contract.get("dormant") or {}))
+    print("  (Cloudflare 侧 worker_secrets %d 项**本机不校验**：如 ECS_API_KEY 本机 .env.local "
+          "有、CF 项目环境变量未设 ⇒ copilot 落 Agnes；别把「本机配了」读成「线上配了」)"
+          % len([k for k in (contract.get("worker_secrets") or {}) if not k.startswith("_")]))
+    if not os.path.exists(env_local):
+        print("  !! 本机无 .env.local —— 真实性检查未验证，不得当绿灯读")
+    if missing_required:
+        print("  !! REQUIRED 缺失: %s —— 对应通道会静默跳过，regression L1.94 判红"
+              % ", ".join(missing_required))
 
     # Final score
     print("\n=== FINAL SCORE ===")

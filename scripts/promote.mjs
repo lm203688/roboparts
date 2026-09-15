@@ -169,7 +169,7 @@ async function submitDomestic(urls) {
   if (!parity.ok) {
     note('[百度主动推送] 因主机同源闸未通过，跳过（宁可不推，也不把假站喂给百度）');
   } else if (!BAIDU_TOKEN) {
-    note('[百度主动推送] 未配置 BAIDU_PUSH_TOKEN（显式 env 或 .env.local），跳过');
+    note('[百度主动推送] ⚠️ 未配置 BAIDU_PUSH_TOKEN（显式 env 或 .env.local），跳过 —— 国内主动推送通道**当前失效**');
     lastResults.baidu = 'skipped-no-token';
     note(`[百度站长] 收录入口 https://ziyuan.baidu.com/site · 收录查询 https://www.baidu.com/s?wd=site%3A${parityHost}`);
   } else if (baiduPushedToday()) {
@@ -216,9 +216,16 @@ async function main() {
   // 写入运行日志
   const runsDir = join(ROOT, 'ops/promotion/runs');
   mkdirSync(runsDir, { recursive: true });
+  // 【20260915-17】文件名用 UTC 戳（历史遗留，勿按北京时间解读：`…-09-25.md` = 北京 17:25）。
   const stamp = new Date().toISOString().replace(/[:T]/g, '-').slice(0, 16);
-  writeFileSync(join(runsDir, `${stamp}.md`), log.join('\n') + '\n', 'utf8');
-  note(`\n[log] 已写入 ops/promotion/runs/${stamp}.md`);
+  // 报告此前**只有**人读的自然语言：缺 token 那 26 天，文件里明明写着
+  // 「未配置 BAIDU_PUSH_TOKEN…跳过」，却没有任何机读字段能断言这句话 ——
+  // 于是 regression 的 L1.94 无从对账，"配置说配了、实跑说没配"可以长期共存。
+  // 补一行机读状态（lastResults 就是各引擎的真实结果），让闸门直接读字段而不是猜中文。
+  const statusLine = '<!-- PROMO-STATUS: '
+    + Object.entries(lastResults).map(([k, v]) => `${k}=${v}`).join(' ') + ' -->';
+  writeFileSync(join(runsDir, `${stamp}.md`), log.join('\n') + '\n' + statusLine + '\n', 'utf8');
+  note(`\n[log] 已写入 ops/promotion/runs/${stamp}.md（含机读 ${statusLine.slice(17, -4)}）`);
 
   // 效果台账（幂等：按日期覆盖，同日记多次只留一份）
   try {

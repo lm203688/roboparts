@@ -313,18 +313,18 @@ snapshotWorkingTree(ROOT);
 // 这里把最新 ops/demand-signal-*.json 在部署前无条件复制到 api/，让 /api/demand-signal
 // 端点与计分板自动读取，取代手填。部署本就不依赖出网，复制本地文件零风险。
 {
-  const opsDir = path.join(ROOT, 'ops');
-  const sigFiles = fs.existsSync(opsDir)
-    ? fs.readdirSync(opsDir).filter((f) => /^demand-signal-\d{4}-\d{2}-\d{2}\.json$/.test(f))
-        .map((f) => ({ f, t: fs.statSync(path.join(opsDir, f)).mtimeMs }))
-        .sort((a, b) => b.t - a.t)
-    : [];
-  const src = sigFiles[0] ? path.join(opsDir, sigFiles[0].f) : null;
-  if (src) {
-    fs.copyFileSync(src, path.join(ROOT, 'api', 'demand-signal.json'));
-    console.log(`   ✅ 需求信号已回流: ${sigFiles[0].f} → api/demand-signal.json`);
-  } else {
-    console.warn('   ⚠️ 未发现 ops/demand-signal-*.json，跳过回流（端点将返回 404 直至首次扫描）');
+  // 20260915：原先在此处**原样复制**最新快照，问题在于快照里既有无需重算的历史信号块、
+  // 也混着本该现算的字段（机械声明率 / 实体总数）。实测最新快照停在 2026-08-28（18 天未更新），
+  // 于是每次部署都把这些过期数字重新灌回对外端点 —— 手工改 api/demand-signal.json 会被静默覆盖，
+  // L1.93 一上线就抓到这个（mech 率 0.0078 vs 现算 0.0575）。
+  // 现改为调用 scripts/reflow_demand_signal.mjs：复制快照后**按真相源重算现算块**，
+  // 使「对外派生物的现算字段与真相源同一时刻」，且该口径只有一份实现（deploy 与手工共用）。
+  const ex = spawnSync(process.execPath,
+    [path.join(ROOT, 'scripts', 'reflow_demand_signal.mjs')], { cwd: ROOT, encoding: 'utf8' });
+  const out = (ex.stdout || '').trim();
+  if (out) console.log(out);
+  if (ex.status !== 0) {
+    console.warn('   ⚠️ 需求信号回流失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
   }
 }
 
