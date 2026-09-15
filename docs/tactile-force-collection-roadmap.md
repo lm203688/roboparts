@@ -30,7 +30,7 @@
 ## 1. 缺口根因（诚实）
 
 `interaction_type` 分布实测：flange_mount 仅 **1** 条、connector_insert **435**、bus_coupling **6734**。
-原因：机械身份键（`mechanical_interface.standard/flange`）**声明率仅 ~0.57%**，绝大多数实体的几何/力接口未公开。即——
+原因：机械身份键（`mechanical_interface.standard/flange`）**声明率仅 5.75%**，绝大多数实体的几何/力接口未公开。即——
 
 > 力觉/触觉扩展的**第一瓶颈不是算法，是机械接口数据没采上来**。
 

@@ -7997,29 +7997,34 @@ def layer1_77():
 
 # ── L1.78 ───────────────────────────────────────────────────────────────────
 # 机械 declared 的 standard token 必须是**有出处的**规范编码，不得凭空造。
-# 白名单：token → 证明该编码确实被厂商官方文档以 ISO 编码形式列出的深链。
-# 加新 token 的唯一合法路径是往这里加一行并附深链 —— 这正是本闸门要制造的摩擦。
-MECH_STD_TOKEN_EVIDENCE = {
-    'ISO 9409-1-50-4-M6': (
-        'https://assets.robotiq.com/website-assets/support_documents/document/'
-        'FT300-S_Sensor_Manual_OMRON_TM_PDF_20210301.pdf'),
-    'ISO 9409-1-31.5-4-M5': (
-        'https://assets.robotiq.com/website-assets/support_documents/document/'
-        'FT300-S_Sensor_Manual_OMRON_TM_PDF_20210301.pdf'),
-    'ISO 9409-1-40-4-M6': (
-        'https://assets.robotiq.com/website-assets/support_documents/document/'
-        'FT300-S_Sensor_Manual_OMRON_TM_PDF_20210301.pdf'),
-}
-# 机械声明的出处主机名白名单：厂商官方资产域 / 标准机构。软文站、聚合站、
-# 电商页一律不算 —— 与 L1.75（标准登记表出处白名单）同一条纪律的机械侧。
-MECH_SOURCE_HOSTS = (
-    'robotiq.com', 'onrobot.com', 'schunk.com', 'ati-ia.com',
-    'universal-robots.com', 'iso.org', 'openstd.samr.gov.cn',
-    # 20260915：新增国产力传感器厂商官域。仅为「允许引用」的白名单扩容 ——
-    # 白名单里有这个域 ≠ 已收录任何 declared 条目；鑫精诚的机械安装接口尚未
-    # 一手核实，故只作供应链候选（见 api/suppliers_seed.json），不产生声明。
-    'xjcsensor.cn',
-)
+#
+# 判据本身自 20260915 起**不再写在本文件里**，抽到单一真相源
+#   scripts/mech_evidence_contract.json
+# 由两侧共同消费：本文件（主库 api/entities.json 侧）读 JSON；
+# scripts/mech_evidence.mjs（贡献层 api/entities.contrib.json 侧）import 该模块。
+#
+# 为什么必须同源 —— 20260915 审计实录：
+#   同一份数据在主库被 L1.78 拒（要求白名单主机名 + 表内编码），在贡献层却被
+#   build_flywheel_layer.mjs 的 fromBom() 放行（它只判断 source_url 非空，
+#   于是 'Universal Robots' 这种**公司名而非 URL**的字符串也过闸）。
+#   判据分叉比判据宽松更危险：产物看起来有出处，却组织不起一次真实核验。
+#   两条通道口径不同，P0 那个数字就是拼出来的，不是量出来的。
+#
+# 本段只负责**加载**；判据非空性与自证由 L1.78 / L1.92 分别把关，缺失即判红
+# （fail-closed），不静默降级为空判据。
+def _load_mech_contract():
+    p = os.path.join(ROOT, 'scripts', 'mech_evidence_contract.json')
+    with open(p, encoding='utf-8') as f:
+        c = json.load(f)
+    return tuple(c.get('source_hosts') or ()), dict(c.get('std_token_evidence') or {})
+
+
+try:
+    MECH_SOURCE_HOSTS, MECH_STD_TOKEN_EVIDENCE = _load_mech_contract()
+except Exception:
+    # 读不到就把判据留空 —— 由下游闸门报红并给出可读原因，而不是让整个回归
+    # 在 import 阶段崩掉（崩掉时其余 60+ 项都无法报数，反而掩盖真因）。
+    MECH_SOURCE_HOSTS, MECH_STD_TOKEN_EVIDENCE = (), {}
 
 
 def _mech_violations(entities):
@@ -8076,6 +8081,41 @@ def layer1_78():
     bad = _mech_violations(entities)
     check(not bad, '全部 declared 机械声明的编码与出处均合规（违规: %s）' % (bad or '无'))
 
+    # ── 覆盖率 meta 的口径自洽（20260915 补） ──────────────────────────────
+    # 起因：meta.mechanical_interface_coverage.fill_pct 长期停在 **3.45%**
+    # （= declared 15/435，只算了 declared），而 onboarding_block.facts()['mech_pct']
+    # 与对外 honest_limits 都是 **5.75%**（declared+partial 25/435）。
+    # 同一指标两套口径 —— 关键是**没有任何闸门看管存盘的那一份**：
+    # 对外播报的 5.75% 有 L1.62/L1.85 盯着，仓里那份 3.45% 无人过问，
+    # 于是"站上数字对、仓里数字错"可以长期共存而不报警。
+    # 本段把存盘那份也拉进闸门，并与对外口径的分子定义显式对齐。
+    _cov = (ents.get('meta') or {}).get('mechanical_interface_coverage') or {}
+    _d = int(_cov.get('declared') or 0)
+    _p = int(_cov.get('partial') or 0)
+    _a = int(_cov.get('applicable') or 0)
+    _expect = round((_d + _p) * 100.0 / _a, 2) if _a else 0.0
+    try:
+        _stored = float(_cov.get('fill_pct'))
+    except (TypeError, ValueError):
+        _stored = -1.0
+    check(abs(_stored - _expect) < 1e-9,
+          'coverage.fill_pct 与自身公式一致（存 %s，现算 (declared %d + partial %d)/applicable %d = %s）'
+          % (_cov.get('fill_pct'), _d, _p, _a, _expect))
+    check(int(_cov.get('not_declared') or 0) + _p + _d == _a,
+          'coverage 分母自洽（not_declared %s + partial %d + declared %d == applicable %d）'
+          % (_cov.get('not_declared'), _p, _d, _a))
+    # 分子定义必须与对外现算同源（对外只敢说"有线索"，故取 declared+partial）。
+    # 这条防的是"两边算法各自演化"——契约同源比数值相等更重要。
+    with open(os.path.join(ROOT, 'scripts', 'onboarding_block.py'), encoding='utf-8') as _f:
+        _ob_src = _f.read()
+    check("st in ('declared', 'partial')" in _ob_src,
+          '对外口径分子仍取 declared+partial（与 coverage.fill_pct 同源，防口径分叉）')
+    # 阳性对照：把分子换成只算 declared 必须算不出一致（防闸门恒真）
+    _wrong = round(_d * 100.0 / _a, 2) if _a else 0.0
+    check(_d != _d + _p,
+          '阳性对照: declared-only 口径(%s) 与 declared+partial 口径(%s) 确为不同值'
+          % (_wrong, _expect))
+
     # 非空转自证 ①：拿本轮真实撞上的分歧 token 喂进去，必须被拒
     hit = _mech_violations([{'id': 'TEST-56', 'mechanical_interface': {
         'status': 'declared', 'standard': ['ISO 9409-1-56-8-M4'],
@@ -8108,17 +8148,310 @@ def layer1_78():
         'source_url': 'https://assets.robotiq.com/x.pdf'}}]),
           '阴性: 非 ISO 前缀的孔位记法不被误判为自造 ISO 编码')
 
+
+def layer1_93():
+    """机械声明率：**所有副本与对外裸文本必须等于现算真值**（禁手写百分比）。
+
+    ── 为什么加（20260915 P0 审计）──
+    用户在追 P0「真实 BOM 机械接口声明贡献」。审计发现该缺口之所以"补不动"，
+    不只是没数据 —— 更根本的是**同一个指标在仓里有 5 个互相矛盾的值**：
+
+      · 对外口径（onboarding_block.facts / platforms.json honest_limits / llms.txt）＝ 5.75%
+      · entities.json + data.json 的 meta.fill_pct           ＝ 3.45%（declared-only，被
+        scripts/fix_mi_meta.py 覆写；正统生成器 add_mechanical_interface.py 用的是
+        declared+partial，两个写者两套分子）
+      · agent-discovery.json coverage                        ＝ 1.12%（20260809 旧快照，
+        且 declared 写成 0，与现状 15 条直接矛盾，内部 358≠350 自不相洽，无人生成、无闸门）
+      · api/demand-signal.json 的 verdict / can_answer_today  ＝ 0.78%（6/767 时代），
+        而生成器 demand_scan.mjs 现算的分母用的是 totalEntities（全库）＝ 第三套分母
+      · README.md / LICENSE / CONTRIBUTING.md / mcp-server/README.md /
+        agent-architecture.html / content/*.md                ＝ 1.52% / 1.68% / 0.57% 三种
+
+    而 docs/contribution-loop-design.md:68 白纸黑字写着「**禁止在文案里手写百分比**」。
+    仓库已有裸文本扫描器（L1.44 一族，只认"实体/开源组件"计数），声明率百分比无人看管。
+    于是"站上数字对、仓里数字错、文案数字第三种"可以长期共存而不报警。
+
+    为什么它卡住 P0：P0 的验收标准就是"这个数字真实且会涨"。数字本身不自洽时，
+    补进来多少条真实声明都无法判定 —— 涨的是哪一套口径？所以本闸门是 P0 的前置条件。
+
+    本闸门查什么：
+      a) 四处结构性副本逐字段等于现算真值（entities / data / agent-discovery / demand-signal）；
+      b) 对外表面（README/LICENSE/CONTRIBUTING/llms.txt/agent-discovery/mcp-server/架构页/
+         content 文章/api 各 JSON）里凡出现"声明率…N%"一律必须等于现算真值；
+      c) 阴阳自证：等于真值不误伤、过期值必命中、显式标「快照」的历史值豁免、
+         HTML 锚点写法不得成为免检后门。
+    """
+    print('\n[L1.93] 机械声明率：副本与对外裸文本一律等于现算真值（禁手写百分比）')
+
+    ents = load_entities()
+    entities = ents.get('entities') or []
+    stat = {}
+    for e in entities:
+        s = (e.get('mechanical_interface') or {}).get('status')
+        stat[s] = stat.get(s, 0) + 1
+    d = stat.get('declared', 0)
+    p = stat.get('partial', 0)
+    nd = stat.get('not_declared', 0)
+    na = stat.get('n_a', 0)
+    applicable = d + p + nd
+    pct = round((d + p) * 100.0 / applicable, 2) if applicable else 0.0
+    rate4 = round((d + p) / applicable, 4) if applicable else 0.0
+
+    def _eq(a, b):
+        try:
+            return abs(float(a) - float(b)) < 1e-9
+        except (TypeError, ValueError):
+            return False
+
+    # ── a) 结构性副本 ────────────────────────────────────────────────────
+    cov = (ents.get('meta') or {}).get('mechanical_interface_coverage') or {}
+    _copies = [('entities.json meta.fill_pct', cov.get('fill_pct'), pct)]
+
+    _dj = json.loads(read_text(os.path.join(ROOT, 'api', 'data.json')))
+    _dc = (_dj.get('meta') or {}).get('mechanical_interface_coverage') or {}
+    _copies.append(('data.json meta.fill_pct', _dc.get('fill_pct'), pct))
+
+    _ad = json.loads(read_text(os.path.join(ROOT, 'agent-discovery.json')))
+    _ac = ((_ad.get('mechanical_interface_registry') or {}).get('coverage') or {})
+    _copies.append(('agent-discovery coverage.fill_pct', _ac.get('fill_pct'), pct))
+
+    _ds = json.loads(read_text(os.path.join(ROOT, 'api', 'demand-signal.json')))
+    _ca = _ds.get('can_answer_today') or {}
+    _copies.append(('demand-signal can_answer_today.mech_decl_rate', _ca.get('mech_decl_rate'), rate4))
+
+    _bad_copy = ['%s 存 %s 应 %s' % (n, v, w) for n, v, w in _copies if not _eq(v, w)]
+    check(not _bad_copy,
+          '四处机械声明率副本均等于现算值（%.2f%%；不一致: %s）' % (pct, _bad_copy or '无'))
+
+    check(_ac.get('declared') == d and _ac.get('partial') == p
+          and _ac.get('not_declared') == nd and _ac.get('not_applicable') == na
+          and _ac.get('applicable_entities') == applicable,
+          'agent-discovery coverage 逐字段等于现算（declared/partial/not_declared/na/applicable；'
+          '实存 %s）' % {k: _ac.get(k) for k in ('applicable_entities', 'not_applicable',
+                                                'declared', 'partial', 'not_declared')})
+
+    # ── b) 对外裸文本 ────────────────────────────────────────────────────
+    # 关键词按「机械侧专属」选取：刻意不含裸 '填允率'（3D 打印 infill 同名），
+    # 也不含裸 'declaration rate'（协议/电气轴各有自己的声明率）。
+    _KW = ('声明率', '机械接口有线索', '机械尺寸级', 'mechanical-interface declaration rate')
+    _NUM = re.compile(r'([0-9]+(?:\.[0-9]+)?)\s*%')
+
+    def _scan(text, label):
+        bad = []
+        for ln, line in enumerate(text.splitlines(), 1):
+            plain = re.sub(r'<[^>]+>', '', line)          # 去标签：锚点写法归一，不留免检后门
+            for kw in _KW:
+                i = plain.find(kw)
+                while i != -1:
+                    seg = plain[max(0, i - 20):i + 40]
+                    if '快照' not in seg and '电气' not in seg:
+                        m = _NUM.search(plain, i, i + len(kw) + 40)
+                        if m and abs(float(m.group(1)) - pct) > 1e-9:
+                            bad.append('%s:%d "%s"→%s%%' % (label, ln, seg.strip()[:44], m.group(1)))
+                    i = plain.find(kw, i + 1)
+        return bad
+
+    _FILES = ['README.md', 'LICENSE', 'CONTRIBUTING.md', 'llms.txt', 'agent-discovery.json',
+              'mcp-server/README.md', 'agent-architecture.html']
+    _targets = [(f, read_text(os.path.join(ROOT, f))) for f in _FILES
+                if os.path.exists(os.path.join(ROOT, f))]
+    import glob as _glob
+    for _pat in ('content/*.md', 'api/*.json'):
+        _dir, _ext = _pat.split('/')
+        for _f in sorted(_glob.glob(os.path.join(ROOT, _dir, _ext))):
+            _targets.append((os.path.relpath(_f, ROOT).replace(os.sep, '/'), read_text(_f)))
+
+    _viol = []
+    for _lbl, _txt in _targets:
+        _viol += _scan(_txt, _lbl)
+    check(not _viol,
+          '对外表面无手写/过期的机械声明率（应一律为 %.2f%%；违规 %d 处: %s）'
+          % (pct, len(_viol), _viol[:6] or '无'))
+    check(len(_targets) >= 20,
+          '扫描面足够宽（实测 %d 个文件；防把扫描面缩到只剩一个文件造成假绿）' % len(_targets))
+
+    # ── c) 阴阳自证 ──────────────────────────────────────────────────────
+    check(not _scan('机械接口声明率仅 %.2f%%。' % pct, 'self-ok'),
+          '阳性: 等于现算真值的裸文本不被误伤')
+    check(bool(_scan('机械接口声明率仅 1.52%。', 'self-stale')),
+          '阴性: 过期值 1.52% 必被命中（防闸门恒真）')
+    check(not _scan('机械接口声明率 1.68%%（2026-08-12 快照；此后已升至 %.2f%%）。' % pct, 'self-snap'),
+          '阳性: 显式标注「快照」的历史值豁免（不把历史记录改错）')
+    check(bool(_scan('机械互换维度声明率仅 <span data-rp="mech_pct">1.52</span>%', 'self-anchor')),
+          '阴性: 锚点写法内的过期值照样命中（锚点不是免检牌）')
+    check(not _scan('电气接口声明率 1.80%，与机械轴无关。', 'self-elec'),
+          '阳性: 电气轴的声明率不被误当机械轴（同一词形、不同轴）')
+
+
+def layer1_92():
+    """贡献层与主库的机械证据判据必须**同源**，且反造假能力要有行为证据。
+
+    ── 为什么加（20260915 P0 审计）──
+    用户下达「P0 真实 BOM 机械声明这个需要你想办法解决了」。审计后的事实是：
+    该缺口长期被记为「数据缺口，非代码 bug」，但真正在动这个数字的两条通道，
+    一条在**编造**、一条在**放行**：
+
+      ① scripts/urdf_auto_extractor.py：classify_flange_type() 仅凭
+         「revolute 关节数 >= 5」就返回 'ISO 9409-1-50-4-M6'，随后
+         `status = "declared" if "ISO" in flange`。URDF 里根本没有法兰事实 ——
+         连同管道的 build_flywheel_layer.mjs 开篇都写着「URDF 不含机械接口事实，
+         故 mechanical_interface 一律留空（不编造）」。抽取器违反了管道自己的
+         成文纪律，且它正是被 orchestrator 的 collection 阶段每小时调用的脚本。
+      ② scripts/bom_backfill.py：SOURCES 是硬编码的 (名称→法兰) 对，
+         source_url 塞的是**公司名**（'Universal Robots'）而非 URL，
+         evidence 只写 '... official documentation'，全部照标 declared。
+      ③ 消费端 build_flywheel_layer.mjs 的 fromBom() 只做 `if (!b.source_url)`
+         —— 非 URL 字符串照样被采信为 declared / confidence: medium。
+
+    即：唯一能把 P0 数字抬起来的东西，是一台**制造该数字的机器**。
+    这类缺口不能靠"多采点数据"解决：得先把判据收敛到一处，再证明它真的会拒。
+
+    ── 本闸门查什么 ──
+      a) 契约单一真相源存在、非空（空表 = 判据全放行，比没有更危险）；
+      b) 贡献层确实 import 了共享判据模块（防两条通道各自演化出第二套判据）；
+      c) 两个产出侧不得自行发出 declared（授权只能来自证据契约）；
+      d) 行为自证：真跑共享判据，证明「非 URL 出处」「非白名单域名」「表外
+         ISO 编码」三类都被拒，且合规项不被误伤（阴性对照，防把'一律拒'当合规）。
+    """
+    print('\n[L1.92] 机械证据判据同源 + 贡献层反造假行为自证')
+
+    cp = os.path.join(ROOT, 'scripts', 'mech_evidence_contract.json')
+    check(os.path.exists(cp), '证据契约单一真相源存在（scripts/mech_evidence_contract.json）')
+    check(len(MECH_SOURCE_HOSTS) >= 1,
+          '契约 source_hosts 非空（实测 %d 个域）' % len(MECH_SOURCE_HOSTS))
+    check(len(MECH_STD_TOKEN_EVIDENCE) >= 3,
+          '契约 std_token_evidence 非空（实测 %d 个 token）' % len(MECH_STD_TOKEN_EVIDENCE))
+    _bad_ev = [t for t, ev in MECH_STD_TOKEN_EVIDENCE.items()
+               if not str(ev).startswith('https://')]
+    check(not _bad_ev, '契约内每个 token 的出处均为 https 深链（异常: %s）' % (_bad_ev or '无'))
+
+    # b) 贡献层必须消费同一判据
+    _fw = os.path.join(ROOT, 'scripts', 'build_flywheel_layer.mjs')
+    _fw_src = ''
+    if os.path.exists(_fw):
+        with open(_fw, encoding='utf-8') as f:
+            _fw_src = f.read()
+    check('mech_evidence.mjs' in _fw_src,
+          '贡献层 import 共享判据模块（防主库/贡献层判据分叉 —— 20260915 审计的直接教训）')
+
+    # c) 产出侧不得自行发出 declared
+    #
+    # 【20260915 自我证伪】初版用「源码是否含 'declared' 子串」判定，结果被自己的
+    # 说明文字打了假红：bom_backfill.py 只是在**读**真相源的技术计数
+    # `truth.get("declared", "?")`，却被判成「在发出声明」。闸门要守的是**行为**，
+    # 不是措辞——与 L1.66 同一条教义（不看源码写法，拿生产函数实喂合成条目验行为）。
+    # 改为：AST 取**代码中**（非 docstring）恰好等于 'declared' 的字符串常量，
+    # 且该行确实在给 status 赋值 —— 这才是「自行发出声明」的最小充分证据。
+    import ast as _ast
+
+    def _declared_emit_lines(src):
+        try:
+            tree = _ast.parse(src)
+        except SyntaxError:
+            return [-1]
+        docs = set()
+        for n in _ast.walk(tree):
+            if isinstance(n, (_ast.Module, _ast.FunctionDef, _ast.AsyncFunctionDef, _ast.ClassDef)):
+                b = getattr(n, 'body', None) or []
+                if b and isinstance(b[0], _ast.Expr) and isinstance(b[0].value, _ast.Constant) \
+                   and isinstance(b[0].value.value, str):
+                    docs.add(id(b[0].value))
+        lines = src.splitlines()
+        out = []
+        for n in _ast.walk(tree):
+            if not (isinstance(n, _ast.Constant) and isinstance(n.value, str)):
+                continue
+            if n.value.strip() != 'declared' or id(n) in docs:
+                continue
+            ln = lines[n.lineno - 1] if 0 < n.lineno <= len(lines) else ''
+            # 只有在给 status 赋值时才算「发出」；读计数（truth.get(...)）不算
+            if re.search(r"status\s*['\"]?\s*[:=]", ln):
+                out.append(n.lineno)
+        return out
+
+    for _fn in ('urdf_auto_extractor.py', 'bom_backfill.py'):
+        _p = os.path.join(ROOT, 'scripts', _fn)
+        if not os.path.exists(_p):
+            check(False, '产出侧脚本存在: %s' % _fn)
+            continue
+        with open(_p, encoding='utf-8') as f:
+            _src = f.read()
+        _hits = _declared_emit_lines(_src)
+        check(not _hits,
+              '%s 不自行发出 declared（授权只能来自证据契约；给 status 赋 declared 的行: %s）'
+              % (_fn, _hits or '无'))
+
+    # 自证：闸门必须能区分「写声明」与「读计数」，否则不是闸门只是噪音
+    check(bool(_declared_emit_lines("e['mechanical_interface'] = {'status': 'declared'}\n")),
+          '阴性对照: 直接给 status 赋 declared 必被命中')
+    check(bool(_declared_emit_lines("status = 'declared' if iso else 'not_declared'\n")),
+          '阴性对照: 按条件赋 declared 必被命中（旧 urdf 抽取器正是这种写法）')
+    check(not _declared_emit_lines('"""本脚本不再产出 declared 声明。"""\n'
+                                   'n = truth.get("declared", 0)\nprint("declared %s" % n)\n'),
+          '阳性对照: docstring 说明文字、读计数 truth.get("declared")、插值串均不得误伤')
+
+    # d) 行为自证：真跑共享判据
+    _node = shutil.which('node')
+    if not _node:
+        check(False, '可找到 node 以运行共享判据自测（找不到 = 无法证明反造假真的生效）')
+        return
+    _probe = os.path.join(ROOT, 'scripts', 'mech_evidence.mjs')
+    try:
+        _r = subprocess.run([_node, _probe, '--selftest'], cwd=ROOT,
+                            capture_output=True, text=True, encoding='utf-8',
+                            errors='replace', timeout=90)
+    except Exception as _e:
+        check(False, '共享判据自测可执行（异常: %s）' % _e)
+        return
+    _out = (_r.stdout or '') + (_r.stderr or '')
+    check(_r.returncode == 0,
+          '共享判据自测退出码 0（exit=%s）\n%s' % (_r.returncode, _out.strip()[-700:]))
+    _m = re.search(r'SELFTEST total=(\d+) pass=(\d+) fail=(\d+) rejected_cases=(\d+) accepted_cases=(\d+)',
+                   _out)
+    check(_m is not None, '自测输出含机读汇总行（防只跑不判）')
+    if _m:
+        _total, _pass, _fail, _rej, _acc = (int(_m.group(i)) for i in range(1, 6))
+        check(_total >= 4, '自测用例数足够（实测 %d，防缩到只剩 1 个例子的空转闸）' % _total)
+        check(_fail == 0 and _pass == _total, '自测全通过（pass=%d/%d）' % (_pass, _total))
+        # 阴阳两侧都必须有样本：只有"拒"的用例 = 无法区分「判据严」与「判据恒 false」
+        check(_rej >= 3, '阴性对照样本足够（应拒用例 %d 条 ≥3：非 URL / 非白名单域 / 表外编码）' % _rej)
+        check(_acc >= 1, '阳性对照样本足够（应放行用例 %d 条 ≥1：合规项不得被误伤）' % _acc)
+
     # 机械维度必须真的能配出对，否则"补了数据"只是自我感动
-    with_std = [e for e in declared if e['mechanical_interface'].get('standard')]
+    # 【20260915 自查出的两个真 bug，都在本段】
+    #  1. `declared` 此前直接引用一个**不存在**的名字 → L1.92 抛 NameError 中断整个套件，
+    #     L1.93 及其后所有闸门**从未运行**。闸门自己把套件截断，是这一族里最隐蔽的
+    #     假绿：输出看起来"只有一两条红"，实际后半套根本没跑。改为本层自算。
+    #  2. standard 可能是**标量字符串**，`set('ISO 9409-1-50-4-M6')` 会炸成字符集，
+    #     两个不同编码只要共享一个字符（比如都有 '9'）就被算成"配出一对"。
+    #     这正是 L1.74 p4 那个形态陷阱的翻版（引擎 idValues 本就 Array.isArray(v)?v:[v]，
+    #     探针漏了同一处理）。统一成"标量当单元素集合"。
+    _ents_decl = json.loads(read_text(os.path.join(ROOT, 'api', 'entities.json'))).get('entities') or []
+
+    def _std_set(e):
+        v = ((e.get('mechanical_interface') or {}).get('standard'))
+        if isinstance(v, str):
+            return {v.strip()} if v.strip() else set()
+        if isinstance(v, (list, tuple)):
+            return {str(x).strip() for x in v if str(x).strip()}
+        return set()
+
+    with_std = [e for e in _ents_decl
+                if (e.get('mechanical_interface') or {}).get('status') == 'declared' and _std_set(e)]
     pairs = 0
     for i in range(len(with_std)):
         for j in range(i + 1, len(with_std)):
-            if (set(with_std[i]['mechanical_interface']['standard'])
-                    & set(with_std[j]['mechanical_interface']['standard'])):
+            if _std_set(with_std[i]) & _std_set(with_std[j]):
                 pairs += 1
     check(not (len(with_std) >= 2 and pairs == 0),
           '≥2 条带尺寸 declared 时至少能配出一对（当前 %d 条 / %d 对）'
           % (len(with_std), pairs))
+    check(_std_set({'mechanical_interface': {'standard': 'ISO 9409-1-50-4-M6'}})
+          == {'ISO 9409-1-50-4-M6'},
+          '标量 standard 归一为单元素集合（不得 set() 成字符集 —— L1.74 p4 同型陷阱）')
+    check(not (_std_set({'mechanical_interface': {'standard': 'ISO 9409-1-50-4-M6'}})
+               & _std_set({'mechanical_interface': {'standard': 'ISO 9409-1-31.5-4-M5'}})),
+          '阴性对照: 两个不同编码不得被判为可配对（字符集误判恰好会在这例上假配对）')
 
 
 # ── L1.79 ───────────────────────────────────────────────────────────────────
@@ -9691,102 +10024,123 @@ def layer1_91():
         check(False, f'生产函数对照失败: {e}')
 
 
+def _run_layer(fn):
+    """执行一层闸门。**闸门自身抛异常不得截断整个套件。**
+
+    【20260915 教训 · 自查出的最隐蔽假绿】L1.92 末尾引用了未定义名 `declared`，
+    抛 NameError 直接中断 main()，导致 L1.93 及其后所有闸门**从未运行**；而输出里
+    只看到"一两条红"，极易被读成"还剩一点小问题就完事"。闸门把套件截断不是漏报
+    某一项，而是让后面所有项集体消失还不说 —— 比任何单项假绿都危险。
+    故：任何一层抛异常 → 转成一条明确的 ❌（含异常类型/消息/末帧），套件继续跑完。
+    """
+    try:
+        return fn()
+    except Exception as e:                       # noqa: BLE001 —— 必须兜住一切，否则就是截断
+        import traceback as _tb
+        lines = _tb.format_exc(limit=3).strip().splitlines()
+        check(False, '闸门 %s 自身抛异常（%s: %s）｜%s'
+              % (getattr(fn, '__name__', fn), type(e).__name__, e,
+                 lines[-2].strip() if len(lines) >= 2 else ''))
+
+
 def main():
     url = None
     if '--url' in sys.argv:
         url = sys.argv[sys.argv.index('--url') + 1]
     print('=== RoboParts 回归测试 ===')
-    layer1()
-    layer1_5()
-    layer1_6()
-    layer1_7()
-    layer1_8()
-    layer1_9()
-    layer1_10()
-    layer1_11()
-    layer1_12()
-    layer1_13()
-    layer1_14()
-    layer1_15()
-    layer1_16()
-    layer1_17()
-    layer1_18()
-    layer1_19()
-    layer1_20()
-    layer1_21()
-    layer1_22()
-    layer1_23()
-    layer1_24()
-    layer1_25()
-    layer1_26()
-    layer1_27()
-    layer1_28()
-    layer1_29()
-    layer1_30()
-    layer1_31()
-    layer1_32()
-    layer1_33()
-    layer1_34()
-    layer1_35()
-    layer1_36()
-    layer1_37()
-    layer1_38()
-    layer1_39()
-    layer1_40()
-    layer1_41()
-    layer1_42()
-    layer1_43()
-    layer1_44()
-    layer1_45()
-    layer1_46()
-    layer1_47()
-    layer1_48()
-    layer1_49()
-    layer1_50()
-    layer1_51()
-    layer1_52()
-    layer1_53()
-    layer1_54()
-    layer1_55()
-    layer1_56()
-    layer1_57()
-    layer1_58()
-    layer1_59()
-    layer1_60()
-    layer1_61()
-    layer1_62()
-    layer1_63()
-    layer1_64()
-    layer1_65()
-    layer1_66()
-    layer1_67()
-    layer1_68()
-    layer1_69()
-    layer1_70()
-    layer1_73()
-    layer1_74()
-    layer1_75()
-    layer1_76()
-    layer1_77()
-    layer1_78()
-    layer1_79()
-    layer1_80()
-    layer1_81()
-    layer1_82()
-    layer1_83()
-    layer1_84()
-    layer1_85()
-    layer1_86()
-    layer1_87()
-    layer1_88()
-    layer1_89()
-    layer1_90()
-    layer1_91()
-    layer2()
-    layer3(url)
-    layer4()
-    layer_schema_contract()
-    layer_dataset_dist()
+    _run_layer(layer1)
+    _run_layer(layer1_5)
+    _run_layer(layer1_6)
+    _run_layer(layer1_7)
+    _run_layer(layer1_8)
+    _run_layer(layer1_9)
+    _run_layer(layer1_10)
+    _run_layer(layer1_11)
+    _run_layer(layer1_12)
+    _run_layer(layer1_13)
+    _run_layer(layer1_14)
+    _run_layer(layer1_15)
+    _run_layer(layer1_16)
+    _run_layer(layer1_17)
+    _run_layer(layer1_18)
+    _run_layer(layer1_19)
+    _run_layer(layer1_20)
+    _run_layer(layer1_21)
+    _run_layer(layer1_22)
+    _run_layer(layer1_23)
+    _run_layer(layer1_24)
+    _run_layer(layer1_25)
+    _run_layer(layer1_26)
+    _run_layer(layer1_27)
+    _run_layer(layer1_28)
+    _run_layer(layer1_29)
+    _run_layer(layer1_30)
+    _run_layer(layer1_31)
+    _run_layer(layer1_32)
+    _run_layer(layer1_33)
+    _run_layer(layer1_34)
+    _run_layer(layer1_35)
+    _run_layer(layer1_36)
+    _run_layer(layer1_37)
+    _run_layer(layer1_38)
+    _run_layer(layer1_39)
+    _run_layer(layer1_40)
+    _run_layer(layer1_41)
+    _run_layer(layer1_42)
+    _run_layer(layer1_43)
+    _run_layer(layer1_44)
+    _run_layer(layer1_45)
+    _run_layer(layer1_46)
+    _run_layer(layer1_47)
+    _run_layer(layer1_48)
+    _run_layer(layer1_49)
+    _run_layer(layer1_50)
+    _run_layer(layer1_51)
+    _run_layer(layer1_52)
+    _run_layer(layer1_53)
+    _run_layer(layer1_54)
+    _run_layer(layer1_55)
+    _run_layer(layer1_56)
+    _run_layer(layer1_57)
+    _run_layer(layer1_58)
+    _run_layer(layer1_59)
+    _run_layer(layer1_60)
+    _run_layer(layer1_61)
+    _run_layer(layer1_62)
+    _run_layer(layer1_63)
+    _run_layer(layer1_64)
+    _run_layer(layer1_65)
+    _run_layer(layer1_66)
+    _run_layer(layer1_67)
+    _run_layer(layer1_68)
+    _run_layer(layer1_69)
+    _run_layer(layer1_70)
+    _run_layer(layer1_73)
+    _run_layer(layer1_74)
+    _run_layer(layer1_75)
+    _run_layer(layer1_76)
+    _run_layer(layer1_77)
+    _run_layer(layer1_78)
+    _run_layer(layer1_79)
+    _run_layer(layer1_80)
+    _run_layer(layer1_81)
+    _run_layer(layer1_82)
+    _run_layer(layer1_83)
+    _run_layer(layer1_84)
+    _run_layer(layer1_85)
+    _run_layer(layer1_86)
+    _run_layer(layer1_87)
+    _run_layer(layer1_88)
+    _run_layer(layer1_89)
+    _run_layer(layer1_90)
+    _run_layer(layer1_91)
+    _run_layer(layer1_92)
+    _run_layer(layer1_93)
+    _run_layer(layer2)
+    _run_layer(lambda: layer3(url))
+    _run_layer(layer4)
+    _run_layer(layer_schema_contract)
+    _run_layer(layer_dataset_dist)
     print('\n==============================')
     if failures:
         print(f'❌ 阻断：{len(failures)} 项未通过，禁止发布')

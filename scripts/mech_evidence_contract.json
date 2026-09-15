@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "updated": "2026-09-15",
+  "note": "机械声明证据契约 · 单一真相源。主库(api/entities.json)与数据飞轮贡献层(api/entities.contrib.json)共用同一份判据，防止两条通道口径漂移。任何 ISO 编码 token 与出处主机名都必须先落在此文件，才可能被采信为 declared。",
+  "why": "20260915 审计发现：贡献层 build_flywheel_layer.mjs 的 fromBom() 只校验 source_url 非空（'Universal Robots' 这种非 URL 字符串也放行），而主库 L1.78 要求白名单主机名 + 表内编码；同时 urdf_auto_extractor.py 凭关节数量编出 ISO 码、bom_backfill.py 硬编码 (名称→法兰) 对并标 declared。即两条 P0 通道一条在编造、一条在放行——本契约把两者收敛到同一判据上，且由 L1.92 行为自证守门。",
+  "source_hosts": [
+    "robotiq.com",
+    "onrobot.com",
+    "schunk.com",
+    "ati-ia.com",
+    "universal-robots.com",
+    "iso.org",
+    "openstd.samr.gov.cn",
+    "xjcsensor.cn"
+  ],
+  "source_hosts_note": "厂商官方资产域 / 标准机构。软文站、聚合站、电商页、代码托管站一律不算。白名单里有某域 ≠ 已收录任何 declared 条目（仅表示「允许引用」）。",
+  "std_token_evidence": {
+    "ISO 9409-1-50-4-M6": "https://assets.robotiq.com/website-assets/support_documents/document/FT300-S_Sensor_Manual_OMRON_TM_PDF_20210301.pdf",
+    "ISO 9409-1-31.5-4-M5": "https://assets.robotiq.com/website-assets/support_documents/document/FT300-S_Sensor_Manual_OMRON_TM_PDF_20210301.pdf",
+    "ISO 9409-1-40-4-M6": "https://assets.robotiq.com/website-assets/support_documents/document/FT300-S_Sensor_Manual_OMRON_TM_PDF_20210301.pdf",
+    "ISO 9409-1-63-4-M6": "https://schunk.com/konfigurator-elg",
+    "ISO 9409-1-80-6-M8": "https://schunk.com/konfigurator-elg",
+    "ISO 9409-1-100-6-M8": "https://schunk.com/konfigurator-elg",
+    "ISO 9409-1-125-6-M10": "https://schunk.com/konfigurator-elg",
+    "ISO 9409-1-160-6-M10": "https://schunk.com/konfigurator-elg",
+    "ISO 9409-1-160-11-M12": "https://schunk.com/konfigurator-elg"
+  },
+  "std_token_evidence_note": "token → 证明该编码确实被厂商官方文档以 ISO 编码形式列出的深链。加新 token 的唯一合法路径是往这里加一行并附深链——这正是该摩擦要制造的阻力。20260915 扩容：Schunk 官方配置器页(ELG 系列适配板)逐字列出 6 个中/大规格编码（厂商写作 'EN ISO 9409-1-…'，前缀 EN 为欧标采用标记，token 按 ISO 记法规范化），补上此前只有 50mm 级三档的空白 —— Ø63/80/100/125/160 正是工业机器人腕法兰的主体区间。",
+  "retrieved": {
+    "schunk_konfigurator_elg": "2026-09-15"
+  }
+}

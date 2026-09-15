@@ -10,7 +10,11 @@
  *   - OSS 零件来源于 URDF 抓取，protocol/voltage/ros_support 是真实可核实的；
  *     但 URDF 不含机械接口事实，故 mechanical_interface 一律留空（不编造）。
  *   - 用户 BOM（ops/seed-bom.json 或 /api/bom/import 提交）若含机械接口声明，
- *     须带 source_url 方可采信，否则仅作协议/电气层补充。
+ *     必须过**机械证据契约**才采信：source_url 是厂商官域白名单上的 https 深链、
+ *     且 ISO 编码挂得出处。判据单一来源 = scripts/mech_evidence_contract.json，
+ *     由 scripts/mech_evidence.mjs 执行；缺出处一律降级拒收，不静默放行。
+ *     （20260915 修：此前只判 `if (!b.source_url)`，于是 'Universal Robots'
+ *      这种公司名而非 URL 的字符串也能被采信为声明。）
  *   - 贡献层不污染主库数字（api/entities.json 的 708 不变），仅作为运行时增强层。
  *
  * 用法：
@@ -22,6 +26,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { loadContract, validateDeclared } from './mech_evidence.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
@@ -91,20 +96,40 @@ function fromOss(e) {
   };
 }
 
-/** 用户/开源 BOM 条目 → 贡献实体。机械接口须带 source_url 才采信。 */
+// 机械声明的判据只有一个来源：scripts/mech_evidence_contract.json（经 mech_evidence.mjs）。
+// 契约读不到 = 无法判定 = 一律不采信（fail-closed）。绝不"读不到就放行"。
+let MECH_CONTRACT = null;
+try {
+  MECH_CONTRACT = loadContract();
+} catch (e) {
+  console.error(`🛑 机械证据契约不可用：${e.message}`);
+  console.error('   → 本层拒绝采信任何机械声明（fail-closed）。修复 '
+    + 'scripts/mech_evidence_contract.json 后重跑。');
+}
+
+/** 用户/开源 BOM 条目 → 贡献实体。机械声明必须通过证据契约才采信。 */
 function fromBom(b, srcLabel) {
   if (!b || !b.id || !b.category) return null;
   const cat = CAT_MAP[b.category] || b.category;
   const mech = b.mechanical_interface;
   let mechanical_interface = undefined;
-  if (mech && mech.standard) {
-    if (!b.source_url) return { _warn: `跳过 ${b.id} 的机械接口：缺 source_url（不可核实）` };
+  if (mech && (mech.standard || mech.flange)) {
+    const v = MECH_CONTRACT
+      ? validateDeclared({ source_url: b.source_url, mechanical_interface: mech }, MECH_CONTRACT)
+      : { ok: false, violations: ['证据契约不可用（fail-closed，未采信）'] };
+    if (!v.ok) {
+      // 拒收而非降级为"部分采信"：机械声明是对外判据，半个声明比没有更坏。
+      return { _warn: `拒绝 ${b.id} 的机械声明：${v.violations.join('；')}` };
+    }
     mechanical_interface = {
       status: 'declared',
-      standard: Array.isArray(mech.standard) ? mech.standard : [mech.standard],
+      standard: mech.standard == null ? null
+        : (Array.isArray(mech.standard) ? mech.standard : [mech.standard]),
+      flange: mech.flange || null,
       source: b.source_url,
       source_url: b.source_url,
       confidence: 'medium',
+      evidence_contract: 'scripts/mech_evidence_contract.json',
     };
   }
   return {
@@ -184,7 +209,13 @@ function main() {
   if (seedRaw) {
     try {
       const bom = JSON.parse(seedRaw);
-      const items = Array.isArray(bom) ? bom : (bom.components || bom.entities || []);
+      // 20260915 修：必须接受 `entries`。旧实现只认 components/entities，
+      // 而 ops/seed-bom.json 的模板与 scripts/bom_backfill.py 写的键都是
+      // entries —— 键名不匹配 ⇒ 提交条目一律被静默当成空入口（纳入 0 条）。
+      // 这是"通道看起来是通的、其实从未通"的又一例：没有报错，只有 0。
+      const items = Array.isArray(bom)
+        ? bom
+        : (bom.entries || bom.components || bom.entities || []);
       let added = 0;
       for (const b of items) {
         const c = fromBom(b, 'seed-bom');

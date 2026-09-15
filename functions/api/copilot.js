@@ -36,6 +36,20 @@ const CORS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
+/**
+ * attempts[].error 会被回给**公开端点**，因此任何后端错误文本在出网前必须先脱敏。
+ * 起因（20260915）：本轮修 push-gitdata.mjs 的 PAT 明文泄露时发现同类风险 ——
+ * 若某运行时把请求头带进 fetch 的异常消息，密钥就会随诊断字段公开泄露。
+ * 这里一律抹掉 Bearer 串 / sk- 前缀密钥 / Authorization 头。
+ */
+function redactErr(msg) {
+  return String(msg == null ? '' : msg)
+    .replace(/(Authorization:\s*Bearer\s+)\S+/gi, '$1***')
+    .replace(/(\bBearer\s+)[A-Za-z0-9_\-.=]{16,}/g, '$1***')
+    .replace(/\bsk-[A-Za-z0-9_\-]{16,}/g, 'sk-***')
+    .slice(0, 140);
+}
+
 // 平台 canonical 法兰梯级（权威源 Industrial Robotics Hub《Robot Tool Flange Sizes by Brand》2026-07-25）。
 // 已发布标准的引用，非平台私有数据；用于锚定模型、防止臆造尺寸。
 const CANONICAL_FLANGE = [
@@ -317,6 +331,8 @@ export async function onRequestPost({ request, env }) {
       model: 'maintenance',
       degraded: true,
       detail: 'no_backend_configured',
+      attempts: [],
+      configured: [],
       references,
       ir,
     }), { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
@@ -324,6 +340,12 @@ export async function onRequestPost({ request, env }) {
 
   const timeoutMs = Number(env.COPILOT_UPSTREAM_TIMEOUT_MS) || 25000;
   let lastDetail = null;
+  // 每个后端的实际结果都要留痕。
+  // 起因（20260915 实测）：lastDetail 只保留**最后一个**后端的错误，于是
+  // 「首选后端（ECS）为什么失败」被次选后端（Agnes 429）的 detail 永久吞掉 ——
+  // 线上只能看到 upstream_agnes_error:429，无法判断 ECS 那一跳是拒连、超时还是 401。
+  // 降级时的可观测性不该取决于"谁是最后一个"。故逐后端记录 attempts。
+  const attempts = [];
   for (const b of backends) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -347,6 +369,7 @@ export async function onRequestPost({ request, env }) {
       });
       if (!r.ok) {
         lastDetail = `upstream_${b.name}_error:${r.status}`;
+        attempts.push({ backend: b.name, ok: false, error: `http_${r.status}` });
         continue; // 降级到下一个后端
       }
       const d = await r.json();
@@ -354,14 +377,21 @@ export async function onRequestPost({ request, env }) {
         ? d.choices[0].message.content : '';
       if (!text) {
         lastDetail = `upstream_${b.name}_empty`;
+        attempts.push({ backend: b.name, ok: false, error: 'empty_content' });
         continue;
       }
-      return new Response(JSON.stringify({ text, model: `${b.name}:${b.model}`, references, ir }),
+      attempts.push({ backend: b.name, ok: true });
+      return new Response(JSON.stringify({ text, model: `${b.name}:${b.model}`, references, ir,
+        attempts, configured: backends.map((x) => `${x.name}:${x.model}`) }),
         { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
     } catch (e) {
-      lastDetail = (e && e.name === 'AbortError')
-        ? `upstream_${b.name}_timeout`
-        : `upstream_${b.name}_fetch_failed`;
+      const aborted = e && e.name === 'AbortError';
+      lastDetail = aborted ? `upstream_${b.name}_timeout` : `upstream_${b.name}_fetch_failed`;
+      attempts.push({
+        backend: b.name,
+        ok: false,
+        error: aborted ? `timeout_${timeoutMs}ms` : redactErr((e && e.message) || 'fetch_failed'),
+      });
       continue; // 降级到下一个后端
     } finally {
       clearTimeout(timer);
@@ -374,6 +404,8 @@ export async function onRequestPost({ request, env }) {
     model: 'maintenance',
     degraded: true,
     detail: lastDetail,
+    attempts,
+    configured: backends.map((x) => `${x.name}:${x.model}`),
     references,
     ir,
   }), { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });

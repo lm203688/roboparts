@@ -13,7 +13,12 @@ for e in mi_ents:
 
 applicable = stat.get('declared', 0) + stat.get('partial', 0) + stat.get('not_declared', 0)
 declared = stat.get('declared', 0)
-fill_pct = round(declared / applicable * 100, 2) if applicable > 0 else 0
+# 分子必须是 declared + partial，与正统生成器 add_mechanical_interface.py 同源。
+# 【20260915 事故】本行原为 declared-only（15/435 = 3.45%），把 meta.fill_pct 覆写成
+# 与对外口径（declared+partial = 25/435 = 5.75%）不一致的值，且无闸门看管存盘那一份，
+# 于是"站上 5.75%、仓里 3.45%"共存多轮。L1.78 已补上值一致性断言锁住。
+filled = declared + stat.get('partial', 0)
+fill_pct = round(filled / applicable * 100, 2) if applicable > 0 else 0
 
 new_cov = {
     "schema_version": "1.0.0",

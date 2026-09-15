@@ -58,10 +58,11 @@
   "explicit_compatibility_pain": 10,
   "cross_brand_compat_engine_users": 0,
   "can_answer_today": {
-    "mech_decl_rate": 0.0078,
-    "mech_declared": 6,
-    "total_entities": 767,
-    "estimate": "极低：跨品牌兼容类提问今天绝大多数答不出（需真实 BOM 反喂抬声明率）"
+    "mech_decl_rate": 0.0575,
+    "mech_declared": 25,
+    "total_entities": 798,
+    "mech_applicable": 435,
+    "estimate": "部分可答：跨品牌兼容类提问多数仍答不出（需真实 BOM 反喂抬声明率）"
   },
   "category_counts": {
     "actuators": 217,
@@ -85,7 +86,7 @@
     "pcb": 2,
     "bionic_mechanisms": 9
   },
-  "verdict": "已捕获 10 条真实兼容性提问信号（跨品牌引擎潜在用户 0 条）。但本站机械接口声明率仅 0.78%，绝大多数今天答不出——需求存在，供给（可计算兼容性）不足。",
+  "verdict": "已捕获 10 条真实兼容性提问信号（跨品牌引擎潜在用户 0 条）。但本站机械接口声明率仅 5.75%，绝大多数今天答不出——需求存在，供给（可计算兼容性）不足。",
   "sources": [
     {
       "name": "github",

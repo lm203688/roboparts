@@ -44,7 +44,16 @@ const mechDeclared = entities.filter((e) => {
   const s = mechStatus(e);
   return s === 'declared' || s === 'partial';
 }).length;
-const mechDeclRate = totalEntities ? mechDeclared / totalEntities : 0;
+// 分母必须是 applicable（declared + partial + not_declared），与正统口径
+// （onboarding_block.facts()['mech_pct'] / add_mechanical_interface.py）同源。
+// 【20260915 事故】此处原为 totalEntities（全库 798）→ 25/798 = 3.13%，
+// 与对外口径 25/435 = 5.75% 不一致；这是同一指标的**第三套分母**。
+// 脚本注释写着「数字现算、不写死」，但现算了却用错分母 —— 现算 ≠ 同源。
+const mechApplicable = entities.filter((e) => {
+  const s = mechStatus(e);
+  return s === 'declared' || s === 'partial' || s === 'not_declared';
+}).length;
+const mechDeclRate = mechApplicable ? mechDeclared / mechApplicable : 0;
 
 const cats = {};
 entities.forEach((e) => {
