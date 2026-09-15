@@ -41,13 +41,19 @@ api/
 | 电气接口 `electrical_interfaces.json`（协议兼容 ≠ 电气兼容） | 脉冲/感觉/运动 信号契约（生物接线 ≠ 功能可用，同理免责） |
 | 实体库 `entities.json`（798 条） | 新增 `neurorobotics` 维度：连接组/芯片/实验室/空白 |
 
-## 与 SwarmLabs 飞轮的衔接
+## 与 SwarmLabs 的关系（项目独立原则 · 2026-09-15 修订）
 
-SwarmLabs 已有 47.5k 结构化科研实体 + Tech Radar（signal→candidate→promote→effect）。
-本域的「研究空白 G1~G7」可直接作为 SwarmLabs 的一个**垂直实体桶**复用同一飞轮：
-连接组 / 神经形态芯片 / 神经机器人实验室 / 跨域研究空白，跑一遍 gap 分析即可看见
-这片图谱里**具体**哪里是空位。RoboParts 侧产出情报，SwarmLabs 侧跑趋势/空白发现，
-两处共用同一份 `source.json` 事实基线（避免双源漂移）。
+本神经控制域是 RoboParts 的**自持模块**：`source.json` / 生成器 / `api/neurorobotics.json`
+/ GAP_MAP 全部在 RoboParts 仓库内闭环，**不依赖 SwarmLabs 或任何外部项目的运行时、
+API key、或源文件**。
+
+- G1~G7 研究空白是 RoboParts 自己的情报层标注，直接落在 `source.json` 的 `research_gaps`，
+  无需外部飞轮即可自洽（本模块的「gap 发现」由本仓库数据独立完成）。
+- **若 SwarmLabs（独立项目）希望把神经控制域实体纳入其科研实体飞轮**，必须由
+  **SwarmLabs 侧独立实现**：在自己的仓库内、通过其**自有 API key** 调用 RoboParts 已公开的
+  `api/neurorobotics.json` 端点拉取数据（或自行复刻同一份公开来源）。
+  **禁止**直接共享 `source.json` 源文件，也**禁止**让 RoboParts 反过来 import / 依赖 SwarmLabs。
+- 两个项目各自独立运行与开发；任何一方的数据更新都不应导致另一方构建或运行失败。
 
 ## 不在本域范围（诚实边界）
 

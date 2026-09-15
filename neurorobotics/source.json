@@ -2,7 +2,7 @@
   "meta": {
     "name": "RoboParts Neurorobotics Frontier Registry",
     "description": "神经控制领域的「体×接口×情报」缺口登记。本域不仿真大脑、不流片芯片——这两块已被 Eon/DeepMind/Intel/BrainChip 卡死。本域填补的是它们之外的空缺：开放躯体/接口标准、神经控制器↔躯体的声明式适配器、以及跨域（计算神经科学×机器人×神经形态硬件）研究空白地图。所有条目均来自 2025-2026 公开来源，未经 RoboParts 实测复现。",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "generated_at": "2026-09-15T20:42:00+08:00",
     "maintainer": "roboparts.cc",
     "thesis": "认知/规划交给 LLM，低层控制/反射/运动基元交给 SNN；躯体与接口标准化是开放缺口。我们不造脑、不造芯片，做脑×体之间的标准与情报层。",
@@ -97,6 +97,23 @@
       "source": "https://openworm.org",
       "source_tier": "A",
       "confidence": 0.9,
+      "last_verified": "2026-09-15"
+    },
+    {
+      "id": "CONN-MICRONS-MOUSE-V1",
+      "name": "MICrONS mouse visual cortex connectome (1 mm³)",
+      "species": "Mus musculus (P87, primary visual cortex + 3 higher visual areas)",
+      "neurons": 120000,
+      "synapses": 523000000,
+      "cell_types": null,
+      "scope": "1.4×0.87×0.84 mm³ 皮层体素（含功能数据 ~75,902 神经元生理响应）",
+      "producers": ["MICrONS Consortium (IARPA + NIH BRAIN Initiative)", "Allen Institute", "Baylor College of Medicine", "Princeton"],
+      "release": "2025-04 Nature 640:435-47 (doi:10.1038/s41586-025-08790-w)，10 篇论文包",
+      "access_mode": "公开（MICrONS Explorer / BossDB / AWS+Google 公共桶）",
+      "model_notes": "迄今最大哺乳动物连接组；首个跨多功能区功能连接组；作为 GAP-G5 规模墙的哺乳动物基准——小鼠全脑 ~7000 万神经元，本片仅 1 mm³",
+      "source": "https://www.nature.com/articles/s41586-025-08790-w ; https://www.microns-explorer.org/cortical-mm3",
+      "source_tier": "A",
+      "confidence": 0.92,
       "last_verified": "2026-09-15"
     }
   ],
@@ -242,7 +259,7 @@
       "severity": "high",
       "detail": "果蝇打游戏每一次都手工接线：像素→感觉神经元、网络活动→按键、受伤→多巴胺奖励。没有可移植、可校验的声明式格式。本域 signal_interface.schema.json 即针对此缺口。",
       "filled_by": "neurorobotics/signal_interface.schema.json",
-      "evidence": "DOOMFLY/Stonkfly 等均为一次性手工映射（zzztech; poptopic）"
+      "evidence": "DOOMFLY/Stonkfly 等均为一次性手工映射（zzztech; poptopic）；Neuralink R1 已把「脑→运动意图→机械臂」的脑↔体信号桥做到人体部署（REF-8），但仍是封闭私有格式——正缺开放声明式标准，即本域 GAP-G2 要填的层"
     },
     {
       "id": "GAP-G3",
@@ -264,7 +281,7 @@
       "id": "GAP-G5",
       "title": "规模扩张算力墙（小鼠/人脑）",
       "severity": "high",
-      "detail": "小鼠脑 ~7000 万神经元（果蝇 560×），人脑 ~860 亿。复杂度非线性的、非单纯神经元数放大。谁能在中端市场参与取决于每突触成本曲线。",
+      "detail": "小鼠脑 ~7000 万神经元（果蝇 560×），人脑 ~860 亿。复杂度非线性的、非单纯神经元数放大。MICrONS 已给出哺乳动物 1 mm³ 连接组基准（523M 突触，REF-9），但全鼠脑是其 560× 量级——连接组测绘本身已是 PB 级数据工程。谁能在中端市场参与取决于每突触成本曲线。",
       "filled_by": "情报层标注（非本域工程范围）",
       "evidence": "biztechweekly; m2now (Eon 小鼠目标)"
     },
@@ -338,6 +355,8 @@
     {"id": "REF-4", "title": "果蝇连接组打 Doom/Smash Bros", "url": "https://hothardware.com/news/google-mapped-a-fruit-fly-brain-so-engineers-taught-it-to-play-doom", "accessed": "2026-09-15"},
     {"id": "REF-5", "title": "Neuromorphic computing 生态 (NIR/Lava/Nengo)", "url": "https://aiwiki.ai/wiki/neuromorphic_computing", "accessed": "2026-09-15"},
     {"id": "REF-6", "title": "FlyWire 连接组", "url": "https://flywire.ai", "accessed": "2026-09-15"},
-    {"id": "REF-7", "title": "OpenWorm (C. elegans)", "url": "https://openworm.org", "accessed": "2026-09-15"}
+    {"id": "REF-7", "title": "OpenWorm (C. elegans)", "url": "https://openworm.org", "accessed": "2026-09-15"},
+    {"id": "REF-8", "title": "Neuralink R1 手术机器人 + N1 植入式 BCI（已人体部署，脑↔体信号桥现实先例）", "url": "https://neuralink.com/", "accessed": "2026-09-15"},
+    {"id": "REF-9", "title": "MICrONS 哺乳动物连接组（Nature 2025, 523M 突触）", "url": "https://www.nature.com/articles/s41586-025-08790-w", "accessed": "2026-09-15"}
   ]
 }
