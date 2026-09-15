@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roboparts.cc/schemas/neurorobotics/signal_interface.schema.json",
+  "title": "Neurocontroller↔Body Signal Interface Contract",
+  "description": "声明式描述「神经控制器（脉冲网络）↔ 躯体（执行器/传感器）」的接线契约。把果蝇打游戏等演示中每次手工完成的 像素→感觉 / 活动→动作 / 奖励→多巴胺 映射，变成可机读、可校验、可移植的格式。本 schema 是 RoboParts 机械接口兼容体系（ISO 9409-1）在『信号维度』的自然延伸：机械兼容回答『能不能拧上去』，信号兼容回答『接上后能不能正确收发脉冲』。",
+  "type": "object",
+  "required": ["id", "title", "controller", "body", "mappings"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "pattern": "^SIGC-[A-Z0-9-]+$"},
+    "title": {"type": "string"},
+    "status": {
+      "type": "string",
+      "enum": ["spec-example", "validated", "proposed", "deprecated"],
+      "description": "spec-example=对公开手工演示的结构化重述（数值为示意）；validated=经实测闭环；proposed=提案未验证。"
+    },
+    "based_on": {"type": "string"},
+    "note": {"type": "string"},
+    "controller": {
+      "type": "object",
+      "required": ["connectome_ref", "neuron_model"],
+      "additionalProperties": false,
+      "properties": {
+        "connectome_ref": {
+          "type": "string",
+          "description": "指向 neurorobotics 登记中的连接组 id（如 CONN-DROSO-MALECNS-V1），或 'custom'/'none'"
+        },
+        "neuron_model": {
+          "type": "string",
+          "enum": ["leaky-integrate-and-fire", "rate-based", "izhikevich", "hodgkin-huxley", "custom"],
+          "description": "LIF 为当前主流近似；注意 LIF 默认无可塑性（见 GAP-G3）"
+        },
+        "output_populations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "semantic", "encoding"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {"type": "string"},
+              "semantic": {"type": "string", "description": "该神经元群体在行为中的语义角色"},
+              "encoding": {"type": "string", "enum": ["rate", "temporal", "event", "membrane-potential"]},
+              "readout": {"type": "string", "description": "如何从群体活动中解码出控制量"}
+            }
+          }
+        },
+        "input_populations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "semantic", "encoding"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {"type": "string"},
+              "semantic": {"type": "string"},
+              "encoding": {"type": "string", "enum": ["rate", "temporal", "event", "membrane-potential"]},
+              "feed": {"type": "string", "description": "外部感觉如何灌入该群体"}
+            }
+          }
+        },
+        "reward_populations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "semantic"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {"type": "string"},
+              "semantic": {"type": "string"},
+              "trigger": {"type": "string"},
+              "plastic_synapses": {"type": "integer", "minimum": 0, "description": "允许可塑的突触数（其余静态，见 GAP-G3）"}
+            }
+          }
+        }
+      }
+    },
+    "body": {
+      "type": "object",
+      "required": ["kind"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {"type": "string", "enum": ["virtual-game", "sim-body", "physical-robot", "hybrid"]},
+        "actuators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "type"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {"type": "string"},
+              "type": {"type": "string", "enum": ["discrete", "continuous", "pwm", "spike-train"]},
+              "range": {"type": "array"},
+              "unit": {"type": "string"}
+            }
+          }
+        },
+        "sensors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "type"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {"type": "string"},
+              "type": {"type": "string"},
+              "preprocess": {"type": "string", "description": "原始传感→脉冲的预处理（如 像素→感觉脉冲）"}
+            }
+          }
+        }
+      }
+    },
+    "mappings": {
+      "type": "object",
+      "required": ["output", "input"],
+      "additionalProperties": false,
+      "properties": {
+        "output": {
+          "type": "array",
+          "description": "控制器输出群体 → 躯体执行器",
+          "items": {
+            "type": "object",
+            "required": ["controller_population", "body_actuator", "rule"],
+            "additionalProperties": false,
+            "properties": {
+              "controller_population": {"type": "string"},
+              "body_actuator": {"type": "string"},
+              "rule": {"type": "string"},
+              "scale": {"type": "string"}
+            }
+          }
+        },
+        "input": {
+          "type": "array",
+          "description": "躯体传感器 → 控制器输入群体",
+          "items": {
+            "type": "object",
+            "required": ["body_sensor", "controller_population", "rule"],
+            "additionalProperties": false,
+            "properties": {
+              "body_sensor": {"type": "string"},
+              "controller_population": {"type": "string"},
+              "rule": {"type": "string"},
+              "scale": {"type": "string"}
+            }
+          }
+        },
+        "reward": {
+          "type": "array",
+          "description": "事件 → 奖励群体（可选）",
+          "items": {
+            "type": "object",
+            "required": ["event", "controller_population", "rule"],
+            "additionalProperties": false,
+            "properties": {
+              "event": {"type": "string"},
+              "controller_population": {"type": "string"},
+              "rule": {"type": "string"},
+              "polarity": {"type": "string", "enum": ["aversive", "appetitive", "neutral"]}
+            }
+          }
+        }
+      }
+    }
+  }
+}
