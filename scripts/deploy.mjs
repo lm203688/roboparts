@@ -341,6 +341,46 @@ snapshotWorkingTree(ROOT);
   else console.warn('   ⚠️ 语义索引重建失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
 }
 
+// 0b5) designations_in_use 现算刷新（写回 api/mechanical_interfaces.json 区块）
+// 2026-09-16：该区块原是 scripts/curate_flange_registry_20260811.py 一次性写死的快照。
+// 快照判定「2 个在用编码无规范行」时那两行确实尚未登记（075e96b 同一次提交新增
+// aliases 与区块，两行都还不存在），但两行于 commit 11af550 补入后区块再没重算——
+// 于是对外长期声称 ISO 9409-1-31.5-4-M5 / -40-4-M6 未登记（实为已登记），
+// 且 used_by_entity_ids 停在 [ACT-028, SENS-31]（实为 16 个实体）。
+// 与 0b3/0b4 完全同源的病：派生物一旦对外，就必须和真相源同一时刻更新。
+{
+  const py = process.platform === 'win32' ? 'python' : 'python3';
+  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'refresh_designations_in_use.py')], { cwd: ROOT, encoding: 'utf8' });
+  if (ex.status === 0) console.log('   ✅ designations_in_use 已随实体库现算刷新（在用编码的登记状态不再靠快照）');
+  else console.warn('   ⚠️ designations_in_use 刷新失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
+}
+
+// 0b6) 应有特征推导层生成（api/derived_features.json）
+// 2026-09-16 新增：从 canonical_ladder_iso_9409_1 现算「每个 A{n} 标号按标准梯级
+// 应当有什么几何」，使未登记/未声明到可判定粒度的标号也能被判定，而非返回 unknown
+// 让 agent 猜。方法学同构于 MS2KOSMOS 的「预测特征索引」：先预计算应有观测，
+// 再拿声明值来比。本层同时机械复算登记表手写的 is_canonical_iso 与 note 断言。
+{
+  const py = process.platform === 'win32' ? 'python' : 'python3';
+  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'build_derived_features.py')], { cwd: ROOT, encoding: 'utf8' });
+  if (ex.status === 0) console.log('   ✅ 应有特征推导层已重建（api/derived_features.json）');
+  else console.warn('   ⚠️ 应有特征推导层生成失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
+}
+
+// 0b7) 标准自校验重建（api/standard-audit.json）
+// 2026-09-16：该文件 8/17 生成后从未重建，且**不在部署链里**，靠人记得手工跑。
+// 后果是它对外报了 4 条 unverified_mechanical_claim，声称 31.5-4-M5 / 40-4-M6
+// 「不在已知指定集中」——两行自 11af550 起就已登记，纯属过期快照的连带假报。
+// 且 /standard-audit 页面与 MCP 工具 get_standard_audit 都在读它（对外可见）。
+// 同一轮另修了脚本自身的死角检测：原写法遍历区块顶层键找 registry_row=null，
+// 而真正的 entries 是一个列表，永远读不到 → registry_gaps 恒为 []，缺口检测从未生效。
+{
+  const py = process.platform === 'win32' ? 'python' : 'python3';
+  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'build_standard_audit.py')], { cwd: ROOT, encoding: 'utf8' });
+  if (ex.status === 0) console.log('   ✅ 标准自校验已重建（登记表 ↔ 实体声明交叉校验；冲突数不再靠快照）');
+  else console.warn('   ⚠️ 标准自校验重建失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
+}
+
 // 0c) 机读接入声明兜底注入（meta.access）
 // 20260808-04：inject_api_access.py 的 docstring 自称「由 deploy 前置与各 build 脚本调用，
 // 不依赖任何人记得手工执行」，但实测 deploy.mjs 里对它的引用是 **0 处** —— 文档写了 ≠ 挂上了，

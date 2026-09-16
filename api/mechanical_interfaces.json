@@ -565,13 +565,31 @@
     ]
   },
   "designations_in_use": {
-    "description": "从 api/entities.json 现算：实体库正在引用的 ISO 9409-1 编码，以及每个编码在本表是否有规范行。registry_row=null 即\"在用但未登记\"。",
+    "description": "从 api/entities.json 现算：实体库正在引用的 ISO 9409-1 编码，以及每个编码在本表是否有规范行。registry_row=null 且 status=unregistered_gap 即「在用但未登记」；status=unparseable_bare_standard 则是厂商未声明到可判定粒度，不是可补的缺口。",
     "computed_from": "/api/entities.json → mechanical_interface.{standard,flange,tool_side,tool_side_flange}",
     "join_rule": "去空格、大写、并删除尺寸段前的 'A' 前缀，即 re.sub(r'ISO9409-1-A', 'ISO9409-1-', s.upper().replace(' ', ''))",
-    "total_tokens_in_use": 3,
-    "unregistered_count": 2,
+    "total_tokens_in_use": 4,
+    "unregistered_count": 0,
+    "unparseable_bare_count": 1,
+    "registered_count": 3,
+    "entities_scanned": 798,
+    "entities_touched": 16,
     "unregistered_policy": "不为消除缺口而凭空补行。按本项目纪律（L1.77），未读到 ISO 9409-1:2004 原文即不替标准发明条目；缺口在此显式列出，待取得标准原文或 OEM 一手尺寸图后再补规范行。",
     "entries": [
+      {
+        "token_as_written": "ISO 9409-1",
+        "normalized": "ISO9409-1",
+        "parsed": null,
+        "registry_row": null,
+        "status": "unparseable_bare_standard",
+        "entity_count": 1,
+        "declared_sides": [
+          "robot"
+        ],
+        "used_by_entity_ids": [
+          "BIONIC-HAND-002"
+        ]
+      },
       {
         "token_as_written": "ISO 9409-1-31.5-4-M5",
         "normalized": "ISO9409-1-31.5-4-M5",
@@ -580,14 +598,20 @@
           "bolt_count": 4,
           "thread": "M5"
         },
-        "registry_row": null,
-        "status": "unregistered_gap",
+        "registry_row": "ISO9409-1-A31.5-4-M5",
+        "status": "registered",
+        "entity_count": 7,
         "declared_sides": [
           "robot"
         ],
         "used_by_entity_ids": [
           "ACT-028",
-          "SENS-31"
+          "GRIP-002",
+          "GRIP-006",
+          "GRIP-009",
+          "GRIP-014",
+          "SENS-31",
+          "SENS-855"
         ]
       },
       {
@@ -598,14 +622,19 @@
           "bolt_count": 4,
           "thread": "M6"
         },
-        "registry_row": null,
-        "status": "unregistered_gap",
+        "registry_row": "ISO9409-1-A40-4-M6",
+        "status": "registered",
+        "entity_count": 6,
         "declared_sides": [
           "robot"
         ],
         "used_by_entity_ids": [
           "ACT-028",
-          "SENS-31"
+          "GRIP-002",
+          "GRIP-006",
+          "GRIP-014",
+          "SENS-31",
+          "SENS-855"
         ]
       },
       {
@@ -618,15 +647,31 @@
         },
         "registry_row": "ISO9409-1-A50-4-M6",
         "status": "registered",
+        "entity_count": 15,
         "declared_sides": [
           "robot"
         ],
         "used_by_entity_ids": [
           "ACT-028",
-          "SENS-31"
+          "GRIP-001",
+          "GRIP-002",
+          "GRIP-006",
+          "GRIP-007",
+          "GRIP-009",
+          "GRIP-012",
+          "GRIP-014",
+          "SENS-047",
+          "SENS-049",
+          "SENS-31",
+          "SENS-37",
+          "SENS-852",
+          "SENS-854",
+          "SENS-855"
         ]
       }
-    ]
+    ],
+    "regenerated_by": "scripts/refresh_designations_in_use.py（挂入部署链 0b5，每次部署现算；此前由 curate_flange_registry_20260811.py 一次性写死，2026-09-16 起改现算）",
+    "regeneration_note": "本区块 2026-08-11 起为冻结快照：当时 31.5-4-M5 / 40-4-M6 两行尚未登记，故判 unregistered 无误；两行于 commit 11af550 补入后区块未再重算，导致对外长期声称「2 个在用编码无规范行」。api/standard-audit.json 的 4 条 unverified_mechanical_claim 亦为此快照的连带假报。"
   },
   "iso_9409_1_naming_convention": {
     "note": "机器人行业 de-facto 的 'A{n}' 命名中 n = 节圆直径 PCD（非 ISO 外径 D）。同一 A 标号在不同厂商可能对应不同几何（命名歧义），例如 A80 既可能是 ISO 标准 6×M8，也可能是 ABB 老款 4×M8；A100 既可能是 ISO 标准 6×M10，也可能是 KUKA 的 4×M8。本文件 flange_designations 仅记录实测真实存在的 (PCD,孔数,螺纹) 组合，is_canonical_iso 标记是否等于 ISO 标准梯级。",

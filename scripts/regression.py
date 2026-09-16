@@ -8507,6 +8507,467 @@ def layer1_94():
           '阳性: 节流跳过不得被误判成缺 token（否则每天必然假红）')
 
 
+def _l195_norm(s):
+    """与 mechanical_interfaces.json grammar.join_rule 同一口径：去空格、大写、删 A 前缀。"""
+    return re.sub(r'ISO9409-1-A', 'ISO9409-1-', str(s).upper().replace(' ', ''))
+
+
+def _l195_sha16(rel):
+    with io.open(os.path.join(ROOT, rel), 'rb') as f:
+        return hashlib.sha256(f.read()).hexdigest()[:16]
+
+
+def _l195_join(rows):
+    """id + aliases 全量建索引。只吃 aliases 是 075e96b 之前的状态，会漏掉带 A 的规范 id。"""
+    idx = {}
+    for row in rows:
+        rid = row.get('id')
+        if not rid:
+            continue
+        idx.setdefault(_l195_norm(rid), rid)
+        for a in (row.get('aliases') or []):
+            idx.setdefault(_l195_norm(a), rid)
+    return idx
+
+
+def _l195_tokens(ents):
+    """实体侧 ISO 9409 标号 → 使用该标号的实体 id 集合（单值/多值双吃）。"""
+    out = {}
+    for e in ents:
+        mi = e.get('mechanical_interface')
+        if not isinstance(mi, dict):
+            continue
+        for key in ('standard', 'flange', 'tool_side', 'tool_side_flange'):
+            v = mi.get(key)
+            if v in (None, ''):
+                continue
+            for tok in (v if isinstance(v, list) else [v]):
+                if isinstance(tok, str) and '9409' in tok:
+                    out.setdefault(tok, set()).add(e.get('id'))
+    return out
+
+
+def _l195_status(tok, idx):
+    """三态：registered / unregistered_gap / unparseable_bare_standard。"""
+    n = _l195_norm(tok)
+    if n in idx:
+        return 'registered'
+    if re.fullmatch(r'ISO9409-1-\d+(?:\.\d+)?-\d+-M\d+', n):
+        return 'unregistered_gap'
+    return 'unparseable_bare_standard'
+
+
+def _l195_classify_geo(ladder, row):
+    """从几何独立算出分类，不读 is_canonical_iso —— 这样才能当作交叉验证的一方。"""
+    try:
+        pcd, holes, thread = float(row['d1_mm']), int(row['bolt_count']), str(row['thread']).upper()
+    except (KeyError, TypeError, ValueError):
+        return None
+    rung = {float(r['pcd']): r for r in ladder}.get(pcd)
+    if rung is None:
+        return 'no_standard_rung'
+    dh = int(rung['holes']) != holes
+    dt = str(rung['thread']).upper() != thread
+    if not dh and not dt:
+        return 'matches_canonical'
+    if not dh:
+        return 'deviates_thread_only'
+    return 'deviates_holes_and_thread'
+
+
+# ── L1.95 辅助：与生成器各自独立实现，靠本层交叉钉住口径不漂移 ───────────
+# 本层的所有判定函数都**不复用** build_derived_features.py / refresh_designations_in_use.py
+# 的实例——若共享实现，闸门就变成了「生成器自己验证自己」的空循环（恒绿）。
+# 代价是口径会重复描述；收益是生成器口径一变、闸门立即变红指出漂移。
+_L195_TOK_RE = re.compile(r'^ISO9409-1-(\d+(?:\.\d+)?)-(\d+)-M(\d+)$')
+
+
+def _l195_norm(s):
+    """与 grammar.designation_forms.normalize_rule 同口径：查表用，不承载等价断言。"""
+    return re.sub(r'ISO9409-1-A', 'ISO9409-1-', str(s).upper().replace(' ', ''))
+
+
+def _l195_join(rows):
+    """登记表 join 索引：id 与全部 aliases 都入表（与 refresh_designations_in_use 同规格）。"""
+    idx = {}
+    for r in rows:
+        rid = r.get('id')
+        if not rid:
+            continue
+        idx.setdefault(_l195_norm(rid), rid)
+        for a in (r.get('aliases') or []):
+            idx.setdefault(_l195_norm(a), rid)
+    return idx
+
+
+def _l195_tokens(ents):
+    """实体侧 ISO 9409 标号现算使用面。单值/多值双吃（L1.74 p4 纪律）。"""
+    out = {}
+    for e in ents:
+        mi = e.get('mechanical_interface') or {}
+        for key in ('standard', 'flange', 'tool_side', 'tool_side_flange'):
+            v = mi.get(key)
+            if not v:
+                continue
+            for tok in (v if isinstance(v, list) else [v]):
+                if not isinstance(tok, str) or '9409' not in tok:
+                    continue
+                out.setdefault(tok, []).append(e.get('id'))
+    return out
+
+
+def _l195_status(tok, idx):
+    """三态分类。bare 标准号是「粒度不足」而非「未登记缺口」，二者不可混为一谈。"""
+    norm = _l195_norm(tok)
+    if idx.get(norm):
+        return 'registered'
+    if not _L195_TOK_RE.match(norm):
+        return 'unparseable_bare_standard'
+    return 'unregistered_gap'
+
+
+def _l195_classify_geo(ladder, row):
+    """独立复现推导层几何分类；几何不全返回 None（不参与统计，防静默漏计成假绿）。"""
+    d1, holes, thread = row.get('d1_mm'), row.get('bolt_count'), row.get('thread')
+    if d1 is None or holes is None or thread is None:
+        return None
+    rung = next((r for r in ladder if float(r['pcd']) == float(d1)), None)
+    if rung is None:
+        return 'no_standard_rung'
+    eh, et = int(rung['holes']), str(rung['thread']).upper()
+    gh, gt = int(holes), str(thread).upper()
+    if eh == gh and et == gt:
+        return 'matches_canonical'
+    return 'deviates_holes_and_thread' if eh != gh else 'deviates_thread_only'
+
+
+def _l195_sha16(rel):
+    """派生产物的新鲜度摘要对账用：取源文件内容 sha256 前 16 位。"""
+    return hashlib.sha256(io.open(os.path.join(ROOT, rel), 'rb').read()).hexdigest()[:16]
+
+
+def _l195_note_check(row, d):
+    """独立复算手写 note 能否被推导佐证，返回交集集合（空集即不佐证）。
+
+    判据取交集而非「note 只写那一个」：note 通常同时写实测值与标准值
+    （A31.5 一行里 4×M5 与 4×M6 并出现），交集是保守写法。
+    本实现**不做 upper**——upper 会把 x 变 X，与大小写敏感正则叠加即恒空匹配，
+    正是「闸门恒真」那类静默假绿（生成器曾因同样的 `.upper()` 把 5 条 note 全算成 0/0）。
+    """
+    note = row.get('note')
+    if not note:
+        return None
+    flat = str(note).replace('\u00d7', 'x')
+    claimed = set(re.findall(r'(\d+)\s*x\s*m(\d+)', flat, re.IGNORECASE))
+    pcds = {float(p) for p in re.findall(r'pcd\s*(\d+(?:\.\d+)?)', flat, re.IGNORECASE)}
+    exp = d.get('expected')
+    if exp is not None:
+        if not claimed:
+            return None
+        want = (str(exp.get('bolt_count')), str(int(str(exp.get('thread')).lstrip('M'))))
+        return claimed & {want}
+    if not pcds:
+        return None
+    return pcds & {float(r['pcd']) for r in (d.get('nearest_rungs') or [])}
+
+
+def layer1_95():
+    """应有特征推导层与登记表缺口区块：派生不得漂移、缺口不得回退成冻结快照。
+
+    2026-09-16 起因：推导层上线时顺带查出两处**对外假陈述**，均为同一族病
+    （派生物一旦对外，就必须与真相源同一时刻更新）：
+      1. mechanical_interfaces.json 的 designations_in_use 由 08-11 一次性脚本写死，
+         声称「2 个在用编码无规范行」—— 那两行自 11af550 起就已登记，区块再没重算。
+      2. api/standard-audit.json 自 8/17 从未重建且不在部署链，对外报 4 条
+         unverified_mechanical_claim；且脚本自身的缺口检测是死角代码（遍历区块顶层键，
+         而真正带 registry_row 的 entries 是列表，永远读不到 → registry_gaps 恒为 []）。
+    本层用现算对账把两条都锁住，并自带阴阳自证防闸门恒真。
+    """
+    print('\n[L1.95] 应有特征推导层 / 登记表缺口区块：现算对账 + 冻结快照回退检测')
+
+    df_path = os.path.join(ROOT, 'api', 'derived_features.json')
+    mi_path = os.path.join(ROOT, 'api', 'mechanical_interfaces.json')
+    au_path = os.path.join(ROOT, 'api', 'standard-audit.json')
+    for p in (df_path, mi_path, au_path):
+        if not os.path.exists(p):
+            check(False, '%s 存在（缺它推导层无法自检）' % os.path.basename(p))
+            return
+    df = json.load(io.open(df_path, encoding='utf-8'))
+    mech = json.load(io.open(mi_path, encoding='utf-8'))
+    audit = json.load(io.open(au_path, encoding='utf-8'))
+    ents = load_entities().get('entities') or []
+
+    rows = mech.get('flange_designations') or []
+    ladder = mech.get('canonical_ladder_iso_9409_1') or []
+    idx = _l195_join(rows)
+    dmap = {d.get('id'): d for d in (df.get('designation_derivations') or [])}
+    cmap = df.get('meta', {}).get('counts', {})
+
+    # ── ① 推导层与源现算对账（派生层不得漂移）─────────────────────────
+    check(len(ladder) == cmap.get('ladder_rungs'),
+          '推导层记录的梯级档数与源一致（产物 %s / 源 %d）'
+          % (cmap.get('ladder_rungs'), len(ladder)))
+    check(len(rows) == cmap.get('registry_designations'),
+          '推导层记录的登记标号数与源一致（产物 %s / 源 %d）'
+          % (cmap.get('registry_designations'), len(rows)))
+
+    recomputed = {}
+    for row in rows:
+        c = _l195_classify_geo(ladder, row)
+        if c:
+            recomputed[c] = recomputed.get(c, 0) + 1
+    for cls in ('matches_canonical', 'no_standard_rung'):
+        check(cmap.get(cls) == recomputed.get(cls, 0),
+              '分类 %s 与源现算一致（产物 %s / 现算 %d —— 不一致即产物漂移或生成器口径变了）'
+              % (cls, cmap.get(cls), recomputed.get(cls, 0)))
+    dev = (recomputed.get('deviates_thread_only', 0)
+           + recomputed.get('deviates_holes_and_thread', 0))
+    check(cmap.get('deviations') == dev,
+          '偏差分类合计与源现算一致（产物 %s / 现算 %d；产物把偏差记作两类、合计口径须对账）'
+          % (cmap.get('deviations'), dev))
+
+    agree = disagree = 0
+    for row in rows:
+        d = dmap.get(row.get('id'))
+        if not d:
+            continue
+        c = _l195_classify_geo(ladder, row)
+        if c is None:
+            continue
+        if (c == 'matches_canonical') == bool(row.get('is_canonical_iso')):
+            agree += 1
+        else:
+            disagree += 1
+    check(disagree == 0,
+          '推导层独立结论与登记的手写 is_canonical_iso 无分歧（%d 一致 / %d 分歧 —— 这是'
+          '内部一致性闸门，分歧即登记数据有错，此前无人看管）' % (agree, disagree))
+    check(disagree == df['meta']['cross_validation']['is_canonical_iso_reproduced']['disagreements'],
+          '产物记录的 is_canonical_iso 分歧数与现算一致（防产物自身漂移）')
+
+    # ── ② note 机械复算：本层独立实现 vs 产物记录 ─────────────────────
+    # 产物记的是生成器自己算的结论；这里用另一份实现重算同一批 note，
+    # 两者对不上即说明两份口径已分叉（或产物是旧实现写的、后来改了实现却没重建）。
+    n_rec = n_agree = 0
+    note_bad = []
+    for d in df.get('designation_derivations') or []:
+        nc = d.get('note_corroboration')
+        if not isinstance(nc, dict) or nc.get('recomputable') is not True:
+            continue
+        n_rec += 1
+        local = _l195_note_check({'note': d.get('handwritten_note')}, d)
+        if local is None:
+            note_bad.append('%s:本层判不可复算而产物判可复算' % d.get('id'))
+        elif bool(local) == bool(nc.get('agrees')):
+            n_agree += 1
+        else:
+            note_bad.append('%s:佐证结论相反' % d.get('id'))
+    check(not note_bad,
+          '产物记录的 note 佐证结论与本层独立实现全部一致（异常 %s）'
+          % (note_bad or '无'))
+    check(n_rec == sum(1 for d in (df.get('designation_derivations') or [])
+                       if isinstance(d.get('note_corroboration'), dict)
+                       and d['note_corroboration'].get('recomputable') is True),
+          '可复算 note 计数自洽（%d 条 —— 生成器曾因 .upper() 与大小写敏感正则叠加，'
+          '把 5 条含断言的 note 全算成 0/0，闸门因此恒绿）' % n_rec)
+
+    # ── ③ 新鲜度锚定：捕获「先建推导层、后刷登记表」的构建顺序错误 ────
+    for key, rel in (('mechanical_interfaces_sha256', 'api/mechanical_interfaces.json'),
+                     ('entities_sha256', 'api/entities.json')):
+        actual = _l195_sha16(rel)
+        recorded = df['meta']['freshness'].get(key)
+        check(recorded == actual,
+              '新鲜度摘要 %s 与源实际内容一致（产物 %s / 实际 %s —— 不等即推导层是在源被'
+              '改写之前构建的，构建顺序错了；refresh_designations_in_use 必须先于 '
+              'build_derived_features 运行）' % (key, recorded, actual))
+
+    # ── ④ 不发明标准行（L1.77）：期望值必须可由梯级独立复现 ──────────
+    by_pcd = {float(r['pcd']): r for r in ladder}
+    bad_expect = []
+    for d in df.get('designation_derivations') or []:
+        exp = d.get('expected')
+        if exp is None:
+            continue
+        rung = by_pcd.get(d.get('pcd_mm'))
+        if rung is None:
+            bad_expect.append(d.get('id'))
+            continue
+        if int(exp.get('bolt_count')) != int(rung['holes']) or \
+           str(exp.get('thread')).upper() != str(rung['thread']).upper():
+            bad_expect.append(d.get('id'))
+    check(not bad_expect,
+          '每条期望值都能由标准梯级独立复现（L1.77：推导层只查表与比对，不发明标准条目；'
+          '异常 %s）' % (bad_expect or '无'))
+
+    check(not any(k for d in (df.get('designation_derivations') or []) for k in d
+                  if k in ('proposed_row', 'invented_row', 'synthetic_row')),
+          '推导层产物不含任何拟新增标准行的字段（防 L1.77 被悄悄绕过）')
+
+    cap = df['meta']['honest_limits'].get('derivation_confidence_cap')
+    tier_dist = {r.get('source_tier'): sum(1 for x in rows if x.get('source_tier') == r.get('source_tier'))
+                 for r in rows if r.get('source_tier')}
+    check(cap == 'B',
+          '推导置信度上限为 B（不臆造 A 级权威；登记表实际 tier 分布 %s）' % tier_dist)
+    check(bool(df['meta']['ladder_provenance'].get('has_independent_citation')) is False
+          and cap != 'A',
+          '梯级基准无独立出处时，置信度上限不得为 A（防把「内部自洽」谎报成「符合 ISO 原文」）')
+
+    # ── ④ designations_in_use 不得回退成冻结快照 ──────────────────────
+    du = mech.get('designations_in_use') or {}
+    entries = du.get('entries')
+    check(isinstance(entries, list),
+          'designations_in_use.entries 是列表（原死角检测遍历的是区块顶层键，'
+          'entries 是列表故永远读不到 → registry_gaps 恒为 []，缺口检测从未生效）')
+    if not isinstance(entries, list):
+        entries = []
+
+    real = _l195_tokens(ents)
+    check(du.get('total_tokens_in_use') == len(entries),
+          'total_tokens_in_use 等于 entries 条数（产物 %s / 实际 %d）'
+          % (du.get('total_tokens_in_use'), len(entries)))
+    check(len(real) == len(entries),
+          '在用标号数与实体库现算一致（产物 %d / 现算 %d —— 不等即区块又变回冻结快照，'
+          '这就是 08-11 那次「2 个未登记」假陈述的成因）' % (len(entries), len(real)))
+
+    st_cls = {'registered', 'unregistered_gap', 'unparseable_bare_standard'}
+    bad_st = [e.get('token_as_written') for e in entries
+              if e.get('status') not in st_cls]
+    check(not bad_st,
+          'entries.status 全落在三态闭集（裸标号不算未登记缺口，二者不可混为一谈；异常 %s）'
+          % (bad_st or '无'))
+
+    for e in entries:
+        tok = e.get('token_as_written')
+        exp_st = _l195_status(tok, idx) if tok else None
+        hint = ('A31.5-4-M5 / A40-4-M6 曾因 aliases 未 join 被长期谎报为「无规范行」'
+                if exp_st == 'registered' else
+                '裸标号缺几何，应判粒度不足而非未登记缺口'
+                if exp_st == 'unparseable_bare_standard' else
+                '此条即登记表确有缺口，需 ISO 原文或 OEM 尺寸图补齐')
+        check(e.get('status') == exp_st,
+              '%s 的登记状态与 aliases join 现算一致（产物 %s / 现算 %s —— %s）'
+              % (tok, e.get('status'), exp_st, hint))
+        exp_ids = sorted(real.get(tok) or [])
+        check(e.get('used_by_entity_ids') == exp_ids,
+              '%s 的 used_by_entity_ids 与实体库现算一致（产物 %d 个 / 现算 %d 个）'
+              % (tok, len(e.get('used_by_entity_ids') or []), len(exp_ids)))
+
+    check(du.get('unregistered_count') == sum(1 for e in entries
+                                              if e.get('status') == 'unregistered_gap'),
+          'unregistered_count 与现算一致（产物 %s；这是对外可见口径，错它就是对外假陈述）'
+          % du.get('unregistered_count'))
+    check(du.get('entities_scanned') == len(ents),
+          'entities_scanned 等于实体总数（产物 %s / 实体 %d —— 不等即区块算的是旧实体集）'
+          % (du.get('entities_scanned'), len(ents)))
+
+    # ── ⑥ standard-audit 不得回退成过期假报 ───────────────────────────
+    audit_known = {_l195_norm(k) for k in
+                   (du.get('entries') and [e.get('token_as_written') for e in entries]) or []}
+    miss = [t for t, s in ((e.get('token_as_written'), _l195_status(e.get('token_as_written'), idx))
+                           for e in entries)
+            if s == 'registered' and _l195_norm(t) not in audit_known]
+    check(not miss,
+          'standard-audit 的已知指定集覆盖全部已登记标号（漏 %s —— 漏了就会把已登记标号'
+          '重新谎报成 unverified_mechanical_claim，即 8/17 那 4 条假报的复现路径）' % (miss or '无'))
+
+    for u in (audit.get('mechanical_claims', {}) or {}).get('unverified', []):
+        tok = u.get('declared')
+        if not tok:
+            continue
+        check(_l195_norm(tok) not in idx,
+              'unverified 中的 %s 确实未登记（死角检测退化：把已登记标号报成未核实，'
+              '是对外假报而不是保守）' % tok)
+
+    check(audit.get('conflict_count') == len(audit.get('conflicts') or []),
+          'conflict_count 与 conflicts 条数一致（防计数与明细脱钩）')
+    check(sum(1 for e in entries if e.get('status') == 'unparseable_bare_standard')
+          == len((audit.get('mechanical_claims', {}) or {}).get('unresolvable_granularity', [])),
+          '粒度不足标号数与审计的 unresolvable_granularity 一致（裸标准号没有可核实内容，'
+          '算进 verified 就是过度计数）')
+
+    # ── ⑦ 领域诚实边界不得被通用接入声明覆写 ──────────────────────────
+    # 20260916 起因：inject_api_access.py 按「access == 现状则跳过」幂等判定，
+    # 副作用是任何写了领域专属 meta.access 的文件都会在下一轮部署被覆写成通用零件
+    # 文案。neurorobotics.json 因此变成「机器人零部件选型或兼容性 / 机械接口声明率
+    # 5.75%」——一个讲连接组、神经形态芯片、脑机躯体接口的端点对外宣称自己在讲零件
+    # 选型，那是写给 AI 助手的对外假陈述，与本层查出的 designations_in_use 冻结
+    # 快照同族。修法见 inject_api_access.DOMAIN_OVERRIDES（机制仍单一来源，
+    # 只覆盖「本域数据是什么、能信到什么程度」）。
+    try:
+        from inject_api_access import DOMAIN_OVERRIDES, access_for
+        from onboarding_block import json_access
+    except Exception as _e:                       # noqa: BLE001
+        check(False, '领域覆盖机制可导入（%s）' % _e)
+        return
+    _canonical = json_access()
+    for _fn in sorted(DOMAIN_OVERRIDES):
+        _p = os.path.join(ROOT, 'api', _fn)
+        if not os.path.exists(_p):
+            check(False, '%s 存在（DOMAIN_OVERRIDES 登记了覆盖但文件已不在）' % _fn)
+            continue
+        _disk = ((json.load(io.open(_p, encoding='utf-8')).get('meta') or {})
+                 .get('access'))
+        check(_disk == access_for(_fn),
+              '%s 的 meta.access 是「通用机制 + 本域诚实边界」（通用块会把它覆写成'
+              '零件文案，等于对外假陈述）' % _fn)
+        check(_disk != _canonical,
+              '阴性: %s 的 access 必与通用块不同（相同＝领域覆盖未生效，'
+              '本闸门退化成空闸门）' % _fn)
+    _plain = os.path.join(ROOT, 'api', 'protocols.json')
+    if os.path.exists(_plain):
+        _pd = ((json.load(io.open(_plain, encoding='utf-8')).get('meta') or {})
+               .get('access'))
+        check(_pd == _canonical,
+              '阴性: 未登记覆盖的文件仍拿到通用块（防 access_for 被写宽成「人人都定制」）')
+
+    # ── 审计记录引用真实实体，entity_kind 不得丢 ──────────────────────
+    # 回归的 entity_kind 全量对账会按 id+name 认实体；审计记录若丢掉 kind 就是漂移。
+    # 上一轮正是这么红掉的（29 处）。
+    for _bucket in ('verified', 'unverified', 'unresolvable_granularity'):
+        _rows = ((audit.get('mechanical_claims', {}) or {}).get(_bucket) or [])
+        _no_kind = [r.get('id') for r in _rows if not r.get('entity_kind')]
+        check(not _no_kind,
+              '审计 %s 记录均带 entity_kind（引用的是真实实体，丢 kind 即派生漂移；'
+              '异常 %s）' % (_bucket, _no_kind or '无'))
+
+    # ── 阴阳自证（喂合成数据，不依赖本机内容）─────────────────────────
+    check(_l195_norm('ISO 9409-1-999-4-M6') not in idx,
+          '阴性: 不存在的编码必不命中（防 join 规则被写宽成恒真）')
+    check(_l195_status('ISO 9409-1-999-4-M6', idx) == 'unregistered_gap',
+          '阴性: 给全几何但不存在的标号判 unregistered_gap')
+    check(_l195_status('ISO 9409-1', idx) == 'unparseable_bare_standard',
+          '阴性: 裸标准号判粒度不足，不算未登记缺口（防把「厂商没说清」记成「表有缺口」）')
+
+    _c = _l195_classify_geo(ladder, {'d1_mm': 50, 'bolt_count': 4, 'thread': 'M6'})
+    check(_c == 'matches_canonical', '阳性: 与梯级完全一致必判 matches_canonical')
+    check(_c is not None, '阳性: 分类函数不接受 None 逃避判定')
+    check(_l195_classify_geo(ladder, {'d1_mm': 999}) is None,
+          '阴性: 几何字段不全返回 None（不参与统计，防静默漏计成假绿）')
+
+    _d = {'expected': {'bolt_count': 99, 'thread': 'M99'}, 'nearest_rungs': None}
+    check(not _l195_note_check({'note': '标准梯级为 4×M6'}, _d),
+          '阳性: note 断言与推导期望矛盾时交集为空（否则闸门恒绿，与生成器 is_canonical_iso '
+          '复现的同型病）')
+    _ok = {'expected': {'bolt_count': 4, 'thread': 'M6'}, 'nearest_rungs': None}
+    check(bool(_l195_note_check({'note': '标准梯级为 4×M6'}, _ok)),
+          '阳性: note 断言与推导期望一致时判佐证（乘号全角 × 写法）')
+    check(bool(_l195_note_check({'note': '标准梯级为 4xM6'}, _ok)),
+          '阳性: 半角 x 写法同样判佐证（生成器曾因 .upper() 把 x 变 X、与大小写敏感正则叠加'
+          '而恒空匹配，5 条含断言的 note 全被算成 0/0，闸门因此恒绿）')
+    _bare = {'expected': None, 'nearest_rungs': []}
+    nc = _l195_note_check({'note': 'PCD200/8×M20 为最近档'}, _bare)
+    check(isinstance(nc, set) and not nc,
+          '阴性: note 提到最近档但推导 nearest 为空时交集为空、不得判佐证（防空集假绿）')
+    nc2 = _l195_note_check({'note': '无任何模式'}, _bare)
+    check(nc2 is None,
+          '阴性: note 不含可解析断言时返回 None（不判「可复算」，避免恒绿）')
+
+    _df2 = {k: json.loads(json.dumps(v)) for k, v in df.items()}
+    _df2['meta']['freshness']['mechanical_interfaces_sha256'] = '0' * 16
+    check(_df2['meta']['freshness']['mechanical_interfaces_sha256'] != _l195_sha16(
+        'api/mechanical_interfaces.json'),
+          '阴性: 把新鲜度摘要改坏后必与源不一致（证明摘要对账这条不是空闸门）')
+
+
 def layer1_92():
     """贡献层与主库的机械证据判据必须**同源**，且反造假能力要有行为证据。
 
@@ -10361,6 +10822,7 @@ def main():
     _run_layer(layer1_92)
     _run_layer(layer1_93)
     _run_layer(layer1_94)
+    _run_layer(layer1_95)
     _run_layer(layer2)
     _run_layer(lambda: layer3(url))
     _run_layer(layer4)
