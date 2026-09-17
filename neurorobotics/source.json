@@ -7,6 +7,7 @@
     "maintainer": "roboparts.cc",
     "thesis": "认知/规划交给 LLM，低层控制/反射/运动基元交给 SNN；躯体与接口标准化是开放缺口。我们不造脑、不造芯片，做脑×体之间的标准与情报层。",
     "rationale": "截至 2026-09-15，RoboParts 798 实体覆盖执行器/传感器/芯片/接口/协议等，但无「神经形态控制 / 神经控制器-躯体接口」维度。果蝇全连接组（MaleCNS v1.0）已公开、Eon 已闭环具身仿真，脑有了、身体没有开放标准件生态，且每次「像素→感觉→运动→奖励」接线都手工重做、无声明式格式。本表为填补该缺口建立基线。",
+    "reference_robots_note": "reference_robots 只登记 GAP-G1（开放躯体标准件生态）的**参考实现**——登记存在性/许可/关键参数/兼容关系；RoboParts 不下载权重、不共享源文件、不反向依赖任何第三方仓库。这是外部生态情报面，独立铁律不变。",
     "coverage_policy": "只登记有公开可溯源出处的规格与项目。无出处的尺寸/参数一律不写，宁可留空，不可臆造。",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
@@ -241,6 +242,76 @@
       "source": "aiwiki.ai/neuromorphic_computing",
       "source_tier": "A",
       "confidence": 0.9
+    }
+  ],
+
+  "reference_robots": [
+    {
+      "id": "ROBOT-SO-101",
+      "name": "SO-101 (TheRobotStudio × HuggingFace)",
+      "role": "GAP-G1 参考实现——开源低成本机械臂 + 世界模型 + 社区数据集",
+      "hardware": {
+        "doF": 6,
+        "payload_g": 250,
+        "reach_mm": 250,
+        "servo": "Feetech STS3215 (bus) / Dynamixel XL330 备选",
+        "encoder": "12-bit magnetic",
+        "construction": "3D-printed links + 3D-printed joint brackets",
+        "self_build_usd": 300,
+        "leader_follower_pair_usd": 230
+      },
+      "end_effector": {
+        "type": "parallel gripper",
+        "interface": "proprietary SO-101 joint",
+        "iso_9409_1_compatible": false,
+        "roboparts_note": "夹爪端不接 ISO 9409-1；RoboParts 侧价值在于提供转接盘让 SO-101 生态能挂上标准化末端，把 $300 平台纳入 9409-1 兼容宇宙。"
+      },
+      "community_dataset": {
+        "episodes": 715,
+        "community_contributors": 6,
+        "tasks": 8,
+        "camera_views": 3,
+        "sources": ["TheRobotStudio SO-101 kit"],
+        "note": "DreamZero-SO101 训练集（community episodes 汇聚自 6 个数据集）"
+      },
+      "world_models": [
+        {
+          "id": "WM-DREAMZERO-SO101",
+          "name": "DreamZero-SO101",
+          "publisher": "Vizuara AI Lab",
+          "architecture": "Wan2.1-I2V-14B backbone (frozen) + LoRA rank-4 (108M trainable)",
+          "adapter_size_mb": 217,
+          "training_steps": 72000,
+          "training_time_h100_hrs": 127,
+          "joint_video_and_action": true,
+          "action_chunk_steps": 24,
+          "action_chunk_seconds": 0.8,
+          "policy_rmse_train_deg": 0.57,
+          "policy_rmse_heldout_deg_range": [1.6, 2.3],
+          "policy_rmse_zeroshot_deg": 11.9,
+          "dreamgen_autoregressive_chunks": 60,
+          "dreamgen_autoregressive_seconds": 18,
+          "inference_ms_h100": 600,
+          "license": "Apache-2.0",
+          "roboparts_note": "第一个面向 SO-101 的开源世界-动作模型。RoboParts 不下载权重、不共享源文件；仅登记其存在性与兼容关系，让 RoboParts 用户能查到「哪个平台有开源世界模型可用」。"
+        }
+      ],
+      "independence": {
+        "no_weights_downloaded": true,
+        "no_source_shared": true,
+        "no_reverse_dependency": true,
+        "integration_mode": "public API + 本表登记；不 clone 仓库、不读 KV/DB"
+      },
+      "roboparts_value": [
+        "作为 GAP-G1 最极致的开源低成本参考实现（$300 / 6-DOF）",
+        "世界模型 DreamGen 模式可做 DreamZero 侧的合成数据；RoboParts 侧对应物是应有特征推导层（build_derived_features.py）",
+        "社区 715 episodes 是 GAP-G1「开放数据生态」的可量化证据点",
+        "夹爪端非 ISO 9409-1 兼容 → RoboParts 转接盘是接入标准法兰宇宙的必经路径"
+      ],
+      "source": "https://vizuara-ai-lab.github.io/dreamzero-so101/ ; https://github.com/TheRobotStudio/SO-ARM100",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "last_verified": "2026-09-17"
     }
   ],
 

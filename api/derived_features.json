@@ -2,7 +2,7 @@
   "meta": {
     "schema": "derived_features/v1",
     "name": "RoboParts 应有特征推导层 (Predicted-Feature Index)",
-    "description": "不采集数据，只推导：给一个 ISO 9409-1 标号，它按标准梯级应当有什么孔数、什么螺纹、什么外径。于是已登记标号可与手写标签交叉验证，有标号但无规范行的声明也能给出「应当如何」而不是 unknown，手写 note 里的偏离断言可被机械复算。",
+    "description": "不采集数据，只推导：给一个 ISO 9409-1 标号，它按标准梯级应当有什么孔数、什么螺纹、什么外径。于是已登记标号可与手写标签交叉验证，有标号但无规范行的声明也能给出「应当如何」而不是 unknown，手写 note 里的偏离断言可被机械复算。deviation / off-ladder 的 residual 字段量化「转接盘的最小几何修正量」（PPS 哲学：冻结 base 不动，只量化差异），工程师拿到本表即可直接算出所需转接盘参数。",
     "methodology": {
       "isomorphism": "问题结构与 Cornell MS2KOSMOS (bioRxiv 2026.08) 同构：它不检索原始谱图，而是先对已知小分子结构预计算出应有的观测谱图（8 亿+ 预测谱）再入库，使未测过的观测也能被比对。本层对法兰做同一件事：先按梯级预计算应有几何，再拿声明值来比。",
       "why_it_matters": "只做「收集厂商声明」时，声明率就是判定天花板——厂商不写就无从判断。加一层「按标准应当如何」的推导，未声明/无规范行的标号也能被判定，天花板从「厂商愿意写多少」抬到「标准定义了多少」。",
@@ -29,7 +29,27 @@
       "entity_tokens_in_use": 4,
       "entity_tokens_judged_by_derivation": 3,
       "entities_covered_by_judged_tokens": 28,
-      "undecidable_tokens": 1
+      "undecidable_tokens": 1,
+      "residual_entries": 9,
+      "residual_with_thread_delta": 5,
+      "residual_with_outer_delta_declared": 0,
+      "hole_delta_magnitudes_seen": [
+        0,
+        2,
+        4
+      ]
+    },
+    "adapter_residual_index": {
+      "why_it_exists": "PPS 哲学落地：base（ISO 9409-1 梯级）冻结不动，只量化厂商声明与梯级的差异向量——这就是「转接盘的最小几何修正量」。工程师拿到本表可直接算出所需转接盘参数（孔数修正 / 螺纹规格 / 外径补偿），不必再回查 ISO 原文。",
+      "reference": "arXiv:2609.09148 (Proxy Policy Steering) — v_pps = v_base + γ·(v_task − v_ref)",
+      "dim_distributions": {
+        "pcd+thread": 1,
+        "thread": 1,
+        "none": 4,
+        "bolt_count+thread": 2,
+        "bolt_count+pcd+thread": 1
+      },
+      "residual_scope_note": "residual 只描述几何差，不裁决「能否互装」。互装判断仍走 build_negative_compat.py（本层与判定层分离，与 grammar.designation_forms.join_scope 的查表/裁决分离同构）。"
     },
     "cross_validation": {
       "is_canonical_iso_reproduced": {
@@ -192,6 +212,20 @@
       "classification": "no_standard_rung",
       "deviation_dims": [],
       "derived_is_canonical": false,
+      "residual": {
+        "target_rung_pcd_mm": 18.0,
+        "pcd_delta_mm": 2.0,
+        "bolt_count_delta": 0,
+        "thread_declared": "M3",
+        "thread_expected": "M4",
+        "thread_delta": true,
+        "iso_outer_diameter_delta_mm": null,
+        "min_correction_dims": [
+          "pcd",
+          "thread"
+        ],
+        "compensation_path": "adapter_plate_to_nearest_rung"
+      },
       "stored_is_canonical_iso": false,
       "flag_agrees_with_derivation": true,
       "note_corroboration": {
@@ -228,6 +262,19 @@
         "thread"
       ],
       "derived_is_canonical": false,
+      "residual": {
+        "target_rung_pcd_mm": 31.5,
+        "pcd_delta_mm": 0.0,
+        "bolt_count_delta": 0,
+        "thread_declared": "M5",
+        "thread_expected": "M6",
+        "thread_delta": true,
+        "iso_outer_diameter_delta_mm": null,
+        "min_correction_dims": [
+          "thread"
+        ],
+        "compensation_path": "adapter_plate"
+      },
       "stored_is_canonical_iso": false,
       "flag_agrees_with_derivation": true,
       "note_corroboration": {
@@ -258,6 +305,17 @@
       "classification": "matches_canonical",
       "deviation_dims": [],
       "derived_is_canonical": true,
+      "residual": {
+        "target_rung_pcd_mm": 40.0,
+        "pcd_delta_mm": 0.0,
+        "bolt_count_delta": 0,
+        "thread_declared": "M6",
+        "thread_expected": "M6",
+        "thread_delta": false,
+        "iso_outer_diameter_delta_mm": null,
+        "min_correction_dims": [],
+        "compensation_path": "direct"
+      },
       "stored_is_canonical_iso": true,
       "flag_agrees_with_derivation": true,
       "note_corroboration": null,
@@ -279,6 +337,17 @@
       "classification": "matches_canonical",
       "deviation_dims": [],
       "derived_is_canonical": true,
+      "residual": {
+        "target_rung_pcd_mm": 50.0,
+        "pcd_delta_mm": 0.0,
+        "bolt_count_delta": 0,
+        "thread_declared": "M6",
+        "thread_expected": "M6",
+        "thread_delta": false,
+        "iso_outer_diameter_delta_mm": null,
+        "min_correction_dims": [],
+        "compensation_path": "direct"
+      },
       "stored_is_canonical_iso": true,
       "flag_agrees_with_derivation": true,
       "note_corroboration": null,
@@ -300,6 +369,17 @@
       "classification": "matches_canonical",
       "deviation_dims": [],
       "derived_is_canonical": true,
+      "residual": {
+        "target_rung_pcd_mm": 63.0,
+        "pcd_delta_mm": 0.0,
+        "bolt_count_delta": 0,
+        "thread_declared": "M6",
+        "thread_expected": "M6",
+        "thread_delta": false,
+        "iso_outer_diameter_delta_mm": null,
+        "min_correction_dims": [],
+        "compensation_path": "direct"
+      },
       "stored_is_canonical_iso": true,
       "flag_agrees_with_derivation": true,
       "note_corroboration": null,
@@ -321,6 +401,17 @@
       "classification": "matches_canonical",
       "deviation_dims": [],
       "derived_is_canonical": true,
+      "residual": {
+        "target_rung_pcd_mm": 80.0,
+        "pcd_delta_mm": 0.0,
+        "bolt_count_delta": 0,
+        "thread_declared": "M8",
+        "thread_expected": "M8",
+        "thread_delta": false,
+        "iso_outer_diameter_delta_mm": null,
+        "min_correction_dims": [],
+        "compensation_path": "direct"
+      },
       "stored_is_canonical_iso": true,
       "flag_agrees_with_derivation": true,
       "note_corroboration": null,
@@ -345,6 +436,20 @@
         "thread"
       ],
       "derived_is_canonical": false,
+      "residual": {
+        "target_rung_pcd_mm": 100.0,
+        "pcd_delta_mm": 0.0,
+        "bolt_count_delta": -2,
+        "thread_declared": "M8",
+        "thread_expected": "M10",
+        "thread_delta": true,
+        "iso_outer_diameter_delta_mm": null,
+        "min_correction_dims": [
+          "bolt_count",
+          "thread"
+        ],
+        "compensation_path": "adapter_plate"
+      },
       "stored_is_canonical_iso": false,
       "flag_agrees_with_derivation": true,
       "note_corroboration": {
@@ -378,6 +483,20 @@
         "thread"
       ],
       "derived_is_canonical": false,
+      "residual": {
+        "target_rung_pcd_mm": 160.0,
+        "pcd_delta_mm": 0.0,
+        "bolt_count_delta": -4,
+        "thread_declared": "M12",
+        "thread_expected": "M16",
+        "thread_delta": true,
+        "iso_outer_diameter_delta_mm": null,
+        "min_correction_dims": [
+          "bolt_count",
+          "thread"
+        ],
+        "compensation_path": "adapter_plate"
+      },
       "stored_is_canonical_iso": false,
       "flag_agrees_with_derivation": true,
       "note_corroboration": {
@@ -417,6 +536,21 @@
       "classification": "no_standard_rung",
       "deviation_dims": [],
       "derived_is_canonical": false,
+      "residual": {
+        "target_rung_pcd_mm": 200.0,
+        "pcd_delta_mm": 50.0,
+        "bolt_count_delta": -4,
+        "thread_declared": "M16",
+        "thread_expected": "M20",
+        "thread_delta": true,
+        "iso_outer_diameter_delta_mm": null,
+        "min_correction_dims": [
+          "pcd",
+          "bolt_count",
+          "thread"
+        ],
+        "compensation_path": "adapter_plate_to_nearest_rung"
+      },
       "stored_is_canonical_iso": false,
       "flag_agrees_with_derivation": true,
       "note_corroboration": {
@@ -472,7 +606,7 @@
       },
       "nearest_rungs": null,
       "verdict": "registered_documented_deviation",
-      "detail": "已登记，但偏离标准梯级（偏差维度：thread）。ISO 期望 4xM6，实测 4xM5。",
+      "detail": "已登记，但偏离标准梯级（转接盘最小修正量：螺纹 M5→M6）。ISO 期望 4xM6，实测 4xM5。",
       "entity_count": 7,
       "entity_ids": [
         "ACT-028",

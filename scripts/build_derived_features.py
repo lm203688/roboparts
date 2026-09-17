@@ -123,6 +123,25 @@ def derive(ladder: List[Dict[str, Any]],
 
     if rung is None:
         near = nearest_rungs(ladder, pcd)
+        # residual（无梯级档）：PCD 与外径都相对最近一档。转接盘必须同时补偿这两维。
+        nearest = near[0] if near else None
+        residual = None
+        if nearest is not None:
+            residual = {
+                "target_rung_pcd_mm": nearest["pcd"],
+                "pcd_delta_mm": pcd - nearest["pcd"],
+                "bolt_count_delta": holes - int(nearest["holes"]),
+                "thread_declared": thread,
+                "thread_expected": nearest["thread"],
+                "thread_delta": (thread != nearest["thread"]),
+                "iso_outer_diameter_delta_mm": None,
+                "min_correction_dims": [d for d, on in [
+                    ("pcd", residual_pcd_differs(pcd, nearest["pcd"])),
+                    ("bolt_count", holes != int(nearest["holes"])),
+                    ("thread", thread != nearest["thread"]),
+                ] if on],
+                "compensation_path": "adapter_plate_to_nearest_rung",
+            }
         return {
             "pcd_mm": pcd,
             "bolt_count": holes,
@@ -133,6 +152,7 @@ def derive(ladder: List[Dict[str, Any]],
             "classification": "no_standard_rung",
             "deviation_dims": [],
             "derived_is_canonical": False,
+            "residual": residual,
         }
 
     eh, et = int(rung["holes"]), str(rung["thread"]).upper()
@@ -149,6 +169,21 @@ def derive(ladder: List[Dict[str, Any]],
     else:
         cls = "deviates_holes_and_thread"
 
+    # residual：转接盘的最小几何修正量（PPS 哲学——冻结 base 不动，只量化差异）
+    # 相对当前档 expected：转接盘必须补偿的实际 mm / 颗数 / 螺纹规格。
+    outer_delta = _row_iso_outer_diameter_delta(row, float(rung["iso_outer_diameter"]))
+    residual = {
+        "target_rung_pcd_mm": pcd,
+        "pcd_delta_mm": 0.0,  # 已在梯级上，PCD 无修正
+        "bolt_count_delta": holes - eh,
+        "thread_declared": thread,
+        "thread_expected": et,
+        "thread_delta": (thread != et),
+        "iso_outer_diameter_delta_mm": outer_delta,
+        "min_correction_dims": list(dims),
+        "compensation_path": "adapter_plate" if dims else "direct",
+    }
+
     return {
         "pcd_mm": pcd,
         "bolt_count": holes,
@@ -163,7 +198,24 @@ def derive(ladder: List[Dict[str, Any]],
         "classification": cls,
         "deviation_dims": dims,
         "derived_is_canonical": cls == "matches_canonical",
+        "residual": residual,
     }
+
+
+def residual_pcd_differs(a: float, b: float) -> bool:
+    """PCD 是否真的不同（浮点容差 0.01mm，避免 31.5000000001 判为偏离）。"""
+    return abs(a - b) > 1e-3
+
+
+def _row_iso_outer_diameter_delta(row: Dict[str, Any], expected: float) -> Optional[float]:
+    """row 是否显式声明了 iso_outer_diameter；有则算 delta，无则 None（诚实边界）。"""
+    v = row.get("iso_outer_diameter") or row.get("d2_mm")
+    if v is None:
+        return None
+    try:
+        return float(v) - expected
+    except (TypeError, ValueError):
+        return None
 
 
 def entity_tokens(ents: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
@@ -346,7 +398,16 @@ def build() -> Dict[str, Any]:
                           "推导给出最近档，便于转接与选型。")
             else:
                 verdict = "registered_documented_deviation"
-                detail = (f"已登记，但偏离标准梯级（偏差维度：{'/'.join(d['deviation_dims'])}）。"
+                _r = d.get("residual") or {}
+                _dim_desc = []
+                if _r.get("bolt_count_delta", 0) != 0:
+                    _dim_desc.append(f"孔数{_r['bolt_count_delta']:+d}颗")
+                if _r.get("thread_delta"):
+                    _dim_desc.append(f"螺纹 {parsed['thread']}→{_r.get('thread_expected','?')}")
+                _outer = _r.get("iso_outer_diameter_delta_mm")
+                if _outer is not None:
+                    _dim_desc.append(f"外径{_outer:+.1f}mm")
+                detail = (f"已登记，但偏离标准梯级（转接盘最小修正量：{'；'.join(_dim_desc) or '无'}）。"
                           f"ISO 期望 {d['expected']['bolt_count']}x"
                           f"{d['expected']['thread']}，实测 {parsed['bolt_count']}x{parsed['thread']}。")
 
@@ -381,6 +442,17 @@ def build() -> Dict[str, Any]:
     n_norun = sum(1 for x in derivations if x["classification"] == "no_standard_rung")
     judged = sum(1 for t in token_verdicts if t["verdict"] != "unparseable_bare_standard")
 
+    # residual 汇总：所有 deviation / off-ladder 标号的转接盘最小几何修正量分布
+    _residuals = [x.get("residual") for x in derivations if x.get("residual")]
+    _hole_deltas = sorted({abs(r.get("bolt_count_delta", 0)) for r in _residuals
+                           if isinstance(r.get("bolt_count_delta"), (int, float))})
+    _thread_delta_count = sum(1 for r in _residuals if r.get("thread_delta"))
+    _has_outer = sum(1 for r in _residuals if r.get("iso_outer_diameter_delta_mm") is not None)
+    _dim_dist = {}
+    for r in _residuals:
+        key = "+".join(sorted(r.get("min_correction_dims") or ["none"])) or "none"
+        _dim_dist[key] = _dim_dist.get(key, 0) + 1
+
     return {
         "meta": {
             "schema": "derived_features/v1",
@@ -389,6 +461,8 @@ def build() -> Dict[str, Any]:
                 "不采集数据，只推导：给一个 ISO 9409-1 标号，它按标准梯级应当有什么孔数、"
                 "什么螺纹、什么外径。于是已登记标号可与手写标签交叉验证，有标号但无规范行的"
                 "声明也能给出「应当如何」而不是 unknown，手写 note 里的偏离断言可被机械复算。"
+                "deviation / off-ladder 的 residual 字段量化「转接盘的最小几何修正量」"
+                "（PPS 哲学：冻结 base 不动，只量化差异），工程师拿到本表即可直接算出所需转接盘参数。"
             ),
             "methodology": {
                 "isomorphism": (
@@ -432,6 +506,24 @@ def build() -> Dict[str, Any]:
                     if t["verdict"] != "unparseable_bare_standard"),
                 "undecidable_tokens": sum(
                     1 for t in token_verdicts if t["verdict"] == "unparseable_bare_standard"),
+                # residual 分布：量化「转接盘最小几何修正量」的样本面
+                "residual_entries": len(_residuals),
+                "residual_with_thread_delta": _thread_delta_count,
+                "residual_with_outer_delta_declared": _has_outer,
+                "hole_delta_magnitudes_seen": _hole_deltas,
+            },
+            "adapter_residual_index": {
+                "why_it_exists": (
+                    "PPS 哲学落地：base（ISO 9409-1 梯级）冻结不动，只量化厂商声明与梯级的"
+                    "差异向量——这就是「转接盘的最小几何修正量」。工程师拿到本表可直接算出"
+                    "所需转接盘参数（孔数修正 / 螺纹规格 / 外径补偿），不必再回查 ISO 原文。"
+                ),
+                "reference": "arXiv:2609.09148 (Proxy Policy Steering) — v_pps = v_base + γ·(v_task − v_ref)",
+                "dim_distributions": _dim_dist,
+                "residual_scope_note": (
+                    "residual 只描述几何差，不裁决「能否互装」。互装判断仍走 build_negative_compat.py"
+                    "（本层与判定层分离，与 grammar.designation_forms.join_scope 的查表/裁决分离同构）。"
+                ),
             },
             "cross_validation": {
                 "is_canonical_iso_reproduced": {

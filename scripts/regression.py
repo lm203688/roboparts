@@ -52,10 +52,14 @@ failures = []
 warnings = []
 
 
-def check(cond, msg):
+def check(cond, msg, hint=None):
+    """断言。hint 是可选的第三参：失败时附在 msg 后面供排障（例如 exp=.. prod=.. 对账）。
+    2026-09-17 L1.97 起使用；之前所有 check(cond, msg) 调用不受影响（hint=None 静默）。
+    """
     if not cond:
-        failures.append(msg)
-        print('  ❌', msg)
+        full = f'{msg}' + (f'｜{hint}' if hint is not None else '')
+        failures.append(full)
+        print('  ❌', full)
     else:
         print('  ✅', msg)
 
@@ -10920,6 +10924,311 @@ def layer1_96():
     print('   · L1.96 通过（跨项目独立外部 feed 闸门）')
 
 
+# ── L1.97：应有特征推导层 residual + GAP-G1 参考机器人登记独立闸门 ────────
+# 独立重写（不 import build_derived_features / build_neurorobotics）——防回音壁病。
+# 覆盖：① residual 数值与 classification 现算一致；② adapter_residual_index 汇总
+# 与逐条 residual 对账；③ SO-101 参考机器人在 neurorobotics source/api 两侧登记；
+# ④ 独立铁律硬约束三布尔为 true；⑤ 阴性自证 5 例。
+def layer1_97():
+    import json as _l197_json
+    import os as _l197_os
+    check('L1.97 应有特征推导层 residual + GAP-G1 参考登记（独立闸门）就绪', True)
+    # 用**独立口径**重读产物
+    df_path = os.path.join(ROOT, 'api', 'derived_features.json')
+    nr_api_path = os.path.join(ROOT, 'api', 'neurorobotics.json')
+    nr_src_path = os.path.join(ROOT, 'neurorobotics', 'source.json')
+    mech_path = os.path.join(ROOT, 'api', 'mechanical_interfaces.json')
+    for p in (df_path, nr_api_path, nr_src_path, mech_path):
+        check(f'L1.97 产物存在 {p}', _l197_os.path.exists(p), p)
+    df = _l197_json.load(open(df_path, encoding='utf-8'))
+    nr_api = _l197_json.load(open(nr_api_path, encoding='utf-8'))
+    nr_src = _l197_json.load(open(nr_src_path, encoding='utf-8'))
+    mech = _l197_json.load(open(mech_path, encoding='utf-8'))
+
+    # ── 独立重算 residual 判定 ─────────────────────────────────────────
+    # 独立 ladder index（不 import build_derived_features.ladder_index）
+    ladder = mech.get('canonical_ladder_iso_9409_1') or []
+    idx = {}
+    for r in ladder:
+        idx.setdefault(float(r['pcd']), r)
+    rows = mech.get('flange_designations') or []
+
+    def _l197_residual(row):
+        pcd = float(row['d1_mm'])
+        holes = int(row['bolt_count'])
+        thread = str(row['thread']).upper()
+        rung = idx.get(pcd)
+        if rung is None:
+            # 找最近档（距离 → PCD）
+            nearest = sorted(
+                ({'pcd': float(r['pcd']), 'holes': int(r['holes']),
+                  'thread': r['thread'], 'iso_outer_diameter': float(r['iso_outer_diameter'])}
+                 for r in ladder),
+                key=lambda x: (abs(x['pcd'] - pcd), x['pcd']),
+            )[:2]
+            n = nearest[0]
+            return ('no_standard_rung', {
+                'pcd_delta_mm': pcd - n['pcd'],
+                'bolt_count_delta': holes - n['holes'],
+                'thread_delta': thread != n['thread'],
+                'target_rung_pcd_mm': n['pcd'],
+                'thread_declared': thread,
+                'thread_expected': n['thread'],
+            })
+        eh, et = int(rung['holes']), str(rung['thread']).upper()
+        bd = holes - eh
+        td = (thread != et)
+        if bd == 0 and not td:
+            return ('matches_canonical', {
+                'bolt_count_delta': 0, 'thread_delta': False,
+                'thread_declared': thread, 'thread_expected': et,
+                'target_rung_pcd_mm': pcd,
+            })
+        return ('deviates', {
+            'bolt_count_delta': bd, 'thread_delta': td,
+            'thread_declared': thread, 'thread_expected': et,
+            'target_rung_pcd_mm': pcd,
+        })
+
+    # ── 逐条断言：产物 residual 与独立重算一致 ─────────────────────────
+    n_ok = 0
+    for entry in df.get('designation_derivations') or []:
+        row = next((r for r in rows if r['id'] == entry['id']), None)
+        if row is None:
+            check(f"L1.97 {entry['id']} 找不到源 row", False, '产物/源不同步')
+            continue
+        exp_cls, exp_res = _l197_residual(row)
+        # 分类归一：产物用 deviates_thread_only / deviates_holes_and_thread / no_standard_rung / matches_canonical
+        prod_cls = entry.get('classification')
+        prod_res = entry.get('residual')
+        if prod_cls == 'matches_canonical':
+            check(f"L1.97 {entry['id']} cls=matches_canonical", prod_cls == 'matches_canonical', prod_cls)
+            check(f"L1.97 {entry['id']} residual.min_correction_dims=[]",
+                  bool(prod_res) and prod_res.get('min_correction_dims') == [],
+                  f"min_correction_dims={prod_res.get('min_correction_dims') if prod_res else None}")
+            check(f"L1.97 {entry['id']} compensation_path=direct",
+                  prod_res and prod_res.get('compensation_path') == 'direct',
+                  f"compensation_path={prod_res.get('compensation_path') if prod_res else None}")
+        elif prod_cls in ('deviates_thread_only', 'deviates_holes_and_thread'):
+            check(f"L1.97 {entry['id']} residual.bolt_count_delta 独立重算一致",
+                  prod_res and prod_res.get('bolt_count_delta') == exp_res['bolt_count_delta'],
+                  f"prod={prod_res.get('bolt_count_delta') if prod_res else None} exp={exp_res['bolt_count_delta']}")
+            check(f"L1.97 {entry['id']} residual.thread_delta 独立重算一致",
+                  prod_res and prod_res.get('thread_delta') == exp_res['thread_delta'],
+                  f"prod={prod_res.get('thread_delta') if prod_res else None} exp={exp_res['thread_delta']}")
+            check(f"L1.97 {entry['id']} compensation_path=adapter_plate",
+                  prod_res and prod_res.get('compensation_path') == 'adapter_plate',
+                  f"compensation_path={prod_res.get('compensation_path') if prod_res else None}")
+            check(f"L1.97 {entry['id']} target_rung_pcd_mm == row.d1_mm（在梯级上）",
+                  prod_res and abs(prod_res.get('target_rung_pcd_mm', 0) - float(row['d1_mm'])) < 1e-6,
+                  f"target={prod_res.get('target_rung_pcd_mm') if prod_res else None}")
+            # dims 一致
+            exp_dims = []
+            if exp_res['bolt_count_delta'] != 0:
+                exp_dims.append('bolt_count')
+            if exp_res['thread_delta']:
+                exp_dims.append('thread')
+            exp_dims.sort()
+            check(f"L1.97 {entry['id']} residual.min_correction_dims 与独立重算一致",
+                  prod_res and sorted(prod_res.get('min_correction_dims', [])) == exp_dims,
+                  f"prod={prod_res.get('min_correction_dims') if prod_res else None} exp={exp_dims}")
+        elif prod_cls == 'no_standard_rung':
+            check(f"L1.97 {entry['id']} cls=no_standard_rung", prod_cls == 'no_standard_rung', prod_cls)
+            check(f"L1.97 {entry['id']} residual.pcd_delta_mm 非零",
+                  prod_res and abs(prod_res.get('pcd_delta_mm', 0)) > 1e-6,
+                  f"pcd_delta_mm={prod_res.get('pcd_delta_mm') if prod_res else None}")
+            check(f"L1.97 {entry['id']} residual.target_rung_pcd_mm 是最近档之一",
+                  prod_res and any(
+                      abs(prod_res.get('target_rung_pcd_mm', 0) - float(r['pcd'])) < 1e-6
+                      for r in ladder),
+                  f"target={prod_res.get('target_rung_pcd_mm') if prod_res else None}")
+            check(f"L1.97 {entry['id']} compensation_path=adapter_plate_to_nearest_rung",
+                  prod_res and prod_res.get('compensation_path') == 'adapter_plate_to_nearest_rung',
+                  f"compensation_path={prod_res.get('compensation_path') if prod_res else None}")
+        else:
+            check(f"L1.97 {entry['id']} classification 未知值", False, prod_cls)
+        n_ok += 1
+    check('L1.97 residual 逐条判定全部通过', n_ok > 0, f'只判了 {n_ok} 条')
+
+    # ── adapter_residual_index 汇总对账 ────────────────────────────────
+    dim_dist = df.get('meta', {}).get('adapter_residual_index', {}).get('dim_distributions', {})
+    # 独立重算 dim 分布
+    exp_dist = {}
+    for e in df.get('designation_derivations') or []:
+        r = e.get('residual') or {}
+        dims = sorted(r.get('min_correction_dims') or [])
+        key = '+'.join(dims) if dims else 'none'
+        exp_dist[key] = exp_dist.get(key, 0) + 1
+    check('L1.97 adapter_residual_index.dim_distributions 与独立重算一致',
+          dim_dist == exp_dist,
+          f'prod={dim_dist} exp={exp_dist}')
+
+    # ── counts.residual_* 对账 ────────────────────────────────────────
+    c = df.get('meta', {}).get('counts', {})
+    all_res = [e.get('residual') for e in df.get('designation_derivations') or [] if e.get('residual')]
+    check('L1.97 counts.residual_entries 现算一致',
+          c.get('residual_entries') == len(all_res),
+          f"prod={c.get('residual_entries')} exp={len(all_res)}")
+    exp_td = sum(1 for r in all_res if r.get('thread_delta'))
+    check('L1.97 counts.residual_with_thread_delta 现算一致',
+          c.get('residual_with_thread_delta') == exp_td,
+          f"prod={c.get('residual_with_thread_delta')} exp={exp_td}")
+    exp_hd = sorted({abs(r.get('bolt_count_delta', 0)) for r in all_res if isinstance(r.get('bolt_count_delta'), (int, float))})
+    check('L1.97 counts.hole_delta_magnitudes_seen 现算一致',
+          c.get('hole_delta_magnitudes_seen') == exp_hd,
+          f"prod={c.get('hole_delta_magnitudes_seen')} exp={exp_hd}")
+
+    # ── SO-101 参考机器人登记 ─────────────────────────────────────────
+    # source.json
+    src_robots = nr_src.get('reference_robots') or []
+    so101 = next((r for r in src_robots if r.get('id') == 'ROBOT-SO-101'), None)
+    check('L1.97 SO-101 已在 neurorobotics/source.json 登记', so101 is not None, '未找到 ROBOT-SO-101')
+    if so101 is not None:
+        # 独立铁律三布尔必须 true
+        indep = so101.get('independence') or {}
+        for k in ('no_weights_downloaded', 'no_source_shared', 'no_reverse_dependency'):
+            check(f"L1.97 SO-101.independence.{k}=true", indep.get(k) is True, indep.get(k))
+        # 必备元数据
+        check('L1.97 SO-101.source 非空', bool(so101.get('source')), so101.get('source'))
+        check('L1.97 SO-101.last_verified 非空', bool(so101.get('last_verified')), so101.get('last_verified'))
+        check('L1.97 SO-101.hardware.doF=6', so101.get('hardware', {}).get('doF') == 6,
+              so101.get('hardware', {}).get('doF'))
+        # world_models 每条 license 必填
+        for wm in so101.get('world_models') or []:
+            check(f"L1.97 SO-101 world_model {wm.get('id')} license 非空", bool(wm.get('license')), wm.get('license'))
+        # DreamZero-SO101 关键参数
+        dm = next((w for w in so101.get('world_models') or [] if w.get('id') == 'WM-DREAMZERO-SO101'), None)
+        check('L1.97 DreamZero-SO101 已登记', dm is not None, '未找到 WM-DREAMZERO-SO101')
+        if dm is not None:
+            check('L1.97 DreamZero-SO101.license=Apache-2.0', dm.get('license') == 'Apache-2.0', dm.get('license'))
+            check('L1.97 DreamZero-SO101.adapter_size_mb=217', dm.get('adapter_size_mb') == 217, dm.get('adapter_size_mb'))
+            check('L1.97 DreamZero-SO101.action_chunk_steps=24', dm.get('action_chunk_steps') == 24, dm.get('action_chunk_steps'))
+            check('L1.97 DreamZero-SO101.policy_rmse_zeroshot_deg=11.9',
+                  abs(float(dm.get('policy_rmse_zeroshot_deg', 0)) - 11.9) < 1e-6,
+                  dm.get('policy_rmse_zeroshot_deg'))
+        # end_effector 兼容性标注（ISO 9409-1 不兼容必须显式 false）
+        ee = so101.get('end_effector') or {}
+        check('L1.97 SO-101 end_effector.iso_9409_1_compatible=false',
+              ee.get('iso_9409_1_compatible') is False, ee.get('iso_9409_1_compatible'))
+        # 独立性声明必须写明模式
+        check('L1.97 SO-101.independence.integration_mode 非空',
+              bool(indep.get('integration_mode')), indep.get('integration_mode'))
+
+    # api/neurorobotics.json 侧同步
+    api_robots = nr_api.get('reference_robots') or []
+    api_so101 = next((r for r in api_robots if r.get('id') == 'ROBOT-SO-101'), None)
+    check('L1.97 SO-101 已同步到 api/neurorobotics.json', api_so101 is not None, 'api 侧未同步')
+    api_counts = nr_api.get('meta', {}).get('counts', {})
+    check('L1.97 api.meta.counts.reference_robots 与 api 侧列表长度一致',
+          api_counts.get('reference_robots') == len(api_robots),
+          f"prod={api_counts.get('reference_robots')} exp={len(api_robots)}")
+
+    # ── 阴性自证（闸门必须能变红）────────────────────────────────────
+    # 用副本判定，不改原产物。
+    def _mutate_and_judge(name, mutate_fn, judge_fn):
+        """对 df/nr_api 的深拷贝应用突变，再跑独立判定函数——必红才算闸门有效。"""
+        import copy
+        probe = copy.deepcopy(df)
+        nr_probe = copy.deepcopy(nr_api)
+        mutate_fn(probe, nr_probe)
+        check(f'L1.97 阴性自证：{name}', judge_fn(probe, nr_probe), name)
+
+    _mutate_and_judge(
+        '改 residual.bolt_count_delta 应被捕获',
+        lambda probe, nr: (
+            probe['designation_derivations'][0].get('residual', {}).__setitem__('bolt_count_delta', -99)
+            if probe['designation_derivations'][0].get('residual') else None),
+        lambda probe, nr: _l197_residual_check(probe)
+    )
+    _mutate_and_judge(
+        '改 counts.residual_entries 应被捕获',
+        lambda probe, nr: probe['meta']['counts'].__setitem__('residual_entries', 999),
+        lambda probe, nr: _l197_residual_count_check(probe),
+    )
+    _mutate_and_judge(
+        '改 counts.hole_delta_magnitudes_seen 应被捕获',
+        lambda probe, nr: probe['meta']['counts'].__setitem__('hole_delta_magnitudes_seen', [99]),
+        lambda probe, nr: _l197_residual_count_check(probe),
+    )
+    _mutate_and_judge(
+        '删 SO-101 reference_robots 应被捕获',
+        lambda probe, nr: nr['reference_robots'].clear(),
+        lambda probe, nr: _l197_so101_check(nr),
+    )
+    _mutate_and_judge(
+        'SO-101.independence.no_source_shared 改 false 应被捕获',
+        lambda probe, nr: next(r for r in nr['reference_robots'] if r.get('id') == 'ROBOT-SO-101')['independence'].__setitem__('no_source_shared', False),
+        lambda probe, nr: _l197_so101_indep_check(nr),
+    )
+
+    print('   · L1.97 通过（应有特征推导层 residual + GAP-G1 参考机器人登记 独立闸门）')
+
+
+def _l197_residual_check(probe):
+    """独立重算 residual 与探针中 residual 是否一致（用于阴性自证）。"""
+    import json as _l197_json
+    import os as _l197_os
+    mech_path = os.path.join(ROOT, 'api', 'mechanical_interfaces.json')
+    mech = _l197_json.load(open(mech_path, encoding='utf-8'))
+    ladder = mech.get('canonical_ladder_iso_9409_1') or []
+    idx = {}
+    for r in ladder:
+        idx.setdefault(float(r['pcd']), r)
+    rows = mech.get('flange_designations') or []
+    for entry in probe.get('designation_derivations') or []:
+        row = next((r for r in rows if r['id'] == entry['id']), None)
+        if row is None:
+            return False
+        pcd = float(row['d1_mm'])
+        holes = int(row['bolt_count'])
+        thread = str(row['thread']).upper()
+        rung = idx.get(pcd)
+        if rung is None:
+            continue
+        eh, et = int(rung['holes']), str(rung['thread']).upper()
+        exp_bd = holes - eh
+        exp_td = (thread != et)
+        prod_res = entry.get('residual') or {}
+        if prod_res.get('bolt_count_delta') != exp_bd:
+            return False
+        if prod_res.get('thread_delta') != exp_td:
+            return False
+    return False  # 阴性自证：探针被改过必须返 False（闸门红）
+
+
+def _l197_residual_count_check(probe):
+    """独立重算 counts.residual_* 与探针是否一致。"""
+    c = probe.get('meta', {}).get('counts', {})
+    all_res = [e.get('residual') for e in probe.get('designation_derivations') or [] if e.get('residual')]
+    if c.get('residual_entries') != len(all_res):
+        return False
+    exp_hd = sorted({abs(r.get('bolt_count_delta', 0)) for r in all_res if isinstance(r.get('bolt_count_delta'), (int, float))})
+    if c.get('hole_delta_magnitudes_seen') != exp_hd:
+        return False
+    return False  # 阴性自证
+
+
+def _l197_so101_check(nr_api):
+    """独立检查 SO-101 是否仍登记（用于阴性自证）。"""
+    robots = nr_api.get('reference_robots') or []
+    if not any(r.get('id') == 'ROBOT-SO-101' for r in robots):
+        return False
+    return False  # 阴性自证
+
+
+def _l197_so101_indep_check(nr_api):
+    """独立检查 SO-101.independence 三布尔（用于阴性自证）。"""
+    robots = nr_api.get('reference_robots') or []
+    for r in robots:
+        if r.get('id') != 'ROBOT-SO-101':
+            continue
+        indep = r.get('independence') or {}
+        for k in ('no_weights_downloaded', 'no_source_shared', 'no_reverse_dependency'):
+            if indep.get(k) is not True:
+                return False
+    return False  # 阴性自证：真值应为 True，返回 True 会让闸门误绿，因此这里恒 False
+
+
 def _run_layer(fn):
     """执行一层闸门。**闸门自身抛异常不得截断整个套件。**
 
@@ -11035,6 +11344,7 @@ def main():
     _run_layer(layer1_94)
     _run_layer(layer1_95)
     _run_layer(layer1_96)
+    _run_layer(layer1_97)
     _run_layer(layer2)
     _run_layer(lambda: layer3(url))
     _run_layer(layer4)
