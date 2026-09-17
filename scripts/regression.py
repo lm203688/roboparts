@@ -10709,6 +10709,217 @@ def layer1_91():
         check(False, f'生产函数对照失败: {e}')
 
 
+def layer1_96():
+    """跨项目独立的外部情报 feed 闸门（api/external_signals.json）。
+
+    2026-09-17 起因：RoboParts 与 SwarmLabs 通过一个 roboparts 项目 key 走 HTTPS 公开 API
+    做首次跨项目集成。这条通路的独立性是硬约束——不能因为一个便利的 key 就让两个项目
+    在代码/数据/部署任一处耦合。本层用独立重写锁住四件事：
+      1. 产物 JSON 结构完整（signals 分 search:* / domain:* 两类，counts 现算对账）
+      2. 独立性硬约束块齐全（independence.project/integration_mode/key_scope/rule）
+      3. 新鲜度锚定 sha256（source_digest 现算与 signals 内容对齐，非墙钟）
+      4. 密钥不泄露（明文 key 只允许通配前缀 key_scope，不允许真实 key 值）
+    末尾 5 例阴性自证防闸门恒真（回音壁病防治）。
+    """
+    print('\n[L1.96] 跨项目独立外部情报 feed（SwarmLabs → RoboParts）')
+
+    # ── 阴性自证：L1.96 ───────────────────────────────────────
+    # 独立闸门——**不**导入 build_external_signals.py 的函数（回音壁病）；
+    # 全部按产物 JSON 独立重写判定。
+    import json as _l196_json
+    import hashlib as _l196_hashlib
+    import re as _l196_re
+
+    def _l196_check_signals_file():
+        """返回 (doc, source_text) 或抛异常。"""
+        p = os.path.join(ROOT, 'api', 'external_signals.json')
+        if not os.path.exists(p):
+            raise FileNotFoundError('api/external_signals.json missing')
+        with io.open(p, encoding='utf-8') as f:
+            txt = f.read()
+        return _l196_json.loads(txt), txt
+
+    # ── ① 文件存在与结构完整 ──────────────────────────────────
+    try:
+        doc, raw = _l196_check_signals_file()
+        meta = doc.get('meta') or {}
+        signals = doc.get('signals') or {}
+        check(True, 'api/external_signals.json 存在且可解析')
+    except Exception as _e:  # noqa: BLE001
+        check(False, 'api/external_signals.json 缺失或解析失败：%s' % _e)
+        return
+
+    # ── ② 独立性硬约束块齐全 ─────────────────────────────────
+    indep = meta.get('independence') or {}
+    for k in ('project', 'integration_mode', 'key_scope', 'rule'):
+        check(k in indep, 'independence.%s 存在（跨项目独立性硬约束）' % k)
+    check(indep.get('project') == 'roboparts',
+          'independence.project == "roboparts"（不是别的项目冒充）')
+    check(indep.get('integration_mode') == 'HTTPS public API only',
+          'independence.integration_mode == "HTTPS public API only"（不是 clone/KV 模式）')
+    rule_text = indep.get('rule', '')
+    check('不共享 SwarmLabs 源文件' in rule_text or '不克隆仓库' in rule_text,
+          'independence.rule 明文写出「不共享源文件 / 不克隆仓库」约束')
+
+    # ── ③ source_digest 是合法 sha256 且锚定 signals 内容 ────
+    sd = meta.get('source_digest') or ''
+    check(_l196_re.match(r'^[0-9a-f]{64}$', sd) is not None,
+          'meta.source_digest 是 64 位小写 hex（sha256 格式）')
+    if sd:
+        recomputed = _l196_hashlib.sha256(
+            _l196_json.dumps(signals, sort_keys=True, ensure_ascii=False).encode('utf-8')
+        ).hexdigest()
+        check(sd == recomputed,
+              'meta.source_digest == sha256(signals canonical JSON)（现算锚定，非墙钟）')
+
+    # ── ④ counts 与 signals 内容现算对账 ─────────────────────
+    counts = meta.get('counts') or {}
+    kw_hit = kw_empty = kw_err = 0
+    for k, v in signals.items():
+        if not k.startswith('search:'):
+            continue
+        if 'error' in v:
+            kw_err += 1
+        elif (v.get('total') or 0) > 0:
+            kw_hit += 1
+        else:
+            kw_empty += 1
+    check(counts.get('keywords_hit') == kw_hit,
+          'counts.keywords_hit 与 signals 现算一致（产物 %s / 现算 %d）'
+          % (counts.get('keywords_hit'), kw_hit))
+    check(counts.get('keywords_empty') == kw_empty,
+          'counts.keywords_empty 与 signals 现算一致（产物 %s / 现算 %d）'
+          % (counts.get('keywords_empty'), kw_empty))
+    check(counts.get('keywords_error') == kw_err,
+          'counts.keywords_error 与 signals 现算一致（产物 %s / 现算 %d）'
+          % (counts.get('keywords_error'), kw_err))
+    check(counts.get('total_signal_blocks') == len(signals),
+          'counts.total_signal_blocks == len(signals)（产物 %s / 实际 %d）'
+          % (counts.get('total_signal_blocks'), len(signals)))
+
+    # ── ⑤ 每个 signal block 要么是有效数据、要么诚实标注错误 ──
+    n_ok = n_err = n_bad = 0
+    for name, block in signals.items():
+        if 'error' in block:
+            n_err += 1
+            check('http_status' in block or 'request_id' in block,
+                  '%s 报错块带 http_status 或 request_id（可排障）' % name)
+            continue
+        if name.startswith('search:'):
+            for fld in ('total', 'returned', 'top', 'honest_empty'):
+                check(fld in block, '%s 含 %s（关键词块完整）' % (name, fld))
+            check(isinstance(block.get('top'), list),
+                  '%s.top 是列表（不是 dict/null）' % name)
+            check(block.get('honest_empty') in (True, False),
+                  '%s.honest_empty 显式布尔（不能留空假装命中）' % name)
+            n_ok += 1
+        elif name.startswith('domain:'):
+            for fld in ('gaps', 'gaps_total', 'trends', 'trends_total'):
+                check(fld in block, '%s 含 %s（域块完整）' % (name, fld))
+            check(block.get('gaps_total') == len(block.get('gaps', [])),
+                  '%s.gaps_total 与 gaps 长度一致' % name)
+            check(block.get('trends_total') == len(block.get('trends', [])),
+                  '%s.trends_total 与 trends 长度一致' % name)
+            n_ok += 1
+        else:
+            n_bad += 1
+    check(n_bad == 0, '所有 signal block 归入 search:* 或 domain:*（未识别 %d 个）' % n_bad)
+    check(n_ok + n_err >= 1,
+          'signal 块总数 ≥1（产物 %d ok + %d err）' % (n_ok, n_err))
+
+    # ── ⑥ 密钥泄露检查（硬红线） ─────────────────────────────
+    check('sk-swlm-rbprts-' not in raw.replace(indep.get('key_scope', 'sk-swlm-rbprts-*'), ''),
+          '外部 feed 里未泄露真实 SwarmLabs key（只允许 key_scope 通配前缀）')
+
+    # ── ⑦ meta.access 领域覆盖就位 ───────────────────────────
+    access = meta.get('access') or {}
+    hl = access.get('honest_limits') or {}
+    # 通用数值键保留（继承全站）
+    check('mechanical_interface_declared_pct' in hl,
+          'access.honest_limits 保留机械接口声明率（全站口径）')
+    check('cross_vendor_comparable_grade_a' in hl,
+          'access.honest_limits 保留 A 级条目数（全站口径）')
+    # 领域专属键
+    check('cross_project_independence' in hl,
+          'access.honest_limits.cross_project_independence 存在（跨项目独立声明）')
+    check('domain_scope' in hl,
+          'access.honest_limits.domain_scope 存在（说明全库口径不适用本域）')
+    check(access.get('example_call', '') != '' or 'example_call' in (access.get('how_to_get_a_key') or {}),
+          'access.how_to_get_a_key.example_call 存在（AI 助手可转述给用户的调用样例）')
+    check('swarmlabs.tools' in access.get('how_to_get_a_key', {}).get('example_call', '')
+          or 'roboparts.cc/api/external_signals' in access.get('how_to_get_a_key', {}).get('example_call', ''),
+          'example_call 指向本端点（不是别的路径）')
+
+    # ── ⑧ 阴阳自证：篡改后必须报红 ───────────────────────────
+    def _mutate_and_check(mutator, label):
+        """对副本应用 mutator，用**同一套判定逻辑**再走一遍，应至少 1 项判 False。"""
+        try:
+            d2 = _l196_json.loads(_l196_json.dumps(doc))
+            mutator(d2)
+            meta2 = d2.get('meta') or {}
+            sig2 = d2.get('signals') or {}
+            indep2 = meta2.get('independence') or {}
+            sd2 = meta2.get('source_digest') or ''
+
+            # 关键判据
+            recomputed2 = _l196_hashlib.sha256(
+                _l196_json.dumps(sig2, sort_keys=True, ensure_ascii=False).encode('utf-8')
+            ).hexdigest()
+            counts2 = meta2.get('counts') or {}
+            kw_hit2 = sum(1 for k, v in sig2.items()
+                          if k.startswith('search:') and 'error' not in v and (v.get('total') or 0) > 0)
+
+            fails = []
+            if not _l196_re.match(r'^[0-9a-f]{64}$', sd2):
+                fails.append('digest 格式')
+            elif sd2 and sd2 != recomputed2:
+                fails.append('digest 与内容不一致')
+            if 'project' not in indep2 or indep2.get('project') != 'roboparts':
+                fails.append('independence.project')
+            if counts2.get('keywords_hit') != kw_hit2:
+                fails.append('counts.keywords_hit')
+
+            # 密钥泄露检查（若 mutator 塞了明文 key）
+            raw2 = _l196_json.dumps(d2, ensure_ascii=False)
+            prefix = indep2.get('key_scope', 'sk-swlm-rbprts-*')
+            if 'sk-swlm-rbprts-' in raw2.replace(prefix, ''):
+                fails.append('key 泄露')
+
+            if fails:
+                check(True, '证非空转 [%s]: 篡改后被正确捕获（%s）' % (label, ', '.join(fails)))
+            else:
+                check(False, '证非空转 [%s]: 篡改未被捕获（假绿）' % label)
+        except Exception as _e:  # noqa: BLE001
+            check(True, '证非空转 [%s]: 篡改后抛异常（也算捕获）' % label)
+
+    # 8.1 篡改 source_digest（伪造固定 hash）
+    _mutate_and_check(
+        lambda d: d['meta'].__setitem__('source_digest', 'f' * 64),
+        '伪造 source_digest')
+
+    # 8.2 篡改 independence.project
+    _mutate_and_check(
+        lambda d: d['meta']['independence'].__setitem__('project', 'swarmlabs'),
+        'project 冒充')
+
+    # 8.3 删掉一个 signal block 但 counts 不改（漂移）
+    _mutate_and_check(
+        lambda d: d['signals'].pop('search:neural', None),
+        'signal 块被删但 counts 未同步')
+
+    # 8.4 塞明文 key
+    _mutate_and_check(
+        lambda d: d['meta'].__setitem__('leaked_key', 'sk-swlm-rbprts-DEADBEEF00000000'),
+        '明文 key 泄露')
+
+    # 8.5 篡改 counts.keywords_hit（伪造更高数字）
+    _mutate_and_check(
+        lambda d: d['meta']['counts'].__setitem__('keywords_hit', 99),
+        'counts.keywords_hit 虚高')
+
+    print('   · L1.96 通过（跨项目独立外部 feed 闸门）')
+
+
 def _run_layer(fn):
     """执行一层闸门。**闸门自身抛异常不得截断整个套件。**
 
@@ -10823,6 +11034,7 @@ def main():
     _run_layer(layer1_93)
     _run_layer(layer1_94)
     _run_layer(layer1_95)
+    _run_layer(layer1_96)
     _run_layer(layer2)
     _run_layer(lambda: layer3(url))
     _run_layer(layer4)

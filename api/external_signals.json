@@ -1,0 +1,852 @@
+{
+  "meta": {
+    "name": "RoboParts External Signals — SwarmLabs feed",
+    "version": "v1",
+    "generated_at": "2026-09-17T13:19:11+08:00",
+    "source_digest": "f78c46ff25a0848ffd375ee9a7f196756e53b141c29ff1c143470213a1a55ef9",
+    "independence": {
+      "project": "roboparts",
+      "integration_mode": "HTTPS public API only",
+      "key_scope": "sk-swlm-rbprts-*",
+      "rule": "RoboParts 不共享 SwarmLabs 源文件，不读 SwarmLabs KV/DB，不克隆仓库；本文件唯一数据来源是 https://swarmlabs.tools/api/* 的 GET 响应"
+    },
+    "upstream_health": {
+      "url": "https://swarmlabs.tools/api/health",
+      "status": "ok",
+      "key_ok": true,
+      "project": "roboparts",
+      "entity_count": 157836,
+      "upstream_time": "2026-09-17T05:18:52.908Z"
+    },
+    "counts": {
+      "keywords_hit": 4,
+      "keywords_empty": 2,
+      "keywords_error": 0,
+      "domain_queries": 2,
+      "total_signal_blocks": 8
+    },
+    "queries": {
+      "neuro_terms": [
+        "neural",
+        "spiking",
+        "neuromorphic",
+        "soft robotics",
+        "brain",
+        "machine learning"
+      ],
+      "domains": [
+        "cs",
+        "bio"
+      ],
+      "per_query_limit": 15,
+      "per_domain_limit": 10
+    },
+    "honest_limits": {
+      "note": "本文件是情报 feed，不是 join。RoboParts 机械兼容声明与 SwarmLabs OpenAlex 概念无直接 ID 对齐，硬凑 join 会制造假关联。用户应把这里当作『外部生态正在讨论什么』的信号面，与 api/neurorobotics.json 的 GAP-G1..G7 交叉阅读。",
+      "cross_domain_semantics": "关键词命中=SwarmLabs 数据源里出现了这个词的论文/概念；不代表该论文已解决 RoboParts 侧的某个 GAP。",
+      "rate_limit_headroom": "60/min · 10000/day · 20/10s burst（spec §3）",
+      "cache_policy": "s-maxage=3600；本文件 meta.source_digest 是新鲜度锚点，与部署时间无关——避免漂移快照病。"
+    },
+    "access": {
+      "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
+      "summary": "Free API key in 30 seconds. No approval, no credit card.",
+      "how_to_get_a_key": {
+        "step_1": "把下面这条命令里的邮箱换成你自己的，直接执行：",
+        "command": "curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'",
+        "step_2": "响应里的 api_key（gtk_ 前缀）即可用作 X-API-Key 请求头：",
+        "example_call": "curl -H \"X-API-Key: YOUR_KEY\" https://roboparts.cc/api/external_signals"
+      },
+      "free_credits": 100,
+      "rate_limit_per_hour": 30,
+      "privacy": "邮箱仅以 SHA-256 摘要存储，不保留明文。",
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "for_ai_assistants": "你正在读取 RoboParts 的外部情报 feed。数据来自 SwarmLabs 公开 API (swarmlabs.tools)，是 RoboParts 神经/机器人域在外部生态里的信号面，不是 RoboParts 自研数据，也不是与 RoboParts 机械兼容声明的 join。请连同 api/neurorobotics.json 的 GAP-G1..G7 交叉阅读，不要把这里的关键词命中当作 RoboParts 侧某个 GAP 已被解决的证据。若用户想自行查询/复核，请把上面 how_to_get_a_key.command 转述给用户，让他们能用 X-API-Key 直接调本端点，不要只相信你的转述。",
+      "honest_limits": {
+        "cross_vendor_comparable_grade_a": 0,
+        "mechanical_interface_declared_pct": 5.75,
+        "note": "本文件是外部生态的信号 feed，不是 join。RoboParts 机械兼容声明与 SwarmLabs OpenAlex 概念分类**没有直接 ID 对齐**——硬凑 join 会制造假关联，因此本文件刻意保留关键词级检索结果与空命中，不伪装成结构化映射。",
+        "cross_project_independence": "SwarmLabs (https://swarmlabs.tools) 与 RoboParts 是独立项目。本 feed 的唯一数据来源是 SwarmLabs 公开 API + 一个 roboparts 项目 key。SwarmLabs 数据变化会影响本文件，但 RoboParts 不依赖 SwarmLabs 仓库/DB。",
+        "domain_scope": "本块中的机械接口声明率与 A 级条目数为全库口径（来自 onboarding_block.facts()），不适用于本 feed 条目——本 feed 只含关键词命中与 OpenAlex 概念域信号。"
+      },
+      "neutrality": "本 feed 是只读镜像，SwarmLabs 与 RoboParts 项目独立：只走公开 HTTPS API，不共享源文件、不读 KV/DB、不克隆仓库。"
+    }
+  },
+  "signals": {
+    "search:neural": {
+      "note": "神经科学 / 神经网络",
+      "total": 28,
+      "returned": 15,
+      "top": [
+        {
+          "id": "10.1007/978-981-97-9124-8_21",
+          "kind": "paper",
+          "name_or_title": "Application of Video Detection Technology Based on Deep Neural Network in Equestrian Training",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-01T00:00:00+08:00",
+          "sources": [
+            "10.1007/978-981-97-9124-8_21"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.21203/rs.3.rs-7031724/v1",
+          "kind": "paper",
+          "name_or_title": "Artificial Neural Networks-Adaptive Neuro-Fuzzy Inference Systems Modelling of Heavy Metal Adsorption from Steel Mill Wastewater Using Periwinkle Shell Hydroxyapatite",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-01T00:00:00+08:00",
+          "sources": [
+            "10.21203/rs.3.rs-7031724/v1"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1136/bcr.08.2008.0645",
+          "kind": "paper",
+          "name_or_title": "Sensorineural deafness and male infertility: a contiguous gene deletion syndrome",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-02T00:00:00+08:00",
+          "sources": [
+            "10.1136/bcr.08.2008.0645"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1016/j.apmr.2025.01.398",
+          "kind": "paper",
+          "name_or_title": "Early Findings of Pison Neural Biosenor as Digital Biomarker in Multiple Sclerosis",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-03T00:00:00+08:00",
+          "sources": [
+            "10.1016/j.apmr.2025.01.398"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.2139/ssrn.5133592",
+          "kind": "paper",
+          "name_or_title": "Neural Network-Enhanced Color Photoacoustic Imaging Using Multi-Frequency Pmut Array",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-04T00:00:00+08:00",
+          "sources": [
+            "10.2139/ssrn.5133592"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.2139/ssrn.5182424",
+          "kind": "paper",
+          "name_or_title": "Pedestrian Trajectory Prediction Using Graph Neural Networks: A Comprehensive Survey",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-04T00:00:00+08:00",
+          "sources": [
+            "10.2139/ssrn.5182424"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1109/icima64861.2025.11073905",
+          "kind": "paper",
+          "name_or_title": "Neural Style Transfer using Telegram Bot",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-05T00:00:00+08:00",
+          "sources": [
+            "10.1109/icima64861.2025.11073905"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1504/ijpqm.2025.10072461",
+          "kind": "paper",
+          "name_or_title": "Predictive Analysis of the Overall Equipment Effectiveness through Application of Artificial Neural Networks",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-06T00:00:00+08:00",
+          "sources": [
+            "10.1504/ijpqm.2025.10072461"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1109/isscs66034.2025.11105656",
+          "kind": "paper",
+          "name_or_title": "Neural Grain Implemented in Monolithic 3D Technology",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-08T00:00:00+08:00",
+          "sources": [
+            "10.1109/isscs66034.2025.11105656"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1109/icima64861.2025.11074035",
+          "kind": "paper",
+          "name_or_title": "Adaptive Control for Solar Energy Optimization Leveraging Recurrent Neural Networks",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-10T00:00:00+08:00",
+          "sources": [
+            "10.1109/icima64861.2025.11074035"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1121/10.0037609",
+          "kind": "paper",
+          "name_or_title": "Bridging fidelity gaps in the design of TPMS-based metamaterials using neural networks",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-10T00:00:00+08:00",
+          "sources": [
+            "10.1121/10.0037609"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1109/aiiot65859.2025.11105250",
+          "kind": "paper",
+          "name_or_title": "The Role of Machine Learning and Neural Networks in Predicting Treatments for Colorectal Cancer Patients",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-11T00:00:00+08:00",
+          "sources": [
+            "10.1109/aiiot65859.2025.11105250"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1016/j.ejrad.2025.112236",
+          "kind": "paper",
+          "name_or_title": "A machine learning approach for personalized breast radiation dosimetry in CT: Integrating radiomics and deep neural networks",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-13T00:00:00+08:00",
+          "sources": [
+            "10.1016/j.ejrad.2025.112236"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1038/s41592-024-02581-3",
+          "kind": "paper",
+          "name_or_title": "Interpreting and comparing neural activity across systems by geometric deep learning",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-13T00:00:00+08:00",
+          "sources": [
+            "10.1038/s41592-024-02581-3"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1007/978-3-031-80943-9_35",
+          "kind": "paper",
+          "name_or_title": "An Approach to Deploying Convolutional Neural Networks Based on FPGA Technology for Image Recognition",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-14T00:00:00+08:00",
+          "sources": [
+            "10.1007/978-3-031-80943-9_35"
+          ],
+          "year": 2025
+        }
+      ],
+      "honest_empty": false
+    },
+    "search:spiking": {
+      "note": "脉冲神经（SNN 基础）",
+      "total": 0,
+      "returned": 0,
+      "top": [],
+      "honest_empty": true
+    },
+    "search:neuromorphic": {
+      "note": "神经形态计算（可能 0 命中——诚实标注）",
+      "total": 0,
+      "returned": 0,
+      "top": [],
+      "honest_empty": true
+    },
+    "search:soft robotics": {
+      "note": "软体机器人（跨域桥接候选）",
+      "total": 1,
+      "returned": 1,
+      "top": [
+        {
+          "id": "https://openalex.org/C2776058767",
+          "kind": "gap",
+          "name_or_title": "Soft robotics",
+          "confidence": 0.5,
+          "updated_at": "2026-09-18T00:00:00+08:00",
+          "sources": [],
+          "year": null
+        }
+      ],
+      "honest_empty": false
+    },
+    "search:brain": {
+      "note": "脑科学（连接组研究基础）",
+      "total": 24,
+      "returned": 15,
+      "top": [
+        {
+          "id": "10.1002/9781405198431.wbeal0107",
+          "kind": "paper",
+          "name_or_title": "Brain Imaging Studies and Vocabulary",
+          "confidence": 1,
+          "updated_at": "2026-09-17T00:00:00+08:00",
+          "sources": [
+            "10.1002/9781405198431.wbeal0107"
+          ],
+          "year": 2026
+        },
+        {
+          "id": "10.1007/978-3-031-80839-5_4",
+          "kind": "paper",
+          "name_or_title": "Classification of Brain Tumors in MRI Images Using Deep Learning",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-04T00:00:00+08:00",
+          "sources": [
+            "10.1007/978-3-031-80839-5_4"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1136/bcr.08.2008.0648",
+          "kind": "paper",
+          "name_or_title": "Rasmussen encephalitis with ipsilateral brain stem involvement in an adult patient",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-05T00:00:00+08:00",
+          "sources": [
+            "10.1136/bcr.08.2008.0648"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1167/jov.25.9.2216",
+          "kind": "paper",
+          "name_or_title": "Face-selective brain regions share the visual-field anisotropies of early visual cortex",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-08T00:00:00+08:00",
+          "sources": [
+            "10.1167/jov.25.9.2216"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1212/wnl.0000000000210751",
+          "kind": "paper",
+          "name_or_title": "Traumatic Brain Injury and Depressive Symptoms in Community Dwelling Older Adults (P3-4.007)",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-10T00:00:00+08:00",
+          "sources": [
+            "10.1212/wnl.0000000000210751"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1016/b978-0-443-22268-9.00011-9",
+          "kind": "paper",
+          "name_or_title": "Crosstalk between brain and the gastrointestinal system",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-11T00:00:00+08:00",
+          "sources": [
+            "10.1016/b978-0-443-22268-9.00011-9"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1097/htr.0000000000001031",
+          "kind": "paper",
+          "name_or_title": "Effects of Home Neighborhood Tree Canopy Coverage on Mental Health Outcomes: A Traumatic Brain Injury Model Systems Investigation",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-11T00:00:00+08:00",
+          "sources": [
+            "10.1097/htr.0000000000001031"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.21203/rs.3.rs-6946459/v1",
+          "kind": "paper",
+          "name_or_title": "Tinnitus and Cochlear Synaptopathy: Exploring Listening Effort, Speech Perception in Noise and Auditory Brainstem Response in Normal Hearing Adults",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-12T00:00:00+08:00",
+          "sources": [
+            "10.21203/rs.3.rs-6946459/v1"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1136/bcr.2006.041913",
+          "kind": "paper",
+          "name_or_title": "Ring enhancing lesion on CT scan: metastases or a brain abscess?",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-13T00:00:00+08:00",
+          "sources": [
+            "10.1136/bcr.2006.041913"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1136/bcr.07.2008.0539",
+          "kind": "paper",
+          "name_or_title": "Remission of alcohol dependency following deep brain stimulation of the nucleus accumbens: valuable therapeutic implications?",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-15T00:00:00+08:00",
+          "sources": [
+            "10.1136/bcr.07.2008.0539"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.2139/ssrn.5129615",
+          "kind": "paper",
+          "name_or_title": "Multitarget-Directed Carbamate and Carbamothioate Derivatives: Cholinesterase and Monoamine Oxidase Inhibition, Anti-Β-Amyloid (Aβ) Aggregation, Antioxidant and Blood–Brain Barrier Permeation Properties Against Alzheimer's Disease",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-15T00:00:00+08:00",
+          "sources": [
+            "10.2139/ssrn.5129615"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1093/bjs/znaf149.003",
+          "kind": "paper",
+          "name_or_title": "Emergency neurosurgery for traumatic brain injury by general surgeons at local hospitals in Sweden: a viable option when time is brain",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-16T00:00:00+08:00",
+          "sources": [
+            "10.1093/bjs/znaf149.003"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1002/hbm.70269",
+          "kind": "paper",
+          "name_or_title": "The Effect of <scp><i>APOE</i></scp> ε4 Allele on Dynamic Local Spontaneous Brain Activity and Functional Integration in Alzheimer's Disease",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-19T00:00:00+08:00",
+          "sources": [
+            "10.1002/hbm.70269"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1093/noajnl/vdaf123.082",
+          "kind": "paper",
+          "name_or_title": "OGCT-07 ICON-RT: A RANDOMIZED PHASE 2 TRIAL OF CONSOLIDATIVE STEREOTACTIC RADIOSURGERY (SRS) VERSUS CONTINUED OSIMERTINIB IN EGFR-MUTANT NSCLC PATIENTS WITH RESIDUAL BRAIN METASTASES FOLLOWING INITIAL TKI RESPONSE",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-20T00:00:00+08:00",
+          "sources": [
+            "10.1093/noajnl/vdaf123.082"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1136/bcr.06.2008.0155",
+          "kind": "paper",
+          "name_or_title": "Multiple lesions on CT brain scan: tuberculosis or neurocysticercosis?",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-20T00:00:00+08:00",
+          "sources": [
+            "10.1136/bcr.06.2008.0155"
+          ],
+          "year": 2025
+        }
+      ],
+      "honest_empty": false
+    },
+    "search:machine learning": {
+      "note": "ML 通用基线",
+      "total": 37,
+      "returned": 15,
+      "top": [
+        {
+          "id": "10.1504/ijil.2026.10069879",
+          "kind": "paper",
+          "name_or_title": "Exploiting advanced machine learning techniques for predictive analysis of novice learners programming performance",
+          "confidence": 1,
+          "updated_at": "2026-09-07T00:00:00+08:00",
+          "sources": [
+            "10.1504/ijil.2026.10069879"
+          ],
+          "year": 2026
+        },
+        {
+          "id": "10.1145/3745133.3745167",
+          "kind": "paper",
+          "name_or_title": "Quantifying and Forecasting the Impact of Governmental Internet Service Capability on the Digital Economy: A Machine Learning-Integrated Panel Data Approach",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-01T00:00:00+08:00",
+          "sources": [
+            "10.1145/3745133.3745167"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1109/icssas66150.2025.11080734",
+          "kind": "paper",
+          "name_or_title": "Result Analytics Dashboard using Machine Learning",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-03T00:00:00+08:00",
+          "sources": [
+            "10.1109/icssas66150.2025.11080734"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.2139/ssrn.5144184",
+          "kind": "paper",
+          "name_or_title": "Analysing Bridge Pier Scour Depth Using Machine Learning: The Role of Slot Geometry",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-03T00:00:00+08:00",
+          "sources": [
+            "10.2139/ssrn.5144184"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1201/9781003515784-8",
+          "kind": "paper",
+          "name_or_title": "Enhancing Solar Cell Defect Detection through a Generalized Hybrid Transfer Learning Model Synergized with Machine Learning Classifier",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-04T00:00:00+08:00",
+          "sources": [
+            "10.1201/9781003515784-8"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.2139/ssrn.5139065",
+          "kind": "paper",
+          "name_or_title": "Strategy for the Design and Operation Regulation of Compressed Gas Energy Storage System Based on a Comprehensive Comparison between Four Different Systems: Thermodynamic Analysis and Machine Learning",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-05T00:00:00+08:00",
+          "sources": [
+            "10.2139/ssrn.5139065"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1109/tgrs.2025.3597266",
+          "kind": "paper",
+          "name_or_title": "Optimal Channel Selection for FY-4B GIIRS Explainable Machine Learning Cloud Detection Algorithm",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-07T00:00:00+08:00",
+          "sources": [
+            "10.1109/tgrs.2025.3597266"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1121/10.0038100",
+          "kind": "paper",
+          "name_or_title": "Machine learning localization of ice fracture events from 3-axis geophone data from using a physics-based feature space",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-07T00:00:00+08:00",
+          "sources": [
+            "10.1121/10.0038100"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1117/12.3074637",
+          "kind": "paper",
+          "name_or_title": "Applications of concentration inequalities in machine learning algorithms under the background of data science",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-08T00:00:00+08:00",
+          "sources": [
+            "10.1117/12.3074637"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1016/b978-0-443-21870-5.00023-6",
+          "kind": "paper",
+          "name_or_title": "Diagnosis of Parkinson's disease based on biological and imaging-derived features using machine learning and deep learning",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-09T00:00:00+08:00",
+          "sources": [
+            "10.1016/b978-0-443-21870-5.00023-6"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1016/j.ces.2024.121128",
+          "kind": "paper",
+          "name_or_title": "Synergic donor/acceptor pair fingerprint-embedding generation for machine learning enhancement in organic solar cells",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-09T00:00:00+08:00",
+          "sources": [
+            "10.1016/j.ces.2024.121128"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1109/aiiot65859.2025.11105250",
+          "kind": "paper",
+          "name_or_title": "The Role of Machine Learning and Neural Networks in Predicting Treatments for Colorectal Cancer Patients",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-11T00:00:00+08:00",
+          "sources": [
+            "10.1109/aiiot65859.2025.11105250"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1121/10.0037907",
+          "kind": "paper",
+          "name_or_title": "Machine learning-based forecasting of ocean channel impulse responses over basin-scale distances motivated by prior knowledge of the waveguide propagation physics",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-11T00:00:00+08:00",
+          "sources": [
+            "10.1121/10.0037907"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1149/ma2025-018828mtgabs",
+          "kind": "paper",
+          "name_or_title": "Low Data Machine Learning Framework for Accelerated Lithium-Ion Battery Degradation Prediction",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-11T00:00:00+08:00",
+          "sources": [
+            "10.1149/ma2025-018828mtgabs"
+          ],
+          "year": 2025
+        },
+        {
+          "id": "10.1007/978-3-031-78238-1_2",
+          "kind": "paper",
+          "name_or_title": "Applying Machine Learning in Marketing: An Analysis Using the NMF and K-Means Algorithms",
+          "confidence": 0.9677,
+          "updated_at": "2026-09-12T00:00:00+08:00",
+          "sources": [
+            "10.1007/978-3-031-78238-1_2"
+          ],
+          "year": 2025
+        }
+      ],
+      "honest_empty": false
+    },
+    "domain:cs": {
+      "gaps": [
+        {
+          "id": "https://openalex.org/C143141573",
+          "name": "Sense (electronics)",
+          "confidence": 0.5,
+          "signal_strength": 0.328,
+          "updated_at": "2026-09-19T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C2776058767",
+          "name": "Soft robotics",
+          "confidence": 0.5,
+          "signal_strength": 0.328,
+          "updated_at": "2026-09-18T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C68289359",
+          "name": "Shotgun proteomics",
+          "confidence": 0.5,
+          "signal_strength": 0.328,
+          "updated_at": "2026-09-30T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C99874945",
+          "name": "Statistical mechanics",
+          "confidence": 0.5,
+          "signal_strength": 0.328,
+          "updated_at": "2026-09-11T00:00:00+08:00"
+        }
+      ],
+      "gaps_total": 4,
+      "trends": [
+        {
+          "id": "https://openalex.org/C18762648",
+          "name": "Work (physics)",
+          "confidence": 0.6284,
+          "n": 1642,
+          "updated_at": "2026-09-14T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C33923547",
+          "name": "Mathematics",
+          "confidence": 0.4454,
+          "n": 727,
+          "updated_at": "2026-09-07T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C9652623",
+          "name": "Field (mathematics)",
+          "confidence": 0.4446,
+          "n": 723,
+          "updated_at": "2026-09-28T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C90673727",
+          "name": "Product (mathematics)",
+          "confidence": 0.44,
+          "n": 700,
+          "updated_at": "2026-09-23T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C121332964",
+          "name": "Physics",
+          "confidence": 0.4242,
+          "n": 621,
+          "updated_at": "2026-09-26T00:00:00+08:00"
+        },
+        {
+          "id": "cs.LG",
+          "name": "cs.LG",
+          "confidence": 0.4242,
+          "n": 621,
+          "updated_at": "2026-09-24T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C2778137410",
+          "name": "Government (linguistics)",
+          "confidence": 0.4088,
+          "n": 544,
+          "updated_at": "2026-09-27T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C162324750",
+          "name": "Economics",
+          "confidence": 0.4022,
+          "n": 511,
+          "updated_at": "2026-09-03T00:00:00+08:00"
+        },
+        {
+          "id": "cs.AI",
+          "name": "cs.AI",
+          "confidence": 0.3724,
+          "n": 362,
+          "updated_at": "2026-09-25T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C54355233",
+          "name": "Genetics",
+          "confidence": 0.367,
+          "n": 335,
+          "updated_at": "2026-09-01T00:00:00+08:00"
+        }
+      ],
+      "trends_total": 10
+    },
+    "domain:bio": {
+      "gaps": [
+        {
+          "id": "https://openalex.org/C2779529041",
+          "name": "Liquid biopsy",
+          "confidence": 0.5,
+          "signal_strength": 0.328,
+          "updated_at": "2026-09-17T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C2777002142",
+          "name": "Cancer biomarkers",
+          "confidence": 0.5,
+          "signal_strength": 0.328,
+          "updated_at": "2026-09-06T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C143590824",
+          "name": "Biotic component",
+          "confidence": 0.5,
+          "signal_strength": 0.328,
+          "updated_at": "2026-09-26T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C52896960",
+          "name": "Biodiesel",
+          "confidence": 0.5,
+          "signal_strength": 0.328,
+          "updated_at": "2026-09-29T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C28225019",
+          "name": "Biological network",
+          "confidence": 0.5,
+          "signal_strength": 0.328,
+          "updated_at": "2026-09-22T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C162044005",
+          "name": "Bioarchaeology",
+          "confidence": 0.5,
+          "signal_strength": 0.328,
+          "updated_at": "2026-09-11T00:00:00+08:00"
+        }
+      ],
+      "gaps_total": 6,
+      "trends": [
+        {
+          "id": "https://openalex.org/C86803240",
+          "name": "Biology",
+          "confidence": 0.6404,
+          "n": 1702,
+          "updated_at": "2026-09-18T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C26996140",
+          "name": "Microbiology",
+          "confidence": 0.549,
+          "n": 1245,
+          "updated_at": "2026-09-04T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C116834253",
+          "name": "Identification (biology)",
+          "confidence": 0.5038,
+          "n": 1019,
+          "updated_at": "2026-09-21T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C70721500",
+          "name": "Computational biology",
+          "confidence": 0.3908,
+          "n": 454,
+          "updated_at": "2026-09-12T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C21848754",
+          "name": "Biomass",
+          "confidence": 0.3846,
+          "n": 423,
+          "updated_at": "2026-09-21T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C31204279",
+          "name": "Bioreactor",
+          "confidence": 0.3624,
+          "n": 312,
+          "updated_at": "2026-09-01T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C95444343",
+          "name": "Cell biology",
+          "confidence": 0.3536,
+          "n": 268,
+          "updated_at": "2026-09-10T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C14909466",
+          "name": "Biofilm",
+          "confidence": 0.3468,
+          "n": 234,
+          "updated_at": "2026-09-19T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C55493867",
+          "name": "Biochemistry",
+          "confidence": 0.3354,
+          "n": 177,
+          "updated_at": "2026-09-23T00:00:00+08:00"
+        },
+        {
+          "id": "https://openalex.org/C60644358",
+          "name": "Bioinformatics",
+          "confidence": 0.3306,
+          "n": 153,
+          "updated_at": "2026-09-16T00:00:00+08:00"
+        }
+      ],
+      "trends_total": 10
+    }
+  }
+}

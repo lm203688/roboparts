@@ -381,6 +381,23 @@ snapshotWorkingTree(ROOT);
   else console.warn('   ⚠️ 标准自校验重建失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
 }
 
+// 0b8) 外部情报 feed 刷新（api/external_signals.json，来源：SwarmLabs 公开 API）
+// 2026-09-17：跨项目独立性首个消费者。RoboParts 通过 SWARMLABS_API_KEY（.env.local）
+// 只走 HTTPS 拉取 SwarmLabs 的关键词信号 + OpenAlex 域数据，**不共享源文件、不克隆仓库、
+// 不读 SwarmLabs 的 KV/DB**。见 docs/swarmlabs-api-spec-v1-20260917.md。
+//
+// 独立性保障：
+//   - .env.local 已在 .gitignore 白名单外，key 不入库
+//   - 脚本只用 stdlib（urllib），无第三方依赖
+//   - meta.source_digest = sha256(原始响应拼接)，与部署时间无关——防漂移快照病
+//   - 上游失败不掩盖：signals 里对应块写 error+http_status+request_id，L1.96 会看到
+{
+  const py = process.platform === 'win32' ? 'python' : 'python3';
+  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'build_external_signals.py')], { cwd: ROOT, encoding: 'utf8' });
+  if (ex.status === 0) console.log('   ✅ 外部情报 feed 已刷新（SwarmLabs → RoboParts，跨项目独立，HTTPS-only）');
+  else console.warn('   ⚠️ 外部情报 feed 刷新失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
+}
+
 // 0c) 机读接入声明兜底注入（meta.access）
 // 20260808-04：inject_api_access.py 的 docstring 自称「由 deploy 前置与各 build 脚本调用，
 // 不依赖任何人记得手工执行」，但实测 deploy.mjs 里对它的引用是 **0 处** —— 文档写了 ≠ 挂上了，

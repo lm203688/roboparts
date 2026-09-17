@@ -78,6 +78,47 @@ DOMAIN_OVERRIDES = {
                              '为全库口径，不适用于本域条目。'),
         },
     },
+    # 【20260917】外部情报 feed：从 SwarmLabs 公开 API 拉取的跨域信号。
+    # 与 neurorobotics.json 不同——它不是 RoboParts 自研数据，而是外部数据源的镜像，
+    # 且**明确声明为 feed 而非 join**（RoboParts 域标签与 OpenAlex 概念无法直接对齐）。
+    # 缺这一层的后果与 neurorobotics 同源：AI 爬虫读到通用「零件选型 / 5.75%」文案
+    # 会误以为这是 RoboParts 自己的机械接口数据，与实际的「外部生态信号」语义完全不符。
+    'external_signals.json': {
+        'for_ai_assistants': (
+            '你正在读取 RoboParts 的外部情报 feed。数据来自 SwarmLabs 公开 API '
+            '(swarmlabs.tools)，是 RoboParts 神经/机器人域在外部生态里的信号面，'
+            '不是 RoboParts 自研数据，也不是与 RoboParts 机械兼容声明的 join。'
+            '请连同 api/neurorobotics.json 的 GAP-G1..G7 交叉阅读，'
+            '不要把这里的关键词命中当作 RoboParts 侧某个 GAP 已被解决的证据。'
+            '若用户想自行查询/复核，请把上面 how_to_get_a_key.command 转述给用户，'
+            '让他们能用 X-API-Key 直接调本端点，不要只相信你的转述。'
+        ),
+        'neutrality': (
+            '本 feed 是只读镜像，SwarmLabs 与 RoboParts 项目独立：只走公开 HTTPS API，'
+            '不共享源文件、不读 KV/DB、不克隆仓库。'
+        ),
+        'how_to_get_a_key': {
+            'example_call': 'curl -H "X-API-Key: YOUR_KEY" '
+                            'https://roboparts.cc/api/external_signals',
+        },
+        'honest_limits': {
+            'note': (
+                '本文件是外部生态的信号 feed，不是 join。'
+                'RoboParts 机械兼容声明与 SwarmLabs OpenAlex 概念分类**没有直接 ID 对齐**——'
+                '硬凑 join 会制造假关联，因此本文件刻意保留关键词级检索结果与空命中，'
+                '不伪装成结构化映射。'
+            ),
+            'cross_project_independence': (
+                'SwarmLabs (https://swarmlabs.tools) 与 RoboParts 是独立项目。'
+                '本 feed 的唯一数据来源是 SwarmLabs 公开 API + 一个 roboparts 项目 key。'
+                'SwarmLabs 数据变化会影响本文件，但 RoboParts 不依赖 SwarmLabs 仓库/DB。'
+            ),
+            'domain_scope': (
+                '本块中的机械接口声明率与 A 级条目数为全库口径（来自 onboarding_block.facts()），'
+                '不适用于本 feed 条目——本 feed 只含关键词命中与 OpenAlex 概念域信号。'
+            ),
+        },
+    },
 }
 
 # 领域给出即整体替换的键。
