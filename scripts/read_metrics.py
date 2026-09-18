@@ -206,6 +206,29 @@ def kv_get(key):
         return None
 
 
+def kv_reachable():
+    """探测命名空间是否可达（wrangler 是否登录、KV 是否在线）。
+
+    【P0-1 20260918 修复】此前 read_metrics.py 读不到任何分片时，只报
+    “合并 0/16 分片 + 无数据”，把「wrangler 未登录 / 网络被墙 / KV 绑定缺失」
+    与「站点真没流量」混为一谈——而前者在沙箱、CI、换新机器上是常态，
+    会让人在“0 信号”的误读下做出错误经营判断（见 _MARKET_POSITIONING-20260918.md）。
+
+    做法：用 `wrangler kv key list` 探一次命名空间可达性。返回码 0 即视为可达
+    （即便里面一条 metrics 都没有，可达性也已证真）；非 0 即不可达。
+    可达但 0 分片 = 真无数据；不可达 = 读数无效，必须显式告警。
+    """
+    try:
+        r = subprocess.run(
+            ['npx', 'wrangler', 'kv', 'key', 'list',
+             f'--namespace-id={NS}', '--remote'],
+            capture_output=True, text=True, timeout=90, shell=True,
+        )
+        return r.returncode == 0
+    except Exception:
+        return False
+
+
 # 第三方探针 / 目录站爬虫的自报名特征。它们的调用**不是**市场需求信号。
 # 上一轮把这些读成"真实 Agent 接入"，是"自检探针污染"这个坑的第三种形态：
 # 第一种是自己的探针，第二种是自己的乐观，第三种是别人的探针。
@@ -309,6 +332,20 @@ def main():
         datetime.now(timezone.utc).strftime('%Y-%m-%d')
     total = {}
     found = 0
+
+    # 【P0-1 20260918】先探命名空间可达性，把「读不出来」和「真没数据」分开。
+    # 不可达 ≠ 无流量：沙箱 / CI / 换机器时 wrangler 多半没登录，此时任何
+    # “合并 0/16 分片 + 无数据”都不代表站点没人来，只代表读数无效。
+    if not kv_reachable():
+        print(f'=== RoboParts 边缘遥测 · {day} ===')
+        print('⚠️ 读取失败：KV 命名空间不可达（wrangler 未登录 / 网络被墙 / '
+              'USER_CREDITS 绑定缺失）。')
+        print('   这**不是**「无流量」——读不出来时任何结论都无效，请勿据此判断市场需求。')
+        print('   先确认：本机 `npx wrangler login` 已执行、且 `USER_CREDITS` '
+              '(` + NS + `) 命名空间存在且已授权。')
+        print('   （若你在本机沙箱运行，无 wrangler 凭据属正常，非站点 bug。）')
+        return
+
     for s in range(SHARDS):
         d = kv_get(f'metrics:{day}:s{s}')
         if not d:
@@ -321,10 +358,12 @@ def main():
 
     print(f'=== RoboParts 边缘遥测 · {day} （合并 {found}/{SHARDS} 分片）===')
     print('※ 以下计数均为**下界**，不是精确值。')
-    print('  写侧 flushMcp 对 KV 做读-改-写：isolate 内已于 20260806-15 串行化修复，')
+    print('  写侧 flush 对 KV 做读-改-写：isolate 内已串行化修复（verify_flush_race.mjs 锁死），')
     print('  但两个 isolate 若随机取到同一分片并同时写，仍会互相覆盖（尚未消除）。')
     print('  故「实际发生次数 ≥ 此处读数」：可用来证明「至少有」，')
     print('  不能用来证明「只有这么多」或「没有」。')
+    print('※ 读侧已区分「KV 不可达」与「真无数据」：若上方提示「读取失败」则本次读数无效，')
+    print('  不要当「0 信号」解读（见 P0-1 修复说明）。')
     print('※ 历史口径警告：**2026-08-08 01:45 之前**，飞轮每轮巡检用裸 curl 打关键路径，')
     print('  未带 x-roboparts-selftest，其请求被记进下方「真实请求数」与「404 归因」。')
     print('  当日阳性对照已实证（哨兵路径裸打 → 进真实 404；带头打 → 只进 selftest）。')

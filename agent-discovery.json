@@ -3,7 +3,7 @@
   "site_name": "RoboParts — 仿生机器人生态平台",
   "domain": "roboparts.cc",
   "tagline": "仿生机器人模块化选型与设计生态平台。配件模块化、接口标准化、协议标准化、大模型产业化、用户数据集成化。",
-  "last_updated": "2026-08-18T13:30:26.000Z",
+  "last_updated": "2026-09-17T00:00:00.000Z",
   "total_entities": 798,
   "categories": {
     "actuators": 220,
@@ -346,8 +346,9 @@
         "title": "RoboParts Skills（Agent 技能包）",
         "url": "https://roboparts.cc/skills/manifest.json",
         "covers": [
-          "机器可读 Skill 清单（6 个）",
-          "search / compat-check / recommend / parameter-semantics / dataset-discovery / adapter-generate",
+          "机器可读 Skill 清单（13 个）",
+          "10 个 MCP 工具 Skill：search / component-detail / compat-check / compare / recommend / parameter-semantics / bom-compat / semantic-search / standard-audit / compat-review",
+          "adapter-generate（转接件生成 web_resource）+ dataset-discovery（数据集检索）+ supplier-risk（供应商风险 methodology）",
           "零安装、免鉴权接入其它 Agent 框架"
         ]
       }

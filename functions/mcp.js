@@ -136,14 +136,19 @@ function scheduleFlush(context) {
 }
 
 async function flushMcp(env) {
-  const entries = Object.entries(_buf);
-  if (!entries.length) return;
+  if (!Object.keys(_buf).length) return;
+  // 【P0-1 20260918 修复】必须先确认 KV 可用再清空缓冲区、再计写入次数。
+  // 旧实现先 `_buf = Object.create(null)` 再 `if (!kv) return`：当 USER_CREDITS
+  // 绑定缺失或不可用时，本批累加的计数被静默丢弃，低流量站点上会系统性低估
+  // （与 functions/_middleware.js 同型缺陷）。现在 kv 不可用则保留 _buf，
+  // 等下一拍重试，绝不丢数。
+  const kv = env && env.USER_CREDITS;
+  if (!kv) return;
   const day = new Date().toISOString().slice(0, 10);
   if (day !== _writeDay) { _writeDay = day; _writes = 0; }
   if (_writes >= MAX_WRITES_PER_ISOLATE_DAY) return;
+  const entries = Object.entries(_buf);
   _buf = Object.create(null);
-  const kv = env && env.USER_CREDITS;
-  if (!kv) return;
   _writes++;
   const key = `metrics:${day}:s${shardOf()}`;
   let prev = {};

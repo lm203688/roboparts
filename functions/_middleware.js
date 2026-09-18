@@ -215,16 +215,19 @@ function classify404(p) {
 }
 
 async function flush(env) {
-  const entries = Object.entries(_buf);
-  if (!entries.length) return;
+  if (!Object.keys(_buf).length) return;
+  // 【P0-1 20260918 修复】必须先确认 KV 可用再清空缓冲、再计写入次数。
+  // 旧实现先清空 _buf 再 `if (!kv) return`：USER_CREDITS 缺失时本批计数被静默丢弃，
+  // 低流量站点上系统性低估。现在 kv 不可用则保留缓冲，下一拍重试。
+  const kv = env && env.USER_CREDITS;
+  if (!kv) return;
   const day = new Date().toISOString().slice(0, 10);
   if (day !== _writeDay) { _writeDay = day; _writes = 0; }   // 跨日重置额度
   if (_writes >= MAX_WRITES_PER_ISOLATE_DAY) return;          // 额度兜底：保留缓冲，不清空
-  _buf = Object.create(null);                                 // 先清空，避免重复计数
-  const key = `metrics:${day}:s${shardId()}`;
-  const kv = env && env.USER_CREDITS;
-  if (!kv) return;
+  const entries = Object.entries(_buf);
+  _buf = Object.create(null);                                 // 清空，避免重复计数
   _writes++;
+  const key = `metrics:${day}:s${shardId()}`;
   let prev = {};
   try {
     prev = (await kv.get(key, { type: 'json' })) || {};
