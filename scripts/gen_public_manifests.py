@@ -51,6 +51,36 @@ ONBOARDING = os.path.join(BASE, "scripts", "onboarding_block.py")
 SITE = "https://roboparts.cc"
 REPO = "https://github.com/lm203688/roboparts"
 
+# 官方 MCP Registry 的 schema 限制 description ≤ 100 字符。
+# 实测：写成 157 字符 → validate/publish 报 422 Unprocessable Entity。
+# 这个限制只在**发布那一刻**才暴露，所以生成器必须自己挡住，
+# 否则会产出「看起来对、但发不出去」的文件（本仓已踩过一次）。
+REGISTRY_DESC_MAX = 100
+
+
+def registry_description(total, cats):
+    """给官方 Registry 用的简介 —— 逐级降级，直到落进 100 字符内。
+
+    刻意不用「截断」：截断会产生半句话（"…compatibility chee"）。
+    降级是从长到短的**完整句式**，且结果只由 (total, cats) 决定，仍是确定性的。
+    """
+    candidates = [
+        f"{total} humanoid/bionic robot parts across {cats} categories, "
+        f"4-dimension compatibility checking. Vendor-neutral.",
+        f"{total} humanoid/bionic robot parts, {cats} categories, "
+        f"4-dimension compatibility checking. Vendor-neutral.",
+        f"{total} humanoid/bionic robot parts, {cats} categories, "
+        f"4-dim compatibility. Vendor-neutral.",
+        f"{total} robot parts, {cats} categories, 4-dim compatibility. Vendor-neutral.",
+    ]
+    for c in candidates:
+        if len(c) <= REGISTRY_DESC_MAX:
+            return c
+    raise SystemExit(
+        f"❌ 连最短的 registry 简介都超过 {REGISTRY_DESC_MAX} 字符 —— "
+        f"请改写候选句式，不要放宽限制（上游会 422）。"
+    )
+
 
 def load_facts():
     spec = importlib.util.spec_from_file_location("onboarding_block", ONBOARDING)
@@ -114,11 +144,7 @@ def render_server_json(f, cats, version):
         "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
         "name": "cc.roboparts/roboparts",
         "title": "RoboParts 机器人零部件兼容性",
-        "description": (
-            f"{f['total_entities']} humanoid/bionic robot component entities across "
-            f"{cats} categories, with protocol / electrical / mechanical / software "
-            f"compatibility checking. Vendor-neutral."
-        ),
+        "description": registry_description(f["total_entities"], cats),
         "version": version,
         "websiteUrl": SITE,
         "repository": {"url": REPO, "source": "github"},
