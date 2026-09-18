@@ -29,6 +29,7 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -80,6 +81,27 @@ def entry_points(manifest):
     if not entries:
         entries = ["index.js"]
     return entries
+
+
+def tracked_files():
+    """返回 git 已跟踪的 mcp-server/ 文件集合；git 不可用时返回 None（跳过该项）。
+
+    .gitignore 里写着 `mcp-server/`，但 index.js / package.json 早在加这条规则
+    **之前**就被跟踪了 —— 忽略规则不影响已跟踪文件。于是同一个目录里「老文件在
+    版本库里、新文件被静默忽略」。20260918 实测：dialects.js 因此从未进仓，
+    而 index.js 却在 import 它，**克隆下来直接跑不起来**。
+    这与 tarball 缺文件同源（「能跑」与「被记录」是两件事），所以一并盯住。
+    """
+    try:
+        r = subprocess.run(
+            ["git", "-C", BASE, "ls-files", "mcp-server"],
+            capture_output=True, text=True, timeout=30,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    if r.returncode != 0:
+        return None
+    return {line.strip() for line in r.stdout.splitlines() if line.strip()}
 
 
 def main():
@@ -161,18 +183,38 @@ def main():
             + "\n".join(f"    - {m}" for m in missing_deps)
         )
 
+    # 3) 可达模块必须已进 git：否则仓库是「能跑但没记录」，克隆即坏
+    tracked = tracked_files()
+    untracked = []
+    if tracked is None:
+        print("⚠️  git 不可用，跳过「是否已进版本库」检查。")
+    else:
+        untracked = [
+            rel for rel in reachable
+            if f"mcp-server/{rel}" not in tracked
+        ]
+        if untracked:
+            problems.append(
+                "以下模块被运行时依赖，却没有进 git（.gitignore 的 `mcp-server/`\n"
+                "    会静默吞掉该目录下**新建**的文件，克隆下来无法启动）：\n"
+                + "\n".join(f"    - {u}" for u in untracked)
+                + "\n    修法：git add -f mcp-server/<file>（该目录已被忽略，必须 -f）"
+            )
+
     if args.verbose:
         print(f"包目录 mcp-server/ · files 白名单 {len(allowed)} 项")
-        print(f"  {'可达模块':<28}在白名单")
+        print(f"  {'可达模块':<28}{'白名单':<8}git")
         for rel in sorted(reachable):
-            print(f"  {rel:<28}{'✓' if in_allowlist(rel) else '✗ 缺失'}")
+            in_wl = "✓" if in_allowlist(rel) else "✗"
+            in_git = "?" if tracked is None else ("✓" if f"mcp-server/{rel}" in tracked else "✗")
+            print(f"  {rel:<28}{in_wl:<8}{in_git}")
 
     if problems:
         print("❌ MCP 包完整性校验失败：\n")
         for p in problems:
             print(f"  {p}\n")
-        print("  修法：把缺失模块补进 mcp-server/package.json 的 files 白名单。")
-        print("        判据是「源码里的相对 import」本身，改完重跑本脚本。")
+        print("  修法：按上面每条的具体提示修（补 files 白名单 / git add -f 补进仓 /")
+        print("        修 import 路径）。判据是「源码里的相对 import」本身，改完重跑本脚本。")
         return 1
 
     print(
