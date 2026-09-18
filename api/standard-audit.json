@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-18T05:47:33.701813Z",
+  "generated_at": "2026-09-18T07:55:23.978875Z",
   "generated_at_semantics": "锚定三个输入源**内容内**时间戳字段的最大值，非脚本运行时刻、非文件 mtime；源内容不变则本字段不变（幂等）。字节级精确锚定见 source_digest。",
-  "source_digest": "e7f9396c6c20cc87/fa27e44b83d52176/1b5c16ad219b4cfa",
+  "source_digest": "256cd847ab88c616/fa27e44b83d52176/1b5c16ad219b4cfa",
   "purpose": "标准登记表 ↔ 实体声明 自动交叉校验（数据质量自检，非兼容性裁决）",
   "registry": {
     "known_mechanical_designations": 10,
