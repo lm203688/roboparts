@@ -11,7 +11,7 @@
       "title": "搜索机器人零部件",
       "type": "mcp_tool",
       "tool": "search_components",
-      "description": "搜索机器人零部件。可按品类、关键词筛选，返回匹配条目的摘要（id/name/category/manufacturer/关键规格/证据等级）。覆盖执行器、传感器、芯片、通信协议、接口、机器人平台、具身智能模型等 10 个品类。库存实时口径（总数/可选型/已隔离）见 initialize 的 instructions 或 GET /mcp 的 dataset 字段 —— 此处不写死数字，避免文案与真实库存漂移。",
+      "description": "搜索机器人零部件。可按品类、关键词筛选，返回匹配条目的摘要（id/name/category/manufacturer/关键规格/证据等级）。覆盖执行器、传感器、芯片、通信协议、接口、机器人平台、具身智能模型等 20 个品类。库存实时口径（总数/可选型/已隔离）见 initialize 的 instructions 或 GET /mcp 的 dataset 字段 —— 此处不写死数字，避免文案与真实库存漂移。",
       "when_to_use": "用户想找某类机器人零件（执行器/传感器/芯片/协议/平台），或给出型号片段需要补全信息时。",
       "guardrails": "只读检索，不写库；中英文命中集合可能不重叠，须两种语言都试；未声明字段不得臆测为「无此物」。",
       "params": [
@@ -19,19 +19,28 @@
           "name": "category",
           "type": "string",
           "required": false,
-          "desc": "品类精确筛选，取值必须来自 enum（严格相等，不做别名映射：传 \"actuator\"、\"电机\" 均返回空）。不传则跨全部 10 个品类检索。注意品类与 ID 前缀不是一一对应的，请以本字段为准。",
+          "desc": "品类精确筛选，取值必须来自 enum（严格相等，不做别名映射：传 \"actuator\"、\"电机\" 均返回空）。不传则跨全部 20 个品类检索。注意品类与 ID 前缀不是一一对应的，请以本字段为准。",
           "enum": [
             "actuators",
             "sensors",
             "chips",
-            "protocols",
-            "platforms",
-            "llms",
             "interfaces",
+            "protocols",
+            "llms",
+            "platforms",
             "flexible_actuators",
             "robot_ai_models",
             "data_acquisition",
-            "connectors"
+            "connectors",
+            "integrated_joints",
+            "reducers",
+            "controllers",
+            "grippers",
+            "structural",
+            "cables",
+            "power",
+            "pcb",
+            "bionic_mechanisms"
           ]
         },
         {

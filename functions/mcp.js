@@ -38,10 +38,25 @@ const SERVER_VERSION = '1.1.0';
 const SUPPORTED_PROTOCOLS = ['2025-06-18', '2025-03-26', '2024-11-05'];
 const PREFERRED_PROTOCOL = SUPPORTED_PROTOCOLS[0];
 
+/**
+ * 全部品类 —— 必须与 api/entities.json 的 meta.categories 完全一致。
+ *
+ * 【20260918】此前这里只列 11 个，而库内真值已是 20 个。危害比 stdio 那侧更大：
+ * 本数组直接当 tool schema 的 enum 用，凡遵守 JSON Schema 的客户端
+ * （Claude / Cursor / LobeHub …）**根本传不进** grippers / reducers /
+ * bionic_mechanisms 等 9 个品类 —— 数据加载得再全也没用。
+ * 而本文件正是托管端点（LobeHub cloudEndpoint、Glama、官方 Registry 与
+ * 全部远程用户实际打的那个口）。
+ *
+ * 现在由 scripts/verify_mcp_coverage.py 对账 meta.categories：
+ * 新增品类却忘了改这里 = CI 红灯。
+ * 文案里也别写死个数，用 `${CATEGORIES.length}` 现算。
+ */
 const CATEGORIES = [
-  'actuators', 'sensors', 'chips', 'protocols', 'platforms',
-  'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition',
-  'connectors',
+  'actuators', 'sensors', 'chips', 'interfaces', 'protocols',
+  'llms', 'platforms', 'flexible_actuators', 'robot_ai_models', 'data_acquisition',
+  'connectors', 'integrated_joints', 'reducers', 'controllers', 'grippers',
+  'structural', 'cables', 'power', 'pcb', 'bionic_mechanisms',
 ];
 
 /**
@@ -211,7 +226,7 @@ const TOOLS = [
     name: 'search_components',
     description:
       '搜索机器人零部件。可按品类、关键词筛选，返回匹配条目的摘要（id/name/category/manufacturer/关键规格/证据等级）。' +
-      '覆盖执行器、传感器、芯片、通信协议、接口、机器人平台、具身智能模型等 10 个品类。' +
+      `覆盖执行器、传感器、芯片、通信协议、接口、机器人平台、具身智能模型等 ${CATEGORIES.length} 个品类。` +
       '库存实时口径（总数/可选型/已隔离）见 initialize 的 instructions 或 GET /mcp 的 dataset 字段 —— ' +
       '此处不写死数字，避免文案与真实库存漂移。',
     inputSchema: {
@@ -221,7 +236,7 @@ const TOOLS = [
           type: 'string',
           description:
             '品类精确筛选，取值必须来自 enum（严格相等，不做别名映射：传 "actuator"、"电机" 均返回空）。' +
-            '不传则跨全部 10 个品类检索。注意品类与 ID 前缀不是一一对应的，请以本字段为准。',
+            `不传则跨全部 ${CATEGORIES.length} 个品类检索。注意品类与 ID 前缀不是一一对应的，请以本字段为准。`,
           enum: CATEGORIES,
         },
         keyword: {
@@ -1017,7 +1032,7 @@ function rpcError(id, code, message, data) {
 // （实测旧文案 688/685 在真值已是 706/703 时仍对每个 agent 播报了不知多少轮）。
 // 精确条数由 buildInstructions() 在响应时从实时数据现算后追加。
 const INSTRUCTIONS_STATIC = [
-  'RoboParts 是仿生/人形机器人零部件的兼容性数据层（执行器、传感器、芯片、通信协议、接口、平台、具身智能模型等 10 个品类）。',
+  `RoboParts 是仿生/人形机器人零部件的兼容性数据层（执行器、传感器、芯片、通信协议、接口、平台、具身智能模型等 ${CATEGORIES.length} 个品类）。`,
   '',
   '适合用它来做：确认两个零件能否搭配、按场景筛选候选件、核对某个参数的口径是否可比。',
   '',

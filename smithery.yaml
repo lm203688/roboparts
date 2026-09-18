@@ -1,5 +1,8 @@
 # Smithery 目录清单 —— RoboParts hosted MCP
 #
+# ⚠️ 数字与工具集由 scripts/gen_public_manifests.py 现算生成，手改会被 --check 打回。
+#    （本条目的简介曾长期停在 688 条 / 5 个工具，而真值已是 798 / 10。）
+#
 # 我方走 hosted Streamable HTTP 端点而非 npm 包分发：
 # 用户侧成本从「装包 + 领 key + 起进程」降到「粘贴一个 URL」。
 # 端点免鉴权只读，因此不需要 configSchema。
@@ -14,10 +17,10 @@ startCommand:
 name: roboparts
 displayName: RoboParts 机器人零部件兼容性
 description: >-
-  仿生/人形机器人零部件兼容性数据层。688 条实体（执行器、传感器、芯片、通信协议、
-  接口、机器人平台、具身智能模型），支持 protocol / electrical / mechanical / ROS2
-  四维兼容判定与参数口径可比性核对。中立数据层：既不生产也不转售任何零部件；
-  兼容性结论基于厂商公开声明字段的规则推断而非实测，未声明维度显式标为「无法判定」。
+  仿生/人形机器人零部件兼容性数据层。798 条实体、20 个品类。
+  支持 protocol / electrical / mechanical / ROS2 四维兼容判定与参数口径可比性核对。
+  中立数据层：既不生产也不转售任何零部件；兼容性结论基于厂商公开声明字段的规则推断
+  而非实测，未声明维度显式标为「无法判定」。
 homepage: https://roboparts.cc
 documentation: https://roboparts.cc/mcp-guide
 license: MIT
@@ -35,12 +38,22 @@ tags:
 
 tools:
   - name: search_components
-    description: 按品类/关键词检索机器人零部件，返回摘要与证据等级
+    description: "搜索机器人零部件。可按品类、关键词筛选，返回匹配条目的摘要（id/name/category/manufacturer/关键规格/证据等级）。"
   - name: get_component_detail
-    description: 按 ID 获取完整字段，含 source_tier / confidence / quarantine 元数据
+    description: "按 ID 获取单个零部件的完整字段，包含 source_tier（数据来源等级）、confidence（置信度）、data_quality 与 mechanical_interface 等元数据。"
   - name: check_compatibility
-    description: 两个零件的协议/电气/机械/ROS2 四维兼容判定
+    description: "判定两个零部件在 protocol（协议）/ electrical（电气）/ mechanical（机械）/ software（ROS2）四个维度的兼容性，返回逐维结论、总体判定与置信说明。"
   - name: recommend_for_application
-    description: 按应用场景（人形/四足/机械臂/AMR/工业）推荐零部件组合
+    description: "按应用场景推荐零部件组合，可选预算上限（USD）。返回各品类的候选项及推荐理由。"
+  - name: compare_components
+    description: "并排对比 2~6 个零部件的关键参数（torque/speed/voltage/protocol/interface/weight/price），相同值自动标注，替代为同一目的连发多次 get_component_det…"
   - name: get_parameter_semantics
-    description: 参数口径规范 —— 判断两份参数表能否直接比较
+    description: "获取参数口径规范：同一个 torque/speed 字段在不同厂商那里含义可能不同（库内 torque 出现 19 种口径、speed 37 种，甚至混入 Gbps 与 rad/s）。"
+  - name: bom_compatibility_check
+    description: "对一组零部件（BOM，物料清单）做两两兼容性矩阵。输入已有条目 ID（可含开源贡献层 OSS-xxx），返回每个组合在 protocol/electrical/mechanical/software 四维的判定与理由。"
+  - name: semantic_search
+    description: "用自然语言描述需求（如\"人形机器人髋部高扭矩电机\"）做语义召回，返回最相近的零部件。"
+  - name: get_standard_audit
+    description: "返回标准登记表 ↔ 实体声明 的自动交叉校验结果：哪些机械/总线声明能被已知标准集核实、哪些声明的编码不在已知指定集中（无法核实），以及登记表缺口与行业标准覆盖情况。"
+  - name: review_compatibility
+    description: "对两个零部件做「多 Agent 质保复核」：Worker 层执行标准四维兼容性裁决（与 /api/compatibility 同一引擎），Governor 层独立复核结论——按证据强度给出 L0–L3 风险分级、在证据不…"

@@ -429,17 +429,27 @@ GATES = [
         'agent-discovery 技能清单一致性',
         ['node', os.path.join(ROOT, 'scripts', 'gen_skills_manifest.mjs'),
          '--check'])),
-    # 2026-09-18 新增：npm/stdio MCP server 的 FILE_MAP 曾两度漏品类
-    # （20260805 少 108 条、20260918 少 68 条且含 grippers/reducers），
-    # 用户侧表现为「搜不到 = 库里没有」。此闸门把覆盖不全变成红灯。
-    ('MCP 品类覆盖（FILE_MAP ↔ entities.json）', lambda: run_sub(
-        'MCP 品类覆盖（FILE_MAP ↔ entities.json）',
+    # 2026-09-18 新增：两个 MCP 服务端（stdio npm 包 + hosted 端点）各自的
+    # 品类声明曾两度漏品类（20260805 少 108 条、20260918 少 68 条且含
+    # grippers/reducers）。hosted 那侧危害更大：schema enum 不放行，
+    # 凡遵守 JSON Schema 的客户端根本传不进新品类，数据加载全了也没用。
+    # 此闸门还禁止文案里写死品类数（改用 ${CATEGORIES.length} 现算）。
+    ('MCP 品类覆盖（stdio + hosted ↔ entities.json）', lambda: run_sub(
+        'MCP 品类覆盖（stdio + hosted ↔ entities.json）',
         [sys.executable, os.path.join(ROOT, 'scripts', 'verify_mcp_coverage.py')])),
     # 2026-09-18 新增：files 白名单曾漏掉 index.js 的本地依赖 dialects.js，
     # 即「仓库能跑、装包就崩」。仓库里跑得通≠装得上，此闸门盯的是**发布物**。
     ('MCP 包完整性（入口可达模块 ⊆ files）', lambda: run_sub(
         'MCP 包完整性（入口可达模块 ⊆ files）',
         [sys.executable, os.path.join(ROOT, 'scripts', 'verify_mcp_package.py')])),
+    # 2026-09-18 新增：面向外部目录的公开清单（server.json / smithery.yaml /
+    # .well-known/mcp.json）里的数字与工具集此前全是手写，已实测失修 ——
+    # server.json 仍写 688（Glama 线上条目正是取它当简介），
+    # smithery.yaml 仍是 688 条 + 只列 5/10 个工具。改为生成器 + 漂移红灯。
+    ('公开清单数字现算（server.json / smithery.yaml / .well-known）', lambda: run_sub(
+        '公开清单数字现算（server.json / smithery.yaml / .well-known）',
+        [sys.executable, os.path.join(ROOT, 'scripts', 'gen_public_manifests.py'),
+         '--check'])),
     ('对外 JSON 可解析', gate_json_parses),
     ('entities.json meta 一致', gate_entities_meta_consistent),
     ('meta 单一真相源', gate_meta_single_source),
