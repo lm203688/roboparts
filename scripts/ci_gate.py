@@ -429,6 +429,12 @@ GATES = [
         'agent-discovery 技能清单一致性',
         ['node', os.path.join(ROOT, 'scripts', 'gen_skills_manifest.mjs'),
          '--check'])),
+    # 2026-09-18 新增：npm/stdio MCP server 的 FILE_MAP 曾两度漏品类
+    # （20260805 少 108 条、20260918 少 68 条且含 grippers/reducers），
+    # 用户侧表现为「搜不到 = 库里没有」。此闸门把覆盖不全变成红灯。
+    ('MCP 品类覆盖（FILE_MAP ↔ entities.json）', lambda: run_sub(
+        'MCP 品类覆盖（FILE_MAP ↔ entities.json）',
+        [sys.executable, os.path.join(ROOT, 'scripts', 'verify_mcp_coverage.py')])),
     ('对外 JSON 可解析', gate_json_parses),
     ('entities.json meta 一致', gate_entities_meta_consistent),
     ('meta 单一真相源', gate_meta_single_source),

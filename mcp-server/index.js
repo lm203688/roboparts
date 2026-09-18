@@ -36,7 +36,7 @@ const API_DIR = join(__dirname, '..', 'api');
 // 每一次 Agent 调用都会在边缘遥测里留下 mcp 来源记录，
 // 这正是当前唯一缺失的「AI 通道是否真被使用」的可测量信号。
 // ------------------------------------------------------------
-const PKG_VERSION = '1.1.0';
+const PKG_VERSION = '1.1.1';
 const REMOTE_BASE = (process.env.ROBOPARTS_API_BASE || 'https://roboparts.cc/api')
   .replace(/\/+$/, '');
 const USER_AGENT = `roboparts-mcp-server/${PKG_VERSION} (+https://roboparts.cc; mcp)`;
@@ -60,6 +60,15 @@ const dataCache = new Map();
 // 【20260805-22】此前只列 7 个品类 = 580 条，而全站对外口径是 688 条。
 // MCP 是我们在 AI Agent 侧的门面，少 108 条等于对外报了个不一致的数字。
 // 补齐 flexible_actuators(21) / robot_ai_models(44) / data_acquisition(43)。
+//
+// 【20260918】同类缺陷复发：这一轮仍是 11 个品类 = 730 条，而库内已扩到
+// 20 个品类 = 798 条，静默漏掉 68 条 —— 且漏的正是采购端最常查的三类：
+// grippers(23) / bionic_mechanisms(17) / reducers(14)，外加 controllers(4) /
+// structural(3) / cables(2) / power(2) / pcb(2) / integrated_joints(1)。
+// 用户装 npm 包搜 "gripper"/"reducer" 会得到 0 命中，误判为「库里没有」。
+// 根因不是写错了，而是「新增品类时没有人被迫回头改这张表」——
+// 所以本次除了补齐，另加 scripts/verify_mcp_coverage.py 做机器对账，
+// 让覆盖不全变成红灯而不是静默。真相源：api/entities.json 的 meta.categories。
 const FILE_MAP = {
   'actuators': 'actuators.json',
   'sensors': 'sensors.json',
@@ -71,7 +80,17 @@ const FILE_MAP = {
   'flexible_actuators': 'flexible_actuators.json',
   'robot_ai_models': 'robot_ai_models.json',
   'data_acquisition': 'data_acquisition.json',
-  'connectors': 'connectors.json'
+  'connectors': 'connectors.json',
+  // --- 20260918 补齐：以下 9 个品类此前完全不可检索 ---
+  'grippers': 'grippers.json',
+  'reducers': 'reducers.json',
+  'bionic_mechanisms': 'bionic_mechanisms.json',
+  'controllers': 'controllers.json',
+  'structural': 'structural.json',
+  'cables': 'cables.json',
+  'power': 'power.json',
+  'pcb': 'pcb.json',
+  'integrated_joints': 'integrated_joints.json'
 };
 
 // 搜索/筛选的默认品类集合：直接从 FILE_MAP 派生，新增品类不再漏同步。
@@ -1236,7 +1255,19 @@ function exportBom(args) {
 const server = new Server(
   {
     name: 'roboparts-mcp-server',
-    version: '1.0.0',
+    // 【20260918】此前硬编码 '1.0.0'，而 package.json / PKG_VERSION 是 1.1.0 ——
+    // 客户端握手看到的版本与用户装的版本对不上，目录站按 serverInfo 归档也会记错。
+    version: PKG_VERSION,
+    title: 'RoboParts — 机器人零部件兼容性数据层',
+    // 非 MCP 规范字段，但 MCP 目录（LobeHub 等）用它推断插件简介；
+    // 缺了它 `lhm plugin init` 会直接失败（实测报 Could not infer a plugin description）。
+    // 刻意不写实体数/品类数：静态字符串里的数字必然失修（本轮 730 vs 798 就是同类
+    // 病根）。计数属动态事实，由 instructions / 目录清单在生成时现算。
+    description:
+      'Vendor-neutral compatibility data layer for humanoid and bionic robot components. ' +
+      'Query parts and get protocol / electrical / mechanical / software compatibility ' +
+      'judgments. We neither manufacture nor resell any part.',
+    websiteUrl: 'https://roboparts.cc',
   },
   {
     capabilities: {
@@ -1259,8 +1290,10 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
         properties: {
           category: {
             type: 'string',
-            description: '品类: actuators(执行器) / sensors(传感器) / chips(芯片) / protocols(通信协议) / platforms(机器人平台) / llms(大语言模型) / interfaces(接口) / connectors(连接器)等 11 类',
-            enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition', 'connectors']
+            // 【20260918】原先写死「等 11 类」并硬编码 enum——和 FILE_MAP 同源失修。
+            // 现改为从 ALL_CATEGORIES 现算，新增品类自动出现在 schema 里。
+            description: `品类: ${ALL_CATEGORIES.join(' / ')}（共 ${ALL_CATEGORIES.length} 类）`,
+            enum: ALL_CATEGORIES
           },
           keyword: {
             type: 'string',
@@ -1287,7 +1320,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
           category: {
             type: 'string',
             description: '品类: actuators / sensors / chips / protocols / platforms / llms / interfaces',
-            enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition', 'connectors']
+            enum: ALL_CATEGORIES
           }
         },
         required: ['id', 'category']
@@ -1306,7 +1339,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
           component1_category: {
             type: 'string',
             description: '零件1品类',
-            enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition', 'connectors']
+            enum: ALL_CATEGORIES
           },
           component2_id: {
             type: 'string',
@@ -1315,7 +1348,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
           component2_category: {
             type: 'string',
             description: '零件2品类',
-            enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition', 'connectors']
+            enum: ALL_CATEGORIES
           }
         },
         required: ['component1_id', 'component1_category', 'component2_id', 'component2_category']
@@ -1350,7 +1383,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
         type: 'object',
         properties: {
           component_id: { type: 'string', description: '零部件ID' },
-          category: { type: 'string', description: '品类', enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition', 'connectors'] },
+          category: { type: 'string', description: '品类', enum: ALL_CATEGORIES },
           dialect: { type: 'string', description: '方言ID（先用 dialects_list 查询）', enum: ['humanoid', 'industrial', 'dexterous_hand', 'mobile_robot', 'research'] }
         },
         required: ['component_id', 'category', 'dialect']
@@ -1403,7 +1436,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
                 category: {
                   type: 'string',
                   description: '品类',
-                  enum: ['actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms', 'interfaces', 'flexible_actuators', 'robot_ai_models', 'data_acquisition', 'connectors']
+                  enum: ALL_CATEGORIES
                 },
                 quantity: {
                   type: 'number',

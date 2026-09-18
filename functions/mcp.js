@@ -1056,7 +1056,19 @@ async function handleRpc(msg, context) {
       return rpcResult(id, {
         protocolVersion: version,
         capabilities: { tools: { listChanged: false }, resources: { listChanged: false } },
-        serverInfo: { name: SERVER_NAME, version: SERVER_VERSION, title: 'RoboParts 机器人零部件兼容性' },
+        // 【20260918】补 description/websiteUrl：MCP 目录（LobeHub、Glama 等）靠它推断
+        // 插件简介，缺失会让 `lhm plugin init` 直接失败。刻意不写死实体数——静态字符串
+        // 里的计数必然失修，动态事实走下面的 instructions（buildInstructions 现算）。
+        serverInfo: {
+          name: SERVER_NAME,
+          version: SERVER_VERSION,
+          title: 'RoboParts 机器人零部件兼容性',
+          description:
+            'Vendor-neutral compatibility data layer for humanoid and bionic robot components. ' +
+            'Query parts and get protocol / electrical / mechanical / software compatibility ' +
+            'judgments. We neither manufacture nor resell any part.',
+          websiteUrl: 'https://roboparts.cc',
+        },
         instructions: buildInstructions(initFacts),
       });
     }

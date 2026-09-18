@@ -1,0 +1,378 @@
+{
+  "identifier": "lm203688-roboparts",
+  "name": "RoboParts — Robot Component Compatibility",
+  "version": "1.1.1",
+  "description": "Vendor-neutral compatibility data layer for humanoid and bionic robot components. Query 798 parts across 20 categories and get protocol / electrical / mechanical / software compatibility judgments. We neither manufacture nor resell any part.",
+  "author": "RoboParts",
+  "authorUrl": "https://github.com/lm203688",
+  "homepage": "https://roboparts.cc",
+  "cloudEndpoint": "https://roboparts.cc/mcp",
+  "category": "developer",
+  "icon": "🤖",
+  "tags": [
+    "robotics",
+    "humanoid-robot",
+    "robot-parts",
+    "hardware",
+    "components",
+    "compatibility",
+    "actuator",
+    "sensor",
+    "bom",
+    "embodied-ai"
+  ],
+  "localizations": [
+    {
+      "locale": "zh-CN",
+      "name": "RoboParts — 机器人零部件兼容性数据层",
+      "description": "厂商中立的仿生／人形机器人零部件兼容性数据层。可检索 20 个品类共 798 条零部件，并给出协议／电气／机械／软件四维兼容性判定。我们既不生产也不转售任何零部件，数据层保持中立。"
+    }
+  ],
+  "tools": [
+    {
+      "name": "search_components",
+      "description": "搜索机器人零部件，支持按品类、关键词、规格筛选。返回匹配的零部件列表（id, name, category, manufacturer, key_specs）。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "品类: actuators / sensors / chips / protocols / platforms / llms / interfaces / flexible_actuators / robot_ai_models / data_acquisition / connectors / grippers / reducers / bionic_mechanisms / controllers / structural / cables / power / pcb / integrated_joints（共 20 类）",
+            "enum": [
+              "actuators",
+              "sensors",
+              "chips",
+              "protocols",
+              "platforms",
+              "llms",
+              "interfaces",
+              "flexible_actuators",
+              "robot_ai_models",
+              "data_acquisition",
+              "connectors",
+              "grippers",
+              "reducers",
+              "bionic_mechanisms",
+              "controllers",
+              "structural",
+              "cables",
+              "power",
+              "pcb",
+              "integrated_joints"
+            ]
+          },
+          "keyword": {
+            "type": "string",
+            "description": "搜索关键词，匹配名称、厂商、类型、描述等字段"
+          },
+          "limit": {
+            "type": "number",
+            "description": "返回数量限制，默认10",
+            "default": 10
+          }
+        }
+      }
+    },
+    {
+      "name": "get_component_detail",
+      "description": "获取单个零部件的详细信息，返回完整规格数据。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "零部件ID，如 \"ACT-001\"、\"CHIP-001\"、\"SENS-001\""
+          },
+          "category": {
+            "type": "string",
+            "description": "品类: actuators / sensors / chips / protocols / platforms / llms / interfaces",
+            "enum": [
+              "actuators",
+              "sensors",
+              "chips",
+              "protocols",
+              "platforms",
+              "llms",
+              "interfaces",
+              "flexible_actuators",
+              "robot_ai_models",
+              "data_acquisition",
+              "connectors",
+              "grippers",
+              "reducers",
+              "bionic_mechanisms",
+              "controllers",
+              "structural",
+              "cables",
+              "power",
+              "pcb",
+              "integrated_joints"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "category"
+        ]
+      }
+    },
+    {
+      "name": "check_compatibility",
+      "description": "检查两个零部件的兼容性，基于协议、接口、电压等维度。兼容性检查规则：执行器+芯片(协议匹配+电压范围)、芯片+传感器(接口兼容)、协议+接口(物理层兼容)、通用检查(应用场景+ROS2支持)。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "component1_id": {
+            "type": "string",
+            "description": "零件1 ID"
+          },
+          "component1_category": {
+            "type": "string",
+            "description": "零件1品类",
+            "enum": [
+              "actuators",
+              "sensors",
+              "chips",
+              "protocols",
+              "platforms",
+              "llms",
+              "interfaces",
+              "flexible_actuators",
+              "robot_ai_models",
+              "data_acquisition",
+              "connectors",
+              "grippers",
+              "reducers",
+              "bionic_mechanisms",
+              "controllers",
+              "structural",
+              "cables",
+              "power",
+              "pcb",
+              "integrated_joints"
+            ]
+          },
+          "component2_id": {
+            "type": "string",
+            "description": "零件2 ID"
+          },
+          "component2_category": {
+            "type": "string",
+            "description": "零件2品类",
+            "enum": [
+              "actuators",
+              "sensors",
+              "chips",
+              "protocols",
+              "platforms",
+              "llms",
+              "interfaces",
+              "flexible_actuators",
+              "robot_ai_models",
+              "data_acquisition",
+              "connectors",
+              "grippers",
+              "reducers",
+              "bionic_mechanisms",
+              "controllers",
+              "structural",
+              "cables",
+              "power",
+              "pcb",
+              "integrated_joints"
+            ]
+          }
+        },
+        "required": [
+          "component1_id",
+          "component1_category",
+          "component2_id",
+          "component2_category"
+        ]
+      }
+    },
+    {
+      "name": "compare_components",
+      "description": "并排对比 2~6 个零部件的关键参数（规格键并集，相同值自动标注），替代为同一目的连发多次 get_component_detail。ID 自动跨品类解析。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "description": "待对比零部件 ID 数组（2~6 个），形如 [\"ACT-001\", \"ACT-002\"]",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 2,
+            "maxItems": 6
+          }
+        },
+        "required": [
+          "ids"
+        ]
+      }
+    },
+    {
+      "name": "dialects_list",
+      "description": "列出可用的领域方言模板（人形/工业机械臂/灵巧手/移动机器人/科研教育），用于按应用场景评估零部件。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "dialects_evaluate",
+      "description": "按领域方言对单个零部件做场景化评分。总分仅基于库内有证据的维度加权，无证据维度不计分（返回 null），不冒充 50 分。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "component_id": {
+            "type": "string",
+            "description": "零部件ID"
+          },
+          "category": {
+            "type": "string",
+            "description": "品类",
+            "enum": [
+              "actuators",
+              "sensors",
+              "chips",
+              "protocols",
+              "platforms",
+              "llms",
+              "interfaces",
+              "flexible_actuators",
+              "robot_ai_models",
+              "data_acquisition",
+              "connectors",
+              "grippers",
+              "reducers",
+              "bionic_mechanisms",
+              "controllers",
+              "structural",
+              "cables",
+              "power",
+              "pcb",
+              "integrated_joints"
+            ]
+          },
+          "dialect": {
+            "type": "string",
+            "description": "方言ID（先用 dialects_list 查询）",
+            "enum": [
+              "humanoid",
+              "industrial",
+              "dexterous_hand",
+              "mobile_robot",
+              "research"
+            ]
+          }
+        },
+        "required": [
+          "component_id",
+          "category",
+          "dialect"
+        ]
+      }
+    },
+    {
+      "name": "recommend_for_application",
+      "description": "根据应用场景推荐零部件组合。基于应用场景(humanoid/quadruped/robot_arm/amr/industrial)和预算，推荐最优零部件组合（执行器、传感器、芯片、控制器各自top推荐）。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "application": {
+            "type": "string",
+            "description": "应用场景",
+            "enum": [
+              "humanoid",
+              "quadruped",
+              "robot_arm",
+              "amr",
+              "industrial"
+            ]
+          },
+          "budget": {
+            "type": "number",
+            "description": "预算上限（CNY 人民币）"
+          },
+          "count": {
+            "type": "number",
+            "description": "每个品类推荐数量，默认3",
+            "default": 3
+          }
+        },
+        "required": [
+          "application"
+        ]
+      }
+    },
+    {
+      "name": "export_bom",
+      "description": "从选定的零部件列表导出BOM（Bill of Materials）清单。计算总成本（USD+CNY），提供供应商建议和采购建议。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project_name": {
+            "type": "string",
+            "description": "项目名称"
+          },
+          "items": {
+            "type": "array",
+            "description": "零部件列表",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "零部件ID"
+                },
+                "category": {
+                  "type": "string",
+                  "description": "品类",
+                  "enum": [
+                    "actuators",
+                    "sensors",
+                    "chips",
+                    "protocols",
+                    "platforms",
+                    "llms",
+                    "interfaces",
+                    "flexible_actuators",
+                    "robot_ai_models",
+                    "data_acquisition",
+                    "connectors",
+                    "grippers",
+                    "reducers",
+                    "bionic_mechanisms",
+                    "controllers",
+                    "structural",
+                    "cables",
+                    "power",
+                    "pcb",
+                    "integrated_joints"
+                  ]
+                },
+                "quantity": {
+                  "type": "number",
+                  "description": "数量",
+                  "default": 1
+                }
+              },
+              "required": [
+                "id",
+                "category"
+              ]
+            }
+          }
+        },
+        "required": [
+          "project_name",
+          "items"
+        ]
+      }
+    }
+  ],
+  "resources": [],
+  "prompts": []
+}
