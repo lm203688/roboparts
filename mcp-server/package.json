@@ -9,13 +9,16 @@
   },
   "files": [
     "index.js",
+    "dialects.js",
     "README.md"
   ],
   "engines": {
     "node": ">=18"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "selftest": "node selftest.mjs",
+    "prepublishOnly": "node selftest.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4"

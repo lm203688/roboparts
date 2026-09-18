@@ -435,6 +435,11 @@ GATES = [
     ('MCP 品类覆盖（FILE_MAP ↔ entities.json）', lambda: run_sub(
         'MCP 品类覆盖（FILE_MAP ↔ entities.json）',
         [sys.executable, os.path.join(ROOT, 'scripts', 'verify_mcp_coverage.py')])),
+    # 2026-09-18 新增：files 白名单曾漏掉 index.js 的本地依赖 dialects.js，
+    # 即「仓库能跑、装包就崩」。仓库里跑得通≠装得上，此闸门盯的是**发布物**。
+    ('MCP 包完整性（入口可达模块 ⊆ files）', lambda: run_sub(
+        'MCP 包完整性（入口可达模块 ⊆ files）',
+        [sys.executable, os.path.join(ROOT, 'scripts', 'verify_mcp_package.py')])),
     ('对外 JSON 可解析', gate_json_parses),
     ('entities.json meta 一致', gate_entities_meta_consistent),
     ('meta 单一真相源', gate_meta_single_source),
