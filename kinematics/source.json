@@ -1,0 +1,91 @@
+{
+  "meta": {
+    "schema": "roboparts.kinematics/v1",
+    "title": "RoboParts 运动学真相源（Kinematic Chains Source of Truth）",
+    "description": "登记参考构型（api/reference_builds.json）的运动学链：自由度、关节类型、连杆长度、关节限位与轴。由 scripts/build_kinematics.py 读取并现算为 api/kinematics.json；本文件是唯一真相源，禁止手改 api/kinematics.json。",
+    "why": "RoboParts 现有判定停在『静态机械接口』（能否拧上去）。运动学是同一问题的动态一半：给定一条由零件拼出的臂/腿，它能不能够到目标位姿。本轮只落地『可达性的必要条件上界』（sound 的『够不到』判定），不做完整 IK 求解——因为求解器需要每个关节的连杆长度与限位，而这些目前尚未声明。",
+    "borrowed_from": [
+      {
+        "project": "pyroki (PyRoki)",
+        "url": "https://github.com/chungmin99/pyroki",
+        "what": "URDF→可微分正/逆运动学的模块化拆分（解析 / FK-IK / 碰撞各自独立）与设备无关设计。本层只借其『URDF 优先的数据模型』：零件若不带运动学元数据，任何 IK 判定都无从谈起。",
+        "license": "MIT"
+      },
+      {
+        "project": "inverse kinematics (技术域)",
+        "url": "https://github.com/chungmin99/pyroki",
+        "what": "可达性/工作空间验证的思路来源。本层刻意不含完整 IK——先把『数据缺口』显式登记，而不是用求解器掩盖它。"
+      }
+    ],
+    "discipline": [
+      "无出处不登记：任何 non-null 的 link_mm / limit_deg / axis 必须能追到 approved_hosts 内的厂商文档。",
+      "宁缺勿假：未知值一律写 null，并在 blocked_by 里点名缺哪个字段，绝不填『看起来合理』的数。",
+      "fail-closed：任一连杆长度缺失，该链的可达性判定必须回 insufficient_data，禁止回退到标称或猜测。",
+      "幂等：本文件派生出的 api/kinematics.json 不写时间戳，重复生成字节一致。"
+    ],
+    "approved_hosts": [
+      "emanual.robotis.com",
+      "en.robotis.com",
+      "www.robotis.us",
+      "github.com",
+      "deepwiki.com",
+      "orobot.io",
+      "www.feetech.cn",
+      "www.feetechrc.com"
+    ],
+    "probe_distances_mm": [150, 300, 450, 600, 800, 1000],
+    "reach_bound_semantics": "max_reach_mm = Σ link_mm，是可达半径的**上界**：忽略了关节限位与自碰撞，故仅供判定『够不到』（unreachable 是可靠结论），不可当作『一定够得到』（reachable 仅表示未被排除）。这是刻意选择的 sound 方向——负面结论可靠，正面结论保守。"
+  },
+  "chains": [
+    {
+      "id": "KC-OMY-ARM",
+      "build_ref": "RB-OMY",
+      "name": "OpenManipulator (Dynamixel X 系列基座)",
+      "kind": "arm",
+      "dof": 4,
+      "joint_types": {
+        "revolute": 4
+      },
+      "joints": [],
+      "spec_status": "topology_only",
+      "blocked_by": [
+        "joint_order",
+        "joint_axis",
+        "link_mm",
+        "joint_limits_deg"
+      ],
+      "provenance": {
+        "dof_source": "api/reference_builds.json#RB-OMY（关节执行器 ×4，Dynamixel X 系列）",
+        "verified_at": "2026-09-08",
+        "tier": "A"
+      },
+      "note": "自由度与关节类型来自参考构型的已核实事实；连杆长度/轴向/限位三项目前无公开一手数值（emanual 未列 horn PCD 与各连杆节距），登记为待测，不臆造。补上后可自动进入可达性计算。",
+      "adapter_opportunity": "在 adapter-generator 的 A20–A250 之外新增『X-series horn ↔ ISO flange』接口对，可解锁『Dynamixel 臂 + 标准工具快换』场景（沿用 RB-OMY 既有结论）。"
+    },
+    {
+      "id": "KC-ODM-BIPED",
+      "build_ref": "RB-ODM",
+      "name": "Open Duck Mini v2（BDX 风格双足）",
+      "kind": "biped",
+      "dof": 14,
+      "joint_types": {
+        "revolute": 14
+      },
+      "joints": [],
+      "spec_status": "topology_only",
+      "blocked_by": [
+        "joint_order",
+        "joint_axis",
+        "link_mm",
+        "joint_limits_deg"
+      ],
+      "provenance": {
+        "dof_source": "api/reference_builds.json#RB-ODM（关节总线伺服 ×14，Feetech STS3215）",
+        "verified_at": "2026-09-08",
+        "tier": "A"
+      },
+      "note": "14 路总线舵机为已核实事实；但各关节在腿/躯干上的分配与连杆长度未在来源中给出，登记为待测。另 2 个 SG90/FS90 微型舵机为 PWM 舵机，不计入总线 DOF，未纳入本条。",
+      "adapter_opportunity": "『伺服输出盘 ↔ 连杆标准孔位』是人形低成本高频适配点；参数补齐后可作为双足构型模板沉淀。"
+    }
+  ]
+}

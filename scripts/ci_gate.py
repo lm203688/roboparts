@@ -450,6 +450,14 @@ GATES = [
         '公开清单数字现算（server.json / smithery.yaml / .well-known）',
         [sys.executable, os.path.join(ROOT, 'scripts', 'gen_public_manifests.py'),
          '--check'])),
+    # 2026-09-19 新增：运动学可达性层（借鉴 PyRoki「URDF 优先」数据模型，
+    # 把机械接口判定从静态延伸到达性上界）。风险在于：一个「永远返回
+    # insufficient_data」的引擎与一个写坏的引擎，输出长得一模一样 —— 只比对外
+    # JSON 会假绿。故本闸门跑 verify_kinematics.py 的阴阳自测：构造参数齐全的
+    # 假链证明它真会算，再抽掉一个 link_mm 证明它真会 fail-closed，外加漂移判据。
+    ('运动学可达性（阴阳自测 + 漂移）', lambda: run_sub(
+        '运动学可达性（阴阳自测 + 漂移）',
+        [sys.executable, os.path.join(ROOT, 'scripts', 'verify_kinematics.py')])),
     ('对外 JSON 可解析', gate_json_parses),
     ('entities.json meta 一致', gate_entities_meta_consistent),
     ('meta 单一真相源', gate_meta_single_source),
