@@ -408,6 +408,97 @@ def gate_flywheel_idempotency():
             ['node', os.path.join(ROOT, 'scripts', 'test_promote_ledger.mjs')])
 
 
+def gate_demand_signal_classification():
+    """需求信号判别层（三态 fail-closed）+ 对外端点口径。
+
+    事故：api/demand-signal.json 曾对外宣称「已捕获 10 条真实兼容性提问信号」，
+    实际这 10 条全是 AI/LLM 软件仓库的 PR（ROCm MXFP4 GEMM、godot engine、
+    elastic/kibana、rust ABI），与机器人零件无关。根因是 real_signal 写死为 true、
+    正则无领域锚定、relevance 写死「需判别」——fail-open：不可判定 → 直接判真。
+
+    本闸门两段：
+    1) 跑判别层三脚本的阴阳自测。必须同时证明「历史噪声确实判 noise」与
+       「硬件锚定真信号确实判 confirmed」——只测绿路径的判据会把引擎写死成
+       恒假而永远不红。
+    2) 校验对外端点的**产物级**口径：不得出现 %% 双百分号（reflow 曾把已带 %
+       的串传给 buildVerdict，而 buildVerdict 又自加 %）、不得再宣称
+       「真实兼容性提问」、不得挂「反喂 ingestion」这条做不到位的建议。
+       这些检查刻意直接读 api/demand-signal.json 而不是读入参——入参契约
+       一致的自测永远看不见调用方传错格式。
+    """
+    run_sub('需求信号判别规则自测（三态 fail-closed + 历史噪声阴性对照）',
+            ['node', os.path.join(ROOT, 'scripts', 'lib', 'demand_signal_rules.mjs'),
+             '--self-test'])
+    run_sub('需求信号扫描自测（demand_scan 报告组装）',
+            ['node', os.path.join(ROOT, 'scripts', 'demand_scan.mjs'),
+             '--self-test'])
+    run_sub('需求信号回流自测（reflow 重判 + 产物级校验）',
+            ['node', os.path.join(ROOT, 'scripts', 'reflow_demand_signal.mjs'),
+             '--self-test'])
+
+    ds_path = os.path.join(ROOT, 'api', 'demand-signal.json')
+    try:
+        with open(ds_path, encoding='utf-8') as f:
+            ds = json.load(f)
+    except OSError as ex:
+        bad('需求信号对外口径', 'api/demand-signal.json 不可读: %s' % ex)
+        return
+    except json.JSONDecodeError as ex:
+        bad('需求信号对外口径', 'JSON 解析失败: %s' % ex)
+        return
+
+    problems = []
+    text = json.dumps(ds, ensure_ascii=False)
+    if '%%' in text:
+        problems.append('对外 JSON 出现 %% 双百分号（调用方传入已带 % 的串）')
+    if '反喂 ingestion' in text:
+        problems.append('actionable_fixes 仍挂「反喂 ingestion」——该指令做不到，'
+                        'ingest_oss_bom.mjs 写 oss_components.json，与声明率分母'
+                        ' entities.json 不相通')
+    if '需判别' in text:
+        problems.append('sources[].relevance 仍是写死的「需判别」占位')
+
+    # 「真实兼容性提问」只在**对外承诺面**上算问题。reflow_note 里出现它属于
+    # 留痕引述（「旧版…表述已作废」），是正确做法，误报会逼人删掉留痕。
+    # 故只查 verdict + 顶层计数：断言形态是「已捕获 N 条…（N≥1）」。
+    verdict = str(ds.get('verdict') or '')
+    if re.search(r'已捕获\s*\d+\s*条真实兼容性提问', verdict):
+        problems.append('verdict 仍以断言形态宣称「已捕获 N 条真实兼容性提问」'
+                        '（仅 reflow_note 的历史引述例外）')
+    if ds.get('real_query_count', 0) >= 1 and not ds.get('classification', {}).get('rule_module'):
+        problems.append('real_query_count≥1 但缺 classification.rule_module，'
+                        '无法证明这些计数来自判别层而非写死常量')
+
+    cls = ds.get('classification') or {}
+    if not cls.get('rule_module'):
+        problems.append('缺 classification.rule_module，无法追溯判据来源')
+    tri = cls.get('confirmed', 0) + cls.get('unclassified', 0) + cls.get('noise', 0)
+    if tri != cls.get('total_hits'):
+        problems.append('三态计数之和 %d != total_hits %s' % (tri, cls.get('total_hits')))
+    if ds.get('real_query_count') != cls.get('confirmed'):
+        problems.append('real_query_count %s != classification.confirmed %s'
+                        % (ds.get('real_query_count'), cls.get('confirmed')))
+
+    for i, s in enumerate(ds.get('sources') or []):
+        if 'signal_state' not in s:
+            problems.append('sources[%d] 缺 signal_state' % i)
+            break
+        if s.get('real_signal') != (s.get('signal_state') == 'confirmed'):
+            problems.append('sources[%d] real_signal 与 signal_state 不一致' % i)
+            break
+        if s.get('signal_state') not in ('confirmed', 'unclassified', 'noise'):
+            problems.append('sources[%d] signal_state 取值非法: %s'
+                            % (i, s.get('signal_state')))
+            break
+
+    if problems:
+        bad('需求信号对外口径', '；'.join(problems))
+    else:
+        ok('需求信号对外口径',
+           '确认 %s / 未判 %s / 噪声 %s，无 %%、无旧假陈述、无失效建议'
+           % (cls.get('confirmed'), cls.get('unclassified'), cls.get('noise')))
+
+
 GATES = [
     ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
@@ -458,6 +549,10 @@ GATES = [
     ('运动学可达性（阴阳自测 + 漂移）', lambda: run_sub(
         '运动学可达性（阴阳自测 + 漂移）',
         [sys.executable, os.path.join(ROOT, 'scripts', 'verify_kinematics.py')])),
+    # 2026-09-20 新增：需求信号判别层。api/demand-signal.json 曾对外宣称
+    # 「已捕获 10 条真实兼容性提问信号」，实际 10 条全是 AI/LLM 软件仓库 PR。
+    # fail-open 的判别层 + 对外口径漂移，一起由这个闸门盯住。
+    ('需求信号判别层（三态 fail-closed + 对外口径）', gate_demand_signal_classification),
     ('对外 JSON 可解析', gate_json_parses),
     ('entities.json meta 一致', gate_entities_meta_consistent),
     ('meta 单一真相源', gate_meta_single_source),

@@ -31,15 +31,15 @@
       "hit_count": 0
     }
   },
-  "real_query_count": 10,
-  "explicit_compatibility_pain": 10,
+  "real_query_count": 0,
+  "explicit_compatibility_pain": 0,
   "cross_brand_compat_engine_users": 0,
   "can_answer_today": {
     "mech_decl_rate": 0.0575,
     "mech_declared": 25,
     "total_entities": 798,
     "mech_applicable": 435,
-    "estimate": "部分可答：跨品牌兼容类提问多数仍答不出（需真实 BOM 反喂抬声明率）"
+    "estimate": "部分可答：跨品牌兼容类提问多数仍答不出，仅少数有厂商 datasheet 出处的条目可判。"
   },
   "category_counts": {
     "actuators": 217,
@@ -63,92 +63,115 @@
     "pcb": 2,
     "bionic_mechanisms": 9
   },
-  "verdict": "已捕获 10 条真实兼容性提问信号（跨品牌引擎潜在用户 0 条）。但本站机械接口声明率仅 5.75%，绝大多数今天答不出——需求存在，供给（可计算兼容性）不足。",
+  "verdict": "本轮监听 3 个可达源、10 条命中，经机器人硬件锚定判别：确认兼容性提问 0 条、未判 0 条、判为非机器人信号 10 条。自动抓取通道当前零确认信号——这不等于需求不存在，而是检索词未锚定机器人领域：历史版本（2026-08-16/28 快照）曾把 AI/LLM 仓库的 \"OpenAI-compatible\"、\"ABI-compatible\"、\"GEMM replacement\" 类 PR 以 real_signal=true 计为真实信号，公开端点因此对外宣称了并不存在的 10 条提问。判别层现为三态 fail-closed。机械接口声明率 5.75%，即便有提问也多数答不出。",
   "sources": [
     {
       "name": "github",
       "url": "https://github.com/agentscope-ai/ReMe/pull/505",
-      "signal_type": "社区兼容性提问",
-      "real_signal": true,
+      "signal_type": "非机器人信号（已按领域锚定过滤）",
+      "signal_state": "noise",
+      "real_signal": false,
       "evidence": "feat(core): support live component replacement",
-      "relevance": "中（需判别是否跨品牌兼容痛点）"
+      "relevance": "通用源且无硬件锚词：兼容语义极可能指软件",
+      "cross_brand": false
     },
     {
       "name": "github",
       "url": "https://github.com/vain90/Moolias/pull/117",
-      "signal_type": "社区兼容性提问",
-      "real_signal": true,
+      "signal_type": "非机器人信号（已按领域锚定过滤）",
+      "signal_state": "noise",
+      "real_signal": false,
       "evidence": "Add guided alias activation and replacement workflow",
-      "relevance": "中（需判别是否跨品牌兼容痛点）"
+      "relevance": "通用源且无硬件锚词：兼容语义极可能指软件",
+      "cross_brand": false
     },
     {
       "name": "github",
       "url": "https://github.com/ROCm/aiter/pull/4526",
-      "signal_type": "社区兼容性提问",
-      "real_signal": true,
+      "signal_type": "非机器人信号（已按领域锚定过滤）",
+      "signal_state": "noise",
+      "real_signal": false,
       "evidence": "[HIP] [FlyDSL] [Kernel] Extend MXFP4 GEMM1 replacement to A4W4",
-      "relevance": "中（需判别是否跨品牌兼容痛点）"
+      "relevance": "AI/LLM 语境：兼容指 API/推理栈，非物理硬件",
+      "cross_brand": false
     },
     {
       "name": "github",
       "url": "https://github.com/lidge-jun/opencodex/issues/2816",
-      "signal_type": "社区兼容性提问",
-      "real_signal": true,
+      "signal_type": "非机器人信号（已按领域锚定过滤）",
+      "signal_state": "noise",
+      "real_signal": false,
       "evidence": "Feature request: opt-in upstream Responses WebSocket transport for OpenAI-compatible providers",
-      "relevance": "中（需判别是否跨品牌兼容痛点）"
+      "relevance": "AI/LLM 语境：兼容指 API/推理栈，非物理硬件",
+      "cross_brand": false
     },
     {
       "name": "github",
       "url": "https://github.com/AntaresQAQ/VoxMesh/pull/35",
-      "signal_type": "社区兼容性提问",
-      "real_signal": true,
+      "signal_type": "非机器人信号（已按领域锚定过滤）",
+      "signal_state": "noise",
+      "real_signal": false,
       "evidence": "feat: stream compatible Chat completions",
-      "relevance": "中（需判别是否跨品牌兼容痛点）"
+      "relevance": "AI/LLM 语境：兼容指 API/推理栈，非物理硬件",
+      "cross_brand": false
     },
     {
       "name": "github",
       "url": "https://github.com/godotengine/godot/pull/118932",
-      "signal_type": "社区兼容性提问",
-      "real_signal": true,
+      "signal_type": "非机器人信号（已按领域锚定过滤）",
+      "signal_state": "noise",
+      "real_signal": false,
       "evidence": "dotnet: Make GodotSharp and generators compatible with trimming",
-      "relevance": "中（需判别是否跨品牌兼容痛点）"
+      "relevance": "软件工程语境：兼容指代码/ABI/依赖/构建，非物理硬件",
+      "cross_brand": false
     },
     {
       "name": "github",
       "url": "https://github.com/elastic/kibana/pull/287765",
-      "signal_type": "社区兼容性提问",
-      "real_signal": true,
+      "signal_type": "非机器人信号（已按领域锚定过滤）",
+      "signal_state": "noise",
+      "real_signal": false,
       "evidence": "[9.5] fix(fleet): hide version-specific policy icon for compatible agents (#287504)",
-      "relevance": "中（需判别是否跨品牌兼容痛点）"
+      "relevance": "软件工程语境：兼容指代码/ABI/依赖/构建，非物理硬件",
+      "cross_brand": false
     },
     {
       "name": "github",
       "url": "https://github.com/elastic/kibana/pull/287764",
-      "signal_type": "社区兼容性提问",
-      "real_signal": true,
+      "signal_type": "非机器人信号（已按领域锚定过滤）",
+      "signal_state": "noise",
+      "real_signal": false,
       "evidence": "[9.4] fix(fleet): hide version-specific policy icon for compatible agents (#287504)",
-      "relevance": "中（需判别是否跨品牌兼容痛点）"
+      "relevance": "软件工程语境：兼容指代码/ABI/依赖/构建，非物理硬件",
+      "cross_brand": false
     },
     {
       "name": "github",
       "url": "https://github.com/torumakabe/aks-chaos-lab/pull/218",
-      "signal_type": "社区兼容性提问",
-      "real_signal": true,
+      "signal_type": "非机器人信号（已按领域锚定过滤）",
+      "signal_state": "noise",
+      "real_signal": false,
       "evidence": "build(deps): bump astral-sh/uv from 0.12.2 to 0.12.5 in /src/api in the docker-compatible group",
-      "relevance": "中（需判别是否跨品牌兼容痛点）"
+      "relevance": "软件工程语境：兼容指代码/ABI/依赖/构建，非物理硬件",
+      "cross_brand": false
     },
     {
       "name": "github",
       "url": "https://github.com/rust-lang/rust/pull/161904",
-      "signal_type": "社区兼容性提问",
-      "real_signal": true,
+      "signal_type": "非机器人信号（已按领域锚定过滤）",
+      "signal_state": "noise",
+      "real_signal": false,
       "evidence": "declare C and C-unwind as mutually ABI-compatible",
-      "relevance": "中（需判别是否跨品牌兼容痛点）"
+      "relevance": "软件工程语境：兼容指代码/ABI/依赖/构建，非物理硬件",
+      "cross_brand": false
     }
   ],
-  "real_demand_signal_count": 10,
+  "real_demand_signal_count": 0,
   "actionable_fixes": [
-    "抬机械接口声明率：导入真实开源人形 BOM（天工/lerobot-humanoid/Asimov）反喂 ingestion"
+    "抬机械接口声明率的合法通道：厂商 datasheet 补录、ISO 9409-1 查表补 A{n} 标准号、用户提交带出处的声明（add_mechanical_interface.py 写 entities.json）。",
+    "不要把开源 BOM 批量导入当成抬本指标的手段：ingest_oss_bom.mjs 写 oss_components.json，而本指标的分母是 entities.json，两条链路不相通。",
+    "检索侧：GitHub 源的检索词必须锚定机器人领域（限定 repo:、或标题补 flange/servo/PCD 类硬件锚词），否则命中会被判别层判为 noise，永不进入 confirmed。",
+    "先证明需求再投数据采集：当前零确认信号，抬供给前应先证明有真实用户在问；且本层「无出处不收」，可答率 50% 只能靠厂商 datasheet 出处逐条登记，不能靠堆量。"
   ],
   "meta": {
     "access": {
@@ -172,5 +195,23 @@
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
+  },
+  "classification": {
+    "rule_module": "scripts/lib/demand_signal_rules.mjs",
+    "rule": "三态 fail-closed：confirmed / unclassified / noise。仅 confirmed 计入 real_query_count；不可判定退判 unclassified，绝不默认判真。",
+    "total_hits": 10,
+    "confirmed": 0,
+    "unclassified": 0,
+    "noise": 10,
+    "rejudged_from_snapshot": true
+  },
+  "retrieval_quality": {
+    "noise_share": 1,
+    "note": "检索词未锚定机器人领域：多数命中被判为非机器人信号，建议收窄检索式（限定 repo: 或补硬件锚词）"
+  },
+  "reflow_note": {
+    "reflowed_at": "2026-09-20",
+    "rule_module": "scripts/lib/demand_signal_rules.mjs",
+    "note": "原快照缺 signal_state（旧版格式：real_signal 为写死常量而非判定结果），已按三态判别层重判；real_query_count 现只计 confirmed，旧版「已捕获 N 条真实兼容性提问信号」表述已作废。"
   }
 }
