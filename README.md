@@ -8,7 +8,7 @@
 - **预览域（Cloudflare Pages 默认域，非正式入口，勿对外引用）**: https://robotparts-924.pages.dev
 <!-- RP-STATS:START 由 scripts/inject_readme_stats.py 生成，勿手改 -->
 - **数据量**：798 实体（589 实物零部件 / 101 接口规范 / 81 AI 模型软件 / 10 企业主体 / 17 市场情报）；机械接口声明率 5.75%（25/435）；开源组件 325
-- **最后更新**：2026-09-20
+- **最后更新**：2026-09-21
 <!-- RP-STATS:END -->
 
 ## 2. 核心目标
@@ -103,7 +103,7 @@ python scripts/ci_gate.py --list   # 列出全部闸门
 python scripts/ci_gate.py          # 跑全部闸门（GitHub Actions 跑的就是这套）
 ```
 
-共 <!-- RP-GATES:START 由 scripts/inject_readme_stats.py 生成，勿手改 -->21<!-- RP-GATES:END --> 项：
+共 <!-- RP-GATES:START 由 scripts/inject_readme_stats.py 生成，勿手改 -->22<!-- RP-GATES:END --> 项：
 
 语义索引覆盖全部实体 · 实体 schema 契约 · `mount_type` 枚举契约 ·
 `standard_conformance` 覆盖率一致 · 对外数据集分发一致性 · agent-discovery 技能清单一致性 ·

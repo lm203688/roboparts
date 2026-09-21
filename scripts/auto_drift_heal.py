@@ -63,6 +63,28 @@ def run_regression():
     return rc == 0
 
 
+def run_pure_drift_check():
+    """【20260921 新增】收口前必须先证明"这批改动真是漂移"。
+
+    真实缺口（本函数的存在理由）：此前本器只看 `git status` 有没有改动，就
+    `git add -A` + commit("auto-heal: drift remediation")。于是**真内容改动**
+    （改了数字、改了文案、改了逻辑）会被贴上 drift 标签静默入库，而 review 者
+    看到 "drift remediation" 就放过去了 —— 这是把内容改动洗白成噪声。
+
+    现在收口路径强制过 scripts/check_pure_drift.py：它逐文件判别为
+    空白归一化 / 时间戳滚动 / 内容改动，只要有一处内容改动就 exit 1。
+    返回 (ok, 摘要)。
+    """
+    print("  [DRIFT-HEAL] Running check_pure_drift.py...")
+    rc, out, err = run_cmd(
+        f"python {os.path.join(SCRIPTS, 'check_pure_drift.py')}",
+        timeout=120
+    )
+    tail = (out or err or '').strip().splitlines()
+    summary = ' | '.join(tail[-3:])[:300] if tail else '(无输出)'
+    return rc == 0, summary
+
+
 def run_deploy():
     """Run deploy.mjs"""
     print("  [DRIFT-HEAL] Running deploy.mjs...")
@@ -158,7 +180,24 @@ def main():
         return 1
     
     print("  GREEN: Regression passed")
-    
+
+    # 【20260921】收口前必须有机械证据证明这批改动是漂移而不是内容改动。
+    # 未过此关即拒绝自动提交，转为升级项交人工 —— 宁可留一次手工收口，
+    # 也不能让内容改动被 "drift remediation" 这个标签静默放行。
+    print("\n[DRIFT-HEAL] Step 3b: Prove changes are pure drift...")
+    drift_ok, drift_summary = run_pure_drift_check()
+    if not drift_ok:
+        print("  RED: 存在内容改动，拒绝以 drift 名义自动提交")
+        print(f"  {drift_summary}")
+        escalate(
+            "工作树含**内容改动**（非纯漂移），auto-drift-heal 拒绝自动提交，"
+            "以免内容改动被 'drift remediation' 标签洗白。"
+            f"判别器输出：{drift_summary}"
+        )
+        return 1
+
+    print("  GREEN: Pure drift confirmed")
+
     # Commit
     print("\n[DRIFT-HEAL] Step 4: Commit changes...")
     now_str = datetime.now().strftime("%Y%m%d-%H%M")

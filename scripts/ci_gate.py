@@ -526,6 +526,35 @@ def gate_adapter_geometry():
              '--self-test'])
 
 
+def gate_pure_drift():
+    """纯漂移判别器 —— 收口提交的机械前置闸门。
+
+    2026-09-21 新增。背景：部署会重生成一批派生文件（api/*.json 的
+    `updated`/`audited_at` 滚日、llms.txt 的「最后更新」、data.js 的 updated、
+    注入器重渲染的空白归一化），这类改动惯例收口成一句「仅时间戳滚日，无内容改动」。
+
+    **这句话此前只能靠人肉核验。** scripts/auto_drift_heal.py 的做法是
+    `git add -A` + `git commit -m "auto-heal: drift remediation"` —— 它只看
+    git status 有没有改动，不看改动**是什么**。于是真内容改动（改了数字、改了
+    文案、改了逻辑）会被贴上 drift 标签静默入库，review 者看到
+    "drift remediation" 就放过去了。这是本仓「闸门自己分不清两种输入」病史的
+    又一例（同族：L1.74 idset 假绿、L1.76 数字识别器漏网）。
+
+    本闸门只跑 check_pure_drift.py 的 --self-test，**不在 CI 跑审计模式**：
+    审计（工作树 vs HEAD）在 CI 上恒为「无改动」= 无信号；在工作树上则会把正常
+    开发中的源改动报成内容改动 = 假警报。它真正的调用点是收口路径 ——
+    auto_drift_heal.py 在 `git add -A` 之前调它，不过关即拒绝自动提交。
+    于是 CI 上该守的就只剩「判别器自身会不会退化」：自证 12 项对照（含 5 条内容
+    改动阴性对照：JSON 数字/文案/数组长度、文本词语/数字）+ 1 条**真实临时 git
+    仓库端到端**用例（覆盖取 diff → 分类 → 汇总判定整条管道：纯漂移必须放行、
+    夹带 798→688 必须判红）。
+    """
+    run_sub('纯漂移判别器阴阳自证',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'check_pure_drift.py'),
+             '--self-test'])
+
+
 GATES = [
     ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
@@ -583,6 +612,9 @@ GATES = [
     # 2026-09-21 新增：法兰转接件的三方几何一致性（预览/OpenSCAD/CLI）。
     # 三处口径一致此前无人守，历史上真出过"预览与产物两套几何"的事故。
     ('转接件三方几何一致性', gate_adapter_geometry),
+    # 2026-09-21 新增：收口提交的机械前置闸门。auto_drift_heal.py 曾把任何工作树
+    # 改动都当"漂移"提交，无法区分时间戳滚动与真内容改动 ⇒ 内容改动被洗白入库。
+    ('纯漂移判别（收口前置）', gate_pure_drift),
     ('对外 JSON 可解析', gate_json_parses),
     ('entities.json meta 一致', gate_entities_meta_consistent),
     ('meta 单一真相源', gate_meta_single_source),
