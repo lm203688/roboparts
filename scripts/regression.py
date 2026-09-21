@@ -6622,6 +6622,20 @@ def layer1_62():
     check(V.verdict(3, 5, 2)[1] == 'RED', '三态: 红优先于未核验（别被"没抓全"洗白）')
     check(V.verdict(0, 0, 0)[1] == 'UNKNOWN', '三态: 一页没抓到 → UNKNOWN（空集不算通过）')
 
+    # 定位口径轴（20260921 新增）不许被静默摘掉：
+    # 数字轴绿着、整站却还在播旧口径，是这套闸门唯一没覆盖过的形态 ——
+    # 而它比数字更外显（写在 title/meta/llms.txt/agent-discovery 上，最容易被抓走二次分发）。
+    check('from positioning_contract import' in src,
+          '定位轴已接入，且判据复用 positioning_contract（禁在核验器里另写一套）')
+    check(bool(getattr(V, '_POSITIONING_EXTRA', None)),
+          '定位轴覆盖「自称面」（agent-discovery / api-pricing / waitlist / suppliers）')
+    check(bool(V.positioning_violations([('/x', '<h1>RoboParts — 仿生机器人生态平台</h1>')], {})),
+          '阳性: 线上播退役定位判红')
+    check(not V.positioning_violations(
+        [('/x', '<title>RoboParts — 机器人零件兼容性判定层</title>')],
+        {'/x': '<title>RoboParts — 机器人零件兼容性判定层</title>'}),
+        '阴性: 源与线上同为现行定位表述时放行（否则闸门恒红＝没人再看它）')
+
 
 def _data_embedded_refs(doc):
     """递归取出数据里所有"站内路径"字符串值，返回 {路径: 出现次数}。

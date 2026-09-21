@@ -166,8 +166,8 @@ def scan_sentinels() -> tuple[list[str], list[str]]:
     return stubs, reconciled
 
 
-def ghost_hashes() -> list[str]:
-    """报告里「声称已提交」但仓库中查无的哈希（幽灵哈希）。
+def ghost_hashes() -> tuple[list[str], list[str]]:
+    """报告里「声称已提交」但仓库中查无的哈希 → (幽灵, 已解释)。
 
     判定必须复用 `scripts/lib/hash_history.py` 的 `resolve()`，**不能**自己写
     `git cat-file -e` / `rev-parse --verify`。原因有两条，都是实测踩出来的：
@@ -181,12 +181,18 @@ def ghost_hashes() -> list[str]:
        会原样引用它；±120 字符内出现 GHOST_OK 关键词即判为**在揭露**，豁免。
 
     口径与 regression.py 的哈希闸门保持一致（HASH_CTX / GHOST_OK 同参数）。
+
+    第三类（20260921 补）：「查无」被拆成两种事实。`resolve()` 现返回四态，
+    `deleted_by_rewrite` = 台账（filter-repo 的 commit-map）记着 old→全 0，
+    即**它存在过、被那次合法的历史清理删掉了**。伪造的哈希不在 commit-map 里，
+    仍判幽灵 —— 检出强度不变，但不再让两类事实共用一句「请人工核」。
+    起因：本提示连两轮挂着 3 个哈希喊人工核，而每个都有据可查（详见当轮报告）。
     """
     try:
         sys.path.insert(0, str(ROOT / "scripts"))
         from lib import hash_history as hh  # type: ignore
     except Exception:
-        return []
+        return [], []
     cands: set[str] = set()
     files = sorted(RESULTS.glob("roboparts-*.md")) + [NEEDS_USER]
     for p in files:
@@ -203,10 +209,16 @@ def ghost_hashes() -> list[str]:
                 continue
             cands.add(h)
     ghosts: list[str] = []
+    explained: list[str] = []
     for h in sorted(cands):
-        if hh.resolve(ROOT, h, [ROOT, OPS_REPO])[0] == "unknown":
+        st = hh.resolve(ROOT, h, [ROOT, OPS_REPO])[0]
+        if st == "unknown":
             ghosts.append(h)
-    return ghosts
+        elif st == "deleted_by_rewrite":
+            # 台账（filter-repo 的 commit-map）亲证「曾存在、后被那次合法清理删除」。
+            # 与幽灵分开报：伪造的哈希不会出现在 commit-map 里。见 lib/hash_history.py。
+            explained.append(h)
+    return ghosts, explained
 
 
 
@@ -278,8 +290,9 @@ def last_digest() -> str:
 
 def build_markdown(now: dt.datetime, reg: tuple[str, list[str]],
                    stubs: list[str], recon: list[str],
-                   ghosts: list[str]) -> str:
+                   ghosts: tuple[list[str], list[str]]) -> str:
     verdict, fails = reg
+    ghosts, explained = ghosts
     dirty_src = git_dirty()
     dirty_derived = git_dirty_derived()
     items = open_items()
@@ -340,6 +353,11 @@ def build_markdown(now: dt.datetime, reg: tuple[str, list[str]],
     L.append(f"| RECONCILED 补写 | {len(recon)} | 审计轨迹 |")
     L.append(f"| 哈希可解析性（提示项·非闸门） | {len(ghosts)} | "
              f"{'⚠️ ' + ', '.join(ghosts[:5]) + ' 主仓+ops仓+重写台账均查无，请人工核' if ghosts else '✅ 全部可解析'} |")
+    if explained:
+        # 台账亲证的「曾存在、后被清理删除」单独一行：不并入上一行，也不喊人工核。
+        # 并进去会让「有证据」和「凭空出现」共用一句结论，正是本仓反复栽的口径混淆。
+        L.append(f"| 　└ 已解释（台账零映射） | {len(explained)} | "
+                 f"filter-repo commit-map 记其存在后被删（{', '.join(explained[:5])}）—— 非伪造，无需人工核 |")
     L.append(f"| 最近部署标记 | `{last_deploy()}` | 部署留痕 |")
     L.append(f"| 上次日报 | {last_digest()} | 节流用 |")
     L.append("")

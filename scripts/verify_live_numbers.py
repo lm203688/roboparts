@@ -53,6 +53,7 @@ sys.path.insert(0, os.path.join(ROOT, 'scripts'))
 from onboarding_block import facts, stale_count_claims  # 数字的唯一真相源  # noqa: E402
 from regression import (  # 口径定义唯一来源  # noqa: E402
     _KIND_ALT, _KIND_NOUNS, _L161_BULLET, _L161_COUNT, _L161_MARKER)
+from positioning_contract import local_map, positioning_violations  # noqa: E402
 
 # 口径名词 → 真相源里的键。'TOTAL' 表示实体总数，'CATEGORIES' 表示品类数。
 # 这张表是本脚本唯一的"自有知识"，且只做名词到键的翻译，不含任何数值。
@@ -330,6 +331,24 @@ _API_TOTALS = [
     ('/api/data.json',    ('meta', 'total_entities'), 'TOTAL'),
     ('/api/oss?stats=1',  ('meta', 'total_entities'), 'OSS_TOTAL'),
     ('/mcp',              ('dataset', 'total_entities'), 'TOTAL'),
+    # 20260921 补：agent-discovery.json 是「AI 抓取面」的自称数据集大小，
+    # 与 /mcp 同族（目录站与 agent 直接读它），此前同样没有任何东西核验过。
+    ('/agent-discovery.json', ('total_entities',), 'TOTAL'),
+]
+
+
+# ---------------------------------------------------------------------------
+# 定位口径轴（20260921 补的盲区：比数字更外显的主张，此前线上零核验）
+#
+# 本轮把全站定位从 6 套收敛为 1 套（「机器人零件兼容性判定层」），验收是一次人工 grep，
+# 结论只写进了 docs/positioning-audit-20260921.md。**没有机制承接**：
+#   · 数字轴被写回旧值 → 本脚本抓得到；定位轴被写回旧口径 → 没人管；
+#   · 源改了没部署（本仓最高频的失真形态）在定位轴上同样无人核验。
+# 判据不在这里手写期望值，而是交给本地源文件自己说话（见 positioning_contract.py）：
+# 本地含定位表述而线上不含 => 未部署；任一侧出现退役表述 => 漂移。
+# 这三条 URL 是「自称面」而非长文正文，与 17 页数字核验分开走，互不干扰口径。
+_POSITIONING_EXTRA = [
+    '/agent-discovery.json', '/api-pricing.html', '/waitlist.html', '/suppliers.html',
 ]
 
 
@@ -638,6 +657,47 @@ def self_test():
     check(not any(p == '/mcp' or p.startswith('/mcp') for p in live_paths()),
           '精确盲区: live_paths() 里确实没有 /mcp（盲区是真的）')
 
+    # ---- 定位口径轴（第四轴，20260921 补）：判据来自本地源，不自带期望值 ----
+    # 本轴的病根形态与前三轴不同：前三轴是「线上数字 ≠ 真相源」，
+    # 本轴是「线上自称的定位 ≠ 源里写的定位」——数字轴绿着也可能整站还在播旧口径。
+    PL = '/p'
+    src_new = '<title>RoboParts — 机器人零件兼容性判定层</title>'
+    ppos = [
+        ('线上仍写退役表述',
+         positioning_violations([(PL, '<h1>RoboParts — 仿生机器人生态平台</h1>')], {})),
+        ('源已改而线上是旧口径（本轮真实病根：改了没部署）',
+         positioning_violations([(PL, '<h1>RoboParts — 开源机器人兼容性平台</h1>')],
+                                {PL: src_new})),
+        ('源新线上旧（线上缺定位表述）',
+         positioning_violations([(PL, '<h1>RoboParts</h1>')], {PL: src_new})),
+    ]
+    for why, got in ppos:
+        check(bool(got), '阳性: 定位轴判红（%s）' % why)
+    pneg = [
+        ('源与线上同含定位表述', positioning_violations([(PL, src_new)], {PL: src_new})),
+        ('合法变体（多一个「的」）',
+         positioning_violations(
+             [(PL, '<title>RoboParts — 机器人零件的兼容性判定层</title>')], {PL: src_new})),
+        ('本地取不到源时不作要求', positioning_violations([(PL, '<h1>无定位</h1>')], {})),
+        ('短语被标签/换行切开仍算命中', positioning_violations(
+            [(PL, '<h1>机器人零件<span>兼容</span>性判定层</h1>')], {PL: src_new})),
+    ]
+    for why, got in pneg:
+        check(not got, '阴性: 定位轴放行（%s）' % why)
+    # 精确盲区：同一份"线上旧口径"页面喂给数字轴，它一声不吭（口径里根本没有定位词）——
+    # 证明这一格只有本轴够得着，不是"别处已经能抓的红"。
+    stale_pos_body = '<h1>RoboParts — 仿生机器人生态平台</h1><p>收录 706 个实体</p>'
+    check(not live_violations([(PL, stale_pos_body)], EXP),
+          '精确盲区: 数字轴对"线上播旧定位"完全放行 ← 只有定位轴能抓')
+    check(bool(positioning_violations([(PL, stale_pos_body)], {})),
+          '精确盲区: 同一份内容，定位轴判红（新增轴非空转）')
+    check(not any('/agent-discovery' in p for p in live_paths()),
+          '精确盲区: live_paths() 里确实没有 /agent-discovery.json（自称面盲区是真的）')
+    # 隔离性：判据不向环境取值，全由调用方喂
+    check(positioning_violations([(PL, src_new)], {PL: src_new})
+          == positioning_violations([(PL, src_new)], {PL: src_new}),
+          '隔离性: 同输入同结论（不向环境取值）')
+
     print('\n%s' % ('❌ 自测失败 %d 项' % len(fails) if fails else '✅ 自测全绿'))
     return 1 if fails else 0
 
@@ -668,6 +728,20 @@ def main():
             llms_bad = llms_subset_mismatches(text, expected)
             break
 
+    # 定位口径轴（20260921 补盲区）：判据来自本地源，不手写期望值。
+    # 抓不到 = UNKNOWN（不判红）；抓到了但源/产物对不上 = RED。
+    pos_pages, pos_unknown = list(pages), []
+    for p in _POSITIONING_EXTRA:
+        status, text = _fetch(p)
+        if status == 0:
+            pos_unknown.append(p)
+        elif status >= 400:
+            pos_unknown.append('%s(HTTP %d)' % (p, status))
+        else:
+            pos_pages.append((p, text))
+    pos_bad = positioning_violations(
+        pos_pages, local_map([n for n, _ in pos_pages]))
+
     # 对外 JSON 接口总数（页面正文核验够不着的那一轴）
     api_payloads, api_unknown = [], []
     for path, keypath, exp_key in _API_TOTALS:
@@ -684,9 +758,9 @@ def main():
             api_payloads.append((path, keypath, exp_key, obj))
     api_bad = api_total_mismatches(api_payloads, expected)
 
-    code, state = verdict(len(pages) + len(api_payloads),
-                          len(unknown) + len(api_unknown),
-                          len(bad) + len(api_bad) + len(llms_bad))
+    code, state = verdict(len(pages) + len(api_payloads) + len(pos_pages),
+                          len(unknown) + len(api_unknown) + len(pos_unknown),
+                          len(bad) + len(api_bad) + len(llms_bad) + len(pos_bad))
 
     if as_json:
         print(json.dumps({
@@ -699,6 +773,9 @@ def main():
             'api_violations': ['%s: %s' % (p, m) for p, m in api_bad],
             'llms_subset_violations': ['%s: 线上%s ≠ 真相源%s' % (n, a, e)
                                        for _, n, a, e in llms_bad],
+            'positioning_checked': [n for n, _ in pos_pages],
+            'positioning_unknown': pos_unknown,
+            'positioning_violations': ['%s: %s' % (n, m) for n, m in pos_bad],
         }, ensure_ascii=False, indent=2))
     else:
         print('=== 线上对外数字核验 · %s · 隔离头已带 ===' % TARGET)
@@ -714,18 +791,22 @@ def main():
             print('❌ %-58s %s' % (path, msg))
         for _, noun, got, want in llms_bad:
             print('❌ %-58s llms.txt 子集 %s 线上%s ≠ 真相源%s' % ('/llms.txt', noun, got, want))
+        for name, msg in pos_bad:
+            print('❌ %-58s 定位口径 %s' % (name, msg))
         if state == 'RED':
-            print('\n❌ 页面失配 %d/%d；对外接口失配 %d/%d。'
-                  % (len(bad), len(pages), len(api_bad), len(api_payloads)))
+            print('\n❌ 页面失配 %d/%d；对外接口失配 %d/%d；定位口径失配 %d 处。'
+                  % (len(bad), len(pages), len(api_bad), len(api_payloads), len(pos_bad)))
             print('   注意：本地回归绿 + 探活 200 都**不能**排除这个红 ——'
                   '它恰恰说明线上跑的不是当前代码，多半是没部署成功。')
         elif state == 'UNKNOWN':
             print('\n⚠️  未核验 %d 项 —— 这**不是**绿灯，只是没看到。'
-                  % (len(unknown) + len(api_unknown)))
+                  % (len(unknown) + len(api_unknown) + len(pos_unknown)))
             print('   先确认本机出网/是否被限流，再重跑；别把"没看到"当成"没问题"。')
         else:
             print('\n✅ 线上 %d 页 + %d 个对外接口的数字均与真相源一致（0 项未核验）'
                   % (len(pages), len(api_payloads)))
+            print('✅ 定位口径：%d 个自称面全绿（0 处退役表述、0 处源新产物旧）'
+                  % len(pos_pages))
 
     sys.exit(code)
 

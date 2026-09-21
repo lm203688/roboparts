@@ -159,13 +159,55 @@ def object_type(root, sha, repos=None):
     return None
 
 
+def deleted_by_rewrite(root):
+    """台账里 target 为**全 0** 的 old 哈希 = filter-repo 亲证「曾存在、后被删除」。
+
+    返回 {40 位 old: 事件说明}。
+
+    为什么必须与「幽灵」分开（20260921 补）：`_mapping()` 故意把全 0 映射滤掉，
+    于是这类哈希和**凭空编造**的哈希被一视同仁地判成幽灵，`_STATUS.md` 连两轮
+    挂着「请人工核」。但它们其实**有证据**：commit-map 是 filter-repo 自己生成的
+    映射表，伪造的哈希根本不会出现在里面 —— 台账里记着 old→全 0，恰恰等于
+    「这个提交存在过，只是被那次合法的历史清理删掉了」。
+
+    同族教训（L1.58/L1.32）：**恒红会训练人忽略这条提示**，比漏报更坏。
+    这里不再让"查无"这一种口径吃掉两种事实。
+
+    注意：**不得并入 `_mapping()`** —— regression 的台账守卫要求「映射的新哈希
+    必须在当前对象库中真实存在」，把全 0 塞进去会立刻判悬空映射（自伤）。
+    """
+    out = {}
+    for ev in load_ledger(root)['events']:
+        why = ev.get('reason') or ev.get('tool') or 'history rewrite'
+        for o, n in (ev.get('map') or {}).items():
+            if n and n == _ZERO and isinstance(o, str) and len(o) == 40:
+                out[o] = why
+    return out
+
+
+def _deleted_match(root, sha):
+    """全长的 40 位直配；缩写要求**唯一前缀**（撞多个＝不可判定，宁可当幽灵也不猜）。"""
+    d = deleted_by_rewrite(root)
+    if sha in d:
+        return d[sha]
+    if 7 <= len(sha) < 40:
+        hits = {k for k in d if k.startswith(sha)}
+        if len(hits) == 1:
+            return d[hits.pop()]
+    return None
+
+
 def resolve(root, sha, repos=None):
     """解析一个（可能是缩写的）哈希。
 
     返回 (status, current_sha, obj_type)：
-      ('current',   原哈希, 类型)  —— 当前对象库里就有
-      ('rewritten', 新哈希, 类型)  —— 重写前的真实哈希，已映射到当前哈希
-      ('unknown',   None,   None)  —— 两边都查不到 = 幽灵
+      ('current',            原哈希, 类型) —— 当前对象库里就有
+      ('rewritten',          新哈希, 类型) —— 重写前的真实哈希，已映射到当前哈希
+      ('deleted_by_rewrite', None,  None) —— 台账记着它存在过、并被那次合法清理删除
+      ('unknown',            None,  None) —— 两边都查不到 = 幽灵
+
+    第三态与第四态的区别是**有没有证据**：前者在 filter-repo 的 commit-map 里，
+    后者只出现在报告文字里。判定强度不变 —— 编造的哈希两边都不在。
     """
     sha = (sha or '').strip().lower()
     if not sha:
@@ -179,9 +221,12 @@ def resolve(root, sha, repos=None):
         hits = {v for k, v in m.items() if k.startswith(sha)}
         # 缩写撞到多个不同目标 = 不可判定，宁可当幽灵也不猜
         new = hits.pop() if len(hits) == 1 else None
-    if not new:
-        return ('unknown', None, None)
-    return ('rewritten', new, object_type(root, new, repos))
+    if new:
+        return ('rewritten', new, object_type(root, new, repos))
+    if _deleted_match(root, sha):
+        return ('deleted_by_rewrite', None, None)
+    return ('unknown', None, None)
+
 
 
 def to_current(root, sha, repos=None):

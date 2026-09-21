@@ -103,7 +103,7 @@ python scripts/ci_gate.py --list   # 列出全部闸门
 python scripts/ci_gate.py          # 跑全部闸门（GitHub Actions 跑的就是这套）
 ```
 
-共 <!-- RP-GATES:START 由 scripts/inject_readme_stats.py 生成，勿手改 -->22<!-- RP-GATES:END --> 项：
+共 <!-- RP-GATES:START 由 scripts/inject_readme_stats.py 生成，勿手改 -->23<!-- RP-GATES:END --> 项：
 
 语义索引覆盖全部实体 · 实体 schema 契约 · `mount_type` 枚举契约 ·
 `standard_conformance` 覆盖率一致 · 对外数据集分发一致性 · agent-discovery 技能清单一致性 ·

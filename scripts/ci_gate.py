@@ -555,6 +555,31 @@ def gate_pure_drift():
              '--self-test'])
 
 
+def gate_positioning_caliber():
+    """定位口径闸门 —— 「我们对外自称什么」的本地半场。
+
+    2026-09-21 新增。背景：本轮把全站定位从 6 套收敛为 1 套
+    （「机器人零件兼容性判定层」），**验收方式是一次人工 grep**，结论只写进
+    `docs/positioning-audit-20260921.md:276`。这不是那次 grep 做错了，而是
+    它**没有机制承接**：谁再往任一页面/JSON/llms.txt 写回旧口径，不会有任何
+    东西报警；更隐蔽的反向失真（源改了、线上没改）在定位轴上同样无人核验 ——
+    数字轴有 verify_live_numbers.py 回探，定位轴一格都没有。
+
+    本闸门跑 `positioning_contract.py` 的**离线**两趟（该模块是判据唯一来源，
+    线上半场由 verify_live_numbers.py 复用同一份判据）：
+      ① --check     本地可部署面（255 个文本文件）0 处退役表述；
+      ② --self-test 15 项阴阳对照（含 4 条阴性对照 + 3 项临时目录端到端）。
+    **刻意不在此处联网**：CI 上网络不可依赖，线上半场属部署后回探的职责。
+    """
+    run_sub('定位口径（本地扫描）',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'positioning_contract.py')])
+    run_sub('定位口径判据阴阳自证',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'positioning_contract.py'),
+             '--self-test'])
+
+
 GATES = [
     ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
@@ -615,6 +640,7 @@ GATES = [
     # 2026-09-21 新增：收口提交的机械前置闸门。auto_drift_heal.py 曾把任何工作树
     # 改动都当"漂移"提交，无法区分时间戳滚动与真内容改动 ⇒ 内容改动被洗白入库。
     ('纯漂移判别（收口前置）', gate_pure_drift),
+    ('定位口径本地扫描', gate_positioning_caliber),
     ('对外 JSON 可解析', gate_json_parses),
     ('entities.json meta 一致', gate_entities_meta_consistent),
     ('meta 单一真相源', gate_meta_single_source),
