@@ -77,3 +77,25 @@
 - REF-5 神经形态计算生态 / NIR（aiwiki.ai）
 - REF-6 FlyWire（flywire.ai）
 - REF-7 OpenWorm（openworm.org）
+- REF-8 非夕科技 Flexiv FLEXIVERSE 2026（flexiv.cn/news/Flexiv_new_enlight）
+- REF-9 ForceDelta-VLA（arXiv 2609.18242，2026-09）
+- REF-10 RAI Institute AthenaZero（Science Robotics 2026，robotics.sciencemag.org/doi/10.1126/scirobotics.aee1868）
+- REF-11 NVIDIA SONIC（Science Robotics eaed4592，2026-08；nvlabs.github.io/GR00T-WholeBodyControl）
+
+## 6. 外部浪潮验证（2026-09-21 第二波）
+
+> 情报更新：脑×体分层栈不再是本仓孤论——2026 主流玩家正**独立**沿同一栈落子，
+> 印证 GAP-G1/GAP-G2 与 RoboParts「缺失中间件」立论。四者均**非竞品**（无人做兼容判定层），
+> 是战略顺风 + 潜在生态数据源。
+
+| 主体 / 技术 | 层 | 关键事实（已核实） | 与本项目关系 |
+|---|---|---|---|
+| 非夕科技 Flexiv（FLEXIVERSE 2026） | 体 / Body | Enlight 力觉躯干 + Orion 控制器 + **MICO 模块化标准双臂平台**（具身算法物理底座）；王世全原话「机器人进入真实世界不只靠算法大脑，更需要可靠物理躯干」 | 与脑×体解耦叙事同构；MICO 标准件平台是 G1 生态可 ingest 的对象（潜在数据源） |
+| ForceDelta-VLA（arXiv 2609.18242） | 脑 / Brain | 力觉修正蒸馏框架，接触密集操作 82.2% vs 基线 54.4%；依赖躯体力觉规格 | 上游消费者候选；印证「躯体规格决定大脑性能上限」 |
+| RAI Institute AthenaZero（Science Robotics 2026） | 体 / Body | 准直驱低惯量双臂，有效质量比商用协作臂低一个量级，拟人动态操作（投 30m/s / 接 14m/s） | 新型躯体标准，G1 可 catalog 其接口；躯体多样化→兼容层需求上升 |
+| NVIDIA SONIC（Science Robotics eaed4592） | 体控制 / Control | 单一全身控制策略，1 亿+ mocap 帧，Unitree G1 实测 99.2%；明确为 GR00T（脑）之下的「运动皮层」层；代码 Apache 2.0、权重 NVIDIA Open Model License、跑在商用 G1 上 | 主流玩家把脑×体栈制度化；G1 成为可 catalog 的标准躯体平台 |
+
+**判定**：四者全部落在 RoboParts 刻意不做的「脑 / 体 / 控制」层，**无人做兼容判定中间件**
+→ 立论「缺失的中间件」被 NVIDIA（SONIC+GR00T）、RAI、Flexiv 三方独立强化。
+唯一不变的真阻塞：P0 真实 BOM 声明率 5.75%、P2 ECS 网关（见 _STATUS）。
+
