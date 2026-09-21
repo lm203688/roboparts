@@ -9,8 +9,6 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0b1020">
-
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="description" content="2026年宇树科技科创板IPO与智元机器人赴港上市，标志着人形机器人进入资本主流视野。本文从开源机器人构建者视角，拆解两大IPO背后的核心供应链，梳理执行器、减速器、力传感器、算力芯片四大主线，并说明这些放量如何让你给天工TienKung、Unitree G1、OpenArm、LeRobot-Humanoid买得到、买得起零件。">
 <meta name="keywords" content="宇树科技IPO, 智元机器人上市, 人形机器人供应链, 开源机器人, 谐波减速器, 行星滚柱丝杠, 力传感器, 机器人零部件投资, 天工机器人, LeRobot">
 <link rel="canonical" href="https://roboparts.cc/articles/humanoid-robot-ipo-supply-chain-2026">
@@ -77,6 +75,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 .acard p{color:var(--mut);font-size:13.5px;margin:0 0 10px;flex:1}
 @media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
 </style>
+
 <!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"798 条实体（其中 589 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
 </head>
 <body>
@@ -90,7 +89,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <a href="/pricing">定价</a>
 </div></div>
 <div class="wrap">
-<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱（</div><h1>人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱（对开源构建者意味着什么）</h1><div class="meta">2026-08-03 · RoboParts Research · 约 4672 字 · RoboParts 开源机器人兼容性平台</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">supply-chain</span><span class="badge">investment</span></div><div class="lede">2026年宇树科技科创板IPO与智元机器人赴港上市，标志着人形机器人进入资本主流视野。本文从开源机器人构建者视角，拆解两大IPO背后的核心供应链，梳理执行器、减速器、力传感器、算力芯片四大主线，并说明这些放量如何让你给天工TienKung、Unitree G1、OpenArm、LeRobot-Humanoid买得到、买得起零件。</div><div class="toc"><b>本文目录</b><ol><li><a href="#人形机器人ipo元年-宇树智元上市背后的供应链掘金图谱">人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱</a></li><li><a href="#一-ipo潮-从-200亿俱乐部-到资本市场主流">一、IPO潮：从&quot;200亿俱乐部&quot;到资本市场主流</a></li><li><a href="#二-掘金主线一-执行器-占硬件成本80-的核心战场">二、掘金主线一：执行器——占硬件成本80%的核心战场</a></li><li><a href="#三-掘金主线二-减速器-精度与寿命的护城河">三、掘金主线二：减速器——精度与寿命的护城河</a></li><li><a href="#四-掘金主线三-力-触觉传感器-从可选到标配的质变">四、掘金主线三：力/触觉传感器——从可选到标配的质变</a></li><li><a href="#五-掘金主线四-算力芯片-端侧部署的军备竞赛">五、掘金主线四：算力芯片——端侧部署的军备竞赛</a></li><li><a href="#六-roboparts数据集-ipo供应链追踪基础设施">六、RoboParts数据集：IPO供应链追踪基础设施</a></li><li><a href="#七-结论与行动建议">七、结论与行动建议</a></li></ol></div><article><h2 id="人形机器人ipo元年-宇树智元上市背后的供应链掘金图谱">人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱</h2>
+<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱（</div><h1>人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱（对开源构建者意味着什么）</h1><div class="meta">2026-08-03 · RoboParts Research · 约 4672 字 · RoboParts 机器人零件兼容性判定层</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">supply-chain</span><span class="badge">investment</span></div><div class="lede">2026年宇树科技科创板IPO与智元机器人赴港上市，标志着人形机器人进入资本主流视野。本文从开源机器人构建者视角，拆解两大IPO背后的核心供应链，梳理执行器、减速器、力传感器、算力芯片四大主线，并说明这些放量如何让你给天工TienKung、Unitree G1、OpenArm、LeRobot-Humanoid买得到、买得起零件。</div><div class="toc"><b>本文目录</b><ol><li><a href="#人形机器人ipo元年-宇树智元上市背后的供应链掘金图谱">人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱</a></li><li><a href="#一-ipo潮-从-200亿俱乐部-到资本市场主流">一、IPO潮：从&quot;200亿俱乐部&quot;到资本市场主流</a></li><li><a href="#二-掘金主线一-执行器-占硬件成本80-的核心战场">二、掘金主线一：执行器——占硬件成本80%的核心战场</a></li><li><a href="#三-掘金主线二-减速器-精度与寿命的护城河">三、掘金主线二：减速器——精度与寿命的护城河</a></li><li><a href="#四-掘金主线三-力-触觉传感器-从可选到标配的质变">四、掘金主线三：力/触觉传感器——从可选到标配的质变</a></li><li><a href="#五-掘金主线四-算力芯片-端侧部署的军备竞赛">五、掘金主线四：算力芯片——端侧部署的军备竞赛</a></li><li><a href="#六-roboparts数据集-ipo供应链追踪基础设施">六、RoboParts数据集：IPO供应链追踪基础设施</a></li><li><a href="#七-结论与行动建议">七、结论与行动建议</a></li></ol></div><article><h2 id="人形机器人ipo元年-宇树智元上市背后的供应链掘金图谱">人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱</h2>
 <p><strong>2026年8月，人形机器人产业迎来历史性资本拐点——对开源构建者同样是利好窗口。</strong></p>
 <p>宇树科技正式启动科创板IPO申购，成为A股"人形机器人第一股"；几乎同一时间，智元机器人宣布启动赴港上市流程，估值约200亿美元。两家中国最具代表性的人形机器人企业同步叩响资本市场大门，这不仅是企业自身的里程碑，更意味着整个行业从"技术验证"正式跨入"量产兑现"阶段。</p>
 <p>对零部件供应商、投资人和行业从业者而言，IPO招股书是史上最透明的供应链数据窗口。但对开源机器人构建者（天工 TienKung、Unitree G1/Go2、Trossen OpenArm、LeRobot-Humanoid、roboto_origin 的玩家）来说，IPO 更直接的含义是：<strong>宇树和智元把产能订单砸下去，减速器、丝杠、力传感器的产能和品类会快速扩张，你在 <a href="https://roboparts.cc/suppliers.html">供应商寻源</a> 上能买到的开源兼容零件会更多、更便宜、交期更短。</strong> 本文基于公开情报与产业调研，系统拆解宇树与智元的供应链图谱，定位四大主线，并逐条说明<strong>对开源构建者意味着什么</strong>。</p>
@@ -150,7 +149,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <p>2026年7月，N0-TWAM触觉原生世界动作模型发表，首次将触觉作为与视觉并列的核心模态。同时，FeelWorld视触觉世界模型、VQ-Touch跨传感器触觉生成框架密集发布。</p>
 <p><strong>信号明确：触觉传感器从"可选配置"变为"标配需求"。</strong></p>
 <h3 id="4-2-力传感器选型矩阵">4.2 力传感器选型矩阵</h3>
-<p>RoboParts平台收录的传感器分类已扩充至 90 条，覆盖：</p>
+<p>RoboParts平台收录的传感器分类已扩充至 95 条，覆盖：</p>
 <ul>
 <li><strong>六维力传感器</strong>：ATI Mini、宇立仪器、蓝点触控、Bota Systems</li>
 <li><strong>触觉传感器</strong>：GelSight、DIGIT、SynTouch、帕西尼感知</li>
@@ -180,11 +179,11 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <h2 id="六-roboparts数据集-ipo供应链追踪基础设施">六、RoboParts数据集：IPO供应链追踪基础设施</h2>
 <p>RoboParts平台已收录 798 个实体、覆盖 20 大品类，为IPO供应链追踪提供数据基础设施：</p>
 <ul>
-<li><strong>执行器</strong>：217 条，覆盖旋转/线性/SEA；另有柔性驱动器 21 条</li>
-<li><strong>传感器</strong>：90 条，含力/触觉、视觉、惯性等子类</li>
+<li><strong>执行器</strong>：220 条，覆盖旋转/线性/SEA；另有柔性驱动器 22 条</li>
+<li><strong>传感器</strong>：95 条，含力/触觉、视觉、惯性等子类</li>
 <li><strong>芯片</strong>：108 条，含Jetson Thor、旭日S600、IQ10等最新平台</li>
 <li><strong>协议</strong>：64 条，支持EtherCAT/CANopen/ROS2等产线常用协议</li>
-<li><strong>robot_ai_models</strong>：44 条，覆盖GR00T、Gemini Robotics 2、τ(0)-VLA等</li>
+<li><strong>robot_ai_models</strong>：46 条，覆盖GR00T、Gemini Robotics 2、τ(0)-VLA等</li>
 </ul>
 <p><strong>数据主权声明</strong>：所有实体标注 source / confidence / last_verified，支持国产化率字段与标准符合度标签。</p>
 <hr>
@@ -222,6 +221,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <br>本文数据引用自 RoboParts 公开数据集，转载请注明来源并保留原文链接。
 </div>
 </div>
+
 <style>
 /* RP-ONBOARDING scoped styles */
 .rp-onboard{max-width:880px;margin:48px auto 0;padding:28px 24px;border:1px solid rgba(128,128,128,.28);

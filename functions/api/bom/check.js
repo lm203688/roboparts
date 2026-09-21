@@ -1,5 +1,5 @@
 /**
- * RoboParts BOM 兼容性检查器（免费构建者工具，对标 TraceParts）
+ * RoboParts BOM 兼容性检查器（免费构建者工具，中立第三方判定）
  * POST /api/bom/check
  *
  * Body:

@@ -34,6 +34,7 @@
 """
 import json
 import os
+import re
 import sys
 from collections import Counter
 from datetime import datetime, timezone, timedelta
@@ -182,7 +183,7 @@ def build_data(src, facts, now):
     # 保留既有 meta 的描述性字段（若分发文件存在），数字一律覆盖
     static = {
         'name': 'RoboParts Dataset',
-        'name_zh': '仿生机器人配件数据库',
+        'name_zh': '机器人零部件结构化数据集',
         'domain': 'roboparts.cc',
         'homepage': 'https://roboparts.cc',
         'github': 'https://github.com/lm203688/roboparts',
@@ -192,8 +193,10 @@ def build_data(src, facts, now):
         try:
             with open(DIST_DATA, encoding='utf-8') as f:
                 prev = (json.load(f) or {}).get('meta') or {}
-            for k in ('description', 'name', 'name_zh', 'domain', 'homepage',
-                      'github'):
+            # 注：name / name_zh 是**定位口径**，属受管字段，一律由本文件现算，
+            # 不从旧分发文件继承 —— 否则改了这里的定位后，旧值会被"保留"住，
+            # 形成「生成器已改、产物没变」的静默漂移（20260921 实测踩到）。
+            for k in ('description', 'domain', 'homepage', 'github'):
                 if prev.get(k):
                     static[k] = prev[k]
         except Exception:
@@ -256,16 +259,16 @@ def build_readme(facts, now):
         tier_lines.append(f'{t} {c} 条（{pct(c)}）')
     tier_summary = ' · '.join(tier_lines)
 
-    return f"""# RoboParts Dataset — 仿生机器人零部件结构化数据集
+    return f"""# RoboParts Dataset — 机器人零部件结构化数据集（兼容判定就绪）
 
-[![RoboParts](https://img.shields.io/badge/RoboParts-仿生机器人生态平台-06b6d4)](https://roboparts.cc)
+[![RoboParts](https://img.shields.io/badge/RoboParts-机器人零件兼容性判定层-06b6d4)](https://roboparts.cc)
 [![Entities](https://img.shields.io/badge/Entities-{n}-10b981)](./data/)
 [![License](https://img.shields.io/badge/License-CC--BY--4.0-blue)](./LICENSE)
 [![ModelScope](https://img.shields.io/badge/ModelScope-数据集-ff6a00)](https://www.modelscope.cn/datasets/lm203688/roboparts-data)
 [![PyPI](https://img.shields.io/badge/PyPI-roboparts-3775a9)](https://pypi.org/project/roboparts/)
 
 > 覆盖 **{f['category_count']} 大品类**（{zh_names}）的结构化零部件数据集，
-> 专为具身智能 / 仿生机器人研发设计，可被 AI Agent 直接检索与引用。
+> 面向具身智能 / 人形 / 仿生机器人研发，可被 AI Agent 直接检索与引用。
 > 当前 **{n} 条实体**。
 
 <!-- 本文件由 scripts/sync_dataset_dist.py 从 api/entities.json 生成，所有数字现算。
@@ -441,6 +444,149 @@ def _norm_json(obj):
     return json.dumps(obj, ensure_ascii=False, indent=2, sort_keys=False) + '\n'
 
 
+# ---------------------------------------------------------------------------
+# Python SDK（DIST/python-sdk/）内的对外数字
+# ---------------------------------------------------------------------------
+# 20260921 发现：python-sdk/ 是 DIST 下的**手维护**静态目录（不由本脚本产出），
+# 它的数字从未纳入生成链 ⇒ 已实测失修成「已发布包对外撒谎」：
+#
+#     README.md   自称 688 实体 / 10 品类：执行器(199)、传感器(90)…
+#                 真值   798 实体 / 20 品类：执行器(220)、传感器(95)…
+#     README.md   套餐 Starter ¥9=500 积分 / Pro ¥29=2000 / Lifetime ¥199=9999
+#                 真相源 functions/api/payment/create.js 是 100 / 500 / 999999
+#
+# 危害级别高于站点：这是 PyPI 上别人会 `pip install` 的产物，且 DIST 在
+# .gitignore 里、SDK 又不在任何闸门扫描面内——数字错了没有任何机器会响。
+#
+# 处理：把 SDK 里承载数字的句子纳入本脚本重写面；任一条正则**失配即判红**，
+# 防止 SDK 改版后这里静默失效（那会变成「闸门绿，但它已经没在看东西」）。
+SDK_DIR = os.path.join(DIST, 'python-sdk')
+PAYMENT_CFG = os.path.join(ROOT, 'functions', 'api', 'payment', 'create.js')
+
+
+def plan_truth():
+    """套餐（价格 / 积分）唯一真相源 = 真正扣费的那个文件。
+
+    为什么不新造一个 plans.json：扣费逻辑已经在 create.js 里，再造一份就是
+    「同一口径的第二份来源」，正是本项目反复踩的漂移起点。解析不足 3 档即抛。
+    """
+    src = open(PAYMENT_CFG, encoding='utf-8').read()
+    out = {}
+    for m in re.finditer(
+            r"(\w+)\s*:\s*\{\s*price\s*:\s*(\d+)\s*,\s*credits\s*:\s*(\d+)\s*,", src):
+        out[m.group(1)] = (int(m.group(2)), int(m.group(3)))
+    if len(out) < 3:
+        raise SystemExit('!! 从 functions/api/payment/create.js 解析到 %d 档套餐（<3），'
+                         'SDK 套餐数字拒绝生成' % len(out))
+    return out
+
+
+def _cat_zh(cat):
+    return CATEGORY_ZH.get(cat, cat).split(' (')[0]
+
+
+def sdk_patches(facts, plans):
+    """返回 {SDK 相对路径: [(正则, 替换), ...]}。每个正则都必须命中，否则判红。"""
+    f = facts
+    cats = f['categories']
+    total = f['total']
+
+    def n(cat):
+        return cats.get(cat, 0)
+
+    def plan_text(key):
+        price, credits = plans[key]
+        return '¥%d' % price, ('无限' if credits >= 999999 else '%d' % credits)
+
+    cat_detail = '、'.join('%s(%d)' % (_cat_zh(c), cats[c])
+                          for c, _ in sorted(cats.items(), key=lambda kv: -kv[1]))
+
+    rp = {}
+
+    # --- README.md（对外数据集卡片，HuggingFace / ModelScope 也展示它）---
+    # 注：所有「去品牌词」类锚点必须写成 (旧|新) 二选一 —— 否则第一次跑完旧词没了，
+    # 第二次跑就"锚点失配"判红（一次性替换不是幂等，会把闸门变成永远红）。
+    rules = [
+        (r'(?:仿生机器人零部件结构化数据|机器人零部件结构化数据)', '机器人零部件结构化数据'),
+        (r'覆盖 \*\*\d+ 个实体\*\*[^\n]*',
+         '覆盖 **%d 个实体** / **%d 个品类**：%s' % (total, f['category_count'], cat_detail)),
+    ]
+    for ep, cat in (('get_actuators', 'actuators'), ('get_sensors', 'sensors'),
+                    ('get_chips', 'chips'), ('get_protocols', 'protocols')):
+        rules.append((r'(\|\s*`%s\(limit\)`\s*\|\s*`GET /api/%s\.json`\s*\|\s*)\d+' % (ep, cat),
+                      r'\g<1>%d' % n(cat)))
+    rules.append((r'(\|\s*`get_entities\(\)`\s*\|\s*`GET /api/entities\.json`\s*\|\s*)\d+',
+                  r'\g<1>%d' % total))
+    for key in ('starter', 'pro', 'lifetime'):
+        price, cred = plan_text(key)
+        rules.append((r'(\|\s*`%s`\s*\|\s*)¥\d+(\s*\|\s*)(?:\d+|无限)' % key,
+                      r'\g<1>%s\g<2>%s' % (price, cred)))
+    rp['README.md'] = rules
+
+    # --- roboparts/client.py（docstring 里的实体数与积分）---
+    rules = []
+    for cat, label in (('actuators', '执行器'), ('sensors', '传感器'),
+                       ('chips', '芯片'), ('protocols', '通信协议')):
+        rules.append((r'(获取%s列表（)\d+( 个实体，免费）)' % label, r'\g<1>%d\g<2>' % n(cat)))
+    for key in ('starter', 'pro', 'lifetime'):
+        price, cred = plan_text(key)
+        rules.append((r'(- ``"%s"``: )¥\d+( / )(?:\d+|无限)( 积分)' % key,
+                      r'\g<1>%s\g<2>%s\g<3>' % (price, cred)))
+    rp['roboparts/client.py'] = rules
+
+    # --- roboparts/__init__.py（包首屏 docstring）---
+    rules = [
+        (r'(?:仿生机器人零部件结构化数据|机器人零部件结构化数据)', '机器人零部件结构化数据'),
+        (r'覆盖执行器\(\d+\)、传感器\(\d+\)、\s*芯片\(\d+\)、协议\(\d+\) 共 \d+ 个实体。',
+         '覆盖执行器(%d)、传感器(%d)、\n芯片(%d)、协议(%d) 共 %d 个实体。'
+         % (n('actuators'), n('sensors'), n('chips'), n('protocols'), total)),
+    ]
+    rp['roboparts/__init__.py'] = rules
+
+    # --- roboparts/models.py（dataclass docstring）---
+    rp['roboparts/models.py'] = [
+        (r'(等 )\d+( 个执行器实体)', r'\g<1>%d\g<2>' % n('actuators')),
+        (r'(等 )\d+( 个传感器实体)', r'\g<1>%d\g<2>' % n('sensors')),
+    ]
+
+    # --- 打包元数据（PyPI 上展示的 description）---
+    rp['pyproject.toml'] = [
+        (r'(?:仿生机器人零部件结构化数据|机器人零部件结构化数据)', '机器人零部件结构化数据')]
+    # setup.py 的措辞少一个「结构化」（历史不一致），单独给锚点
+    rp['setup.py'] = [
+        (r'(?:仿生机器人零部件数据|机器人零部件数据)', '机器人零部件数据')]
+    return rp
+
+
+def sdk_sync(facts, write):
+    """按真相源重写 SDK 内的对外数字。返回 (漂移文件列表, 失配列表)。
+
+    write=True 时写盘；False 时只报告。**失配（正则没命中）永远算问题**——
+    它意味着 SDK 结构变了、本脚本已经看不见那些数字了。
+    """
+    plans = plan_truth()
+    patches = sdk_patches(facts, plans)
+    drifted, unmatched = [], []
+    for rel, rules in patches.items():
+        p = os.path.join(SDK_DIR, rel.replace('/', os.sep))
+        if not os.path.exists(p):
+            unmatched.append('python-sdk/%s 不存在' % rel)
+            continue
+        cur = open(p, encoding='utf-8').read()
+        new = cur
+        for pat, rep in rules:
+            if not re.search(pat, new):
+                unmatched.append('python-sdk/%s 数字锚点失配 /%s/' % (rel, pat[:46]))
+                continue
+            new = re.sub(pat, rep, new)
+        if new != cur:
+            drifted.append('python-sdk/%s' % rel)
+            if write:
+                with open(p, 'w', encoding='utf-8', newline='') as fh:
+                    fh.write(new)
+    return drifted, unmatched
+
+
 def main():
     check = '--check' in sys.argv
     if not os.path.exists(SRC):
@@ -513,10 +659,16 @@ def main():
                     f"{facts['mi']['rate']:.2f}%")
             problems.append('README.md 内容与真相源现算结果不一致')
 
+    # --- Python SDK 内的对外数字（PyPI 已发布，见文件头注释）---
+    sdk_drift, sdk_unmatched = sdk_sync(facts, write=not check)
+    problems.extend(sdk_unmatched)
+    if check:
+        problems.extend('%s 对外数字与真相源不一致' % x for x in sdk_drift)
+
     if check:
         if problems:
             print('❌ 分发目录漂移（roboparts-dataset-github/ 会把错误数字发布到 '
-                  'HuggingFace / ModelScope）:')
+                  'HuggingFace / ModelScope / PyPI）:')
             for p in problems:
                 print(f'   - {p}')
             print('   修复: python scripts/sync_dataset_dist.py')
@@ -533,6 +685,10 @@ def main():
 
     print(f"✅ 已生成分发目录: {facts['total']} 实体 / "
           f"{facts['category_count']} 品类 / 声明率 {facts['mi']['rate']:.2f}%")
+    if sdk_drift:
+        print('   （SDK 对外数字已同步）')
+        for x in sdk_drift:
+            print(f'   - {x}')
     if problems:
         print('   （修正了以下漂移）')
         for p in problems:

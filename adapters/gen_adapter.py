@@ -27,10 +27,19 @@ gen_adapter.py — RoboParts 法兰转接板（adapter plate）参数化生成�
 **直径**，销孔圆心落在半径 pin_pcd/2 上。这与 `adapter-generator.html` 的
 OpenSCAD 导出分支一致（其 `pins()` 模块内部做 `translate([pcd/2,0,0])`）。
 
-注意：该 HTML 的 three.js **预览**分支存在一处不一致 —— 它把 pinPCD 当成半径
-直接用（`s.pinPCD*Math.cos(a)`）。按半径解释会导致销孔与螺栓孔干涉，例如
-A100 预设 pinPCD=50 恰好等于其螺栓节圆半径 50，两个销孔会正好压在 0°/180°
-的螺栓孔上。因此本脚本采用直径口径（正确解释），并对干涉做显式校验告警。
+【口径现状 20260921 复核 —— 三方已一致，本条改为留痕而不是警告】
+该 HTML 的 three.js **预览**分支曾在早期版本把 pinPCD 当半径直接用
+（`s.pinPCD*Math.cos(a)`），会导致销孔与螺栓孔干涉 —— A100 预设 pinPCD=50
+恰好等于其螺栓节圆半径 50，两个销孔会正好压在 0°/180° 的螺栓孔上。
+**该缺陷现已修复**：`adapter-generator.html` 的两个分支都按直径解释
+（预览 `s.pinPCD/2*Math.cos(a)`；OpenSCAD `pins(pcd,...)` 内部
+`translate([pcd/2,0,0])`），与本脚本一致。
+
+⚠️ 留这段留痕的原因：**这条一致性没有任何机器在守**。它当初是靠人读完三处代码
+比对出来的，注释又晚于修复一周才更新 —— 也就是说，下次任一方改动都会静默分叉，
+而唯一的记录就是这段文字。改动任一处 pinPCD 语义时，必须同时核
+`adapter-generator.html` 的预览分支、其 OpenSCAD 模板的 `pins()` 模块、
+以及本脚本的 `build()`。（已列为硬骨头待办：加机械可判定的三方一致性闸门。）
 
 关于螺纹
 --------

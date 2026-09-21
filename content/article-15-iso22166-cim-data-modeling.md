@@ -10,7 +10,7 @@ canonical: "https://roboparts.cc/content/article-15-iso22166-cim-data-modeling.m
 
 # ISO 22166-201 模块公共信息模型：机器人零部件数据建模该抄的作业
 
-> 本文首发于 [RoboParts 开源机器人兼容性平台](https://roboparts.cc)。数据建模口径以平台真实收录为准，标准事实以 ISO 官方页面为准。
+> 本文首发于 [RoboParts 机器人零件兼容性判定层](https://roboparts.cc)。数据建模口径以平台真实收录为准，标准事实以 ISO 官方页面为准。
 
 做机器人零部件兼容性平台的人，迟早会撞上一个绕不开的问题：**一个零件该用哪些字段描述，别人才能正确地把它拼到自己的机器上？**
 

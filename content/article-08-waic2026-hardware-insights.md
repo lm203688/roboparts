@@ -11,7 +11,7 @@ canonical: https://roboparts.cc/articles/waic2026-hardware-insights
 
 # WAIC 2026 硬件洞察：产线级需求对开源机器人构建者意味着什么
 
-> 本文首发于 [RoboParts 开源机器人兼容性平台](https://roboparts.cc)。硬件选型数据交叉引用：[roboparts.cc/api/data.json](https://roboparts.cc/api/data.json)。
+> 本文首发于 [RoboParts 机器人零件兼容性判定层](https://roboparts.cc)。硬件选型数据交叉引用：[roboparts.cc/api/data.json](https://roboparts.cc/api/data.json)。
 
 WAIC 2026的H3馆里，161家企业带来了314项展品，超300台真机几乎全部动态运行。工信部预计2026年全年人形机器人整机产量突破10万台——这个数字在一年前还只是预测。更重要的是，银河通用S1在宁德时代产线稳定运行超3个月，智元G2 Max在京东物流7×24小时作业，越疆+腾讯在化妆品产线任务成功率超95%。
 

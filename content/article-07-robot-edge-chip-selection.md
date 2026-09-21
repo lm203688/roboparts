@@ -11,7 +11,7 @@ canonical: https://roboparts.cc/articles/robot-edge-chip-selection-2026
 
 # 为你的开源机器人选算力板卡：算力、功耗、生态全对比
 
-> 本文首发于 [RoboParts 开源机器人兼容性平台](https://roboparts.cc)。芯片规格数据交叉引用：[roboparts.cc/api/data.json](https://roboparts.cc/api/data.json)。
+> 本文首发于 [RoboParts 机器人零件兼容性判定层](https://roboparts.cc)。芯片规格数据交叉引用：[roboparts.cc/api/data.json](https://roboparts.cc/api/data.json)。
 
 选一颗机器人主控芯片，过去是在NVIDIA Jetson家族里挑算力档位。2026年这个选择题变了——NVIDIA Jetson Thor系列覆盖了2070到400 FP4 TFLOPS的宽区间，高通带着700 TOPS和SIL3功能安全的Dragonwing IQ10杀入工业AMR和全尺寸人形机器人，Intel用Core Ultra Series 3的异构SoC主打成本敏感型服务机器人。三家之外，Jetson Orin Nano/NX仍是入门级边缘AI的成熟基准。
 

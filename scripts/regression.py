@@ -433,17 +433,40 @@ def layer2():
     pub = json.load(open(pub_path, encoding='utf-8')) if os.path.exists(pub_path) else {}
     pub_arr = pub.get('data') or pub.get('entities') or []
 
+    # 【20260921】README 的总数只认**注入块**（RP-STATS），不认「全文第一个 \d+实体」。
+    # 旧写法 `re.search(r'(\d+)实体', readme)` 会一路抓到「更新日志」里的历史数字：
+    # 真值 798，却读出 493（那是四个月前那次发布的记录）。于是闸门长期假红——
+    # 而假红比假绿更坏：它会训练人去忽略这条闸门。
+    # 注入块由 scripts/inject_readme_stats.py 从 facts() 生成，是唯一的对外口径面。
+    def _readme_total(text):
+        blk = re.search(r'RP-STATS:START(.*?)RP-STATS:END', text, re.S)
+        if not blk:
+            return -1  # 注入块缺失 = 无法确认口径，判红（不静默取巧）
+        m = re.search(r'(\d+)\s*实体', blk.group(1))
+        return int(m.group(1)) if m else -1
+
     sources = {
         'entities.json': total,
         'data.js(stats)': db_sum,
         '分类JSON求和': cat_sum,
-        'README': int(re.search(r'(\d+)实体', readme).group(1)) if re.search(r'(\d+)实体', readme) else -1,
+        'README': _readme_total(readme),
         'llms.txt': int(re.search(r'(\d+)实体', llms).group(1)) if re.search(r'(\d+)实体', llms) else -1,
         'agent-discovery': ad.get('total_entities', -1),
         'api/data.json': len(pub_arr),
     }
     vals = set(sources.values())
     check(len(vals) == 1, f'七处实体总数一致: {sources}')
+
+    # ── _readme_total 的阴阳自证 ─────────────────────────────────────────
+    # 阳性：注入块存在时必须读出真相源的值，即使正文别处有历史数字干扰。
+    check(
+        _readme_total('<!-- RP-STATS:START -->\n- **数据量**：%d 实体\n<!-- RP-STATS:END -->'
+                      '\n\n## 更新日志\n- 总计 493实体覆盖10大品类' % total) == total,
+        'README 总数只读 RP-STATS 注入块（更新日志里的历史数字不得干扰）',
+    )
+    # 阴性：缺注入块时必须判 -1（判红），不得"顺手"取正文里第一个数字。
+    check(_readme_total('# README\n更新日志：总计 493实体') == -1,
+          'README 缺 RP-STATS 注入块时判 -1（不静默退化取首个数字）')
 
     # 内容指纹交叉校验：仅比总数会漏报「总数不变、内容变更」的漂移
     src_fp = {(e.get('id'), e.get('category')) for e in doc['entities']}
@@ -7924,6 +7947,31 @@ def layer1_76():
     check(not _scan('本文基于 217 款执行器实测参数，161 家参展企业、314 项展品'),
           '阳性: 非"实体/开源组件"语境的数字不被误伤')
 
+    # ---- 识别器自身的阴阳自证（20260921 补）----
+    # 为什么必须单独自证：识别器是**闸门的闸门**。它一瞎，本闸门与线上核验
+    # 会同时报「0 条陈旧数字」——一个看起来最健康的数字，而真相是压根没看见。
+    # 20260921 实测即如此：首页「133+ 开源机器人组件」（真值 325）因「机器人」
+    # 插在「开源」与「组件」之间，被封闭名词表整条绕过，静态闸与线上核验双双假绿。
+    # 故这里用**变形关系**锁住它（数字==真值须放行、≠真值须命中），不写死期望值，
+    # 真值上涨也不会让自证变成假红。
+    from onboarding_block import _self_test as _detector_selftest, \
+        _DETECTOR_SAMPLES as _samples
+    _dfails, _dn = _detector_selftest()
+    check(not _dfails,
+          '阴性: 识别器阴阳自证 %d 项全过（盲区=双闸同假绿；越权=下次真红没人信）。%s'
+          % (_dn, '' if not _dfails else ' 实得: %s' % '; '.join(_dfails[:3])))
+    # 盲区原文的定点回归：这一条是本次真因，必须永久留住
+    _blind = [t for t, _b in _samples if '开源机器人' in t]
+    check(bool(_blind) and all(_scan(t) for t in _blind),
+          '阴性: 20260921 盲区原文（「开源机器人组件」形态）已被永久纳入识别范围')
+    check(not _scan(refresh_bare_counts('133+ 开源机器人组件，跨项目归一化。',
+                                        total, oss)),
+          '阳性: 保鲜器能自愈新形态（不只是检测器看得见，还要修得掉）')
+    check(refresh_bare_counts(
+              refresh_bare_counts('133+ 开源机器人组件', total, oss), total, oss)
+          == refresh_bare_counts('133+ 开源机器人组件', total, oss),
+          '阳性: 新形态保鲜幂等')
+
     # ---- 保鲜器行为对照：喂陈旧原文，必须自愈成真值且第二遍无改动（幂等）----
     stale = '收录 <strong>688 个机器人零部件实体</strong>与 300+ 开源组件'
     once = refresh_bare_counts(stale, total, oss)
@@ -8255,8 +8303,11 @@ def layer1_93():
                     i = plain.find(kw, i + 1)
         return bad
 
-    _FILES = ['README.md', 'LICENSE', 'CONTRIBUTING.md', 'llms.txt', 'agent-discovery.json',
-              'mcp-server/README.md', 'agent-architecture.html']
+    # 【20260921】DATA-LICENSE.md 必须留在扫描面内：诚实提示（含机械声明率百分比）
+    # 此前写在 LICENSE 里受本闸门管，拆分成双文件后若不带进来，就是**扫描面静默缩小** ——
+    # 闸门报绿而管的东西少了一块，正是本闸门自己反复记录的那类假绿。
+    _FILES = ['README.md', 'LICENSE', 'DATA-LICENSE.md', 'CONTRIBUTING.md', 'llms.txt',
+              'agent-discovery.json', 'mcp-server/README.md', 'agent-architecture.html']
     _targets = [(f, read_text(os.path.join(ROOT, f))) for f in _FILES
                 if os.path.exists(os.path.join(ROOT, f))]
     import glob as _glob
@@ -10279,7 +10330,10 @@ def _promote_parity_audit(promote_src, parity_src):
         bad.append('verify_host_parity.mjs 缺软 404 判据（不存在路径必须非 200）')
     if 'bom-checker' not in v:
         bad.append('verify_host_parity.mjs 缺深链同源判据')
-    for lit in ('开源机器人兼容性平台',):
+    # 【20260921】这里的字面量必须跟着 index.html 的 title 走：它是"闸门不得把
+    # 站点 title 写死"的负向对照样本，字面量停在旧标题上就整条对照静默失效
+    # （拿一个已经不存在的字符串去证明"没有写死"，永远绿）。
+    for lit in ('机器人零件兼容性判定层',):
         if lit in v:
             bad.append('verify_host_parity.mjs 把站点 title 写死了（%s），应现读 index.html' % lit)
     return bad
@@ -10339,7 +10393,7 @@ def layer1_87():
         ('闸门把 title 写死不再读本仓',
          psrc,
          vsrc.replace("const homeTitle = localTitle('index.html');",
-                      "const homeTitle = 'RoboParts — 开源机器人兼容性平台';")),
+                      "const homeTitle = 'RoboParts — 机器人零件兼容性判定层';")),
     ]
     for name, mp, mv in neg:
         check(bool(_promote_parity_audit(mp, mv)),

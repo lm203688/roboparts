@@ -133,7 +133,7 @@ class RoboPartsClient:
     # ──────────────────────────────────────────────────────────────
 
     def get_actuators(self, limit: Optional[int] = None) -> List[dict]:
-        """获取执行器列表（147 个实体，免费）。
+        """获取执行器列表（220 个实体，免费）。
 
         对应端点: ``GET /api/actuators.json``
 
@@ -155,7 +155,7 @@ class RoboPartsClient:
         return self._get_data("/api/actuators.json", limit=limit)
 
     def get_sensors(self, limit: Optional[int] = None) -> List[dict]:
-        """获取传感器列表（42 个实体，免费）。
+        """获取传感器列表（95 个实体，免费）。
 
         对应端点: ``GET /api/sensors.json``
 
@@ -170,7 +170,7 @@ class RoboPartsClient:
         return self._get_data("/api/sensors.json", limit=limit)
 
     def get_chips(self, limit: Optional[int] = None) -> List[dict]:
-        """获取芯片列表（95 个实体，免费）。
+        """获取芯片列表（108 个实体，免费）。
 
         对应端点: ``GET /api/chips.json``
 
@@ -449,9 +449,9 @@ class RoboPartsClient:
 
         Args:
             plan: 套餐名称，可选值:
-                - ``"starter"``: ¥9 / 500 积分
-                - ``"pro"``: ¥29 / 2000 积分
-                - ``"lifetime"``: ¥199 / 9999 积分
+                - ``"starter"``: ¥9 / 100 积分
+                - ``"pro"``: ¥29 / 500 积分
+                - ``"lifetime"``: ¥199 / 无限 积分
             email: 联系邮箱（可选）。
 
         Returns:

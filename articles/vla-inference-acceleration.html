@@ -9,8 +9,6 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0b1020">
-
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="description" content="VLA模型端侧推理从1.4Hz到22.1Hz的15倍加速如何实现？本文从开源机器人构建者视角，深度拆解智元π0.5全栈优化、理想3.2B MoE混合精度部署、VQVLA运动感知向量量化三大加速路径，并系统对比Jetson Thor、Dragonwing IQ10、Intel Robotics三款端侧芯片的算力、功耗、功能安全与VLA验证，给出从0.5B到3B参数模型、面向天工TienKung/Unitree G1/OpenArm/LeRobot-Humanoid的选型决策框架。">
 <meta name="keywords" content="VLA推理加速, 端侧VLA部署, 开源机器人, Jetson Thor, Dragonwing IQ10, Intel Robotics, VQVLA, MoE架构, INT8量化, FP8混合精度, π0.5, VLA推理加速器, 智元AGIBOT, 理想VLA, MotionVQ, 端侧芯片选型, 具身智能, 天工机器人, LeRobot">
 <link rel="canonical" href="https://roboparts.cc/articles/vla-inference-acceleration">
@@ -77,6 +75,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 .acard p{color:var(--mut);font-size:13.5px;margin:0 0 10px;flex:1}
 @media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
 </style>
+
 <!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"798 条实体（其中 589 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
 </head>
 <body>
@@ -90,8 +89,8 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <a href="/pricing">定价</a>
 </div></div>
 <div class="wrap">
-<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › VLA推理加速实战：为你的开源机器人选哪颗端侧芯片？——</div><h1>VLA推理加速实战：为你的开源机器人选哪颗端侧芯片？——智元15倍加速、理想MoE部署、VQVLA量化与Jetson Thor/IQ10/Intel三方对比</h1><div class="meta">2026-07-30 · RoboParts Research · 约 13409 字 · RoboParts 开源机器人兼容性平台</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">robotics-ai</span><span class="badge">edge-computing</span><span class="badge">vla</span></div><div class="lede">VLA模型端侧推理从1.4Hz到22.1Hz的15倍加速如何实现？本文从开源机器人构建者视角，深度拆解智元π0.5全栈优化、理想3.2B MoE混合精度部署、VQVLA运动感知向量量化三大加速路径，并系统对比Jetson Thor、Dragonwing IQ10、Intel Robotics三款端侧芯片的算力、功耗、功能安全与VLA验证，给出从0.5B到3B参数模型、面向天工TienKung/Unitree G1/OpenArm/LeRobot-Humanoid的选型决策框架。</div><div class="toc"><b>本文目录</b><ol><li><a href="#vla推理加速实战-为你的开源机器人选哪颗端侧芯片">VLA推理加速实战：为你的开源机器人选哪颗端侧芯片？</a></li><li><a href="#一-vla端侧部署的算力困境">一、VLA端侧部署的算力困境</a></li><li><a href="#二-智元15倍加速案例深度拆解">二、智元15倍加速案例深度拆解</a></li><li><a href="#三-理想vla司机大模型的工程实践">三、理想VLA司机大模型的工程实践</a></li><li><a href="#四-vqvla-算法-硬件协同设计新范式">四、VQVLA：算法-硬件协同设计新范式</a></li><li><a href="#五-端侧芯片三方对比-jetson-thor-vs-iq10-vs-intel-robotics">五、端侧芯片三方对比：Jetson Thor vs IQ10 vs Intel Robotics</a></li><li><a href="#六-选型决策框架-算力-功耗-功能安全-生态-vla验证">六、选型决策框架：算力/功耗/功能安全/生态/VLA验证</a></li><li><a href="#七-结语-从外挂显卡到端侧原生部署">七、结语：从外挂显卡到端侧原生部署</a></li></ol></div><article><h2 id="vla推理加速实战-为你的开源机器人选哪颗端侧芯片">VLA推理加速实战：为你的开源机器人选哪颗端侧芯片？</h2>
-<blockquote><p>本文首发于 <a href="https://roboparts.cc">RoboParts 开源机器人兼容性平台</a>。芯片与VLA模型交叉引用数据：<a href="https://roboparts.cc/api/data.json">roboparts.cc/api/data.json</a>。</p></blockquote>
+<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › VLA推理加速实战：为你的开源机器人选哪颗端侧芯片？——</div><h1>VLA推理加速实战：为你的开源机器人选哪颗端侧芯片？——智元15倍加速、理想MoE部署、VQVLA量化与Jetson Thor/IQ10/Intel三方对比</h1><div class="meta">2026-07-30 · RoboParts Research · 约 13410 字 · RoboParts 机器人零件兼容性判定层</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">robotics-ai</span><span class="badge">edge-computing</span><span class="badge">vla</span></div><div class="lede">VLA模型端侧推理从1.4Hz到22.1Hz的15倍加速如何实现？本文从开源机器人构建者视角，深度拆解智元π0.5全栈优化、理想3.2B MoE混合精度部署、VQVLA运动感知向量量化三大加速路径，并系统对比Jetson Thor、Dragonwing IQ10、Intel Robotics三款端侧芯片的算力、功耗、功能安全与VLA验证，给出从0.5B到3B参数模型、面向天工TienKung/Unitree G1/OpenArm/LeRobot-Humanoid的选型决策框架。</div><div class="toc"><b>本文目录</b><ol><li><a href="#vla推理加速实战-为你的开源机器人选哪颗端侧芯片">VLA推理加速实战：为你的开源机器人选哪颗端侧芯片？</a></li><li><a href="#一-vla端侧部署的算力困境">一、VLA端侧部署的算力困境</a></li><li><a href="#二-智元15倍加速案例深度拆解">二、智元15倍加速案例深度拆解</a></li><li><a href="#三-理想vla司机大模型的工程实践">三、理想VLA司机大模型的工程实践</a></li><li><a href="#四-vqvla-算法-硬件协同设计新范式">四、VQVLA：算法-硬件协同设计新范式</a></li><li><a href="#五-端侧芯片三方对比-jetson-thor-vs-iq10-vs-intel-robotics">五、端侧芯片三方对比：Jetson Thor vs IQ10 vs Intel Robotics</a></li><li><a href="#六-选型决策框架-算力-功耗-功能安全-生态-vla验证">六、选型决策框架：算力/功耗/功能安全/生态/VLA验证</a></li><li><a href="#七-结语-从外挂显卡到端侧原生部署">七、结语：从外挂显卡到端侧原生部署</a></li></ol></div><article><h2 id="vla推理加速实战-为你的开源机器人选哪颗端侧芯片">VLA推理加速实战：为你的开源机器人选哪颗端侧芯片？</h2>
+<blockquote><p>本文首发于 <a href="https://roboparts.cc">RoboParts 机器人零件兼容性判定层</a>。芯片与VLA模型交叉引用数据：<a href="https://roboparts.cc/api/data.json">roboparts.cc/api/data.json</a>。</p></blockquote>
 <p>如果你是开源机器人构建者，VLA 推理加速和你息息相关——不管你是在给天工 TienKung 配"大脑"、给 Unitree G1 跑 GR00T、给 Trossen OpenArm 接 LeRobot-Humanoid 的操控策略，还是用 roboto_origin 攒一台自己的双足机，最终都要回答三个问题：</p>
 <ol>
 <li><strong>我的 VLA 模型在端侧能跑到几 Hz？</strong> 10Hz 才能接控制闭环，1.4Hz 等于不可用；</li>
@@ -263,6 +262,7 @@ for chip in vla_chips:
 <br>本文数据引用自 RoboParts 公开数据集，转载请注明来源并保留原文链接。
 </div>
 </div>
+
 <style>
 /* RP-ONBOARDING scoped styles */
 .rp-onboard{max-width:880px;margin:48px auto 0;padding:28px 24px;border:1px solid rgba(128,128,128,.28);

@@ -13,7 +13,7 @@ from typing import List, Optional
 class Actuator:
     """执行器模型（对应 /api/actuators.json 中的单项）。
 
-    覆盖舵机、直驱电机、SEA 仿生关节等 147 个执行器实体。
+    覆盖舵机、直驱电机、SEA 仿生关节等 220 个执行器实体。
     """
 
     id: str
@@ -42,7 +42,7 @@ class Actuator:
 class Sensor:
     """传感器模型（对应 /api/sensors.json 中的单项）。
 
-    覆盖 LiDAR、IMU、触觉传感器、事件相机等 42 个传感器实体。
+    覆盖 LiDAR、IMU、触觉传感器、事件相机等 95 个传感器实体。
     """
 
     id: str

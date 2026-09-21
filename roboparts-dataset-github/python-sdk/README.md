@@ -1,8 +1,8 @@
 # RoboParts Python SDK
 
-仿生机器人零部件结构化数据 API 客户端，基于 OpenAPI 2.0 规范开发。
+机器人零部件结构化数据 API 客户端，基于 OpenAPI 2.0 规范开发。
 
-覆盖 **688 个实体**：执行器(199)、传感器(90)、芯片(108)、协议(64)、平台(40)、大模型(42)、接口(37)、柔性执行器(21)、机器人AI模型(44)、数据采集设备(43)。
+覆盖 **798 个实体** / **20 个品类**：执行器(220)、芯片(108)、传感器(95)、通信协议(64)、机器人AI模型(46)、数据采集设备(46)、接口(44)、大模型(42)、平台(41)、夹爪 / 末端执行器(23)、柔性执行器(22)、仿生机构(17)、减速器(14)、控制器(4)、结构件(3)、连接器(2)、线缆(2)、电源(2)、电路板(2)、一体化关节(1)
 
 ## 安装
 
@@ -93,12 +93,12 @@ balance = client.get_balance()
 
 | 方法 | 端点 | 数量 | 积分消耗 |
 |------|------|------|----------|
-| `get_actuators(limit)` | `GET /api/actuators.json` | 199 | 免费 |
-| `get_sensors(limit)` | `GET /api/sensors.json` | 90 | 免费 |
+| `get_actuators(limit)` | `GET /api/actuators.json` | 220 | 免费 |
+| `get_sensors(limit)` | `GET /api/sensors.json` | 95 | 免费 |
 | `get_chips(limit)` | `GET /api/chips.json` | 108 | 免费 |
 | `get_protocols(limit)` | `GET /api/protocols.json` | 64 | 免费 |
 | `get_intelligence()` | `GET /api/intelligence.json` | - | 免费 |
-| `get_entities()` | `GET /api/entities.json` | 688 | 50 积分 |
+| `get_entities()` | `GET /api/entities.json` | 798 | 50 积分 |
 
 ```python
 # 获取执行器
@@ -176,9 +176,9 @@ with open("bom.csv", "w", encoding="utf-8-sig") as f:
 
 | 套餐 | 价格 | 积分 |
 |------|------|------|
-| `starter` | ¥9 | 500 |
-| `pro` | ¥29 | 2000 |
-| `lifetime` | ¥199 | 9999 |
+| `starter` | ¥9 | 100 |
+| `pro` | ¥29 | 500 |
+| `lifetime` | ¥199 | 无限 |
 
 ```python
 order = client.create_payment_order("pro", email="user@example.com")

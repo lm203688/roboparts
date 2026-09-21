@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "roboparts"
 version = "1.0.0"
-description = "RoboParts Python SDK - 仿生机器人零部件结构化数据 API 客户端"
+description = "RoboParts Python SDK - 机器人零部件结构化数据 API 客户端"
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }

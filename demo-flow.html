@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0b1020">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="description" content="RoboParts 5 分钟兼容性闭环演示：选机器人法兰 → 选工具侧法兰 → 判定兼容 → 一键生成转接件 → 引导选型与供应商">
+<meta name="description" content="RoboParts 5 分钟兼容性闭环演示：选机器人法兰 → 选工具侧法兰 → 判定兼容 → 一键生成转接件 → 引导选型与数据贡献">
 <style>
 :root{
   --bg:#0a0e17;--card:#111827;--border:#1e2d4a;--text:#e2e8f0;--muted:#94a3b8;
@@ -155,12 +155,12 @@ footer{text-align:center;padding:30px 0;color:var(--dim);font-size:.78rem}
 
   <div class="footnav">
     <a href="/selection">👉 智能选型（按场景推荐零件）</a>
-    <a href="/suppliers">🏭 供应商与价格</a>
+    <a href="/suppliers">🧾 数据贡献</a>
     <a href="/mcp-guide">🔌 接入 API / MCP</a>
     <a href="/">🏠 首页</a>
   </div>
 
-  <footer>© 2026 RoboParts · 仿生机器人生态平台 · 本演示为可行性示意，最终以厂商数据手册为准</footer>
+  <footer>© 2026 RoboParts · 机器人零件兼容性判定层 · 本演示为可行性示意，最终以厂商数据手册为准</footer>
 </div>
 
 <script>
@@ -210,7 +210,7 @@ function evaluateCompat(){
     <p class="note">RoboParts 可一键生成一块参数化转接板（STEP + STL，可直接 3D 打印或 CNC），把 ${a} 与 ${b} 桥接起来。</p>
     <div class="actions">
       <a class="btn btn-primary" href="${url}" target="_blank" rel="noopener">⚙️ 一键生成转接板（${a} → ${b}）</a>
-      <a class="btn btn-ghost" href="/suppliers" target="_blank" rel="noopener">查兼容供应商 / 价格</a>
+      <a class="btn btn-ghost" href="/suppliers" target="_blank" rel="noopener">贡献接口声明</a>
     </div>`;
   setPill(3,'done');setPill(4,'active');
 }

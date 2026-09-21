@@ -11,7 +11,7 @@ canonical: https://roboparts.cc/articles/vla-model-landscape-2026
 
 # 2026年VLA模型全景图：开源机器人构建者该给自己的机器人装哪个大脑？
 
-> 本文首发于 [RoboParts 开源机器人兼容性平台](https://roboparts.cc)。数据集引用入口：[roboparts.cc/api/data.json](https://roboparts.cc/api/data.json)。
+> 本文首发于 [RoboParts 机器人零件兼容性判定层](https://roboparts.cc)。数据集引用入口：[roboparts.cc/api/data.json](https://roboparts.cc/api/data.json)。
 
 2026年7月的WAIC会场，每隔几小时就有一款新的VLA模型发布。腾讯、面壁、大晓、银河通用、蚂蚁、智谱、智平方、阿里、NVIDIA——九家团队在四天内密集亮出各自的具身智能基座，参数从0.5B跨度到30B，架构从纯VLA延伸到世界模型、类脑分层，开源策略也从完全闭源到HuggingFace同步上传各不相同。
 

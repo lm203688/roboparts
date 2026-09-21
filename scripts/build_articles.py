@@ -466,7 +466,7 @@ def build():
 
         crumb = ('<div class="crumb"><a href="/">首页</a> › '
                  '<a href="/articles">技术文库</a> › %s</div>' % html.escape(a['title'][:28]))
-        meta_line = '<div class="meta">%s%s · 约 %d 字 · RoboParts 开源机器人兼容性平台</div>' % (
+        meta_line = '<div class="meta">%s%s · 约 %d 字 · RoboParts 机器人零件兼容性判定层</div>' % (
             (a['date'] + ' · ') if a['date'] else '', html.escape(a['author']), a['words'])
         tags_html = ('<div class="tags">%s</div>' % ''.join(
             '<span class="badge">%s</span>' % html.escape(t) for t in a['tags'])) if a['tags'] else ''

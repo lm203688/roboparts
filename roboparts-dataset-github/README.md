@@ -1,13 +1,13 @@
-# RoboParts Dataset — 仿生机器人零部件结构化数据集
+# RoboParts Dataset — 机器人零部件结构化数据集（兼容判定就绪）
 
-[![RoboParts](https://img.shields.io/badge/RoboParts-仿生机器人生态平台-06b6d4)](https://roboparts.cc)
+[![RoboParts](https://img.shields.io/badge/RoboParts-机器人零件兼容性判定层-06b6d4)](https://roboparts.cc)
 [![Entities](https://img.shields.io/badge/Entities-798-10b981)](./data/)
 [![License](https://img.shields.io/badge/License-CC--BY--4.0-blue)](./LICENSE)
 [![ModelScope](https://img.shields.io/badge/ModelScope-数据集-ff6a00)](https://www.modelscope.cn/datasets/lm203688/roboparts-data)
 [![PyPI](https://img.shields.io/badge/PyPI-roboparts-3775a9)](https://pypi.org/project/roboparts/)
 
 > 覆盖 **20 大品类**（执行器、芯片、传感器、通信协议、机器人AI模型、数据采集设备、接口、大模型、平台、夹爪 / 末端执行器、柔性执行器、仿生机构、减速器、控制器、结构件、连接器、线缆、电源、电路板、一体化关节）的结构化零部件数据集，
-> 专为具身智能 / 仿生机器人研发设计，可被 AI Agent 直接检索与引用。
+> 面向具身智能 / 人形 / 仿生机器人研发，可被 AI Agent 直接检索与引用。
 > 当前 **798 条实体**。
 
 <!-- 本文件由 scripts/sync_dataset_dist.py 从 api/entities.json 生成，所有数字现算。
@@ -49,7 +49,7 @@ curl -X POST https://roboparts.cc/api/validate \
 
 **为什么这仍然值得用**：RoboParts 不生产、不销售、不代理任何零部件。关节厂商自建的选型器无法回避一个结构性问题——选型结果天然偏向自家可造方案。中立是我们唯一无法被复制的东西，而中立的代价就是必须连自己的短板一起公开。
 
-## 数据概览（798 实体 · 20 品类 · 2026-09-20 更新）
+## 数据概览（798 实体 · 20 品类 · 2026-09-21 更新）
 
 | 品类 | 数量 | 高频字段（现算） |
 |---|---|---|

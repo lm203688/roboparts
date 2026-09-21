@@ -9,8 +9,6 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0b1020">
-
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="description" content="2026年触觉原生WAM模型密集发布，触觉感知成为具身智能核心模态。本文从开源机器人构建者视角，系统梳理六维力传感器、视触觉传感器、电子皮肤等六大技术路线，并结合天工TienKung、Unitree G1、Trossen OpenArm、LeRobot-Humanoid的灵巧手/力控方案，提供工程化选型决策框架与开源兼容零件寻源。">
 <meta name="keywords" content="机器人触觉传感器, 六维力传感器, 视触觉, 电子皮肤, GelSight, DIGIT, 触觉原生WAM, 力传感器选型, 开源机器人, 灵巧手, LeRobot, 天工机器人">
 <link rel="canonical" href="https://roboparts.cc/articles/robot-tactile-sensor-selection-guide-2026">
@@ -77,6 +75,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 .acard p{color:var(--mut);font-size:13.5px;margin:0 0 10px;flex:1}
 @media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
 </style>
+
 <!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"798 条实体（其中 589 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
 </head>
 <body>
@@ -90,7 +89,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <a href="/pricing">定价</a>
 </div></div>
 <div class="wrap">
-<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 触觉从可选变标配：机器人触觉传感器选型全指南2026（开</div><h1>触觉从可选变标配：机器人触觉传感器选型全指南2026（开源构建者版）</h1><div class="meta">2026-08-03 · RoboParts Research · 约 4717 字 · RoboParts 开源机器人兼容性平台</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sensors</span><span class="badge">tactile</span><span class="badge">dexterous-hand</span></div><div class="lede">2026年触觉原生WAM模型密集发布，触觉感知成为具身智能核心模态。本文从开源机器人构建者视角，系统梳理六维力传感器、视触觉传感器、电子皮肤等六大技术路线，并结合天工TienKung、Unitree G1、Trossen OpenArm、LeRobot-Humanoid的灵巧手/力控方案，提供工程化选型决策框架与开源兼容零件寻源。</div><div class="toc"><b>本文目录</b><ol><li><a href="#触觉从可选变标配-机器人触觉传感器选型全指南2026">触觉从可选变标配：机器人触觉传感器选型全指南2026</a></li><li><a href="#一-为什么触觉在2026年成为刚需">一、为什么触觉在2026年成为刚需？</a></li><li><a href="#二-六大触觉传感器技术路线全景">二、六大触觉传感器技术路线全景</a></li><li><a href="#三-工程化选型决策框架">三、工程化选型决策框架</a></li><li><a href="#四-2026年触觉传感器技术前沿">四、2026年触觉传感器技术前沿</a></li><li><a href="#五-roboparts触觉传感器数据集">五、RoboParts触觉传感器数据集</a></li><li><a href="#六-结论与趋势预判">六、结论与趋势预判</a></li></ol></div><article><h2 id="触觉从可选变标配-机器人触觉传感器选型全指南2026">触觉从可选变标配：机器人触觉传感器选型全指南2026</h2>
+<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 触觉从可选变标配：机器人触觉传感器选型全指南2026（开</div><h1>触觉从可选变标配：机器人触觉传感器选型全指南2026（开源构建者版）</h1><div class="meta">2026-08-03 · RoboParts Research · 约 4717 字 · RoboParts 机器人零件兼容性判定层</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sensors</span><span class="badge">tactile</span><span class="badge">dexterous-hand</span></div><div class="lede">2026年触觉原生WAM模型密集发布，触觉感知成为具身智能核心模态。本文从开源机器人构建者视角，系统梳理六维力传感器、视触觉传感器、电子皮肤等六大技术路线，并结合天工TienKung、Unitree G1、Trossen OpenArm、LeRobot-Humanoid的灵巧手/力控方案，提供工程化选型决策框架与开源兼容零件寻源。</div><div class="toc"><b>本文目录</b><ol><li><a href="#触觉从可选变标配-机器人触觉传感器选型全指南2026">触觉从可选变标配：机器人触觉传感器选型全指南2026</a></li><li><a href="#一-为什么触觉在2026年成为刚需">一、为什么触觉在2026年成为刚需？</a></li><li><a href="#二-六大触觉传感器技术路线全景">二、六大触觉传感器技术路线全景</a></li><li><a href="#三-工程化选型决策框架">三、工程化选型决策框架</a></li><li><a href="#四-2026年触觉传感器技术前沿">四、2026年触觉传感器技术前沿</a></li><li><a href="#五-roboparts触觉传感器数据集">五、RoboParts触觉传感器数据集</a></li><li><a href="#六-结论与趋势预判">六、结论与趋势预判</a></li></ol></div><article><h2 id="触觉从可选变标配-机器人触觉传感器选型全指南2026">触觉从可选变标配：机器人触觉传感器选型全指南2026</h2>
 <p><strong>2026年，机器人触觉感知迎来技术拐点——对开源灵巧手构建者尤为关键。</strong></p>
 <p>N0-TWAM触觉原生世界动作模型、FeelWorld视触觉世界模型、VQ-Touch跨传感器触觉生成框架在7月密集发表。Google DeepMind的Gemini Robotics 2更将22-DOF灵巧手操作作为核心卖点。这些信号共同指向一个结论：<strong>触觉正从机器人的"可选配置"升级为"核心模态"</strong>——而开源社区恰好站在受益最前沿：DIGIT 是 Meta 开源方案、GelSight 有成熟复刻、国产视触觉模组价格已打到消费级，你给 LeRobot-Humanoid、Trossen OpenArm 或 Unitree G1 的灵巧手加触觉，今天就能小批量落地。</p>
 <p>对开源硬件工程师和构建者而言，如何在纷繁复杂的触觉传感器技术路线中做出正确选型，已成为影响项目成败的关键决策。本文基于RoboParts平台 95 条传感器数据与最新学术进展，提供系统化的选型指南，并在每节标注<strong>哪些方案对开源构建者最友好、去哪找兼容零件</strong>。</p>
@@ -245,6 +244,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <br>本文数据引用自 RoboParts 公开数据集，转载请注明来源并保留原文链接。
 </div>
 </div>
+
 <style>
 /* RP-ONBOARDING scoped styles */
 .rp-onboard{max-width:880px;margin:48px auto 0;padding:28px 24px;border:1px solid rgba(128,128,128,.28);

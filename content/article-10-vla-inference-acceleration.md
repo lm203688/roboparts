@@ -11,7 +11,7 @@ canonical: https://roboparts.cc/articles/vla-inference-acceleration
 
 # VLA推理加速实战：为你的开源机器人选哪颗端侧芯片？
 
-> 本文首发于 [RoboParts 开源机器人兼容性平台](https://roboparts.cc)。芯片与VLA模型交叉引用数据：[roboparts.cc/api/data.json](https://roboparts.cc/api/data.json)。
+> 本文首发于 [RoboParts 机器人零件兼容性判定层](https://roboparts.cc)。芯片与VLA模型交叉引用数据：[roboparts.cc/api/data.json](https://roboparts.cc/api/data.json)。
 
 如果你是开源机器人构建者，VLA 推理加速和你息息相关——不管你是在给天工 TienKung 配"大脑"、给 Unitree G1 跑 GR00T、给 Trossen OpenArm 接 LeRobot-Humanoid 的操控策略，还是用 roboto_origin 攒一台自己的双足机，最终都要回答三个问题：
 

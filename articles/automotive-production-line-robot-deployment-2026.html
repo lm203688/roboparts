@@ -9,8 +9,6 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0b1020">
-
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="description" content="小米机器人汽车产线98%成功率、均普智能99.9%稳定率，标志着人形机器人在工业场景跨越ROI临界点。本文从开源机器人构建者视角，拆解汽车产线落地的核心零部件需求与选型策略，并说明这些工业级可靠性标准如何反哺天工TienKung、Unitree G1、OpenArm、LeRobot-Humanoid的自主构建。">
 <meta name="keywords" content="汽车产线机器人, 人形机器人工业落地, 开源机器人, 小米机器人, 均普智能, 产线自动化, 机器人ROI, 执行器选型, 力传感器产线, 天工机器人, LeRobot">
 <link rel="canonical" href="https://roboparts.cc/articles/automotive-production-line-robot-deployment-2026">
@@ -77,6 +75,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 .acard p{color:var(--mut);font-size:13.5px;margin:0 0 10px;flex:1}
 @media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
 </style>
+
 <!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"798 条实体（其中 589 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
 </head>
 <body>
@@ -90,7 +89,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <a href="/pricing">定价</a>
 </div></div>
 <div class="wrap">
-<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 汽车产线机器人落地实战：98%成功率背后的零部件选型密码</div><h1>汽车产线机器人落地实战：98%成功率背后的零部件选型密码（开源构建者可借鉴的可靠性标准）</h1><div class="meta">2026-08-03 · RoboParts Research · 约 4800 字 · RoboParts 开源机器人兼容性平台</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">actuators</span><span class="badge">reliability</span></div><div class="lede">小米机器人汽车产线98%成功率、均普智能99.9%稳定率，标志着人形机器人在工业场景跨越ROI临界点。本文从开源机器人构建者视角，拆解汽车产线落地的核心零部件需求与选型策略，并说明这些工业级可靠性标准如何反哺天工TienKung、Unitree G1、OpenArm、LeRobot-Humanoid的自主构建。</div><div class="toc"><b>本文目录</b><ol><li><a href="#汽车产线机器人落地实战-98-成功率背后的零部件选型密码">汽车产线机器人落地实战：98%成功率背后的零部件选型密码</a></li><li><a href="#一-为什么汽车产线是最快落地场景">一、为什么汽车产线是最快落地场景？</a></li><li><a href="#二-汽车产线对零部件的严苛要求">二、汽车产线对零部件的严苛要求</a></li><li><a href="#三-产线落地案例深度拆解">三、产线落地案例深度拆解</a></li><li><a href="#四-产线选型工具-roboparts平台适配">四、产线选型工具：RoboParts平台适配</a></li><li><a href="#五-趋势预判与行动建议">五、趋势预判与行动建议</a></li><li><a href="#六-结论">六、结论</a></li></ol></div><article><h2 id="汽车产线机器人落地实战-98-成功率背后的零部件选型密码">汽车产线机器人落地实战：98%成功率背后的零部件选型密码</h2>
+<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 汽车产线机器人落地实战：98%成功率背后的零部件选型密码</div><h1>汽车产线机器人落地实战：98%成功率背后的零部件选型密码（开源构建者可借鉴的可靠性标准）</h1><div class="meta">2026-08-03 · RoboParts Research · 约 4800 字 · RoboParts 机器人零件兼容性判定层</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">actuators</span><span class="badge">reliability</span></div><div class="lede">小米机器人汽车产线98%成功率、均普智能99.9%稳定率，标志着人形机器人在工业场景跨越ROI临界点。本文从开源机器人构建者视角，拆解汽车产线落地的核心零部件需求与选型策略，并说明这些工业级可靠性标准如何反哺天工TienKung、Unitree G1、OpenArm、LeRobot-Humanoid的自主构建。</div><div class="toc"><b>本文目录</b><ol><li><a href="#汽车产线机器人落地实战-98-成功率背后的零部件选型密码">汽车产线机器人落地实战：98%成功率背后的零部件选型密码</a></li><li><a href="#一-为什么汽车产线是最快落地场景">一、为什么汽车产线是最快落地场景？</a></li><li><a href="#二-汽车产线对零部件的严苛要求">二、汽车产线对零部件的严苛要求</a></li><li><a href="#三-产线落地案例深度拆解">三、产线落地案例深度拆解</a></li><li><a href="#四-产线选型工具-roboparts平台适配">四、产线选型工具：RoboParts平台适配</a></li><li><a href="#五-趋势预判与行动建议">五、趋势预判与行动建议</a></li><li><a href="#六-结论">六、结论</a></li></ol></div><article><h2 id="汽车产线机器人落地实战-98-成功率背后的零部件选型密码">汽车产线机器人落地实战：98%成功率背后的零部件选型密码</h2>
 <p><strong>2026年，汽车产线成为人形机器人最快落地的场景，没有之一——它的可靠性标准也值得每个开源构建者抄作业。</strong></p>
 <p>小米机器人宣布汽车产线作业成功率达到98%，多车企已接入其解决方案。均普智能的全球首条多台机器人并线BMS量产产线实现99.9%稳定率。特斯拉更将Model S/X产线直接切换为Optimus生产线。这些信号共同指向一个产业共识：<strong>汽车产线是人形机器人跨越ROI临界点的第一战场。</strong></p>
 <p>对零部件供应商和系统集成商而言，理解汽车产线的严苛要求，是抓住这波需求浪潮的前提。而对开源构建者（天工 TienKung、Unitree G1、Trossen OpenArm、LeRobot-Humanoid 的玩家）而言，产线标准更是一份<strong>现成的"可靠性 checklist"</strong>——你不用把自己的机器人跑坏 10 万次才摸索出 MTBF 要求，工业界已经把精度、寿命、防护、安全等级的门槛写好了。本文基于RoboParts平台 798 条实体数据与产线落地案例，系统拆解汽车产线机器人的零部件选型密码，并逐节说明<strong>开源构建者能直接借鉴什么</strong>。</p>
@@ -220,8 +219,8 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 </ul>
 <h3 id="4-2-数据规模">4.2 数据规模</h3>
 <ul>
-<li><strong>执行器</strong>：217 条，含产线级旋转/线性执行器</li>
-<li><strong>传感器</strong>：90 条，含产线力控方案</li>
+<li><strong>执行器</strong>：220 条，含产线级旋转/线性执行器</li>
+<li><strong>传感器</strong>：95 条，含产线力控方案</li>
 <li><strong>协议</strong>：64 条，含汽车产线常用工业协议</li>
 <li><strong>芯片</strong>：108 条，含功能安全认证算力平台</li>
 </ul>
@@ -283,6 +282,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <br>本文数据引用自 RoboParts 公开数据集，转载请注明来源并保留原文链接。
 </div>
 </div>
+
 <style>
 /* RP-ONBOARDING scoped styles */
 .rp-onboard{max-width:880px;margin:48px auto 0;padding:28px 24px;border:1px solid rgba(128,128,128,.28);

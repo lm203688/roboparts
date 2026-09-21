@@ -10,7 +10,7 @@ canonical: "https://roboparts.cc/content/article-05-canfd-vs-ethercat.md"
 
 # 为你的开源人形机器人选总线：CAN FD 与 EtherCAT 的实战选型博弈
 
-> 本文首发于 [RoboParts 开源机器人兼容性平台](https://roboparts.cc)。
+> 本文首发于 [RoboParts 机器人零件兼容性判定层](https://roboparts.cc)。
 
 当你设计一台 30+ 自由度的开源人形机器人——不管是复刻天工 TienKung，还是在 LeRobot-Humanoid 基础上加自由度——通信协议的选择会直接影响：
 

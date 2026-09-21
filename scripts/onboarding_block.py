@@ -20,6 +20,7 @@ onboarding_block.py —— 可执行接入入口的单一真相源
 import json
 import os
 import re
+import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -367,9 +368,24 @@ def json_access():
 # 线上核验也绿，而线上 22 个页面确实在低报（最狠的 data-hub 写 435+，真值 708）。
 # 本项目反复栽的坑就是"同一个口径有第二个来源"，这里把识别器收成一份，
 # 静态闸门（L1.76）与线上核验共用，禁止再各写各的。
+#
+# 【20260921】识别器盲区（实测漏网，非推测）：首页「**133+ 开源机器人组件**，跨项目
+# 归一化」这条真·陈旧断言（真值 325），在 L1.76 静态闸与 verify_live_numbers 线上
+# 核验里**双双判绿**。根因：旧式把名词表写成封闭集合
+# `(机器人零部件实体|零部件实体|实体|开源项目组件|开源组件)`，文案在「开源」与
+# 「组件」之间插一个修饰词（**机器人**）就整条不认——既不是"开源项目组件"也不是
+# "开源组件"。与 20260818-W1「英文 entities 漏网」同根因：**用白名单穷举名词，
+# 而不是描述名词的形态**。文案是活的，白名单是死的，漏网只是时间问题。
+# 改为「限定词 + 有限长度修饰词 + 头部名词」的形态描述，并把命中归类交给
+# `_claim_bucket()`，不再靠枚举。
 _CLAIM_RE = re.compile(
     r'(\d{2,5})\s*\+?\s*(?:个|条|款)?\s*'
-    r'(机器人零部件实体|零部件实体|实体|开源项目组件|开源组件)')
+    r'((?:机器人)?(?:零部件)?实体'
+    r'|开源[^\s\d，。；、）)】」”"\'|/]{0,8}?(?:组件|项目)'
+    r'|组件)')
+#: 命中归属哪个真相源桶。判据只认**词面**（不做语义推断）：
+#: 带「开源」或头部名词是「组件」⇒ 开源组件数；其余 ⇒ 全库实体数。
+_OSS_WORD = re.compile(r'开源|组件')
 _ANCHOR_UNWRAP_RE = re.compile(r'<span data-rp="[a-z_0-9]+"\s*>([^<]*)</span>')
 # 子集口径不是全库口径。「451 条实体**落在其作用域内**」说的是 469 条子集，
 # 拿全库 708 去比它就是造假红 —— 闸门一旦假红，下一次真红也没人信。
@@ -396,11 +412,74 @@ def stale_count_claims(text, total, oss):
             continue
         if _SUBSET_BEFORE.search(flat[max(0, m.start() - 8):m.start()]):
             continue
-        want = oss if '开源' in m.group(2) else total
+        want = oss if _OSS_WORD.search(m.group(2)) else total
         if int(m.group(1)) != want:
             out.append((m.group(0), int(m.group(1)), want))
     return out
 
 
+# ------------------------------------------------- 识别器自证（阴阳对照，可单独跑）
+# 【20260921】为什么要单独自证：识别器是**闸门的闸门**。它一瞎，L1.76 与线上核验
+# 同时假绿，而且报出来的是"0 条陈旧数字"——一个看起来最健康的数字。
+# 20260921 实测就是这样：全站扫描 0 命中，真因是 133+ 那条压根没被看见。
+# 故本表用**变形关系**双向锁，而不是把期望值写死（真值会变，写死即失修）：
+#   (文案, 桶) → 文案里的数字 == 该桶真值 ⇒ 必须放行；≠ ⇒ 必须命中。
+# 这样真值涨到 900 也不会让自证变成假红。
+_DETECTOR_SAMPLES = (
+    ('133+ 开源机器人组件，跨项目归一化。', 'oss'),      # 20260921 实测漏网原文
+    ('133+ 开源机器人零部件组件', 'oss'),
+    ('9 大品类 435+ 实体。', 'total'),                   # 约数一律判错
+    ('收录 <strong>688 个机器人零部件实体</strong>', 'total'),
+    ('在 700+ 实体、300+ 开源组件里搜索', 'total'),
+    ('1435 个开源组件', 'oss'),
+    ('42 个组件', 'oss'),
+    ('16 个机器人实体', 'total'),
+)
+_DETECTOR_MUST_PASS = (
+    '本文基于 217 款执行器实测参数，161 家参展企业、314 项展品',
+    'ISO 9409-1-A50-4-M6 法兰，孔数 4',
+    '实体 2 个，共 3 处',
+    '支持 EtherCAT / CANopen / ROS2 三种协议',
+)
+
+
+def _self_test(verbose=False):
+    """返回 (失败列表, 检查项数)。按"数字 vs 真值"的变形关系判，不写死期望值。"""
+    f = facts()
+    truth = {'total': f['total_entities'], 'oss': f['oss_total']}
+    fails = []
+    n = 0
+    for text, bucket in _DETECTOR_SAMPLES:
+        n += 1
+        m = _CLAIM_RE.search(text)
+        if not m:
+            fails.append('识别器不认这条文案（形态描述有缺口）: %r' % text)
+            continue
+        num = int(m.group(1))
+        hits = stale_count_claims(text, truth['total'], truth['oss'])
+        if num == truth[bucket]:
+            if hits:
+                fails.append('数字==真值却被判错（假红）: %r -> %s' % (text, hits))
+        elif not any(h[1] == num for h in hits):
+            fails.append('数字%r≠真值却被放行（假绿）: %r -> %s' % (num, text, hits))
+    for text in _DETECTOR_MUST_PASS:
+        n += 1
+        if stale_count_claims(text, truth['total'], truth['oss']):
+            fails.append('MUST_PASS 误伤: %r -> %s'
+                         % (text, stale_count_claims(text, truth['total'], truth['oss'])))
+    n += 1
+    ok = '在 %d 条实体、%d 个开源组件里搜索' % (truth['total'], truth['oss'])
+    if stale_count_claims(ok, truth['total'], truth['oss']):
+        fails.append('真值被误伤: %r' % ok)
+    if verbose:
+        for x in fails:
+            print('  !! ' + x)
+    return fails, n
+
+
 if __name__ == '__main__':
+    if '--self-test' in sys.argv:
+        _fails, _n = _self_test(verbose=True)
+        print('识别器阴阳自证：%d 项，%s' % (_n, 'FAIL' if _fails else 'PASS'))
+        raise SystemExit(1 if _fails else 0)
     print(json.dumps(facts(), ensure_ascii=False, indent=2))

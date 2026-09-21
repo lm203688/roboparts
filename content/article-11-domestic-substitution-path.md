@@ -11,7 +11,7 @@ canonical: https://roboparts.cc/articles/domestic-substitution-path
 
 # 开源机器人零部件国产替代地图：从60%到100%
 
-> 本文首发于 [RoboParts 开源机器人兼容性平台](https://roboparts.cc)。供应链全景数据交叉引用：[roboparts.cc/api/data.json](https://roboparts.cc/api/data.json)。
+> 本文首发于 [RoboParts 机器人零件兼容性判定层](https://roboparts.cc)。供应链全景数据交叉引用：[roboparts.cc/api/data.json](https://roboparts.cc/api/data.json)。
 
 如果你是开源机器人构建者，国产化率这几个数字和你有直接关系——它决定了你给天工 TienKung、Unitree G1、Trossen OpenArm、LeRobot-Humanoid 或 roboto_origin 配零件时，是能在 [供应商寻源](https://roboparts.cc/suppliers.html) 上一周拿到现货，还是要在海外品牌那里排三个月、还被关税和汇率割一刀。
 

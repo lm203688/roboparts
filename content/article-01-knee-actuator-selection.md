@@ -10,7 +10,7 @@ canonical: "https://roboparts.cc/content/article-01-knee-actuator-selection.md"
 
 # 为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配
 
-> 本文首发于 [RoboParts 开源机器人兼容性平台](https://roboparts.cc)，数据集与在线选型工具均已开源。
+> 本文首发于 [RoboParts 机器人零件兼容性判定层](https://roboparts.cc)，数据集与在线选型工具均已开源。
 
 如果你正在复刻 **天工 TienKung**、基于 **Unitree G1** 做二次开发，或者从零搭一台 **LeRobot-Humanoid**，膝关节几乎一定是你第一个卡住的地方。
 

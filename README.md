@@ -1,14 +1,14 @@
-# RoboParts — 仿生机器人生态平台
+# RoboParts — 机器人零件兼容性判定层
 
 ## 1. 项目概述
-- **名称**: RoboParts — 仿生机器人生态平台
-- **定位**: 仿生机器人模块化选型与设计生态平台
+- **名称**: RoboParts — 机器人零件兼容性判定层
+- **定位**: 跨厂商机器人零件接口兼容性判定与开源数据层（vendor-neutral）
 - **域名**: roboparts.cc
 - **线上地址**: https://roboparts.cc
 - **预览域（Cloudflare Pages 默认域，非正式入口，勿对外引用）**: https://robotparts-924.pages.dev
 <!-- RP-STATS:START 由 scripts/inject_readme_stats.py 生成，勿手改 -->
 - **数据量**：798 实体（589 实物零部件 / 101 接口规范 / 81 AI 模型软件 / 10 企业主体 / 17 市场情报）；机械接口声明率 5.75%（25/435）；开源组件 325
-- **最后更新**：2026-09-17
+- **最后更新**：2026-09-20
 <!-- RP-STATS:END -->
 
 ## 2. 核心目标
@@ -21,7 +21,7 @@
 ## 3. 三大原则
 - **自动化** — 智能选型引擎、自动BOM生成、AI兼容性匹配、一键导出采购清单
 - **生态化** — 连接厂商/开发者/用户形成闭环
-- **盈利化** — API订阅、选型工具SaaS、模块交易佣金、企业定制
+- **盈利化** — API 数据订阅、选型工具 SaaS、企业定制（**不做交易抽佣**：一旦抽佣，判定就不中立了）
 
 ## 4. 核心功能
 - 🔧 **智能选型引擎** — 五维度评分（扭矩/速度/精度/重量/成本）多因子选型 + 多结果对比表格
@@ -31,16 +31,32 @@
 - 🔗 **兼容性矩阵** — 电气/机械/协议/软件四维兼容检测
 
 ## 5. 数据分类
-- **actuators**: 217条 — 执行器（电机、谐波减速器、行星滚柱丝杠、无框力矩电机、驱动器、关节模组、灵巧手、腱绳驱动手、开源力控关节、SEA、柔性驱动器）
-- **sensors**: 90条 — 传感器（视觉相机、六维力/力矩传感器、关节扭矩传感器、触觉传感器、磁性电子皮肤、激光雷达、IMU）
-- **chips**: 108条 — 芯片（AI芯片、边缘推理加速器、MCU、FPGA、通信芯片）
-- **protocols**: 64条 — 通信协议（EtherCAT、CANopen、ROS2、MQTT等）
-- **interfaces**: 14条 — 接口标准
-- **llms**: 23条 — 大模型（VLA模型、机器人基础模型）
-- **platforms**: 26条 — 机器人平台（含开源可复现整机）
-- **flexible_actuators**: 6条 — 柔性执行器（人工肌肉、柔性驱动器、仿生脊柱）
-- **robot_ai_models**: 30条 — 机器人AI模型（VLA模型、世界模型、机器人基础模型）
-- **data_acquisition**: 27条 — 数据采集设备（遥操作、外骨骼采集、动作捕捉、数据手套、触觉传感器、开源具身数据集平台）
+<!-- RP-CATS:START 由 scripts/inject_readme_stats.py 生成，勿手改 -->
+- **actuators**: 220 条 — 执行器（电机、谐波减速器、行星滚柱丝杠、无框力矩电机、驱动器、关节模组、灵巧手、腱绳驱动手、开源力控关节、SEA、柔性驱动器）
+- **chips**: 108 条 — 芯片（AI 芯片、边缘推理加速器、MCU、FPGA、通信芯片）
+- **sensors**: 95 条 — 传感器（视觉相机、六维力/力矩传感器、关节扭矩传感器、触觉传感器、磁性电子皮肤、激光雷达、IMU）
+- **protocols**: 64 条 — 通信协议（EtherCAT、CANopen、ROS2、MQTT 等）
+- **data_acquisition**: 46 条 — 数据采集设备（遥操作、外骨骼采集、动作捕捉、数据手套、开源具身数据集平台）
+- **robot_ai_models**: 46 条 — 机器人 AI 模型（VLA 模型、世界模型、机器人基础模型）
+- **interfaces**: 44 条 — 接口标准（法兰、总线、连接器标准文本）
+- **llms**: 42 条 — 大模型（VLA 模型、机器人基础模型）
+- **platforms**: 41 条 — 机器人平台（含开源可复现整机）
+- **grippers**: 23 条 — 夹爪与末端执行器
+- **flexible_actuators**: 22 条 — 柔性执行器（人工肌肉、柔性驱动器、仿生脊柱）
+- **bionic_mechanisms**: 17 条 — 仿生机构（仿生关节、仿生驱动器、仿生传感器）
+- **reducers**: 14 条 — 减速器（谐波、行星、RV）
+- **controllers**: 4 条 — 控制器
+- **structural**: 3 条 — 结构件
+- **cables**: 2 条 — 线缆
+- **connectors**: 2 条 — 连接器
+- **pcb**: 2 条 — PCB
+- **power**: 2 条 — 电源
+- **integrated_joints**: 1 条 — 一体化关节模组
+<!-- RP-CATS:END -->
+
+> 本节计数由 `scripts/inject_readme_stats.py` 从 `api/entities.json` 现算注入，
+> 不手写。此前它停在 8 月初快照（actuators 写 217 实 220，且 10 个品类整类缺失）
+> 长达 7 周而无人发现 —— 因为总数有闸门盯着，分项没有。
 
 ## 6. 最新更新（2026-08-05）
 - **开源硬件上游缺口补齐（+10，全部 Tier A 实证）** — 按语料缺口探测（而非重复灌注优先品类）定位结构性空白：腱绳传动仅 1 条、电子皮肤仅 2 条、开源力控关节模组缺失。新增灵巧手 LEAP Hand（CMU，16DoF 直驱）/ RUKA Hand（NYU，腱绳驱动），开源力控关节 ODRI Actuator（准直驱免力矩传感器）、驱动器 mjbots moteus（CAN-FD）与 VESC，磁性电子皮肤 AnySkin / ReSkin（免重标定可更换），智元 AgiBot World 具身数据集平台（对应 direction-202608 P0「智元供应链」），开源整机 Open Duck Mini / Reachy 2。**10 条全部经 scripts/verify_vendor_sources.py 真实 HTTP 实证（200 + 页面命中）升 Tier A**，可追溯率 54.42%→55.20%，实体总数 577→587
@@ -83,19 +99,32 @@
 本仓的数字与对外发布物由脚本从唯一真相源 `api/entities.json` 现算，禁止手改。
 
 ```bash
-python scripts/ci_gate.py     # 仓内可判定的 8 项闸门（GitHub Actions 跑的就是这套）
+python scripts/ci_gate.py --list   # 列出全部闸门
+python scripts/ci_gate.py          # 跑全部闸门（GitHub Actions 跑的就是这套）
 ```
 
-校验项：实体 schema 契约、`mount_type` 枚举契约、对外数据集分发一致性、
-agent 技能清单一致性、对外 JSON 可解析、`meta` 与实体一致、
-Cloudflare Functions 顶层安全、无凭据泄漏。
+共 <!-- RP-GATES:START 由 scripts/inject_readme_stats.py 生成，勿手改 -->21<!-- RP-GATES:END --> 项：
 
-改完数据需重生成派生文件：`python scripts/normalize_categories.py`。
+语义索引覆盖全部实体 · 实体 schema 契约 · `mount_type` 枚举契约 ·
+`standard_conformance` 覆盖率一致 · 对外数据集分发一致性 · agent-discovery 技能清单一致性 ·
+MCP 品类覆盖（stdio + hosted ↔ entities.json）· MCP 包完整性 · 公开清单数字现算 ·
+运动学可达性（阴阳自测 + 漂移）· 需求信号判别层（三态 fail-closed + 对外口径）·
+对外 JSON 可解析 · `entities.json` meta 一致 · meta 单一真相源 · Functions 顶层安全 ·
+GitHub 配置 YAML 可解析 · 无凭据泄漏 · BOM 装配次序拓扑排序 · 反馈信号回流聚合 ·
+飞轮幂等 / 可恢复。
+
+> 项数由 `scripts/inject_readme_stats.py` 现读 `ci_gate.py --list` 的实际输出行数注入。
+> 此前手写「8 项」，真值已是 20 —— 少报的 12 项不是"没做"，是**没人数的**。
+
+完整的跨文件一致性回归（七处数字同源、全站数量断言、对外表面口径）见
+`python scripts/regression.py`。
+
+改完数据需重生成派生文件：`python scripts/regen_derived.py`。
 
 ## 12. 贡献
-本项目最大的缺口是机械接口声明率仅 **5.75%**（declared 15 + partial 10 / 435 适用）——
-「两个零件能不能拧到一起」多数情况答不了。补一条带出处的孔位数据，
-比重构算法有用得多。
+本项目最大的缺口是**机械接口声明率**——「两个零件能不能拧到一起」多数情况答不了。
+这个数字不在这里手写（见本文顶部「数据量」一行的现算值）；
+补一条带出处的孔位数据，比重构算法有用得多。
 
 - [补机械接口声明](https://github.com/lm203688/roboparts/issues/new?template=mechanical-interface.yml)（不必会写 JSON，贴出处链接即可）
 - [报数据错误](https://github.com/lm203688/roboparts/issues/new?template=data-correction.yml)
@@ -105,7 +134,16 @@ Cloudflare Functions 顶层安全、无凭据泄漏。
 唯一的硬规矩：**无出处不收**。我们宁可留着 `not_declared`，也不猜。
 
 ## 13. 许可
-双轨许可：**代码 MIT，数据 CC BY 4.0**。详见 [`LICENSE`](./LICENSE)。
+双轨许可：
+
+| 对象 | 许可 | 文件 |
+|---|---|---|
+| 代码（`scripts/`、`functions/`、`*.js`/`*.py`/`*.mjs`、页面模板） | **MIT** | [`LICENSE`](./LICENSE) |
+| 数据（`api/`、`roboparts-dataset-github/`、`/api/` 同源数据） | **CC BY 4.0** | [`DATA-LICENSE.md`](./DATA-LICENSE.md) |
+
+两条此前写在同一个 `LICENSE` 里，GitHub 的识别器读不懂混排文本 ⇒ 仓库页
+`license` 字段长期显示 `NOASSERTION`。现已拆分：`LICENSE` 只放逐字 MIT 全文
+（可被识别），数据那条挪到 `DATA-LICENSE.md`。
 
 引用数据前请知悉：本库参数为厂商公开声明值，**未经我方实测复现**；
 跨厂商可直接横向比较的 A 级条目为 0 条。每条数据带 `source_tier`(A/B/C)

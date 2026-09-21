@@ -1,7 +1,7 @@
 {
   "meta": {
     "name": "RoboParts Dataset",
-    "name_zh": "仿生机器人配件数据库",
+    "name_zh": "机器人零部件结构化数据集",
     "domain": "roboparts.cc",
     "homepage": "https://roboparts.cc",
     "github": "https://github.com/lm203688/roboparts",
@@ -44,7 +44,7 @@
       "B": 246,
       "C": 150
     },
-    "updated": "2026-09-20T14:00:31+0800",
+    "updated": "2026-09-21T10:08:26+0800",
     "generated_by": "scripts/sync_dataset_dist.py",
     "truth_source": "api/entities.json"
   },

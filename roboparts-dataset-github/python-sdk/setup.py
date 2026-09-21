@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name="roboparts",
     version="1.0.0",
-    description="RoboParts Python SDK - 仿生机器人零部件数据API客户端",
+    description="RoboParts Python SDK - 机器人零部件数据API客户端",
     author="RoboParts",
     author_email="support@roboparts.cc",
     url="https://roboparts.cc",

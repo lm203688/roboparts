@@ -114,6 +114,64 @@ SUBSET_RULES = (
 )
 
 
+# ------------------------------------------------ 对外清单「最后更新」日期保鲜
+# 【20260921】与数字同一类失修：llms.txt 写「最后更新：2026-08-27」、agent-discovery
+# 写 "last_updated":"2026-09-17"，两者都不是真值（当日为 2026-09-21），且**没有任何
+# 机制维护**——L2「七处一致」只管数字，日期不参与任何比对。AI 抓走 llms.txt 后转述
+# 「这项目 8 月底就停了」，比数字少报更直接地损伤可信度。
+# 日期真相源＝最近一次提交日期（与 inject_readme_stats.last_updated 同源，不另立一套）。
+DATE_RULES = (
+    ('llms.txt',
+     re.compile(r'(?m)^(- 最后更新：)(\d{4}-\d{2}-\d{2})(T[0-9:.]+Z)?\s*$'),
+     r'\g<1>%s\g<3>'),
+    ('agent-discovery.json',
+     re.compile(r'("last_updated"\s*:\s*")(\d{4}-\d{2}-\d{2})(?:T[0-9:.]+Z)?"'),
+     r'\g<1>%sT00:00:00.000Z"'),
+)
+
+
+def repo_date():
+    """最近一次提交的日期（本地时间）。取不到时返回 None —— 宁可不改，也不猜。"""
+    import subprocess
+    from datetime import date
+    try:
+        out = subprocess.run(['git', 'log', '-1', '--date=short', '--format=%cd'],
+                             cwd=ROOT, capture_output=True, text=True, timeout=30)
+        if out.returncode == 0 and out.stdout.strip():
+            return out.stdout.strip()
+    except Exception:
+        pass
+    return date.today().isoformat()
+
+
+def refresh_dates(write=True):
+    """把对外清单里的「最后更新」刷成最近提交日期。返回 [(文件, 旧, 新)]。"""
+    day = repo_date()
+    if not day:
+        return []
+    changed = []
+    for rel, pat, tmpl in DATE_RULES:
+        path = os.path.join(ROOT, rel)
+        if not os.path.isfile(path):
+            continue
+        with open(path, encoding='utf-8') as f:
+            src = f.read()
+        m = pat.search(src)
+        if not m:
+            # 规则零命中＝这段日期换了写法，从此重新无人维护。宁可吵，不要静默失管。
+            raise SystemExit('!! 日期保鲜规则在 %s 中零命中：写法被改过？'
+                             '规则失效等于这个日期重新没人管' % rel)
+        old = m.group(2)
+        if old == day:
+            continue
+        out = pat.sub(tmpl % day, src, count=1)
+        changed.append((rel, old, day))
+        if write:
+            with open(path, 'w', encoding='utf-8', newline='') as f:
+                f.write(out)
+    return changed
+
+
 def refresh_subsets(fact_map, write=True):
     """子集口径按真相源现算重写。返回 [(文件, 旧值, 新值)]（无改动则不列）。"""
     changed = []
@@ -165,7 +223,12 @@ def refresh_anchors(src, fact_map):
 # 于是 truthy 类目从 708 涨到 710 时它一路陈旧。补英文 entities 别名，
 # 让裸文本保鲜对中英双语声明同效。替换模板保留原文的 suffix（entities/实体）。
 BARE_TOTAL_RE = re.compile(r'(?<!\d)(\d{2,5})\s*\+?\s*(个|条)?\s*(机器人零部件实体|零部件实体|实体|entities)')
-BARE_OSS_RE = re.compile(r'(?<!\d)(\d{2,5})\s*\+?\s*(个|条)?\s*开源(项目)?组件')
+# 【20260921】开源组件侧同类盲区：旧式 `开源(项目)?组件` 把修饰词穷举成"项目"一种，
+# 首页真实文案「133+ 开源**机器人**组件」整条漏网——检测器报 0 条、保鲜器也不认，
+# 于是它既查不出也修不掉，一路陈旧（真值 325）。改为「开源 + 有限长度修饰词 + 头部名词」，
+# 与 onboarding_block._CLAIM_RE 的形态描述同构：**文案是活的，白名单是死的**。
+BARE_OSS_RE = re.compile(
+    r'(?<!\d)(\d{2,5})\s*\+?\s*(个|条)?\s*开源([^\s\d，。；、）)】」”"\'|/]{0,8}?)(组件|项目)')
 # 锚点内的数字归 refresh_anchors 管，裸文本 pass 必须看不见它们。
 # 曾用 (?<![\d>]) 排除「紧跟 > 的数字」来躲开 </span>——但那把 <td>688 实体、
 # <strong>688 个…实体</strong> 这类**紧跟任意标签**的真陈旧数字一并放过了
@@ -185,8 +248,8 @@ def refresh_bare_counts(src, total, oss):
     src = ANCHOR_RE.sub(_mask, src)
 
     src = BARE_TOTAL_RE.sub(lambda m: '%d %s%s' % (total, m.group(2) or '', m.group(3)), src)
-    src = BARE_OSS_RE.sub(lambda m: '%d %s开源%s组件'
-                          % (oss, m.group(2) or '', m.group(3) or ''), src)
+    src = BARE_OSS_RE.sub(lambda m: '%d %s开源%s%s'
+                          % (oss, m.group(2) or '', m.group(3) or '', m.group(4)), src)
 
     for i, raw in enumerate(kept):
         src = src.replace(_MASK % i, raw)
@@ -309,6 +372,12 @@ def main():
           % (len(SUBSET_RULES),
              'unchanged' if not sub
              else ' '.join('%s %s→%d' % (r, o, n) for r, o, n in sub)))
+
+    dates = refresh_dates()
+    print('对外清单日期保鲜：%d 条规则 %s'
+          % (len(DATE_RULES),
+             'unchanged' if not dates
+             else ' '.join('%s %s→%s' % (r, o, n) for r, o, n in dates)))
     return 0
 
 

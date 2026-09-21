@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RoboParts · 抢先体验 / 合作意向</title>
+<title>RoboParts · 构建者候补</title>
+<meta name="description" content="RoboParts 构建者候补：留下邮箱，你要的零件接口数据被证实时第一时间通知你。不卖零件，只登记不知道的部分。">
 
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -17,9 +18,6 @@
   .wrap{width:100%;max-width:560px;background:var(--card);border:1px solid #23304d;border-radius:16px;padding:36px 32px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
   h1{margin:0 0 6px;font-size:24px;letter-spacing:.5px}
   .sub{color:var(--mut);font-size:14px;margin-bottom:24px}
-  .toggle{display:flex;gap:8px;margin-bottom:18px;background:#0d1426;border-radius:10px;padding:4px}
-  .toggle button{flex:1;border:0;background:transparent;color:var(--mut);padding:10px;border-radius:8px;cursor:pointer;font-size:14px;transition:.15s}
-  .toggle button.on{background:var(--acc);color:#06231a;font-weight:600}
   label{display:block;font-size:13px;color:var(--mut);margin:14px 0 6px}
   input,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #2a3a5e;background:#0d1426;color:var(--txt);font-size:15px;outline:none}
   input:focus,select:focus{border-color:var(--acc)}
@@ -34,27 +32,25 @@
   .chips button{border:1px solid #2a3a5e;background:#0d1426;color:var(--mut);padding:8px 12px;border-radius:999px;cursor:pointer;font-size:13px;transition:.15s}
   .chips button.on{border-color:var(--acc);color:var(--acc);background:rgba(55,224,166,.1)}
   .foot{margin-top:22px;font-size:12px;color:#5c6781;text-align:center}
+  .note{font-size:12.5px;color:var(--mut);border:1px solid #23304d;border-radius:10px;padding:12px 14px;margin:0 0 18px}
   a{color:var(--acc2);text-decoration:none}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>RoboParts 抢先体验</h1>
-  <div class="sub">机器人的零部件兼容性数据底座与匹配引擎 —— 留下邮箱，需求被证实时第一时间通知你。</div>
+  <h1>加入构建者候补</h1>
+  <div class="sub">RoboParts 是机器人零件的兼容性判定层。留下邮箱，你要的零件接口数据被证实时第一时间通知你。</div>
 
-  <div class="toggle">
-    <button id="t-build" class="on" onclick="setRole('builder')">我是 Builder</button>
-    <button id="t-inv" onclick="setRole('investor')">我是投资人</button>
-    <button id="t-sup" onclick="setRole('supplier')">我是供应商</button>
-  </div>
+  <p class="note">我们只登记<strong>有出处</strong>的接口数据。查不到的直接标 <code>not_declared</code>，不猜、不填 0 假装有数据。
+  你在这里勾选的缺口会进入补数据队列，并按"有出处优先"排序——这就是这份候补表的全部用途。</p>
 
   <label>邮箱</label>
   <input id="email" type="email" placeholder="you@example.com" autocomplete="email">
 
-  <label>你最想解决的事（可选）</label>
-  <input id="note" type="text" placeholder="例如：给 Asimov v1 找兼容舵机 / 想聊早期投资">
+  <label>你正在做的事（可选）</label>
+  <input id="note" type="text" placeholder="例如：给 Asimov v1 找兼容舵机 / 复现 Unitree G1 的关节模组">
 
-  <label>你最想找哪类零件？（可多选，用于需求热度排序）</label>
+  <label>你最想找哪类零件？（可多选，用于补数据优先级排序）</label>
   <div class="chips" id="needs">
     <button type="button" data-c="actuators" onclick="toggleNeed(this)">执行器</button>
     <button type="button" data-c="sensors" onclick="toggleNeed(this)">传感器</button>
@@ -70,22 +66,21 @@
     <button type="button" data-c="robot_ai_models" onclick="toggleNeed(this)">机器人AI模型</button>
   </div>
 
-  <button class="submit" id="btn" onclick="submit()">加入 waitlist</button>
+  <button class="submit" id="btn" onclick="submit()">加入候补</button>
   <div class="msg" id="msg"></div>
   <div class="count" id="count">正在读取实时计数…</div>
 
-  <div class="foot">我们只在产品里程碑或需求验证进展时联系你，绝不滥发。<br>RoboParts · <a href="/">返回首页</a></div>
+  <div class="foot">我们只在零件数据更新或产品里程碑时联系你，绝不滥发。<br>
+  RoboParts · 不生产、不销售、不代理任何零部件 · <a href="/">返回首页</a></div>
 </div>
 
 <script>
-let role = 'builder';
+// 【20260921】受众收窄：此前有 builder / investor / supplier 三个角色按钮。
+// 后两类是「佣金中介」模式的残留（29 次 API 调用 0 注册已证该模式无效），
+// 且投资人不是用户、供应商不会为"被查到"付费 —— 三种画像等于没有画像。
+// 现在只留构建者：唯一已验证存在、且能产生外部交互痕迹的群体。
+const role = 'builder';
 const needSet = new Set();
-function setRole(r){
-  role = r;
-  document.getElementById('t-build').className = r==='builder'?'on':'';
-  document.getElementById('t-inv').className   = r==='investor'?'on':'';
-  document.getElementById('t-sup').className   = r==='supplier'?'on':'';
-}
 function toggleNeed(btn){
   const c = btn.dataset.c;
   if(needSet.has(c)){ needSet.delete(c); btn.className=''; }
@@ -95,13 +90,13 @@ async function refresh(){
   try{
     const r = await fetch('/api/waitlist');
     const d = await r.json();
-    let html = `当前 waitlist：<b>${d.total||0}</b> 人（Builder ${d.builders||0} · Investor ${d.investors||0} · Supplier ${d.suppliers||0}）`;
+    let html = `当前候补构建者：<b>${d.builders||0}</b> 人`;
     const needs = d.needs||{};
     const keys = Object.keys(needs);
     if(keys.length){
       const top = keys.sort((a,b)=>needs[b]-needs[a]).slice(0,3)
         .map(k=>`${NEED_LABEL[k]||k} ${needs[k]}`).join(' · ');
-      html += `<br>需求热度 Top3：${top}`;
+      html += `<br>补数据优先级 Top3（按候补勾选）：${top}`;
     }
     document.getElementById('count').innerHTML = html;
   }catch(e){ document.getElementById('count').textContent = ''; }
@@ -128,7 +123,7 @@ async function submit(){
       refresh();
     }else{ msg.className='msg err'; msg.textContent=d.error||'提交失败，请稍后再试'; }
   }catch(e){ msg.className='msg err'; msg.textContent='网络错误，请稍后再试'; }
-  btn.disabled=false; btn.textContent='加入 waitlist';
+  btn.disabled=false; btn.textContent='加入候补';
 }
 refresh();
 </script>

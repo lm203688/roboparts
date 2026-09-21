@@ -9,8 +9,6 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0b1020">
-
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="description" content="2026年7月，特斯拉Optimus V3在加州弗里蒙特工厂正式启动量产。本文全景拆解Optimus V3的28个关节执行器BOM成本结构，梳理三花智控、绿的谐波、盟立自动化、亚洲光学、双林股份等核心供应商图谱，分析稀土磁体瓶颈、灵巧手良率挑战与产能S曲线爬坡逻辑；并逐节说明这些供应链变化如何影响开源机器人构建者（天工TienKung、Unitree G1/Go2、OpenArm、LeRobot-Humanoid）的零件价格、交期与选型策略。">
 <meta name="keywords" content="特斯拉Optimus, Optimus V3, 人形机器人供应链, 开源机器人, 关节执行器, 三花智控, 绿的谐波, 行星滚柱丝杠, RV减速器, 谐波减速器, 灵巧手, 稀土磁体, 机器人零部件选型, 天工机器人, LeRobot">
 <link rel="canonical" href="https://roboparts.cc/articles/tesla-optimus-supply-chain">
@@ -77,6 +75,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 .acard p{color:var(--mut);font-size:13.5px;margin:0 0 10px;flex:1}
 @media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
 </style>
+
 <!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"798 条实体（其中 589 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
 </head>
 <body>
@@ -90,8 +89,8 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <a href="/pricing">定价</a>
 </div></div>
 <div class="wrap">
-<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 特斯拉Optimus V3量产元年：供应链拆解，以及它对</div><h1>特斯拉Optimus V3量产元年：供应链拆解，以及它对开源机器人构建者意味着什么</h1><div class="meta">2026-07-30 · RoboParts Research · 约 10040 字 · RoboParts 开源机器人兼容性平台</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">supply-chain</span><span class="badge">actuators</span></div><div class="lede">2026年7月，特斯拉Optimus V3在加州弗里蒙特工厂正式启动量产。本文全景拆解Optimus V3的28个关节执行器BOM成本结构，梳理三花智控、绿的谐波、盟立自动化、亚洲光学、双林股份等核心供应商图谱，分析稀土磁体瓶颈、灵巧手良率挑战与产能S曲线爬坡逻辑；并逐节说明这些供应链变化如何影响开源机器人构建者（天工TienKung、Unitree G1/Go2、OpenArm、LeRobot-Humanoid）的零件价格、交期与选型策略。</div><div class="toc"><b>本文目录</b><ol><li><a href="#特斯拉optimus-v3量产元年-供应链拆解-以及它对开源机器人构建者意味着什么">特斯拉Optimus V3量产元年：供应链拆解，以及它对开源机器人构建者意味着什么</a></li><li><a href="#一-量产时间线与产能规划">一、量产时间线与产能规划</a></li><li><a href="#二-28个关节执行器-bom成本拆解">二、28个关节执行器：BOM成本拆解</a></li><li><a href="#三-核心供应商全景图">三、核心供应商全景图</a></li><li><a href="#四-供应链瓶颈与核心挑战">四、供应链瓶颈与核心挑战</a></li><li><a href="#五-对开源构建者选型的启示">五、对开源构建者选型的启示</a></li><li><a href="#六-结语-从样品验证到订单兑现">六、结语：从样品验证到订单兑现</a></li></ol></div><article><h2 id="特斯拉optimus-v3量产元年-供应链拆解-以及它对开源机器人构建者意味着什么">特斯拉Optimus V3量产元年：供应链拆解，以及它对开源机器人构建者意味着什么</h2>
-<blockquote><p>本文首发于 <a href="https://roboparts.cc">RoboParts 开源机器人兼容性平台</a>。供应链数据交叉引用：<a href="https://roboparts.cc/api/data.json">roboparts.cc/api/data.json</a>。</p></blockquote>
+<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 特斯拉Optimus V3量产元年：供应链拆解，以及它对</div><h1>特斯拉Optimus V3量产元年：供应链拆解，以及它对开源机器人构建者意味着什么</h1><div class="meta">2026-07-30 · RoboParts Research · 约 10042 字 · RoboParts 机器人零件兼容性判定层</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">supply-chain</span><span class="badge">actuators</span></div><div class="lede">2026年7月，特斯拉Optimus V3在加州弗里蒙特工厂正式启动量产。本文全景拆解Optimus V3的28个关节执行器BOM成本结构，梳理三花智控、绿的谐波、盟立自动化、亚洲光学、双林股份等核心供应商图谱，分析稀土磁体瓶颈、灵巧手良率挑战与产能S曲线爬坡逻辑；并逐节说明这些供应链变化如何影响开源机器人构建者（天工TienKung、Unitree G1/Go2、OpenArm、LeRobot-Humanoid）的零件价格、交期与选型策略。</div><div class="toc"><b>本文目录</b><ol><li><a href="#特斯拉optimus-v3量产元年-供应链拆解-以及它对开源机器人构建者意味着什么">特斯拉Optimus V3量产元年：供应链拆解，以及它对开源机器人构建者意味着什么</a></li><li><a href="#一-量产时间线与产能规划">一、量产时间线与产能规划</a></li><li><a href="#二-28个关节执行器-bom成本拆解">二、28个关节执行器：BOM成本拆解</a></li><li><a href="#三-核心供应商全景图">三、核心供应商全景图</a></li><li><a href="#四-供应链瓶颈与核心挑战">四、供应链瓶颈与核心挑战</a></li><li><a href="#五-对开源构建者选型的启示">五、对开源构建者选型的启示</a></li><li><a href="#六-结语-从样品验证到订单兑现">六、结语：从样品验证到订单兑现</a></li></ol></div><article><h2 id="特斯拉optimus-v3量产元年-供应链拆解-以及它对开源机器人构建者意味着什么">特斯拉Optimus V3量产元年：供应链拆解，以及它对开源机器人构建者意味着什么</h2>
+<blockquote><p>本文首发于 <a href="https://roboparts.cc">RoboParts 机器人零件兼容性判定层</a>。供应链数据交叉引用：<a href="https://roboparts.cc/api/data.json">roboparts.cc/api/data.json</a>。</p></blockquote>
 <p>2026年7月，加州弗里蒙特工厂内，一条原本生产Model S/X的产线完成了它的历史性转型——特斯拉Optimus V3在此正式启动量产。这并非又一场发布会上的概念展示，而是真金白银的产线开动、零件入库、整机下线。对于整个人形机器人产业而言，这一刻的标志性意义远超单款产品的交付：它意味着全球首个由汽车级制造体系驱动的万人形机器人量产项目，正式从PPT走入了车间。</p>
 <p>马斯克对这一过程的困难程度有着清醒认知。他公开表示："Optimus将会是特斯拉有史以来最难实现规模化量产的产品。几乎所有零部件都不存在成熟供应链，全部需要从零自研开发。"这句话并非谦辞——当一辆汽车有超过3万个零部件和数十年沉淀的全球供应链体系时，一台人形机器人却要在几乎没有现成货架产品的情况下，重新建立从关节执行器到灵巧手指尖传感器的全部供应网络。</p>
 <p><strong>为什么一个开源机器人构建者要关心 Optimus 的供应链？</strong></p>
@@ -170,7 +169,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <blockquote><p><strong>对开源构建者意味着什么</strong>：产能 S 曲线的斜率，就是你的<strong>交期曲线</strong>。当 7-9 月 Optimus 三个节点把周产从 150 拉到 1200，绿的谐波、双林股份、秦川机床的产能会被优先保供特斯拉，开源构建者能分到的余量随爬坡收紧——这正是 4 周交期拖成 20 周的高发窗口。应对：不要在一个 BOM 里押注单一爆款料号；用 <a href="https://roboparts.cc/bom-checker.html">BOM 兼容性检查</a> 预先规划 2-3 个可互换替代料，并用 <a href="https://roboparts.cc/suppliers.html">供应商寻源</a> 锁定有现货的二级供应商。在产能爆发前把零件买齐，比上线前临时抢货便宜得多。</p></blockquote>
 <hr>
 <h2 id="五-对开源构建者选型的启示">五、对开源构建者选型的启示</h2>
-<p>Optimus V3的量产元年，对开源机器人构建者的选型工作流提出了新的命题。RoboParts作为开源机器人兼容性平台，从这场量产浪潮中观察到三个趋势：</p>
+<p>Optimus V3的量产元年，对开源机器人构建者的选型工作流提出了新的命题。RoboParts作为机器人零件兼容性判定层，从这场量产浪潮中观察到三个趋势：</p>
 <p><strong>第一，选型决策从"参数对比"升级为"供应链可行性评估"。</strong> 过去开源构建者选型主要看扭矩、精度、转速等性能参数，但当你要给天工 TienKung 或 Unitree G1 复刻机备齐 28 个关节的零件时，供应商的产能弹性、交付周期、良率水平变得同等重要。一个参数完美的减速器，如果供应商月产能只有 500 台还要排特斯拉的队，对你这个交付节点毫无意义。RoboParts 数据集正在扩展供应链维度的字段，帮助构建者在做技术选型时同步评估供应风险。</p>
 <p><strong>第二，零部件标准化是开源生态的命脉。</strong> 特斯拉"从零自研"是垂直整合的极致，但开源社区恰恰相反——缺乏标准件意味着每个构建者都在重复造轮子。RoboParts 收录的执行器接口、通信协议和安装尺寸数据（<a href="https://roboparts.cc/oss.html">开源组件数据层</a>），正是为推动社区标准化接口而构建：当更多人基于统一法兰、统一协议选型和替换时，零件才能真正"即插即用"。</p>
 <p><strong>第三，数据驱动的选型闭环正在形成。</strong> Optimus Academy 的训练模式意味着量产机器人本身就是数据采集终端。对开源构建者而言，你不一定有万台机器人，但可以把你那台 LeRobot-Humanoid 或 roboto_origin 的运行日志（哪些关节磨损快、哪些接口长期松动）贡献到开源数据层，让社区共享兼容性经验。RoboParts 的平台愿景正是构建这样的数据闭环。</p>
@@ -212,6 +211,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <br>本文数据引用自 RoboParts 公开数据集，转载请注明来源并保留原文链接。
 </div>
 </div>
+
 <style>
 /* RP-ONBOARDING scoped styles */
 .rp-onboard{max-width:880px;margin:48px auto 0;padding:28px 24px;border:1px solid rgba(128,128,128,.28);

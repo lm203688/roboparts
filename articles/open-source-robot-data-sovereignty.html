@@ -9,8 +9,6 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0b1020">
-
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="description" content="用 LeRobot、Unitree G1、OpenArm 采集的遥操作数据，究竟归谁？本文解释机器人数据的特殊风险、主流平台的三个数据陷阱，以及 RoboParts 的零知识加密架构如何让开源构建者完全掌控自己的数据。">
 <meta name="keywords" content="机器人数据主权, 开源机器人, LeRobot 数据集, 遥操作数据, 零知识加密, 具身智能数据, 数据迁移, AES-256-GCM">
 <link rel="canonical" href="https://roboparts.cc/articles/open-source-robot-data-sovereignty">
@@ -77,6 +75,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 .acard p{color:var(--mut);font-size:13.5px;margin:0 0 10px;flex:1}
 @media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
 </style>
+
 <!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"798 条实体（其中 589 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
 </head>
 <body>
@@ -90,8 +89,8 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <a href="/pricing">定价</a>
 </div></div>
 <div class="wrap">
-<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 开源机器人的数据主权：你采的每一条轨迹，都应该属于你</div><h1>开源机器人的数据主权：你采的每一条轨迹，都应该属于你</h1><div class="meta">RoboParts Research · 约 2804 字 · RoboParts 开源机器人兼容性平台</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">data-sovereignty</span><span class="badge">lerobot</span></div><div class="lede">用 LeRobot、Unitree G1、OpenArm 采集的遥操作数据，究竟归谁？本文解释机器人数据的特殊风险、主流平台的三个数据陷阱，以及 RoboParts 的零知识加密架构如何让开源构建者完全掌控自己的数据。</div><div class="toc"><b>本文目录</b><ol><li><a href="#开源机器人的数据主权-你采的每一条轨迹-都应该属于你">开源机器人的数据主权：你采的每一条轨迹，都应该属于你</a></li><li><a href="#一-机器人数据的特殊性">一、机器人数据的特殊性</a></li><li><a href="#二-现有平台的数据陷阱">二、现有平台的数据陷阱</a></li><li><a href="#三-roboparts-的解决方案-零知识架构">三、RoboParts 的解决方案：零知识架构</a></li><li><a href="#四-技术实现">四、技术实现</a></li><li><a href="#五-对比-传统平台-vs-roboparts">五、对比：传统平台 vs RoboParts</a></li><li><a href="#六-使用方式">六、使用方式</a></li><li><a href="#七-结语">七、结语</a></li></ol></div><article><h2 id="开源机器人的数据主权-你采的每一条轨迹-都应该属于你">开源机器人的数据主权：你采的每一条轨迹，都应该属于你</h2>
-<blockquote><p>本文首发于 <a href="https://roboparts.cc">RoboParts 开源机器人兼容性平台</a>。</p></blockquote>
+<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 开源机器人的数据主权：你采的每一条轨迹，都应该属于你</div><h1>开源机器人的数据主权：你采的每一条轨迹，都应该属于你</h1><div class="meta">RoboParts Research · 约 2955 字 · RoboParts 机器人零件兼容性判定层</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">sourcing</span><span class="badge">data-sovereignty</span><span class="badge">lerobot</span></div><div class="lede">用 LeRobot、Unitree G1、OpenArm 采集的遥操作数据，究竟归谁？本文解释机器人数据的特殊风险、主流平台的三个数据陷阱，以及 RoboParts 的零知识加密架构如何让开源构建者完全掌控自己的数据。</div><div class="toc"><b>本文目录</b><ol><li><a href="#开源机器人的数据主权-你采的每一条轨迹-都应该属于你">开源机器人的数据主权：你采的每一条轨迹，都应该属于你</a></li><li><a href="#一-机器人数据的特殊性">一、机器人数据的特殊性</a></li><li><a href="#二-现有平台的数据陷阱">二、现有平台的数据陷阱</a></li><li><a href="#三-roboparts-的解决方案-零知识架构">三、RoboParts 的解决方案：零知识架构</a></li><li><a href="#四-技术实现">四、技术实现</a></li><li><a href="#五-对比-传统平台-vs-roboparts">五、对比：传统平台 vs RoboParts</a></li><li><a href="#六-使用方式">六、使用方式</a></li><li><a href="#七-结语">七、结语</a></li></ol></div><article><h2 id="开源机器人的数据主权-你采的每一条轨迹-都应该属于你">开源机器人的数据主权：你采的每一条轨迹，都应该属于你</h2>
+<blockquote><p>本文首发于 <a href="https://roboparts.cc">RoboParts 机器人零件兼容性判定层</a>。</p></blockquote>
 <p>你用一台 Trossen OpenArm 做遥操作，花 6 个月采集了 10 万条抓取轨迹；或者你在自己搭的 LeRobot-Humanoid 上跑了半年数据采集。这些数据属于谁？</p>
 <p>如果你用的是某云厂商的机器人平台，答案可能是：属于平台。你的数据被用来优化他们的通用模型，甚至被卖给第三方，而你一分钱都拿不到。</p>
 <p>这不是假设。2024 年，某头部机器人数据平台被曝出将用户的遥操作数据用于训练商业模型，引发社区强烈反弹。</p>
@@ -141,14 +140,18 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <p><strong>数据迁移路径</strong>：</p>
 <pre class="code"><code>Robot A → 加密导出 → 用户持有 → 解密导入 → Robot B</code></pre>
 <p>对开源构建者最实际的用法：在 OpenArm 上采的数据，解密后直接转成 LeRobot 数据集格式推到 HuggingFace；或者把在 roboto_origin 上验证过的策略数据，迁移到 Unitree G1 上做跨平台微调。<strong>平台不参与，也就不会成为瓶颈。</strong></p>
-<h3 id="3-3-授权市场-可选">3.3 授权市场（可选）</h3>
+<h3 id="3-3-授权引用-可选-平台不抽佣">3.3 授权引用（可选，平台不抽佣）</h3>
 <p>如果用户<strong>自愿</strong>将数据授权给制造商：</p>
 <ul>
 <li>用户明确勾选授权范围</li>
 <li>数据以匿名化统计形式出售</li>
-<li>收益分配：<strong>80% 归用户，20% 平台佣金</strong></li>
+<li><strong>平台不收佣金</strong>：RoboParts 只做可核验的来源引用（谁授权、授权了什么、出处是哪条），</li>
+</ul>
+<p>交易本身由授权方与使用方直接完成，平台不经手资金、不参与定价、不抽成</p>
+<ul>
 <li>用户随时可撤回授权</li>
 </ul>
+<blockquote><p>为什么刻意不做抽佣：一旦平台从交易里获利，判定结果就有了立场，</p><p>"这个零件跟那个零件不兼容"就不再可信。中立是这门生意的全部资产。</p></blockquote>
 <hr>
 <h2 id="四-技术实现">四、技术实现</h2>
 <h3 id="加密流程">加密流程</h3>
@@ -174,7 +177,7 @@ const ciphertext = await crypto.subtle.encrypt(
 <li>每个用户 1GB 数据 → 月成本 $0.015</li>
 <li>10 万用户 → 月成本 $1,500</li>
 </ul>
-<p>这由平台佣金收入覆盖，<strong>用户免费</strong>。</p>
+<p>这由 API 数据订阅收入覆盖（¥9 起，不抽佣、不按交易收费），<strong>用户免费</strong>。</p>
 <hr>
 <h2 id="五-对比-传统平台-vs-roboparts">五、对比：传统平台 vs RoboParts</h2>
 <div class="tablebox"><table><thead><tr><th>维度</th><th>传统平台</th><th>RoboParts</th></tr></thead><tbody><tr><td>数据所有权</td><td>平台</td><td>用户</td></tr><tr><td>平台能否访问数据</td><td>能</td><td>不能（零知识）</td></tr><tr><td>数据迁移</td><td>困难/付费</td><td>自由导出</td></tr><tr><td>数据商业化</td><td>平台单方面决定</td><td>用户授权 + 分成</td></tr><tr><td>加密</td><td>传输层 TLS</td><td>客户端 AES-256-GCM</td></tr><tr><td>存储费用</td><td>通常收费</td><td>免费</td></tr><tr><td>与开源生态互通</td><td>通常封闭</td><td>可导出为 LeRobot / HuggingFace 格式</td></tr></tbody></table></div>
@@ -217,6 +220,7 @@ const ciphertext = await crypto.subtle.encrypt(
 <br>本文数据引用自 RoboParts 公开数据集，转载请注明来源并保留原文链接。
 </div>
 </div>
+
 <style>
 /* RP-ONBOARDING scoped styles */
 .rp-onboard{max-width:880px;margin:48px auto 0;padding:28px 24px;border:1px solid rgba(128,128,128,.28);

@@ -10,7 +10,7 @@ canonical: "https://roboparts.cc/content/article-03-sea-actuators.md"
 
 # 为开源足式与人形机器人选 SEA：串联弹性执行器的力控核心与替换指南
 
-> 本文首发于 [RoboParts 开源机器人兼容性平台](https://roboparts.cc)。
+> 本文首发于 [RoboParts 机器人零件兼容性判定层](https://roboparts.cc)。
 
 为什么波士顿动力的 Atlas 能后空翻而不碎？为什么 ANYmal 四足能在冰面上稳健行走？为什么很多人照着开源图纸做出来的双足，一落地就把减速器打坏？
 

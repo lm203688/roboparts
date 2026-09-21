@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RoboParts — 开源机器人兼容性平台</title>
+<title>RoboParts — 机器人零件兼容性判定层（开源）</title>
 
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -11,20 +11,20 @@
 <meta name="theme-color" content="#0b1020">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="description" content="中文圈稀缺的开源机器人兼容性平台：归一化天工 / roboto_origin / LeRobot-Humanoid / Unitree / OpenArm 等开源项目的组件，提供免费 BOM 兼容性检查、兼容性数据 API 与智能选型。">
+<meta name="description" content="面向开源机器人构建者的兼容性判定层：ISO 9409-1 法兰判定、BOM 可装性筛查、转接件生成。我们公开登记答不出来的部分——因为不卖零件，所以没理由骗你选一个。">
 <meta name="keywords" content="开源机器人,人形机器人,兼容性,BOM检查,URDF,机器人选型,ROS2,模块化,humanoid,open-source robotics">
 <link rel="canonical" href="https://roboparts.cc/">
-<meta property="og:title" content="RoboParts — 开源机器人兼容性平台">
-<meta property="og:description" content="免费 BOM 兼容性检查器 + 开源机器人兼容性数据层 + 智能选型引擎。">
+<meta property="og:title" content="RoboParts — 机器人零件兼容性判定层（开源）">
+<meta property="og:description" content="ISO 9409-1 法兰判定 + BOM 可装性筛查 + 转接件生成。中立第三方：不生产、不销售、不代理任何零部件。">
 <meta property="og:type" content="website">
 <text y='.9em' font-size='90'>🤖</text></svg>">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "RoboParts — 开源机器人兼容性平台",
+  "name": "RoboParts — 机器人零件兼容性判定层（开源）",
   "url": "https://roboparts.cc",
-  "description": "开源机器人组件兼容性数据库与选型工具",
+  "description": "面向开源机器人构建者的跨厂商零件接口兼容性判定层：ISO 9409-1 法兰判定、BOM 可装性筛查、转接件生成。中立第三方，不生产不销售任何零部件。",
   "potentialAction": { "@type": "SearchAction", "target": "https://roboparts.cc/api/search?q={search_term_string}", "query-input": "required name=search_term_string" }
 }
 </script>
@@ -87,8 +87,14 @@
 
 <div class="wrap">
   <section class="hero">
-    <h1>开源机器人兼容性平台</h1>
-    <p>一站式查清楚：天工、LeRobot、Unitree、OpenArm 等开源项目的电机、关节、传感器、控制器，能不能装到一起、能不能互相替换。粘贴 BOM、搜索零件、或直接问 Copilot，立刻拿到兼容性结论与替代方案。</p>
+    <h1>机器人零件能不能装到一起？</h1>
+    <p>面向开源机器人构建者的兼容性判定层：天工、LeRobot、Unitree、OpenArm 等开源项目的电机、关节、传感器、控制器，能不能装到一起、能不能互相替换。ISO 9409-1 法兰判定 + 机械 / 电气 / 协议 / ROS 四维兼容检查；不兼容时直接给出可 3D 打印的转接件。</p>
+    <p style="max-width:680px;margin:0 auto 24px;padding:14px 18px;border:1px solid rgba(128,128,128,.32);border-radius:10px;font-size:14px;line-height:1.75;color:var(--mut);text-align:left">
+      <strong style="color:var(--txt)">我们公开登记「答不出来」的那部分。</strong>
+      机械接口声明率仅 <span data-rp="mech_declared">25</span>/<span data-rp="mech_applicable">435</span>，其余如实标注 <code>not_declared</code>，不填 0 假装有数据。
+      RoboParts 不生产、不销售、不代理任何零部件 —— 所以没有把选型结果导向自家产品的动机。
+      <strong style="color:var(--txt)">卖家不适合同时当裁判</strong>，这是关节厂商自建选型器无法复制的一条差异。
+    </p>
     <div class="cta">
       <a class="btn" href="/demo-flow.html">▶ 5 分钟上手 · 全流程引导</a>
       <a class="btn ghost" href="/bom-checker.html">检查 BOM 兼容性</a>
@@ -124,13 +130,13 @@
     <div class="card">
       <div class="ico">🔧</div>
       <h3>免费 BOM 兼容性检查器</h3>
-      <p>粘贴组件清单，秒得两两兼容性矩阵、可互换选型组与冲突告警。构建者免费的日常工具（对标 TraceParts）。</p>
+      <p>粘贴组件清单，秒得两两兼容性矩阵、可互换选型组与冲突告警。中立第三方出品——不生产也不销售任何零件，判定结果不会被导向自家产品。</p>
       <a href="/bom-checker.html">立即使用 →</a>
     </div>
     <div class="card">
       <div class="ico">🌐</div>
       <h3>开源兼容性数据层</h3>
-      <p>133+ 开源机器人组件，跨项目归一化。中文圈稀缺的「开源机器人兼容性数据库」，持续摄取新开源发布。</p>
+      <p><span data-rp="oss_total">325</span> 个开源机器人组件，跨项目归一化。面向全球开源机器人项目的兼容性数据层，持续摄取新开源发布。</p>
       <a href="/oss.html">浏览数据 →</a>
     </div>
     <div class="card">
@@ -166,7 +172,7 @@
 </div>
 
 <footer>
-  RoboParts · 开源机器人兼容性平台 · <a href="https://github.com/lm203688/roboparts">GitHub</a> · <a href="/waitlist.html">候补登记</a> · 数据层持续摄取开源机器人项目
+  RoboParts · 机器人零件兼容性判定层 · 中立第三方：不生产、不销售、不代理任何零部件 · <a href="https://github.com/lm203688/roboparts">GitHub</a> · <a href="/waitlist.html">构建者候补</a> · 数据层持续摄取开源机器人项目
 </footer>
 <style>
 /* RP-ONBOARDING scoped styles */

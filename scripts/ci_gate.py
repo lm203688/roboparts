@@ -499,6 +499,33 @@ def gate_demand_signal_classification():
            % (cls.get('confirmed'), cls.get('unclassified'), cls.get('noise')))
 
 
+def gate_adapter_geometry():
+    """法兰转接件的「三方几何一致性」——预览 / OpenSCAD 导出 / CLI 三处口径。
+
+    2026-09-21 新增。背景：同一个 ISO 9409-1 法兰参数在三个地方各写了一份
+    （adapter-generator.html 的 three.js 预览分支、同文件的 OpenSCAD 导出模板、
+    adapters/gen_adapter.py 的 CLI），三处一致**完全靠人的记忆维持**。
+    历史上预览分支真把 pinPCD 当半径用过，导致「浏览器里看到的 3D」与
+    「下载去打印的 STL」是两套几何，而发现方式是人工读三处代码比对——
+    gen_adapter.py 的注释在修复后还挂着过期警告一周，会误导下一个人"修"回去。
+
+    本闸门跑 check_adapter_geometry.py，它同时做两件事：
+      ① 审计生产源码（label 自洽 + pinPCD 一律直径口径 + 跨实现 (pcd,holes,thread) 一致）；
+      ② 阴阳自证（喂 6 种真实分叉：预览回退半径、**只坏一半**、label 与字段不符、
+         跨实现孔数分叉、pins() 半径口径、清空预设表，逐一必须判红）。
+    为什么必须带自证：第一版判据只扫全文件的 `pinPCD/2*`，预览有 cos/sin 两处，
+    只坏 cos 那处时闸门照常通过 —— 一个"只坏了一半"的几何分叉被放行。
+    故本闸门把"只坏一半"也列为阴性对照，防止判据自己退化成装饰。
+    """
+    run_sub('转接件几何一致性（审计）',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'check_adapter_geometry.py')])
+    run_sub('转接件几何一致性（阴阳自证）',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'check_adapter_geometry.py'),
+             '--self-test'])
+
+
 GATES = [
     ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
@@ -553,6 +580,9 @@ GATES = [
     # 「已捕获 10 条真实兼容性提问信号」，实际 10 条全是 AI/LLM 软件仓库 PR。
     # fail-open 的判别层 + 对外口径漂移，一起由这个闸门盯住。
     ('需求信号判别层（三态 fail-closed + 对外口径）', gate_demand_signal_classification),
+    # 2026-09-21 新增：法兰转接件的三方几何一致性（预览/OpenSCAD/CLI）。
+    # 三处口径一致此前无人守，历史上真出过"预览与产物两套几何"的事故。
+    ('转接件三方几何一致性', gate_adapter_geometry),
     ('对外 JSON 可解析', gate_json_parses),
     ('entities.json meta 一致', gate_entities_meta_consistent),
     ('meta 单一真相源', gate_meta_single_source),

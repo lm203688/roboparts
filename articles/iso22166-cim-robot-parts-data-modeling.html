@@ -9,8 +9,6 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0b1020">
-
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="description" content="ISO 22166-201:2024 用一份「模块公共信息模型(CIM)」规定了一个服务机器人模块该用哪些属性描述才能被复用、被组合、被互操作。本文把它和 RoboParts 的零部件数据建模逐一对账，给做兼容性平台的人一份可直接对照的字段映射。">
 <meta name="keywords" content="ISO 22166, ISO 22166-201, 模块公共信息模型, CIM, 服务机器人模块化, 机器人零部件, 数据建模, 互操作, 可组合, ISO/TC 299">
 <link rel="canonical" href="https://roboparts.cc/articles/iso22166-cim-robot-parts-data-modeling">
@@ -77,6 +75,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 .acard p{color:var(--mut);font-size:13.5px;margin:0 0 10px;flex:1}
 @media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
 </style>
+
 <!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"798 条实体（其中 589 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
 </head>
 <body>
@@ -90,8 +89,8 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <a href="/pricing">定价</a>
 </div></div>
 <div class="wrap">
-<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › ISO 22166-201 模块公共信息模型：机器人零部</div><h1>ISO 22166-201 模块公共信息模型：机器人零部件数据建模该抄的作业</h1><div class="meta">RoboParts Research · 约 3659 字 · RoboParts 开源机器人兼容性平台</div><div class="tags"><span class="badge">standards</span><span class="badge">data-modeling</span><span class="badge">modularity</span><span class="badge">interop</span></div><div class="lede">ISO 22166-201:2024 用一份「模块公共信息模型(CIM)」规定了一个服务机器人模块该用哪些属性描述才能被复用、被组合、被互操作。本文把它和 RoboParts 的零部件数据建模逐一对账，给做兼容性平台的人一份可直接对照的字段映射。</div><div class="toc"><b>本文目录</b><ol><li><a href="#iso-22166-201-模块公共信息模型-机器人零部件数据建模该抄的作业">ISO 22166-201 模块公共信息模型：机器人零部件数据建模该抄的作业</a></li><li><a href="#一-iso-22166-系列到底是什么">一、ISO 22166 系列到底是什么</a></li><li><a href="#二-cim-的三个目标-翻译成人话">二、CIM 的三个目标，翻译成人话</a></li><li><a href="#三-roboparts-字段-cim-目标-对照表">三、RoboParts 字段 ↔ CIM 目标 对照表</a></li><li><a href="#四-我们的差距-标准符合性维度里没有-国际标准">四、我们的差距：标准符合性维度里没有「国际标准」</a></li><li><a href="#五-我们没核验-也不引的部分-重要">五、我们没核验、也不引的部分（重要）</a></li><li><a href="#六-拿去用的工具">六、拿去用的工具</a></li><li><a href="#七-小结">七、小结</a></li></ol></div><article><h2 id="iso-22166-201-模块公共信息模型-机器人零部件数据建模该抄的作业">ISO 22166-201 模块公共信息模型：机器人零部件数据建模该抄的作业</h2>
-<blockquote><p>本文首发于 <a href="https://roboparts.cc">RoboParts 开源机器人兼容性平台</a>。数据建模口径以平台真实收录为准，标准事实以 ISO 官方页面为准。</p></blockquote>
+<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › ISO 22166-201 模块公共信息模型：机器人零部</div><h1>ISO 22166-201 模块公共信息模型：机器人零部件数据建模该抄的作业</h1><div class="meta">RoboParts Research · 约 3660 字 · RoboParts 机器人零件兼容性判定层</div><div class="tags"><span class="badge">standards</span><span class="badge">data-modeling</span><span class="badge">modularity</span><span class="badge">interop</span></div><div class="lede">ISO 22166-201:2024 用一份「模块公共信息模型(CIM)」规定了一个服务机器人模块该用哪些属性描述才能被复用、被组合、被互操作。本文把它和 RoboParts 的零部件数据建模逐一对账，给做兼容性平台的人一份可直接对照的字段映射。</div><div class="toc"><b>本文目录</b><ol><li><a href="#iso-22166-201-模块公共信息模型-机器人零部件数据建模该抄的作业">ISO 22166-201 模块公共信息模型：机器人零部件数据建模该抄的作业</a></li><li><a href="#一-iso-22166-系列到底是什么">一、ISO 22166 系列到底是什么</a></li><li><a href="#二-cim-的三个目标-翻译成人话">二、CIM 的三个目标，翻译成人话</a></li><li><a href="#三-roboparts-字段-cim-目标-对照表">三、RoboParts 字段 ↔ CIM 目标 对照表</a></li><li><a href="#四-我们的差距-标准符合性维度里没有-国际标准">四、我们的差距：标准符合性维度里没有「国际标准」</a></li><li><a href="#五-我们没核验-也不引的部分-重要">五、我们没核验、也不引的部分（重要）</a></li><li><a href="#六-拿去用的工具">六、拿去用的工具</a></li><li><a href="#七-小结">七、小结</a></li></ol></div><article><h2 id="iso-22166-201-模块公共信息模型-机器人零部件数据建模该抄的作业">ISO 22166-201 模块公共信息模型：机器人零部件数据建模该抄的作业</h2>
+<blockquote><p>本文首发于 <a href="https://roboparts.cc">RoboParts 机器人零件兼容性判定层</a>。数据建模口径以平台真实收录为准，标准事实以 ISO 官方页面为准。</p></blockquote>
 <p>做机器人零部件兼容性平台的人，迟早会撞上一个绕不开的问题：<strong>一个零件该用哪些字段描述，别人才能正确地把它拼到自己的机器上？</strong></p>
 <p>这不是炫技，是生死线。字段少了，兼容性判定只能靠人肉读 PDF；字段多了，录入成本爆炸，数据永远凑不齐。这个两难，国际标准其实已经给过一份参考答案——<strong>ISO 22166-201:2024《 Robotics — Modularity for service robots — Part 201: Common information model (CIM) for modules 》</strong>，也就是「服务机器人模块的<strong>公共信息模型</strong>」。</p>
 <p>中文互联网上，这份标准的逐条解读近乎空白。本文把它和 RoboParts 自建的零部件数据模型做一次<strong>坦诚的对账</strong>：哪些我们想到了、哪些还没覆盖、哪些属于「标准说了但我们暂未采信」。所有标准事实均可溯源到 ISO 官方页面，不引无编号的宣传口径。</p>
@@ -158,6 +157,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <br>本文数据引用自 RoboParts 公开数据集，转载请注明来源并保留原文链接。
 </div>
 </div>
+
 <style>
 /* RP-ONBOARDING scoped styles */
 .rp-onboard{max-width:880px;margin:48px auto 0;padding:28px 24px;border:1px solid rgba(128,128,128,.28);

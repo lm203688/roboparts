@@ -10,7 +10,7 @@ canonical: "https://roboparts.cc/content/article-02-embodied-ai-hardware-stack.m
 
 # 开源人形机器人硬件栈全景：构建者视角的 7 层架构与选型清单
 
-> 本文首发于 [RoboParts 开源机器人兼容性平台](https://roboparts.cc)。
+> 本文首发于 [RoboParts 机器人零件兼容性判定层](https://roboparts.cc)。
 
 大模型让机器人"会思考"，但硬件决定了它"能不能动"。
 
