@@ -344,13 +344,22 @@ NAV = """<div class="nav"><div class="in">
 <a href="/pricing">定价</a>
 </div></div>"""
 
-CTA = """<div class="cta">
+def CTA(f):
+    """CTA 区块。数字一律从 facts() 现取，不允许写死。
+
+    20260921：此处曾写死 688 / 325（真值 798 / 325）。CTA 段落没有 data-rp 语义锚点，
+    verify_live_numbers 与 regression 都不覆盖它——正好落在「可见文本 + 生成器硬编码」
+    双重盲区里。跑一次构建就会把 16 个文章页 + 索引页从 798 静默回退到 688，
+    而同一页注入的 onboarding 区块仍写 798：同页两个数，正是本仓被咬过 9 次的
+    「口径 ≠ 事实」。改为唯一真相源现算，让漂移在构建时不可能发生。
+    """
+    return """<div class="cta">
 <h3>把这篇文章的结论直接跑一遍</h3>
-<p>RoboParts 收录 <strong>688 个机器人零部件实体</strong>与 <strong>325 个开源项目组件</strong>，支持电气 / 机械 / 协议 / 软件四维兼容判定。文中提到的型号大多可直接检索。</p>
+<p>RoboParts 收录 <strong>%d 个机器人零部件实体</strong>与 <strong>%d 个开源项目组件</strong>，支持电气 / 机械 / 协议 / 软件四维兼容判定。文中提到的型号大多可直接检索。</p>
 <a class="btn" href="/bom-checker">免费校验我的 BOM</a>
 <a class="btn ghost" href="/oss">浏览开源组件库</a>
 <a class="btn ghost" href="/api/data.json">下载结构化数据 (JSON)</a>
-</div>"""
+</div>""" % (f['total_entities'], f['oss_total'])
 
 
 def page(title, desc, keywords, canonical, body, extra_ld=None, og_type='article'):
@@ -473,7 +482,7 @@ def build():
         lede = ('<div class="lede">%s</div>' % html.escape(a['desc'])) if a['desc'] else ''
 
         body = (crumb + '<h1>%s</h1>' % html.escape(a['title']) + meta_line + tags_html
-                + lede + toc_html + '<article>' + body_html + '</article>' + CTA + rel_html)
+                + lede + toc_html + '<article>' + body_html + '</article>' + CTA(_facts) + rel_html)
 
         article_ld = {
             '@context': 'https://schema.org',
@@ -524,8 +533,9 @@ def build():
     )
     idx_desc = ('RoboParts 技术文库：%d 篇开源机器人零部件选型与兼容性深度长文，'
                 '覆盖执行器选型、VLA 模型部署、边缘芯片、CAN FD/EtherCAT 协议、'
-                '触觉传感器、国产替代与供应链分析，全部基于 688 个实体的公开数据集撰写。'
-                % len(ordered))
+                '触觉传感器、国产替代与供应链分析，'
+                '全部基于 %d 个实体的公开数据集撰写。'
+                % (len(ordered), _facts['total_entities']))
     idx_body = (
         '<div class="crumb"><a href="/">首页</a> › 技术文库</div>'
         '<h1>RoboParts 技术文库</h1>'
@@ -533,7 +543,7 @@ def build():
         '<div class="lede">%s</div>'
         '<div class="cards">%s</div>' % (
             len(ordered), sum(a['words'] for a in ordered), html.escape(idx_desc), cards)
-    ) + CTA
+    ) + CTA(_facts)
 
     idx_ld = [{
         '@context': 'https://schema.org', '@type': 'CollectionPage',
