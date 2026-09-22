@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>信号契约：当兼容层从螺栓孔延伸到脉冲线 | RoboParts</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="神经机器人的兼容层缺口：每次手工接线、无可移植格式。RoboParts 把机械兼容延伸到脉冲/感觉/运动信号契约。">
+<meta name="keywords" content="">
+<link rel="canonical" href="https://roboparts.cc/articles/signal-contract-compatibility-layer-2026">
+<meta property="og:type" content="article">
+<meta property="og:title" content="信号契约：当兼容层从螺栓孔延伸到脉冲线 | RoboParts">
+<meta property="og:description" content="神经机器人的兼容层缺口：每次手工接线、无可移植格式。RoboParts 把机械兼容延伸到脉冲/感觉/运动信号契约。">
+<meta property="og:url" content="https://roboparts.cc/articles/signal-contract-compatibility-layer-2026">
+<meta property="og:site_name" content="RoboParts">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="信号契约：当兼容层从螺栓孔延伸到脉冲线 | RoboParts">
+<meta name="twitter:description" content="神经机器人的兼容层缺口：每次手工接线、无可移植格式。RoboParts 把机械兼容延伸到脉冲/感觉/运动信号契约。">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"信号契约：当兼容层从螺栓孔延伸到脉冲线","description":"神经机器人的兼容层缺口：每次手工接线、无可移植格式。RoboParts 把机械兼容延伸到脉冲/感觉/运动信号契约。","keywords":"","inLanguage":"zh-CN","url":"https://roboparts.cc/articles/signal-contract-compatibility-layer-2026","mainEntityOfPage":{"@type":"WebPage","@id":"https://roboparts.cc/articles/signal-contract-compatibility-layer-2026"},"author":{"@type":"Organization","name":"RoboParts Research","url":"https://roboparts.cc"},"publisher":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc"},"isAccessibleForFree":true,"citation":{"@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","url":"https://roboparts.cc/api/data.json"},"datePublished":"2026-09-22","dateModified":"2026-09-22"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://roboparts.cc"},{"@type":"ListItem","position":2,"name":"技术文库","item":"https://roboparts.cc/articles"},{"@type":"ListItem","position":3,"name":"信号契约：当兼容层从螺栓孔延伸到脉冲线","item":"https://roboparts.cc/articles/signal-contract-compatibility-layer-2026"}]}</script>
+<style>
+:root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--line:#243352}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.8}
+a{color:var(--acc2);text-decoration:none}a:hover{text-decoration:underline}
+.nav{border-bottom:1px solid var(--line);background:#0e1530}
+.nav .in{max-width:960px;margin:0 auto;padding:12px 20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px}
+.nav .brand{font-weight:800;color:var(--acc);font-size:16px}
+.nav a{color:var(--mut)}.nav a:hover{color:var(--txt)}
+.wrap{max-width:960px;margin:0 auto;padding:28px 20px 72px}
+.crumb{font-size:13px;color:var(--mut);margin-bottom:14px}
+h1{font-size:30px;line-height:1.4;margin:0 0 14px}
+h2{font-size:22px;margin:34px 0 12px;padding-top:8px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:24px 0 10px;color:var(--acc)}
+h4{font-size:16px;margin:18px 0 8px}
+.meta{color:var(--mut);font-size:13px;margin-bottom:18px}
+.lede{background:var(--card);border-left:3px solid var(--acc);border-radius:0 10px 10px 0;padding:14px 16px;color:#c8d2e6;margin:18px 0 24px;font-size:15px}
+.tags{margin:10px 0 0}
+.badge{display:inline-block;background:#0e1530;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--mut);margin:2px 4px 2px 0}
+.tablebox{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
+th,td{border-bottom:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:#0e1530;color:var(--acc);font-weight:700;white-space:nowrap}
+tbody tr:hover{background:#111a33}
+blockquote{margin:16px 0;padding:10px 16px;background:#101830;border-left:3px solid var(--acc2);border-radius:0 8px 8px 0;color:#c2cde3}
+blockquote p{margin:6px 0}
+pre.code{background:#0a1128;border:1px solid var(--line);border-radius:10px;padding:14px;overflow-x:auto;font-size:13px;line-height:1.6}
+code{background:#0e1530;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:13px;color:var(--acc)}
+pre.code code{background:0;border:0;padding:0;color:#cfe3ff}
+ul,ol{padding-left:22px}li{margin:6px 0}
+hr{border:0;border-top:1px solid var(--line);margin:26px 0}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:22px 0}
+.toc b{color:var(--acc);font-size:14px}
+.toc ol{margin:8px 0 0;padding-left:20px;font-size:14px}
+.toc li{margin:4px 0}.toc a{color:#b9c6de}
+.cta{background:linear-gradient(135deg,#13233f,#152b3a);border:1px solid #2b6;border-radius:14px;padding:18px 20px;margin:30px 0 10px}
+.cta h3{margin:0 0 8px;color:var(--acc);border:0;padding:0}
+.cta p{margin:6px 0;font-size:14.5px;color:#c8d2e6}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;font-weight:800;border-radius:9px;padding:9px 18px;margin:10px 8px 0 0;font-size:14px}
+.btn:hover{text-decoration:none;opacity:.9}
+.btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+.rel{margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+.rel h3{border:0;padding:0;margin:0 0 10px}
+.rel li{margin:8px 0;font-size:14.5px}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:20px}
+.acard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column}
+.acard h2{font-size:17px;margin:0 0 8px;border:0;padding:0;line-height:1.5}
+.acard p{color:var(--mut);font-size:13.5px;margin:0 0 10px;flex:1}
+@media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
+</style>
+
+<!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"802 条实体（其中 593 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
+</head>
+<body>
+<div class="nav"><div class="in">
+<a class="brand" href="/">RoboParts</a>
+<a href="/articles">技术文库</a>
+<a href="/oss">开源数据层</a>
+<a href="/bom-checker">BOM 兼容检查</a>
+<a href="/selection">智能选型</a>
+<a href="/data-hub">数据中心</a>
+<a href="/pricing">定价</a>
+</div></div>
+<div class="wrap">
+<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 信号契约：当兼容层从螺栓孔延伸到脉冲线</div><h1>信号契约：当兼容层从螺栓孔延伸到脉冲线</h1><div class="meta">2026-09-22 · RoboParts Research · 约 3315 字 · RoboParts 机器人零件兼容性判定层</div><div class="tags"><span class="badge">信号接口</span><span class="badge">神经形态</span><span class="badge">兼容层</span><span class="badge">适配器规范</span><span class="badge">SNN</span></div><div class="lede">神经机器人的兼容层缺口：每次手工接线、无可移植格式。RoboParts 把机械兼容延伸到脉冲/感觉/运动信号契约。</div><div class="toc"><b>本文目录</b><ol><li><a href="#引言-果蝇打游戏-每次都要重新接线">引言：果蝇打游戏，每次都要重新接线</a></li><li><a href="#脑-体解耦之后-缺失的中间件">脑×体解耦之后，缺失的中间件</a></li><li><a href="#机械兼容的边界-iso-9409-1-只管螺栓孔">机械兼容的边界：ISO 9409-1 只管螺栓孔</a></li><li><a href="#信号契约层-把接线变成声明">信号契约层：把接线变成声明</a></li><li><a href="#当前状态-诚实边界">当前状态：诚实边界</a></li><li><a href="#为什么不做-三条不做清单">为什么不做：三条不做清单</a></li><li><a href="#与-swarmlabs-的关系-项目独立原则">与 SwarmLabs 的关系：项目独立原则</a></li><li><a href="#下一步-从-schema-到声明">下一步：从 schema 到声明</a></li><li><a href="#结论">结论</a></li></ol></div><article><h2 id="引言-果蝇打游戏-每次都要重新接线">引言：果蝇打游戏，每次都要重新接线</h2>
+<p>2026 年 3 月，Eon Systems 发布果蝇全脑具身仿真，能控制真实机器人身体打 Doom。Demo 很惊艳，但一个细节被忽略了：<strong>每次换身体、换传感器、换控制器，工程师都要重新写一遍信号映射</strong>。</p>
+<p>DOOMFLY 项目把 Doom 的像素喂给感觉神经元，把运动神经元的活动映射成按键。Stonkfly 换了 Smash Bros，映射又重写了一遍。每次都是手工接线——没有可移植、可校验的格式。</p>
+<p>这不是 bug，是<strong>兼容层缺口</strong>。</p>
+<h2 id="脑-体解耦之后-缺失的中间件">脑×体解耦之后，缺失的中间件</h2>
+<p>神经机器人的正确心智模型是分层闭环：</p>
+<div class="tablebox"><table><thead><tr><th>层</th><th>职责</th><th>谁擅长</th></tr></thead><tbody><tr><td>认知/规划</td><td>世界模型、语言推理</td><td>LLM（大模型更合适）</td></tr><tr><td>脉冲控制</td><td>事件驱动、反射、运动基元</td><td>SNN（神经形态硬件）</td></tr><tr><td>躯体</td><td>事件相机、触觉皮、仿生执行器</td><td>开放标准件生态（<strong>空缺</strong>）</td></tr></tbody></table></div>
+<p>脑（FlyWire / MaleCNS）已公开，芯片（Loihi 2 / Akida / Speck）已商用化。但<strong>身体和信号层没有开放标准件生态</strong>。</p>
+<p>Eon 自述：「无法追踪真实运动神经元，因为身体未扫描」——他们不做躯体，也不做信号映射。Intel 做芯片，不做机械兼容。每一方都卡在各自的边界，<strong>中间没人做适配器规范</strong>。</p>
+<p>RoboParts 的切入点就在这里：把机械兼容（ISO 9409-1）延伸到<strong>信号契约层</strong>。</p>
+<h2 id="机械兼容的边界-iso-9409-1-只管螺栓孔">机械兼容的边界：ISO 9409-1 只管螺栓孔</h2>
+<p>先校准一个前提：RoboParts 的机械兼容层目前<strong>只覆盖末端法兰</strong>。</p>
+<p>全站 439 条机械适用实体里，15 条 declared 全部是末端执行器（7 grippers + 7 sensors + 1 Robotiq 2F-85），0 条关节电机、0 条平台腕部。ISO 9409-1 是 A50/A80/A100 法兰标准，只定义螺栓孔布局和孔间距（PCD），不覆盖：</p>
+<ul>
+<li><strong>关节电机的抱紧结构</strong>（Damiao43 与 RobStride 的自研抱紧，不兼容）</li>
+<li><strong>平台腕部的非标接口</strong>（多数自研，无 ISO 9409-1 布局）</li>
+<li><strong>信号线束</strong>（CAN-FD / EtherCAT / TTL / RS-485 的针脚定义）</li>
+<li><strong>脉冲信号</strong>（SNN 的事件驱动时序、发放率编码）</li>
+</ul>
+<p>ISO 9409-1 是<strong>机械法兰标准</strong>，不是<strong>信号契约</strong>。</p>
+<h2 id="信号契约层-把接线变成声明">信号契约层：把接线变成声明</h2>
+<p>GAP-G2 是神经控制域最紧迫的空白之一：<strong>神经控制器↔躯体无声明式适配器规范</strong>。</p>
+<p>果蝇打游戏每次手工接线，因为没有一个格式能描述：「这个运动神经元的发放率编码成这个电机的 PWM 占空比」。每个项目都自己写映射，换身体就重写。</p>
+<p>RoboParts 的 <code>signal_interface.schema.json</code> 试图解决这个缺口。它把机械兼容的<strong>判定逻辑</strong>延伸到信号层：</p>
+<h3 id="三层信号契约">三层信号契约</h3>
+<div class="tablebox"><table><thead><tr><th>层</th><th>契约内容</th><th>判定维度</th></tr></thead><tbody><tr><td><strong>脉冲层</strong></td><td>发放率编码、时序窗口、事件格式</td><td>脉冲频率范围、事件延迟、帧同步</td></tr><tr><td><strong>感觉层</strong></td><td>传感器采样率、编码格式、通道映射</td><td>采样率兼容、通道数匹配、时序对齐</td></tr><tr><td><strong>运动层</strong></td><td>执行器驱动协议、PWM/位置控制、反馈回路</td><td>协议兼容、控制周期、反馈延迟</td></tr></tbody></table></div>
+<h3 id="与机械兼容的咬合">与机械兼容的咬合</h3>
+<p>信号契约层不是独立于机械兼容层——它<strong>咬合</strong>：</p>
+<ul>
+<li>一个 gripper 的 ISO 9409-1 法兰规格（机械层）和它的 TTL 控制信号（信号层）是两个维度</li>
+<li>一个关节电机的抱紧结构（机械层，非 ISO 9409-1）和它的 CAN-FD 总线协议（信号层）是两个维度</li>
+<li><strong>兼容判定必须两层都过</strong>——法兰对齐但信号不兼容，等于装了个不能动的部件</li>
+</ul>
+<h2 id="当前状态-诚实边界">当前状态：诚实边界</h2>
+<p>不吹嘘。RoboParts 的信号契约层目前是<strong>schema 定义</strong>，不是<strong>声明数据库</strong>：</p>
+<ul>
+<li><code>signal_interface.schema.json</code> 已定义契约结构，但<strong>0 条实体有完整信号声明</strong></li>
+<li><code>neurorobotics/source.json</code> 收录了 4 个连接组、5 个神经形态芯片、5 个实验室、7 个引用，但<strong>0 条已验证的信号映射</strong></li>
+<li>GAP-G3~G7（LIF 无可塑性、SNN 训练难、规模墙、死脑快照、能效仅在硬件成立）是<strong>情报标注</strong>，不是工程实现</li>
+</ul>
+<p>这意味着：RoboParts 能做信号契约的<strong>判定层</strong>（给定两个实体的信号声明，判定是否兼容），但不能声称有<strong>信号声明数据库</strong>。</p>
+<p>这和机械兼容层的 5.69% 声明率是同一个逻辑：<strong>分子是真声明，分母是真适用，剩下的 414 not_declared 不是数据缺失，是品类边界诚实</strong>。</p>
+<h2 id="为什么不做-三条不做清单">为什么不做：三条不做清单</h2>
+<h3 id="不造脑">不造脑</h3>
+<p>Eon 的果蝇 12.5 万神经元、DeepMind 的 RL 飞、Google/Janelia 的 MaleCNS v1.0（16.67 万神经元）——连接组数据 + 超算 + 躯体模型，重资产、强学术壁垒。RoboParts 不做脑仿真。</p>
+<h3 id="不造芯片">不造芯片</h3>
+<p>Intel Loihi 2、BrainChip Akida、SynSense Speck/Xylo——已商用化，无差异空间，重资本。RoboParts 不做神经形态芯片。</p>
+<h3 id="不做-snn-训练框架">不做 SNN 训练框架</h3>
+<p>脉冲不可微 → 替代梯度 / ANN→SNN 转换 / 局部 STDP。框架分散（Lava/Nengo/Norse/snnTorch），仅 NIR 做部分互操作。RoboParts 不做训练框架。</p>
+<h3 id="做什么">做什么</h3>
+<p><strong>脑×体之间的标准与情报层</strong>：</p>
+<ol>
+<li><strong>GAP-G1（开放躯体标准件生态缺失）</strong>：机械兼容已是现成底座，向神经机器人躯体/执行器/连接器延伸</li>
+<li><strong>GAP-G2（信号适配器规范缺失）</strong>：<code>signal_interface.schema.json</code>——把机械兼容延伸到脉冲/感觉/运动信号契约</li>
+<li><strong>GAP-G3~G7</strong>：情报层标注（诚实边界），不投入工程，持续跟踪</li>
+</ol>
+<h2 id="与-swarmlabs-的关系-项目独立原则">与 SwarmLabs 的关系：项目独立原则</h2>
+<p>RoboParts 的神经控制域和 SwarmLabs（科研 Agent Infra）共享同一个 <code>neurorobotics/source.json</code> 事实基线（47.5k 结构化科研实体），但<strong>不共享源文件、不互相依赖</strong>：</p>
+<ul>
+<li>RoboParts 侧：<code>neurorobotics/source.json</code> → <code>api/neurorobotics.json</code>（机器人零件兼容性判定层）</li>
+<li>SwarmLabs 侧：独立的 <code>neurorobotics/source.json</code> → 科研实体情报层</li>
+</ul>
+<p>两个项目各自独立运行，各自独立枚举、各自独立校验。若 SwarmLabs 需引用 RoboParts 的机械兼容数据，通过 API 接口而非共享文件。</p>
+<h2 id="下一步-从-schema-到声明">下一步：从 schema 到声明</h2>
+<p>信号契约层的下一步不是写更多 schema，而是<strong>补声明</strong>：</p>
+<ol>
+<li><strong>DYNAMIXEL 系列</strong>（ROBOTIS）：CAN 总线协议 + TTL 控制信号，已有官方 datasheet</li>
+<li><strong>CubeMars AK80-9</strong>：CAN-FD 总线 + 电流反馈，已有官方规格</li>
+<li><strong>Damiao43 / RobStride</strong>：自研抱紧 + 自研总线，需社区贡献</li>
+</ol>
+<p>这和机械兼容层的 P0 待办（414 条 not_declared）是同一个逻辑：<strong>AI 不编，需真实出处</strong>。</p>
+<h2 id="结论">结论</h2>
+<p>信号契约层是机械兼容层的自然延伸——从螺栓孔到脉冲线，从法兰对齐到协议兼容。GAP-G2 是神经控制域最紧迫的空白之一：每次手工接线、无可移植格式。</p>
+<p>RoboParts 的定位不是造脑、不是造芯片、不是做训练框架——是做<strong>脑×体之间的标准与情报层</strong>。机械兼容（ISO 9409-1）是底座，信号契约（<code>signal_interface.schema.json</code>）是延伸。</p>
+<p>当前诚实边界：schema 已定义，0 条完整信号声明。下一步是补声明，不是扩 schema。</p>
+<p>这和 5.69% 的机械声明率是同一个逻辑：<strong>分子是真声明，分母是真适用，剩下的 not_declared 不是数据缺失，是品类边界诚实</strong>。</p>
+<hr>
+<p><em>本文基于 RoboParts 数据集收录的 802 个实体、覆盖 20 个品类。机械声明率与信号声明率的口径差异，详见第 17 篇「5.69% 的诚实」。</em></p></article><div class="cta">
+<h3>把这篇文章的结论直接跑一遍</h3>
+<p>RoboParts 收录 <strong>802 个机器人零部件实体</strong>与 <strong>325 个开源项目组件</strong>，支持电气 / 机械 / 协议 / 软件四维兼容判定。文中提到的型号大多可直接检索。</p>
+<a class="btn" href="/bom-checker">免费校验我的 BOM</a>
+<a class="btn ghost" href="/oss">浏览开源组件库</a>
+<a class="btn ghost" href="/api/data.json">下载结构化数据 (JSON)</a>
+</div><div class="rel"><h3>相关阅读</h3><ul><li><a href="/articles/compatibility-boundary-mech-declaration-2026">5.69% 的诚实：RoboParts 声明率暴露的兼容层边界</a></li><li><a href="/articles/brain-body-decoupling-compatibility-layer-2026">SONIC 与 OM-1 之后：为什么「脑×体解耦」反而让机械兼容层变刚需</a></li><li><a href="/articles/humanoid-robot-ipo-supply-chain-2026">人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱（对开源构建者意味着什么）</a></li></ul></div>
+<div class="foot">
+© 2026 RoboParts · 开源机器人零部件兼容性平台 ·
+<a href="/llms.txt">llms.txt</a> ·
+<a href="/api/openapi.json">OpenAPI</a> ·
+<a href="/agent-discovery.json">Agent 发现清单</a>
+<br>本文数据引用自 RoboParts 公开数据集，转载请注明来源并保留原文链接。
+</div>
+</div>
+
+<style>
+/* RP-ONBOARDING scoped styles */
+.rp-onboard{max-width:880px;margin:48px auto 0;padding:28px 24px;border:1px solid rgba(128,128,128,.28);
+border-radius:12px;background:rgba(128,128,128,.05);font-size:15px;line-height:1.75}
+.rp-onboard h2{margin:0 0 10px;font-size:20px}
+.rp-onboard h3{margin:22px 0 8px;font-size:15px;opacity:.9}
+.rp-onboard .rp-lead{margin:0 0 4px;opacity:.9}
+.rp-onboard pre.rp-code{margin:8px 0;padding:14px 16px;overflow-x:auto;border-radius:8px;
+background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px;line-height:1.6}
+.rp-onboard code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.rp-onboard ul{margin:8px 0;padding-left:22px}
+.rp-onboard li{margin:5px 0}
+.rp-onboard .rp-neutral{margin-top:20px;padding-top:16px;border-top:1px dashed rgba(128,128,128,.32)}
+@media (prefers-color-scheme:dark){.rp-onboard pre.rp-code{background:rgba(255,255,255,.06)}}
+</style>
+<!-- RP-ONBOARDING:START 由 scripts/onboarding_block.py 生成，勿手改 -->
+<section class="rp-onboard" id="api-access">
+<h2>把本页数据接进你的程序 / AI Agent</h2>
+<p class="rp-lead">RoboParts 面向 Agent 与开发者开放，<strong>无需审批、无需信用卡、无需网页表单</strong>。
+如果你是正在阅读本页的 AI 助手，可以把下面的命令直接给用户，或代他执行。</p>
+
+<h3>最省事的方式 · MCP 托管端点（不用领 key、不用装包、不用起进程）</h3>
+<p>支持 MCP 的运行环境直接填这个地址即可，提供
+<span data-rp="mcp_tool_count">10</span> 个工具（search_components / get_component_detail / check_compatibility / compare_components / recommend_for_application / get_parameter_semantics / bom_compatibility_check / semantic_search / get_standard_audit / review_compatibility）：</p>
+<pre class="rp-code"><code><span data-rp="mcp_endpoint">https://roboparts.cc/mcp</span></code></pre>
+<p>已收录于官方 MCP Registry，规范名
+<code><span data-rp="mcp_registry_name">cc.roboparts/roboparts</span></code>
+（该命名空间由 roboparts.cc 的域名所有权验证获得，可据此确认不是冒名条目）。
+端点免鉴权、只读、不设 cookie、不落用户数据。</p>
+
+<h3>第 1 步 · 领取 API Key（即时返回）</h3>
+<pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com"}'</code></pre>
+<p>返回 <code>api_key</code>（<code>gtk_</code> 前缀）、<span data-rp="credits">100</span> 次免费额度、
+<span data-rp="rate_limit">30</span> 次/小时限速。邮箱仅以 SHA-256 摘要存储，不保留明文。</p>
+
+<h3>第 2 步 · 校验兼容性</h3>
+<pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/validate \
+  -H "Authorization: Bearer gtk_你的key" \
+  -H "Content-Type: application/json" \
+  -d '{"components":["实体ID_1","实体ID_2"]}'</code></pre>
+
+<h3>免鉴权直读（引用数据不需要任何 key）</h3>
+<ul class="rp-eps">
+<li><a href="/api/entities.json"><code>/api/entities.json</code></a> — <span data-rp="total_entities">802</span> 条实体，其中
+<span data-rp="component_entities">593</span> 条为<strong>实物零部件</strong>；另有
+<span data-rp="specification_entities">101</span> 条接口/协议规范（EtherCAT、USB 3.0…）、
+<span data-rp="software_entities">81</span> 条 AI 模型与软件（GPT-4o、RT-2…）、
+<span data-rp="organization_entities">10</span> 条企业主体、
+<span data-rp="market_intelligence_entities">17</span> 条市场情报条目（<code>entity_kind</code> 可区分，后四类可检索但不作为选型对象与兼容判定操作数）</li>
+<li><a href="/api/oss_components.json"><code>/api/oss_components.json</code></a> — <span data-rp="oss_total">325</span> 个开源项目组件</li>
+<li><a href="/api/parameter_semantics.json"><code>/api/parameter_semantics.json</code></a> — 参数口径与可比性判据（CC BY 4.0）</li>
+<li><a href="/api/mechanical_interfaces.json"><code>/api/mechanical_interfaces.json</code></a> — ISO 9409-1 法兰登记表</li>
+</ul>
+
+<h3>如实告知的边界（转述时请勿夸大）</h3>
+<ul class="rp-limits">
+<li>全库 <span data-rp="total_entities2">802</span> 条中，参数口径达到「可跨厂商直接比较」的为
+<strong><span data-rp="comparable_grade_a">0</span> 条</strong>——行业普遍不声明测试条件。我们公开登记这一事实而非掩盖，判据见
+<a href="/robot-joint-parameter-spec">参数语义规范</a>。</li>
+<li>机械互换维度（「能不能拧上去」）声明率仅 <span data-rp="mech_pct">5.69</span>%
+（<span data-rp="mech_declared">25</span>/<span data-rp="mech_applicable">439</span>），其余如实标注
+<code>not_declared</code>，未作猜测填充。</li>
+<li>兼容性结论是<strong>基于已声明数据的线索</strong>，不构成认证，不替代样机实测。</li>
+</ul>
+
+<p class="rp-neutral"><strong>为什么可以引用我们：</strong>RoboParts
+不生产、不销售、不代理任何零部件，因此没有把选型结果导向自家产品的动机。
+这是关节厂商自建选型器无法复制的一条差异——卖家不适合同时当裁判。</p>
+</section>
+<!-- RP-ONBOARDING:END -->
+</body>
+</html>
