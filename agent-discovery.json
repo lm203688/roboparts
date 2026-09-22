@@ -158,20 +158,25 @@
     "purpose": "机械互换维度判定基准：ISO 9409-1 法兰指定命名语法、标准尺寸族、装配红线",
     "designation_format": "ISO 9409-1-A{d1}-{n}-M{thread}",
     "coverage": {
-      "applicable_entities": 435,
+      "applicable_entities": 439,
       "not_applicable": 363,
       "declared": 15,
       "partial": 10,
-      "not_declared": 410,
+      "not_declared": 414,
       "fill_pct": 5.69
     },
     "honesty_note": "机械尺寸级数据当前填充率极低（5.69%，含 partial）。每条实体均带显式 status（declared/partial/not_declared/n_a），Agent 可直接判别缺口，切勿把 not_declared 误读为「无机械接口」。"
   },
   "content_library": {
     "index": "https://roboparts.cc/articles",
-    "count": 16,
+    "count": 17,
     "license_note": "原创长文，允许 AI 检索引用，请注明来源链接",
     "articles": [
+      {
+        "title": "5.69% 的诚实：RoboParts 声明率暴露的兼容层边界",
+        "url": "https://roboparts.cc/articles/compatibility-boundary-mech-declaration-2026",
+        "date": "2026-09-22"
+      },
       {
         "title": "SONIC 与 OM-1 之后：为什么「脑×体解耦」反而让机械兼容层变刚需",
         "url": "https://roboparts.cc/articles/brain-body-decoupling-compatibility-layer-2026",

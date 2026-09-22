@@ -137,7 +137,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <hr>
 <h2 id="五-兼容不只是机械-还有三层-且声明率更难看">五、兼容不只是机械：还有三层，且声明率更难看</h2>
 <p>机械只是第一道关卡。真正换件要过的有四道，而站内声明率一路走低：</p>
-<div class="tablebox"><table><thead><tr><th>维度</th><th>站内声明情况</th></tr></thead><tbody><tr><td><strong>机械互换</strong></td><td>435 条适用实体中 25 条给出可比线索，<strong>5.75%</strong></td></tr><tr><td><strong>电气连接器</strong></td><td>220 个执行器中 4 条声明连接器，<strong>1.82%</strong></td></tr><tr><td><strong>参数跨厂商可比</strong></td><td>达到「可跨厂商直接比较」口径的是 <strong>0 条</strong></td></tr><tr><td><strong>协议 / 总线</strong></td><td>作为独立规范条目收录 64 条（EtherCAT、CAN FD 等），但它们描述的是总线本身，不等于「这条臂支持这条总线」的实体级声明</td></tr></tbody></table></div>
+<div class="tablebox"><table><thead><tr><th>维度</th><th>站内声明情况</th></tr></thead><tbody><tr><td><strong>机械互换</strong></td><td>435 条适用实体中 25 条给出可比线索，<strong>5.69%</strong></td></tr><tr><td><strong>电气连接器</strong></td><td>220 个执行器中 4 条声明连接器，<strong>1.82%</strong></td></tr><tr><td><strong>参数跨厂商可比</strong></td><td>达到「可跨厂商直接比较」口径的是 <strong>0 条</strong></td></tr><tr><td><strong>协议 / 总线</strong></td><td>作为独立规范条目收录 64 条（EtherCAT、CAN FD 等），但它们描述的是总线本身，不等于「这条臂支持这条总线」的实体级声明</td></tr></tbody></table></div>
 <p>这三行数字不好看，但它们正是本文唯一的立场：<strong>不把缺口包装成谦虚，也不拿未声明的数据装出确定性。</strong>行业普遍不声明测试条件与接口细节，我们公开登记这个事实，判据见 <a href="/robot-joint-parameter-spec">参数语义规范</a>。</p>
 <hr>
 <h2 id="六-给构建者的三档判定清单">六、给构建者的三档判定清单</h2>
@@ -167,7 +167,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <div class="tablebox"><table><thead><tr><th>内容</th><th>站内状态</th></tr></thead><tbody><tr><td><strong>Unitree G1</strong></td><td>平台条目 + 组件条目（含接口与感知系统）——SONIC 的实测载体就在里面</td></tr><tr><td><strong>NVIDIA Jetson 系列</strong></td><td>Orin NX / AGX Orin / Thor 等</td></tr><tr><td>机器人 AI 模型</td><td>46 条</td></tr><tr><td>平台</td><td>43 条</td></tr><tr><td>执行器</td><td>222 条</td></tr><tr><td>接口规范</td><td>44 条</td></tr></tbody></table></div>
 <p><strong>尚未入库（缺口）：</strong></p>
 <div class="tablebox"><table><thead><tr><th>缺口</th><th>说明</th></tr></thead><tbody><tr><td><strong>非夕 MICO</strong></td><td>2026 模块化标准双臂平台，未入库</td></tr><tr><td><strong>reBot Arm B601</strong></td><td>Seeed 2026-04，开源到螺丝级 BOM，未入库</td></tr><tr><td><strong>RAI AthenaZero</strong></td><td>2026 Science Robotics 低惯量双臂，未入库</td></tr></tbody></table></div>
-<p><strong>本文提到的这三具新身体，站内一条都没收。</strong>这不是把缺点说成谦虚——躯体正在快速分化，而判定数据没跟上，这本身就是兼容层此刻最该干的事。反过来，本站最大的短板第五节已经写了：机械维度声明率 5.75%、参数跨厂商可比 0 条。</p>
+<p><strong>本文提到的这三具新身体，站内一条都没收。</strong>这不是把缺点说成谦虚——躯体正在快速分化，而判定数据没跟上，这本身就是兼容层此刻最该干的事。反过来，本站最大的短板第五节已经写了：机械维度声明率 5.69%、参数跨厂商可比 0 条。</p>
 <hr>
 <h2 id="八-趋势判断与三条诚实边界">八、趋势判断与三条诚实边界</h2>
 <p><strong>趋势判断：</strong></p>
@@ -180,7 +180,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <ol>
 <li><strong>本文五项都不是本站竞品，也没有一项可以集成。</strong>SONIC 是控制层（权重开源，但层级与用途都不同）；OM-1 全闭源、无 API、无第三方基准，目前是 demo 级信号；TrAct 与 ForceDelta-VLA 是论文框架；非夕与 RAI 是硬件厂商，不卖中间件。别把「浪潮验证了方向」读成「我们马上能用上」。</li>
 <li><strong>「零样本适配全硬件」不会让机械兼容层消失。</strong>它解决的是训练分布，不是法兰、螺栓圆、扭矩、负载。这四样是物理约束，短期不会消失。若真有哪天机器臂不需要法兰了，那是一个新的物理学，不是 2026 年。</li>
-<li><strong>浪潮是必要非充分条件。</strong>方向被 NVIDIA、RAI、非夕独立验证，不等于本站数据护城河已经建成。本站真正的阻塞仍是机械声明率 5.75% 与参数可比度 0 条——这两件事与本文的热闹无关，得一条一条补。</li>
+<li><strong>浪潮是必要非充分条件。</strong>方向被 NVIDIA、RAI、非夕独立验证，不等于本站数据护城河已经建成。本站真正的阻塞仍是机械声明率 5.69% 与参数可比度 0 条——这两件事与本文的热闹无关，得一条一条补。</li>
 </ol>
 <hr>
 <h2 id="参考资料">参考资料</h2>
@@ -199,7 +199,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <a class="btn" href="/bom-checker">免费校验我的 BOM</a>
 <a class="btn ghost" href="/oss">浏览开源组件库</a>
 <a class="btn ghost" href="/api/data.json">下载结构化数据 (JSON)</a>
-</div><div class="rel"><h3>相关阅读</h3><ul><li><a href="/articles/vla-model-landscape-2026">2026年VLA模型全景图：开源机器人构建者该给自己的机器人装哪个大脑？</a></li><li><a href="/articles/humanoid-robot-ipo-supply-chain-2026">人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱（对开源构建者意味着什么）</a></li><li><a href="/articles/automotive-production-line-robot-deployment-2026">汽车产线机器人落地实战：98%成功率背后的零部件选型密码（开源构建者可借鉴的可靠性标准）</a></li></ul></div>
+</div><div class="rel"><h3>相关阅读</h3><ul><li><a href="/articles/compatibility-boundary-mech-declaration-2026">5.69% 的诚实：RoboParts 声明率暴露的兼容层边界</a></li><li><a href="/articles/vla-model-landscape-2026">2026年VLA模型全景图：开源机器人构建者该给自己的机器人装哪个大脑？</a></li><li><a href="/articles/humanoid-robot-ipo-supply-chain-2026">人形机器人IPO元年：宇树智元上市背后的供应链掘金图谱（对开源构建者意味着什么）</a></li></ul></div>
 <div class="foot">
 © 2026 RoboParts · 开源机器人零部件兼容性平台 ·
 <a href="/llms.txt">llms.txt</a> ·
