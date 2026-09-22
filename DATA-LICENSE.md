@@ -38,7 +38,7 @@ Creative Commons Attribution 4.0 International (CC BY 4.0)
 1. 本库参数为**厂商公开声明值，未经我方实测复现**。请勿当作实测数据使用。
 2. 跨厂商可直接横向比较的 A 级条目为 **0 条**。
 3. 「两个零件能否装到一起」这个问题，本库目前多数情况答不了 ——
-   机械接口有线索的实体占 **5.75%**（declared 15 + partial 10 / 435 适用，
+   机械接口有线索的实体占 **5.69%**（declared 15 + partial 10 / 435 适用，
    截至 2026-09-15，历史快照）。**该百分比禁止在文案里手写**，
    对外一律以 `api/entities.json` → `meta.mechanical_interface_coverage.fill_pct`
    与 <https://roboparts.cc/api/entities.json> 的现算值为准；

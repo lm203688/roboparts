@@ -13,7 +13,7 @@ from typing import List, Optional
 class Actuator:
     """执行器模型（对应 /api/actuators.json 中的单项）。
 
-    覆盖舵机、直驱电机、SEA 仿生关节等 220 个执行器实体。
+    覆盖舵机、直驱电机、SEA 仿生关节等 222 个执行器实体。
     """
 
     id: str

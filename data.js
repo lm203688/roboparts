@@ -1,13 +1,13 @@
 const DB = {
-  "updated": "2026-09-21T15:24:20.852564Z",
+  "updated": "2026-09-22T07:20:30.272227Z",
   "stats": {
-    "actuators": 220,
+    "actuators": 222,
     "sensors": 95,
     "chips": 108,
     "interfaces": 44,
     "protocols": 64,
     "llms": 42,
-    "platforms": 41,
+    "platforms": 43,
     "flexible_actuators": 22,
     "robot_ai_models": 46,
     "data_acquisition": 46,
@@ -13115,6 +13115,110 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "ACT-3277",
       "rp_id": "RP-ACT-0220"
+    },
+    {
+      "id": "ACT-damiao-4340p",
+      "name": "Damiao43 4340P 关节电机",
+      "name_en": "Damiao43 4340P joint motor (reBot B601-DM variant)",
+      "category": "actuators",
+      "manufacturer": "Damiao Technology",
+      "manufacturer_en": "Damiao Technology (达妙)",
+      "type": "direct_drive_joint_motor",
+      "torque": "not_declared",
+      "speed": "not_declared",
+      "voltage": "24V DC（系统级）",
+      "protocol": "CAN",
+      "interface": "CAN",
+      "applications": [
+        "robotic_arm",
+        "rebot_b601_dm"
+      ],
+      "price_range": "varies",
+      "compatibility": [
+        "reBot B601-DM"
+      ],
+      "ros_support": true,
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Seeed Studio reBot-DevArm (github.com/Seeed-Projects/reBot-DevArm, 4287 stars, CERN-OHL-W-2.0); BOM/README 开源到每颗螺丝规格，检索 2026-09-22",
+      "source_url": "https://github.com/Seeed-Projects/reBot-DevArm",
+      "source_tier": "A",
+      "confidence": 0.7,
+      "confidence_basis": "github_repo_mentioned_only_no_vendor_spec_sheet",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "CAN",
+        "ros2": true,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "reason": "自研直驱关节电机，非 ISO 9409-1 法兰；reBot BOM 未提供厂商官域机械接口规格，不可跨厂商比对。",
+        "registry_ref": "/api/mechanical_interfaces.json"
+      },
+      "entity_kind": "component",
+      "rp_id": "RP-ACT-damiao-4340p",
+      "related": [
+        "PLAT-seeed-rebot-dm"
+      ],
+      "compatibility_note": "与 RobStride RSM 系列不兼容（同外观不同电机版本），不可互换。Damiao43 系列其他型号（4310/4340 等）之间是否兼容需查厂商官方规格。",
+      "source_tier_basis": "deep_link:github.com/Seeed-Projects/reBot-DevArm"
+    },
+    {
+      "id": "ACT-robstride-rsm",
+      "name": "RobStride RSM 关节电机",
+      "name_en": "RobStride RSM joint motor (reBot B601-RS variant)",
+      "category": "actuators",
+      "manufacturer": "RobStride",
+      "manufacturer_en": "RobStride",
+      "type": "direct_drive_joint_motor",
+      "torque": "not_declared",
+      "speed": "not_declared",
+      "voltage": "48V DC（系统级）",
+      "protocol": "CAN",
+      "interface": "CAN",
+      "applications": [
+        "robotic_arm",
+        "rebot_b601_rs"
+      ],
+      "price_range": "varies",
+      "compatibility": [
+        "reBot B601-RS"
+      ],
+      "ros_support": true,
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Seeed Studio reBot-DevArm (github.com/Seeed-Projects/reBot-DevArm, 4287 stars, CERN-OHL-W-2.0); BOM/README 开源到每颗螺丝规格，检索 2026-09-22",
+      "source_url": "https://github.com/Seeed-Projects/reBot-DevArm",
+      "source_tier": "A",
+      "confidence": 0.7,
+      "confidence_basis": "github_repo_mentioned_only_no_vendor_spec_sheet",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "CAN",
+        "ros2": true,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": false,
+        "interop_posture": "unknown",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "reason": "自研直驱关节电机，非 ISO 9409-1 法兰；reBot BOM 未提供厂商官域机械接口规格，不可跨厂商比对。",
+        "registry_ref": "/api/mechanical_interfaces.json"
+      },
+      "entity_kind": "component",
+      "rp_id": "RP-ACT-robstride-rsm",
+      "related": [
+        "PLAT-seeed-rebot-rs"
+      ],
+      "compatibility_note": "与 Damiao43 系列不兼容（同外观不同电机版本），不可互换。RobStride 其他型号之间是否兼容需查厂商官方规格。",
+      "source_tier_basis": "deep_link:github.com/Seeed-Projects/reBot-DevArm"
     }
   ],
   "sensors": [
@@ -33788,6 +33892,144 @@ const DB = {
       "last_verified": "2026-08-18",
       "rp_id": "RP-PLA-0041",
       "entity_kind_basis": "type=humanoid_robot_company（企业/机构主体，不是实物零部件，无接口可判定）"
+    },
+    {
+      "id": "PLAT-seeed-rebot-dm",
+      "name": "reBot-DevArm B601-DM",
+      "name_en": "Seeed reBot-DevArm B601-DM (Damiao motor version)",
+      "category": "platforms",
+      "manufacturer": "Seeed Studio",
+      "manufacturer_en": "Seeed Studio",
+      "type": "open_source_arm",
+      "description": "6+1 自由度开源机械臂平台，767mm 臂展、1.5kg 负载、<0.2mm 重复定位精度、24V DC 供电；使用 Damiao43 系列电机（第一关节 4340P，v1.1 由 4310 修正）。BOM/STEP/SDK 全开源，CERN-OHL-W-2.0 许可。定位「千元级桌面具身 AI 平台」，已适配 ROS1/2、LeRobot、Isaac Sim、Pinocchio。",
+      "features": [
+        "6+1 DOF（6 轴机械臂 + 1 夹爪）",
+        "767mm 最大臂展",
+        "1.5kg 负载",
+        "<0.2mm 重复定位精度",
+        "24V DC 供电",
+        "Damiao43 电机（4340P）",
+        "BOM 开源到每颗螺丝",
+        "STEP 全开放",
+        "ROS1/ROS2/LeRobot/Isaac Sim/Pinocchio",
+        "CERN-OHL-W-2.0 许可"
+      ],
+      "applications": [
+        "desktop",
+        "research",
+        "education",
+        "embodied_ai"
+      ],
+      "price_range": "999-1500",
+      "year": 2026,
+      "status": "open_source",
+      "sources": [
+        {
+          "source_type": "github",
+          "source_credibility": "A",
+          "collected_at": "2026-09-22T14:58:00Z"
+        }
+      ],
+      "source": "Seeed Studio reBot-DevArm (github.com/Seeed-Projects/reBot-DevArm, 4287 stars, CERN-OHL-W-2.0); BOM/README 开源到每颗螺丝规格，检索 2026-09-22",
+      "source_url": "https://github.com/Seeed-Projects/reBot-DevArm",
+      "source_tier": "A",
+      "source_tier_basis": "deep_link:github.com/Seeed-Projects/reBot-DevArm",
+      "confidence": 0.92,
+      "confidence_basis": "github_official_repo",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "last_verified": "2026-09-22",
+      "standard_conformance": {
+        "assessed": true,
+        "bus_class": "CAN/CAN-FD",
+        "ros2": true,
+        "interop_stack_20262893": "partial",
+        "caee060_relevant": false,
+        "interop_posture": "partial",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "reason": "自研直驱关节（Damiao43），非 ISO 9409-1 法兰；关节安装面为 reBot 专有设计，无厂商官域声明可跨厂商比对。BOM 开源到 STEP 但不构成通用法兰标号。",
+        "registry_ref": "/api/mechanical_interfaces.json"
+      },
+      "entity_kind": "component",
+      "rp_id": "RP-PLAT-seeed-rebot-dm",
+      "related": [
+        "PLAT-seeed-rebot-rs",
+        "ACT-damiao-4340p"
+      ],
+      "compatibility_note": "B601-DM 与 B601-RS 是同外观的两种电机版本（Damiao vs RobStride），机械安装面相同但电机接口不兼容，不可互换；详见 B601-RS 条目。"
+    },
+    {
+      "id": "PLAT-seeed-rebot-rs",
+      "name": "reBot-DevArm B601-RS",
+      "name_en": "Seeed reBot-DevArm B601-RS (RobStride motor version)",
+      "category": "platforms",
+      "manufacturer": "Seeed Studio",
+      "manufacturer_en": "Seeed Studio",
+      "type": "open_source_arm",
+      "description": "6+1 自由度开源机械臂平台，754mm 臂展、2.5kg 负载、<0.2mm 重复定位精度、48V DC 供电；使用 RobStride RSM 系列电机。BOM/STEP/SDK 全开源，CERN-OHL-W-2.0 许可。定位「千元级桌面具身 AI 平台」，已适配 ROS1/2、LeRobot、Isaac Sim、Pinocchio。",
+      "features": [
+        "6+1 DOF（6 轴机械臂 + 1 夹爪）",
+        "754mm 最大臂展",
+        "2.5kg 负载",
+        "<0.2mm 重复定位精度",
+        "48V DC 供电",
+        "RobStride RSM 电机",
+        "BOM 开源到每颗螺丝",
+        "STEP 全开放",
+        "ROS1/ROS2/LeRobot/Isaac Sim/Pinocchio",
+        "CERN-OHL-W-2.0 许可"
+      ],
+      "applications": [
+        "desktop",
+        "research",
+        "education",
+        "embodied_ai"
+      ],
+      "price_range": "999-1500",
+      "year": 2026,
+      "status": "open_source",
+      "sources": [
+        {
+          "source_type": "github",
+          "source_credibility": "A",
+          "collected_at": "2026-09-22T14:58:00Z"
+        }
+      ],
+      "source": "Seeed Studio reBot-DevArm (github.com/Seeed-Projects/reBot-DevArm, 4287 stars, CERN-OHL-W-2.0); BOM/README 开源到每颗螺丝规格，检索 2026-09-22",
+      "source_url": "https://github.com/Seeed-Projects/reBot-DevArm",
+      "source_tier": "A",
+      "source_tier_basis": "deep_link:github.com/Seeed-Projects/reBot-DevArm",
+      "confidence": 0.92,
+      "confidence_basis": "github_official_repo",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "last_verified": "2026-09-22",
+      "standard_conformance": {
+        "assessed": true,
+        "bus_class": "CAN/CAN-FD",
+        "ros2": true,
+        "interop_stack_20262893": "partial",
+        "caee060_relevant": false,
+        "interop_posture": "partial",
+        "iso22166_relevant": false
+      },
+      "mechanical_interface": {
+        "status": "not_declared",
+        "reason": "自研直驱关节（RobStride RSM），非 ISO 9409-1 法兰；关节安装面为 reBot 专有设计，无厂商官域声明可跨厂商比对。BOM 开源到 STEP 但不构成通用法兰标号。",
+        "registry_ref": "/api/mechanical_interfaces.json"
+      },
+      "entity_kind": "component",
+      "rp_id": "RP-PLAT-seeed-rebot-rs",
+      "related": [
+        "PLAT-seeed-rebot-dm",
+        "ACT-robstride-rsm"
+      ],
+      "compatibility_note": "B601-RS 与 B601-DM 是同外观的两种电机版本（RobStride vs Damiao），机械安装面相同但电机接口不兼容，不可互换；详见 B601-DM 条目。"
     }
   ],
   "flexible_actuators": [

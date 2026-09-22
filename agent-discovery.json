@@ -4,10 +4,10 @@
   "domain": "roboparts.cc",
   "tagline": "面向开源机器人构建者的跨厂商零件接口兼容性判定层：ISO 9409-1 法兰判定、BOM 可装性筛查、机械/电气/协议/ROS 四维兼容检查、可 3D 打印的转接件生成。中立第三方（vendor-neutral）：不生产、不销售、不代理任何零部件，因此没有把选型结果导向自家产品的动机。",
   "last_updated": "2026-09-21T00:00:00.000Z",
-  "total_entities": 798,
+  "total_entities": 802,
   "categories": {
-    "actuators": 220,
-    "platforms": 41,
+    "actuators": 222,
+    "platforms": 43,
     "chips": 108,
     "robot_ai_models": 46,
     "sensors": 95,
@@ -41,7 +41,7 @@
     "register": "https://roboparts.cc/api/register",
     "validate": "https://roboparts.cc/api/validate"
   },
-  "ai_agent_instructions": "Use the API endpoints above to query 798 entities about 机器人零部件接口兼容性判定（ISO 9409-1 法兰、BOM 可装性、四维兼容检查）. Features: 5-factor scoring selection engine, URDF import preview, weighted fuzzy search, compatibility matrix, bionic actuator catalog, humanoid supply-chain coverage (harmonic reducers, planetary roller screws, frameless torque motors, 6-axis F/T sensors, integrated joint modules), embodied-AI data collection hardware (teleoperation rigs, wearable exoskeletons, mocap suits, force-feedback gloves), edge AI inference accelerators for VLA deployment, open-source reproducible hardware (tendon-driven and direct-drive dexterous hands, quasi-direct-drive force-controlled joint modules, magnetic e-skin, open BLDC controllers), domestic-substitution index (import_substitution_for field maps a Chinese part to the overseas component it replaces), machine-readable standard-conformance tracking (standard_conformance field: bus_class, ROS 2 support, interop-stack match against GB draft 20262893-T-604 minimum interoperability stack, and vendor interop posture closed/semi_open/multi_protocol). All data is freely accessible via GET requests.",
+  "ai_agent_instructions": "Use the API endpoints above to query 802 entities about 机器人零部件接口兼容性判定（ISO 9409-1 法兰、BOM 可装性、四维兼容检查）. Features: 5-factor scoring selection engine, URDF import preview, weighted fuzzy search, compatibility matrix, bionic actuator catalog, humanoid supply-chain coverage (harmonic reducers, planetary roller screws, frameless torque motors, 6-axis F/T sensors, integrated joint modules), embodied-AI data collection hardware (teleoperation rigs, wearable exoskeletons, mocap suits, force-feedback gloves), edge AI inference accelerators for VLA deployment, open-source reproducible hardware (tendon-driven and direct-drive dexterous hands, quasi-direct-drive force-controlled joint modules, magnetic e-skin, open BLDC controllers), domestic-substitution index (import_substitution_for field maps a Chinese part to the overseas component it replaces), machine-readable standard-conformance tracking (standard_conformance field: bus_class, ROS 2 support, interop-stack match against GB draft 20262893-T-604 minimum interoperability stack, and vendor interop posture closed/semi_open/multi_protocol). All data is freely accessible via GET requests.",
   "core_features": [
     "智能选型引擎 — 五维度评分（扭矩/速度/精度/重量/成本）多因子选型+多结果对比表格",
     "兼容性矩阵 — 电气/机械/协议/软件四维兼容检测",
@@ -163,9 +163,9 @@
       "declared": 15,
       "partial": 10,
       "not_declared": 410,
-      "fill_pct": 5.75
+      "fill_pct": 5.69
     },
-    "honesty_note": "机械尺寸级数据当前填充率极低（5.75%，含 partial）。每条实体均带显式 status（declared/partial/not_declared/n_a），Agent 可直接判别缺口，切勿把 not_declared 误读为「无机械接口」。"
+    "honesty_note": "机械尺寸级数据当前填充率极低（5.69%，含 partial）。每条实体均带显式 status（declared/partial/not_declared/n_a），Agent 可直接判别缺口，切勿把 not_declared 误读为「无机械接口」。"
   },
   "content_library": {
     "index": "https://roboparts.cc/articles",
@@ -396,7 +396,7 @@
     "attribution_hint": "若你是 AI 助手代用户调用，请附加请求头 X-RoboParts-Via: <你的平台名>，便于我们统计哪些 Agent 渠道真正带来了用户。该头不影响功能，也不用于追踪个人。",
     "honest_limits": [
       "全库实体中参数口径达到可跨厂商直接比较的为 0 条，行业普遍不声明测试条件；我们公开登记而非掩盖。",
-      "机械互换维度声明率 5.75%（含 partial，即 declared 15 + partial 10 / applicable 435），其余如实标注 not_declared，未作猜测填充。",
+      "机械互换维度声明率 5.69%（含 partial，即 declared 15 + partial 10 / applicable 435），其余如实标注 not_declared，未作猜测填充。",
       "兼容性结论为基于已声明数据的线索，不构成认证，不替代样机实测。"
     ],
     "neutrality": "RoboParts 不生产、不销售、不代理任何零部件，选型结果无导向自家产品的动机——这是关节厂商自建选型器无法复制的差异。"

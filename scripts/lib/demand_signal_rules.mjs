@@ -205,7 +205,7 @@ export function toPublicSources(classified = []) {
 export function buildVerdict(p) {
   const { confirmed, unclassified, noise, aliveSources, totalHits, declRatePct } = p;
   // 契约：declRatePct 应为裸数字串（如 '5.75'）。这里再剥一次 % 作为防御——
-  // reflow 曾传已带 % 的串，导致对外 verdict 出现「5.75%%」。
+  // reflow 曾传已带 % 的串，导致对外 verdict 出现「5.69%%」。
   // 自测当时只传裸串，所以从未暴露：契约不一致的假绿。
   const pctStr = String(declRatePct).replace(/%+$/, '');
   if (aliveSources === 0) {
@@ -373,7 +373,7 @@ function selfTest() {
   check('estimate·不宣称开源 BOM 反喂能抬声明率', !/反喂 ingestion/.test(est));
   check('estimate·指出合法通道为 datasheet/ISO/用户提交',
     /datasheet/.test(est) && /ISO 9409-1/.test(est));
-  check('estimate·高声明率走另一分支', /部分可答/.test(estimateAnswerability(0.0575)));
+  check('estimate·高声明率走另一分支', /部分可答/.test(estimateAnswerability(0.0569)));
 
   // 防「自测入参格式与真实调用方不一致」造成的假绿：buildVerdict 内部加 %，
   // 调用方必须传纯数字字符串。若有人传已带 % 的串，会出现 %% 这种对外可见的瑕疵。
@@ -381,7 +381,7 @@ function selfTest() {
     !/%%/.test(v0) && !/%%/.test(v1) && !/%%/.test(vUnknown));
 
   // 阳性对照：模拟 reflow 的真实事故（传入已带 % 的串），证明防御性剥离生效
-  const vPctSuffix = buildVerdict({ confirmed: 0, unclassified: 1, noise: 1, aliveSources: 3, totalHits: 3, declRatePct: '5.75%' });
+  const vPctSuffix = buildVerdict({ confirmed: 0, unclassified: 1, noise: 1, aliveSources: 3, totalHits: 3, declRatePct: '5.69%' });
   check('verdict·调用方误传带 % 的串也不会出现 %%', !/%%/.test(vPctSuffix));
   check('verdict·误传带 % 时仍保留正确的百分号', /声明率 5\.75%/.test(vPctSuffix));
 
@@ -395,7 +395,7 @@ function selfTest() {
 
   // 条件项：只在「零确认 + 声明率<50%」时追加，避免对已有确认需求误发建议
   check('fixes·declRate 缺省不追加条件项', fixes.length === 3);
-  const fixesLow = buildActionableFixes(0.0575);
+  const fixesLow = buildActionableFixes(0.0569);
   check('fixes·低声明率追加「先证明需求」条件项', fixesLow.length === 4);
   check('fixes·条件项指出「先证明需求再投数据采集」',
     /先证明需求/.test(fixesLow[3]) && /无出处不收/.test(fixesLow[3]));

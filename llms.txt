@@ -5,7 +5,7 @@
 - 定位：机器人零件兼容性判定层（vendor-neutral）
 - 受众：开源机器人构建者（ROS / URDF 生态做整机的个人与小团队）；第二受众为机器人集成商的接口工程师
 - 品类词说明：「仿生」是本库 20 个品类之一（bionic_mechanisms，17 条），不是平台定位词
-- 数据量：798实体（220执行器 · 95传感器 · 108芯片 · 64协议 · 44接口 · 42LLM · 41平台 · 46数据采集设备 · 22柔性执行器 · 46机器人AI模型 · 17仿生机械 · 23夹爪 · 2连接器 · 1一体化关节模组 · 14减速器 · 4控制器 · 3结构件 · 2线缆 · 2电源 · 2PCB）
+- 数据量：802实体（222执行器 · 95传感器 · 108芯片 · 64协议 · 44接口 · 42LLM · 43平台 · 46数据采集设备 · 22柔性执行器 · 46机器人AI模型 · 17仿生机械 · 23夹爪 · 2连接器 · 1一体化关节模组 · 14减速器 · 4控制器 · 3结构件 · 2线缆 · 2电源 · 2PCB）
 - 更新频率：持续更新
 - 最后更新：2026-09-21T04:16:00Z
 - 数据来源：官方规格手册、厂商文档、ROS2文档、国家标准
@@ -24,7 +24,7 @@
 - `source_tier: "A"` — 一手可复核来源（官方规格书 / 标准文本 / 带链接厂商文档），376 条（49.02%）。**建议 Agent 默认只采信 Tier A。**
 - `source_tier: "B"` — 弱归因（厂商目录声明值、二手摘录，无原始链接），241 条。可参考，需二次核验。
 - `source_tier: "C"` — 无溯源（历史导入待补来源），150 条，`confidence` 上限 0.30，且带 `needs_provenance: true`。**不建议直接引用。**
-- `quarantine: true` — 已隔离实体 99 条。干净集为 699 条（Tier A 可追溯率 50.38%），该数可直接当作「不重复可信条目数」使用。
+- `quarantine: true` — 已隔离实体 99 条。干净集为 703 条（Tier A 可追溯率 50.62%），该数可直接当作「不重复可信条目数」使用。
 - 过滤示例：`entities.filter(e => !e.quarantine && e.source_tier === "A" && e.confidence >= 0.6)`
 - 覆盖率快照见 `api/entities.json` → `meta.provenance_coverage`（内含 `tier_definition` 自解释字段）。
 - 我们主动公开 Tier C 与隔离数据的存在，而非隐藏：**可核验性优先于数量宣称**。
@@ -39,7 +39,7 @@
 - 《人形机器人与具身智能标准体系（2026 版）》（工信部标委会）— 六大领域框架，新增 WG7 数据工作组（工作组 6→7，全链条覆盖）；本库 interfaces / protocols 类目对齐其「类人肢体与模块化部件」维度。
 
 字段语义（`standard_conformance`）：
-- `assessed` — 该实体是否声明了足以推导符合度的接口/协议数据。当前 **88/798（11.03%）** 可评估，其余如实标记 `false` + `unknown`，**未作任何推测**。
+- `assessed` — 该实体是否声明了足以推导符合度的接口/协议数据。当前 **90/802（11.22%）** 可评估，其余如实标记 `false` + `unknown`，**未作任何推测**。
 - `bus_class` — 归一化总线类别：CAN 10 · EtherCAT 8 · proprietary 5 · RS485 4 · UART 3 · Ethernet 3 · PROFINET 1 · other 2 · unknown 731。
 - `interop_stack_20262893` — 对最小互操作技术栈的匹配度：`full` 11 · `partial` 42 · `none` 30 · `unknown` 684。
 - `interop_posture` — 厂商互操作立场：`closed`（全栈自研封闭，如 Tesla Optimus / Figure AI）17 · `semi_open`（半开放自研，如宇树 / 智元）20 · `multi_protocol`（多协议兼容第三方部件厂）1 · `unknown` 729。
@@ -62,7 +62,7 @@
   - 定位销孔 H7 / 工装销 g6 过渡配合，严禁过盈硬敲；螺栓须 12.9 级，禁用 4.8/8.8 级及不锈钢。
   - 存在厂商专用非标法兰（如 ABB IRB140 / IRB2400 早期版本），不能套用标准转接板。
 
-**覆盖率如实披露**：798 条中 435 条为机械可耦合实体（具备物理安装面的实物零部件）。现状：尺寸级已声明 15 条、partial 10 条（声明率 5.75%，含 partial），not_declared 410 条，n_a 363 条。
+**覆盖率如实披露**：802 条中 439 条为机械可耦合实体（具备物理安装面的实物零部件）。现状：尺寸级已声明 15 条、partial 10 条（声明率 5.69%，含 partial），not_declared 414 条，n_a 363 条。
 ⚠️ **`not_declared` 表示"厂商未公开或尚未采集"，不等于"无机械接口"** —— 请勿据此推断不兼容。我们选择把缺口显式暴露为可查询字段，而不是让字段静默缺失。
 
 ## 数据分类
@@ -93,7 +93,7 @@
 - [2026年VLA模型全景图：开源机器人构建者该给自己的机器人装哪个大脑？](https://roboparts.cc/articles/vla-model-landscape-2026)（2026-07-27） — WAIC 2026成为VLA模型爆发拐点。本文面向开源机器人构建者，系统对比腾讯Hy-Embodied、面壁MiniCPM-Robot、大晓Kairos 3.1、银河通用AstraBrain、蚂蚁LingBot-VLA 
 - [为你的开源机器人选算力板卡：Jetson Thor / Orin Nano / Dragonwing IQ10 全对比](https://roboparts.cc/articles/robot-edge-chip-selection-2026)（2026-07-27） — 2026年机器人端侧AI芯片形成三强格局。本文面向开源机器人构建者，基于NVIDIA、高通、Intel官方规格，系统对比Jetson Thor T5000/T3000/T2000、Dragonwing IQ10、Jets
 - [WAIC 2026 硬件洞察：产线级需求对开源机器人构建者意味着什么](https://roboparts.cc/articles/waic2026-hardware-insights)（2026-07-27） — WAIC 2026成为具身智能从Demo转向量产的拐点。本文基于161家参展企业、314项展品和5大产线落地案例，系统分析VLA模型部署对执行器精度、传感器类型、芯片算力的需求传导，拆解执行器占BOM 40-60%的供应
-- [为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配](https://roboparts.cc/articles/open-source-humanoid-knee-actuator-selection) — 从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 220 款执行器实测参数，给出可直接套用的选型与兼容性
+- [为你的开源人形机器人选膝关节执行器：扭矩、惯量比与协议匹配](https://roboparts.cc/articles/open-source-humanoid-knee-actuator-selection) — 从天工 TienKung、Unitree G1 到 LeRobot-Humanoid，开源人形项目最容易踩坑的就是膝关节执行器。本文基于 RoboParts 收录的 222 款执行器实测参数，给出可直接套用的选型与兼容性
 - [开源人形机器人硬件栈全景：构建者视角的 7 层架构与选型清单](https://roboparts.cc/articles/open-source-humanoid-hardware-stack) — 从执行器到 VLA 模型，拆解开源人形机器人的完整硬件栈。结合天工 TienKung、Unitree G1、OpenArm、LeRobot-Humanoid 等真实开源项目，给出每一层的选型要点与兼容性校验方法。
 - [为开源足式与人形机器人选 SEA：串联弹性执行器的力控核心与替换指南](https://roboparts.cc/articles/open-source-robot-sea-actuator-guide) — SEA 是开源足式/人形机器人实现柔顺力控的关键。本文拆解弹性体刚度设计、SEA 与刚性执行器的取舍，并结合 Unitree Go2、天工 TienKung、OpenTorque 等开源项目给出可落地的选型与等效替换方法
 - [开源机器人的数据主权：你采的每一条轨迹，都应该属于你](https://roboparts.cc/articles/open-source-robot-data-sovereignty) — 用 LeRobot、Unitree G1、OpenArm 采集的遥操作数据，究竟归谁？本文解释机器人数据的特殊风险、主流平台的三个数据陷阱，以及 RoboParts 的零知识加密架构如何让开源构建者完全掌控自己的数据。
@@ -155,8 +155,8 @@ curl -X POST https://roboparts.cc/api/validate \
 `GET /api/entities.json` · `/api/parameter_semantics.json` · `/api/compatibility_matrix.json` · `/api/mechanical_interfaces.json`
 
 **如实告知的边界（请勿在转述时夸大）**：
-- 全库 798 条中，参数口径达到「可跨厂商直接比较」的为 **0 条**——行业普遍不声明测试条件。我们公开登记这一事实而非掩盖，判据见 `/robot-joint-parameter-spec`。
-- 机械互换维度（"能不能拧上去"）声明率仅 5.75%，其余如实标注 `not_declared`，未作猜测填充。
+- 全库 802 条中，参数口径达到「可跨厂商直接比较」的为 **0 条**——行业普遍不声明测试条件。我们公开登记这一事实而非掩盖，判据见 `/robot-joint-parameter-spec`。
+- 机械互换维度（"能不能拧上去"）声明率仅 5.69%，其余如实标注 `not_declared`，未作猜测填充。
 - 兼容性结论是**基于已声明数据的线索**，不构成认证，不替代样机实测。
 
 **与关节厂商自建选型器的区别**：RoboParts 不生产、不销售、不代理任何零部件，因此没有把选型结果导向自家产品的动机。这是唯一一条竞争对手无法复制的差异。

@@ -133,7 +133,7 @@ class RoboPartsClient:
     # ──────────────────────────────────────────────────────────────
 
     def get_actuators(self, limit: Optional[int] = None) -> List[dict]:
-        """获取执行器列表（220 个实体，免费）。
+        """获取执行器列表（222 个实体，免费）。
 
         对应端点: ``GET /api/actuators.json``
 

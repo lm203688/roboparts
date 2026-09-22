@@ -6,18 +6,18 @@ We're building **RoboParts** (https://roboparts.cc), an open structured dataset 
 
 ## What is RoboParts?
 
-A curated, structured dataset of **798 entities** across **20 categories**:
+A curated, structured dataset of **802 entities** across **20 categories**:
 
 | Category | Count | Example Data Points |
 |---|---|---|
-| Actuators | 220 | Torque, speed, voltage, weight, price range, gear type |
+| Actuators | 222 | Torque, speed, voltage, weight, price range, gear type |
 | Chips | 108 | CPU, AI TOPS, power, interfaces (CAN FD, EtherCAT, …) |
 | Sensors | 95 | Range, precision, interface |
 | Protocols | 64 | Bandwidth, latency, topology, standard conformance |
 | Robot AI Models | 46 | VLA models (GR00T N1.7, LeRobot v0.6.0, π0.5, SmolVLA, InternVLA-A1.5) |
 | Data Acquisition | 46 | Teleoperation, motion capture, tactile (ALOHA, UMI, GELLO, OptiTrack, GelSight) |
 | LLMs | 42 | Parameters, open-source, embodied-AI fine-tuning |
-| Platforms | 41 | Simulation support, ROS 2 compatibility, open-source |
+| Platforms | 43 | Simulation support, ROS 2 compatibility, open-source |
 | Interfaces | 44 | Power rating, connector type, speed |
 | Flexible Actuators | 22 | Series Elastic Actuators, soft robotics, bio-inspired |
 | Connectors | 2 | Current rating, data rate, routing opening, mating orientation |
@@ -30,7 +30,7 @@ Most component databases quietly turn "we don't know" into "no". We think that's
 
 Concretely, on ROS support:
 
-- **47 of 798** entities explicitly declare ROS support
+- **47 of 802** entities explicitly declare ROS support
 - **27** explicitly declare no ROS support
 - **751 (94%)** have *never declared it*
 
@@ -40,10 +40,10 @@ Field coverage is published rather than hidden:
 
 | Field | Coverage |
 |---|---|
-| `confidence`, `source_tier`, `data_quality`, `standard_conformance` | 798/798 (100%) |
-| `source` | 737/798 (92%) |
-| `last_verified` | 495/798 (62%) |
-| `ros_support` | 47/798 (6%) |
+| `confidence`, `source_tier`, `data_quality`, `standard_conformance` | 802/802 (100%) |
+| `source` | 737/802 (92%) |
+| `last_verified` | 495/802 (62%) |
+| `ros_support` | 47/802 (6%) |
 
 Filling in the sparse mechanical and ROS fields is our current priority. If you have vendor-confirmed data, contributions are very welcome.
 

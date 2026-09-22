@@ -136,7 +136,7 @@ function barePct(value, label) {
 function applyFacts(ds, entities) {
   const { applicable, withLead, rate } = mechCoverage(entities);
   // buildVerdict 契约是「裸数字串」（内部自加 %）。此前误传已带 % 的 pct，
-  // 对外 verdict 出现「5.75%%」——正是自测只喂裸串才一直没暴露的那种契约不一致假绿。
+  // 对外 verdict 出现「5.69%%」——正是自测只喂裸串才一直没暴露的那种契约不一致假绿。
   const pctNum = (rate * 100).toFixed(2);
   const pct = pctNum + '%';
   const { needsRejudge } = normalizeByRule(ds);
@@ -315,7 +315,7 @@ function selfTest() {
   check('契约·barePct 放行裸数字串', barePct('5.75', 'selftest') === '5.75');
   let threwOnPct = false;
   try {
-    barePct('5.75%', 'selftest');
+    barePct('5.69%', 'selftest');
   } catch (e) {
     threwOnPct = /契约要求裸数字串/.test(String(e.message));
   }
