@@ -555,6 +555,68 @@ def gate_pure_drift():
              '--self-test'])
 
 
+def gate_morphology_graph():
+    """形态图闸门（D4 协同设计底座的输入形式）。
+
+    2026-09-23 新增（方向锚点 v2.1 的 Phase A2）。形态图的失效模式不是崩溃而是
+    **静默说谎**：一个永远返回 unknown 的引擎与一个被写坏成"什么都判 unknown"的
+    引擎产物一模一样；反过来把「未声明」误判成「兼容」，会让下游协同设计把不存在
+    的组合当合法解。故本闸门两趟：
+      ① 审计：不变量（缺口枢纽入度 == facts().mech_not_declared、类型 id 唯一、
+         无悬挂端口、各轴类型对完整、**无几何类型参与的对必须判 unknown**、
+         汇总层不得与实体脱节）+ 与已提交产物逐键比对（抓未重建的漂移）；
+      ② 自证：21 项阴阳/变异对照 —— 4 阳性（证明真会算几何）、8 阴性（抽掉证据
+         必须 fail-closed）、5 变异（把产物人为改坏必须判红）、3 守卫（两个真实
+         踩过的 bug：连接器匹配被括号打断、中文厂商名塌成同一空 id）。
+    """
+    run_sub('形态图不变量（审计 + 漂移）',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'verify_morphology_graph.py'), '--quiet'])
+    run_sub('形态图判据阴阳/变异自证',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'verify_morphology_graph.py'), '--self-test'])
+
+
+def gate_embodiment_provenance():
+    """具身跨层溯源闸门（方向锚点 v2.1 的 D6 地基）。
+
+    2026-09-23 新增。产物的核心输出是**四个布尔**（L1–L4 连接条件是否满足），
+    布尔最容易假绿。本闸门首版真实踩到一个假绿：L3（body→policy）判据把
+    robot_ai_models 条目与自己比，而该文件是 entities.json 里那 46 条实体的
+    **派生视图**（条目 id 就是实体 id），于是"引用自己"被当成跨层引用，
+    产物报 body→policy=true —— 而真实的物理零件引用数是 0。
+    若无此闸门，「链已闭合」会作为事实对外输出。故两趟：
+      ① 契约 + 不变量（complete ⇒ 四链全满足；satisfied=false ⇒ 必须给出
+         blocked_by；dangling ⇒ 必须指明断点；honest_limits 必须披露完整链数）；
+      ② 自证 12 项（含 5 变异 + 3 守卫，守卫③ 是上述自引用 bug 的反证）。
+    """
+    run_sub('跨层溯源契约与不变量',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'verify_provenance.py'), '--quiet'])
+    run_sub('跨层溯源判据阴阳/变异自证',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'verify_provenance.py'), '--self-test'])
+
+
+def gate_croissant_metadata():
+    """Croissant 元数据闸门（方向锚点 v2.1 Phase A1 副产品 —— 引用入口）。
+
+    2026-09-23 新增。副产品不等于免检：对外元数据的失效模式是
+    ① 计数与 facts() 脱节（手写副本腐烂）；② license/诚实边界被改掉后
+    下游把声明值数据当 benchmark 用。故两趟：
+      ① 审计：必备键、license=CC-BY-4.0、distribution 指到的文件真实存在、
+         计数逐键对账 facts()、description 必须内嵌现算 total/pct（抓陈旧描述）；
+      ② 自证 7 项（1 阳性 + 6 变异：翻计数/改机械四态/换 license/删
+         distribution/描述去数字/清空诚实边界，每个变异必须判红）。
+    """
+    run_sub('Croissant 元数据审计',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'verify_croissant.py'), '--quiet'])
+    run_sub('Croissant 判据阴阳/变异自证',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'verify_croissant.py'), '--self-test'])
+
+
 def gate_positioning_caliber():
     """定位口径闸门 —— 「我们对外自称什么」的本地半场。
 
@@ -640,6 +702,15 @@ GATES = [
     # 2026-09-21 新增：收口提交的机械前置闸门。auto_drift_heal.py 曾把任何工作树
     # 改动都当"漂移"提交，无法区分时间戳滚动与真内容改动 ⇒ 内容改动被洗白入库。
     ('纯漂移判别（收口前置）', gate_pure_drift),
+    # 2026-09-23 新增：形态图（方向锚点 v2.1 的 Phase A2 —— D4 协同设计底座的输入形式）。
+    # 失效模式是静默说谎而非崩溃，故必须"不变量 + 阴阳/变异自证"双趟。
+    ('形态图（不变量 + 阴阳/变异自证）', gate_morphology_graph),
+    # 2026-09-23 新增：跨层溯源（方向锚点 v2.1 的 D6 地基）。核心输出是四个布尔，
+    # 最容易假绿；本闸门首版真被一个自引用假阳性骗过（见 gate 文档字符串）。
+    ('跨层溯源（契约 + 阴阳/变异自证）', gate_embodiment_provenance),
+    # 2026-09-23 新增：Croissant 元数据（方向锚点 v2.1 Phase A1 副产品）。
+    # 副产品不免检：计数对账 facts() + 诚实边界必须随元数据传播。
+    ('Croissant 元数据（审计 + 阴阳/变异自证）', gate_croissant_metadata),
     ('定位口径本地扫描', gate_positioning_caliber),
     ('对外 JSON 可解析', gate_json_parses),
     ('entities.json meta 一致', gate_entities_meta_consistent),

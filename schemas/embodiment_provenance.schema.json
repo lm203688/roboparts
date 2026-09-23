@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roboparts.cc/schemas/embodiment_provenance.schema.json",
+  "title": "Embodied Cross-Layer Provenance Contract",
+  "description": "声明式描述「具身系统行为」的五层可追溯链：神经元 → 拓扑 → 躯体 → 策略 → 行为。把 W3C PROV-O 的 entity/activity/agent 三元映射到具身栈的每一层，使一条链可被机器校验（而不是靠文档描述）。本 schema 与 neurorobotics/signal_interface.schema.json 的分工：signal_interface 描述「控制器与躯体之间怎么接线」，本 schema 描述「接好之后这条系统从哪来、能不能一路追到行为」。二者共用 LAYER 语义，不各立一套。",
+  "type": "object",
+  "required": ["id", "layers", "links", "status"],
+  "additionalProperties": false,
+  "$defs": {
+    "LayerId": {
+      "type": "string",
+      "enum": ["neuron", "topology", "body", "policy", "behavior"],
+      "description": "具身栈的五层。顺序即依赖序：后一层以前一层为输入。"
+    },
+    "ProvOClass": {
+      "type": "string",
+      "enum": ["entity", "activity", "agent"],
+      "description": "W3C PROV-O 三元。e.g. 连接组是 entity，解析活动是 activity，产出它的实验室是 agent。"
+    },
+    "ProvO": {
+      "type": "object",
+      "description": "一层的最小 PROV-O 溯源块。刻意与 api/morphology_graph.json 的 prov 块同形（source/tier/retrieved），便于跨文件拼接。",
+      "required": ["source"],
+      "additionalProperties": false,
+      "properties": {
+        "source": {"type": "string", "description": "一手出处（URL / 具名文档 / 构造说明）"},
+        "tier": {"type": ["string", "null"], "enum": ["A", "B", "C", null], "description": "A=可点开复核；B=弱归因（知道去哪找但点不开）；C=无溯源。判据唯一源 scripts/govern_source_tier.py"},
+        "retrieved": {"type": ["string", "null"], "description": "采集日期 YYYY-MM-DD"},
+        "note": {"type": ["string", "null"]},
+        "prov_o_class": {"$ref": "#/$defs/ProvOClass"},
+        "activity": {"type": ["string", "null"], "description": "产生该层的活动（PROV activity），如 EM 重建 / 供应商目录采集"},
+        "agent": {"type": ["string", "null"], "description": "负责主体（PROV agent），如 Janelia / ROBOTIS / roboparts.cc"}
+      }
+    },
+    "Layer": {
+      "type": "object",
+      "required": ["id", "owner", "available", "prov"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/LayerId"},
+        "owner": {"type": "string", "description": "数据归属方。roboparts=本仓自持；external(<name>)=外部项目持有，本仓只引用不复制。"},
+        "available": {
+          "type": "string",
+          "enum": ["populated", "partial", "declared_empty", "external_not_ingested"],
+          "description": "populated=有实测数据；partial=有但覆盖不足；declared_empty=已定义但库内为 0；external_not_ingested=外部持有且本仓刻意不复制（项目独立原则）。"
+        },
+        "count": {"type": "integer", "minimum": 0},
+        "ref": {"type": ["string", "null"], "description": "该层数据的机读入口（本仓路径或外部端点）"},
+        "prov": {"$ref": "#/$defs/ProvO"}
+      }
+    },
+    "Link": {
+      "type": "object",
+      "required": ["from", "to", "requires", "satisfied"],
+      "additionalProperties": false,
+      "properties": {
+        "from": {"$ref": "#/$defs/LayerId"},
+        "to": {"$ref": "#/$defs/LayerId"},
+        "requires": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string"},
+          "description": "机器可判定的连接条件（字段/键名，不是散文）"
+        },
+        "satisfied": {"type": "boolean", "description": "当前库内是否满足该连接条件（现算）"},
+        "blocked_by": {"type": ["string", "null"], "description": "不满足时的具体缺口"},
+        "note": {"type": ["string", "null"]}
+      }
+    }
+  },
+  "properties": {
+    "id": {"type": "string", "pattern": "^PROVC-[A-Z0-9-]+$"},
+    "title": {"type": "string"},
+    "status": {
+      "type": "string",
+      "enum": ["complete", "partial", "dangling", "spec-example"],
+      "description": "complete=五层齐备且全部连接条件满足；partial=部分层有数据但链不闭合；dangling=链在某一层断掉；spec-example=对公开演示的结构化重述，非实测闭环。"
+    },
+    "layers": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "items": {"$ref": "#/$defs/Layer"},
+      "description": "按 neuron→topology→body→policy→behavior 顺序。允许缺层（正是要暴露断层）。"
+    },
+    "links": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/Link"},
+      "description": "相邻层之间的连接。相邻即必须存在对应 link 条目，缺条目不等于自动满足。"
+    },
+    "dangling_at": {
+      "type": ["string", "null"],
+      "$ref": "#/$defs/LayerId",
+      "description": "链断在哪一层（status=dangling 时必填）。"
+    }
+  }
+}

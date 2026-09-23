@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use the RoboParts registry, please cite it as follows."
+title: "RoboParts Embodied-Components Registry"
+abstract: >-
+  A vendor-neutral registry of robotic and embodied-system entities with
+  rule-based, three-state compatibility verdicts (declared / partial /
+  cannot-determine) across protocol, electrical, mechanical and ROS2
+  dimensions, plus a morphology graph and a cross-layer provenance record.
+  Verdicts derive from manufacturer-declared public fields, not measurements.
+authors:
+  - family-names: Li
+    given-names: Xing
+version: 2026.09
+date-released: "2026-09-23"
+license: CC-BY-4.0
+repository-code: "https://github.com/lm203688/roboparts"
+urls:
+  - "https://roboparts.cc/"
+keywords:
+  - robotics
+  - embodied AI
+  - compatibility
+  - morphology graph
+  - provenance

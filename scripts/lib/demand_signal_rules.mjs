@@ -356,15 +356,20 @@ function selfTest() {
     pub.every((p) => !/需判别/.test(p.relevance)));
 
   // verdict：零确认时不得宣称真实提问
-  const v0 = buildVerdict({ confirmed: 0, unclassified: 1, noise: 1, aliveSources: 3, totalHits: 3, declRatePct: '5.75' });
+  // 【2026-09-23 修】此前 declRatePct 入参写 '5.75'、断言也写 /5\.75%/ —— 同一事实
+  // 在两处手写。声明率真值降到 5.69% 后只改了入参，断言留在 5.75%，本自测因此**恒红**。
+  // 改为单一来源：入参与期望都由 RATE 派生，杜绝再次分叉。
+  const RATE = '5.69';
+  const RATE_RE = new RegExp(`声明率 ${RATE.replace('.', '\\.')}%`);
+  const v0 = buildVerdict({ confirmed: 0, unclassified: 1, noise: 1, aliveSources: 3, totalHits: 3, declRatePct: RATE });
   check('verdict·confirmed=0 时不宣称「真实兼容性提问信号」', !/真实兼容性提问/.test(v0));
   check('verdict·confirmed=0 时明示零确认与历史误判成因',
     /零确认信号/.test(v0) && /real_signal=true/.test(v0));
-  check('verdict·confirmed=0 时仍披露声明率', /5\.75%/.test(v0));
-  const v1 = buildVerdict({ confirmed: 3, unclassified: 1, noise: 5, aliveSources: 3, totalHits: 9, declRatePct: '5.75' });
+  check('verdict·confirmed=0 时仍披露声明率', RATE_RE.test(v0));
+  const v1 = buildVerdict({ confirmed: 3, unclassified: 1, noise: 5, aliveSources: 3, totalHits: 9, declRatePct: RATE });
   check('verdict·confirmed>0 时保留「需求存在、供给不足」表述',
     /需求存在/.test(v1) && /供给/.test(v1));
-  const vUnknown = buildVerdict({ confirmed: 0, unclassified: 0, noise: 0, aliveSources: 0, totalHits: 0, declRatePct: '5.75' });
+  const vUnknown = buildVerdict({ confirmed: 0, unclassified: 0, noise: 0, aliveSources: 0, totalHits: 0, declRatePct: RATE });
   check('verdict·通道全不可达 → UNKNOWN 且不推断零需求',
     /UNKNOWN/.test(vUnknown) && /不推断需求为零/.test(vUnknown));
 
@@ -381,9 +386,9 @@ function selfTest() {
     !/%%/.test(v0) && !/%%/.test(v1) && !/%%/.test(vUnknown));
 
   // 阳性对照：模拟 reflow 的真实事故（传入已带 % 的串），证明防御性剥离生效
-  const vPctSuffix = buildVerdict({ confirmed: 0, unclassified: 1, noise: 1, aliveSources: 3, totalHits: 3, declRatePct: '5.69%' });
+  const vPctSuffix = buildVerdict({ confirmed: 0, unclassified: 1, noise: 1, aliveSources: 3, totalHits: 3, declRatePct: RATE + '%' });
   check('verdict·调用方误传带 % 的串也不会出现 %%', !/%%/.test(vPctSuffix));
-  check('verdict·误传带 % 时仍保留正确的百分号', /声明率 5\.75%/.test(vPctSuffix));
+  check('verdict·误传带 % 时仍保留正确的百分号', RATE_RE.test(vPctSuffix));
 
   const fixes = buildActionableFixes();
   check('fixes·不宣称开源 BOM 反喂 ingestion', !fixes.some((f) => /反喂 ingestion/.test(f)));
