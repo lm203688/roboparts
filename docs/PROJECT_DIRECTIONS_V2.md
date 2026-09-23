@@ -86,6 +86,9 @@
 | `api/morphology_graph.json` | verify_morphology_graph 双趟全绿（不变量 + 21 项自证，ci_gate 挂闸） | **形态图本体** | ✅ 存在（2026-09-23 实测） |
 | `api/croissant.json` + `CITATION.cff` | 802 实体 / 20 品类 / 机械四态 15-10-414-363（现算 + facts() 逐键对账，verify_croissant 1 阳性 + 6 变异全过，ci_gate 挂闸） | 引用入口（副产品） | ✅ 存在（2026-09-23 实测） |
 | `schemas/embodiment_provenance.schema.json` | verify_provenance 双趟全绿（契约 + 12 项自证，ci_gate 挂闸） | 跨层溯源契约 | ✅ 存在（2026-09-23 实测） |
+| `scripts/compose_engine.py`（B1） | compose(a,b) 三态裁决纯函数；reflexivity 公理 + best-pair + fail-closed；无文件 IO | **效应系统原型** | ✅ 存在（2026-09-23 实测） |
+| `api/compose_semantics.json`（B2） | 351,649 全对评测：composed 0 / type_error 4 / unknown 351,645（现算对账 + 21 项自证，ci_gate 挂闸）；规则表 R0–R5 导出 | **三轴类型语义** | ✅ 存在（2026-09-23 实测） |
+| `docs/paper-compose-calculus-outline.md`（B3） | 提纲占位，不含未做声明；出口候选 arXiv→workshop→RAM | 方法论文占学术位 | ✅ 占位（2026-09-23；**非投稿稿**） |
 | 机械声明率 | 5.69%（declared 15 + partial 10 / applicable 439） | 见 §6.1（**已收窄**） | ⚠️ 见下 |
 
 ---

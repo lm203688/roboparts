@@ -617,6 +617,24 @@ def gate_croissant_metadata():
                                           'verify_croissant.py'), '--self-test'])
 
 
+def gate_compose_semantics():
+    """组合语义闸门（方向锚点 v2.1 Phase B1/B2 —— compose 效应系统原型）。
+
+    2026-09-23 新增。失效模式：① 引擎常量与产物 rule_table/verdicts 脱节；
+    ② 聚合计数与 graph 现算漂移；③ fail-closed 被悄悄放宽（unknown 轴
+    冒出 composed）。故两趟：
+      ① 审计：结构 + 与 graph 现算逐键对账 + 判例引擎复验 +
+         不变量（无已声明 SIG 通道 ⇒ composed 必为 0）；
+      ② 自证 21 项（阳性/阴性/公理/fail-closed/变异/守卫/确定性往返）。
+    """
+    run_sub('组合语义审计（graph 现算对账 + 判例复验）',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'verify_compose_semantics.py'), '--quiet'])
+    run_sub('组合语义阳性/阴性/变异自证',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'verify_compose_semantics.py'), '--self-test'])
+
+
 def gate_positioning_caliber():
     """定位口径闸门 —— 「我们对外自称什么」的本地半场。
 
@@ -711,6 +729,8 @@ GATES = [
     # 2026-09-23 新增：Croissant 元数据（方向锚点 v2.1 Phase A1 副产品）。
     # 副产品不免检：计数对账 facts() + 诚实边界必须随元数据传播。
     ('Croissant 元数据（审计 + 阴阳/变异自证）', gate_croissant_metadata),
+    # 2026-09-23 新增：组合语义（方向锚点 v2.1 Phase B1/B2）。
+    ('组合语义 compose(a,b)（审计 + 阴阳/变异自证）', gate_compose_semantics),
     ('定位口径本地扫描', gate_positioning_caliber),
     ('对外 JSON 可解析', gate_json_parses),
     ('entities.json meta 一致', gate_entities_meta_consistent),
