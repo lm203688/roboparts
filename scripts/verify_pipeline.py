@@ -40,6 +40,7 @@ from scripts.pipeline.dag import (  # noqa: E402
     Pipeline, PipelineError, Step, build as build_pipeline, resolve_input,
 )
 from scripts.pipeline.stages import gap  # noqa: F401  触发 @operator 注册
+from scripts.pipeline.stages import compose as _compose_stage  # noqa: F401  触发 @operator 注册
 
 
 # ---------- 结果收集 ----------
@@ -305,7 +306,17 @@ def test_registry_reset_clears_all():
     importlib.reload(_g)
 
     after = len(OPERATOR_REGISTRY)
-    expect(after >= 7, f"reload 后应恢复 ≥7 个，实际 {after}")
+    expect(after >= 7, f"reload gap 后应恢复 ≥7 个，实际 {after}")
+
+    # compose 阶段的 6 个算子也需 reload 复原
+    import scripts.pipeline.stages.compose as _c
+    importlib.reload(_c)
+
+    compose_ops = by_stage("compose")
+    expect(len(compose_ops) == 6,
+           f"compose 阶段应有 6 个算子，实际 {len(compose_ops)}")
+    expect(len(OPERATOR_REGISTRY) >= 13,
+           f"reload 后应有 ≥13 个算子（7 gap + 6 compose），实际 {len(OPERATOR_REGISTRY)}")
 
 
 def test_trace_contains_expected_keys():
@@ -336,6 +347,126 @@ def test_step_result_has_all_fields():
 
 
 # ============================================================
+# 7. compose_semantics pipeline：正路径 + 等价性 + 变异
+# ============================================================
+
+def test_registry_has_6_compose_operators():
+    """阶段十八：6 个 compose.* 算子已注册。"""
+    compose_ops = by_stage("compose")
+    expect(len(compose_ops) == 6,
+           f"compose 阶段应有 6 个算子，实际 {len(compose_ops)}: {sorted(compose_ops)}")
+    expected = {
+        "compose.load_graph", "compose.evaluate_pairs", "compose.pick_examples",
+        "compose.crosscheck", "compose.compute_roles", "compose.assemble",
+    }
+    expect(compose_ops == expected, f"compose 算子名不符：差 {compose_ops ^ expected}")
+
+
+def test_pipeline_compose_runs_all_6_steps_ok():
+    """阶段十九：跑通 compose_semantics DAG，6 步全 ok。"""
+    from scripts.pipeline.run import _build_compose_semantics_pipeline
+    pipe = _build_compose_semantics_pipeline()
+    ctx = pipe.run()
+    trace = pipe.to_trace()
+    expect(trace["steps_total"] == 6, f"应跑 6 步，实际 {trace['steps_total']}")
+    expect(trace["steps_ok"] == 6, f"6 步应全 ok，实际 {trace['steps_ok']}")
+    expect(trace["steps_failed"] == 0)
+
+
+def test_pipeline_compose_output_equivalence_with_original():
+    """阶段二十：**关键** —— pipeline 产出与原 build_compose_semantics.build()
+    逐字段等价（除 meta.generated_at / meta.generated_by 两个必然不同的字段）。
+
+    与阶段五同一原则：等价性是「重构而非重写」的唯一证据。
+    """
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "b_cs", os.path.join(ROOT, "scripts", "build_compose_semantics.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)  # 加载原脚本
+
+    orig = mod.build()
+
+    from scripts.pipeline.run import _build_compose_semantics_pipeline
+    pipe = _build_compose_semantics_pipeline()
+    ctx = pipe.run()
+    new = ctx["compose.assemble"]
+
+    SKIP = {"meta.generated_at", "meta.generated_by"}
+
+    def walk(x, y, path=""):
+        diffs = []
+        if isinstance(x, dict) and isinstance(y, dict):
+            for k in sorted(set(x) | set(y)):
+                p = f"{path}.{k}" if path else k
+                if p in SKIP:
+                    continue
+                if k not in x or k not in y:
+                    diffs.append(f"{p}: 一方缺")
+                    continue
+                diffs.extend(walk(x[k], y[k], p))
+        elif isinstance(x, list) and isinstance(y, list):
+            if len(x) != len(y):
+                diffs.append(f"{path}: 长度 {len(x)} vs {len(y)}")
+            else:
+                for i, (xi, yi) in enumerate(zip(x, y)):
+                    diffs.extend(walk(xi, yi, f"{path}[{i}]"))
+        else:
+            if x != y:
+                diffs.append(f"{path}: {repr(x)[:60]} vs {repr(y)[:60]}")
+        return diffs
+
+    diffs = walk(orig, new)
+    expect(not diffs,
+           f"compose pipeline 与原脚本不等价，共 {len(diffs)} 处：{diffs[:5]}")
+
+
+def test_compose_crosscheck_catches_overall_counts_mismatch():
+    """阶段二十一（变异 1）：overall_counts 之和不等于 pairs_evaluated → SystemExit。
+
+    构造：把 composed 从真实值 +1（凭空多出 1 个判定），crosscheck 应抓出。
+    """
+    from scripts.pipeline.stages.compose import crosscheck as _cc
+    from compose_engine import AXES
+    # 构造一个自洽的 aggregates，再把 overall_counts 中某一项 +1
+    total = 100
+    oc = {"composed": 10, "type_error": 20, "unknown": 91}  # 和 121 ≠ 100
+    am = {ax: {"compatible": 30, "unknown": 70} for ax in AXES}  # 各轴和 100
+    aggregates = {"pairs_evaluated": total, "overall_counts": oc, "axis_marginals": am}
+    expect_raises(SystemExit, lambda: _cc(aggregates),
+                 "overall_counts 之和 121 vs pairs_evaluated 100 应抓出")
+
+
+def test_compose_crosscheck_catches_axis_marginals_mismatch():
+    """阶段二十二（变异 2）：某轴 axis_marginals 之和不等于 pairs_evaluated → SystemExit。
+
+    构造：mechanical 轴少 1（凭空丢掉一个判定），crosscheck 应抓出。
+    """
+    from scripts.pipeline.stages.compose import crosscheck as _cc
+    from compose_engine import AXES
+    total = 100
+    oc = {"composed": 10, "type_error": 20, "unknown": 70}  # 和 100 自洽
+    am = {ax: {"compatible": 30, "unknown": 70} for ax in AXES}
+    am["mechanical"] = {"compatible": 29, "unknown": 70}  # 和 99 ≠ 100
+    aggregates = {"pairs_evaluated": total, "overall_counts": oc, "axis_marginals": am}
+    expect_raises(SystemExit, lambda: _cc(aggregates),
+                 "axis_marginals[mechanical] 之和 99 vs pairs_evaluated 100 应抓出")
+
+
+def test_compose_crosscheck_passes_when_consistent():
+    """阶段二十三（正向对照）：完全自洽的 aggregates → crosscheck 返回 ok=True。"""
+    from scripts.pipeline.stages.compose import crosscheck as _cc
+    from compose_engine import AXES
+    total = 100
+    oc = {"composed": 10, "type_error": 20, "unknown": 70}
+    am = {ax: {"compatible": 30, "unknown": 70} for ax in AXES}
+    aggregates = {"pairs_evaluated": total, "overall_counts": oc, "axis_marginals": am}
+    result = _cc(aggregates)
+    expect(result["ok"] is True)
+    expect(result["pairs_evaluated"] == total)
+
+
+# ============================================================
 # 主入口
 # ============================================================
 
@@ -360,6 +491,18 @@ def run_all_tests():
     check("15 registry.reset 清空并复原", test_registry_reset_clears_all)
     check("16 trace 结构完整", test_trace_contains_expected_keys)
     check("17 StepResult 结构完整", test_step_result_has_all_fields)
+
+    # compose_semantics 阶段
+    check("18 registry 已注册 6 个 compose 算子", test_registry_has_6_compose_operators)
+    check("19 compose DAG 跑通 6 步全 ok", test_pipeline_compose_runs_all_6_steps_ok)
+    check("20 compose pipeline 产出与原脚本逐字段等价",
+          test_pipeline_compose_output_equivalence_with_original)
+    check("21 compose crosscheck 抓出 overall_counts 不一致",
+          test_compose_crosscheck_catches_overall_counts_mismatch)
+    check("22 compose crosscheck 抓出 axis_marginals 不一致",
+          test_compose_crosscheck_catches_axis_marginals_mismatch)
+    check("23 compose crosscheck 正向对照通过",
+          test_compose_crosscheck_passes_when_consistent)
 
     return Results
 

@@ -16,7 +16,10 @@
     # 打印 pipeline 定义（不执行）
     python -m scripts.pipeline.run gap_classification --dry-run
 
-Pipeline 定义通过 PIPELINES 字典注册。目前只有 gap_classification——
+Pipeline 定义通过 PIPELINES 字典注册。当前两个：
+- gap_classification（样板，7 算子）
+- compose_semantics（6 算子，见 stages/compose.py）
+
 后续每接一个 build_*.py 重构，就加一条到这里。
 """
 from __future__ import annotations
@@ -38,6 +41,7 @@ def _ensure_stages_loaded() -> None:
     以后加 stage 就在这里加一行，一目了然。
     """
     import scripts.pipeline.stages.gap  # noqa: F401
+    import scripts.pipeline.stages.compose  # noqa: F401
 
 
 def _build_gap_classification_pipeline():
@@ -84,9 +88,44 @@ def _build_gap_classification_pipeline():
     ])
 
 
+def _build_compose_semantics_pipeline():
+    """声明 compose_semantics 的 DAG。
+
+    与 build_compose_semantics.py 原脚本对照——本 DAG 是它的**分解重放**。
+    每一步的输入输出与原子函数一一对应，方便逐字段比对产物。
+    """
+    from .dag import Pipeline, Step
+
+    return Pipeline("compose_semantics", [
+        Step(op="compose.load_graph", inputs={
+            "path": "api/morphology_graph.json",
+        }),
+        Step(op="compose.evaluate_pairs", inputs={
+            "graph": "compose.load_graph",
+        }),
+        Step(op="compose.pick_examples", inputs={
+            "graph": "compose.load_graph",
+            "aggregates": "compose.evaluate_pairs",
+        }),
+        Step(op="compose.crosscheck", inputs={
+            "aggregates": "compose.evaluate_pairs",
+        }),
+        Step(op="compose.compute_roles", inputs={
+            "graph": "compose.load_graph",
+        }),
+        Step(op="compose.assemble", inputs={
+            "graph": "compose.load_graph",
+            "aggregates": "compose.evaluate_pairs",
+            "examples": "compose.pick_examples",
+            "roles": "compose.compute_roles",
+        }),
+    ])
+
+
 # 全部已注册 pipeline 名 -> 构造函数
 PIPELINES = {
     "gap_classification": _build_gap_classification_pipeline,
+    "compose_semantics": _build_compose_semantics_pipeline,
 }
 
 
