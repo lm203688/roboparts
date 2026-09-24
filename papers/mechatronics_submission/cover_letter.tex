@@ -1,0 +1,71 @@
+% ============================================================
+% cover_letter.tex — Elsevier cover letter
+% ============================================================
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\geometry{a4paper, margin=2.5cm}
+\usepackage{hyperref}
+\pagestyle{empty}
+\begin{document}
+
+\vspace*{1cm}
+
+Dear Editor-in-Chief,
+
+We are pleased to submit our manuscript titled \emph{``Three-State
+Honesty in Robotic Hardware Compatibility: A Vendor-Neutral
+Determination Layer''} for consideration for publication as a Regular
+Article in \emph{Mechatronics: The Science of Intelligent Machines}.
+
+The manuscript reports an original formalisation of hardware
+compatibility as a three-valued function
+$\mathsf{compose}(a,b) \in \{\mathsf{composed}, \mathsf{type\_error},
+\mathsf{unknown}\}$ with \emph{unknown} taking priority over
+\emph{composed}. This is instantiated as \textbf{RoboParts}, a
+vendor-neutral determination layer evaluated on $802$ real-world
+robotic entities, yielding $351{,}649$ composite pair evaluations.
+
+We believe the manuscript fits the aims and scope of \emph{Mechatronics}
+in three respects. First, our work sits squarely at the mechatronics
+intersection of mechanical specification, electrical interfaces and
+signal semantics, and provides a unified type-system treatment across
+the three axes. Second, the paper reports real experimental results
+on a real dataset with explicit reproducibility artifacts
+(open-source code under MIT and data under CC BY 4.0 at
+\url{https://github.com/lm203688/roboparts}). Third, the reflexivity
+boundary between geometric-specification and directional-role types is
+a small but safety-critical formal contribution that generalises
+beyond our corpus.
+
+We confirm that this manuscript is original, is not under consideration
+elsewhere, and that all authors have approved the submission. No
+competing interests exist. Generative-AI use is confined to language
+editing and is disclosed in the manuscript.
+
+We suggest the following potential reviewers (all are independent of
+the authors and hold no financial conflict):
+
+\begin{itemize}
+\item Prof.\ M.\ Gini (Sapienza University of Rome, \textit{Robotics and Autonomous Systems} EiC) — robotics systems and knowledge layers.
+\item Prof.\ O.\ Sawodny (University of Stuttgart, \textit{Mechatronics} EiC) — mechatronics systems.
+\item Prof.\ C.\ Hager (TU Berlin) — assembly and interface learning.
+\end{itemize}
+
+% TODO: 提交时替换掉 "Prof. M. Gini / O. Sawodny / C. Hager" 三人为
+% 你实际愿意提名的人，并核实邮箱；上面三人仅示例，请务必替换。
+
+Thank you for considering our manuscript.
+
+Sincerely,
+
+\vspace{1.5cm}
+
+Author One (Corresponding Author)\\
+\texttt{author.one@example.com}\\
+\textit{Department of Mechanical Engineering, University of XX}
+
+\vspace{2cm}
+
+\noindent Date: September 2026
+
+\end{document}
