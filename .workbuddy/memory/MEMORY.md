@@ -161,10 +161,21 @@
   - 转投顺序：Mechatronics → 6 月内无决定 → RAS → KIS → arXiv 预印本同步占时间戳。
   - **投稿版已产出**：`papers/mechatronics_submission/`（main.tex 1088 行 ~5800 词 /
     references.bib 19 条 / highlights.txt 5 bullets / cover_letter.tex / README.md），
-    commit `a5bbc8b` → 远端 `e15c71e4`。所有 TODO 用 `TODO:` 前缀标记
-    （作者/单位/ORCID/基金号/图表/推荐审稿人）。
-  - **投稿前必做**：填 TODO → 下载 elsarticle 包 → 编译 3 次（pdflatex + bibtex + pdflatex × 2）
-    → PDF 检查 → Editorial Manager 提交 Regular Article → 上传 PDF + 源文件 +
+    commit `a5bbc8b` → 远端 `e15c71e4`。
+  - **图真图（2026-09-24 commit d67253f）**：`scripts/make_figures.py` 读
+    `api/*.json` SoT 现算生成 4 张矢量 PDF（Elsevier 要求）：
+    concentration_curve（242 vendor 累计份额 + Top 10=28.5%）/
+    d1_bottleneck_bar（电气 100%）/ gap_distance_hist（log 轴，d=3 长尾）/
+    reflexivity_boundary（几何规格 vs 方向性角色对比）。
+    脚本内建 4 项 SoT 一致性断言 fail-fast。任何人跑一次即可复现。
+  - **作者信息**：单作者 Lexing Li + ORCID `https://orcid.org/0009-0004-2152-7669`
+    已写入；无基金号 ⇒ Acknowledgements 节已删；无审稿人建议 ⇒ cover_letter
+    改为 "no reviewer suggestions"。
+  - **剩余用户手动补**（仅 2 项，`TODO_` 前缀）：`TODO_email` +
+    `TODO_affiliation`（main.tex + cover_letter.tex）。
+  - **投稿前必做**：填 email + affiliation → 下载 elsarticle 包 →
+    编译 3 次（pdflatex + bibtex + pdflatex × 2）→ PDF 检查 →
+    Editorial Manager 提交 Regular Article → 上传 PDF + 源文件 +
     highlights.txt + cover_letter.pdf。
 
 - **pipeline 迁移暂缓**：2 个样板（gap_classification / compose_semantics）已够，
