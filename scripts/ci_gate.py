@@ -848,6 +848,15 @@ GATES = [
     # 一个是配对级动态瓶颈定位（gap_distance / d1_bottleneck）。
     # 前者决定「缺口可不可攻」，后者决定「先攻哪一轴」。
     ('缺口成因分类（与 facts 交叉校验 + 完备性）', gate_gap_classification),
+    # 2026-09-24 新增：pipeline 框架（算子+DAG 骨架 + gap_classification 样板）。
+    # 这是 GOAI 报告里识别的"缺 20%"——用算子/DAG 显式建模，把手写脚本拆成
+    # 纯函数算子。骨架本身零依赖 stdlib，样板与旧脚本产出必须逐字段等价
+    # （除 generated_at / generated_by 两个必然不同的字段）。等价性断了就是
+    # 重构分叉，立刻红灯——这是防"pipeline 与旧脚本悄悄分叉"的唯一闸门。
+    ('Pipeline 框架（骨架 + 等价性 + 自证 17 项）', lambda: run_sub(
+        'Pipeline 框架（骨架 + 等价性 + 自证 17 项）',
+        [sys.executable, os.path.join(ROOT, 'scripts', 'verify_pipeline.py')],
+        timeout=120)),
     ('定位口径本地扫描', gate_positioning_caliber),
     ('对外 JSON 可解析', gate_json_parses),
     ('entities.json meta 一致', gate_entities_meta_consistent),
