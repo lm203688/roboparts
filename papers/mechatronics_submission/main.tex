@@ -18,7 +18,6 @@
 
 % ============================================================
 % Title & Authors
-% TODO: 投稿前请把作者 / 单位 / 邮箱 / ORCID / 基金号填上
 % ============================================================
 \begin{document}
 \begin{frontmatter}
@@ -26,20 +25,17 @@
 \title{Three-State Honesty in Robotic Hardware Compatibility:
        A Vendor-Neutral Determination Layer}
 
-\author[inst1]{Author One\fnref{fn1}}
+\author[inst1]{Lexing Li\fnref{fn1}}
 \cortext[cor1]{Corresponding author.}
-\ead{author.one@example.com}
-
-\author[inst1]{Author Two}
-\ead{author.two@example.com}
-
-\fntext[fn1]{ORCID: 0000-0000-0000-0000. % TODO: 替换为真实 ORCID}
+\ead{TODO_email}
 
 \affil[inst1]{%
-  % TODO: 单位全称
-  Department of Mechanical Engineering, University of XX,
-  City, Country
+  % TODO: 请补充单位全称（若属无依托研究可写
+  % "Independent Researcher, China"）
+  TODO_affiliation
 }
+
+\fntext[fn1]{ORCID: \url{https://orcid.org/0009-0004-2152-7669}}
 
 \begin{abstract}
 Compatibility determination between robotic hardware components is the
@@ -115,9 +111,6 @@ its content.
 The authors declare that they have no known competing financial
 interests or personal relationships that could have appeared to
 influence the work reported in this paper.
-
-\section*{Acknowledgements}
-% TODO: 基金号 / 项目号。若无可删除此节。
 
 \section*{Data availability}
 All data, code and intermediate artefacts used to produce the results
@@ -568,8 +561,7 @@ would close the gap by no more than a quarter.
 
 \begin{figure}[ht]
 \centering
-% TODO: 替换为真实图 figures/concentration_curve.pdf
-\includegraphics[width=0.7\textwidth]{figures/placeholder_concentration.pdf}
+\includegraphics[width=0.72\textwidth]{figures/concentration_curve.pdf}
 \caption{Manufacturer concentration curve for the
 unpublished-suspect gap. The curve is remarkably flat: reaching
 90\% of the gap requires covering over 120 vendors out of 242.}
@@ -640,6 +632,15 @@ be aimed at electrical-axis declarations: connector pin count and
 pitch. This is a directly actionable finding, not a general
 statement about ``more data would help''.
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.62\textwidth]{figures/d1_bottleneck_bar.pdf}
+\caption{d1 bottleneck by axis. All $112$ single-axis-unknown pairs
+are bottlenecked on the electrical axis; the mechanical and signal
+axes contribute zero.}
+\label{fig:d1}
+\end{figure}
+
 \subsection{Reflexivity boundary — case study}
 
 To make the reflexivity boundary concrete, we examine
@@ -657,8 +658,7 @@ rules detect.
 
 \begin{figure}[ht]
 \centering
-% TODO: 替换为真实图 figures/reflexivity_boundary.pdf
-\includegraphics[width=0.7\textwidth]{figures/placeholder_reflexivity.pdf}
+\includegraphics[width=0.82\textwidth]{figures/reflexivity_boundary.pdf}
 \caption{Reflexivity boundary: same label is compatible only for
 geometric-specification types (dashed: flange A55 = flange A55
 composes), not for directional-role types (dotted: OUTPUT\_SPIKE
@@ -811,13 +811,23 @@ The gap-distance measure makes the data-collection problem
 \emph{optimisable} rather than merely \emph{large}. Two immediate
 consequences:
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.68\textwidth]{figures/gap_distance_hist.pdf}
+\caption{Distribution of pairs by gap distance. On a log scale,
+the long tail from $d=2$ to $d=3$ shows that the majority of the
+unknown population ($295{,}096$ of $351{,}645$) requires closing
+three coordinated declarations — the tail is the hard part.
+$d=1$ ($112$ pairs) is the immediately actionable subset.}
+\label{fig:gap}
+\end{figure}
+
 \begin{enumerate}[nosep]
 \item \textbf{Priority ordering.} $d=1$ pairs come first (112 pairs
 to close, one electrical declaration each). Then $d=2$ pairs (each
 closed by two coordinated declarations). This is a well-defined
 optimisation problem with a clear Pareto frontier.
 
-\input{figures/placeholder_d1_bar}
 \item \textbf{Leverage constraint.} The concentration curve in
 Fig.~\ref{fig:concentration} tells us that no single vendor can close
 the gap on its own. The only strategies that scale are (a) user-
@@ -1058,12 +1068,9 @@ spirit of \textsc{ReconVLA}~\cite{R10}.
 % CRediT authorship statement
 % ============================================================
 \section*{CRediT authorship contribution statement}
-% TODO: 填写每个作者的实际贡献
-\textbf{Author One:}
-Conceptualization, Methodology, Software, Writing -- Original Draft,
-Validation, Supervision.
-\textbf{Author Two:}
-Data Curation, Validation, Writing -- Review \& Editing.
+\textbf{Lexing Li:} Conceptualization, Methodology, Software,
+Data Curation, Validation, Writing -- Original Draft,
+Writing -- Review \& Editing, Visualization.
 
 \section*{Appendix A. Data and code availability}
 
