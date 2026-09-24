@@ -147,8 +147,25 @@
   2. 参考文献免费优先（arXiv / MDPI / PLOS）；
   3. 不夸大贡献（`composed=0` 是诚实画像非失败；5.69% 是覆盖率地图非 benchmark）；
   4. 投稿前走锚点 §2 三问闸门（真数据 / 独特贡献 / 可复现代码）。
-- **投稿路径**（成本升序）：arXiv cs.RO 预印本（免费占时间戳）→
-  IROS/ICRA workshop（短文 4–6 页）→ Science Robotics Technical Comment /
-  RAM → Sensors MDPI 期刊。
+
+- **投稿路径（20260924 更新，真免费 SCIE 优先）**：用户明确「真正免费 =
+  无 APC/版面费/印刷费」⇒ 排除所有强制 OA 出版商（MDPI / Frontiers / PLOS /
+  Nature 系 / Hindawi 全线）；**「arXiv 预印本免费占时间戳」+「订阅制 SCIE 正式发表」
+  双通道**：
+  - ① **首选 Mechatronics**（Elsevier, IF 3.2 / CAS 计算机 3 区 / 机械 2 区 / 机器人 3 区；
+    153 天审稿；elsarticle-num 模板；10,000 词 / 15 页；明确 "No publication fee charged to authors"）
+  - ② 高影响备份 Robotics and Autonomous Systems（Elsevier, IF 5.2 / CAS 计算机 2 区；
+    4-8 周审稿；Q1 竞争极激烈）
+  - ③ 主题对味备份 Knowledge and Information Systems（Springer, IF 3.1 / CAS 计算机 2 区；
+    KG/Ontology 方向；5 月审稿）
+  - 转投顺序：Mechatronics → 6 月内无决定 → RAS → KIS → arXiv 预印本同步占时间戳。
+  - **投稿版已产出**：`papers/mechatronics_submission/`（main.tex 1088 行 ~5800 词 /
+    references.bib 19 条 / highlights.txt 5 bullets / cover_letter.tex / README.md），
+    commit `a5bbc8b` → 远端 `e15c71e4`。所有 TODO 用 `TODO:` 前缀标记
+    （作者/单位/ORCID/基金号/图表/推荐审稿人）。
+  - **投稿前必做**：填 TODO → 下载 elsarticle 包 → 编译 3 次（pdflatex + bibtex + pdflatex × 2）
+    → PDF 检查 → Editorial Manager 提交 Regular Article → 上传 PDF + 源文件 +
+    highlights.txt + cover_letter.pdf。
+
 - **pipeline 迁移暂缓**：2 个样板（gap_classification / compose_semantics）已够，
   剩余 13 个 build_ 脚本留待 R&D 主线定稿后再收口。

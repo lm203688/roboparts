@@ -1,0 +1,100 @@
+# RoboParts 长期约定（跨会话有效，≤3k）
+
+## 飞轮与留痕纪律
+- 单一总指挥线程。每轮落盘 `ops/results/_LATEST.md`+`_NEEDS_USER.md`+`_SUMMARY.md`+`roboparts-YYYYMMDD-HH.md`。说"汇报"读前两份。
+- 日报由 `_last_digest.txt` 节流(>24h)；到期须**手写正文** `ops/results/_DAILY_DIGEST-*.md`+改 _last_digest.txt 后才能 --stamp(判 issued)；`DIGEST-CLAIM`与摘要行只走 digest_due.py(禁手打)。
+- 飞轮第0步 `run_lock.py acquire`，收尾 `release`。
+- 占位补写不删(删=孤儿红灯)。历史补写用 RECONCILED 标记+免责+真实commit哈希，by=须晚于被补写时段。
+- 别把远端侧生成哈希写进报告(判幽灵哈希)；远端ref记作`ref 落 x`。机制：`HASH_CTX=(提交|commit|推送|push|HEAD)[^`；;。，,、\n]{0,24}`([0-9a-f]{7,10})``——本地commit加反引号，**远端ref/tree一律裸写**；正则只认关键字后24字符内的下一个反引号，>24字侥幸不中不可依赖。否定语境(不存在/幽灵/伪造/订正)豁免。
+- **门禁探针也会假红假绿**：L1.74 idset 曾两个bug(标量被`[...str]`炸成字符；数组/标量归一化口径不一)致 8×7=56 对全误判假绿。异常数量必须能用手算组合数逐位对账才算定位到位；已加 p6/p7/p8 自证锁住。
+
+## 部署与 GitHub
+- **推GitHub≠上线**：须真跑 `deploy.mjs`+`verify_live_numbers.py` 回探。顺序铁律：提交→推送→部署。`ops/`在.gitignore。
+- git直推被墙→`push-gitdata.mjs`(增量)。**已修(20260915)**：curl 失败异常消息曾含完整命令行 `Authorization: Bearer <token>`(PAT 明文入日志，20260914 两次实测)，现统一 `redact()`——抹 token 原值 + `Authorization: Bearer <...>` 头 + 裸 `Bearer <20+串>`，已过阴阳自测。
+- **幽灵哈希**：远端 ref/tree 裸写(见飞轮纪律)。deploy 完必做**漂移收口 commit**(24 文件仅 `updated`+`audited_at` 滚日，逐文件核验无内容改动)。
+- 推送通道：`~/.git-credentials` 直提 token + `curl --tlsv1.3 --ssl-no-revoke` 代 Node fetch。直连 api.github.com/cloudflare 均需 `--ssl-no-revoke --tlsv1.3`。
+- **部署挂死已修(20260912, 7fd827f)**：`npx wrangler pages deploy` 本机无限挂死(CPU=0 冻结)。根因：deploy.mjs 不读 .env.local⇒token 未进环境⇒后退过期 OAuth。修：加载 .env.local + 无 WRANGLER_BIN 时优先全局 npm wrangler(node 直跑) + spawnSync 8min 超时。
+- **预部署护栏** `pre_deploy_check.py`：扫描面只取线上实际校验页集(子集口径勿误报)；脏树闸门两级——源改动拒，派生产物纯时间戳diff放行。
+- **护栏报数先核口径再动手**：检测器只是提醒不是判决(708 子集教训)。
+
+## 数据层纪律
+- 全站数字唯一真相源 `onboarding_block.facts()`，禁手改页面数字。
+- 数字保鲜三层：①data-rp锚点②裸文本③子集口径(子集数必现算，比总数更危险)。
+- `meta.access` 是注入器受管区；顶层副本字段会失修须对账。
+- OSS 325(缩水>10%拒写)；巡检禁裸curl打roboparts.cc；verify 三态 UNKNOWN 非绿灯。
+
+## AI 推理后端(copilot)
+- `functions/api/copilot.js` 多后端路由(ECS优先/Agnes次之/全败降级)。Agnes 延迟不稳，已做25s超时+grounding。
+- ECS网关 150.158.119.19:8420/v1：需用户给`ECS_API_KEY`+定`ECS_MODEL`。
+
+## 兼容性裁决/标准/电气
+- `build_negative_compat.py`→`api/negative_compat.json`(81条:9 identity/0 direct/72 adapter_required)；9种ISO 9409-1标号PCD两两不同⇒100%需转接盘；A{n}中n=PCD非外径。
+- 声明率现算=**5.75%**(declared15+partial10 / applicable435，20260914)；历史有 1.52%/2.76% 两套「对外口径」未收敛，传播以 `platforms.json` honest_limits 现值为准；内部严格口径仅 declared。
+- **机械声明出处(L1.78)**：`source_url` 主机名必须落 `MECH_SOURCE_HOSTS` 厂商官域白名单(vention.io/ramcoi.s3/roboticstomorrow/manualslib/thingiverse 全越权)；第三方实读出处降级写进 `source` 文本留痕。
+- **单值/多值形态纪律(L1.74 p4)**：判据「`standard` 是数组⇒多值⇒`matched.length>=2`」。单孔位条目**必须写标量字符串**，写成 `[ISO50]` 单元素数组=假红；多孔位才用数组。引擎 `idValues` 本就 `Array.isArray(v)?v:[v]`，探针漏了同一处理。
+- 标准唯一源 `govern_standard_conformance.py`；带日期/状态断言须挂evidence+evidence_tier(白名单host)。
+- **电气轴(20260908)**：`api/electrical_interfaces.json`(EXEMPT)；免责「协议兼容≠电气兼容」已上线；actuators connector 4/220=1.8%(余不臆造)。CIS 不接(封闭ODBC)；开放生态 docs/ecosystem-linking-20260908.md(LCSC/KiCad-atopile/Octopart)。
+
+## MCP 工具面（20260909-24 后）
+- functions 端 10 工具 / npm 端 8 工具(1.1.0，含 compare_components/dialects)。
+- 新增 MCP 工具三处必同步：mcp.js TOOLS(真相源)→skills.meta.json→read_metrics.py 的 BUSINESS_TOOLS 白名单，再跑 gen_skills_manifest.mjs。
+- dialects.js 评分已修(无证据维度 null 不冒充50分)；reputation.js 刻意不接(fs依赖+无贡献链=空转)。
+- 工具数展示勿硬编码：onboarding_block 走 `_mcp_tool_names()` 现算。
+- **npm 实况(20260918)**：**1.1.1 已发布**（`dist-tags.latest=1.1.1`；此前长期停在 1.0.2，1.1.0 从未发出）。新 token 写在 `~/.npmrc`（账号 `61960005qq`）。两个会骗人的点：①`npm publish` 返回 **202「being processed」**、`npm view` 立刻读仍是旧版（CDN 滞后数分钟）——别当失败；②npm 本地 cache 会喂旧 packument，装包验证要 `--cache <新目录> --prefer-online`。
+- **npm 凭据**：`~/.npmrc` 现用 `npm_6maV…`（账号 `61960005qq`）。历史两枚旧 token 均 401 失效。⚠️**更正**：`npm_`+36 字符（len=40）是**正常格式，不是「legacy 特征」**——此前据此判定「格式过期」是错的，实际就是被吊销。备选更持久路线：**OIDC Trusted Publishing**（aishield 已在用，需 npm 侧配一次 trusted publisher；推 workflow 文件需 `workflows:write`）。**别用 `--tlsv1.3 --ssl-no-revoke` 打 registry.npmjs.org（会 HTTP 000）——它与 github 不同、未被 MITM。**
+- **发 npm 前三层自检**（`verify_mcp_package.py`，已挂 ci_gate）：**本地 import ⊆ `package.json` 的 `files` ⊆ `git ls-files`**。三个真坑：①`files` 曾漏 `dialects.js` ⇒ 包一装就 `ERR_MODULE_NOT_FOUND`（1.0.2 后从未发版所以没暴露）②自检 `stage()` 曾硬编码复制清单 ⇒ 假绿（现改为读 `files` 当真相源）③`.gitignore` 有 `mcp-server/` 但 `dialects.js`/`reputation.js` 从未进仓（忽略规则不管已跟踪文件，新文件被静默吞）⇒ 已 `git add -f` 补回。`package.json` 加了 `prepublishOnly: node selftest.mjs`，`npm publish` 自己就会拒发坏包。
+- **品类覆盖闸门** `verify_mcp_coverage.py`(已挂 ci_gate，20260918 加严)：以 `api/entities.json` 的 `meta.categories` 对账**两个服务端** —— stdio 的 FILE_MAP + hosted(`functions/mcp.js`) 的 `CATEGORIES`。hosted 那份**直接当 tool schema 的 enum 用**：只列 11/20 时，凡遵守 JSON Schema 的客户端根本传不进 grippers/reducers/bionic_mechanisms(共 68 条)，而它正是 LobeHub cloudEndpoint/Glama/官方 Registry 与全部远程用户打的口。另两条判据：①schema 必须写 `enum: CATEGORIES`（禁另抄一份）②文案禁写死品类数（改 `${CATEGORIES.length}`）。**新增品类必须同时改这两处**，否则红灯。
+- **官方 MCP Registry 是快照，不是同步**：`cc.roboparts/roboparts@1.1.0` 停在 2026-08-05 发布时的元数据（简介仍是 **688**），Glama 作为下游也跟着显示 688（线上实测出现 23 次）。改仓库文件**不会**更新它。刷新需 `./.tools/mcp-publisher.exe` 发布，而缓存 JWT 已过期、当年那对 Ed25519 **私钥已丢失**（只有公钥托管在 `/.well-known/mcp-registry-auth`）⇒ 需轮换公钥后 `login http`（见 `ops/outreach/mcp-registry-refresh-20260918.md`）。**Registry schema 限 `server.json` 的 description ≤ 100 字符**（超了 422），生成器已加硬限；`mcp-publisher validate` 免登录，发前必跑。**「让数字现算」还不够，目标系统的格式约束也必须由生成器承担。**
+- **公开清单单一来源**：`server.json`(官方 MCP Registry / Glama 的元数据源) / `smithery.yaml` / `.well-known/mcp.json` 三份**全部由 `scripts/gen_public_manifests.py` 生成**（数字取自 facts() / meta / SERVER_VERSION / skills manifest），`--check` 已挂 ci_gate，禁手改。此前 server.json 写 "688" 直接成了 Glama 线上条目的简介；smithery 只列 5/10 个工具。
+- **LobeHub**：`lm203688-roboparts` 已 published(claimed=yes, v1.1.1)，`https://lobehub.com/mcp/lm203688-roboparts`；清单由 `gen_lhm_manifest.py` 生成(计数现算, version 跟随 package.json)。注意公开页版本号有 edge 缓存滞后，**以 `plugin list` API 读回为准**。
+- **`mcp-server/` 在 .gitignore 里但部分文件已跟踪** ⇒ 改/加文件都要 `git add -f`；普通 `git add` 会报 ignored 且 **exit 1 但文件其实已暂存**（别信 exit code，用 `git diff --cached --name-only` 复核）。
+
+## 外部数据源：GeneTech/SwarmLabs 14 站（20260919 实测）
+- **裁决：不接入 RoboParts**。其 `embodied-ai/entities.json` 经 `data.swarmlabs.tools`（20.3MB，免 key 可裸拉）**100% 是论文层**（id 全 doi/arxiv/oa/pmid；part 级字段命中 0）⇒ 填不上机械声明 5.75% 与运动学 `computed=0/2`。
+- `api.swarmlabs.tools` 当前 **522**（源站未响应）⇒ Free/Pro 均不可用；**Pro ¥39.9 对本项目零增量**（唯一免 key 可拉的就是 entities.json；语义搜索无用）。
+- **规模口径乱**：子站索引自报 **10,000**、站点首页自称 "30 领域/300000 条"、推广文案写 "~47k"（＝SwarmLabs 飞轮口径被套用）。对外引用该数据时先核口径。
+- 可借鉴的**模式**：其记录自带 `source`+`confidence`+`tagConfidence`+`tagGap12`（把出处/置信度/缺口纪律结构化成字段）；`tagGap12` 可映射为本项目 `declaration_gap`。
+- 通道事实：本机 `--noproxy '*'` 直连可用（约 42KB/s）；经代理 502。github.io 的 301 `Location` 声明为 `http://`（HTTPS 实际可用）。
+
+## 其他
+- 定位：生意；官网面向工程师。「零件级+判定」象限无人占。竞品：Allonic(无判定⇒BOM源可衔接)、orobot.io(无AI/MCP)、Tnkr(不碰零件)。不能走GOAI。
+- 支付纯虎皮椒：`/api/payment/create`→notify验签→加积分+置plan=pro。
+- agent-mail：GetMe=alxealxe3329@agent.qq.com，未启用自动发信。
+- 模型能力边界：不能读图，用户贴图须声明无法读、请文本贴内容，绝不推测拼凑结论。
+- 待办：P0真实BOM机械声明(AI不编；applicable435/declared15/partial10/nd410/na363，现算率5.75%，20260913；EOAT 9条已补，余关节电机无ISO 9409-1)；P2 copilot后端(.env.local无ECS_API_KEY，路由走Agnes→维护中，待你给密钥)。llms.txt子集P1已核销(20260908双闸)。增长渠道外发属你侧账号动作。LobeHub 的「runs from source」路径现在装到的就是 npm **1.1.1**（已对齐，云端点声明与实际一致）。
+- **计量(20260909)**：边缘遥测存在(`_middleware.js`→KV USER_CREDITS，读 `read_metrics.py`)，但读数是**下界**(分片写互盖)：只能证「至少」。渠道漏斗 `?via=` + `stat:via:<src>:<detail>` + `via:<ch>`，`channel_report.py` 读(`--link` 生成链接)；非渠道注册不混入 ROI。
+
+## 神经控制域（20260915 新增方向）
+- 用户受果蝇打游戏(MaleCNS v1.0 接 Doom/Smash)启发，要求评估神经机器人可行性并在 RoboParts **叠加一块**填补前沿空缺。
+- **定位校准（已与用户对齐）**：不造脑(Eon/DeepMind 领地)、不造芯片(Intel/BrainChip/SynSense 领地)；做**脑×体之间的标准与情报层**。正确心智模型=分层混合(LLM 管认知、SNN 管低层控制)，非神经元取代大模型。能效优势仅兑现于 neuromorphic 硬件(离开 Loihi/Akida 谈更省电不成立)。
+- **已落地**：`neurorobotics/source.json`(单一真相源:连接组4/芯片5/实验室5/空白G1-G7/信号契约1/引用7) + `signal_interface.schema.json`(适配器层:把 ISO 9409-1 机械兼容延伸到脉冲/感觉/运动信号契约，针对 GAP-G2 每次手工接线无标准) + `scripts/build_neurorobotics.py`(生成器→`api/neurorobotics.json`，禁手改) + `GAP_MAP.md`/`README.md`。commit `34a7a73`。
+- **衔接**：G1(开放躯体标准件生态)咬 RoboParts 机械兼容；G2(信号适配器)咬新 schema；G3-G7 为情报层标注接 SwarmLabs 飞轮(47.5k 实体，同一 source.json 事实基线避免双源漂移)。前端 nav 入口为可选后续，未重部署。
+- **诚实边界**：LIF 模型无可塑性=无长期记忆(G3)；SNN 训练难+生态碎片化(G4,NIR 部分互操作)；规模墙小鼠560×/人脑(G5)；连接组是死脑快照(G6)。
+
+## 运动学域（20260919 新增）
+- 定位：把「零件级+判定」从**静态机械接口**延伸到**动态可达性**。借鉴 PyRoki(UC Berkeley,MIT,IROS25) 的**URDF 优先数据模型**——不搬代码(其 Python+JAX **跑不进 Workers**，只能旁挂 ECS 或离线预计算)。
+- 落地：`kinematics/source.json`(SoT) → `scripts/build_kinematics.py` → `api/kinematics.json`；`scripts/verify_kinematics.py` 阴阳自测已挂 `ci_gate`(20→21)。`evaluate_chain` 是可复用纯函数。
+- 语义铁律：`max_reach_mm = Σ link_mm` 是**上界**（忽略限位/自碰撞）⇒ `unreachable` 可靠、`not_ruled_out` 保守。**禁用 not_ruled_out 对外宣称"可达"**。
+- 现状 **computed=0/2**（KC-OMY-ARM dof4 / KC-ODM-BIPED dof14）：缺 `joints[].link_mm`/轴/限位，属**数据缺口非算法缺陷**；补齐即自动生效免改码。补运动学元数据可并入"机械声明率 5.75%"同一批来源。
+- 闸门方法论（可复用）：**一个"永远 fail-closed"的引擎与一个写坏的引擎输出完全一致 ⇒ 只比产物必假绿**。必须阳性对照(证明真会算)+阴性对照(证明真会拒)+变异对照(证明闸门能变红)。
+- 新坑：`check(name,cond,detail)` 若把 list 拼进字符串，只在**判红分支**炸，绿路径永久掩盖 ⇒ 凡"仅失败分支执行"的代码须用变异样本走到。
+- 漂移核验口径（修正 V1 假红）：除 `updated`/`audited_at` 外，还须认 **日期型值**、**别名键**(`upstream_time`/`verified_at`)、**由时间戳派生的摘要**(`source_digest`/`entities_sha256`)、以及 README 的日期标题行——否则纯漂移会被误判为内容改动。核验脚本范式见 `ops/tmp/_driftcheck.py`(不入仓)。
+
+## 需求信号域（20260920 新增，commit fcc67f2）
+- **事故定性**：`api/demand-signal.json` 曾对外宣称「已捕获 10 条真实兼容性提问信号」，实际 10 条全是 AI/LLM 软件仓库 PR（ROCm MXFP4 GEMM / godot / kibana / rust ABI）。根因三连：正则无领域锚定、`real_signal` 写死 `true`、`relevance` 写死「需判别」⇒ **fail-open：不可判定即判真**。
+- 判据唯一入口 `scripts/lib/demand_signal_rules.mjs`：`classifySignal()` 三态 `confirmed/unclassified/noise`，仅 confirmed 计入 `real_query_count`。`demand_scan.mjs` 与 `reflow_demand_signal.mjs` 共用，`buildActionableFixes(declRate)` 也在此（别在消费方手写第二份）。
+- reflow 按判别层**重判 sources[]**，绝不沿用旧快照计数。旧快照格式识别靠「缺 `signal_state`」；`real_signal === (signal_state === 'confirmed')` 恒成立。
+- 对外口径校验（ci_gate 第 22 项，22/22→25 子项全绿）：禁 `%%`、禁断言形态假陈述 `已捕获\s*\d+\s*条真实兼容性提问`、禁失效建议「反喂 ingestion」、禁「需判别」占位、三态求和须等于 `total_hits`、`rule_module` 必须可追溯。
+- **负向语境豁免铁律（新增）**：全量 `json.dumps()` 搜关键词会把 `reflow_note` 里的**历史引述**（「…表述已作废」）误判成假陈述——误报会逼人删留痕。判据必须做**字段级 + 断言形态**，且明确豁免 reflow_note 这类留痕字段。同族纪律见 HASH_CTX 的「不存在/幽灵/伪造/订正」豁免。
+- **静默补偿陷阱**：只加下游防御（buildVerdict 剥 `%`）会让上游调用方回归后自测仍绿——两处 bug 互相掩盖，产物看起来对但契约已破。故入口用 `barePct()` **fail-fast 抛错**，宁可崩不可假绿。自测须配阴阳对照。
+- 承重验证范式（两个探针，ops/tmp 不入仓）：`_mutprobe.py` 双文件 7 处变异全红 + 还原校验；`_gate_probe.py` 对**闸门本身**做 6 注入 + baseline + 1 反向误报对照 = 8 用例，注入后逐字节还原目标 JSON。**空闸门与空产物是两种不同故障，都要阳性对照**。
+- 合法补数据通道只有三条：厂商 datasheet、ISO 9409-1 查表补 `A{n}`、用户提交带出处（`add_mechanical_interface.py:56` 的 `_curated()` 只保留有 `source_url` 的声明）。**「开源 BOM 反喂 ingestion」是做不到位的指令**——`ingest_oss_bom.mjs` 写 `oss_components.json`，与声明率分母 `entities.json` 不相通。
+- 留痕纪律：`reflow_note` 引述旧假陈述并标「已作废」是**正确做法，不要删**。
+- 未解：ops 快照混两类来源（脚本抓取 vs 人工情报笔记 20260814，后者含 Asimov/Bambot/RobotShop 真实需求证据），reflow 按 mtime 取最新 ⇒ **机器快照会覆盖人工情报**，需加来源优先级。
+- **已部署(20260920 deploy-20260920-1401)**：`api/demand-signal.json` 变更已对外生效（Contents API 回探 200）。「10 条真实兼容性提问」假陈述已消失。
+- **清理(20260920, commit 8a2bf4d/远端 3fe95c46)**：4 个历史一次性分析目录(robot-ai-models-evaluation / multi-persona-ux-analysis-v3 / scheduled-tasks-closure-analysis / modelscope_staging) + 2 个 modelscope 脚本 + 2 个 8-03 报告 + 13 个根目录调试残留共 29 文件已删，备份在仓库同级 `../cleanup-backup-robopart-20260920`。保留：ops/、articles/、content/、roboparts-dataset-github/、kinematics/、neurorobotics/、tasks/、.opencode/、.chk/.secrets/.tools/.uploads。
+- **Git Bash 删除坑**：`git commit` 只提交 index 里内容，**不自动 stage 工作树的删除**。物理删除后必须显式 `git add -A` 再 commit；否则 tree 里文件仍在，远端推送也不会真删。判定：commit 后跑 `git ls-tree -r HEAD --name-only` 确认目标已不在。
+- **Git Bash commit message 坑**：`git commit --amend --message="..."` 在 Git Bash 里把 message 当 pathspec。可靠写法：`git commit -F -` + subprocess.run(input=msg) 从 stdin 读。
+- **GitHub Contents API 回探坑**：`.git-credentials` 格式 `https://x-access-token:<tok>@github.com`，token 用正则 `x-access-token:([^@]+)@` 提取；`Authorization: Bearer <tok>`（不是 `token <tok>`）。
+- **Tnkr "parts supplier" 提案裁定(20260920)**：不主动发。理由：`api.tnkr.ai` 无 API 面（占位页）⇒ 通道非对称；Impact Metrics 全 0% ⇒ 平台自身未验证；主动提"想做 parts supplier"等于把 5.75% 机械声明率当筹码递出去。P0 仍是 ToddlerBot 外链 PR（零账号风险）。若用户坚持发：最小信息集——不提需求信号/判别引擎/转接盘结论/5.75% 缺口，只说"ISO 9409-1 标号查询 + 9 种 A{n} PCD 判定"。
+
