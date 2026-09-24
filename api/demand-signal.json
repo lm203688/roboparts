@@ -210,7 +210,7 @@
     "note": "检索词未锚定机器人领域：多数命中被判为非机器人信号，建议收窄检索式（限定 repo: 或补硬件锚词）"
   },
   "reflow_note": {
-    "reflowed_at": "2026-09-23",
+    "reflowed_at": "2026-09-24",
     "rule_module": "scripts/lib/demand_signal_rules.mjs",
     "note": "原快照缺 signal_state（旧版格式：real_signal 为写死常量而非判定结果），已按三态判别层重判；real_query_count 现只计 confirmed，旧版「已捕获 N 条真实兼容性提问信号」表述已作废。"
   }
