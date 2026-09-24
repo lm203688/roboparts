@@ -35,7 +35,7 @@ sys.path.insert(0, os.path.join(ROOT, 'scripts'))
 from build_morphology_graph import (  # noqa: E402
     build, mech_ports_of, elec_ports_of, build_type_compat,
     build_mechanical_port_types, build_electrical_port_types,
-    build_signal_port_types, _load, OUT,
+    build_signal_port_types, _load, OUT, SIG_ROLE_BY_CATEGORY,
     MI_PATH, NC_PATH, EL_PATH, SIG_PATH,
 )
 
@@ -132,6 +132,42 @@ def check_doc(doc, expect_not_declared=None):
     if s.get('port_types_total') != len(types):
         P.append('summary.port_types_total %s != 实得 %d'
                  % (s.get('port_types_total'), len(types)))
+
+    # 10) 信号端口必须是**单一角色**且与品类映射一致。旧实现给每个终端实体
+    #     无差别赋全部 3 个角色（output/input/reward），一只执行器同时充当
+    #     传感器输入端——语义错误，也让信号轴永远凑不出任何互补配对。
+    for n in nodes:
+        sig = [p for p in n.get('ports') or [] if p['type'].startswith('SIG')]
+        if len(sig) > 1:
+            P.append('节点 %s 有 %d 个信号端口（定向赋值后应至多 1 个）'
+                     % (n['id'], len(sig)))
+            break
+        if sig:
+            exp = SIG_ROLE_BY_CATEGORY.get(n.get('category'))
+            if exp and sig[0]['type'] != exp:
+                P.append('节点 %s（品类 %s）信号角色 %s != 映射 %s'
+                         % (n['id'], n.get('category'), sig[0]['type'], exp))
+                break
+            if sig[0].get('status') != 'declared':
+                P.append('节点 %s 信号端口 status=%r（品类映射应判 declared）'
+                         % (n['id'], sig[0].get('status')))
+                break
+
+    # 11) 信号轴裁决规则固定：互补对 identity、同类端 unknown。
+    #     旧实现把全部信号对硬编码 unknown，信号轴等于零信号。
+    cindex = {(c['a'], c['b']): c for c in compat}
+
+    def _sigv(a, b):
+        e = cindex.get((a, b)) or cindex.get((b, a))
+        return e['verdict'] if e else None
+
+    if _sigv('SIG:OUTPUT_SPIKE', 'SIG:INPUT_SENSORY') != 'identity':
+        P.append('信号互补对 OUTPUT~INPUT 未判 identity（得 %r）'
+                 % _sigv('SIG:OUTPUT_SPIKE', 'SIG:INPUT_SENSORY'))
+    for same in ('SIG:OUTPUT_SPIKE', 'SIG:INPUT_SENSORY', 'SIG:REWARD'):
+        v = _sigv(same, same)
+        if v != 'unknown':
+            P.append('信号同类端 %s 自配对未判 unknown（得 %r）' % (same, v))
     return P
 
 

@@ -635,6 +635,118 @@ def gate_compose_semantics():
                                           'verify_compose_semantics.py'), '--self-test'])
 
 
+def gate_gap_classification():
+    """缺口成因分类闸门（D-GAP：机械缺口按成因 (i)/(ii) 拆分）。
+
+    2026-09-24 挂闸。为什么必须挂：锚点 §6.1 明令「在 (i)/(ii) 分类完成之前，
+    不得把 5.69% 单独当标准覆盖边界的实证证据」——分类结论若与 facts() 脱节，
+    就是拿错误前提做方向判断。
+
+    失效模式：
+      ① 分类计数与 facts() 漂移（构建器自带 fail-fast，闸门是第二双眼睛）；
+      ② 分类不完备——某实体既不算缺口也不算已解，静默消失；
+      ③ 汇总层与 per_category 脱节（分品类数加不总）；
+      ④ signal_axis 退回硬编码：该字段曾硬编码 ``0`` + 硬编码 note，
+         2026-09-24 信号轴定向赋值后已失效一次。这正是锚点 §5.3 记的双盲区——
+         锚点扫描与回归都不覆盖生成器**内部**的字面量。
+    """
+    run_sub('缺口成因分类生成（fail-fast 与 facts 交叉校验）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_gap_classification.py')])
+    p = os.path.join(ROOT, 'api', 'gap_classification.json')
+    if not os.path.exists(p):
+        bad('缺口成因分类聚合口径', '产物缺失')
+        return
+    with open(p, encoding='utf-8') as f:
+        gc = json.load(f)
+    from onboarding_block import facts
+    ft = facts()
+    try:
+        mg = json.load(open(os.path.join(ROOT, 'api', 'morphology_graph.json'),
+                            encoding='utf-8'))
+    except (OSError, ValueError):
+        live_sig = None
+    else:
+        live_sig = sum(1 for n in (mg.get('nodes') or []) for pp in (n.get('ports') or [])
+                       if pp['type'].startswith('SIG')
+                       and pp.get('status') in ('declared', 'partial'))
+    errs = _gap_doc_errors(gc, ft, live_sig)
+    if errs:
+        bad('缺口成因分类聚合口径', '；'.join(errs[:4]))
+    else:
+        b = gc.get('buckets') or {}
+        og = b.get('open_gap') or {}
+        ok('缺口成因分类聚合口径',
+           'solved=%s na=%s open_gap=%s（unpublished %s）信号端口现算 %s'
+           % (b.get('solved'), b.get('na'), og.get('open_gap_total'),
+              og.get('unpublished_suspect'), live_sig))
+    # 阳性对照：本闸门必须真的会红，否则它就是装饰（空闸门与空产物一样是故障）。
+    # 三处变异各打一条不同的断言线：计数漂移 / 完备性破洞 / signal_axis 回退硬编码。
+    for tag, mutate in (
+            ('与 facts 漂移',
+             lambda d: d['buckets'].update({'solved': d['buckets']['solved'] + 1})),
+            ('分类不完备',
+             lambda d: d['totals'].update({'entities_total': d['totals']['entities_total'] - 1})),
+            ('signal_axis 退回硬编码',
+             lambda d: d['signal_axis'].update({'declared_signal_ports': 0})),
+    ):
+        mut = json.loads(json.dumps(gc))
+        mutate(mut)
+        if _gap_doc_errors(mut, ft, live_sig) == []:
+            bad('缺口成因分类判据自证', '变异「%s」未判红——本闸门是装饰' % tag)
+        else:
+            ok('缺口成因分类判据自证·%s ⇒ 红' % tag)
+
+
+def _gap_doc_errors(gc, ft, live_sig):
+    """缺口成因分类聚合口径判据（纯函数，供闸门与变异自证共用）。"""
+    errs = []
+    t = gc.get('totals') or {}
+    b = gc.get('buckets') or {}
+    og = b.get('open_gap') or {}
+    if b.get('solved') != ft.get('mech_declared'):
+        errs.append('solved=%r != facts().mech_declared=%r'
+                    % (b.get('solved'), ft.get('mech_declared')))
+    if og.get('open_gap_total') != ft.get('mech_not_declared'):
+        errs.append('open_gap_total=%r != facts().mech_not_declared=%r'
+                    % (og.get('open_gap_total'), ft.get('mech_not_declared')))
+    if t.get('entities_total') != ft.get('total_entities'):
+        errs.append('entities_total=%r != facts().total_entities=%r'
+                    % (t.get('entities_total'), ft.get('total_entities')))
+    # 完备性一：全库每条必须落桶（三桶穷尽，不得有实体静默消失）
+    if (b.get('solved', 0) + b.get('na', 0) + og.get('open_gap_total', 0)
+            != t.get('entities_total')):
+        errs.append('分类不完备：solved+na+open_gap=%r != entities_total %r'
+                    % (b.get('solved', 0) + b.get('na', 0) + og.get('open_gap_total', 0),
+                       t.get('entities_total')))
+    # 完备性二：机械**适用面**内部是 declared/not_declared 二分。
+    # na 属「非可判定粒度」不在适用面内，把它算进来会恒等失败。
+    if b.get('solved', 0) + og.get('open_gap_total', 0) != t.get('mech_applicable'):
+        errs.append('适用面不完备：solved+open_gap=%r != mech_applicable %r'
+                    % (b.get('solved', 0) + og.get('open_gap_total', 0),
+                       t.get('mech_applicable')))
+    # 缺口细分必须加总回缺口总数
+    sub = sum(og.get(k, 0) for k in ('proprietary_suspect', 'unpublished_suspect', 'ambiguous'))
+    if sub != og.get('open_gap_total'):
+        errs.append('缺口细分合计 %r != open_gap_total %r' % (sub, og.get('open_gap_total')))
+    # 汇总层不得与分品类脱节
+    pc = gc.get('per_category') or {}
+    for key, expect in (('total', t.get('entities_total')),
+                        ('solved', b.get('solved')), ('na', b.get('na')),
+                        ('proprietary_suspect', og.get('proprietary_suspect')),
+                        ('unpublished_suspect', og.get('unpublished_suspect')),
+                        ('ambiguous', og.get('ambiguous'))):
+        s = sum(v.get(key, 0) for v in pc.values())
+        if s != expect:
+            errs.append('per_category.%s 合计 %r != 汇总 %r' % (key, s, expect))
+    # signal_axis 必须与形态图现算一致（防退回硬编码）
+    if live_sig is not None:
+        sa = gc.get('signal_axis') or {}
+        if sa.get('declared_signal_ports') != live_sig:
+            errs.append('signal_axis.declared_signal_ports=%r != 形态图现算 %r'
+                        % (sa.get('declared_signal_ports'), live_sig))
+    return errs
+
+
 def gate_positioning_caliber():
     """定位口径闸门 —— 「我们对外自称什么」的本地半场。
 
@@ -731,6 +843,11 @@ GATES = [
     ('Croissant 元数据（审计 + 阴阳/变异自证）', gate_croissant_metadata),
     # 2026-09-23 新增：组合语义（方向锚点 v2.1 Phase B1/B2）。
     ('组合语义 compose(a,b)（审计 + 阴阳/变异自证）', gate_compose_semantics),
+    # 2026-09-24 新增：缺口成因分类（锚点 §6.1 D-GAP）。与上面的组合语义互补——
+    # 一个是实体级静态成因归因（414 条缺口属 (i) 未公开还是 (ii) 专有），
+    # 一个是配对级动态瓶颈定位（gap_distance / d1_bottleneck）。
+    # 前者决定「缺口可不可攻」，后者决定「先攻哪一轴」。
+    ('缺口成因分类（与 facts 交叉校验 + 完备性）', gate_gap_classification),
     ('定位口径本地扫描', gate_positioning_caliber),
     ('对外 JSON 可解析', gate_json_parses),
     ('entities.json meta 一致', gate_entities_meta_consistent),

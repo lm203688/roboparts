@@ -1,0 +1,331 @@
+{
+  "meta": {
+    "schema": "roboparts/gap_classification/v1",
+    "title": "RoboParts 机械接口缺口成因分类（Gap-Cause Taxonomy）",
+    "anchor": "docs/PROJECT_DIRECTIONS_V2.md §6.1（方向锚点 v2.2 · D-GAP）",
+    "generated_by": "scripts/build_gap_classification.py",
+    "generated_at": "2026-09-24T01:50:33Z",
+    "open_standard_alignment": "分类维度可映射为 Croissant 1.1 数据集的 declaration_gap 属性（solved / na / proprietary / unpublished / ambiguous），PROV-O 溯源可由 source_tier 字段补出。"
+  },
+  "totals": {
+    "entities_total": 802,
+    "mech_applicable": 439,
+    "mech_declared": 25,
+    "mech_not_declared": 414,
+    "mech_n_a": 363,
+    "declared_pct": 5.69
+  },
+  "buckets": {
+    "solved": 25,
+    "na": 363,
+    "open_gap": {
+      "proprietary_suspect": 5,
+      "unpublished_suspect": 350,
+      "ambiguous": 59,
+      "open_gap_total": 414,
+      "physical_mount_open_gap": 403
+    }
+  },
+  "cause_interpretation": {
+    "solved": "已有公开可判定接口线索（declared/partial）。",
+    "na": "锚点口径：非可判定粒度（status=n_a），不构成缺口。",
+    "proprietary_suspect": "成因(ii)嫌疑：制造商已知采用专有安装体系（正向信号来自 partial 实体证据）。需补「专有转接盘」几何。",
+    "unpublished_suspect": "成因(i)嫌疑：厂商存在但未公开法兰规格（真数据缺口）。需爬取厂商 datasheet。",
+    "ambiguous": "现有数据无法区分 (i)/(ii)：缺制造商与出处。fail-closed，标记证据缺失，等待用户提交/抓取。"
+  },
+  "evidence_required": {
+    "targets": [
+      "unpublished_suspect",
+      "ambiguous"
+    ],
+    "count": 409,
+    "note": "proprietary_suspect 亦需确认（补专有转接盘几何），但动作是「记录专有形态」而非「等厂商公开」。"
+  },
+  "per_category": {
+    "actuators": {
+      "total": 222,
+      "solved": 5,
+      "na": 2,
+      "proprietary_suspect": 1,
+      "unpublished_suspect": 187,
+      "ambiguous": 27
+    },
+    "bionic_mechanisms": {
+      "total": 17,
+      "solved": 1,
+      "na": 0,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 16,
+      "ambiguous": 0
+    },
+    "cables": {
+      "total": 2,
+      "solved": 0,
+      "na": 0,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 2,
+      "ambiguous": 0
+    },
+    "chips": {
+      "total": 108,
+      "solved": 0,
+      "na": 108,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 0,
+      "ambiguous": 0
+    },
+    "connectors": {
+      "total": 2,
+      "solved": 1,
+      "na": 0,
+      "proprietary_suspect": 1,
+      "unpublished_suspect": 0,
+      "ambiguous": 0
+    },
+    "controllers": {
+      "total": 4,
+      "solved": 1,
+      "na": 0,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 3,
+      "ambiguous": 0
+    },
+    "data_acquisition": {
+      "total": 46,
+      "solved": 0,
+      "na": 46,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 0,
+      "ambiguous": 0
+    },
+    "flexible_actuators": {
+      "total": 22,
+      "solved": 0,
+      "na": 0,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 22,
+      "ambiguous": 0
+    },
+    "grippers": {
+      "total": 23,
+      "solved": 8,
+      "na": 0,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 15,
+      "ambiguous": 0
+    },
+    "integrated_joints": {
+      "total": 1,
+      "solved": 0,
+      "na": 0,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 1,
+      "ambiguous": 0
+    },
+    "interfaces": {
+      "total": 44,
+      "solved": 0,
+      "na": 44,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 0,
+      "ambiguous": 0
+    },
+    "llms": {
+      "total": 42,
+      "solved": 0,
+      "na": 42,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 0,
+      "ambiguous": 0
+    },
+    "pcb": {
+      "total": 2,
+      "solved": 0,
+      "na": 0,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 2,
+      "ambiguous": 0
+    },
+    "platforms": {
+      "total": 43,
+      "solved": 0,
+      "na": 11,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 32,
+      "ambiguous": 0
+    },
+    "power": {
+      "total": 2,
+      "solved": 0,
+      "na": 0,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 2,
+      "ambiguous": 0
+    },
+    "protocols": {
+      "total": 64,
+      "solved": 0,
+      "na": 64,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 0,
+      "ambiguous": 0
+    },
+    "reducers": {
+      "total": 14,
+      "solved": 0,
+      "na": 0,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 14,
+      "ambiguous": 0
+    },
+    "robot_ai_models": {
+      "total": 46,
+      "solved": 0,
+      "na": 46,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 0,
+      "ambiguous": 0
+    },
+    "sensors": {
+      "total": 95,
+      "solved": 9,
+      "na": 0,
+      "proprietary_suspect": 3,
+      "unpublished_suspect": 51,
+      "ambiguous": 32
+    },
+    "structural": {
+      "total": 3,
+      "solved": 0,
+      "na": 0,
+      "proprietary_suspect": 0,
+      "unpublished_suspect": 3,
+      "ambiguous": 0
+    }
+  },
+  "examples": {
+    "solved": [
+      "ACT-001",
+      "ACT-002",
+      "ACT-003",
+      "ACT-028",
+      "SENS-31",
+      "SENS-37"
+    ],
+    "unpublished_suspect": [
+      "ACT-004",
+      "ACT-005",
+      "ACT-006",
+      "ACT-007",
+      "ACT-008",
+      "ACT-009"
+    ],
+    "ambiguous": [
+      "ACT-mit-electrofluidic",
+      "ACT-hyundai-gripper",
+      "ACT-inspire-linear-servo",
+      "ACT-inspire-dexterous-hand",
+      "ACT-dea-soft",
+      "ACT-iai-robot-lineup"
+    ],
+    "proprietary_suspect": [
+      "ACT-robotis-20dof-hand",
+      "SENS-ft-sri-m35xx",
+      "SENS-ft-sri-m221x",
+      "SENS-ft-sri-m37xx",
+      "CONN-molex-mirror-mezz"
+    ],
+    "na": [
+      "ACT-roland-berger-hd-actuator",
+      "act-patsnap-analysis",
+      "ACT-patsnap-actuator",
+      "CHIP-001",
+      "CHIP-002",
+      "CHIP-003"
+    ]
+  },
+  "signal_axis": {
+    "signal_ports_total": 392,
+    "declared_signal_ports": 392,
+    "declared_pct": 100.0,
+    "roles": {
+      "SIG:OUTPUT_SPIKE": 297,
+      "SIG:INPUT_SENSORY": 95
+    },
+    "note": "信号角色由品类映射派生（SIG_ROLE_BY_CATEGORY），非实体层字段——entities.json 无 signal_interface 键。此计数现读形态图，禁止手填。composed 仍为 0 的归因不要看本节，看 api/compose_semantics.json 的 aggregates.gap_distance / d1_bottleneck（配对级瓶颈定位）。"
+  },
+  "gap_leverage": {
+    "open_gap_total": 414,
+    "distinct_manufacturers": 242,
+    "top10_share_pct": 28.5,
+    "share_without_manufacturer_pct": 14.3,
+    "top10": [
+      {
+        "manufacturer": "(无制造商)",
+        "count": 59
+      },
+      {
+        "manufacturer": "Tesla",
+        "count": 9
+      },
+      {
+        "manufacturer": "RoboParts",
+        "count": 9
+      },
+      {
+        "manufacturer": "CubeMars",
+        "count": 8
+      },
+      {
+        "manufacturer": "Figure AI",
+        "count": 7
+      },
+      {
+        "manufacturer": "Festo",
+        "count": 6
+      },
+      {
+        "manufacturer": "Unitree",
+        "count": 5
+      },
+      {
+        "manufacturer": "1X Technologies",
+        "count": 5
+      },
+      {
+        "manufacturer": "Unitree Robotics (China)",
+        "count": 5
+      },
+      {
+        "manufacturer": "Intel",
+        "count": 5
+      }
+    ],
+    "note": "头部 10 家仅占 28.5%、独立制造商 242 家、14.3% 的缺口连制造商都不知——「抓少数制造商 datasheet」是**必要但不充分**的手段，主缺口只能靠用户提交 / OSS BOM 反喂 / 社区 PR 收敛。"
+  },
+  "honest_limits": [
+    "(i)/(ii) 的拆分是**嫌疑**而非**确认**：仅 proprietary_suspect 使用正向信号（制造商落在已知专有生态），unpublished_suspect / ambiguous 均为开放缺口，需进一步证据（厂商文档抓取或用户提交）才能定论。分类器**不猜测**。",
+    "5.69% 在此框架下是「公开可判定粒度上的标准登记率」，其低值由 (i)/(ii) 两类未区分成因构成；本分类是把它拆开的第一步，不是标准覆盖边界的实证证据。",
+    "na 桶不是缺口，请勿并入缺口率分母。",
+    "unpublished_suspect 的判据是**排除法**：「有制造商但不落专有集合」→ 推定厂商有规格未公开。它无法区分「厂商真没公开」与「我们没爬到」——后者同样判published 嫌疑。故该桶是**抓取目标清单**，不是「厂商不公开」的实证。",
+    "2026-09-24 判据收紧：原判据为 `manufacturer ∨ source`，把 59 条**无制造商**但有 source_tier 的实体推成 unpublished——但不知厂商是谁就谈不上「厂商未公开」，属过度推断，已退回 ambiguous。收紧后 unpublished 350 / ambiguous 59。"
+  ],
+  "rule_transparency": {
+    "proprietary_ecosystem_size": 5,
+    "proprietary_ecosystem_sample": [
+      "IKO 日本トムソン",
+      "Molex",
+      "ROBOTIS",
+      "Vittorio Lumare (Yeah Robotics) / Public Invention",
+      "宇立仪器 (Sunrise Instruments / SRI)"
+    ],
+    "classification": [
+      "status==n_a → na",
+      "status∈{declared,partial} → solved",
+      "status==not_declared ∧ manufacturer∈PROPRIETARY → proprietary_suspect",
+      "status==not_declared ∧ manufacturer≠∅ → unpublished_suspect",
+      "status==not_declared ∧ manufacturer=∅ → ambiguous"
+    ],
+    "caveat": "unpublished 与 ambiguous 的分界是「制造商字段是否有值」，不是「厂商是否公开」。source_tier 单独不足以判定成因。"
+  }
+}

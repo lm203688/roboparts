@@ -90,17 +90,28 @@ def build(with_timestamp: bool = True, graph: dict | None = None):
             "无证据的轴恒为 unknown，绝不按标号字面猜测。"
             "这是方向锚点 Phase B1/B2 的形式化底座原型（轻量 effect system，非 Lean）。"
         ),
-        "anchor": "docs/PROJECT_DIRECTIONS_V2.md §1（方向锚点 v2.1）",
+        "anchor": "docs/PROJECT_DIRECTIONS_V2.md §1（方向锚点 v2.2）",
         "roadmap": "docs/direction-evolution-roadmap-20260923.md Phase B1/B2",
         "engine_version": ENGINE_VERSION,
         "generated_by": "scripts/build_compose_semantics.py",
         "truth_sources": ["api/morphology_graph.json", "scripts/compose_engine.py"],
         "honest_limits": [
-            "SIG 通道当前全部 not_declared，故 composed 恒为 0——组合可行性地图当前由"
-            "「可证伪的错误」与「诚实的未知」构成，这与溯源层「连接条件满足 0/4」一致。",
+            "composed 的归因**必须现读 aggregates**，不要复述历史口径。此前记作"
+            "「SIG 全 not_declared 导致 composed=0」——那是 2026-09-23 之前的状态。"
+            "信号轴改为按品类定向声明角色后，真实瓶颈已由 gap_distance 指出："
+            "d1_bottleneck 显示只差一轴即可判定的配对中，电气轴占比 "
+            "%d%%。补哪一轴的声明，看 d1_bottleneck 而非记忆。"
+            % (100 * aggregates.get("d1_bottleneck", {}).get("electrical", 0)
+               / max(1, aggregates.get("gap_distance", {}).get("1", 0))),
             "compatible_via_adapter 表示需转接盘（H3 硬骨头：转接件几何可打印可信尚未做），"
             "不等于开箱即装。",
             "全对评测含自配对与脑体对称展开；35 万对逐对结果不落盘，只落聚合与判例。",
+            "gap_distance[d] = 恰有 d 轴判 unknown 的配对数（仅统计 overall=unknown；"
+            "type_error 是类型冲突而非证据缺口，不计入）。d=1 即「补一轴声明即可判定」，"
+            "是数据补录的最高优先级目标；gap_distance['0'] 恒为 0（无缺口就不可能是 unknown）。",
+            "reflexivity 公理（同型必配）只对**几何规格型**类型成立（同标号法兰必然可装）；"
+            "对**方向性角色型**类型（OUTPUT_SPIKE~OUTPUT_SPIKE）不成立——两个输出端不是"
+            "必然可装，而是互为不互补。type_compat 里显式登记的自配对裁决优先于该公理。",
         ],
     }
     if not with_timestamp:

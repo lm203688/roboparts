@@ -116,9 +116,16 @@ class CompatIndex:
     def pair_verdict(self, ta: str, tb: str) -> Tuple[str, Optional[Dict[str, Any]]]:
         """返回 (pair_verdict, entry|None)。entry 仅索引命中时非空。"""
         if ta == tb:
-            # reflexivity 公理：同型必配。显式登记过的 entry 优先取（保留 reason/prov）。
             entry = self._index.get((ta, tb))
-            return ("identity", entry)
+            if entry is not None:
+                # 显式登记的自配对裁决优先于 reflexivity 公理。
+                # reflexivity（同型必配）对**几何规格型**类型成立：A50-4-M6 法兰
+                # 配 A50-4-M6 法兰必然可装。但对**方向性角色型**类型不成立：
+                # OUTPUT_SPIKE 配 OUTPUT_SPIKE 不是「必然可装」，而是「不互补」。
+                # 旧实现无条件返回 identity，会让 type_compat 里显式登记的
+                # 自配对 unknown/incompatible 被静默覆盖——登记了等于没登记。
+                return (entry["verdict"], entry)
+            return ("identity", None)  # 未登记 ⇒ reflexivity 公理
         entry = self._index.get((ta, tb)) or self._index.get((tb, ta))
         if entry is None:
             return ("unknown", None)
@@ -157,35 +164,53 @@ def _mech_elec_axis(
     }
 
 
-def _signal_axis(a_node: Dict[str, Any], b_node: Dict[str, Any]) -> Dict[str, Any]:
-    """通道互补判定：OUTPUT_SPIKE → INPUT_SENSORY（双向任一即 sensory_link）。
+def _signal_axis(
+    a_node: Dict[str, Any], b_node: Dict[str, Any], compat: CompatIndex
+) -> Dict[str, Any]:
+    """信号轴判定。verdict 一律来自 type_compat 查表（单一判据源）。
 
-    REWARD 通道是「学习者消费奖励」，双方各有 REWARD 端口不代表互连——
+    本函数只负责两件事：产出**结构化通道证据**（sensory_links / reward），
+    以及把「哪一轴可组合」的判据交给 CompatIndex——不在这里另写互补规则。
+    旧实现把 OUTPUT~INPUT 互补逻辑硬编码在两处（本函数与 eval_all_pairs），
+    两处语义一旦分叉，产物与引擎就会悄悄不一致。
+
+    REWARD 是「学习者消费奖励」，双方各有 REWARD 端口不代表互连，
     只记 evidence，不参与正向判定（fail-closed）。
     """
-    a_eff = {p["type"]: p["status"] for p in effective_ports(a_node, "signal")}
-    b_eff = {p["type"]: p["status"] for p in effective_ports(b_node, "signal")}
+    a_ports = effective_ports(a_node, "signal")
+    b_ports = effective_ports(b_node, "signal")
+    a_ids = sorted({p["type"] for p in a_ports})
+    b_ids = sorted({p["type"] for p in b_ports})
     links = []
-    if SIG_OUTPUT in a_eff and SIG_INPUT in b_eff:
+    if SIG_OUTPUT in a_ids and SIG_INPUT in b_ids:
         links.append("a_output_to_b_input")
-    if SIG_OUTPUT in b_eff and SIG_INPUT in a_eff:
+    if SIG_OUTPUT in b_ids and SIG_INPUT in a_ids:
         links.append("b_output_to_a_input")
     reward_note = {
-        "a_declared": SIG_REWARD in a_eff,
-        "b_declared": SIG_REWARD in b_eff,
+        "a_declared": SIG_REWARD in a_ids,
+        "b_declared": SIG_REWARD in b_ids,
     }
-    if links:
-        return {
-            "verdict": "compatible",
-            "sensory_links": links,
-            "reward": reward_note,
-        }
-    return {
-        "verdict": "unknown",
-        "sensory_links": [],
-        "reward": reward_note,
-        "reason": "无已声明的输出→输入互补通道",
-    }
+    base = {"sensory_links": links, "reward": reward_note}
+    if not a_ids or not b_ids:
+        return dict(
+            base,
+            verdict="unknown",
+            reason="任一侧无已声明信号端口（not_declared）",
+        )
+    best_rank = -1
+    best_pv = "unknown"
+    reason = None
+    for ta in a_ids:
+        for tb in b_ids:
+            pv, entry = compat.pair_verdict(ta, tb)
+            if PAIR_RANK[pv] > best_rank:
+                best_rank = PAIR_RANK[pv]
+                best_pv = pv
+                reason = entry.get("reason") if entry else None
+    out = dict(base, verdict=AXIS_VERDICT_OF_PAIR[best_pv])
+    if reason:
+        out["reason"] = reason
+    return out
 
 
 def compose(a: Dict[str, Any], b: Dict[str, Any], graph: Dict[str, Any]) -> Dict[str, Any]:
@@ -214,7 +239,7 @@ def compose(a: Dict[str, Any], b: Dict[str, Any], graph: Dict[str, Any]) -> Dict
             base.update(_mech_elec_axis(a_eff, b_eff, compat))
         axes[axis] = base
 
-    axes["signal"] = _signal_axis(a, b)
+    axes["signal"] = _signal_axis(a, b, compat)
     axes["signal"]["a_undeclared"] = undeclared_count(a, "signal")
     axes["signal"]["b_undeclared"] = undeclared_count(b, "signal")
 
@@ -261,6 +286,14 @@ def eval_all_pairs(graph: Dict[str, Any], examples_per_class: int = 0) -> Dict[s
     axis_marginals = {ax: {v: 0 for v in AXIS_VERDICTS} for ax in AXES}
     cross: Dict[str, int] = {}
     example_ids: Dict[str, List[Tuple[str, str]]] = {v: [] for v in OVERALL_VERDICTS}
+    # 缺口距离 = unknown 轴数。overall 恒 unknown 不等于零信息：d=1 的配对只差
+    # 一轴声明即可判定，是数据补录的最高优先级目标。把 unknown 变成可排序的
+    # 资产，而不是一个笼统的零信号。d1_bottleneck 即「补全某轴可解锁多少对」
+    # 的上界，是数据飞轮的排序依据。
+    gap_dist_counts: Dict[int, int] = {i: 0 for i in range(len(AXES) + 1)}
+    d1_bottleneck: Dict[str, int] = {ax: 0 for ax in AXES}
+    d1_examples: List[List[str]] = []
+    n_d1_cap = max(8, examples_per_class * 4)
 
     n_ids = [n["id"] for n in nodes]
     for ida in n_ids:
@@ -268,7 +301,9 @@ def eval_all_pairs(graph: Dict[str, Any], examples_per_class: int = 0) -> Dict[s
             a_eff = eff[ida]
             b_eff = eff[idb]
             axis_v: Dict[str, str] = {}
-            for axis in ("mechanical", "electrical"):
+            # 三轴同构：全部走 type_compat 查表。旧实现在 signal 分支另写一套
+            # 互补判定，与 morphology_graph 的 type_compat 两处定义会悄悄分叉。
+            for axis in AXES:
                 ta_list, tb_list = a_eff[axis], b_eff[axis]
                 if not ta_list or not tb_list:
                     axis_v[axis] = "unknown"
@@ -282,14 +317,6 @@ def eval_all_pairs(graph: Dict[str, Any], examples_per_class: int = 0) -> Dict[s
                                 best_rank = PAIR_RANK[pv]
                                 best = pv
                     axis_v[axis] = AXIS_VERDICT_OF_PAIR[best]
-            # signal
-            a_sig, b_sig = a_eff["signal"], b_eff["signal"]
-            if (SIG_OUTPUT in a_sig and SIG_INPUT in b_sig) or (
-                SIG_OUTPUT in b_sig and SIG_INPUT in a_sig
-            ):
-                axis_v["signal"] = "compatible"
-            else:
-                axis_v["signal"] = "unknown"
 
             vals = list(axis_v.values())
             if "incompatible" in vals:
@@ -305,12 +332,26 @@ def eval_all_pairs(graph: Dict[str, Any], examples_per_class: int = 0) -> Dict[s
                 axis_marginals[ax][axis_v[ax]] += 1
             key = f"{axis_v['mechanical']}|{axis_v['electrical']}"
             cross[key] = cross.get(key, 0) + 1
+            # 缺口距离：只在 overall == unknown 时统计。type_error 是「类型冲突」
+            # 而非「证据缺口」，混进来会让 d1_bottleneck 语义混乱。
+            # d=0 恒为 0（无缺口就不可能是 unknown）——保留该键作为不变量。
+            if ov == "unknown":
+                nd = sum(1 for v in vals if v == "unknown")
+                gap_dist_counts[nd] += 1
+                if nd == 1:
+                    bottleneck = next(ax for ax in AXES if axis_v[ax] == "unknown")
+                    d1_bottleneck[bottleneck] += 1
+                    if len(d1_examples) < n_d1_cap:
+                        d1_examples.append([ida, idb, bottleneck])
 
     return {
         "pairs_evaluated": len(n_ids) * len(n_ids),
         "overall_counts": overall_counts,
         "axis_marginals": axis_marginals,
         "mech_elec_cross": dict(sorted(cross.items())),
+        "gap_distance": {str(k): v for k, v in sorted(gap_dist_counts.items())},
+        "d1_bottleneck": d1_bottleneck,
+        "d1_examples": d1_examples,
         "example_ids": {k: v for k, v in example_ids.items() if v},
     }
 
@@ -323,8 +364,12 @@ RULE_TABLE: List[Dict[str, str]] = [
     },
     {
         "rule": "R1 reflexivity",
-        "statement": "ta == tb ⇒ identity（同型必配，类型系统自反性）。",
-        "fail_mode": "无。",
+        "statement": "ta == tb 且 type_compat 未显式登记 ⇒ identity（同型必配，类型系统自反性）。"
+                     "显式登记的自配对裁决优先于本公理。",
+        "fail_mode": "对本公理的适用范围要分清：几何规格型（同标号法兰）成立；"
+                     "方向性角色型（OUTPUT_SPIKE~OUTPUT_SPIKE）不成立——两个输出端不是"
+                     "「必然可装」而是「不互补」，必须由 type_compat 显式登记为 unknown。"
+                     "旧实现无条件返回 identity，会让显式登记被静默覆盖（登记了等于没登记）。",
     },
     {
         "rule": "R2 lookup",
@@ -337,9 +382,13 @@ RULE_TABLE: List[Dict[str, str]] = [
         "fail_mode": "全部 incompatible 才判 incompatible；存在 unknown 候选对时保守 unknown。",
     },
     {
-        "rule": "R4 sensory link",
-        "statement": "signal 轴：一方 OUTPUT_SPIKE 已声明且另一方 INPUT_SENSORY 已声明 ⇒ compatible；否则 unknown。",
-        "fail_mode": "REWARD 不参与正向判定。",
+        "rule": "R4 signal lookup",
+        "statement": "signal 轴与机械/电气同构：一律走 type_compat 查表，"
+                     "由 morphology_graph 的 build_type_compat 单一定义角色语义"
+                     "（OUTPUT_SPIKE~INPUT_SENSORY = identity；同类端 = unknown；含 REWARD = unknown）。",
+        "fail_mode": "本规则的唯一判据源是 type_compat。引擎内不得另写互补逻辑——"
+                     "历史上 signal 判定曾在 _signal_axis 与 eval_all_pairs 各写一份，"
+                     "两处语义一旦分叉，产物与引擎就悄悄不一致。REWARD 不参与正向判定。",
     },
     {
         "rule": "R5 precedence",

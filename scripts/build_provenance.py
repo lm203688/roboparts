@@ -320,7 +320,7 @@ def build(with_timestamp=True):
             'schema': 'embodiment_provenance/v1',
             'title': 'RoboParts 具身跨层溯源清单（Embodied Provenance）',
             'contract': 'schemas/embodiment_provenance.schema.json',
-            'anchor': 'docs/PROJECT_DIRECTIONS_V2.md §1（方向锚点 v2.1 · D6）',
+            'anchor': 'docs/PROJECT_DIRECTIONS_V2.md §1（方向锚点 v2.2 · D6）',
             'generated_by': 'scripts/build_provenance.py',
             'generated_at': (datetime.now(TZ).strftime('%Y-%m-%dT%H:%M:%S+08:00')
                              if with_timestamp else None),

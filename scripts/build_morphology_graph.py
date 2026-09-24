@@ -367,10 +367,42 @@ def elec_ports_of(e, port_types):
     return [{'type': tid, 'status': 'declared'} for tid in hits], {'connector': conn}
 
 
+# 品类 → 单一信号端角色。语义直接来自 signal_interface.schema.json 的
+# properties.mappings：output[].body_actuator = 「躯体执行器」、
+# input[].body_sensor = 「躯体传感器」、reward[].event = 「事件 → 奖励群体」。
+# 旧实现的错误是**给每个终端实体无差别赋全部 3 个角色**——一只执行器不可能同时
+# 是「躯体传感器输入端」，这让信号轴永远凑不出任何互补配对（signal compatible 恒 0）。
+# 现在按 schema 角色定向赋**唯一**角色：
+SIG_ROLE_BY_CATEGORY = {
+    'actuators':           'SIG:OUTPUT_SPIKE',   # body_actuator 端
+    'flexible_actuators':  'SIG:OUTPUT_SPIKE',
+    'grippers':            'SIG:OUTPUT_SPIKE',
+    'reducers':            'SIG:OUTPUT_SPIKE',
+    'bionic_mechanisms':   'SIG:OUTPUT_SPIKE',
+    'integrated_joints':   'SIG:OUTPUT_SPIKE',
+    'sensors':             'SIG:INPUT_SENSORY',  # body_sensor 端
+    # 'controllers' 故意不赋：它是 output/input 群体的**宿主**（脑侧），
+    # 不是体侧被连接端。给体侧图强行造一个端口，是为迎合叙事而捏造数据。
+}
+
+SIG_PORT_BASIS = ('signal_interface.schema.json#properties.mappings '
+                  '角色语义 + 品类映射')
+# 诚实边界：这是**品类级推断**（Tier B），不是厂商 datasheet 实测。
+# 具体零件的信号引脚/协议需 datasheet 确认；因此声明的是「角色」，
+# 不是「该零件确有一个可插的信号接头」。
+SIG_PORT_CAVEAT = ('品类级推断（Tier B），非厂商 datasheet 实测；'
+                   '声明的是信号**角色**，不代表该零件存在已标定的信号接头')
+
+
 def sig_ports_of(e):
-    if e.get('category') not in SIGNAL_ENDPOINT_CATEGORIES:
+    role = SIG_ROLE_BY_CATEGORY.get(e.get('category'))
+    if not role:
         return []
-    return [{'type': tid, 'status': 'not_declared'} for tid, _, _ in SIG_LAYERS]
+    return [{'type': role, 'status': 'declared',
+             'role_basis': SIG_PORT_BASIS,
+             'caveat': SIG_PORT_CAVEAT,
+             'prov_override': {'source': SIG_PORT_BASIS, 'tier': 'B',
+                               'note': SIG_PORT_CAVEAT}}]
 
 
 # --------------------------------------------------------------- 类型间裁决
@@ -449,15 +481,43 @@ def build_type_compat(port_types, nc_doc):
                           'prov': _prov('api/electrical_interfaces.json 连接器/针数现算',
                                         'B', None, None)})
 
-    # 信号（三型两两）
+    # 信号（三型两两）。
+    # 旧实现把全部信号对硬编码成 unknown，理由是「0 条完整契约」——但那否定的是
+    # **协议级**契约（波特率、时序、编码），不是**角色级**组合语义。schema 的
+    # mappings 已经把角色关系说清楚了：output[].body_actuator 与 input[].body_sensor
+    # 是一对互补端（执行器输出 ↔ 传感器输入）。角色级配对有契约依据，可以断言；
+    # 协议级细节仍 fail-closed，写在 reason 里不注水。
+    # reward 是「事件 → 奖励群体」的映射，不是点对点物理接口，不参与组合判定。
+    def _sig_pair(a, b):
+        if 'REWARD' in a or 'REWARD' in b:
+            return ('unknown',
+                    'reward 是「事件→奖励群体」映射，非点对点接口，不参与组合判定')
+        if a == b:
+            # 同类端不判 incompatible：那暗示「物理上冲突」，但真相是
+            # 「不构成两元素互补对」——两个执行器之间不是禁止连接，而是
+            # 需要一个控制器中介（更高层次的组合结构，超出二元 compose 的域）。
+            # 判 unknown 并把原因写清，比硬判 incompatible 更诚实。
+            return ('unknown',
+                    '同一角色端不构成互补对（output~output / input~input）；'
+                    '需控制器中介，超出二元组合的判定域')
+        if {a, b} == {'SIG:OUTPUT_SPIKE', 'SIG:INPUT_SENSORY'}:
+            return ('identity',
+                    '执行器输出端 ↔ 传感器输入端，schema mappings 定义的标准互补连接'
+                    '（角色级；协议级细节另需 datasheet 确认）')
+        return ('unknown', 'schema 未定义该角色组合的连接语义')
+
     sg_ids = sorted(t for t in port_types if port_types[t]['axis'] == 'signal')
     for i, a in enumerate(sg_ids):
         for b in sg_ids[i:]:
-            pairs.append({'a': a, 'b': b, 'axis': 'signal', 'verdict': 'unknown',
-                          'reason': 'schema 已定义但库内 0 条完整信号契约，无实测可断言',
-                          'blocking_dims': [],
-                          'prov': _prov('neurorobotics/signal_interface.schema.json',
-                                        'B', None, 'fail-closed：不臆断信号兼容')})
+            v, rs = _sig_pair(a, b)
+            pairs.append({'a': a, 'b': b, 'axis': 'signal', 'verdict': v,
+                          'reason': rs,
+                          'blocking_dims': ['role_polarity'] if v == 'incompatible' else [],
+                          'prov': _prov('neurorobotics/signal_interface.schema.json'
+                                        '#properties.mappings 角色语义', 'B', None,
+                                        None if v == 'unknown' else
+                                        '角色级配对；协议级（时序/编码）未标定，'
+                                        '需 datasheet 确认')})
     return pairs
 
 
@@ -508,7 +568,10 @@ def build(paths=None, with_timestamp=True):
                 'from': e['id'], 'to': p['type'],
                 'type': 'has_%s_port' % ax,
                 'status': p['status'],
-                'prov': _prov('api/entities.json#%s' % e['id'], e.get('source_tier'),
+                # 信号端口的出处是 schema 契约 + 品类映射，不是实体自身的
+                # source_tier——用实体的出处会给「声明了信号角色」挂错证据。
+                'prov': p.get('prov_override') or
+                        _prov('api/entities.json#%s' % e['id'], e.get('source_tier'),
                               e.get('last_verified')),
             })
         prov = _prov(e.get('source') or 'api/entities.json',
@@ -568,7 +631,7 @@ def build(paths=None, with_timestamp=True):
                 '端口类型之间带可判定裁决。二部结构（实体→端口类型→端口类型）而非'
                 '实体×实体的全对边，因为 ISO 9409-1 的语义本身就是类型系统：'
                 '法兰标号即类型，两件能装当且仅当标号一致或经转接盘。',
-            'anchor': 'docs/PROJECT_DIRECTIONS_V2.md §1（方向锚点 v2.1）',
+            'anchor': 'docs/PROJECT_DIRECTIONS_V2.md §1（方向锚点 v2.2）',
             'generated_by': 'scripts/build_morphology_graph.py',
             'generated_at': (datetime.now(TZ).strftime('%Y-%m-%dT%H:%M:%S+08:00')
                              if with_timestamp else None),

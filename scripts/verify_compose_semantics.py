@@ -94,7 +94,8 @@ def check_doc(doc, graph) -> list:
     agg = doc.get("aggregates") or {}
     fresh = eval_all_pairs(graph, examples_per_class=EXAMPLES_PER_CLASS)
     for key in ("pairs_evaluated", "overall_counts", "axis_marginals",
-                "mech_elec_cross", "example_ids"):
+                "mech_elec_cross", "gap_distance", "d1_bottleneck",
+                "d1_examples", "example_ids"):
         if agg.get(key) != fresh.get(key):
             errs.append(f"aggregates.{key} 与现算不符")
 
@@ -115,6 +116,22 @@ def check_doc(doc, graph) -> list:
     composed = (agg.get("overall_counts") or {}).get("composed", 0)
     if not has_sig and composed != 0:
         errs.append(f"不变量违背：全库无已声明 SIG 通道但 composed={composed} != 0")
+
+    # ---- 缺口距离不变量（四条，任一违背都是引擎或口径错误）----
+    gd = agg.get("gap_distance") or {}
+    d1 = agg.get("d1_bottleneck") or {}
+    if gd.get("0", 0) != 0:
+        errs.append(f"缺口距离不变量违背：gap_distance['0']={gd.get('0')}，"
+                    f"无缺口就不可能是 overall=unknown，应为 0")
+    unk = (agg.get("overall_counts") or {}).get("unknown", 0)
+    if sum(gd.values()) != unk:
+        errs.append(f"缺口距离不变量违背：gap_distance 之和 {sum(gd.values())} "
+                    f"!= overall_counts.unknown {unk}（缺口距离只统计 unknown 配对）")
+    if set(d1) != set(AXES):
+        errs.append(f"缺口距离不变量违背：d1_bottleneck 键集 {sorted(d1)} != {sorted(AXES)}")
+    if sum(d1.values()) != gd.get("1", 0):
+        errs.append(f"缺口距离不变量违背：d1_bottleneck 之和 {sum(d1.values())} "
+                    f"!= gap_distance['1'] {gd.get('1')}")
 
     # ---- 判例复验：引擎重算逐键全等 + 前缀对账 ----
     nodes = {n["id"]: n for n in graph.get("nodes") or []}
@@ -149,7 +166,12 @@ def check_doc(doc, graph) -> list:
 # ---------------------------------------------------------------------------
 
 def _synth_graph():
-    """三类型合成图：ISO_A / ISO_B（incompatible 登记）+ PROP_X（专有，靠 reflexivity）。"""
+    """三轴合成图：ISO_A/ISO_B（incompatible 登记）+ PROP_X（专有，靠 reflexivity）
+    + 信号角色（OUTPUT/INPUT 互补；同类端 unknown，显式登记以覆盖 reflexivity）。
+
+    信号条目必须与 build_morphology_graph.build_type_compat 的角色语义同构——
+    合成图不是随意构造的测试夹具，而是判据源的缩影，否则自证测的是空关系。
+    """
     tc = [
         {"a": "MECH:ISO_A", "b": "MECH:ISO_A", "axis": "mechanical",
          "verdict": "identity", "reason": "同标号"},
@@ -157,6 +179,18 @@ def _synth_graph():
          "verdict": "incompatible", "reason": "孔数不同"},
         {"a": "ELEC:CONN1", "b": "ELEC:CONN1", "axis": "electrical",
          "verdict": "identity", "reason": "同连接器"},
+        {"a": "SIG:OUTPUT_SPIKE", "b": "SIG:INPUT_SENSORY", "axis": "signal",
+         "verdict": "identity", "reason": "输出端↔输入端互补"},
+        {"a": "SIG:OUTPUT_SPIKE", "b": "SIG:OUTPUT_SPIKE", "axis": "signal",
+         "verdict": "unknown", "reason": "同一角色端不构成互补对"},
+        {"a": "SIG:INPUT_SENSORY", "b": "SIG:INPUT_SENSORY", "axis": "signal",
+         "verdict": "unknown", "reason": "同一角色端不构成互补对"},
+        {"a": "SIG:OUTPUT_SPIKE", "b": "SIG:REWARD", "axis": "signal",
+         "verdict": "unknown", "reason": "reward 非点对点接口"},
+        {"a": "SIG:INPUT_SENSORY", "b": "SIG:REWARD", "axis": "signal",
+         "verdict": "unknown", "reason": "reward 非点对点接口"},
+        {"a": "SIG:REWARD", "b": "SIG:REWARD", "axis": "signal",
+         "verdict": "unknown", "reason": "reward 非点对点接口"},
     ]
     def node(nid, ports):
         return {"id": nid, "kind": "component", "entity_kind": "component",
@@ -229,6 +263,26 @@ def self_test() -> int:
     r4 = compose(nodes["NA_FULL"], nodes["NA_FULL"], g)
     expect("best-pair·自配对 identity", r4["axes"]["mechanical"]["verdict"] == "compatible")
 
+    # ---- 公理边界：reflexivity 只适用于几何规格型，不适用于方向性角色型 ----
+    # 这是 2026-09-24 修掉的引擎级缺陷：pair_verdict 曾无条件返回 identity，
+    # 使 type_compat 里显式登记的自配对裁决被静默覆盖（登记了等于没登记），
+    # 结果是 OUTPUT_SPIKE~OUTPUT_SPIKE 被判 composed 且 sensory_links 为空。
+    r4b = compose(nodes["NA_FULL"], nodes["NA_FULL"], g)
+    expect("公理边界·角色型自配对被显式登记压过（OUTPUT~OUTPUT ⇒ unknown）",
+           r4b["axes"]["signal"]["verdict"] == "unknown"
+           and r4b["overall"] == "unknown",
+           f"signal={r4b['axes']['signal']['verdict']} overall={r4b['overall']}")
+    # 未登记的自配对仍走 reflexivity（公理未被削弱，只是让位于显式证据）
+    r4c = compose(nodes["ND_PROP"], nodes["ND_PROP"], g)
+    expect("公理边界·未登记自配对仍走 reflexivity",
+           r4c["axes"]["mechanical"]["best_pair"]["pair_verdict"] == "identity")
+    # 语义一致性：signal 判 compatible 必须有非空 sensory_links（否则是矛盾输出）
+    r4d = compose(nodes["NA_FULL"], nodes["NB_FULL"], g)
+    expect("一致性·signal compatible 必有 sensory_links",
+           (r4d["axes"]["signal"]["verdict"] != "compatible"
+            or len(r4d["axes"]["signal"].get("sensory_links") or []) > 0),
+           str(r4d["axes"]["signal"]))
+
     # ---- 引擎级：阴性 / fail-closed ----
     r5 = compose(nodes["NA_FULL"], nodes["NC_INCOMPAT"], g)
     expect("阴性·incompatible ⇒ type_error", r5["overall"] == "type_error")
@@ -262,6 +316,56 @@ def self_test() -> int:
     r10 = compose(g4_nodes["NA_FULL"], g4_nodes["NB_FULL"], g4)
     expect("阴性·仅 REWARD 不构成链路 ⇒ unknown",
            r10["axes"]["signal"]["verdict"] == "unknown")
+
+    # ---- 缺口距离：口径 + 不变量自证（无阳性对照的聚合维度等于没测）----
+    # 子图 A/B：两轴互补可组合；A×A 与 B×B 因角色不互补（OUTPUT~OUTPUT /
+    # INPUT~INPUT）在信号轴为 unknown。手算：4 对中 2 对 composed、2 对 d=1
+    # 且瓶颈必为 signal。
+    sub = {"nodes": [nodes["NA_FULL"], nodes["NB_FULL"]], "type_compat": g["type_compat"]}
+    ag1 = eval_all_pairs(sub)
+    expect("缺口距离·composed 不计入，角色型自配对记 d=1 瓶颈 signal",
+           ag1["gap_distance"] == {"0": 0, "1": 2, "2": 0, "3": 0}
+           and ag1["overall_counts"]["composed"] == 2
+           and ag1["d1_bottleneck"] == {"mechanical": 0, "electrical": 0, "signal": 2},
+           f"{ag1['gap_distance']} {ag1['d1_bottleneck']}")
+    # 抽掉电气登记：CONN1~CONN1 是同型自配对，reflexivity 仍成立（连接器是
+    # 几何规格型，同型必配）。所以瓶颈不迁移——验证 reflexivity 的适用范围
+    # 判据是「类型是否几何规格型」，而不是「type_compat 里登记了没有」。
+    sub2 = {"nodes": [nodes["NA_FULL"], nodes["NB_FULL"]],
+            "type_compat": [e for e in g["type_compat"] if e["axis"] != "electrical"]}
+    ag2 = eval_all_pairs(sub2)
+    expect("缺口距离·抽掉几何型登记不迁移瓶颈（reflexivity 判据是类型性质）",
+           ag2["gap_distance"] == ag1["gap_distance"]
+           and ag2["d1_bottleneck"] == ag1["d1_bottleneck"],
+           f"{ag2['gap_distance']} vs {ag1['gap_distance']}")
+    # 瓶颈迁移：构造与真实 d1 判例（ACT×SENS）同构的跨连接器对——
+    # NX 电气 CONN2 未登记（跨型未知），机械同标号，信号与 NA 互补。
+    # 手算 4 对：NX×NX、NA×NA 各 d=1 瓶颈 signal；NA×NX、NX×NA 各 d=1 瓶颈 electrical
+    sub3_nodes = [
+        {"id": "NX", "kind": "component", "entity_kind": "component",
+         "category": "sensors", "composable": True, "ports": [
+             {"type": "MECH:ISO_A", "status": "declared"},
+             {"type": "ELEC:CONN2", "status": "declared"},
+             {"type": "SIG:INPUT_SENSORY", "status": "declared"}]},
+    ]
+    sub3 = {"nodes": sub3_nodes + [nodes["NA_FULL"]], "type_compat": g["type_compat"]}
+    ag3 = eval_all_pairs(sub3)
+    expect("缺口距离·跨连接器对归因到电气瓶颈（与真实 ACT×SENS 判例同构）",
+           ag3["gap_distance"] == {"0": 0, "1": 4, "2": 0, "3": 0}
+           and ag3["d1_bottleneck"] == {"mechanical": 0, "electrical": 2, "signal": 2},
+           f"{ag3['gap_distance']} {ag3['d1_bottleneck']}")
+    # 三条不变量（与 check_doc 同口径，这里是引擎级直证）
+    expect("缺口距离·不变量 sum(gap)==unknown 且 gap[0]==0",
+           sum(ag3["gap_distance"].values()) == ag3["overall_counts"]["unknown"]
+           and ag3["gap_distance"]["0"] == 0)
+    expect("缺口距离·不变量 sum(d1_bottleneck)==gap[1]",
+           sum(ag3["d1_bottleneck"].values()) == ag3["gap_distance"]["1"])
+    # 变异：把瓶颈归因错轴必须被 check_doc 抓出（否则 d1_bottleneck 是死字段）
+    import build_compose_semantics as _bcs_mut
+    m = copy.deepcopy(_bcs_mut.build(with_timestamp=False, graph=sub2))
+    m["aggregates"]["d1_bottleneck"]["mechanical"] += 1
+    m["aggregates"]["d1_bottleneck"]["electrical"] -= 1
+    expect("变异·错轴归因 d1_bottleneck ⇒ 红", check_doc(m, sub2) != [])
 
     # ---- 产物级：绿路径 ----
     doc = None

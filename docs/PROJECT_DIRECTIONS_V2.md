@@ -1,6 +1,6 @@
-# RoboParts · 方向锚点 v2.1（决策契约）
+# RoboParts · 方向锚点 v2.2（决策契约）
 
-> **文档状态**：ACTIVE · 2026-09-23 · **取代 v2.0 草案**
+> **文档状态**：ACTIVE · 2026-09-24 · **取代 v2.1**（v2.1 取代 v2.0 草案）
 > **性质**：这不是路线图，是**决策契约**。「符不符合这个方向」由本文件的**决策闸门**判定，
 > 不靠感觉。任何工作（代码/数据/内容/API/文档）开始前过闸门；三问全否则**丢弃**。
 > **配套**：`direction-change-feasibility-20260923.md`（可行性）、
@@ -10,7 +10,23 @@
 
 ---
 
-## 0. 变更记录（v2.0 → v2.1）
+## 0. 变更记录
+
+### v2.1 → v2.2（2026-09-24）
+
+三处修正，都是「按锚点自查发现自己写的东西已经过期」：
+
+| # | v2.1 写的 | 实际核实结果 | 处置 |
+|---|---|---|---|
+| 1 | §6.1「把 (i)/(ii) 分类**做出来**，是一个**尚未做**、可做、没人做过的研究动作」 | **已做完**。`scripts/build_gap_classification.py` 产出 `api/gap_classification.json`：414 条缺口 → 409 unpublished / 5 proprietary / 0 ambiguous | 更新为「已做完」，见 §6.1 |
+| 2 | §6.2「只有 25 个实体有可判定接口」+ compose 归因「SIG 全 not_declared ⇒ composed 恒为 0」 | **两处都过期**。① 信号轴已按品类定向赋值 392 条 declared（OUTPUT_SPIKE 297 / INPUT_SENSORY 95）；② 瓶颈已迁移到**电气轴**：112 对 d=1 配对 100% 卡在电气（判例全是 ACT-028 × SENS-0xx） | 见 §6.2 新增归因纪律 |
+| 3 | 规则表 R1「ta == tb ⇒ identity（无条件）」 | **对方向性角色型类型不成立**。`CompatIndex.pair_verdict` 曾无条件返回 identity，静默覆盖了 type_compat 里显式登记的自配对裁决——登记了等于没登记。结果 OUTPUT_SPIKE~OUTPUT_SPIKE 被判 composed 且 `sensory_links=[]` | 显式登记优先于 reflexivity 公理；合成图补 6 条 SIG 判据 |
+
+> 第 3 条是本轮唯一真正的**引擎级 bug**：其余是口径过期。它的隐蔽之处在于——
+> 表面上「同型必配」是类型系统的常识公理，没人会去质疑它，
+> 但机械法兰（几何规格型）与信号角色（方向性角色型）不是同一类东西。
+
+### v2.0 → v2.1（2026-09-23）
 
 两份必须留痕的修正。v2.0 是 15:56 生成的草案，**问题不是方向错，是把没做的事标成了做完**：
 
@@ -87,7 +103,8 @@
 | `api/croissant.json` + `CITATION.cff` | 802 实体 / 20 品类 / 机械四态 15-10-414-363（现算 + facts() 逐键对账，verify_croissant 1 阳性 + 6 变异全过，ci_gate 挂闸） | 引用入口（副产品） | ✅ 存在（2026-09-23 实测） |
 | `schemas/embodiment_provenance.schema.json` | verify_provenance 双趟全绿（契约 + 12 项自证，ci_gate 挂闸） | 跨层溯源契约 | ✅ 存在（2026-09-23 实测） |
 | `scripts/compose_engine.py`（B1） | compose(a,b) 三态裁决纯函数；reflexivity 公理 + best-pair + fail-closed；无文件 IO | **效应系统原型** | ✅ 存在（2026-09-23 实测） |
-| `api/compose_semantics.json`（B2） | 351,649 全对评测：composed 0 / type_error 4 / unknown 351,645（现算对账 + 21 项自证，ci_gate 挂闸）；规则表 R0–R5 导出 | **三轴类型语义** | ✅ 存在（2026-09-23 实测） |
+| `api/compose_semantics.json`（B2） | 351,649 全对评测：composed 0 / type_error 4 / unknown 351,645（现算对账 + 28 项自证，ci_gate 挂闸）；规则表 R0–R5 导出；**2026-09-24 增 gap_distance + d1_bottleneck** | **三轴类型语义 + 瓶颈定位** | ✅ 存在（2026-09-24 实测） |
+| `api/gap_classification.json`（D-GAP） | 414 条缺口成因分类：unpublished 409 / proprietary 5 / ambiguous 0；与 facts() 交叉校验 fail-fast；ci_gate 挂闸（口径 + 完备性 + 3 项变异自证） | **缺口成因归因（静态·实体级）** | ✅ 存在（2026-09-24 实测） |
 | `docs/paper-compose-calculus-outline.md`（B3） | 提纲占位，不含未做声明；出口候选 arXiv→workshop→RAM | 方法论文占学术位 | ✅ 占位（2026-09-23；**非投稿稿**） |
 | 机械声明率 | 5.69%（declared 15 + partial 10 / applicable 439） | 见 §6.1（**已收窄**） | ⚠️ 见下 |
 
@@ -124,15 +141,47 @@
   以 **conf=0.9226** 回答 **否（P(true)=0.0774）**。高置信度信号，作为反方意见采纳。
   （同批 3 个 choice 问题 conf 仅 0.014–0.030，低于该模型可用区间，**未采信**；见留痕文件。）
 
-**残留价值**：把 (i)/(ii) 分类**做出来**，是一个尚未做、可做、没人做过的研究动作。
-方向从「把缺口当证据」改为「把**缺口的成因分类**当研究」。
+**这一步已经做完**（2026-09-24，`api/gap_classification.json`，ci_gate 挂闸）：
+
+> 414 条开放缺口 = **350 unpublished_suspect** / 5 proprietary_suspect / **59 ambiguous**。
+> 方向从「把缺口当证据」改为「把**缺口的成因分类**当研究」——现在有了可核的产出。
+
+**但两个结果都得诚实说，因为它们各自否掉了一条直觉路线：**
+
+1. **unpublished 350 条不是「厂商不公开」的实证**。判据是排除法——「有制造商但不落
+   已知专有集合」→ 推定有规格未公开。它**无法区分**「厂商真没公开」与「我们没爬到」。
+   所以这 350 条是**抓取目标清单**，不是「厂商拒绝公开」的结论。
+2. **59 条 ambiguous 不是笔误，是判据收紧后的真结果**。原判据是
+   `manufacturer ∨ source`，把这些实体也推成 unpublished——但**不知厂商是谁，
+   就谈不上「厂商未公开」**。收紧后它们退回 ambiguous。这 59 条是 14.3% 的缺口，
+   连「谁没公开」都不知道，只能靠溯源先补制造商字段。
+
+**缺口分布决定路径**（`gap_leverage`，现算）：414 条缺口散布在 **242 家**制造商，
+头部 10 家仅占 **28.5%**。**结论是负向的**——「抓少数制造商 datasheet 就能大幅提声明率」
+这条路不成立。批量抓取是必要但不充分；主缺口只能靠用户提交 / OSS BOM 反喂 / 社区 PR。
+这条负证据比「我们可以爬到 200 家 datasheet」的乐观估计有用得多。
 
 ### 6.2 其他边界
 
-- **形态图 ≠ 完整图**：只有 25 个实体有可判定接口。图为**稀疏且带 unknown 类型**，
+- **形态图 ≠ 完整图**：机械/电气/信号三轴的声明面都还窄。图为**稀疏且带 unknown 类型**，
   不是一张「全连通兼容图」。任何下游消费者都会读到 unknown，须自行处理。
 - **`compatibility_matrix.json` 的 pairs 不与实体绑定**，是人工示意。
   生产判定走 `/api/compatibility?a=&b=` 实时计算。**不得**把示意对当判定证据。
+- **`composed=0` 的归因有版本，别拿旧说法当结论**（2026-09-24 起）：
+  - ~~「SIG 全 not_declared ⇒ composed 恒 0」~~ — **已失效**。信号轴已按品类定向赋值
+    392 条 declared（OUTPUT_SPIKE 297 / INPUT_SENSORY 95，`signal_axis` 字段现算）。
+  - 现说法：全对评测里 **112 对 d=1（只差一轴即可组合），瓶颈 100% 在电气轴**
+    ——判例全是 ACT-028 × SENS-0xx 这类「执行器+传感器」配对，机械与信号都匹配，
+    只差电气接口未声明。
+  - **纪律**：归因**必须现读** `api/compose_semantics.json` 的
+    `aggregates.gap_distance` / `d1_bottleneck`，**不得**复述历史结论。
+    这条纪律已写进产物的 `meta.honest_limits`（生成器源串），改生成器而非改产物。
+- **reflexivity 公理有适用范围**（2026-09-24 修正的引擎级 bug）：
+  「同型必配」只对**几何规格型**类型成立（A50 法兰配 A50 法兰）。对**方向性角色型**
+  类型不成立——OUTPUT_SPIKE 配 OUTPUT_SPIKE 不是「必然可装」，而是**不构成互补**。
+  判据：`type_compat` 里**显式登记的自配对裁决优先于 reflexivity 公理**。
+  旧代码无条件返回 identity，导致显式登记被静默覆盖（登记了等于没登记），
+  产出过 `composed` 却 `sensory_links=[]` 的自相矛盾结果。
 - **D5（组合演算）是多年期**：范畴论/Lean 形式化，独立开发者必须分三步走
   （轻量原型 → 方法论文 → 视反馈上重武器）。**不许一上来写 Lean 定理证明。**
 - **算力是真实约束**：D4 协同设计需仿真 loop，必须小规模起步 + 离线预计算。
