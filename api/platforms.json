@@ -22,8 +22,8 @@
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
-  "count": 43,
-  "updated": "2026-09-24T02:01:14.132005Z",
+  "count": 93,
+  "updated": "2026-09-25T02:01:28.878633Z",
   "data": [
     {
       "id": "ACT-patsnap-actuator",
@@ -2254,6 +2254,2348 @@
         "ACT-robstride-rsm"
       ],
       "compatibility_note": "B601-RS 与 B601-DM 是同外观的两种电机版本（RobStride vs Damiao），机械安装面相同但电机接口不兼容，不可互换；详见 B601-DM 条目。"
+    },
+    {
+      "id": "HUB-001",
+      "name": "KR 3 AGILUS",
+      "name_en": "KR 3 AGILUS",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR 3 AGILUS 工具法兰符合 ISO 9409-1-20-4-M3。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-20-4-M3"
+        ],
+        "aliases": [
+          "ISO 9409-1-A20-4-M3"
+        ],
+        "flange": {
+          "pcd_mm": 20,
+          "bolt_count": 4,
+          "thread": "M3",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-002",
+      "name": "KR DELTA",
+      "name_en": "KR DELTA",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR DELTA 工具法兰符合 ISO 9409-1-20-4-M3。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-20-4-M3"
+        ],
+        "aliases": [
+          "ISO 9409-1-A20-4-M3"
+        ],
+        "flange": {
+          "pcd_mm": 20,
+          "bolt_count": 4,
+          "thread": "M3",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-003",
+      "name": "KR SCARA R600",
+      "name_en": "KR SCARA R600",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR SCARA R600 工具法兰符合 ISO 9409-1-20-4-M3。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-20-4-M3"
+        ],
+        "aliases": [
+          "ISO 9409-1-A20-4-M3"
+        ],
+        "flange": {
+          "pcd_mm": 20,
+          "bolt_count": 4,
+          "thread": "M3",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-004",
+      "name": "KR 6 R700 sixx",
+      "name_en": "KR 6 R700 sixx",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR 6 R700 sixx 工具法兰符合 ISO 9409-1-31.5-4-M5。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-31.5-4-M5"
+        ],
+        "aliases": [
+          "ISO 9409-1-A31.5-4-M5"
+        ],
+        "flange": {
+          "pcd_mm": 31.5,
+          "bolt_count": 4,
+          "thread": "M5",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-005",
+      "name": "KR 10 R900 sixx",
+      "name_en": "KR 10 R900 sixx",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR 10 R900 sixx 工具法兰符合 ISO 9409-1-31.5-4-M5。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-31.5-4-M5"
+        ],
+        "aliases": [
+          "ISO 9409-1-A31.5-4-M5"
+        ],
+        "flange": {
+          "pcd_mm": 31.5,
+          "bolt_count": 4,
+          "thread": "M5",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-006",
+      "name": "LBR iisy 3 R760",
+      "name_en": "LBR iisy 3 R760",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA LBR iisy 3 R760 工具法兰符合 ISO 9409-1-31.5-4-M5。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-31.5-4-M5"
+        ],
+        "aliases": [
+          "ISO 9409-1-A31.5-4-M5"
+        ],
+        "flange": {
+          "pcd_mm": 31.5,
+          "bolt_count": 4,
+          "thread": "M5",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-007",
+      "name": "LBR iisy 11 R1300",
+      "name_en": "LBR iisy 11 R1300",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA LBR iisy 11 R1300 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-008",
+      "name": "LBR iiwa 14 R820",
+      "name_en": "LBR iiwa 14 R820",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA LBR iiwa 14 R820 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-009",
+      "name": "LBR iisy 15 R930",
+      "name_en": "LBR iisy 15 R930",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA LBR iisy 15 R930 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-010",
+      "name": "KR 20 R1810",
+      "name_en": "KR 20 R1810",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR 20 R1810 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-011",
+      "name": "KR 20 R3100 IONTEC",
+      "name_en": "KR 20 R3100 IONTEC",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR 20 R3100 IONTEC 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-012",
+      "name": "KR 30 R2100",
+      "name_en": "KR 30 R2100",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR 30 R2100 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-013",
+      "name": "KR 70 R2100",
+      "name_en": "KR 70 R2100",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR 70 R2100 工具法兰符合 ISO 9409-1-100-4-M8。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-100-4-M8"
+        ],
+        "aliases": [
+          "ISO 9409-1-A100-4-M8"
+        ],
+        "flange": {
+          "pcd_mm": 100,
+          "bolt_count": 4,
+          "thread": "M8",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-014",
+      "name": "KR 120 R2700-2",
+      "name_en": "KR 120 R2700-2",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR 120 R2700-2 工具法兰符合 ISO 9409-1-100-4-M8。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-100-4-M8"
+        ],
+        "aliases": [
+          "ISO 9409-1-A100-4-M8"
+        ],
+        "flange": {
+          "pcd_mm": 100,
+          "bolt_count": 4,
+          "thread": "M8",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-015",
+      "name": "KR 210 R2700-2 (QUANTEC)",
+      "name_en": "KR 210 R2700-2 (QUANTEC)",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR 210 R2700-2 (QUANTEC) 工具法兰符合 ISO 9409-1-100-4-M8。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-100-4-M8"
+        ],
+        "aliases": [
+          "ISO 9409-1-A100-4-M8"
+        ],
+        "flange": {
+          "pcd_mm": 100,
+          "bolt_count": 4,
+          "thread": "M8",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-016",
+      "name": "KR 500 R2830",
+      "name_en": "KR 500 R2830",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR 500 R2830 工具法兰符合 ISO 9409-1-160-4-M12。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-160-4-M12"
+        ],
+        "aliases": [
+          "ISO 9409-1-A160-4-M12"
+        ],
+        "flange": {
+          "pcd_mm": 160,
+          "bolt_count": 4,
+          "thread": "M12",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-017",
+      "name": "KR 1000 TITAN",
+      "name_en": "KR 1000 TITAN",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR 1000 TITAN 工具法兰符合 ISO 9409-1-250-4-M16。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-250-4-M16"
+        ],
+        "aliases": [
+          "ISO 9409-1-A250-4-M16"
+        ],
+        "flange": {
+          "pcd_mm": 250,
+          "bolt_count": 4,
+          "thread": "M16",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-018",
+      "name": "KR 10 R1100-2 (AGILUS)",
+      "name_en": "KR 10 R1100-2 (AGILUS)",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA KR 10 R1100-2 (AGILUS) 工具法兰符合 ISO 9409-1-40-4-M6。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-40-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A40-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 40,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-019",
+      "name": "LBR iiwa 7 R800",
+      "name_en": "LBR iiwa 7 R800",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "KUKA LBR iiwa 7 R800 工具法兰符合 ISO 9409-1-63-6-M6。",
+      "manufacturer": "KUKA",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-63-6-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A63-6-M6"
+        ],
+        "flange": {
+          "pcd_mm": 63,
+          "bolt_count": 6,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-020",
+      "name": "IRB 1010",
+      "name_en": "IRB 1010",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "ABB IRB 1010 工具法兰符合 ISO 9409-1-31.5-4-M5。",
+      "manufacturer": "ABB",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-31.5-4-M5"
+        ],
+        "aliases": [
+          "ISO 9409-1-A31.5-4-M5"
+        ],
+        "flange": {
+          "pcd_mm": 31.5,
+          "bolt_count": 4,
+          "thread": "M5",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-021",
+      "name": "IRB 1100",
+      "name_en": "IRB 1100",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "ABB IRB 1100 工具法兰符合 ISO 9409-1-31.5-4-M5。",
+      "manufacturer": "ABB",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-31.5-4-M5"
+        ],
+        "aliases": [
+          "ISO 9409-1-A31.5-4-M5"
+        ],
+        "flange": {
+          "pcd_mm": 31.5,
+          "bolt_count": 4,
+          "thread": "M5",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-022",
+      "name": "SWIFTI CRB 1100-4/0.58",
+      "name_en": "SWIFTI CRB 1100-4/0.58",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "ABB SWIFTI CRB 1100-4/0.58 工具法兰符合 ISO 9409-1-31.5-4-M5。",
+      "manufacturer": "ABB",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-31.5-4-M5"
+        ],
+        "aliases": [
+          "ISO 9409-1-A31.5-4-M5"
+        ],
+        "flange": {
+          "pcd_mm": 31.5,
+          "bolt_count": 4,
+          "thread": "M5",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-023",
+      "name": "IRB 1660ID-6/1.55",
+      "name_en": "IRB 1660ID-6/1.55",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "ABB IRB 1660ID-6/1.55 工具法兰符合 ISO 9409-1-40-4-M6。",
+      "manufacturer": "ABB",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-40-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A40-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 40,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-024",
+      "name": "IRB 1200-7/0.7",
+      "name_en": "IRB 1200-7/0.7",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "ABB IRB 1200-7/0.7 工具法兰符合 ISO 9409-1-40-4-M6。",
+      "manufacturer": "ABB",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-40-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A40-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 40,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-025",
+      "name": "IRB 1600-10/1.45",
+      "name_en": "IRB 1600-10/1.45",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "ABB IRB 1600-10/1.45 工具法兰符合 ISO 9409-1-40-4-M6。",
+      "manufacturer": "ABB",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-40-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A40-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 40,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-026",
+      "name": "IRB 1300-11/0.9",
+      "name_en": "IRB 1300-11/0.9",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "ABB IRB 1300-11/0.9 工具法兰符合 ISO 9409-1-40-4-M6。",
+      "manufacturer": "ABB",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-40-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A40-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 40,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-027",
+      "name": "GoFa CRB 15000 (5 kg)",
+      "name_en": "GoFa CRB 15000 (5 kg)",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "ABB GoFa CRB 15000 (5 kg) 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "ABB",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-028",
+      "name": "GoFa CRB 15000-10/1.52",
+      "name_en": "GoFa CRB 15000-10/1.52",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "ABB GoFa CRB 15000-10/1.52 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "ABB",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-029",
+      "name": "GoFa CRB 15000-12/1.27",
+      "name_en": "GoFa CRB 15000-12/1.27",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "ABB GoFa CRB 15000-12/1.27 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "ABB",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-030",
+      "name": "UR3e",
+      "name_en": "UR3e",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "Universal Robots UR3e 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "Universal Robots",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-031",
+      "name": "UR5e",
+      "name_en": "UR5e",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "Universal Robots UR5e 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "Universal Robots",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-032",
+      "name": "UR7e",
+      "name_en": "UR7e",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "Universal Robots UR7e 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "Universal Robots",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-033",
+      "name": "UR10e",
+      "name_en": "UR10e",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "Universal Robots UR10e 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "Universal Robots",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-034",
+      "name": "UR12e",
+      "name_en": "UR12e",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "Universal Robots UR12e 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "Universal Robots",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-035",
+      "name": "UR16e",
+      "name_en": "UR16e",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "Universal Robots UR16e 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "Universal Robots",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-036",
+      "name": "UR15",
+      "name_en": "UR15",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "Universal Robots UR15 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "Universal Robots",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-037",
+      "name": "UR20",
+      "name_en": "UR20",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "Universal Robots UR20 工具法兰符合 ISO 9409-1-80-6-M8。",
+      "manufacturer": "Universal Robots",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-80-6-M8"
+        ],
+        "aliases": [
+          "ISO 9409-1-A80-6-M8"
+        ],
+        "flange": {
+          "pcd_mm": 80,
+          "bolt_count": 6,
+          "thread": "M8",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-038",
+      "name": "UR30",
+      "name_en": "UR30",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "Universal Robots UR30 工具法兰符合 ISO 9409-1-80-6-M8。",
+      "manufacturer": "Universal Robots",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-80-6-M8"
+        ],
+        "aliases": [
+          "ISO 9409-1-A80-6-M8"
+        ],
+        "flange": {
+          "pcd_mm": 80,
+          "bolt_count": 6,
+          "thread": "M8",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-039",
+      "name": "LR Mate 200iD/7L",
+      "name_en": "LR Mate 200iD/7L",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "FANUC LR Mate 200iD/7L 工具法兰符合 ISO 9409-1-40-4-M6。",
+      "manufacturer": "FANUC",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-40-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A40-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 40,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-040",
+      "name": "CRX-10iA",
+      "name_en": "CRX-10iA",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "FANUC CRX-10iA 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "FANUC",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-041",
+      "name": "CRX-10iA/L",
+      "name_en": "CRX-10iA/L",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "FANUC CRX-10iA/L 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "FANUC",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-042",
+      "name": "CRX-20iA/L",
+      "name_en": "CRX-20iA/L",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "FANUC CRX-20iA/L 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "FANUC",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-043",
+      "name": "CRX-25iA",
+      "name_en": "CRX-25iA",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "FANUC CRX-25iA 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "FANUC",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-044",
+      "name": "CR-35iB",
+      "name_en": "CR-35iB",
+      "type": "robot arm / cobot platform (tool flange partial)",
+      "description": "FANUC CR-35iB 工具法兰部分符合(仅公布节圆直径/家族名) ISO 9409-1-100。",
+      "manufacturer": "FANUC",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.5,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "partial",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-100"
+        ],
+        "aliases": [],
+        "flange": {
+          "pcd_mm": 100,
+          "bolt_count": null,
+          "thread": null,
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-045",
+      "name": "Motoman HC10",
+      "name_en": "Motoman HC10",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "Yaskawa Motoman HC10 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "Yaskawa",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-046",
+      "name": "HC10DTP",
+      "name_en": "HC10DTP",
+      "type": "robot arm / cobot platform (tool flange partial)",
+      "description": "Yaskawa HC10DTP 工具法兰部分符合(仅公布节圆直径/家族名) ISO 9409-1。",
+      "manufacturer": "Yaskawa",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.5,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "partial",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1"
+        ],
+        "aliases": [],
+        "flange": {
+          "pcd_mm": null,
+          "bolt_count": null,
+          "thread": null,
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-047",
+      "name": "HC20DTP",
+      "name_en": "HC20DTP",
+      "type": "robot arm / cobot platform (tool flange partial)",
+      "description": "Yaskawa HC20DTP 工具法兰部分符合(仅公布节圆直径/家族名) ISO 9409-1。",
+      "manufacturer": "Yaskawa",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.5,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "partial",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1"
+        ],
+        "aliases": [],
+        "flange": {
+          "pcd_mm": null,
+          "bolt_count": null,
+          "thread": null,
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-048",
+      "name": "HC30PL",
+      "name_en": "HC30PL",
+      "type": "robot arm / cobot platform (tool flange partial)",
+      "description": "Yaskawa HC30PL 工具法兰部分符合(仅公布节圆直径/家族名) EN ISO 9409-1。",
+      "manufacturer": "Yaskawa",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.5,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "partial",
+        "mount_type": "flange_mount",
+        "standard": [
+          "EN ISO 9409-1"
+        ],
+        "aliases": [],
+        "flange": {
+          "pcd_mm": null,
+          "bolt_count": null,
+          "thread": null,
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-049",
+      "name": "H2515",
+      "name_en": "H2515",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "Doosan Robotics H2515 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "Doosan Robotics",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
+    },
+    {
+      "id": "HUB-050",
+      "name": "TM12",
+      "name_en": "TM12",
+      "type": "robot arm / cobot platform (tool flange declared)",
+      "description": "Techman Robot TM12 工具法兰符合 ISO 9409-1-50-4-M6。",
+      "manufacturer": "Techman Robot",
+      "category": "platforms",
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "last_verified": "2026-09-25",
+      "standard_conformance": {
+        "assessed": false,
+        "bus_class": "unknown",
+        "ros2": null,
+        "interop_stack_20262893": "unknown",
+        "caee060_relevant": true,
+        "interop_posture": "unknown",
+        "iso22166_relevant": true
+      },
+      "mechanical_interface": {
+        "status": "declared",
+        "mount_type": "flange_mount",
+        "standard": [
+          "ISO 9409-1-50-4-M6"
+        ],
+        "aliases": [
+          "ISO 9409-1-A50-4-M6"
+        ],
+        "flange": {
+          "pcd_mm": 50,
+          "bolt_count": 4,
+          "thread": "M6",
+          "mount_type": "flange_mount"
+        },
+        "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
+        "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+        "source_tier": "B"
+      },
+      "entity_kind": "component"
     }
   ]
 }
