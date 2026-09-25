@@ -152,7 +152,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <p>这自然把已有的阴性兼容方法论扩展到仿生域，而不需要编造任何不存在的标准——凡是厂商未公开，引擎就返回「未知 / 需人工确认」。</p>
 
 <h2 id="data">数据可机读</h2>
-<p>全部 <span data-rp="total_entities">802</span> 条实体（含 17 条仿生机构、8 款灵巧手）以 CC BY 4.0 发布，免鉴权直读：</p>
+<p>全部 <span data-rp="total_entities">852</span> 条实体（含 17 条仿生机构、8 款灵巧手）以 CC BY 4.0 发布，免鉴权直读：</p>
 <pre class="code"><code>curl -s https://roboparts.cc/api/entities.json \
   | jq '.entities[] | select(.category=="bionic_mechanisms" and .subcategory=="bionic_hands")'</code></pre>
 <p>每条仿生实体含 <code>bionic_interface</code> 四维度字段与 <code>source_tier</code> / <code>source_url</code>，可程序化接入选型、BOM 检查与 Agent 工作流。</p>
