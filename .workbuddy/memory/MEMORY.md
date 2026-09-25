@@ -26,6 +26,9 @@
   `curl --tlsv1.3 --ssl-no-revoke` 为 api.github.com / cloudflare **必需**；**npm registry 相反——会 HTTP 000**。
   Contents API 头写 `Authorization: Bearer <tok>`（不是 `token`）。
 - deploy.mjs 挂死根因：不读 `.env.local` ⇒ 回退过期 OAuth。修法：加载 `.env.local` + 无 `WRANGLER_BIN` 时走全局 npm wrangler + `spawnSync` 8min 超时。
+- **部署链路已通（20260925）**：deploy.mjs 内部 spawnSync 全灭（EBUSY -4082），改用 Python subprocess 直调 wrangler.js：
+  `python -c` 加载 `.env.local` → `node <workspace>/node_modules/wrangler/bin/wrangler.js pages deploy . --project-name=robotparts`
+  wrangler 4.120.0 在 managed node workspace 已装好。5389 文件上传 2-5 秒。以后所有部署走此路径。
 - `pre_deploy_check.py` 两级闸门：源改动拒、派生纯时间戳 diff 放行。**护栏报数先核口径**（检测器只是提醒非判决）。
 - **Git Bash 两坑**：① `git commit` 不自动 stage 工作树删除，须显式 `git add -A`，判定用 `git ls-tree -r HEAD --name-only`；② `--message="..."` 被当 pathspec ⇒ 用 `git commit -F -` + subprocess stdin。
 - **本机沙箱 Bash 的 PATH 被 shim 破坏**（`ls/cat/head/tail/grep` 全 command not found，且 SIGTERM 长命令）⇒ 用 Python `subprocess` 显式拼 PATH 驱动 `node.exe`，或直接用 `os.walk`/`re`。
@@ -62,7 +65,8 @@
 - 模型能力边界：**不能读图**；用户贴图须声明无法读并请文本贴内容，绝不推测拼凑结论。
 
 ## 六、MCP 工具面
-- 新增工具三处必同步：`mcp.js` TOOLS（真相源）→ `skills.meta.json` → `read_metrics.py` BUSINESS_TOOLS 白名单，再跑 `gen_skills_manifest.mjs`。工具数展示走 `_mcp_tool_names()` 现算。
+- **20260925 已上线 11 个工具**（第 11 个：`lint_urdf` — URDF 兼容性静态检查，检查 10 类问题）。
+- 新增工具四处必同步：`mcp.js` TOOLS（真相源）→ `skills.meta.json` → `read_metrics.py` BUSINESS_TOOLS → `agent-discovery.json`。工具数展示走 `_mcp_tool_names()` 现算。
 - `verify_mcp_package.py`（本地 import ⊆ package.json.files ⊆ git ls-files）+ `verify_mcp_coverage.py`（stdio FILE_MAP 对账 hosted CATEGORIES）已挂 ci_gate。
   **hosted CATEGORIES 直接当 tool schema enum 用**——少列品类，凡守 JSON Schema 的客户端根本传不进。
 - 公开清单三份全由 `scripts/gen_public_manifests.py` 生成，`--check` 已挂 ci_gate。Registry schema 限 description ≤ 100 字符（超了 422）。
