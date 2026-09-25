@@ -33,7 +33,7 @@ import { judgePair, loadEntityMap, loadCuratedList, semanticSearch } from './_li
 import { lintUrdf } from './_urdf_lint.js';
 
 const SERVER_NAME = 'roboparts';
-const SERVER_VERSION = '1.1.0';
+const SERVER_VERSION = '1.1.1';
 
 /** 支持的协议版本，降序。客户端报的版本若在列则原样回应，否则回落到首个。 */
 const SUPPORTED_PROTOCOLS = ['2025-06-18', '2025-03-26', '2024-11-05'];
