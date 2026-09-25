@@ -79,6 +79,13 @@
       "title": "多Agent质保复核兼容性",
       "when_to_use": "对外发布 / 采购决策前要对兼容性结论做第二双眼睛复核时：给出 L0–L3 风险分级、证据不足时降级、缺失证据显式列出。",
       "guardrails": "只读裁决，不写库、不生成文件；证据不足 2 条时不得向用户输出『确认兼容』，必须附 governor_review.risk_level 与 recommended_next_step。"
+    },
+    {
+      "tool": "lint_urdf",
+      "name": "roboparts-urdf-lint",
+      "title": "URDF 兼容性检查",
+      "when_to_use": "用户上传或引用 URDF XML 文件，想做兼容性预检、检查运动学树完整性、或验证是否符合 ROS 工业标准帧规范时。",
+      "guardrails": "只读静态分析，不修改 URDF 文件、不生成新文件；severity=error 时不得视为通过，必须向用户列出全部 error 级 issue 并建议修复后再提交。"
     }
   ],
   "non_mcp_skills": [

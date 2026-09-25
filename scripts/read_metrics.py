@@ -243,7 +243,8 @@ BUSINESS_TOOLS = ('search_components', 'get_component_detail',
                   'check_compatibility', 'compare_components',
                   'recommend_for_application',
                   'get_parameter_semantics', 'bom_compatibility_check',
-                  'semantic_search', 'get_standard_audit', 'review_compatibility')
+                  'semantic_search', 'get_standard_audit', 'review_compatibility',
+                  'lint_urdf')
 
 
 def mcp_report(total, n):

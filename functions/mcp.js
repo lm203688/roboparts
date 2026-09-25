@@ -30,6 +30,7 @@
  */
 
 import { judgePair, loadEntityMap, loadCuratedList, semanticSearch } from './_lib/compat_engine.js';
+import { lintUrdf } from './_urdf_lint.js';
 
 const SERVER_NAME = 'roboparts';
 const SERVER_VERSION = '1.1.0';
@@ -441,7 +442,37 @@ const TOOLS = [
           description: '零件 2 的 ID，取值方式同 component1_id。两个 ID 可以属于不同品类。',
         },
       },
-      required: ['component1_id', 'component2_id'],
+        required: ['component1_id', 'component2_id'],
+    },
+  },
+  {
+    name: 'lint_urdf',
+    description:
+      '对 URDF（Unified Robot Description Format）XML 文件做静态兼容性检查。' +
+      '返回结构化 JSON 报告，含 severity（error/warning/info）、issues 数组、summary 与 stats。' +
+      '检查 10 类问题：XML 解析错误、缺失根 link、关节限位缺失、关节类型非法、' +
+      '重复 link 名、运动学树循环、缺少 ROS 工业标准帧（flange/tool0/base）、' +
+      '缺少 origin、缺少 inertial 数据、mesh 路径问题。' +
+      '只读、免鉴权。适用于上传 URDF 到 RoboParts 前做兼容性预检。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        urdf_xml: {
+          type: 'string',
+          description:
+            'URDF XML 文件内容（完整 XML 字符串，含 <?xml ... ?> 声明）。' +
+            '支持 DOMParser 与正则 fallback 双解析路径。' +
+            '最大 512KB，超出截断并返回 parse_error。',
+        },
+        check_level: {
+          type: 'string',
+          description:
+            '检查严格度：all=全部检查（默认），errors_only=仅返回 error 级别，warnings_and_errors=warning+error。',
+          enum: ['all', 'errors_only', 'warnings_and_errors'],
+          default: 'all',
+        },
+      },
+      required: ['urdf_xml'],
     },
   },
 ];
@@ -1218,6 +1249,14 @@ async function handleRpc(msg, context) {
         } else if (name === 'review_compatibility') {
           const { map } = await getEntities(env, request);
           payload = toolReviewCompat(map, args);
+        } else if (name === 'lint_urdf') {
+          const xml = String(args.urdf_xml || '');
+          if (xml.length > 524288) {
+            return rpcError(id, -32602, 'URDF XML 超过 512KB 限制', {
+              tool: name, max_size: 524288, actual_size: xml.length,
+            });
+          }
+          payload = lintUrdf(xml, { checkLevel: args.check_level || 'all' });
         } else {
           return rpcError(id, -32602, `未知工具: ${name}`);
         }
