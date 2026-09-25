@@ -1,0 +1,47 @@
+{
+  "serverInfo": {
+    "name": "roboparts",
+    "version": "1.1.1",
+    "title": "RoboParts 机器人零部件兼容性",
+    "description": "仿生/人形机器人零部件兼容性数据层：852 条实体（593 实物零部件 / 101 接口规范 / 81 AI 模型软件 / 10 企业主体 / 17 市场情报），支持协议/电气/机械/ROS2 四维兼容判定。中立数据层 —— 既不生产也不转售任何零部件。11 个 MCP 工具，包含 URDF 静态兼容性检查（lint_urdf）。"
+  },
+  "capabilities": {
+    "tools": {
+      "listChanged": false
+    }
+  },
+  "transport": "streamable-http",
+  "url": "https://roboparts.cc/mcp",
+  "documentation": "https://roboparts.cc/mcp-guide",
+  "authentication": {
+    "required": false,
+    "schemes": []
+  },
+  "repository": {
+    "url": "https://github.com/lm203688/roboparts",
+    "source": "github"
+  },
+  "metadata": {
+    "provider": {
+      "name": "RoboParts",
+      "url": "https://roboparts.cc",
+      "maintainer_email": "61960005@qq.com"
+    },
+    "license": "MIT (code) / CC BY 4.0 (data)",
+    "categories": [
+      "Research & Data",
+      "Developer Tools",
+      "AI & Machine Learning"
+    ],
+    "tools_count": 11,
+    "entities_count": 852,
+    "boundaries": [
+      "只读、免鉴权、不设 cookie、不存储调用方数据",
+      "兼容性结论基于厂商公开声明字段的规则推断，非实验室实测",
+      "厂商未声明的维度记为无法判定，不计入兼容也不计入不兼容",
+      "与任何零部件厂商无商业绑定"
+    ]
+  },
+  "resources": [],
+  "prompts": []
+}
