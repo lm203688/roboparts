@@ -72,6 +72,8 @@
 - 公开清单三份全由 `scripts/gen_public_manifests.py` 生成，`--check` 已挂 ci_gate。Registry schema 限 description ≤ 100 字符（超了 422）。
 - `.gitignore` 有 `mcp-server/` 但部分文件已跟踪 ⇒ 改/加文件用 `git add -f`；普通 `git add` 会 exit 1 但**文件其实已暂存**——别信 exit code，用 `git diff --cached --name-only` 复核。
 - 官方 MCP Registry 是**快照非同步**：改仓库不更新它，须 `./.tools/mcp-publisher.exe` 发布；Ed25519 原私钥已丢失（仅公钥托管 `/.well-known/mcp-registry-auth`）⇒ 需轮换公钥后 `login http`（遇 429 未跑完）。
+- **20260925 Registry 已刷新**：生成新 Ed25519 密钥对 → 部署新公钥 → `login http --domain roboparts.cc --private-key <hex>` → `publish`。v1.1.1 isLatest=True。私钥需纯 hex（64字符无换行），PEM/文件路径均报 "invalid hex"。
+- **20260926 Smithery 上架完成**：入口是 `https://smithery.ai/servers/new`（不是文档写的 `/new`）。namespace 由 Smithery 自动生成 `fm203688`（不是想填的 `lm203688`）。扫描 SUCCESS，11 tools + 1 resource。最终 URL `https://smithery.ai/servers/fm203688/roboparts`。Step 2 连接参数页面对免鉴权服务直接 Skip。
 - npm `1.1.1` 已发（`~/.npmrc` 账号 `61960005qq`）。返 202 + 立刻 `npm view` 读旧版是 CDN 滞后（非失败）；验证要 `--cache <新目录> --prefer-online`。
 
 ## 七、计量与后端
