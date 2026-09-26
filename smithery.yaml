@@ -57,3 +57,5 @@ tools:
     description: "返回标准登记表 ↔ 实体声明 的自动交叉校验结果：哪些机械/总线声明能被已知标准集核实、哪些声明的编码不在已知指定集中（无法核实），以及登记表缺口与行业标准覆盖情况。"
   - name: review_compatibility
     description: "对两个零部件做「多 Agent 质保复核」：Worker 层执行标准四维兼容性裁决（与 /api/compatibility 同一引擎），Governor 层独立复核结论——按证据强度给出 L0–L3 风险分级、在证据不…"
+  - name: lint_urdf
+    description: "对 URDF（Unified Robot Description Format）XML 文件做静态兼容性检查。"
