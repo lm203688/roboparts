@@ -75,7 +75,9 @@
 - **20260925 Registry 已刷新**：生成新 Ed25519 密钥对 → 部署新公钥 → `login http --domain roboparts.cc --private-key <hex>` → `publish`。v1.1.1 isLatest=True。私钥需纯 hex（64字符无换行），PEM/文件路径均报 "invalid hex"。
 - **20260926 Smithery 上架完成**：入口是 `https://smithery.ai/servers/new`（不是文档写的 `/new`）。namespace 由 Smithery 自动生成 `fm203688`（不是想填的 `lm203688`）。扫描 SUCCESS，11 tools + 1 resource。最终 URL `https://smithery.ai/servers/fm203688/roboparts`。Step 2 连接参数页面对免鉴权服务直接 Skip。
 - **20260927 LobeHub Marketplace 已刷新到 11 tools**：`lm203688-roboparts@1.1.1` 已 published。**关键突破**——`lhm` CLI 走 **M2M auth** 完全绕开浏览器 OAuth：`npx @lobehub/market-cli register --name X --source Y`（30 秒注册，落 `~/.lobehub-market/credentials.json`）→ `auth refresh` → 拿 access token（1h 有效）→ 拥有完整 `plugin list/init/update` 权限。之前 user OAuth（`lhm login`）token 即使过期也可忽略，两条认证独立。日常流程：`auth refresh` → `plugin init --force --url https://roboparts.cc/mcp --dir .` → `python scripts/gen_lhm_manifest.py`（刷回 owner 声明）→ `plugin update --dir .`（原地合并不增版本号）。
+- **Glama 早已自动上架**（`https://glama.ai/mcp/connectors/cc.roboparts/roboparts`）：HTTP 200，Status=Healthy，Owner Verified，Uptime 100%/41d，TDQS A4.2/5.0，11 tools，最后测试 2026-09-27。Glama 是**通过 Registry 命名空间 `cc.roboparts/roboparts` 自动同步**，不需要人工提交。**判定「未上架」必须直接 GET 详情页 `/mcp/connectors/<ns>/<slug>`，不能用搜索列表反推**——初稿踩过坑。
 - npm `1.1.1` 已发（`~/.npmrc` 账号 `61960005qq`）。返 202 + 立刻 `npm view` 读旧版是 CDN 滞后（非失败）；验证要 `--cache <新目录> --prefer-online`。
+- **分发 4 家已全绿**（Registry / Smithery / LobeHub / Glama），下一棒是 3 个 awesome 列表批量 PR（`punkpeye/` / `TensorBlock/` / `mcpservers.org`），Glama 分数直接引用即可。
 
 ## 七、计量与后端
 - 边缘遥测 `_middleware.js`→KV `USER_CREDITS`，读 `read_metrics.py`；读数是**下界**（分片写互盖），只能证"至少"。
