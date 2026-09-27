@@ -74,6 +74,7 @@
 - 官方 MCP Registry 是**快照非同步**：改仓库不更新它，须 `./.tools/mcp-publisher.exe` 发布；Ed25519 原私钥已丢失（仅公钥托管 `/.well-known/mcp-registry-auth`）⇒ 需轮换公钥后 `login http`（遇 429 未跑完）。
 - **20260925 Registry 已刷新**：生成新 Ed25519 密钥对 → 部署新公钥 → `login http --domain roboparts.cc --private-key <hex>` → `publish`。v1.1.1 isLatest=True。私钥需纯 hex（64字符无换行），PEM/文件路径均报 "invalid hex"。
 - **20260926 Smithery 上架完成**：入口是 `https://smithery.ai/servers/new`（不是文档写的 `/new`）。namespace 由 Smithery 自动生成 `fm203688`（不是想填的 `lm203688`）。扫描 SUCCESS，11 tools + 1 resource。最终 URL `https://smithery.ai/servers/fm203688/roboparts`。Step 2 连接参数页面对免鉴权服务直接 Skip。
+- **20260927 LobeHub Marketplace 已刷新到 11 tools**：`lm203688-roboparts@1.1.1` 已 published。**关键突破**——`lhm` CLI 走 **M2M auth** 完全绕开浏览器 OAuth：`npx @lobehub/market-cli register --name X --source Y`（30 秒注册，落 `~/.lobehub-market/credentials.json`）→ `auth refresh` → 拿 access token（1h 有效）→ 拥有完整 `plugin list/init/update` 权限。之前 user OAuth（`lhm login`）token 即使过期也可忽略，两条认证独立。日常流程：`auth refresh` → `plugin init --force --url https://roboparts.cc/mcp --dir .` → `python scripts/gen_lhm_manifest.py`（刷回 owner 声明）→ `plugin update --dir .`（原地合并不增版本号）。
 - npm `1.1.1` 已发（`~/.npmrc` 账号 `61960005qq`）。返 202 + 立刻 `npm view` 读旧版是 CDN 滞后（非失败）；验证要 `--cache <新目录> --prefer-online`。
 
 ## 七、计量与后端
