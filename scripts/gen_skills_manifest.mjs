@@ -33,6 +33,8 @@ if (!Array.isArray(TOOLS) || !TOOLS.length) {
 const BY_NAME = new Map(TOOLS.map((t) => [t.name, t]));
 
 const META = JSON.parse(fs.readFileSync(path.join(ROOT, 'skills', 'skills.meta.json'), 'utf8'));
+const SERVER = JSON.parse(fs.readFileSync(path.join(ROOT, 'server.json'), 'utf8'));
+const VERSION = SERVER.version || META.version || '0.0.0';
 
 /* ── 1. 校验散文文件没有编造工具 ───────────────────────────────────────── */
 const bogus = META.mcp_skills.filter((s) => !BY_NAME.has(s.tool));
@@ -217,7 +219,7 @@ const agentCard = {
   url: META.mcp_server,
   preferredTransport: 'JSONRPC',
   provider: { organization: META.provider, url: 'https://roboparts.cc' },
-  version: '1.1.0',
+  version: VERSION,
   documentationUrl: 'https://roboparts.cc/llms.txt',
   capabilities: { streaming: false, pushNotifications: false, stateTransitionHistory: false },
   securitySchemes: {},
