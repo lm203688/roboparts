@@ -81,7 +81,7 @@
 
 ## 六·五、生态与竞品地图（20260929 加）
 - **目标客户 = Feather Robotics**（`feather.dev`，SF 2025 创立，$29,990 轮式双臂人形，23 DOF，Python+ROS2 Open SDK，$7.6M pre-seed Gradient 领投）。**Custom end effectors supported** + 无公开 GitHub repo ⇒ 每个客户都要解决机械/电气兼容性 ⇒ RoboParts 是完美数据层。互补不冲突：他们卖 body+SDK，RoboParts 卖 body 之间怎么接。**P2 行动**：加 "Feather 兼容清单" 文章，或邮件 contact@feather.dev 提议官方推荐。
-- **生态接入点 = AgenticROS**（`agenticros.com`，RealSense 赞助开源）。skills marketplace `npx agenticros skills install owner/skill-id` + capability schema `{id,verb,preconditions,inputs,outputs}` = RoboParts entity schema 镜像。**P1 行动**：做 `roboparts/roboparts` AgenticROS skill wrapper（2h 成本，接入 4 个 adapter：Claude Code / OpenClaw / Gemini / Codex）。规模差距：AgenticROS 周下载 128 vs RoboParts 29 调用 0 注册，但场景互补（他们做控制栈，RoboParts 做零件层）。
+- **生态接入点 = AgenticROS（`agenticros.com`，RealSense 赞助开源）**：**P1 已落地（20260929）**——`agenticros-skill-roboparts/`（独立 GitHub repo `lm203688/agenticros-skill-roboparts` + npm 包），11 个 `roboparts_*` 工具通过 HTTP 代理 `roboparts.cc/mcp`。`npx agenticros skills install lm203688/roboparts` 一次接入 4 客户端（Claude Code / OpenClaw / Gemini / Codex）。capabilities verb 映射让 planner 可链式调用（如 search → check_compatibility）。待办：`npx agenticros publish` 提交 marketplace。规模差距：AgenticROS 周下载 128 vs RoboParts 29 调用，但场景互补（他们做控制栈，RoboParts 做零件层）。
 - **哲学背书 = Isaac ROS 5.0（2026-09-22 ROSCon）**：rosidl::buffer 是 NVIDIA+OSRA 贡献给 ROS Lyrical 的供应商中立内存传输接口（middleware 以 plugin 加载 buffer backend）⇒ **RoboParts = 零件兼容性层的 rosidl::buffer**。这条哲学可在 UVP 文案里引用（"the rosidl::buffer for robot parts compatibility"）——但要谨慎，不要过度绑定 NVIDIA 叙事。
 - **分发链 ROI 排序**（未来同类目录 PR 参考）：punkpeye ✅ 必做（10K+ stars 行业事实标准）> mcpservers.org 🟡 可选（SEO 长尾）> TensorBlock ⚠️ 可跳过（受众高度重叠，边际近零）。真正瓶颈是 T1 受众转化率，不是曝光。
 
