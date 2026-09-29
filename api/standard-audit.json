@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-24T02:01:14.132005Z",
+  "generated_at": "2026-09-29T09:04:52.103066Z",
   "generated_at_semantics": "锚定三个输入源**内容内**时间戳字段的最大值，非脚本运行时刻、非文件 mtime；源内容不变则本字段不变（幂等）。字节级精确锚定见 source_digest。",
-  "source_digest": "08218bae18185227/b9acb68e14125992/1b5c16ad219b4cfa",
+  "source_digest": "06d1595e6e4a737e/8ce11dadc7ba3619/1b5c16ad219b4cfa",
   "purpose": "标准登记表 ↔ 实体声明 自动交叉校验（数据质量自检，非兼容性裁决）",
   "registry": {
-    "known_mechanical_designations": 10,
+    "known_mechanical_designations": 12,
     "recognized_bus_standards": [
       "BLE",
       "BLUETOOTH",
@@ -37,7 +37,7 @@
     "hb_in_scope_count": 4
   },
   "mechanical_claims": {
-    "total_declared": 29,
+    "total_declared": 87,
     "verified": [
       {
         "id": "ACT-028",
@@ -206,13 +206,367 @@
         "name": "Robotiq FT 300-S",
         "entity_kind": "component",
         "declared": "ISO 9409-1-40-4-M6"
+      },
+      {
+        "id": "HUB-001",
+        "name": "KR 3 AGILUS",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-20-4-M3"
+      },
+      {
+        "id": "HUB-002",
+        "name": "KR DELTA",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-20-4-M3"
+      },
+      {
+        "id": "HUB-003",
+        "name": "KR SCARA R600",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-20-4-M3"
+      },
+      {
+        "id": "HUB-004",
+        "name": "KR 6 R700 sixx",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-31.5-4-M5"
+      },
+      {
+        "id": "HUB-005",
+        "name": "KR 10 R900 sixx",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-31.5-4-M5"
+      },
+      {
+        "id": "HUB-006",
+        "name": "LBR iisy 3 R760",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-31.5-4-M5"
+      },
+      {
+        "id": "HUB-007",
+        "name": "LBR iisy 11 R1300",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-008",
+        "name": "LBR iiwa 14 R820",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-009",
+        "name": "LBR iisy 15 R930",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-010",
+        "name": "KR 20 R1810",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-011",
+        "name": "KR 20 R3100 IONTEC",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-012",
+        "name": "KR 30 R2100",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-013",
+        "name": "KR 70 R2100",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-100-4-M8"
+      },
+      {
+        "id": "HUB-014",
+        "name": "KR 120 R2700-2",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-100-4-M8"
+      },
+      {
+        "id": "HUB-015",
+        "name": "KR 210 R2700-2 (QUANTEC)",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-100-4-M8"
+      },
+      {
+        "id": "HUB-016",
+        "name": "KR 500 R2830",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-160-4-M12"
+      },
+      {
+        "id": "HUB-017",
+        "name": "KR 1000 TITAN",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-250-4-M16"
+      },
+      {
+        "id": "HUB-018",
+        "name": "KR 10 R1100-2 (AGILUS)",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-40-4-M6"
+      },
+      {
+        "id": "HUB-019",
+        "name": "LBR iiwa 7 R800",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-63-6-M6"
+      },
+      {
+        "id": "HUB-020",
+        "name": "IRB 1010",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-31.5-4-M5"
+      },
+      {
+        "id": "HUB-021",
+        "name": "IRB 1100",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-31.5-4-M5"
+      },
+      {
+        "id": "HUB-022",
+        "name": "SWIFTI CRB 1100-4/0.58",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-31.5-4-M5"
+      },
+      {
+        "id": "HUB-023",
+        "name": "IRB 1660ID-6/1.55",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-40-4-M6"
+      },
+      {
+        "id": "HUB-024",
+        "name": "IRB 1200-7/0.7",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-40-4-M6"
+      },
+      {
+        "id": "HUB-025",
+        "name": "IRB 1600-10/1.45",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-40-4-M6"
+      },
+      {
+        "id": "HUB-026",
+        "name": "IRB 1300-11/0.9",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-40-4-M6"
+      },
+      {
+        "id": "HUB-027",
+        "name": "GoFa CRB 15000 (5 kg)",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-028",
+        "name": "GoFa CRB 15000-10/1.52",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-029",
+        "name": "GoFa CRB 15000-12/1.27",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-030",
+        "name": "UR3e",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-031",
+        "name": "UR5e",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-032",
+        "name": "UR7e",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-033",
+        "name": "UR10e",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-034",
+        "name": "UR12e",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-035",
+        "name": "UR16e",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-036",
+        "name": "UR15",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-037",
+        "name": "UR20",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-80-6-M8"
+      },
+      {
+        "id": "HUB-038",
+        "name": "UR30",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-80-6-M8"
+      },
+      {
+        "id": "HUB-039",
+        "name": "LR Mate 200iD/7L",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-40-4-M6"
+      },
+      {
+        "id": "HUB-040",
+        "name": "CRX-10iA",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-041",
+        "name": "CRX-10iA/L",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-042",
+        "name": "CRX-20iA/L",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-043",
+        "name": "CRX-25iA",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-044",
+        "name": "CR-35iB",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-100"
+      },
+      {
+        "id": "HUB-045",
+        "name": "Motoman HC10",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-048",
+        "name": "HC30PL",
+        "entity_kind": "component",
+        "declared": "EN ISO 9409-1"
+      },
+      {
+        "id": "HUB-049",
+        "name": "H2515",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "HUB-050",
+        "name": "TM12",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "SUPERDEX-fr3-v2",
+        "name": "SuperDex Franka FR3 v2",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "SUPERDEX-fr3",
+        "name": "SuperDex Franka FR3",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "SUPERDEX-2f-85",
+        "name": "SuperDex Robotiq 2F-85",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-50-4-M6"
+      },
+      {
+        "id": "SUPERDEX-2f-85",
+        "name": "SuperDex Robotiq 2F-85",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-40-4-M6"
+      },
+      {
+        "id": "SUPERDEX-2f-85",
+        "name": "SuperDex Robotiq 2F-85",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1-31.5-4-M5"
       }
     ],
-    "unverified": [],
+    "unverified": [
+      {
+        "id": "SUPERDEX-openarm-v20-left-arm",
+        "name": "SuperDex Agilex OpenArm V20",
+        "entity_kind": "component",
+        "declared": "Proprietary (OpenArm flange)",
+        "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+      },
+      {
+        "id": "SUPERDEX-openarm-v20-right-arm",
+        "name": "SuperDex Agilex OpenArm V20",
+        "entity_kind": "component",
+        "declared": "Proprietary (OpenArm flange)",
+        "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+      },
+      {
+        "id": "SUPERDEX-allegro-v5-right",
+        "name": "SuperDex Allegro Hand V5",
+        "entity_kind": "component",
+        "declared": "Proprietary (Allegro flange)",
+        "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+      }
+    ],
     "unresolvable_granularity": [
       {
         "id": "BIONIC-HAND-002",
         "name": "Yeah Robotic Hand (formerly Rebelia)",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1",
+        "note": "声明只到标准号本身，未给出 (PCD, 孔数, 螺纹)，无可核实内容；这不是笔误，是厂商未声明到可判定粒度"
+      },
+      {
+        "id": "HUB-046",
+        "name": "HC10DTP",
+        "entity_kind": "component",
+        "declared": "ISO 9409-1",
+        "note": "声明只到标准号本身，未给出 (PCD, 孔数, 螺纹)，无可核实内容；这不是笔误，是厂商未声明到可判定粒度"
+      },
+      {
+        "id": "HUB-047",
+        "name": "HC20DTP",
         "entity_kind": "component",
         "declared": "ISO 9409-1",
         "note": "声明只到标准号本身，未给出 (PCD, 孔数, 螺纹)，无可核实内容；这不是笔误，是厂商未声明到可判定粒度"
@@ -265,8 +619,33 @@
       "note": "作用域（机器人∩接口）已确认；实体级\"是否符合\"需其声明该标准，当前库无此链接字段，故仅报告标准存在性与证据等级，不臆造符合判定。"
     }
   ],
-  "conflicts": [],
-  "conflict_count": 0,
+  "conflicts": [
+    {
+      "type": "unverified_mechanical_claim",
+      "id": "SUPERDEX-openarm-v20-left-arm",
+      "name": "SuperDex Agilex OpenArm V20",
+      "entity_kind": "component",
+      "declared": "Proprietary (OpenArm flange)",
+      "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+    },
+    {
+      "type": "unverified_mechanical_claim",
+      "id": "SUPERDEX-openarm-v20-right-arm",
+      "name": "SuperDex Agilex OpenArm V20",
+      "entity_kind": "component",
+      "declared": "Proprietary (OpenArm flange)",
+      "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+    },
+    {
+      "type": "unverified_mechanical_claim",
+      "id": "SUPERDEX-allegro-v5-right",
+      "name": "SuperDex Allegro Hand V5",
+      "entity_kind": "component",
+      "declared": "Proprietary (Allegro flange)",
+      "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+    }
+  ],
+  "conflict_count": 3,
   "disclaimer": "本审计仅校验\"声明是否可核实\"，不构成兼容性结论；unverified/registry_gap 属数据质量缺口，需用可溯源出处补全，而非直接判定不兼容。",
   "meta": {
     "access": {
@@ -285,8 +664,8 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 5.69,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 5.69%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 16.2,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 16.20%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }

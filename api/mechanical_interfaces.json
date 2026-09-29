@@ -23,8 +23,8 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 5.69,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 5.69%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 16.2,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 16.20%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
@@ -568,17 +568,17 @@
     "description": "从 api/entities.json 现算：实体库正在引用的 ISO 9409-1 编码，以及每个编码在本表是否有规范行。registry_row=null 且 status=unregistered_gap 即「在用但未登记」；status=unparseable_bare_standard 则是厂商未声明到可判定粒度，不是可补的缺口。",
     "computed_from": "/api/entities.json → mechanical_interface.{standard,flange,tool_side,tool_side_flange}",
     "join_rule": "去空格、大写、并删除尺寸段前的 'A' 前缀，即 re.sub(r'ISO9409-1-A', 'ISO9409-1-', s.upper().replace(' ', ''))",
-    "total_tokens_in_use": 4,
+    "total_tokens_in_use": 12,
     "unregistered_count": 0,
-    "unparseable_bare_count": 1,
-    "registered_count": 3,
-    "entities_scanned": 802,
-    "entities_touched": 16,
+    "unparseable_bare_count": 3,
+    "registered_count": 9,
+    "entities_scanned": 865,
+    "entities_touched": 69,
     "unregistered_policy": "不为消除缺口而凭空补行。按本项目纪律（L1.77），未读到 ISO 9409-1:2004 原文即不替标准发明条目；缺口在此显式列出，待取得标准原文或 OEM 一手尺寸图后再补规范行。",
     "entries": [
       {
-        "token_as_written": "ISO 9409-1",
-        "normalized": "ISO9409-1",
+        "token_as_written": "EN ISO 9409-1",
+        "normalized": "ENISO9409-1",
         "parsed": null,
         "registry_row": null,
         "status": "unparseable_bare_standard",
@@ -587,7 +587,113 @@
           "robot"
         ],
         "used_by_entity_ids": [
-          "BIONIC-HAND-002"
+          "HUB-048"
+        ]
+      },
+      {
+        "token_as_written": "ISO 9409-1",
+        "normalized": "ISO9409-1",
+        "parsed": null,
+        "registry_row": null,
+        "status": "unparseable_bare_standard",
+        "entity_count": 3,
+        "declared_sides": [
+          "robot"
+        ],
+        "used_by_entity_ids": [
+          "BIONIC-HAND-002",
+          "HUB-046",
+          "HUB-047"
+        ]
+      },
+      {
+        "token_as_written": "ISO 9409-1-100",
+        "normalized": "ISO9409-1-100",
+        "parsed": null,
+        "registry_row": null,
+        "status": "unparseable_bare_standard",
+        "entity_count": 1,
+        "declared_sides": [
+          "robot"
+        ],
+        "used_by_entity_ids": [
+          "HUB-044"
+        ]
+      },
+      {
+        "token_as_written": "ISO 9409-1-100-4-M8",
+        "normalized": "ISO9409-1-100-4-M8",
+        "parsed": {
+          "d1_mm": 100.0,
+          "bolt_count": 4,
+          "thread": "M8"
+        },
+        "registry_row": "ISO9409-1-A100-4-M8",
+        "status": "registered",
+        "entity_count": 3,
+        "declared_sides": [
+          "robot"
+        ],
+        "used_by_entity_ids": [
+          "HUB-013",
+          "HUB-014",
+          "HUB-015"
+        ]
+      },
+      {
+        "token_as_written": "ISO 9409-1-160-4-M12",
+        "normalized": "ISO9409-1-160-4-M12",
+        "parsed": {
+          "d1_mm": 160.0,
+          "bolt_count": 4,
+          "thread": "M12"
+        },
+        "registry_row": "ISO9409-1-A160-4-M12",
+        "status": "registered",
+        "entity_count": 1,
+        "declared_sides": [
+          "robot"
+        ],
+        "used_by_entity_ids": [
+          "HUB-016"
+        ]
+      },
+      {
+        "token_as_written": "ISO 9409-1-20-4-M3",
+        "normalized": "ISO9409-1-20-4-M3",
+        "parsed": {
+          "d1_mm": 20.0,
+          "bolt_count": 4,
+          "thread": "M3"
+        },
+        "registry_row": "ISO9409-1-A20-4-M3",
+        "status": "registered",
+        "entity_count": 3,
+        "declared_sides": [
+          "robot"
+        ],
+        "used_by_entity_ids": [
+          "HUB-001",
+          "HUB-002",
+          "HUB-003"
+        ]
+      },
+      {
+        "token_as_written": "ISO 9409-1-250-4-M16",
+        "normalized": "ISO9409-1-250-4-M16",
+        "parsed": {
+          "d1_mm": 250.0,
+          "bolt_count": 4,
+          "thread": "M16"
+        },
+        "registry_row": "ISO9409-1-A250-4-M16",
+        "status": "registered",
+        "entity_count": 1,
+        "declared_sides": [
+          "robot"
+        ],
+        "used_by_entity_ids": [
+          "HUB-017"
         ]
       },
       {
@@ -600,7 +706,7 @@
         },
         "registry_row": "ISO9409-1-A31.5-4-M5",
         "status": "registered",
-        "entity_count": 7,
+        "entity_count": 14,
         "declared_sides": [
           "robot"
         ],
@@ -610,8 +716,15 @@
           "GRIP-006",
           "GRIP-009",
           "GRIP-014",
+          "HUB-004",
+          "HUB-005",
+          "HUB-006",
+          "HUB-020",
+          "HUB-021",
+          "HUB-022",
           "SENS-31",
-          "SENS-855"
+          "SENS-855",
+          "SUPERDEX-2f-85"
         ]
       },
       {
@@ -624,7 +737,7 @@
         },
         "registry_row": "ISO9409-1-A40-4-M6",
         "status": "registered",
-        "entity_count": 6,
+        "entity_count": 13,
         "declared_sides": [
           "robot"
         ],
@@ -633,8 +746,15 @@
           "GRIP-002",
           "GRIP-006",
           "GRIP-014",
+          "HUB-018",
+          "HUB-023",
+          "HUB-024",
+          "HUB-025",
+          "HUB-026",
+          "HUB-039",
           "SENS-31",
-          "SENS-855"
+          "SENS-855",
+          "SUPERDEX-2f-85"
         ]
       },
       {
@@ -647,7 +767,7 @@
         },
         "registry_row": "ISO9409-1-A50-4-M6",
         "status": "registered",
-        "entity_count": 15,
+        "entity_count": 41,
         "declared_sides": [
           "robot"
         ],
@@ -660,13 +780,76 @@
           "GRIP-009",
           "GRIP-012",
           "GRIP-014",
+          "HUB-007",
+          "HUB-008",
+          "HUB-009",
+          "HUB-010",
+          "HUB-011",
+          "HUB-012",
+          "HUB-027",
+          "HUB-028",
+          "HUB-029",
+          "HUB-030",
+          "HUB-031",
+          "HUB-032",
+          "HUB-033",
+          "HUB-034",
+          "HUB-035",
+          "HUB-036",
+          "HUB-040",
+          "HUB-041",
+          "HUB-042",
+          "HUB-043",
+          "HUB-045",
+          "HUB-049",
+          "HUB-050",
           "SENS-047",
           "SENS-049",
           "SENS-31",
           "SENS-37",
           "SENS-852",
           "SENS-854",
-          "SENS-855"
+          "SENS-855",
+          "SUPERDEX-2f-85",
+          "SUPERDEX-fr3",
+          "SUPERDEX-fr3-v2"
+        ]
+      },
+      {
+        "token_as_written": "ISO 9409-1-63-6-M6",
+        "normalized": "ISO9409-1-63-6-M6",
+        "parsed": {
+          "d1_mm": 63.0,
+          "bolt_count": 6,
+          "thread": "M6"
+        },
+        "registry_row": "ISO9409-1-A63-6-M6",
+        "status": "registered",
+        "entity_count": 1,
+        "declared_sides": [
+          "robot"
+        ],
+        "used_by_entity_ids": [
+          "HUB-019"
+        ]
+      },
+      {
+        "token_as_written": "ISO 9409-1-80-6-M8",
+        "normalized": "ISO9409-1-80-6-M8",
+        "parsed": {
+          "d1_mm": 80.0,
+          "bolt_count": 6,
+          "thread": "M8"
+        },
+        "registry_row": "ISO9409-1-A80-6-M8",
+        "status": "registered",
+        "entity_count": 2,
+        "declared_sides": [
+          "robot"
+        ],
+        "used_by_entity_ids": [
+          "HUB-037",
+          "HUB-038"
         ]
       }
     ],

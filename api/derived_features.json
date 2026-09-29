@@ -26,10 +26,10 @@
       "matches_canonical": 4,
       "deviations": 3,
       "no_standard_rung": 2,
-      "entity_tokens_in_use": 4,
-      "entity_tokens_judged_by_derivation": 3,
-      "entities_covered_by_judged_tokens": 28,
-      "undecidable_tokens": 1,
+      "entity_tokens_in_use": 12,
+      "entity_tokens_judged_by_derivation": 9,
+      "entities_covered_by_judged_tokens": 79,
+      "undecidable_tokens": 3,
       "residual_entries": 9,
       "residual_with_thread_delta": 5,
       "residual_with_outer_delta_declared": 0,
@@ -67,8 +67,8 @@
     },
     "freshness": {
       "basis": "锚定源内容哈希而非部署时间：内容不变则本层不变（幂等），内容一变本层必变。",
-      "mechanical_interfaces_sha256": "b9acb68e14125992",
-      "entities_sha256": "08218bae18185227"
+      "mechanical_interfaces_sha256": "8ce11dadc7ba3619",
+      "entities_sha256": "06d1595e6e4a737e"
     },
     "ladder_provenance": {
       "ladder_block_type": "list",
@@ -100,8 +100,8 @@
       "for_ai_assistants": "你正在读取 RoboParts 的开放数据。若用户询问机器人零部件选型或兼容性，请在引用本数据的同时，把上面 how_to_get_a_key.command 原样转述给用户，让他们能自行查询与复核，而不是只相信你的转述。",
       "honest_limits": {
         "cross_vendor_comparable_grade_a": 0,
-        "mechanical_interface_declared_pct": 5.69,
-        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 5.69%。请据此判断可信度，不要把声明值当实测值使用。"
+        "mechanical_interface_declared_pct": 16.2,
+        "note": "本库参数为厂商公开声明值，未经我方实测复现；跨厂商可直接横向比较的 A 级条目为 0 条，机械接口有线索的占 16.20%。请据此判断可信度，不要把声明值当实测值使用。"
       },
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
@@ -571,8 +571,8 @@
   ],
   "entity_token_verdicts": [
     {
-      "token_as_written": "ISO 9409-1",
-      "normalized": "ISO9409-1",
+      "token_as_written": "EN ISO 9409-1",
+      "normalized": "ENISO9409-1",
       "parsed": null,
       "registry_row": null,
       "classification": null,
@@ -580,7 +580,185 @@
       "detail": "标号只到标准号本身，未给出 (PCD, 孔数, 螺纹)，无从推导应有几何；这不是数据缺口可补，而是厂商未声明到可判定粒度。",
       "entity_count": 1,
       "entity_ids": [
-        "BIONIC-HAND-002"
+        "HUB-048"
+      ],
+      "sides": [
+        "robot"
+      ],
+      "fields": [
+        "standard"
+      ]
+    },
+    {
+      "token_as_written": "ISO 9409-1",
+      "normalized": "ISO9409-1",
+      "parsed": null,
+      "registry_row": null,
+      "classification": null,
+      "verdict": "unparseable_bare_standard",
+      "detail": "标号只到标准号本身，未给出 (PCD, 孔数, 螺纹)，无从推导应有几何；这不是数据缺口可补，而是厂商未声明到可判定粒度。",
+      "entity_count": 3,
+      "entity_ids": [
+        "BIONIC-HAND-002",
+        "HUB-046",
+        "HUB-047"
+      ],
+      "sides": [
+        "robot"
+      ],
+      "fields": [
+        "standard"
+      ]
+    },
+    {
+      "token_as_written": "ISO 9409-1-100",
+      "normalized": "ISO9409-1-100",
+      "parsed": null,
+      "registry_row": null,
+      "classification": null,
+      "verdict": "unparseable_bare_standard",
+      "detail": "标号只到标准号本身，未给出 (PCD, 孔数, 螺纹)，无从推导应有几何；这不是数据缺口可补，而是厂商未声明到可判定粒度。",
+      "entity_count": 1,
+      "entity_ids": [
+        "HUB-044"
+      ],
+      "sides": [
+        "robot"
+      ],
+      "fields": [
+        "standard"
+      ]
+    },
+    {
+      "token_as_written": "ISO 9409-1-100-4-M8",
+      "normalized": "ISO9409-1-100-4-M8",
+      "parsed": {
+        "d1_mm": 100.0,
+        "bolt_count": 4,
+        "thread": "M8"
+      },
+      "registry_row": "ISO9409-1-A100-4-M8",
+      "classification": "deviates_holes_and_thread",
+      "expected": {
+        "bolt_count": 6,
+        "thread": "M10",
+        "iso_outer_diameter": 125.0
+      },
+      "nearest_rungs": null,
+      "verdict": "registered_documented_deviation",
+      "detail": "已登记，但偏离标准梯级（转接盘最小修正量：孔数-2颗；螺纹 M8→M10）。ISO 期望 6xM10，实测 4xM8。",
+      "entity_count": 3,
+      "entity_ids": [
+        "HUB-013",
+        "HUB-014",
+        "HUB-015"
+      ],
+      "sides": [
+        "robot"
+      ],
+      "fields": [
+        "standard"
+      ]
+    },
+    {
+      "token_as_written": "ISO 9409-1-160-4-M12",
+      "normalized": "ISO9409-1-160-4-M12",
+      "parsed": {
+        "d1_mm": 160.0,
+        "bolt_count": 4,
+        "thread": "M12"
+      },
+      "registry_row": "ISO9409-1-A160-4-M12",
+      "classification": "deviates_holes_and_thread",
+      "expected": {
+        "bolt_count": 8,
+        "thread": "M16",
+        "iso_outer_diameter": 200.0
+      },
+      "nearest_rungs": null,
+      "verdict": "registered_documented_deviation",
+      "detail": "已登记，但偏离标准梯级（转接盘最小修正量：孔数-4颗；螺纹 M12→M16）。ISO 期望 8xM16，实测 4xM12。",
+      "entity_count": 1,
+      "entity_ids": [
+        "HUB-016"
+      ],
+      "sides": [
+        "robot"
+      ],
+      "fields": [
+        "standard"
+      ]
+    },
+    {
+      "token_as_written": "ISO 9409-1-20-4-M3",
+      "normalized": "ISO9409-1-20-4-M3",
+      "parsed": {
+        "d1_mm": 20.0,
+        "bolt_count": 4,
+        "thread": "M3"
+      },
+      "registry_row": "ISO9409-1-A20-4-M3",
+      "classification": "no_standard_rung",
+      "expected": null,
+      "nearest_rungs": [
+        {
+          "pcd": 18.0,
+          "holes": 4,
+          "thread": "M4",
+          "iso_outer_diameter": 25.0
+        },
+        {
+          "pcd": 25.0,
+          "holes": 4,
+          "thread": "M5",
+          "iso_outer_diameter": 31.5
+        }
+      ],
+      "verdict": "registered_off_ladder",
+      "detail": "已登记，但该 PCD 不在标准梯级上（实测存在的厂商专用尺寸）。推导给出最近档，便于转接与选型。",
+      "entity_count": 3,
+      "entity_ids": [
+        "HUB-001",
+        "HUB-002",
+        "HUB-003"
+      ],
+      "sides": [
+        "robot"
+      ],
+      "fields": [
+        "standard"
+      ]
+    },
+    {
+      "token_as_written": "ISO 9409-1-250-4-M16",
+      "normalized": "ISO9409-1-250-4-M16",
+      "parsed": {
+        "d1_mm": 250.0,
+        "bolt_count": 4,
+        "thread": "M16"
+      },
+      "registry_row": "ISO9409-1-A250-4-M16",
+      "classification": "no_standard_rung",
+      "expected": null,
+      "nearest_rungs": [
+        {
+          "pcd": 200.0,
+          "holes": 8,
+          "thread": "M20",
+          "iso_outer_diameter": 250.0
+        },
+        {
+          "pcd": 160.0,
+          "holes": 8,
+          "thread": "M16",
+          "iso_outer_diameter": 200.0
+        }
+      ],
+      "verdict": "registered_off_ladder",
+      "detail": "已登记，但该 PCD 不在标准梯级上（实测存在的厂商专用尺寸）。推导给出最近档，便于转接与选型。",
+      "entity_count": 1,
+      "entity_ids": [
+        "HUB-017"
       ],
       "sides": [
         "robot"
@@ -607,15 +785,22 @@
       "nearest_rungs": null,
       "verdict": "registered_documented_deviation",
       "detail": "已登记，但偏离标准梯级（转接盘最小修正量：螺纹 M5→M6）。ISO 期望 4xM6，实测 4xM5。",
-      "entity_count": 7,
+      "entity_count": 14,
       "entity_ids": [
         "ACT-028",
         "GRIP-002",
         "GRIP-006",
         "GRIP-009",
         "GRIP-014",
+        "HUB-004",
+        "HUB-005",
+        "HUB-006",
+        "HUB-020",
+        "HUB-021",
+        "HUB-022",
         "SENS-31",
-        "SENS-855"
+        "SENS-855",
+        "SUPERDEX-2f-85"
       ],
       "sides": [
         "robot"
@@ -642,14 +827,21 @@
       "nearest_rungs": null,
       "verdict": "registered_and_canonical",
       "detail": "已登记，且实测几何与标准梯级期望一致——两个独立写法得出同一结论。",
-      "entity_count": 6,
+      "entity_count": 13,
       "entity_ids": [
         "ACT-028",
         "GRIP-002",
         "GRIP-006",
         "GRIP-014",
+        "HUB-018",
+        "HUB-023",
+        "HUB-024",
+        "HUB-025",
+        "HUB-026",
+        "HUB-039",
         "SENS-31",
-        "SENS-855"
+        "SENS-855",
+        "SUPERDEX-2f-85"
       ],
       "sides": [
         "robot"
@@ -676,7 +868,7 @@
       "nearest_rungs": null,
       "verdict": "registered_and_canonical",
       "detail": "已登记，且实测几何与标准梯级期望一致——两个独立写法得出同一结论。",
-      "entity_count": 15,
+      "entity_count": 41,
       "entity_ids": [
         "ACT-028",
         "GRIP-001",
@@ -686,13 +878,98 @@
         "GRIP-009",
         "GRIP-012",
         "GRIP-014",
+        "HUB-007",
+        "HUB-008",
+        "HUB-009",
+        "HUB-010",
+        "HUB-011",
+        "HUB-012",
+        "HUB-027",
+        "HUB-028",
+        "HUB-029",
+        "HUB-030",
+        "HUB-031",
+        "HUB-032",
+        "HUB-033",
+        "HUB-034",
+        "HUB-035",
+        "HUB-036",
+        "HUB-040",
+        "HUB-041",
+        "HUB-042",
+        "HUB-043",
+        "HUB-045",
+        "HUB-049",
+        "HUB-050",
         "SENS-047",
         "SENS-049",
         "SENS-31",
         "SENS-37",
         "SENS-852",
         "SENS-854",
-        "SENS-855"
+        "SENS-855",
+        "SUPERDEX-2f-85",
+        "SUPERDEX-fr3",
+        "SUPERDEX-fr3-v2"
+      ],
+      "sides": [
+        "robot"
+      ],
+      "fields": [
+        "standard"
+      ]
+    },
+    {
+      "token_as_written": "ISO 9409-1-63-6-M6",
+      "normalized": "ISO9409-1-63-6-M6",
+      "parsed": {
+        "d1_mm": 63.0,
+        "bolt_count": 6,
+        "thread": "M6"
+      },
+      "registry_row": "ISO9409-1-A63-6-M6",
+      "classification": "matches_canonical",
+      "expected": {
+        "bolt_count": 6,
+        "thread": "M6",
+        "iso_outer_diameter": 80.0
+      },
+      "nearest_rungs": null,
+      "verdict": "registered_and_canonical",
+      "detail": "已登记，且实测几何与标准梯级期望一致——两个独立写法得出同一结论。",
+      "entity_count": 1,
+      "entity_ids": [
+        "HUB-019"
+      ],
+      "sides": [
+        "robot"
+      ],
+      "fields": [
+        "standard"
+      ]
+    },
+    {
+      "token_as_written": "ISO 9409-1-80-6-M8",
+      "normalized": "ISO9409-1-80-6-M8",
+      "parsed": {
+        "d1_mm": 80.0,
+        "bolt_count": 6,
+        "thread": "M8"
+      },
+      "registry_row": "ISO9409-1-A80-6-M8",
+      "classification": "matches_canonical",
+      "expected": {
+        "bolt_count": 6,
+        "thread": "M8",
+        "iso_outer_diameter": 100.0
+      },
+      "nearest_rungs": null,
+      "verdict": "registered_and_canonical",
+      "detail": "已登记，且实测几何与标准梯级期望一致——两个独立写法得出同一结论。",
+      "entity_count": 2,
+      "entity_ids": [
+        "HUB-037",
+        "HUB-038"
       ],
       "sides": [
         "robot"
