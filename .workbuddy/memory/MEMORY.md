@@ -77,7 +77,13 @@
 - **20260927 LobeHub Marketplace 已刷新到 11 tools**：`lm203688-roboparts@1.1.1` 已 published。**关键突破**——`lhm` CLI 走 **M2M auth** 完全绕开浏览器 OAuth：`npx @lobehub/market-cli register --name X --source Y`（30 秒注册，落 `~/.lobehub-market/credentials.json`）→ `auth refresh` → 拿 access token（1h 有效）→ 拥有完整 `plugin list/init/update` 权限。之前 user OAuth（`lhm login`）token 即使过期也可忽略，两条认证独立。日常流程：`auth refresh` → `plugin init --force --url https://roboparts.cc/mcp --dir .` → `python scripts/gen_lhm_manifest.py`（刷回 owner 声明）→ `plugin update --dir .`（原地合并不增版本号）。
 - **Glama 早已自动上架**（`https://glama.ai/mcp/connectors/cc.roboparts/roboparts`）：HTTP 200，Status=Healthy，Owner Verified，Uptime 100%/41d，TDQS A4.2/5.0，11 tools，最后测试 2026-09-27。Glama 是**通过 Registry 命名空间 `cc.roboparts/roboparts` 自动同步**，不需要人工提交。**判定「未上架」必须直接 GET 详情页 `/mcp/connectors/<ns>/<slug>`，不能用搜索列表反推**——初稿踩过坑。
 - npm `1.1.1` 已发（`~/.npmrc` 账号 `61960005qq`）。返 202 + 立刻 `npm view` 读旧版是 CDN 滞后（非失败）；验证要 `--cache <新目录> --prefer-online`。
-- **分发 4 家已全绿**（Registry / Smithery / LobeHub / Glama），下一棒是 3 个 awesome 列表批量 PR（`punkpeye/` / `TensorBlock/` / `mcpservers.org`），Glama 分数直接引用即可。
+- **分发 4 家已全绿**（Registry / Smithery / LobeHub / Glama），下一棒是 punkpeye 单条 PR（20260929 起）——TensorBlock / mcpservers.org 判低 ROI 已跳过（理由：受众与 punkpeye 高度重叠，RoboParts 29 次调用 0 注册已证目录曝光不是瓶颈）。
+
+## 六·五、生态与竞品地图（20260929 加）
+- **目标客户 = Feather Robotics**（`feather.dev`，SF 2025 创立，$29,990 轮式双臂人形，23 DOF，Python+ROS2 Open SDK，$7.6M pre-seed Gradient 领投）。**Custom end effectors supported** + 无公开 GitHub repo ⇒ 每个客户都要解决机械/电气兼容性 ⇒ RoboParts 是完美数据层。互补不冲突：他们卖 body+SDK，RoboParts 卖 body 之间怎么接。**P2 行动**：加 "Feather 兼容清单" 文章，或邮件 contact@feather.dev 提议官方推荐。
+- **生态接入点 = AgenticROS**（`agenticros.com`，RealSense 赞助开源）。skills marketplace `npx agenticros skills install owner/skill-id` + capability schema `{id,verb,preconditions,inputs,outputs}` = RoboParts entity schema 镜像。**P1 行动**：做 `roboparts/roboparts` AgenticROS skill wrapper（2h 成本，接入 4 个 adapter：Claude Code / OpenClaw / Gemini / Codex）。规模差距：AgenticROS 周下载 128 vs RoboParts 29 调用 0 注册，但场景互补（他们做控制栈，RoboParts 做零件层）。
+- **哲学背书 = Isaac ROS 5.0（2026-09-22 ROSCon）**：rosidl::buffer 是 NVIDIA+OSRA 贡献给 ROS Lyrical 的供应商中立内存传输接口（middleware 以 plugin 加载 buffer backend）⇒ **RoboParts = 零件兼容性层的 rosidl::buffer**。这条哲学可在 UVP 文案里引用（"the rosidl::buffer for robot parts compatibility"）——但要谨慎，不要过度绑定 NVIDIA 叙事。
+- **分发链 ROI 排序**（未来同类目录 PR 参考）：punkpeye ✅ 必做（10K+ stars 行业事实标准）> mcpservers.org 🟡 可选（SEO 长尾）> TensorBlock ⚠️ 可跳过（受众高度重叠，边际近零）。真正瓶颈是 T1 受众转化率，不是曝光。
 
 ## 七、计量与后端
 - 边缘遥测 `_middleware.js`→KV `USER_CREDITS`，读 `read_metrics.py`；读数是**下界**（分片写互盖），只能证"至少"。
