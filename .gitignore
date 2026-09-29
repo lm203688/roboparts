@@ -93,3 +93,6 @@ api/training_dataset.json
 
 # 扫描/摄取临时目录（含 10MB step.parts 索引与测试产物）
 .tmp_scan/
+
+# Backup files (from ingest scripts)
+*.bak.*

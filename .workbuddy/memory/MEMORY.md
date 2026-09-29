@@ -60,7 +60,7 @@
 - **单值/多值形态**：`Array.isArray(standard)` ⇒ 多值 ⇒ `matched.length>=2`。单孔位条目**必须写标量字符串**，写成 `[ISO50]` 单元素数组 = 假红。
 - 标准唯一源 `govern_standard_conformance.py`；带日期/状态断言须挂 evidence + evidence_tier（白名单 host）。
 - 电气：`api/electrical_interfaces.json`（EXEMPT）；免责「协议兼容 ≠ 电气兼容」已上线。actuators connector 4/220=1.8%（余不臆造）。CIS 不接。
-- 合法补数据通道三条：厂商 datasheet / ISO 9409-1 查表补 `A{n}` / 用户提交带出处（`add_mechanical_interface.py` 的 `_curated()` 只留带 `source_url` 的）。
+- 合法补数据通道四条：①厂商 datasheet ②ISO 9409-1 查表补 `A{n}` ③用户提交带出处（`add_mechanical_interface.py` 的 `_curated()` 只留带 `source_url` 的）④**上游开源仓 ingestion**（20260929 起，`scripts/ingest_superdex.py` 从 Meta SuperDex 抓 `.superdex_bot` JSON，13/34 文件已入 entities.json；SuperDex 的 JSON 声明式格式比 URDF 更清晰，可零依赖解析）。
   **「开源 BOM 反喂 ingestion」做不到位**——`ingest_oss_bom.mjs` 写 `oss_components.json`，与声明率分母 `entities.json` 不相通。
 - 模型能力边界：**不能读图**；用户贴图须声明无法读并请文本贴内容，绝不推测拼凑结论。
 
@@ -86,7 +86,7 @@
 - **分发链 ROI 排序**（未来同类目录 PR 参考）：punkpeye ✅ 必做（10K+ stars 行业事实标准）> mcpservers.org 🟡 可选（SEO 长尾）> TensorBlock ⚠️ 可跳过（受众高度重叠，边际近零）。真正瓶颈是 T1 受众转化率，不是曝光。
 
 ## 六·六、前沿项目借鉴与 P0 行动（20260929 加）
-- **SuperDex（Meta, 2026-08-24 v1.0.0）**：**P0 首选**——支持 `.superdex_bot` 格式导入 + 兼容性检查（2-3h）。573 stars 起步，"SuperDex-compatible"是当前市场稀缺标签，first-mover 窗口 3-6 个月。SuperDex 关注 contact-rich 场景（软接触/触觉/非凸/变形）正好匹配 RoboParts 的机械接口数据类型。
+- **SuperDex（Meta, 2026-08-24 v1.0.0）**：**P0 已落地（20260929）**——`scripts/ingest_superdex.py` 把 13 个 `.superdex_bot` 文件（Franka FR3/FR3 v2/OpenArm V20/Allegro V5/DG5F/Wuji Hand2/Robotiq 2F-85 等）导入 entities.json（852→865）。关键：`.superdex_bot` 是纯 JSON 声明式（两种 shape：standalone `{joints,links}` / composition `{base, modifications.AttachBot[]}`），RoboParts 零依赖解析。新增标签：`superdex_compatible=true` / `contact_rich=true` / `superdex_composition_attachments`。first-mover 窗口 3-6 个月。
 - **Unifolm-WMA-0（Unitree, 2026-09-15）**：哲学背书"RoboParts = 零件层的 Unifolm"（兼容性世界模型）。可扩数据混合通道：URDF/xacro 直接扫描 ingestion（第 4 条合法通道）。
 - **Scaling laws 借鉴（Generalist GEN-0 + Physical Intelligence）**：**多样性 > 数量**（PI 涌现发现）。RoboParts 852 实体集中 ROS/URDF 圈 = 多样性不足。P0 加品牌不加 SKU：UR/Franka/Fanuc/KUKA/ABB/Feather/Unitree G1/Stereolabs ZED/RealSense。RoboParts 涌现门槛猜测：<1K 玩具 / 1-10K 工具 / 10K+ 参考标准。付费墙时机 = 跨过多样性+数量双门槛后。
 - **GenEgo/PEVA（LeCun 团队, 2025）**：远期观察——egocentric data collection kit 是新兴垂直 niche，等 Meta/FAIR 收敛后再介入。
