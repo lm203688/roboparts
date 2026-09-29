@@ -537,13 +537,13 @@
     "mechanical_interface_coverage": {
       "schema_version": "1.0.0",
       "registry": "/api/mechanical_interfaces.json",
-      "applicable": 489,
-      "not_applicable": 363,
-      "declared": 61,
+      "applicable": 500,
+      "not_applicable": 365,
+      "declared": 67,
       "partial": 14,
-      "not_declared": 414,
-      "fill_pct": 15.34,
-      "note": "机械互换维度基线。fill_pct 为已获得厂商声明的比例；not_declared 为显式缺口（可被 agent 查询），非字段缺失。【2026-09-25】+50 工业机械臂回填后 fill_pct 5.69→15.34"
+      "not_declared": 419,
+      "fill_pct": 13.4,
+      "note": "机械互换维度基线。fill_pct 为已获取厂商声明的比例；not_declared 为显式缺口（可被 agent 查询），非字段缺失。【2026-09-29】+13 SuperDex .superdex_bot 导入后 fill_pct 15.34→13.4%"
     },
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",

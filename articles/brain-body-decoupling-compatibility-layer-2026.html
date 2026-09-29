@@ -76,7 +76,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 @media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
 </style>
 
-<!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"852 条实体（其中 593 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
+<!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"865 条实体（其中 593 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
 </head>
 <body>
 <div class="nav"><div class="in">
@@ -89,7 +89,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <a href="/pricing">定价</a>
 </div></div>
 <div class="wrap">
-<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › SONIC 与 OM-1 之后：为什么「脑×体解耦」反而</div><h1>SONIC 与 OM-1 之后：为什么「脑×体解耦」反而让机械兼容层变刚需</h1><div class="meta">2026-09-21 · RoboParts Research · 约 5435 字 · RoboParts 机器人零件兼容性判定层</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">standards</span><span class="badge">sourcing</span><span class="badge">vla</span></div><div class="lede">2026 年下半年，NVIDIA 把 SONIC 全身控制器定位在 GR00T 之下并跑在商用 Unitree G1 上，Reward AI 的 OM-1 宣称零样本适配全硬件，非夕推出模块化双臂平台 MICO。本文从开源构建者视角拆解这场脑×体解耦，回答一个反直觉的问题：当模型能适配任何硬件时，机械兼容判定为什么不是变弱而是变强？附 ISO 9409-1 法兰对照、三档判定清单与数据集缺口清单。</div><div class="toc"><b>本文目录</b><ol><li><a href="#sonic-与-om-1-之后-为什么-脑-体解耦-反而让机械兼容层变刚需">SONIC 与 OM-1 之后：为什么「脑×体解耦」反而让机械兼容层变刚需</a></li><li><a href="#一-半年内发生的事-智能与身体正在被拆开">一、半年内发生的事：智能与身体正在被拆开</a></li><li><a href="#二-它们解耦的其实是同一件事">二、它们解耦的其实是同一件事</a></li><li><a href="#三-关键论证-零样本适配全硬件-为什么反而抬高兼容层">三、关键论证：「零样本适配全硬件」为什么反而抬高兼容层</a></li><li><a href="#四-那道绕不开的物理约束-iso-9409-1">四、那道绕不开的物理约束：ISO 9409-1</a></li><li><a href="#五-兼容不只是机械-还有三层-且声明率更难看">五、兼容不只是机械：还有三层，且声明率更难看</a></li><li><a href="#六-给构建者的三档判定清单">六、给构建者的三档判定清单</a></li><li><a href="#七-站内有什么-缺什么-诚实清单">七、站内有什么、缺什么（诚实清单）</a></li><li><a href="#八-趋势判断与三条诚实边界">八、趋势判断与三条诚实边界</a></li><li><a href="#参考资料">参考资料</a></li></ol></div><article><h2 id="sonic-与-om-1-之后-为什么-脑-体解耦-反而让机械兼容层变刚需">SONIC 与 OM-1 之后：为什么「脑×体解耦」反而让机械兼容层变刚需</h2>
+<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › SONIC 与 OM-1 之后：为什么「脑×体解耦」反而</div><h1>SONIC 与 OM-1 之后：为什么「脑×体解耦」反而让机械兼容层变刚需</h1><div class="meta">2026-09-21 · RoboParts Research · 约 5436 字 · RoboParts 机器人零件兼容性判定层</div><div class="tags"><span class="badge">open-source-robotics</span><span class="badge">humanoid</span><span class="badge">standards</span><span class="badge">sourcing</span><span class="badge">vla</span></div><div class="lede">2026 年下半年，NVIDIA 把 SONIC 全身控制器定位在 GR00T 之下并跑在商用 Unitree G1 上，Reward AI 的 OM-1 宣称零样本适配全硬件，非夕推出模块化双臂平台 MICO。本文从开源构建者视角拆解这场脑×体解耦，回答一个反直觉的问题：当模型能适配任何硬件时，机械兼容判定为什么不是变弱而是变强？附 ISO 9409-1 法兰对照、三档判定清单与数据集缺口清单。</div><div class="toc"><b>本文目录</b><ol><li><a href="#sonic-与-om-1-之后-为什么-脑-体解耦-反而让机械兼容层变刚需">SONIC 与 OM-1 之后：为什么「脑×体解耦」反而让机械兼容层变刚需</a></li><li><a href="#一-半年内发生的事-智能与身体正在被拆开">一、半年内发生的事：智能与身体正在被拆开</a></li><li><a href="#二-它们解耦的其实是同一件事">二、它们解耦的其实是同一件事</a></li><li><a href="#三-关键论证-零样本适配全硬件-为什么反而抬高兼容层">三、关键论证：「零样本适配全硬件」为什么反而抬高兼容层</a></li><li><a href="#四-那道绕不开的物理约束-iso-9409-1">四、那道绕不开的物理约束：ISO 9409-1</a></li><li><a href="#五-兼容不只是机械-还有三层-且声明率更难看">五、兼容不只是机械：还有三层，且声明率更难看</a></li><li><a href="#六-给构建者的三档判定清单">六、给构建者的三档判定清单</a></li><li><a href="#七-站内有什么-缺什么-诚实清单">七、站内有什么、缺什么（诚实清单）</a></li><li><a href="#八-趋势判断与三条诚实边界">八、趋势判断与三条诚实边界</a></li><li><a href="#参考资料">参考资料</a></li></ol></div><article><h2 id="sonic-与-om-1-之后-为什么-脑-体解耦-反而让机械兼容层变刚需">SONIC 与 OM-1 之后：为什么「脑×体解耦」反而让机械兼容层变刚需</h2>
 <blockquote><p>本文首发于 <a href="https://roboparts.cc">RoboParts 机器人零件兼容性判定层</a>。外部事实全部锚定官方论文与厂商公告，不引二手转述；站内数据以真实收录为准，缺什么就写什么。</p></blockquote>
 <p>2026 年这半年，机器人行业几乎同时在讲一件事：<strong>把智能和身体拆开。</strong></p>
 <p>NVIDIA 把 SONIC 全身控制器明确定位在 GR00T 之下做「运动皮层」，直接跑在商用的 Unitree G1 上；Reward AI 的 OM-1 只用人类手部数据训练，宣称零样本适配桌面臂、工业臂与人形；TrAct 的原文写得很干脆——<strong>动作与本体绑定，视觉轨迹不与本体绑定</strong>；非夕在 FLEXIVERSE 上推出模块化标准双臂平台 MICO，创始人王世全的原话是「机器人进入真实世界不只靠算法大脑，更需要可靠的物理躯干」。</p>
@@ -161,11 +161,11 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <li>总线（EtherCAT / CAN FD）是否被控制器原生支持</li>
 <li>软件栈（ROS2 / LeRobot / Isaac Sim）是否有现成驱动</li>
 </ol>
-<p>一个反直觉但重要的提醒：<strong>换之前先查，比换之后返工便宜一个量级。</strong>本站 852 条实体覆盖 20 个品类、325 个开源项目组件，文中提到的多数型号可直接检索。</p>
+<p>一个反直觉但重要的提醒：<strong>换之前先查，比换之后返工便宜一个量级。</strong>本站 865 条实体覆盖 20 个品类、325 个开源项目组件，文中提到的多数型号可直接检索。</p>
 <hr>
 <h2 id="七-站内有什么-缺什么-诚实清单">七、站内有什么、缺什么（诚实清单）</h2>
 <p><strong>已在库，可直接查：</strong></p>
-<div class="tablebox"><table><thead><tr><th>内容</th><th>站内状态</th></tr></thead><tbody><tr><td><strong>Unitree G1</strong></td><td>平台条目 + 组件条目（含接口与感知系统）——SONIC 的实测载体就在里面</td></tr><tr><td><strong>NVIDIA Jetson 系列</strong></td><td>Orin NX / AGX Orin / Thor 等</td></tr><tr><td>机器人 AI 模型</td><td>46 条</td></tr><tr><td>平台</td><td>93 条</td></tr><tr><td>执行器</td><td>222 条</td></tr><tr><td>接口规范</td><td>44 条</td></tr></tbody></table></div>
+<div class="tablebox"><table><thead><tr><th>内容</th><th>站内状态</th></tr></thead><tbody><tr><td><strong>Unitree G1</strong></td><td>平台条目 + 组件条目（含接口与感知系统）——SONIC 的实测载体就在里面</td></tr><tr><td><strong>NVIDIA Jetson 系列</strong></td><td>Orin NX / AGX Orin / Thor 等</td></tr><tr><td>机器人 AI 模型</td><td>46 条</td></tr><tr><td>平台</td><td>105 条</td></tr><tr><td>执行器</td><td>222 条</td></tr><tr><td>接口规范</td><td>44 条</td></tr></tbody></table></div>
 <p><strong>尚未入库（缺口）：</strong></p>
 <div class="tablebox"><table><thead><tr><th>缺口</th><th>说明</th></tr></thead><tbody><tr><td><strong>非夕 MICO</strong></td><td>2026 模块化标准双臂平台，未入库</td></tr><tr><td><strong>reBot Arm B601</strong></td><td>Seeed 2026-04，开源到螺丝级 BOM，未入库</td></tr><tr><td><strong>RAI AthenaZero</strong></td><td>2026 Science Robotics 低惯量双臂，未入库</td></tr></tbody></table></div>
 <p><strong>本文提到的这三具新身体，站内一条都没收。</strong>这不是把缺点说成谦虚——躯体正在快速分化，而判定数据没跟上，这本身就是兼容层此刻最该干的事。反过来，本站最大的短板第五节已经写了：机械维度声明率 5.69%、参数跨厂商可比 0 条。</p>
@@ -196,7 +196,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <li>ISO 9409-1：站内速查见 <a href="/iso-9409-flange">iso-9409-flange</a>，机读版见 <a href="/api/mechanical_interfaces.json">mechanical_interfaces.json</a></li>
 </ul></article><div class="cta">
 <h3>把这篇文章的结论直接跑一遍</h3>
-<p>RoboParts 收录 <strong>852 个机器人零部件实体</strong>与 <strong>325 个开源项目组件</strong>，支持电气 / 机械 / 协议 / 软件四维兼容判定。文中提到的型号大多可直接检索。</p>
+<p>RoboParts 收录 <strong>865 个机器人零部件实体</strong>与 <strong>325 个开源项目组件</strong>，支持电气 / 机械 / 协议 / 软件四维兼容判定。文中提到的型号大多可直接检索。</p>
 <a class="btn" href="/bom-checker">免费校验我的 BOM</a>
 <a class="btn ghost" href="/oss">浏览开源组件库</a>
 <a class="btn ghost" href="/api/data.json">下载结构化数据 (JSON)</a>
@@ -233,7 +233,7 @@ background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px
 
 <h3>最省事的方式 · MCP 托管端点（不用领 key、不用装包、不用起进程）</h3>
 <p>支持 MCP 的运行环境直接填这个地址即可，提供
-<span data-rp="mcp_tool_count">10</span> 个工具（search_components / get_component_detail / check_compatibility / compare_components / recommend_for_application / get_parameter_semantics / bom_compatibility_check / semantic_search / get_standard_audit / review_compatibility）：</p>
+<span data-rp="mcp_tool_count">11</span> 个工具（search_components / get_component_detail / check_compatibility / compare_components / recommend_for_application / get_parameter_semantics / bom_compatibility_check / semantic_search / get_standard_audit / review_compatibility / lint_urdf）：</p>
 <pre class="rp-code"><code><span data-rp="mcp_endpoint">https://roboparts.cc/mcp</span></code></pre>
 <p>已收录于官方 MCP Registry，规范名
 <code><span data-rp="mcp_registry_name">cc.roboparts/roboparts</span></code>
@@ -255,7 +255,7 @@ background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px
 
 <h3>免鉴权直读（引用数据不需要任何 key）</h3>
 <ul class="rp-eps">
-<li><a href="/api/entities.json"><code>/api/entities.json</code></a> — <span data-rp="total_entities">852</span> 条实体，其中
+<li><a href="/api/entities.json"><code>/api/entities.json</code></a> — <span data-rp="total_entities">865</span> 条实体，其中
 <span data-rp="component_entities">593</span> 条为<strong>实物零部件</strong>；另有
 <span data-rp="specification_entities">101</span> 条接口/协议规范（EtherCAT、USB 3.0…）、
 <span data-rp="software_entities">81</span> 条 AI 模型与软件（GPT-4o、RT-2…）、
@@ -268,11 +268,11 @@ background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px
 
 <h3>如实告知的边界（转述时请勿夸大）</h3>
 <ul class="rp-limits">
-<li>全库 <span data-rp="total_entities2">852</span> 条中，参数口径达到「可跨厂商直接比较」的为
+<li>全库 <span data-rp="total_entities2">865</span> 条中，参数口径达到「可跨厂商直接比较」的为
 <strong><span data-rp="comparable_grade_a">0</span> 条</strong>——行业普遍不声明测试条件。我们公开登记这一事实而非掩盖，判据见
 <a href="/robot-joint-parameter-spec">参数语义规范</a>。</li>
-<li>机械互换维度（「能不能拧上去」）声明率仅 <span data-rp="mech_pct">15.34</span>%
-（<span data-rp="mech_declared">75</span>/<span data-rp="mech_applicable">489</span>），其余如实标注
+<li>机械互换维度（「能不能拧上去」）声明率仅 <span data-rp="mech_pct">16.2</span>%
+（<span data-rp="mech_declared">81</span>/<span data-rp="mech_applicable">500</span>），其余如实标注
 <code>not_declared</code>，未作猜测填充。</li>
 <li>兼容性结论是<strong>基于已声明数据的线索</strong>，不构成认证，不替代样机实测。</li>
 </ul>
