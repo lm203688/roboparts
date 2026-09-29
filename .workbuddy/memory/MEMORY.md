@@ -85,6 +85,12 @@
 - **哲学背书 = Isaac ROS 5.0（2026-09-22 ROSCon）**：rosidl::buffer 是 NVIDIA+OSRA 贡献给 ROS Lyrical 的供应商中立内存传输接口（middleware 以 plugin 加载 buffer backend）⇒ **RoboParts = 零件兼容性层的 rosidl::buffer**。这条哲学可在 UVP 文案里引用（"the rosidl::buffer for robot parts compatibility"）——但要谨慎，不要过度绑定 NVIDIA 叙事。
 - **分发链 ROI 排序**（未来同类目录 PR 参考）：punkpeye ✅ 必做（10K+ stars 行业事实标准）> mcpservers.org 🟡 可选（SEO 长尾）> TensorBlock ⚠️ 可跳过（受众高度重叠，边际近零）。真正瓶颈是 T1 受众转化率，不是曝光。
 
+## 六·六、前沿项目借鉴与 P0 行动（20260929 加）
+- **SuperDex（Meta, 2026-08-24 v1.0.0）**：**P0 首选**——支持 `.superdex_bot` 格式导入 + 兼容性检查（2-3h）。573 stars 起步，"SuperDex-compatible"是当前市场稀缺标签，first-mover 窗口 3-6 个月。SuperDex 关注 contact-rich 场景（软接触/触觉/非凸/变形）正好匹配 RoboParts 的机械接口数据类型。
+- **Unifolm-WMA-0（Unitree, 2026-09-15）**：哲学背书"RoboParts = 零件层的 Unifolm"（兼容性世界模型）。可扩数据混合通道：URDF/xacro 直接扫描 ingestion（第 4 条合法通道）。
+- **Scaling laws 借鉴（Generalist GEN-0 + Physical Intelligence）**：**多样性 > 数量**（PI 涌现发现）。RoboParts 852 实体集中 ROS/URDF 圈 = 多样性不足。P0 加品牌不加 SKU：UR/Franka/Fanuc/KUKA/ABB/Feather/Unitree G1/Stereolabs ZED/RealSense。RoboParts 涌现门槛猜测：<1K 玩具 / 1-10K 工具 / 10K+ 参考标准。付费墙时机 = 跨过多样性+数量双门槛后。
+- **GenEgo/PEVA（LeCun 团队, 2025）**：远期观察——egocentric data collection kit 是新兴垂直 niche，等 Meta/FAIR 收敛后再介入。
+
 ## 七、计量与后端
 - 边缘遥测 `_middleware.js`→KV `USER_CREDITS`，读 `read_metrics.py`；读数是**下界**（分片写互盖），只能证"至少"。
 - 渠道漏斗 `?via=` + `stat:via:<src>:<detail>`，`channel_report.py` 读；非渠道注册不混入 ROI。
