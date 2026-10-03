@@ -1,3 +1,17 @@
+// rp_id 命名空间纪律（2026-10-04 修正）
+// ---------------------------------------------------------------------------
+// 本脚本曾给 REDUCER-*/GRIPPER-* 条目**手写** rp_id（RP-RED-0001、RP-GRI-0001…），
+// 而这些编号与 entities.json 里既有的 RED-001 / GRIP-001 所属的 rp_id
+// **逐个撞号**：全库 11 组 rp_id 重复，其中 9 组跨厂商
+// （如 RP-GRI-0002 同时是「Robotiq 2F-85」与「OnRobot NG10 电动夹爪」）。
+//
+// 后果不是"不好看"，是**数据污染**：电气取证层按 rp_id 接线后，
+// Robotiq 的连接器被挂到了 OnRobot 夹爪上（GRIPPER-ONR-NG1 拿到了
+// ROBOTIQ-COUPLING-10-SPRING-PIN）。同一个 rp_id 会被跨库合并认成同一件器件。
+//
+// 修法：本脚本改用 **P1 专属命名空间**，与既有 RP-* 序列不重叠。
+// schema_contract 已补 rp_id 唯一性校验（此前只查"在不在"，不查"唯一不唯一"，
+// 与 2026-10-03 修的 ci_gate 缺陷同型），所以这类撞号会被当场判红。
 /**
  * P1 品类补全：减速器 + 夹爪
  * 
@@ -27,7 +41,7 @@ function addEntity(entity) {
 // === 减速器（reducers）品类补全 ===
 const reducerEntities = [
   {
-    id: 'REDUCER-HD-25', rp_id: 'RP-RED-0001',
+    id: 'REDUCER-HD-25', rp_id: 'RP1-RED-0001',
     name: 'Harmonic Drive CSF-25-100-H-D',
     name_en: 'Harmonic Drive CSF-25-100-H-D',
     category: 'reducers', entity_kind: 'type',
@@ -48,7 +62,7 @@ const reducerEntities = [
     data_quality: 'good',
   },
   {
-    id: 'REDUCER-HD-32', rp_id: 'RP-RED-0002',
+    id: 'REDUCER-HD-32', rp_id: 'RP1-RED-0002',
     name: 'Harmonic Drive CSF-32-100-H-D',
     name_en: 'Harmonic Drive CSF-32-100-H-D',
     category: 'reducers', entity_kind: 'type',
@@ -69,7 +83,7 @@ const reducerEntities = [
     data_quality: 'good',
   },
   {
-    id: 'REDUCER-HD-50', rp_id: 'RP-RED-0003',
+    id: 'REDUCER-HD-50', rp_id: 'RP1-RED-0003',
     name: 'Harmonic Drive CSF-50-100-H-D',
     name_en: 'Harmonic Drive CSF-50-100-H-D',
     category: 'reducers', entity_kind: 'type',
@@ -90,7 +104,7 @@ const reducerEntities = [
     data_quality: 'good',
   },
   {
-    id: 'REDUCER-GH-25', rp_id: 'RP-RED-0004',
+    id: 'REDUCER-GH-25', rp_id: 'RP1-RED-0004',
     name: 'Green Harmonic GH25-100-H-D',
     name_en: 'Green Harmonic GH25-100-H-D',
     category: 'reducers', entity_kind: 'type',
@@ -112,7 +126,7 @@ const reducerEntities = [
     data_quality: 'good',
   },
   {
-    id: 'REDUCER-GH-50', rp_id: 'RP-RED-0005',
+    id: 'REDUCER-GH-50', rp_id: 'RP1-RED-0005',
     name: 'Green Harmonic GH50-100-H-D',
     name_en: 'Green Harmonic GH50-100-H-D',
     category: 'reducers', entity_kind: 'type',
@@ -134,7 +148,7 @@ const reducerEntities = [
     data_quality: 'good',
   },
   {
-    id: 'REDUCER-RV-50', rp_id: 'RP-RED-0006',
+    id: 'REDUCER-RV-50', rp_id: 'RP1-RED-0006',
     name: 'Nabtesco RV-50CE',
     name_en: 'Nabtesco RV-50CE',
     category: 'reducers', entity_kind: 'type',
@@ -155,7 +169,7 @@ const reducerEntities = [
     data_quality: 'good',
   },
   {
-    id: 'REDUCER-RV-200', rp_id: 'RP-RED-0007',
+    id: 'REDUCER-RV-200', rp_id: 'RP1-RED-0007',
     name: 'Nabtesco RV-200FS',
     name_en: 'Nabtesco RV-200FS',
     category: 'reducers', entity_kind: 'type',
@@ -176,7 +190,7 @@ const reducerEntities = [
     data_quality: 'good',
   },
   {
-    id: 'REDUCER-LIF-60', rp_id: 'RP-RED-0008',
+    id: 'REDUCER-LIF-60', rp_id: 'RP1-RED-0008',
     name: '来福 LIF-60RV-C',
     name_en: 'Lif-drive LIF-60RV-C',
     category: 'reducers', entity_kind: 'type',
@@ -202,7 +216,7 @@ const reducerEntities = [
 // === 夹爪（grippers）品类补全 ===
 const gripperEntities = [
   {
-    id: 'GRIPPER-ONR-VG1', rp_id: 'RP-GRI-0001',
+    id: 'GRIPPER-ONR-VG1', rp_id: 'RP1-GRI-0001',
     name: 'OnRobot VG1 气动夹爪',
     name_en: 'OnRobot VG1 Vacuum Gripper',
     category: 'grippers', entity_kind: 'type',
@@ -222,7 +236,7 @@ const gripperEntities = [
     data_quality: 'good',
   },
   {
-    id: 'GRIPPER-ONR-NG1', rp_id: 'RP-GRI-0002',
+    id: 'GRIPPER-ONR-NG1', rp_id: 'RP1-GRI-0002',
     name: 'OnRobot NG10 电动夹爪',
     name_en: 'OnRobot NG10 Robotic Gripper',
     category: 'grippers', entity_kind: 'type',
@@ -242,7 +256,7 @@ const gripperEntities = [
     data_quality: 'good',
   },
   {
-    id: 'GRIPPER-ONR-NG30', rp_id: 'RP-GRI-0003',
+    id: 'GRIPPER-ONR-NG30', rp_id: 'RP1-GRI-0003',
     name: 'OnRobot NG30 电动夹爪',
     name_en: 'OnRobot NG30 Robotic Gripper',
     category: 'grippers', entity_kind: 'type',
@@ -262,7 +276,7 @@ const gripperEntities = [
     data_quality: 'good',
   },
   {
-    id: 'GRIPPER-SCHUNK-SWG15', rp_id: 'RP-GRI-0004',
+    id: 'GRIPPER-SCHUNK-SWG15', rp_id: 'RP1-GRI-0004',
     name: 'Schunk SWG 15 气动夹爪',
     name_en: 'Schunk SWG 15 Parallel Gripper',
     category: 'grippers', entity_kind: 'type',
@@ -282,7 +296,7 @@ const gripperEntities = [
     data_quality: 'good',
   },
   {
-    id: 'GRIPPER-POS-2F20', rp_id: 'RP-GRI-0005',
+    id: 'GRIPPER-POS-2F20', rp_id: 'RP1-GRI-0005',
     name: '正实 2F-20 电动夹爪',
     name_en: 'ZhenShi 2F-20 Electric Gripper',
     category: 'grippers', entity_kind: 'type',
