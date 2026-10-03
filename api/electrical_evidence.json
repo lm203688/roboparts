@@ -6,8 +6,8 @@
   "anchor": "docs/RESEARCH_BARRIERS_20261003.md §3 H1",
   "upstream": "api/evidence_valuation.json（by_axis.electrical.top_targets）",
   "generated_by": "scripts/build_electrical_evidence.py",
-  "generated_at": "2026-10-03T16:44:21+00:00",
-  "headline_finding": "「M8」不是一个连接器类型，是一个家族。ATI Axia80 传感器端是 6-pin M8 ZC22，Robotiq 2F-85 设备线是 5-pole M8，OnRobot HEX 传感器线是 5-pin M8 —— 三者外形都是 M8，但针数/针序/承载信号全不同，物理上不可互插。这意味着类型系统必须用 (family, pins, pinout) 三元组，family 单独作键会系统性误判。",
+  "generated_at": "2026-10-03T23:16:36+00:00",
+  "headline_finding": "**连接器的类型键必须是 (family, pins, pinout) 三元组，缺一不可。**本层给出三条互相独立的实证：(1) 「M8」不是类型是家族——ATI Axia80 6-pin ZC22（24V+100BASE-TX）/ Robotiq 2F-85 5-pole（24V+RS-485）/ OnRobot HEX 5-pin，针数针序全不同，物理不可互插；(2) **同针数同针序也可能不可插**——Robotiq 2F-85 用 M8 5-pole、FT 300 用 M12 5-pin A-coded，两者针数(5)、针序、承载信号(24V+RS-485)完全相同，仅螺纹不同 ⇒ 不可互插。这一条骗过了「只比针数」的判定器，是 family 必须进键的最小反例；(3) 合法 identity 案例（FT 300 与 FT 300-S 同 family 同 variant）同时收录，防止判据退化成「同家族一律 incompatible」——那是方向相反的另一种臆断。",
   "honest_limits": [
    "覆盖度极低：已核实条数占电气未声明节点的比例见 coverage。本文件不宣称补齐电气轴，只证明这条取证方向有效且成本极低。",
    "pinout 留 null 是**诚实缺口**不是遗漏：OnRobot HEX-E 与 2FG7 的一手datasheet 均未逐针列出针序（2FG7 甚至未给针数）。按项目纪律，不知道就写 null，不按「同类连接器针序应当类似」推断。",
@@ -40,7 +40,7 @@
   "consequence_for_engines": "compose_engine 的 CompatIndex 对电气轴目前只能给 identity/unknown/incompatible 三态，且 type_compat 中 electrical 仅 5 个已登记类型（含 UNKNOWN 枢纽）。本文件新增的变体需先登记进type_compat，MDV 层的 electrical 正收益才会兑现。"
  },
  "evidence": {
-  "SENS-852": {
+  "RP-SEN-0091": {
    "vendor": "ATI Industrial Automation",
    "device": "Axia80-M20 F/T Sensor (Ethernet)",
    "connectors": [
@@ -99,7 +99,7 @@
    "source_tier_basis": "厂商官方文档域名 ati-ia.com",
    "confidence": 0.95
   },
-  "SENS-049": {
+  "RP-SEN-0054": {
    "vendor": "OnRobot",
    "device": "HEX-E / HEX-H 6-Axis F/T Sensor",
    "connectors": [
@@ -128,7 +128,7 @@
    "source_tier_basis": "授权经销商页面转载厂商 datasheet 参数（供电/功耗/线缆规格），但非 onrobot.com 官方域名 ⇒ 降级 B",
    "confidence": 0.8
   },
-  "GRIP-002": {
+  "RP-GRI-0002": {
    "vendor": "Robotiq",
    "device": "2F-85 Adaptive Gripper",
    "connectors": [
@@ -188,7 +188,7 @@
    "source_tier_basis": "厂商官方文档域名 assets.robotiq.com",
    "confidence": 0.95
   },
-  "GRIP-001": {
+  "RP-GRI-0001": {
    "vendor": "OnRobot",
    "device": "2FG7 Parallel Gripper",
    "connectors": [
@@ -217,6 +217,104 @@
    "source_tier": "B",
    "source_tier_basis": "授权渠道托管的厂商 datasheet PDF（非 onrobot.com 官方域名）⇒ B；针数与针序在任一版本中均未给出",
    "confidence": 0.75
+  },
+  "RP-SEN-0036": {
+   "vendor": "Robotiq",
+   "device": "FT 300 Force Torque Sensor",
+   "connectors": [
+    {
+     "id": "m12_5pin_acoded",
+     "label": "M12 5-pin A-coded (IEC 61076-2-101)",
+     "family": "M12",
+     "variant": "acoded-5",
+     "pins": 5,
+     "thread": "M12",
+     "pinout": [
+      "1 485 GND (SHIELD)",
+      "2 24 V (RED)",
+      "3 GND (BLACK)",
+      "4 485+ (WHITE)",
+      "5 485- (GREEN)"
+     ],
+     "carries": [
+      "power",
+      "rs485"
+     ],
+     "voltage": "5-24 V DC (±10%, max 26.4 V)",
+     "power_w": 2,
+     "max_current_a": 1.0,
+     "fuse": "Phoenix #0916604 (UT6-TMC M 1A)",
+     "note": "**针序与 2F-85 的 M8 5-pole 完全相同，但螺纹规格不同**（M12 A-coded vs M8）⇒ 物理上不可互插，而仅比针数会误判为兼容。这是「family 必须进类型键」的第二个实证（第一个是 M8 家族内部的 6-pin vs 5-pin）。"
+    }
+   ],
+   "protocol": "RS-485 半双工（Modbus RTU 从站，默认地址 9 / 0x0009；或 100/333/1000 Hz 流式二进制）",
+   "source_url": "https://assets.robotiq.com/website-assets/support_documents/document/FT_Sensor_Instruction_Manual_PDF_20190322.pdf",
+   "source": "Robotiq FT 300 Instruction Manual §3.4 Power Supply Specifications / §3.5 Wiring（Fig. 3-2 Pinout，5-POLE M12 CONNECTOR）",
+   "source_tier": "A",
+   "source_tier_basis": "厂商官方文档域名 assets.robotiq.com",
+   "confidence": 0.95
+  },
+  "RP-SEN-0094": {
+   "vendor": "Robotiq",
+   "device": "FT 300-S Force Torque Sensor",
+   "connectors": [
+    {
+     "id": "m12_5pin_acoded",
+     "label": "M12 5-pin A-coded (IEC 61076-2-101)",
+     "family": "M12",
+     "variant": "acoded-5",
+     "pins": 5,
+     "thread": "M12",
+     "pinout": [
+      "1 485 GND (SHIELD)",
+      "2 24 V (RED)",
+      "3 GND (BLACK)",
+      "4 485+ (WHITE)",
+      "5 485- (GREEN)"
+     ],
+     "carries": [
+      "power",
+      "rs485"
+     ],
+     "voltage": "5-24 V DC (±10%)",
+     "note": "FT 300-S 与 FT 300 共用同一 5-pin M12 A-coded 接口（厂商文档中两者 pinout 表为同一张）。**这是同族同变体的合法 identity 案例**——与 M8 家族的「同族不同变体不可互插」形成对照，说明判据必须是三元组：family+variant 都相同才 identity。"
+    }
+   ],
+   "protocol": "RS-485 半双工（Modbus RTU 从站）",
+   "source_url": "https://assets.robotiq.com/website-assets/support_documents/document/FT_Sensor_Instruction_Manual_PDF_20190322.pdf",
+   "source": "Robotiq FT 300 Instruction Manual §3.5 Wiring（FT 300-S 为同接口精简型号，pinout 表共用）",
+   "source_tier": "A",
+   "source_tier_basis": "厂商官方文档域名 assets.robotiq.com",
+   "confidence": 0.85
+  },
+  "RP-GRI-0013": {
+   "vendor": "Schunk",
+   "device": "Co-act EGP-C 64-N-N (collaborating electric gripper)",
+   "connectors": [
+    {
+     "id": "m8_schunk_dual",
+     "label": "2 x M8 (power/control + signal)",
+     "family": "M8",
+     "variant": "schunk-dual",
+     "pins": null,
+     "thread": "M8",
+     "pinout": null,
+     "carries": [
+      "power",
+      "control"
+     ],
+     "voltage": "24 V DC (min 21.6 / nom 24 / max 26.4)",
+     "max_current_a": 2.0,
+     "note": "SCHUNK 产品页字段「Cable connector/cable end = 2 x M8」，配 4 路数字输入 / 2 路数字输出（控制器内置）。**针数与针序均未公开** ⇒ pins/pinout 留 null。这与 ATI/Robotiq 的「单 M8 复合 6 针或 5 针」是不同拓扑，不可按 family=M8 归为兼容。",
+     "evidence_gap": "pinout_unverified"
+    }
+   ],
+   "protocol": "Digital I/O（IO-Link 变体另有 COM2 PortClass B 版本）",
+   "source_url": "https://schunk.com/us/en/gripping-systems/parallel-gripper/co-act-egp-c/co-act-egp-c-64-n-n-gofa/p/000000000001468551",
+   "source": "SCHUNK Co-act EGP-C 64-N-N-GoFa 产品页技术参数表：Power supply 24 V / Max. total current 2 A / Cable connector-cable end 2 x M8 / 4 DI + 2 DO",
+   "source_tier": "A",
+   "source_tier_basis": "厂商官方域名 schunk.com",
+   "confidence": 0.8
   }
  },
  "family_conflicts": [
@@ -245,14 +343,58 @@
    "verdict": "incompatible_within_family",
    "reason": "同为 M8 螺纹连接器，但针数（6/5/5）与针序、承载信号（以太网/RS-485/未知）均不同 ⇒ 物理上不可互插，电气上不可对接。",
    "implication": "任何按「M8」字符串匹配连接器类型的判定器都会在此误判为 compatible。类型系统必须用 (family, pins, pinout) 三元组，不能只用 family。"
+  },
+  {
+   "family": "SAME_PIN_COUNT_DIFFERENT_THREAD",
+   "variants": [
+    {
+     "variant": "m8-device-5",
+     "pins": 5,
+     "thread": "M8",
+     "device": "Robotiq 2F-85 gripper",
+     "carries": "24V + RS-485"
+    },
+    {
+     "variant": "m12-acoded-5",
+     "pins": 5,
+     "thread": "M12",
+     "device": "Robotiq FT 300 F/T sensor",
+     "carries": "24V + RS-485"
+    }
+   ],
+   "verdict": "incompatible_despite_identical_pinout",
+   "reason": "两者**针数相同（5）且针序完全相同**（485 GND / 24V / GND / 485+ / 485-），承载信号也相同（24V + RS-485）—— 但螺纹规格不同：2F-85 设备线是 M8，FT 300 传感器是 **M12 5-pin A-coded**（IEC 61076-2-101）。**同厂、同针数、同针序、同信号，仍物理上不可互插。**",
+   "implication": "这是本层最强的判据证据：`(family, pins, pinout)` 三元组里**family 不可省**。若判定器只比 (pins, pinout)，这两个连接器会被判 identity —— 而接上去必然失败。工程上这是「协议兼容 + 针序兼容 ≠ 物理可插」的最小反例：唯一阻断维度就是螺纹规格。"
+  },
+  {
+   "family": "M12",
+   "variants": [
+    {
+     "variant": "acoded-5",
+     "pins": 5,
+     "thread": "M12",
+     "device": "Robotiq FT 300",
+     "carries": "24V + RS-485"
+    },
+    {
+     "variant": "acoded-5",
+     "pins": 5,
+     "thread": "M12",
+     "device": "Robotiq FT 300-S",
+     "carries": "24V + RS-485"
+    }
+   ],
+   "verdict": "identity_expected",
+   "reason": "同 family（M12）同 variant（acoded-5）同针数同针序 ⇒ 应当 identity。收录此条是为了给「合法兼容」留机读对照，防止判据退化成「凡是同家族一律 incompatible」——那也是臆断，只是方向相反。",
+   "implication": "三元组判据是**双向**的：family 相同但 variant 不同 ⇒ 不可互插；family 与 variant 都相同 ⇒ 可对接。两个方向都需要有实例。"
   }
  ],
  "coverage": {
   "mdv_positive_targets": 16,
-  "evidenced_now": 4,
-  "connectors_recorded": 6,
-  "electrical_undeclared_nodes": 650,
-  "pct_of_undeclared": 0.62,
-  "verdict": "已核实 4/16 个 MDV 正收益目标（占电气未声明节点 0.62%）。**本层不宣称补齐了电气轴**——它证明的是这条取证方向有效且单条成本极低（每个器件一份厂商针图），不是「已经补完」。"
+  "evidenced_now": 7,
+  "connectors_recorded": 9,
+  "electrical_undeclared_nodes": 643,
+  "pct_of_undeclared": 1.09,
+  "verdict": "已核实 7/16 个 MDV 正收益目标（占电气未声明节点 1.09%）。**本层不宣称补齐了电气轴**——它证明的是这条取证方向有效且单条成本极低（每个器件一份厂商针图），不是「已经补完」。"
  }
 }
