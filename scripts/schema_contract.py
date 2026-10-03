@@ -87,6 +87,38 @@ def validate(entities, mount_type_keys=None):
                     f"（合法值见 api/mechanical_interfaces.json#mount_type_enum）")
         elif mi is not None:
             violations.append(f"{eid}: mechanical_interface 非 dict")
+
+    # ---- rp_id 唯一性（2026-10-04 新增）----
+    #
+    # 为什么必须加：rp_id 被定义为「跨库稳定标识」，**唯一性是它的全部意义**。
+    # 但本契约此前只查「rp_id 存不存在」，不查「rp_id 是不是唯一的」——
+    # 于是 11 组 rp_id 发生跨厂商碰撞，且已开始造成实际数据污染：
+    #   RP-GRI-0002 同时是「Robotiq 2F-85」与「OnRobot NG10 电动夹爪」
+    #   ⇒ 电气取证接线后，**Robotiq 的连接器被挂到了 OnRobot 夹爪上**
+    #
+    # 这与 2026-10-03 修的 ci_gate 缺陷是**同一型**：
+    # 断言强度不看它抓不抓得住「错误」，要看抓不抓得住「缺失」/「重复」。
+    # 查了「在场」没查「唯一」，等于给了一份可以互相冒名的证件系统。
+    #
+    # 豁免：空 rp_id 不算违规（缺失已由上面的 CORE_REQUIRED 单独报），
+    # 否则同一问题会报两遍、掩盖真正的重复项。
+    rp_index: dict = {}
+    for i, e in enumerate(entities):
+        rp = e.get("rp_id")
+        if not rp:
+            continue
+        rp_index.setdefault(rp, []).append(
+            (e.get("id") or f"#{i}", e.get("manufacturer"), e.get("name")))
+    for rp, holders in sorted(rp_index.items()):
+        if len(holders) < 2:
+            continue
+        detail = "；".join(f"{h[0]}({h[1]})" for h in holders[:4])
+        mans = {h[1] for h in holders if h[1]}
+        cross = "【跨厂商】" if len(mans) > 1 else ""
+        violations.append(
+            f"rp_id 重复 {len(holders)} 条{cross}: {rp} → {detail}"
+            f"{' …' if len(holders) > 4 else ''}（rp_id 必须唯一，"
+            f"否则跨库合并会把不同器件认成同一件）")
     return violations
 
 
