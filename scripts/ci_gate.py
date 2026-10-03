@@ -835,6 +835,148 @@ def gate_cohort_feasibility():
             timeout=600)
 
 
+def _elec_token(label):
+    """连接器 label → 形态图里的端口类型 token（必须与 build_morphology_graph._slug 同源）。
+
+    2026-10-04 教训：闸门原先用「去空格大写子串包含」匹配 label 与 type，
+    在 label 含 CJK 时**必然失配**——`_slug` 只保留 [a-z0-9]，
+    "OnRobot tool I/O + Ethernet (UR tool connector 兼容)" 里
+    那两个汉字被整段丢掉，于是闸门报「未落地」而接线其实是对的。
+
+    这与 2026-10-03 的教训同型：**判据必须复用生产代码的规范化函数**，
+    不能在闸门里另写一份近似实现。近似实现必然在某类输入上分叉。
+    """
+    return 'ELEC:CONNECTOR:' + re.sub(r'[^a-z0-9]+', '-', str(label).lower()).strip('-').upper()
+
+
+def gate_electrical_wiring():
+    """电气取证层 → 形态图 的**接线完整性**闸门。
+
+    2026-10-03 挂闸。这条闸门守的是一个**已经真实发生过**的故障：
+
+    取证层落了 4 个一手核实的连接器（6 条），产物完全自洽、字段齐全、
+    闸门全绿——但 `build_morphology_graph.py` **从不读它**。
+    实体仍然挂 `ELEC:UNKNOWN`，判定对数**一个都没变**。
+    「产物已落盘但判据层没接线」是半接线故障：两边各自都对，接起来没反应。
+
+    第一次接线后又踩了第二层：取证层用**本地 id**（SENS-852）作键，
+    而实体侧稳定键是 **rp_id**（RP-SEN-0091）⇒ 依然一条不命中。
+    两层故障叠加，症状完全相同：**改完看起来都对，就是不生效。**
+
+    所以本闸门不看「接线代码写了没」（那是形式），只验**行为**：
+      ① 取证层每条记录，必须能在形态图里找到持有对应 ELEC 端口的节点；
+      ② 形态图必须存在由取证层 token 构造的端口类型；
+      ③ 电气轴可判定对数必须 ≥ 1（否则接线等于没接）；
+      ④ 取证层的键必须全是 rp_id 形态。
+    """
+    ep = os.path.join(ROOT, 'api', 'electrical_evidence.json')
+    gp = os.path.join(ROOT, 'api', 'morphology_graph.json')
+    cp = os.path.join(ROOT, 'api', 'compose_semantics.json')
+    for p in (ep, gp, cp):
+        if not os.path.exists(p):
+            bad('电气接线完整性', '产物缺失：%s' % os.path.basename(p))
+            return
+    ee = json.load(open(ep, encoding='utf-8'))
+    mg = json.load(open(gp, encoding='utf-8'))
+    cs = json.load(open(cp, encoding='utf-8'))
+    ents = json.load(open(os.path.join(ROOT, 'api', 'entities.json'), encoding='utf-8'))
+
+    # rp_id -> 实体 id 列表（一个 rp_id 理论上只应有一个实体——
+    # rp_id 唯一性由 schema_contract 把关；这里仍按列表处理，
+    # 宁可对「意外重复」判红，也不静默只认第一条）。
+    id_by_rp: dict = {}
+    for e in ents.get('entities') or []:
+        if e.get('rp_id'):
+            id_by_rp.setdefault(e['rp_id'], []).append(e['id'])
+
+    errs = []
+    evidence = ee.get('evidence') or {}
+    # ④ 键必须是 rp_id 形态（本地 id 会一条不命中）
+    for k in evidence:
+        if not re.match(r'^RP-[A-Z]+-\d{3,}$', k):
+            errs.append('取证层键 %r 不是 rp_id 形态（本地 id 接不上）' % k)
+
+    # ①② 每条记录必须在形态图里落地
+    nodes = {n['id']: n for n in (mg.get('nodes') or []) if n.get('composable', True)}
+    elec_tokens = {t['id'] for t in (mg.get('port_types') or [])
+                  if t.get('axis') == 'electrical' and t.get('class') == 'registered_connector'}
+    landed, unlanded = 0, []
+    for rp, ev in evidence.items():
+        targets = sorted(n for n in (id_by_rp.get(rp) or []) if n in nodes)
+        if not targets:
+            unlanded.append('%s(实体未入图)' % rp)
+            continue
+        want = {_elec_token(c.get('label') or c.get('id'))
+                for c in ev.get('connectors') or []}
+        miss = []
+        for nid in targets:
+            have = {p['type'] for p in (nodes[nid].get('ports') or [])
+                    if p['type'].startswith('ELEC:')}
+            if want & have:
+                landed += 1
+            else:
+                miss.append(nid)
+        if miss:
+            unlanded.append('%s→%s' % (rp, miss))
+    if unlanded:
+        errs.append('取证层有 %d 个 rp_id 未在形态图全部落地：%s'
+                    % (len(unlanded), unlanded[:4]))
+    if not (elec_tokens & {'ELEC:UNKNOWN'} == elec_tokens) and not elec_tokens:
+        errs.append('形态图无电气 registered_connector 类型')
+
+    # ③ 行为验证：电气轴可判定对数必须 ≥1
+    elec_pairs = ((cs.get('aggregates') or {}).get('axis_marginals') or {}) \
+        .get('electrical', {}).get('compatible', 0)
+    if elec_pairs < 1:
+        errs.append('电气轴可判定对数 = %d（接线未生效或无任何可判定电气对）' % elec_pairs)
+
+    if errs:
+        bad('电气接线完整性', '；'.join(errs[:4]))
+    else:
+        ok('电气接线完整性',
+           '取证 %d 条全部在形态图落地；电气 registered_connector 类型 %d 个；'
+           '电气轴可判定对 %d' % (landed, len(elec_tokens), elec_pairs))
+
+    # 变异检测：把取证层换成空（模拟「忘了接线」）必须判红
+    empty = dict(ee)
+    empty['evidence'] = {}
+    if _wiring_errors(empty, mg, cs, id_by_rp) == []:
+        bad('电气接线判据自证', '变异「取证层清空」未判红——本闸门是装饰')
+    else:
+        ok('电气接线判据自证·取证层清空 ⇒ 红')
+
+
+def _wiring_errors(ee, mg, cs, id_by_rp):
+    """接线完整性判据（纯函数，供闸门与变异自证共用）。"""
+    errs = []
+    evidence = ee.get('evidence') or {}
+    for k in evidence:
+        if not re.match(r'^RP-[A-Z]+-\d{3,}$', k):
+            errs.append('键非 rp_id 形态：%r' % k)
+    if not evidence:
+        errs.append('取证层为空')
+        return errs
+    nodes = {n['id']: n for n in (mg.get('nodes') or []) if n.get('composable', True)}
+    for rp, ev in evidence.items():
+        targets = sorted(n for n in (id_by_rp.get(rp) or []) if n in nodes)
+        if not targets:
+            errs.append('%s 未落地（实体不在可组合节点里）' % rp)
+            continue
+        want = {_elec_token(c.get('label') or c.get('id'))
+                for c in ev.get('connectors') or []}
+        for nid in targets:
+            have = {p['type'] for p in (nodes[nid].get('ports') or [])
+                    if p['type'].startswith('ELEC:')}
+            if not (want & have):
+                errs.append('%s/%s 无电气端口（want %s / have %s）'
+                            % (rp, nid, sorted(want), sorted(have)))
+    elec_pairs = ((cs.get('aggregates') or {}).get('axis_marginals') or {}) \
+        .get('electrical', {}).get('compatible', 0)
+    if elec_pairs < 1:
+        errs.append('电气轴可判定对数 = %d' % elec_pairs)
+    return errs
+
+
 def _cohort_errors(cf):
     """cohort_feasibility 产物的纯函数判据。"""
     errs = []
@@ -928,16 +1070,23 @@ def gate_electrical_evidence():
     # 变异检测（内存级注入，不改磁盘——ci_gate 会先跑 builder 把文件级篡改洗掉）
     for tag, mutate in (
             ('删除一手出处',
-             lambda d: d['evidence'].pop('SENS-852')),
+             lambda d: d['evidence'].pop('RP-SEN-0091')),
             ('来源 tier 降级为非法值',
-             lambda d: d['evidence']['GRIP-002'].update({'source_tier': 'X'})),
+             lambda d: d['evidence']['RP-GRI-0002'].update({'source_tier': 'X'})),
             ('抹掉 M8 家族冲突表',
              lambda d: d.update({'family_conflicts': []})),
-            ('冲突表变体针数全部相同（不可互拔结论失去几何依据）',
-             lambda d: [v.update({'pins': 6})
-                        for v in d['family_conflicts'][0]['variants']]),
+            # 变异目标必须打在**真的 incompatible 表**上，且抹平**所有**几何维度。
+            # 2026-10-04 修正：原变异只把 M8 表的 pins 全设成 6。判据同日扩展为
+            # 「比对全部几何维度」后，thread/variant 仍有差异 ⇒ 不再破防 ⇒ 假警报。
+            # 教训（SKILL 已记）：**变异体本身也要验证确实打到了破口**。
+            ('冲突表 incompatible 结论失去几何依据（thread/pins/variant 抹平）',
+             lambda d: [v.update({'pins': 5, 'thread': 'M8', 'variant': 'x'})
+                        for v in [t for t in d['family_conflicts']
+                                  if t['verdict'].startswith('incompatible')][0]['variants']]),
+            ('冲突表 identity 案例被改成有差异（自相矛盾）',
+             lambda d: d['family_conflicts'][-1]['variants'][0].update({'thread': 'M8'})),
             ('抹掉诚实缺口登记',
-             lambda d: d['evidence']['SENS-049']['connectors'][0].pop('evidence_gap', None)),
+             lambda d: d['evidence']['RP-SEN-0054']['connectors'][0].pop('evidence_gap', None)),
     ):
         mut = json.loads(json.dumps(ee))
         try:
@@ -994,15 +1143,39 @@ def _electrical_evidence_errors(ee):
     if cov_conn is not None and cov_conn != n_conn:
         errs.append('coverage.connectors_recorded=%r != 实际连接器数 %d'
                     % (cov_conn, n_conn))
-    # 冲突表：同 family 变体针数必须不同，否则「不可互插」无几何依据
+    # 冲突表：每条表**声明的阻断维度必须真的存在差异**。
+    # 2026-10-04 扩展：判据原为「针数必须不同」，被两条新表证伪——
+    #   · SAME_PIN_COUNT_DIFFERENT_THREAD：针数**相同**，阻断维度是螺纹
+    #     （Robotiq 2F-85 = M8 5-pole vs FT 300 = M12 5-pin A-coded，
+    #      针数/针序/信号全同，仅螺纹不同 ⇒ 不可插）
+    #   · M12：合法 **identity** 案例（FT 300 与 FT 300-S），所有维度都相同
+    # 沿用旧判据会把合法的 identity 也判红，迫使判据退化成
+    # 「同家族一律 incompatible」——那是方向相反的另一种臆断。
+    # **判据必须随已登记的实证一起扩展，否则它会开始拒绝正确的东西。**
     cfs = ee.get('family_conflicts') or []
     if not cfs:
         errs.append('family_conflicts 为空——「M8 是家族不是类型」这一核心发现无机读证据')
     for cf in cfs:
-        pins = {v.get('pins') for v in (cf.get('variants') or [])}
-        if len(pins) < 2:
-            errs.append('冲突表 %s 各变体针数相同（%s），不可互插结论缺几何依据'
-                        % (cf.get('family'), pins))
+        verdict = cf.get('verdict') or ''
+        variants = cf.get('variants') or []
+        if len(variants) < 2:
+            errs.append('冲突表 %s 变体不足 2 条' % cf.get('family'))
+            continue
+        diffs = {d for d in ('pins', 'thread', 'family', 'variant')
+                 if len({v.get(d) for v in variants}) > 1}
+        if verdict.startswith('incompatible'):
+            if not diffs:
+                errs.append('冲突表 %s 判 incompatible 但所有几何维度都相同，'
+                            '结论缺依据——没有差异就没有不可插的理由'
+                            % cf.get('family'))
+        elif verdict.startswith('identity'):
+            if diffs:
+                errs.append('冲突表 %s 判 identity 但几何维度 %s 不同 ⇒ 自相矛盾'
+                            % (cf.get('family'), sorted(diffs)))
+        else:
+            errs.append('冲突表 %s 的 verdict %r 未登记'
+                        '（只允许 incompatible_* / identity_*）'
+                        % (cf.get('family'), verdict))
     return errs
 
 
@@ -1217,6 +1390,13 @@ GATES = [
      gate_cohort_feasibility),
     ('电气接口取证（MDV 定向，一手出处强制 + M8 家族冲突）',
      gate_electrical_evidence),
+    # 2026-10-04 新增：电气取证层 → 形态图的**接线完整性**。
+    # 守的是一个已真实发生过的故障：取证层落了 4 个一手核实的连接器，
+    # 产物自洽 + 字段齐全 + 闸门全绿，但形态图生成器**从不读它**，
+    # 实体仍挂 ELEC:UNKNOWN，判定对数一个都没变。
+    # 第一次接线后又踩第二层：用本地 id 而非 rp_id 作键，依然一条不命中。
+    # 形式检查（"接线代码写了没"）抓不住这类故障，只有行为验证能。
+    ('电气取证接线完整性（落地 + 行为 + 变异）', gate_electrical_wiring),
     # 2026-09-24 新增：pipeline 框架（算子+DAG 骨架 + gap_classification 样板）。
     # 这是 GOAI 报告里识别的"缺 20%"——用算子/DAG 显式建模，把手写脚本拆成
     # 纯函数算子。骨架本身零依赖 stdlib，样板与旧脚本产出必须逐字段等价
