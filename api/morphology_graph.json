@@ -5,7 +5,7 @@
     "description": "把零件目录变成「可组合的形式对象」：实体为节点、接口为带类型的端口、端口类型之间带可判定裁决。二部结构（实体→端口类型→端口类型）而非实体×实体的全对边，因为 ISO 9409-1 的语义本身就是类型系统：法兰标号即类型，两件能装当且仅当标号一致或经转接盘。",
     "anchor": "docs/PROJECT_DIRECTIONS_V2.md §1（方向锚点 v2.2）",
     "generated_by": "scripts/build_morphology_graph.py",
-    "generated_at": "2026-10-04T06:54:52+08:00",
+    "generated_at": "2026-10-04T07:40:17+08:00",
     "truth_sources": [
       "api/entities.json",
       "api/mechanical_interfaces.json",
@@ -56,34 +56,34 @@
         "declared": 82
       },
       "electrical": {
-        "declared": 14,
-        "not_declared": 534
+        "declared": 16,
+        "not_declared": 532
       },
       "signal": {
         "declared": 393
       }
     },
-    "port_types_total": 35,
+    "port_types_total": 36,
     "port_types_by_axis": {
       "mechanical": 18,
-      "electrical": 14,
+      "electrical": 15,
       "signal": 3
     },
     "edges_entity_to_port": 1456,
-    "type_compat_pairs": 282,
+    "type_compat_pairs": 297,
     "type_compat_histogram": {
       "mechanical/identity": 9,
       "mechanical/adapter_required": 36,
       "mechanical/unknown": 126,
-      "electrical/identity": 13,
-      "electrical/incompatible": 51,
-      "electrical/unknown": 41,
+      "electrical/identity": 14,
+      "electrical/incompatible": 62,
+      "electrical/unknown": 44,
       "signal/unknown": 5,
       "signal/identity": 1
     },
     "unknown_hub_fanin": 419,
     "gap_hubs": {
-      "ELEC:UNKNOWN": 534,
+      "ELEC:UNKNOWN": 532,
       "MECH:UNKNOWN": 419
     },
     "mechanical_accounting": {
@@ -97,6 +97,32 @@
     }
   },
   "port_types": [
+    {
+      "id": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "axis": "electrical",
+      "class": "registered_connector",
+      "token": "12-pin round Amphenol",
+      "pins": 12,
+      "pitch_mm": null,
+      "family": "amphenol_round",
+      "variant": "12pin",
+      "pinout": null,
+      "carries": [
+        "sensor_analog_or_digital"
+      ],
+      "evidence_gap": "pinout_unverified",
+      "consumers": [
+        "SENS-37",
+        "SENS-37"
+      ],
+      "prov": {
+        "source": "api/electrical_evidence.json#RP-SEN-0042",
+        "tier": "B",
+        "note": "**全新家族**：ATI Mini/Mini45 系列用**外置电子学**（16-bit DAQ / Net / EtherCAT 板或盒），传感器本体只出 12 针圆形 Amphenol 连接器；而同一厂商的 Axia80 是 6-pin M8 ZC22 复合接口（以太网+供电一体）。⇒ **同厂商不同系列的接口架构完全不同**，按厂商名推断接口必错。**pinout 未公开** ⇒ 留 null + evidence_gap，不按「12 针大概是模拟量」推断。"
+      },
+      "consumer_count": 2,
+      "in_use": true
+    },
     {
       "id": "ELEC:CONNECTOR:2-X-M8-POWER-CONTROL-SIGNAL",
       "axis": "electrical",
@@ -300,14 +326,17 @@
       "evidence_gap": "pinout_unverified",
       "consumers": [
         "SENS-049",
-        "SENS-049"
+        "SENS-049",
+        "SENS-854",
+        "SENS-854"
       ],
       "prov": {
         "source": "api/electrical_evidence.json#RP-SEN-0054",
         "tier": "B",
         "note": "包装清单明写「Sensor cable (M8, 5 m)」，**但公开 datasheet 未给逐针针序** ⇒ pinout 留 null。这是本层的诚实边界：知道有 5 针 M8，不知道每一针是什么。补齐它需要 OEM 针图，属未完成项。"
       },
-      "consumer_count": 2,
+      "note": "取证层另有登记（OnRobot HEX-H 6-Axis F/T Sensor (Low Deformation)）",
+      "consumer_count": 4,
       "in_use": true
     },
     {
@@ -906,14 +935,12 @@
         "SENS-34",
         "SENS-35",
         "SENS-36",
-        "SENS-37",
         "SENS-38",
         "SENS-39",
         "SENS-40",
         "SENS-41",
         "SENS-42",
         "SENS-853",
-        "SENS-854",
         "SENS-856",
         "SENS-cam-orbbec-gemini335",
         "SENS-cam-percipio-fm851",
@@ -1008,7 +1035,7 @@
         "source": "构造类型：电气接口未声明",
         "note": "电气轴覆盖率极低（见 electrical_interfaces.coverage），本类型为显式缺口。"
       },
-      "consumer_count": 534,
+      "consumer_count": 532,
       "in_use": true
     },
     {
@@ -17559,8 +17586,11 @@
           "status": "declared"
         },
         {
-          "type": "ELEC:UNKNOWN",
-          "status": "not_declared"
+          "type": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+          "status": "declared",
+          "evidence_gap": "pinout_unverified",
+          "family": "amphenol_round",
+          "pins": 12
         },
         {
           "type": "SIG:INPUT_SENSORY",
@@ -17855,8 +17885,11 @@
           "status": "declared"
         },
         {
-          "type": "ELEC:UNKNOWN",
-          "status": "not_declared"
+          "type": "ELEC:CONNECTOR:M8-5-PIN-SENSOR-CABLE",
+          "status": "declared",
+          "evidence_gap": "pinout_unverified",
+          "family": "M8",
+          "pins": 5
         },
         {
           "type": "SIG:INPUT_SENSORY",
@@ -33872,9 +33905,9 @@
     },
     {
       "from": "SENS-37",
-      "to": "ELEC:UNKNOWN",
+      "to": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
       "type": "has_electrical_port",
-      "status": "not_declared",
+      "status": "declared",
       "prov": {
         "source": "api/entities.json#SENS-37",
         "tier": "C",
@@ -34141,9 +34174,9 @@
     },
     {
       "from": "SENS-854",
-      "to": "ELEC:UNKNOWN",
+      "to": "ELEC:CONNECTOR:M8-5-PIN-SENSOR-CABLE",
       "type": "has_electrical_port",
-      "status": "not_declared",
+      "status": "declared",
       "prov": {
         "source": "api/entities.json#SENS-854",
         "tier": "A"
@@ -39071,6 +39104,208 @@
       "blocking_dims": [],
       "prov": {
         "source": "api/negative_compat.json + 标号几何现算",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "axis": "electrical",
+      "verdict": "identity",
+      "reason": "同一连接器型号（family=amphenol_round pins=12），自配对可对接",
+      "blocking_dims": [],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:2-X-M8-POWER-CONTROL-SIGNAL",
+      "axis": "electrical",
+      "verdict": "incompatible",
+      "reason": "family 不同（amphenol_round vs M8）⇒ 非同一连接器品类，不可互插",
+      "blocking_dims": [
+        "family"
+      ],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:5264-3P",
+      "axis": "electrical",
+      "verdict": "incompatible",
+      "reason": "针数不同（12 vs 3）⇒ 物理上不可直接对接。注意 family 同为 amphenol_round 时尤其易误判：同族不同变体针数针序都不同。",
+      "blocking_dims": [
+        "pins"
+      ],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:A1257WR-S-3P",
+      "axis": "electrical",
+      "verdict": "unknown",
+      "reason": "连接器不同型且无针数/family/pinout 证据，不臆断",
+      "blocking_dims": [],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:JST-EHR-03",
+      "axis": "electrical",
+      "verdict": "incompatible",
+      "reason": "针数不同（12 vs 3）⇒ 物理上不可直接对接。注意 family 同为 amphenol_round 时尤其易误判：同族不同变体针数针序都不同。",
+      "blocking_dims": [
+        "pins"
+      ],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:JST-EHR-04",
+      "axis": "electrical",
+      "verdict": "incompatible",
+      "reason": "针数不同（12 vs 4）⇒ 物理上不可直接对接。注意 family 同为 amphenol_round 时尤其易误判：同族不同变体针数针序都不同。",
+      "blocking_dims": [
+        "pins"
+      ],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:M12-5-PIN-A-CODED-IEC-61076-2-101",
+      "axis": "electrical",
+      "verdict": "incompatible",
+      "reason": "针数不同（12 vs 5）⇒ 物理上不可直接对接。注意 family 同为 amphenol_round 时尤其易误判：同族不同变体针数针序都不同。",
+      "blocking_dims": [
+        "pins"
+      ],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:M12-ZC28-8-PIN-MALE-CABLE-END",
+      "axis": "electrical",
+      "verdict": "incompatible",
+      "reason": "针数不同（12 vs 8）⇒ 物理上不可直接对接。注意 family 同为 amphenol_round 时尤其易误判：同族不同变体针数针序都不同。",
+      "blocking_dims": [
+        "pins"
+      ],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:M8-5-PIN-SENSOR-CABLE",
+      "axis": "electrical",
+      "verdict": "incompatible",
+      "reason": "针数不同（12 vs 5）⇒ 物理上不可直接对接。注意 family 同为 amphenol_round 时尤其易误判：同族不同变体针数针序都不同。",
+      "blocking_dims": [
+        "pins"
+      ],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:M8-ZC22-6-PIN-MALE",
+      "axis": "electrical",
+      "verdict": "incompatible",
+      "reason": "针数不同（12 vs 6）⇒ 物理上不可直接对接。注意 family 同为 amphenol_round 时尤其易误判：同族不同变体针数针序都不同。",
+      "blocking_dims": [
+        "pins"
+      ],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:ONROBOT-TOOL-I-O-ETHERNET-UR-TOOL-CONNECTOR",
+      "axis": "electrical",
+      "verdict": "incompatible",
+      "reason": "family 不同（amphenol_round vs tool_io_composite）⇒ 非同一连接器品类，不可互插",
+      "blocking_dims": [
+        "family"
+      ],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:ROBOTIQ-COUPLING-10-SPRING-PIN",
+      "axis": "electrical",
+      "verdict": "incompatible",
+      "reason": "针数不同（12 vs 10）⇒ 物理上不可直接对接。注意 family 同为 amphenol_round 时尤其易误判：同族不同变体针数针序都不同。",
+      "blocking_dims": [
+        "pins"
+      ],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:ROBOTIQ-DEVICE-CABLE-5-POLE-M8",
+      "axis": "electrical",
+      "verdict": "incompatible",
+      "reason": "针数不同（12 vs 5）⇒ 物理上不可直接对接。注意 family 同为 amphenol_round 时尤其易误判：同族不同变体针数针序都不同。",
+      "blocking_dims": [
+        "pins"
+      ],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:CONNECTOR:XT30PW-M",
+      "axis": "electrical",
+      "verdict": "unknown",
+      "reason": "连接器不同型且无针数/family/pinout 证据，不臆断",
+      "blocking_dims": [],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
+        "tier": "B"
+      }
+    },
+    {
+      "a": "ELEC:CONNECTOR:12-PIN-ROUND-AMPHENOL",
+      "b": "ELEC:UNKNOWN",
+      "axis": "electrical",
+      "verdict": "unknown",
+      "reason": "至少一侧未声明（ELEC:UNKNOWN）",
+      "blocking_dims": [],
+      "prov": {
+        "source": "(family, pins, pinout) 三元组现算｜api/electrical_evidence.json",
         "tier": "B"
       }
     },
