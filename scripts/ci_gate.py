@@ -697,6 +697,357 @@ def gate_gap_classification():
             ok('缺口成因分类判据自证·%s ⇒ 红' % tag)
 
 
+def gate_evidence_valuation():
+    """边际声明价值（MDV）闸门——取证投资的判据源。
+
+    2026-10-03 挂闸。本层回答一个此前全项目没回答过的问题：
+    **「补哪一条机械/电气/信号声明，能把最多 unknown 配对变成可判定配对？」**
+
+    为什么必须挂（不是又一层统计）：
+      MDV 的输出包含「某轴的边际收益**恒为 0**」这种定理级断言。
+      它错的方式极隐蔽——引擎里 PAIR_RANK 阈值改错一点、或 type_compat
+      少登记几条，MDV 就能整体翻号，而项目所有既有检查都照样绿。
+      一旦翻号，后果是**把取证资源系统性投入到死轴上**，
+      且没有任何现有指标能发现（声明率反而会"上升"）。
+
+    三重对照（项目 §四纪律：只测绿路径的闸门等于没闸门）：
+      ① 构建器 fail-fast 算术守卫（内建于 build_evidence_valuation.build）
+      ② verify_evidence_valuation.py 的 5 组自证：算术自洽 / 阴阳合成图
+         （正样本 SYN-D MDV>0、负样本 SYN-E 缺两轴⇒MDV=0）/ 6 种变异
+         全部判红 / 恒等复现 / 反向误报
+      ③ 本函数额外守一条**跨层不变量**：MDV 的零轴裁决必须与
+         compose_semantics 的 binding_axis 口径一致。
+         两者由不同代码路径算出（MDV 走 _decidable_matrix，
+         compose 走 eval_all_pairs），若分叉说明其中一层已失效。
+    """
+    run_sub('MDV 生成（fail-fast 算术守卫）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_evidence_valuation.py')])
+    p = os.path.join(ROOT, 'api', 'evidence_valuation.json')
+    if not os.path.exists(p):
+        bad('MDV 产物', 'api/evidence_valuation.json 缺失')
+        return
+    with open(p, encoding='utf-8') as f:
+        ev = json.load(f)
+    errs = _mdv_errors(ev)
+    if errs:
+        bad('MDV 聚合口径', '；'.join(errs[:4]))
+    else:
+        s = ev['summary']
+        dead = [a for a in ('mechanical', 'electrical', 'signal')
+                if (ev['by_axis'][a]['verdict'] or '').startswith('provably_zero_mdv')]
+        ok('MDV 聚合口径',
+           '三轴AND=%s binding=%s 零贡献轴=%s electrical 正收益目标=%s'
+           % (s['three_axis_conjunction'], s['binding_axis'],
+              dead or '无', ev['by_axis']['electrical']['positive_mdv_nodes']))
+
+    # 跨层不变量：MDV 判定的瓶颈轴须与 compose_semantics 口径咬合。
+    # MDV 说「某轴 MDV 恒 0」⇒ 该轴无论怎么取证都不改变三轴 AND。
+    # 若 compose_semantics 报告三轴 AND > 0，两者就矛盾了。
+    cp = os.path.join(ROOT, 'api', 'compose_semantics.json')
+    if os.path.exists(cp):
+        with open(cp, encoding='utf-8') as f:
+            cs = json.load(f)
+        overall = (cs.get('aggregates') or {}).get('overall_counts') or {}
+        composed = overall.get('composed', 0)
+        s = ev['summary']
+        if composed > 0 and s['three_axis_conjunction'] == 0:
+            bad('MDV 跨层不变量',
+                'compose_semantics 报 composed=%d>0，但 MDV 算出的三轴 AND=0'
+                '——两层判定分叉，至少一层已失效' % composed)
+        else:
+            ok('MDV 跨层不变量',
+               'compose_semantics composed=%d 与 MDV 三轴AND=%s 口径一致'
+               % (composed, s['three_axis_conjunction']))
+
+    # 阳性/阴性/变异自证：跑独立自证脚本（它内部含 6 变异 + 正负样本）
+    run_sub('MDV 阴阳/变异自证（正样本+负样本+6 变异+恒等复现+反向误报）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'verify_evidence_valuation.py')],
+            timeout=600)
+
+
+def gate_cohort_feasibility():
+    """最小可行同质声明集闸门——**真正的取证判据**。
+
+    2026-10-03 挂闸。这层的存在源于一次**对自己结论的纠正**：
+    MDV 层输出「16 个单条高收益节点」，但端到端注入验证发现
+    单独补这 16 个，电气可判定对数 1→1 持平，**预测未兑现**。
+    根因是 MDV 算的是「n 与 j 同时被填充」的联合上界，
+    而严格语义下单条声明的边际收益在全库三轴恒为 0。
+
+    修正后的判据：约束是**最小可行同质集**——K=1 不可能，K=2 即可。
+
+    为什么必须挂闸（本层特有的失效模式）：
+      这层产物自身完全自洽（计数守恒、profile 加总一致），
+      它的错误**不会表现为数字异常，而会表现为语义标签错误**——
+      即「把候选可行集说成保证可行集」。算术守卫抓不住这类错误。
+      故本闸门额外守三件事：
+        ① K=1 不可能性论证必须在位（method.k1_impossible 被删即红）；
+        ② MDV 的 16 个候选目标必须全部落在本层可行集内（跨层不变量）；
+        ③ 乐观上界的免责措辞必须在位（honest_limits 含 optimism 说明）。
+    """
+    run_sub('Cohort 生成（fail-fast 守恒守卫）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_cohort_feasibility.py')])
+    p = os.path.join(ROOT, 'api', 'cohort_feasibility.json')
+    if not os.path.exists(p):
+        bad('Cohort 产物', 'api/cohort_feasibility.json 缺失')
+        return
+    with open(p, encoding='utf-8') as f:
+        cf = json.load(f)
+    errs = _cohort_errors(cf)
+    if errs:
+        bad('Cohort 聚合口径', '；'.join(errs[:4]))
+    else:
+        s = cf['summary']
+        rc = cf.get('mdv_reconciliation') or {}
+        ok('Cohort 聚合口径',
+           'K=%s 可行对 %s 同质 %s（%s%%）涉及 %s 节点；MDV 对账 %s/%s'
+           % (s.get('min_viable_k'), s.get('viable_pairs_k2'),
+              s.get('homogeneous_viable_pairs'), s.get('homogeneous_share_pct'),
+              s.get('nodes_in_any_viable_cohort'),
+              rc.get('landed_in_viable_cohort'), rc.get('mdv_single_declaration_targets')))
+
+    # 跨层不变量：MDV 的候选目标必须全部落在 cohort 可行集内
+    mp = os.path.join(ROOT, 'api', 'evidence_valuation.json')
+    if os.path.exists(mp):
+        with open(mp, encoding='utf-8') as f:
+            mdv = json.load(f)
+        tops = (mdv.get('by_axis', {}).get('electrical', {}).get('top_targets') or [])
+        mdv_ids = {t['id'] for t in tops if t.get('mdv', 0) > 0}
+        landed = set((cf.get('mdv_reconciliation') or {}).get('ids') or [])
+        missing = sorted(mdv_ids - landed)
+        if missing:
+            bad('Cohort 跨层不变量',
+                'MDV 候选目标 %d 个未全部落在 cohort 可行集：%s —— 两层判定分叉'
+                % (len(missing), missing[:5]))
+        else:
+            ok('Cohort 跨层不变量',
+               'MDV %d 个候选目标全部落在 cohort 可行集内' % len(mdv_ids))
+
+    # 乐观上界免责措辞必须在位（本层最大的语义风险就是把上界说成保证）
+    hl = ' '.join((cf.get('meta', {}).get('honest_limits') or []))
+    if '上界' not in hl or '⊆' not in hl:
+        bad('Cohort 语义守卫', 'honest_limits 缺少乐观上界免责（实际可行集 ⊆ 本表）')
+    else:
+        ok('Cohort 语义守卫', '乐观上界免责措辞在位')
+
+    run_sub('Cohort 阴阳/变异自证（正样本+负样本+K1 不可能性+6 变异）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'verify_cohort_feasibility.py')],
+            timeout=600)
+
+
+def _cohort_errors(cf):
+    """cohort_feasibility 产物的纯函数判据。"""
+    errs = []
+    s = cf.get('summary') or {}
+    n = s.get('nodes_evaluated')
+    if not isinstance(n, int) or n <= 0:
+        return ['nodes_evaluated 非法：%r' % (n,)]
+    total = n * (n - 1) // 2
+    v = s.get('viable_pairs_k2')
+    h = s.get('homogeneous_viable_pairs')
+    if not isinstance(v, int) or not isinstance(h, int):
+        return ['可行对计数非整数：viable=%r homogeneous=%r' % (v, h)]
+    if h > v:
+        errs.append('同质集 %d > 可行集 %d' % (h, v))
+    if v > total:
+        errs.append('可行对 %d > C(n,2) %d' % (v, total))
+    if s.get('min_viable_k') != 2:
+        errs.append('min_viable_k 应为 2，收到 %r' % (s.get('min_viable_k'),))
+    if (s.get('k1_status') or '').startswith('possible'):
+        errs.append('k1_status 声称 K=1 可行，与 method.k1_impossible 矛盾')
+    if 'k1_impossible' not in (cf.get('method') or {}):
+        errs.append('K=1 不可能性论证缺失')
+    prof = cf.get('gap_profiles') or []
+    psum = sum(p.get('viable_pairs', 0) for p in prof)
+    if psum != h:
+        errs.append('缺口画像加总 %d != 同质可行对 %d' % (psum, h))
+    for p in prof:
+        if p.get('nodes_involved', 0) > n:
+            errs.append('profile %r 节点数 %d 溢出全库 %d'
+                        % (p.get('missing_axes'), p['nodes_involved'], n))
+    rc = cf.get('mdv_reconciliation')
+    if rc and rc.get('mdv_single_declaration_targets'):
+        if rc.get('landed_in_viable_cohort') != rc['mdv_single_declaration_targets']:
+            errs.append('MDV 跨层对账不一致：%r/%r'
+                        % (rc.get('landed_in_viable_cohort'),
+                           rc['mdv_single_declaration_targets']))
+    return errs
+
+
+def gate_electrical_evidence():
+    """电气接口取证闸门——MDV 定向取证的落地产物。
+
+    2026-10-03 挂闸。本层是「MDV/cohort 算出的取证方向」的实际执行记录，
+    它最危险的失效方式是**看起来有出处、实际是推断**：
+    电气连接器一旦猜错针序，工程师照着接会烧件——这是人身与设备风险，
+    不是数据质量问题。故本闸门把「必须有一手出处」变成硬约束。
+
+    三重对照：
+      ① 构建器 _validate() 强制：每条证据必须有 source_url + source_tier + vendor；
+      ② M8 家族冲突表自洽：同 family 的变体针数必须真的不同，
+         否则「物理不可互插」的结论没有几何依据；
+      ③ 变异检测：删 source_url / 改 tier / 抹掉冲突表 / 抹掉诚实缺口声明，
+         闸门必须逐一判红。
+    """
+    run_sub('电气取证生成（fail-fast 一手出处强制）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_electrical_evidence.py')])
+    p = os.path.join(ROOT, 'api', 'electrical_evidence.json')
+    if not os.path.exists(p):
+        bad('电气取证产物', 'api/electrical_evidence.json 缺失')
+        return
+    with open(p, encoding='utf-8') as f:
+        ee = json.load(f)
+    errs = _electrical_evidence_errors(ee)
+    if errs:
+        bad('电气取证出处纪律', '；'.join(errs[:4]))
+    else:
+        n_conn = sum(len(v.get('connectors') or []) for v in (ee.get('evidence') or {}).values())
+        cf = ee.get('coverage') or {}
+        ok('电气取证出处纪律',
+           '%d 器件 / %d 连接器 全部具一手出处；覆盖 MDV 目标 %s/16；'
+           'M8 家族冲突组 %d'
+           % (len(ee.get('evidence') or {}), n_conn,
+              cf.get('evidenced_now'), len(ee.get('family_conflicts') or [])))
+
+    # 语义守卫：诚实缺口（pinout null）必须显式登记 evidence_gap，
+    # 不能悄悄留空——「不知道」必须可被 agent 看见，否则会被当成「没有针序要求」
+    gaps = 0
+    for nid, ev in (ee.get('evidence') or {}).items():
+        for c in ev.get('connectors') or []:
+            if c.get('pinout') is None:
+                if not c.get('evidence_gap'):
+                    bad('电气取证诚实缺口',
+                        '%s/%s 的 pinout 为 null 但未登记 evidence_gap —— '
+                        '「不知道」必须显式可见，否则会被误读为「无针序要求」'
+                        % (nid, c.get('id')))
+                else:
+                    gaps += 1
+    if gaps:
+        ok('电气取证诚实缺口', '%d 处 pinout 未知已显式登记 evidence_gap' % gaps)
+
+    # 变异检测（内存级注入，不改磁盘——ci_gate 会先跑 builder 把文件级篡改洗掉）
+    for tag, mutate in (
+            ('删除一手出处',
+             lambda d: d['evidence'].pop('SENS-852')),
+            ('来源 tier 降级为非法值',
+             lambda d: d['evidence']['GRIP-002'].update({'source_tier': 'X'})),
+            ('抹掉 M8 家族冲突表',
+             lambda d: d.update({'family_conflicts': []})),
+            ('冲突表变体针数全部相同（不可互拔结论失去几何依据）',
+             lambda d: [v.update({'pins': 6})
+                        for v in d['family_conflicts'][0]['variants']]),
+            ('抹掉诚实缺口登记',
+             lambda d: d['evidence']['SENS-049']['connectors'][0].pop('evidence_gap', None)),
+    ):
+        mut = json.loads(json.dumps(ee))
+        try:
+            mutate(mut)
+        except (KeyError, IndexError):
+            fail_msg = ('变异「%s」无法注入——判据源结构已变，闸门需同步更新' % tag)
+            bad('电气取证判据自证', fail_msg)
+            continue
+        if _electrical_evidence_errors(mut) == [] and not _has_gap_violation(mut):
+            bad('电气取证判据自证', '变异「%s」未判红——本闸门是装饰' % tag)
+        else:
+            ok('电气取证判据自证·%s ⇒ 红' % tag)
+
+
+def _has_gap_violation(ee):
+    """pinout 为 null 但未登记 evidence_gap ⇒ 诚实缺口被吞掉。"""
+    for ev in (ee.get('evidence') or {}).values():
+        for c in ev.get('connectors') or []:
+            if c.get('pinout') is None and not c.get('evidence_gap'):
+                return True
+    return False
+
+
+def _electrical_evidence_errors(ee):
+    """电气取证的纯函数判据：出处纪律 + 冲突表几何依据。"""
+    errs = []
+    ev = ee.get('evidence')
+    if not ev:
+        return ['evidence 为空——fail-closed，无一手出处不得落盘']
+    for nid, e in ev.items():
+        for field in ('vendor', 'device', 'source_url', 'source', 'source_tier', 'confidence'):
+            if not e.get(field):
+                errs.append('%s 缺必填字段 %s' % (nid, field))
+        if e.get('source_tier') not in ('A', 'B', 'C'):
+            errs.append('%s source_tier=%r 非法（只允许 A/B/C）'
+                        % (nid, e.get('source_tier')))
+        if not e.get('connectors'):
+            errs.append('%s 无连接器记录' % nid)
+        for c in (e.get('connectors') or []):
+            for field in ('id', 'label', 'family', 'carries', 'note'):
+                if not c.get(field):
+                    errs.append('%s/%s 缺字段 %s' % (nid, c.get('id', '?'), field))
+    # coverage.evidenced_now 必须与实际条目数一致——否则删条目不会被发现。
+    # 起因：本闸门第一版漏了这条，变异「删除一手出处」（pop 一个器件）
+    # 竟然未判红——因为剩 3 条仍满足「每条都有出处」，只是**少了一条**没人发现。
+    # 这就是「只测绿路径的闸门等于没闸门」的具体形态：断言够不够强，
+    # 不看它抓不抓得住「缺失」而非「错误」。
+    cov = ee.get('coverage') or {}
+    if cov.get('evidenced_now') != len(ev):
+        errs.append('coverage.evidenced_now=%r != 实际条目数 %d（有条目被删或计数漂移）'
+                    % (cov.get('evidenced_now'), len(ev)))
+    n_conn = sum(len(e.get('connectors') or []) for e in ev.values())
+    cov_conn = cov.get('connectors_recorded')
+    if cov_conn is not None and cov_conn != n_conn:
+        errs.append('coverage.connectors_recorded=%r != 实际连接器数 %d'
+                    % (cov_conn, n_conn))
+    # 冲突表：同 family 变体针数必须不同，否则「不可互插」无几何依据
+    cfs = ee.get('family_conflicts') or []
+    if not cfs:
+        errs.append('family_conflicts 为空——「M8 是家族不是类型」这一核心发现无机读证据')
+    for cf in cfs:
+        pins = {v.get('pins') for v in (cf.get('variants') or [])}
+        if len(pins) < 2:
+            errs.append('冲突表 %s 各变体针数相同（%s），不可互插结论缺几何依据'
+                        % (cf.get('family'), pins))
+    return errs
+
+
+def _mdv_errors(ev):
+    """MDV 产物的纯函数判据（供闸门复用；不手写期望值，全部与产物自洽性对账）。"""
+    errs = []
+    s = ev.get('summary') or {}
+    n = s.get('nodes_evaluated')
+    if not isinstance(n, int) or n <= 0:
+        return ['nodes_evaluated 非法：%r' % (n,)]
+    total = n * (n - 1) // 2
+    if s.get('total_pairs') != total:
+        errs.append('total_pairs %r != C(n,2) %d' % (s.get('total_pairs'), total))
+    per = s.get('per_axis_decidable_pairs') or {}
+    for axis, cnt in per.items():
+        if not isinstance(cnt, int) or cnt < 0 or cnt > total:
+            errs.append('%s 可判定对 %r 越界 [0,%d]' % (axis, cnt, total))
+    conj = s.get('two_axis_conjunction') or {}
+    for combo, cnt in conj.items():
+        a, b = combo.split('+')
+        if a in per and b in per and cnt > min(per[a], per[b]):
+            errs.append('%s=%r 超过单轴上界' % (combo, cnt))
+    if conj and s.get('three_axis_conjunction', 0) > min(conj.values()):
+        errs.append('三轴 AND %r 超过二轴 AND' % s.get('three_axis_conjunction'))
+    # MDV 计数守恒 + 索引完备
+    by = ev.get('by_axis') or {}
+    expect_idx = 0
+    for axis, b in by.items():
+        if b['positive_mdv_nodes'] + b['zero_mdv_nodes'] != b['undeclared_nodes']:
+            errs.append('%s MDV 计数不守恒：%d+%d != %d'
+                        % (axis, b['positive_mdv_nodes'], b['zero_mdv_nodes'],
+                           b['undeclared_nodes']))
+        expect_idx += b['undeclared_nodes']
+        zero_claim = (b['verdict'] or '').startswith('provably_zero_mdv')
+        actually = b['positive_mdv_nodes'] == 0 and b['undeclared_nodes'] > 0
+        if zero_claim != actually:
+            errs.append('%s 零轴裁决 %r 与实测（正收益 %d/未声明 %d）矛盾'
+                        % (axis, b['verdict'], b['positive_mdv_nodes'],
+                           b['undeclared_nodes']))
+    if len(ev.get('entity_mdv_index') or {}) != expect_idx:
+        errs.append('entity_mdv_index 条数 %d != 未声明总数 %d'
+                    % (len(ev.get('entity_mdv_index') or {}), expect_idx))
+    return errs
+
+
 def _gap_doc_errors(gc, ft, live_sig):
     """缺口成因分类聚合口径判据（纯函数，供闸门与变异自证共用）。"""
     errs = []
@@ -848,6 +1199,24 @@ GATES = [
     # 一个是配对级动态瓶颈定位（gap_distance / d1_bottleneck）。
     # 前者决定「缺口可不可攻」，后者决定「先攻哪一轴」。
     ('缺口成因分类（与 facts 交叉校验 + 完备性）', gate_gap_classification),
+    # 2026-10-03 新增：边际声明价值 MDV（锚点 §6.3 / docs/RESEARCH_BARRIERS_20261003.md）。
+    # 与 gap_classification 的分工：那一层判「缺口是什么成因」（实体级静态），
+    # 这一层判「补哪条声明边际收益最大」（配对级动态）。
+    # 必须挂闸的理由：本层输出「某轴取证收益恒为 0」这种**定理级断言**。
+    # 断言错了不会崩——引擎改错一个 PAIR_RANK 阈值或 type_compat 少登记几条，
+    # MDV 就可能翻号，而所有「跑通了」的检查照样绿，而项目会把资源投到死轴上。
+    ('边际声明价值 MDV（上界定理 + 阴阳/变异自证）', gate_evidence_valuation),
+    # 2026-10-03 新增：最小可行同质集 cohort_feasibility。
+    # 这是 MDV 的**语义修正版**——MDV 把「联合上界」误标成「单条边际值」，
+    # 端到端验证（单独注入 16 个目标 ⇒ 电气可判定对 1→1 持平）证明预测未兑现。
+    # 修正后的判据是：K=1 不可能，K=2 即可，同质可行对 46,149 对 / 636 节点。
+    # 两层必须同时挂：MDV 提供候选节点筛选，cohort 提供真正的取证判据，
+    # 且 ci_gate 强制校验「MDV 的 16 个目标全部落在 cohort 可行集内」——
+    # 这是跨层不变量，任一层失效都会立刻红灯。
+    ('最小可行同质集（K=2 可行域 + MDV 跨层对账 + 阴阳/变异自证）',
+     gate_cohort_feasibility),
+    ('电气接口取证（MDV 定向，一手出处强制 + M8 家族冲突）',
+     gate_electrical_evidence),
     # 2026-09-24 新增：pipeline 框架（算子+DAG 骨架 + gap_classification 样板）。
     # 这是 GOAI 报告里识别的"缺 20%"——用算子/DAG 显式建模，把手写脚本拆成
     # 纯函数算子。骨架本身零依赖 stdlib，样板与旧脚本产出必须逐字段等价
