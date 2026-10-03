@@ -12,13 +12,13 @@
    "scripts/compose_engine.py"
   ],
   "honest_limits": [
-   "composed 的归因**必须现读 aggregates**，不要复述历史口径。此前记作「SIG 全 not_declared 导致 composed=0」——那是 2026-09-23 之前的状态。信号轴改为按品类定向声明角色后，真实瓶颈已由 gap_distance 指出：d1_bottleneck 显示只差一轴即可判定的配对中，电气轴占比 92%。补哪一轴的声明，看 d1_bottleneck 而非记忆。",
+   "composed 的归因**必须现读 aggregates**，不要复述历史口径。此前记作「SIG 全 not_declared 导致 composed=0」——那是 2026-09-23 之前的状态。信号轴改为按品类定向声明角色后，真实瓶颈已由 gap_distance 指出：d1_bottleneck 显示只差一轴即可判定的配对中，电气轴占比 88%。补哪一轴的声明，看 d1_bottleneck 而非记忆。",
    "compatible_via_adapter 表示需转接盘（H3 硬骨头：转接件几何可打印可信尚未做），不等于开箱即装。",
    "全对评测含自配对与脑体对称展开；35 万对逐对结果不落盘，只落聚合与判例。",
    "gap_distance[d] = 恰有 d 轴判 unknown 的配对数（仅统计 overall=unknown；type_error 是类型冲突而非证据缺口，不计入）。d=1 即「补一轴声明即可判定」，是数据补录的最高优先级目标；gap_distance['0'] 恒为 0（无缺口就不可能是 unknown）。",
    "reflexivity 公理（同型必配）只对**几何规格型**类型成立（同标号法兰必然可装）；对**方向性角色型**类型（OUTPUT_SPIKE~OUTPUT_SPIKE）不成立——两个输出端不是必然可装，而是互为不互补。type_compat 里显式登记的自配对裁决优先于该公理。"
   ],
-  "generated_at": "2026-10-04T06:54:54+08:00"
+  "generated_at": "2026-10-04T07:40:18+08:00"
  },
  "rule_table": [
   {
@@ -105,8 +105,8 @@
   "pairs_evaluated": 427716,
   "overall_counts": {
    "composed": 0,
-   "type_error": 78,
-   "unknown": 427638
+   "type_error": 114,
+   "unknown": 427602
   },
   "axis_marginals": {
    "mechanical": {
@@ -116,10 +116,10 @@
     "unknown": 423620
    },
    "electrical": {
-    "compatible": 15,
+    "compatible": 19,
     "compatible_via_adapter": 0,
-    "incompatible": 78,
-    "unknown": 427623
+    "incompatible": 114,
+    "unknown": 427583
    },
    "signal": {
     "compatible": 56620,
@@ -130,23 +130,23 @@
   },
   "mech_elec_cross": {
    "compatible_via_adapter|unknown": 2138,
-   "compatible|compatible": 9,
-   "compatible|incompatible": 32,
-   "compatible|unknown": 1917,
+   "compatible|compatible": 13,
+   "compatible|incompatible": 56,
+   "compatible|unknown": 1889,
    "unknown|compatible": 6,
-   "unknown|incompatible": 46,
-   "unknown|unknown": 423568
+   "unknown|incompatible": 58,
+   "unknown|unknown": 423556
   },
   "gap_distance": {
    "0": 0,
-   "1": 117,
-   "2": 60423,
+   "1": 113,
+   "2": 60391,
    "3": 367098
   },
   "d1_bottleneck": {
    "mechanical": 0,
-   "electrical": 108,
-   "signal": 9
+   "electrical": 100,
+   "signal": 13
   },
   "d1_examples": [
    [
