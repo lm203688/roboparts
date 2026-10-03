@@ -52,6 +52,10 @@ def main():
         mi = h.get("mechanical_interface") or {}
         entry = {
             "id": h["id"],
+            # rp_id 是 schema_contract 的核心字段（跨库稳定标识）。2026-10-03 修复：
+            # 本脚本此前不写该字段，导致 50 个 HUB-* 条目全部违反核心字段契约。
+            # 口径：与 id 同值（HUB-* 已是本仓稳定 id，不另造编号空间）。
+            "rp_id": h["id"],
             "name": nm,
             "name_en": h.get("name_en") or nm,
             "category": "platforms",
@@ -69,7 +73,12 @@ def main():
             "last_verified": h.get("last_verified",""),
             "mechanical_interface": {
                 "status": mi.get("status","not_declared"),
-                "mount_type": mi.get("mount_type","flange_mount"),
+                # 2026-10-03 修复：默认值曾写 "flange_mount"，而权威枚举
+                # api/mechanical_interfaces.json#mount_type_enum 的合法 key 是
+                # "flange"（"flange_mount" 是同义异写，已于 2026-08-31 归一，
+                # 见该文件的 normalization_history）。本脚本漏掉了那次归一，
+                # 致使 50 个 HUB-* 条目越界。schema_contract 判红才暴露出来。
+                "mount_type": mi.get("mount_type") or "flange",
                 "standard": mi.get("standard",[]),
                 "aliases": mi.get("aliases",[]),
                 "flange": mi.get("flange"),
