@@ -300,6 +300,88 @@ EVIDENCE = {
         "confidence": 0.85,
     },
 
+    # ---------- OnRobot HEX-H ----------
+    # 与 HEX-E 共用同一份 datasheet（EN_HEX-H_Datasheet_October_2018）
+    # 与同一份包装清单（Sensor cable M8, 5m / UTP 0.5m / 24V 电源线）
+    # ⇒ 连接器证据与 RP-SEN-0054（HEX-E）**同源**，不是推断。
+    "RP-SEN-0093": {   # OnRobot HEX-H（本地 id SENS-854）
+        "vendor": "OnRobot",
+        "device": "HEX-H 6-Axis F/T Sensor (Low Deformation)",
+        "connectors": [
+            {
+                "id": "m8_5pin_sensor_cable",
+                "label": "M8 5-pin sensor cable",
+                "family": "M8",
+                "variant": "sensor-5",
+                "pins": 5,
+                "thread": "M8",
+                "pinout": None,
+                "carries": ["power", "signal"],
+                "voltage": "7-24 V DC (min 7 / max 24)",
+                "power_w": 0.8,
+                "note": "HEX-H 与 HEX-E **共用同一 datasheet 与包装清单**"
+                        "（均为 Sensor cable (M8, 5m) + UTP 0.5m + 24V 电源线），"
+                        "故连接器证据与 HEX-E 同源。两者差异在力学量程"
+                        "（HEX-H 更大负载、更大形变容差），不在接口。"
+                        "**pinout 仍为 null**——OnRobot 任一版本 datasheet "
+                        "都未逐针列出针序，不按「同族应当一致」推断。",
+                "evidence_gap": "pinout_unverified",
+            },
+        ],
+        "protocol": "Ethernet (UTP cable) + 24V 供电；信号经 Compute Box 转 I/O",
+        "source_url": "https://futura-automation.com/product/hex-h-with-compute-box-and-adapter-flange-a/",
+        "source": "OnRobot HEX-H 包装清单（传感器线缆 M8 5m / UTP 0.5m / 24V 电源线）"
+                  "+ HEX-H datasheet 供电 7-24V / 0.8W（与 HEX-E 同一份文档）",
+        "source_tier": "B",
+        "source_tier_basis": "授权经销商页面转载厂商 datasheet 与包装清单参数，"
+                             "非 onrobot.com 官方域名 ⇒ B",
+        "confidence": 0.8,
+    },
+
+    # ---------- ATI Mini45 ----------
+    # 2026-10-04 新增。**本轮第三个连接器家族**：12-pin round Amphenol。
+    # Mini/Mini45 用**外置电子学**（16-bit DAQ / Net / ECAT 板或盒），
+    # 传感器本体只出 12 针圆形连接器 —— 与 Axia80 的
+    # 「6-pin M8 ZC22（以太网+供电复合）」是完全不同的架构。
+    "RP-SEN-0042": {   # ATI Mini45（本地 id SENS-37）
+        "vendor": "ATI Industrial Automation",
+        "device": "Mini45 Force/Torque Sensor",
+        "connectors": [
+            {
+                "id": "amphenol_round_12pin",
+                "label": "12-pin round Amphenol",
+                "family": "amphenol_round",
+                "variant": "12pin",
+                "pins": 12,
+                "thread": None,
+                "pinout": None,
+                "carries": ["sensor_analog_or_digital"],
+                "voltage": None,
+                "note": "**全新家族**：ATI Mini/Mini45 系列用**外置电子学**"
+                        "（16-bit DAQ / Net / EtherCAT 板或盒），"
+                        "传感器本体只出 12 针圆形 Amphenol 连接器；"
+                        "而同一厂商的 Axia80 是 6-pin M8 ZC22 复合接口"
+                        "（以太网+供电一体）。⇒ **同厂商不同系列的接口架构"
+                        "完全不同**，按厂商名推断接口必错。"
+                        "**pinout 未公开** ⇒ 留 null + evidence_gap，"
+                        "不按「12 针大概是模拟量」推断。",
+                "evidence_gap": "pinout_unverified",
+            },
+        ],
+        "protocol": "模拟（±10V / mV/V）或数字（EtherCAT+RS485 / Ethernet+RS422 / "
+                    "EtherNet-IP+CAN / PROFINET）—— 取决于所选外置电子学",
+        "source_url": "https://www.luyatec.com/products/detail/mini45-ip65-ip68-force-torque-sensor-ati-industrial-automation",
+        "source": "ATI Mini45 IP65/IP68 技术参数表字段 "
+                  "「Connector = 12-pin round Amphenol」+ "
+                  "「Communication Interface = Analog / EtherCAT&RS485 / "
+                  "Ethernet&RS422 / EtherNet-IP&CAN / PROFINET」",
+        "source_tier": "B",
+        "source_tier_basis": "授权经销商技术参数表（转载厂商规格字段），"
+                             "非 ati-ia.com 官方域名 ⇒ B；"
+                             "但「12-pin round Amphenol」是明确规格字段，非推断",
+        "confidence": 0.75,
+    },
+
     # ---------- Schunk Co-act EGP 64 ----------
     "RP-GRI-0013": {   # Schunk Co-act EGP 64（本地 id GRIP-009）
         "vendor": "Schunk",
@@ -525,7 +607,11 @@ def build() -> dict:
                 "是 family 必须进键的最小反例；"
                 "(3) 合法 identity 案例（FT 300 与 FT 300-S 同 family 同 variant）"
                 "同时收录，防止判据退化成「同家族一律 incompatible」——"
-                "那是方向相反的另一种臆断。"),
+                "那是方向相反的另一种臆断；"
+                "(4) **同厂商不同系列的接口架构完全不同**：ATI Axia80 是 6-pin M8 ZC22 "
+                "复合接口（24V + 100BASE-TX 一体），而 ATI Mini45 是 12-pin round "
+                "Amphenol（传感器本体只出信号，供电与协议由外置电子学盒承担）。"
+                "⇒ **按厂商名推断接口必错**，family 必须逐型号核实。"),
             "honest_limits": [
                 "覆盖度极低：已核实条数占电气未声明节点的比例见 coverage。"
                 "本文件不宣称补齐电气轴，只证明这条取证方向有效且成本极低。",
