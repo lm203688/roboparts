@@ -1110,6 +1110,111 @@ def _has_gap_violation(ee):
     return False
 
 
+def gate_compose_frontier():
+    """共装前沿闸门——把「composed=0」从失败叙事变成可复现的诊断。
+
+    2026-10-04 挂闸。本层回答一个此前全项目没回答过的问题：
+    **composed 恒为 0 是数据缺口，还是语义真相？**
+
+    实测结论（L1/L2/L3 三层分解）：
+      L1 跨角色（signal 必要条件）      = 393 节点
+      L2 L1 ∩ 机械可判定                 = 63 对 / 16 节点
+        其中 mechanical 63/63 通过、signal 63/63 通过
+      L3 L2 ∩ electrical compatible      = 0 对  ← composed
+    唯一阻点 electrical 判的是「两器件能否**互插**」，而这 16 个节点全是
+    cobot EOAT（夹爪 + 六轴力传感器，共享同一 A50 法兰），
+    它们各自占机器人侧的一个接口——**按设计就不该互插**。
+
+    为什么必须挂闸（本层特有的失效模式）：
+      这层输出的是**诊断性结论**，危险不在算错，而在**被过度声称**——
+      它读起来像一个定理，却只由少量样本支撑。
+      故闸门额外守一条**口径守卫**：
+        · statement 必须以「【强假说」开头
+        · headline 必须含「不是已证定理」
+        · 不得出现无否定的断言措辞
+        · sample_caveat 必须在场
+      变异「把假说改成断言」必须判红。**被过度声称的诊断比没有诊断更坏。**
+    """
+    run_sub('共装前沿生成（fail-fast 层级守恒）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_compose_frontier.py')])
+    p = os.path.join(ROOT, 'api', 'compose_frontier.json')
+    if not os.path.exists(p):
+        bad('共装前沿产物', 'api/compose_frontier.json 缺失')
+        return
+    with open(p, encoding='utf-8') as f:
+        cf = json.load(f)
+    errs = _frontier_errors(cf)
+    if errs:
+        bad('共装前沿层级口径', '；'.join(errs[:4]))
+    else:
+        s = cf['summary']
+        es = cf['co_mount_theorem']['empirical_support']
+        ok('共装前沿层级口径',
+           'L1=%s/%s节点 L2=%s对/%s节点 L3=%s｜两侧取证 %s 对，判出 %s'
+           % (s['l1_pairs'], s['l1_cross_role_nodes'], s['l2_pairs'],
+              s['l2_nodes'], s['l3_pairs'],
+              es['both_sides_evidenced_pairs'],
+              dict(es['electrical_verdict_histogram'])))
+
+    # 跨层不变量：L3 与 compose_semantics.composed 口径必须一致
+    cp = os.path.join(ROOT, 'api', 'compose_semantics.json')
+    if os.path.exists(cp):
+        with open(cp, encoding='utf-8') as f:
+            cs = json.load(f)
+        composed = (cs.get('aggregates') or {}).get('overall_counts', {}).get('composed', 0)
+        l3 = cf['summary']['l3_pairs']
+        if composed == 0 and l3 == 0:
+            ok('共装前沿跨层不变量', 'compose composed=0 与 frontier L3=0 口径一致')
+        elif composed > 0 and l3 * 2 == composed:
+            ok('共装前沿跨层不变量',
+               'compose composed=%d == L3(%d)×2（对称展开）' % (composed, l3))
+        else:
+            bad('共装前沿跨层不变量',
+                'compose composed=%d（n² 有向）vs frontier L3=%d（C(n,2) 无序）'
+                '口径分叉' % (composed, l3))
+
+    run_sub('共装前沿阴阳/变异自证（层级 + 口径守卫 + 7 变异 + 跨层对账）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'verify_compose_frontier.py')],
+            timeout=600)
+
+
+def _frontier_errors(cf):
+    """共装前沿的纯函数判据：层级单调 + 口径守卫。"""
+    errs = []
+    s = cf.get('summary') or {}
+    l1, l2, l3 = s.get('l1_pairs'), s.get('l2_pairs'), s.get('l3_pairs')
+    for name, v in (('l1', l1), ('l2', l2), ('l3', l3)):
+        if not isinstance(v, int) or v < 0:
+            return ['%s_pairs 非法：%r' % (name, v)]
+    if not (l1 >= l2 >= l3):
+        errs.append('层级不单调 L1=%d L2=%d L3=%d' % (l1, l2, l3))
+    if (s.get('l2_signal_histogram') or {}).get('compatible', 0) != l2:
+        errs.append('L2 signal 非全 compatible（%s）' % s.get('l2_signal_histogram'))
+    if s.get('l2_nodes', 0) > s.get('l1_cross_role_nodes', 0):
+        errs.append('l2_nodes %s > l1_cross_role_nodes %s'
+                    % (s.get('l2_nodes'), s.get('l1_cross_role_nodes')))
+    if len(cf.get('frontier_nodes') or []) != s.get('l2_nodes'):
+        errs.append('frontier_nodes %d != l2_nodes %s'
+                    % (len(cf.get('frontier_nodes') or []), s.get('l2_nodes')))
+    if not (s.get('co_mount_flange_profile') or {}):
+        errs.append('法兰画像为空')
+    # 口径守卫
+    thm = cf.get('co_mount_theorem') or {}
+    stmt = thm.get('statement') or ''
+    head = (cf.get('meta') or {}).get('headline') or ''
+    if not stmt.lstrip().startswith('【强假说'):
+        errs.append('statement 未以「【强假说」开头（口径被过度声称）')
+    if '不是已证定理' not in head:
+        errs.append('headline 缺「不是已证定理」限定')
+    if 'sample_caveat' not in json.dumps(thm, ensure_ascii=False):
+        errs.append('缺 sample_caveat（样本量限制未登记）')
+    hl = ' '.join((cf.get('meta') or {}).get('honest_limits') or [])
+    for kw in ('不改', 'Tier B', '多年期'):
+        if kw not in hl:
+            errs.append('honest_limits 缺「%s」相关声明' % kw)
+    return errs
+
+
 def _electrical_evidence_errors(ee):
     """电气取证的纯函数判据：出处纪律 + 冲突表几何依据。"""
     errs = []
@@ -1397,6 +1502,10 @@ GATES = [
     # 第一次接线后又踩第二层：用本地 id 而非 rp_id 作键，依然一条不命中。
     # 形式检查（"接线代码写了没"）抓不住这类故障，只有行为验证能。
     ('电气取证接线完整性（落地 + 行为 + 变异）', gate_electrical_wiring),
+    # 2026-10-04 新增：共装前沿。把「composed=0」从失败叙事变成可复现诊断。
+    # 本层特有守卫是**口径守卫**——它输出的是诊断性结论，只由少量样本支撑，
+    # 变异「把假说改成断言」必须判红。被过度声称的诊断比没有诊断更坏。
+    ('共装前沿（L1/L2/L3 分解 + 口径守卫 + 7 变异）', gate_compose_frontier),
     # 2026-09-24 新增：pipeline 框架（算子+DAG 骨架 + gap_classification 样板）。
     # 这是 GOAI 报告里识别的"缺 20%"——用算子/DAG 显式建模，把手写脚本拆成
     # 纯函数算子。骨架本身零依赖 stdlib，样板与旧脚本产出必须逐字段等价
