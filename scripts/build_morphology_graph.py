@@ -49,6 +49,8 @@ ENT_PATH = os.path.join(ROOT, 'api', 'entities.json')
 MI_PATH = os.path.join(ROOT, 'api', 'mechanical_interfaces.json')
 NC_PATH = os.path.join(ROOT, 'api', 'negative_compat.json')
 EL_PATH = os.path.join(ROOT, 'api', 'electrical_interfaces.json')
+#: MDV 定向电气取证层（2026-10-03）。build() 会读它并按 rp_id 给实体挂端口。
+EE_PATH = os.path.join(ROOT, 'api', 'electrical_evidence.json')
 SIG_PATH = os.path.join(ROOT, 'neurorobotics', 'signal_interface.schema.json')
 OUT = os.path.join(ROOT, 'api', 'morphology_graph.json')
 
@@ -213,7 +215,23 @@ def build_mechanical_port_types(mi_doc, nc_doc, ents):
     return types
 
 
-def build_electrical_port_types(el_doc):
+def build_electrical_port_types(el_doc, ee_doc=None):
+    """构造电气轴端口类型表。
+
+    两个来源，**后者是前者的超集补充**（2026-10-03 起）：
+      ① `api/electrical_interfaces.json#connectors` —— 协议族级连接器表（5 条）
+      ② `api/electrical_evidence.json#evidence`   —— MDV 定向取证层（4 器件 / 6 连接器）
+
+    为什么必须接 ②：取证层落盘后若不接进来，那些一手核实的针序/针数
+    **在本图里完全不起作用**——实体仍然挂 ELEC:UNKNOWN，判定对数不变。
+    这是「产物已落地但判据层没接线」的典型故障：产物自洽、闸门全绿，
+    而取证工作对判定结果零影响。**只补证据不接形态图 = 白干。**
+
+    类型键的纪律：`(family, pins, pinout)` 三元组，不是单用 family。
+    实测「M8」不是类型是家族（ATI 6-pin / Robotiq 5-pole / OnRobot 5-pin，
+    针数针序全不同 ⇒ 物理不可互插）。故每条类型带 family/pins/pinout
+    三元组字段，供 type_compat 构造器按**几何**而非名字判兼容。
+    """
     types = {}
     for c in el_doc.get('connectors') or []:
         label = c.get('label') or c.get('name') or c.get('id')
@@ -227,11 +245,48 @@ def build_electrical_port_types(el_doc):
             'token': label,
             'pins': c.get('pins'),
             'pitch_mm': c.get('pitch_mm'),
+            # 旧表没有 family/pinout 字段，如实留空——不按连接器名反推。
+            'family': c.get('family'),
+            'pinout': c.get('pinout'),
             'consumers': [],
             'prov': _prov('api/electrical_interfaces.json#connectors',
                           c.get('source_tier'), None,
                           c.get('warning') or c.get('source_discrepancy') or c.get('role')),
         }
+
+    # ---- 接入 MDV 定向取证层（②）----
+    for nid, ev in ((ee_doc or {}).get('evidence') or {}).items():
+        for c in ev.get('connectors') or []:
+            label = c.get('label') or c.get('id')
+            if not label:
+                continue
+            tid = 'ELEC:CONNECTOR:' + _slug(label).upper()
+            if tid in types:
+                # 旧表已登记同名连接器：**不覆盖**。两个来源指向同一 token 时
+                # 保留旧表行，避免「后写的覆盖先写的」这种隐式优先级。
+                # 差异（若有）记在 note，不静默丢弃。
+                note = types[tid].get('note')
+                extra = f"；取证层另有登记（{ev.get('vendor')} {ev.get('device')}）"
+                types[tid]['note'] = (note + extra) if note else extra.lstrip('；')
+                continue
+            types[tid] = {
+                'id': tid,
+                'axis': 'electrical',
+                'class': 'registered_connector',
+                'token': label,
+                'pins': c.get('pins'),
+                'pitch_mm': c.get('pitch_mm'),
+                'family': c.get('family'),
+                'variant': c.get('variant'),
+                'pinout': c.get('pinout'),
+                'carries': c.get('carries'),
+                'evidence_gap': c.get('evidence_gap'),
+                'consumers': [],
+                'prov': _prov('api/electrical_evidence.json#%s' % nid,
+                              ev.get('source_tier'), None,
+                              c.get('note')),
+            }
+
     types['ELEC:UNKNOWN'] = {
         'id': 'ELEC:UNKNOWN',
         'axis': 'electrical',
@@ -335,17 +390,70 @@ def mech_ports_of(e, port_types):
     return out, mi
 
 
-def elec_ports_of(e, port_types):
-    """电气端口：仅认 connector 字段（voltage/protocol 单独不足以定位物理端口类型）。
+def elec_ports_of(e, port_types, evidence_by_id=None):
+    """电气端口：两个来源，**取证层优先**（2026-10-03 起）。
 
-    匹配用**归一化后的去标点**比较：连接器表用 `label`（"JST EHR-03"），实体用
-    "JST EHR-03（TTL 3-pin；PCB header B3B-EH-A）"。先前拿表里的 `id`
-    （"jst_ehr_03"）去比，标点差异使**全部 32 个实体**匹配失败、集体落到
-    ELEC:UNKNOWN —— 一个「电气轴 0 覆盖」的假象，而真值是 5 个连接器类型在用。
-    故先抹非字母数字再双向包含；且**匹配全部命中**而非首个 ——
-    一个实体可以同时持有两个连接器（ACT-016 就是 "XT30PW-M + A1257WR-S-3P"），
-    只取首个会把第二个连接器静默丢掉。
+    优先级判据（不是「谁后写谁赢」，而是「谁的证据更强」）：
+
+    ┌────────────────────────────────────────────────────────────┐
+    │ ① `api/electrical_evidence.json` 按 rp_id 精确命中          │
+    │    —— 一手厂商文档核实的连接器（针数/针序/供电区间），      │
+    │       证据等级随 record.source_tier 走，可到 A。             │
+    │ ② 实体的 `connector` 字段字符串匹配旧表                     │
+    │    —— 32 个实体，5 个类型，Tier B 居多。                    │
+    │ ③ 都不命中 + 属预期品类 → ELEC:UNKNOWN（显式缺口）          │
+    └────────────────────────────────────────────────────────────┘
+
+    为什么取证层优先：①是逐针核实过的（含 pinout 全文），
+    ②是字符串包含匹配——按 skill 记录的实测，**按名字匹配连接器必误判**
+    （「M8」是家族不是类型）。若让 ② 覆盖 ①，等于用弱证据覆盖强证据。
+
+    匹配键：**必须用 `rp_id`**，不能用本地 id。
+    实体侧稳定键是 rp_id（RP-SEN-0091 / RP-GRI-0002），本地 id 是库内序号
+    （SENS-852 / GRIP-002）。两者不同，用错键则取证证据**一条都不命中**，
+    而产物完全自洽、闸门全绿——最难发现的一类半接线故障。
+    故 `evidence_by_id` 的键由 build() 预建为 rp_id 索引，此处只查 rp_id。
     """
+    # ---- ① 取证层按 rp_id 精确命中 ----
+    if evidence_by_id:
+        # rp_id 是取证键；无 rp_id 时不回落本地 id——那会把「键口径不一致」
+        # 变成静默失配。缺 rp_id 本身是 schema_contract 该管的事。
+        rid = e.get('rp_id')
+        rec = evidence_by_id.get(rid) if rid else None
+        if rec:
+            out = []
+            for c in rec.get('connectors') or []:
+                label = c.get('label') or c.get('id')
+                if not label:
+                    continue
+                tid = 'ELEC:CONNECTOR:' + _slug(label).upper()
+                if tid in port_types:
+                    port_types[tid]['consumers'].append(e.get('id'))
+                else:
+                    # 取证层登记了但类型表没有——说明 ② 侧的接线漏了。
+                    # 不静默跳过：显式挂 UNKNOWN，让「证据已落盘但类型未登记」
+                    # 这种半接线状态可被追问。
+                    out.append({'type': 'ELEC:UNKNOWN', 'status': 'not_declared'})
+                    continue
+                p = {'type': tid, 'status': 'declared'}
+                # pinout 为 null 时**必须**把 evidence_gap 带到端口上，
+                # 否则「不知道针序」在端口层被抹平，下游会误读为「无针序要求」。
+                if c.get('evidence_gap'):
+                    p['evidence_gap'] = c['evidence_gap']
+                if c.get('family'):
+                    p['family'] = c['family']
+                if c.get('pins') is not None:
+                    p['pins'] = c['pins']
+                out.append(p)
+            if out:
+                return out, {
+                    'connector': 'via api/electrical_evidence.json',
+                    'evidence_id': rid,
+                    'source_tier': rec.get('source_tier'),
+                    'source_url': rec.get('source_url'),
+                }
+
+    # ---- ② 实体 connector 字段字符串匹配（原有逻辑）----
     conn = e.get('connector')
     if not conn:
         # 该品类**预期**有电气接口却未声明 → 显式 ELEC:UNKNOWN（不是"没有端口"）。
@@ -463,23 +571,80 @@ def build_type_compat(port_types, nc_doc):
                           'prov': _prov('api/negative_compat.json + 标号几何现算', 'B', None, None)})
 
     # 电气（仅在同 axis 内）
+    #
+    # 2026-10-03 修正：判据从「比 pins」升级为**显式的 (family, pins, pinout) 三元组**。
+    #
+    # 起因（本项目实测的核心发现）：「M8」不是一个连接器类型，是一个**家族**。
+    # ATI Axia80 = 6-pin M8 ZC22（24V+100BASE-TX）/ Robotiq 2F-85 = 5-pole M8
+    # （24V+RS-485）/ OnRobot HEX = 5-pin M8。三者外形都是「M8 螺纹 + 针」，
+    # 但针数与针序全不同 ⇒ **物理不可互插**。
+    #
+    # 旧实现「pins 不同 ⇒ incompatible，pins 相同 ⇒ unknown」有两个问题：
+    #   ① 同为 5-pin 的两个不同变体（Robotiq device-5 vs OnRobot sensor-5）
+    #      落到 unknown —— 结果对，但**理由是错的**（说「无针数/间距证据」，
+    #      实际针数相同、真正阻断的是 pinout 不同）。理由错会让下游误以为
+    #      补上针数就能判定，而真正需要的是 pinout。
+    #   ② 完全没读 family。family 相同但 variant 不同是「同族不同变体」，
+    #      是**已核实的不兼容**，比 unknown 更有信息量。
     el_ids = sorted(t for t in port_types if port_types[t]['axis'] == 'electrical')
+
+    def _elec_pair(a, b):
+        """返回 (verdict, reason, blocking_dims)。三元组判据，fail-closed。"""
+        ta, tb = port_types[a], port_types[b]
+        if a == b:
+            if ta['class'] == 'unknown':
+                return ('unknown', '未知连接器不可断言（未声明即不可判定）', [])
+            return ('identity', '同一连接器型号（family=%s pins=%s），自配对可对接'
+                    % (ta.get('family'), ta.get('pins')), [])
+        if ta['class'] == 'unknown' or tb['class'] == 'unknown':
+            return ('unknown', '至少一侧未声明（ELEC:UNKNOWN）', [])
+
+        fa, fb = ta.get('family'), tb.get('family')
+        pa, pb = ta.get('pins'), tb.get('pins')
+        ia, ib = ta.get('pinout'), tb.get('pinout')
+
+        # ① 针数不同 ⇒ 物理上不可直接对接（有几何依据，可断言）
+        if pa and pb and pa != pb:
+            return ('incompatible',
+                    '针数不同（%s vs %s）⇒ 物理上不可直接对接。'
+                    '注意 family 同为 %s 时尤其易误判：同族不同变体针数针序都不同。'
+                    % (pa, pb, fa or '?'),
+                    ['pins'])
+        # ② 针数相同但 family 不同 ⇒ 连接器品类不同，不可互插（可断言）
+        if fa and fb and fa != fb:
+            return ('incompatible',
+                    'family 不同（%s vs %s）⇒ 非同一连接器品类，不可互插' % (fa, fb),
+                    ['family'])
+        # ③ 针数相同、family 相同、但 variant 不同 ⇒ 同族不同变体。
+        #    这是本层最有价值的一类：它正是「M8 是家族不是类型」的机读体现。
+        #    有任一侧 pinout 已核实 ⇒ 针序不同即可判不兼容；
+        #    否则 fail-closed 判 unknown（不按「同族应该一样」推断）。
+        if fa and fb and fa == fb:
+            va, vb = ta.get('variant'), tb.get('variant')
+            if va and vb and va != vb:
+                if ia and ib:
+                    return ('incompatible',
+                            '同 family（%s）不同 variant（%s vs %s），且两侧 pinout 均已核实'
+                            '⇒ 针序不同，不可互插' % (fa, va, vb),
+                            ['variant', 'pinout'])
+                return ('unknown',
+                        '同 family（%s）不同 variant（%s vs %s），但至少一侧 pinout 未公开'
+                        '⇒ 针序不可比对，fail-closed 判 unknown（不按同族推断针序一致）'
+                        % (fa, va, vb),
+                        ['variant', 'pinout'])
+        # ④ 其余：无足够几何/序列证据
+        return ('unknown', '连接器不同型且无针数/family/pinout 证据，不臆断', [])
+
     for i, a in enumerate(el_ids):
         for b in el_ids[i:]:
-            ta, tb = port_types[a], port_types[b]
-            if a == b:
-                v, rs = ('identity', '同一连接器') if ta['class'] != 'unknown' \
-                    else ('unknown', '未知连接器不可断言')
-            elif ta['class'] == 'unknown' or tb['class'] == 'unknown':
-                v, rs = 'unknown', '至少一侧未声明'
-            elif ta.get('pins') and tb.get('pins') and ta['pins'] != tb['pins']:
-                v, rs = 'incompatible', '针数不同（%s vs %s），物理上不可直接对接' % (ta['pins'], tb['pins'])
-            else:
-                v, rs = 'unknown', '连接器不同型但无针数/间距证据，不臆断'
+            v, rs, blk = _elec_pair(a, b)
+            ta = port_types[a]
             pairs.append({'a': a, 'b': b, 'axis': 'electrical', 'verdict': v,
-                          'reason': rs, 'blocking_dims': ['pins'] if v == 'incompatible' else [],
-                          'prov': _prov('api/electrical_interfaces.json 连接器/针数现算',
-                                        'B', None, None)})
+                          'reason': rs, 'blocking_dims': blk,
+                          'prov': _prov('(family, pins, pinout) 三元组现算'
+                                        + ('｜api/electrical_evidence.json'
+                                           if ta.get('family') else ''),
+                                        ta.get('prov', {}).get('tier') or 'B', None, None)})
 
     # 信号（三型两两）。
     # 旧实现把全部信号对硬编码成 unknown，理由是「0 条完整契约」——但那否定的是
@@ -540,10 +705,22 @@ def build(paths=None, with_timestamp=True):
     nc_doc = _load(paths.get('negative', NC_PATH))
     el_doc = _load(paths.get('electrical', EL_PATH))
     sig_schema = _load(paths.get('signal', SIG_PATH))
+    # MDV 定向电气取证层（2026-10-03 接入）。
+    # **这一行是本轮的关键接线**：取证层落了 4 个一手核实的连接器，若不接进来，
+    # 它们在本图里完全不起作用——实体仍挂 ELEC:UNKNOWN，判定对数不变。
+    # 「产物已落盘但判据层没接线」是典型的半接线故障：产物自洽、闸门全绿，
+    # 而取证工作对判定结果零影响。缺它 ⇒ 补证据 = 白干。
+    # 缺失或不可读时降级为空 dict（不 fail-closed：取证层是增强项不是前提），
+    # 但会在产物 summary 里显式登记接入了多少条，避免「静默降级成 0 条」。
+    try:
+        ee_doc = _load(paths.get('electrical_evidence', EE_PATH))
+    except Exception:
+        ee_doc = {}
+    evidence_by_id = {nid: ev for nid, ev in (ee_doc.get('evidence') or {}).items()}
 
     port_types = {}
     port_types.update(build_mechanical_port_types(mi_doc, nc_doc, ents))
-    port_types.update(build_electrical_port_types(el_doc))
+    port_types.update(build_electrical_port_types(el_doc, ee_doc))
     port_types.update(build_signal_port_types(sig_schema))
 
     nodes, edges = [], []
@@ -556,7 +733,7 @@ def build(paths=None, with_timestamp=True):
             continue
         ports = []
         mp, mi_ev = mech_ports_of(e, port_types)
-        ep, el_ev = elec_ports_of(e, port_types)
+        ep, el_ev = elec_ports_of(e, port_types, evidence_by_id)
         sp = sig_ports_of(e)
         ports += mp + ep + sp
         for p in ports:
