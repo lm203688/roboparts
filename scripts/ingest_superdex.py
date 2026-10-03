@@ -460,6 +460,10 @@ def parse_bot_to_entity(path: str, bot: dict[str, Any]) -> dict[str, Any]:
     # Build entity
     entity: dict[str, Any] = {
         "id": entity_id,
+        # rp_id 是 schema_contract 的核心字段（跨库稳定标识）。2026-10-03 补：
+        # 本脚本漏写该字段，13 个 SUPERDEX-* 条目全部违反核心字段契约。
+        # 口径：与 id 同值（SUPERDEX-* 已由上游文件名派生，天然稳定）。
+        "rp_id": entity_id,
         "name": f"SuperDex {brand}",
         "name_en": f"SuperDex {brand}",
         "category": category,
