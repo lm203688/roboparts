@@ -40,11 +40,11 @@
       "applicable_denominator": 500
     },
     "source_tier_counts": {
-      "A": 419,
-      "B": 296,
+      "A": 469,
+      "B": 246,
       "C": 150
     },
-    "updated": "2026-09-29T17:04:49+0800",
+    "updated": "2026-10-03T23:58:30+0800",
     "generated_by": "scripts/sync_dataset_dist.py",
     "truth_source": "api/entities.json"
   },
@@ -44095,13 +44095,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-20-4-M3"
         ],
@@ -44112,14 +44112,16 @@
           "pcd_mm": 20,
           "bolt_count": 4,
           "thread": "M3",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-001"
     },
     {
       "id": "HUB-002",
@@ -44134,13 +44136,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-20-4-M3"
         ],
@@ -44151,14 +44153,16 @@
           "pcd_mm": 20,
           "bolt_count": 4,
           "thread": "M3",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-002"
     },
     {
       "id": "HUB-003",
@@ -44173,13 +44177,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-20-4-M3"
         ],
@@ -44190,14 +44194,16 @@
           "pcd_mm": 20,
           "bolt_count": 4,
           "thread": "M3",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-003"
     },
     {
       "id": "HUB-004",
@@ -44212,13 +44218,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-31.5-4-M5"
         ],
@@ -44229,14 +44235,16 @@
           "pcd_mm": 31.5,
           "bolt_count": 4,
           "thread": "M5",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-004"
     },
     {
       "id": "HUB-005",
@@ -44251,13 +44259,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-31.5-4-M5"
         ],
@@ -44268,14 +44276,16 @@
           "pcd_mm": 31.5,
           "bolt_count": 4,
           "thread": "M5",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-005"
     },
     {
       "id": "HUB-006",
@@ -44290,13 +44300,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-31.5-4-M5"
         ],
@@ -44307,14 +44317,16 @@
           "pcd_mm": 31.5,
           "bolt_count": 4,
           "thread": "M5",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-006"
     },
     {
       "id": "HUB-007",
@@ -44329,13 +44341,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -44346,14 +44358,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-007"
     },
     {
       "id": "HUB-008",
@@ -44368,13 +44382,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -44385,14 +44399,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-008"
     },
     {
       "id": "HUB-009",
@@ -44407,13 +44423,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -44424,14 +44440,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-009"
     },
     {
       "id": "HUB-010",
@@ -44446,13 +44464,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -44463,14 +44481,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-010"
     },
     {
       "id": "HUB-011",
@@ -44485,13 +44505,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -44502,14 +44522,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-011"
     },
     {
       "id": "HUB-012",
@@ -44524,13 +44546,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -44541,14 +44563,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-012"
     },
     {
       "id": "HUB-013",
@@ -44563,13 +44587,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-100-4-M8"
         ],
@@ -44580,14 +44604,16 @@
           "pcd_mm": 100,
           "bolt_count": 4,
           "thread": "M8",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-013"
     },
     {
       "id": "HUB-014",
@@ -44602,13 +44628,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-100-4-M8"
         ],
@@ -44619,14 +44645,16 @@
           "pcd_mm": 100,
           "bolt_count": 4,
           "thread": "M8",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-014"
     },
     {
       "id": "HUB-015",
@@ -44641,13 +44669,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-100-4-M8"
         ],
@@ -44658,14 +44686,16 @@
           "pcd_mm": 100,
           "bolt_count": 4,
           "thread": "M8",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-015"
     },
     {
       "id": "HUB-016",
@@ -44680,13 +44710,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-160-4-M12"
         ],
@@ -44697,14 +44727,16 @@
           "pcd_mm": 160,
           "bolt_count": 4,
           "thread": "M12",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-016"
     },
     {
       "id": "HUB-017",
@@ -44719,13 +44751,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-250-4-M16"
         ],
@@ -44736,14 +44768,16 @@
           "pcd_mm": 250,
           "bolt_count": 4,
           "thread": "M16",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-017"
     },
     {
       "id": "HUB-018",
@@ -44758,13 +44792,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-40-4-M6"
         ],
@@ -44775,14 +44809,16 @@
           "pcd_mm": 40,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-018"
     },
     {
       "id": "HUB-019",
@@ -44797,13 +44833,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-63-6-M6"
         ],
@@ -44814,14 +44850,16 @@
           "pcd_mm": 63,
           "bolt_count": 6,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-019"
     },
     {
       "id": "HUB-020",
@@ -44836,13 +44874,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-31.5-4-M5"
         ],
@@ -44853,14 +44891,16 @@
           "pcd_mm": 31.5,
           "bolt_count": 4,
           "thread": "M5",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-020"
     },
     {
       "id": "HUB-021",
@@ -44875,13 +44915,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-31.5-4-M5"
         ],
@@ -44892,14 +44932,16 @@
           "pcd_mm": 31.5,
           "bolt_count": 4,
           "thread": "M5",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-021"
     },
     {
       "id": "HUB-022",
@@ -44914,13 +44956,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-31.5-4-M5"
         ],
@@ -44931,14 +44973,16 @@
           "pcd_mm": 31.5,
           "bolt_count": 4,
           "thread": "M5",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-022"
     },
     {
       "id": "HUB-023",
@@ -44953,13 +44997,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-40-4-M6"
         ],
@@ -44970,14 +45014,16 @@
           "pcd_mm": 40,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-023"
     },
     {
       "id": "HUB-024",
@@ -44992,13 +45038,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-40-4-M6"
         ],
@@ -45009,14 +45055,16 @@
           "pcd_mm": 40,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-024"
     },
     {
       "id": "HUB-025",
@@ -45031,13 +45079,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-40-4-M6"
         ],
@@ -45048,14 +45096,16 @@
           "pcd_mm": 40,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-025"
     },
     {
       "id": "HUB-026",
@@ -45070,13 +45120,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-40-4-M6"
         ],
@@ -45087,14 +45137,16 @@
           "pcd_mm": 40,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-026"
     },
     {
       "id": "HUB-027",
@@ -45109,13 +45161,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45126,14 +45178,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-027"
     },
     {
       "id": "HUB-028",
@@ -45148,13 +45202,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45165,14 +45219,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-028"
     },
     {
       "id": "HUB-029",
@@ -45187,13 +45243,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45204,14 +45260,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-029"
     },
     {
       "id": "HUB-030",
@@ -45226,13 +45284,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45243,14 +45301,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-030"
     },
     {
       "id": "HUB-031",
@@ -45265,13 +45325,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45282,14 +45342,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-031"
     },
     {
       "id": "HUB-032",
@@ -45304,13 +45366,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45321,14 +45383,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-032"
     },
     {
       "id": "HUB-033",
@@ -45343,13 +45407,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45360,14 +45424,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-033"
     },
     {
       "id": "HUB-034",
@@ -45382,13 +45448,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45399,14 +45465,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-034"
     },
     {
       "id": "HUB-035",
@@ -45421,13 +45489,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45438,14 +45506,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-035"
     },
     {
       "id": "HUB-036",
@@ -45460,13 +45530,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45477,14 +45547,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-036"
     },
     {
       "id": "HUB-037",
@@ -45499,13 +45571,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-80-6-M8"
         ],
@@ -45516,14 +45588,16 @@
           "pcd_mm": 80,
           "bolt_count": 6,
           "thread": "M8",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-037"
     },
     {
       "id": "HUB-038",
@@ -45538,13 +45612,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-80-6-M8"
         ],
@@ -45555,14 +45629,16 @@
           "pcd_mm": 80,
           "bolt_count": 6,
           "thread": "M8",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-038"
     },
     {
       "id": "HUB-039",
@@ -45577,13 +45653,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-40-4-M6"
         ],
@@ -45594,14 +45670,16 @@
           "pcd_mm": 40,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-039"
     },
     {
       "id": "HUB-040",
@@ -45616,13 +45694,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45633,14 +45711,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-040"
     },
     {
       "id": "HUB-041",
@@ -45655,13 +45735,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45672,14 +45752,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-041"
     },
     {
       "id": "HUB-042",
@@ -45694,13 +45776,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45711,14 +45793,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-042"
     },
     {
       "id": "HUB-043",
@@ -45733,13 +45817,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45750,14 +45834,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-043"
     },
     {
       "id": "HUB-044",
@@ -45767,18 +45853,18 @@
       "manufacturer": "FANUC",
       "type": "industrial_robot_arm",
       "description": "FANUC CR-35iB 工具法兰部分符合(仅公布节圆直径/家族名) ISO 9409-1-100。",
-      "verified": true,
+      "verified": false,
       "data_quality": "ok",
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.5,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "partial",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-100"
         ],
@@ -45787,14 +45873,16 @@
           "pcd_mm": 100,
           "bolt_count": null,
           "thread": null,
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.5
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-044"
     },
     {
       "id": "HUB-045",
@@ -45809,13 +45897,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45826,14 +45914,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-045"
     },
     {
       "id": "HUB-046",
@@ -45843,18 +45933,18 @@
       "manufacturer": "Yaskawa",
       "type": "industrial_robot_arm",
       "description": "Yaskawa HC10DTP 工具法兰部分符合(仅公布节圆直径/家族名) ISO 9409-1。",
-      "verified": true,
+      "verified": false,
       "data_quality": "ok",
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.5,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "partial",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1"
         ],
@@ -45863,14 +45953,16 @@
           "pcd_mm": null,
           "bolt_count": null,
           "thread": null,
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.5
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-046"
     },
     {
       "id": "HUB-047",
@@ -45880,18 +45972,18 @@
       "manufacturer": "Yaskawa",
       "type": "industrial_robot_arm",
       "description": "Yaskawa HC20DTP 工具法兰部分符合(仅公布节圆直径/家族名) ISO 9409-1。",
-      "verified": true,
+      "verified": false,
       "data_quality": "ok",
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.5,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "partial",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1"
         ],
@@ -45900,14 +45992,16 @@
           "pcd_mm": null,
           "bolt_count": null,
           "thread": null,
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.5
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-047"
     },
     {
       "id": "HUB-048",
@@ -45917,18 +46011,18 @@
       "manufacturer": "Yaskawa",
       "type": "industrial_robot_arm",
       "description": "Yaskawa HC30PL 工具法兰部分符合(仅公布节圆直径/家族名) EN ISO 9409-1。",
-      "verified": true,
+      "verified": false,
       "data_quality": "ok",
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.5,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "partial",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "EN ISO 9409-1"
         ],
@@ -45937,14 +46031,16 @@
           "pcd_mm": null,
           "bolt_count": null,
           "thread": null,
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.5
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-048"
     },
     {
       "id": "HUB-049",
@@ -45959,13 +46055,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -45976,14 +46072,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-049"
     },
     {
       "id": "HUB-050",
@@ -45998,13 +46096,13 @@
       "quarantine": false,
       "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
       "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
-      "source_tier": "B",
+      "source_tier": "A",
       "confidence": 0.85,
       "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
       "last_verified": "2026-09-25",
       "mechanical_interface": {
         "status": "declared",
-        "mount_type": "flange_mount",
+        "mount_type": "flange",
         "standard": [
           "ISO 9409-1-50-4-M6"
         ],
@@ -46015,14 +46113,16 @@
           "pcd_mm": 50,
           "bolt_count": 4,
           "thread": "M6",
-          "mount_type": "flange_mount"
+          "mount_type": "flange"
         },
         "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, no fabricated specs)",
         "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
         "source_tier": "B",
         "confidence": 0.85
       },
-      "entity_kind": "platform"
+      "entity_kind": "component",
+      "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
+      "rp_id": "HUB-050"
     },
     {
       "id": "SUPERDEX-fr3-v2",
@@ -46038,7 +46138,7 @@
       "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arms/fr3_v2/fr3_v2.superdex_bot",
       "source_tier": "A",
       "confidence": 0.95,
-      "entity_kind": "physical_simulation_asset",
+      "entity_kind": "component",
       "entity_kind_basis": "Ingested from upstream .superdex_bot JSON",
       "confidence_basis": "Direct file parse of upstream GitHub blob",
       "last_verified": "2026-09-29T08:51:25+00:00",
@@ -46130,7 +46230,9 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
+      "rp_id": "SUPERDEX-fr3-v2"
     },
     {
       "id": "SUPERDEX-fr3",
@@ -46146,7 +46248,7 @@
       "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arms/fr3/fr3.superdex_bot",
       "source_tier": "A",
       "confidence": 0.95,
-      "entity_kind": "physical_simulation_asset",
+      "entity_kind": "component",
       "entity_kind_basis": "Ingested from upstream .superdex_bot JSON",
       "confidence_basis": "Direct file parse of upstream GitHub blob",
       "last_verified": "2026-09-29T08:51:25+00:00",
@@ -46238,7 +46340,9 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
+      "rp_id": "SUPERDEX-fr3"
     },
     {
       "id": "SUPERDEX-openarm-v20-left-arm",
@@ -46254,7 +46358,7 @@
       "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arms/openarm_v20/left/openarm_v20_left_arm.superdex_bot",
       "source_tier": "A",
       "confidence": 0.95,
-      "entity_kind": "physical_simulation_asset",
+      "entity_kind": "component",
       "entity_kind_basis": "Ingested from upstream .superdex_bot JSON",
       "confidence_basis": "Direct file parse of upstream GitHub blob",
       "last_verified": "2026-09-29T08:51:25+00:00",
@@ -46344,7 +46448,9 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
+      "rp_id": "SUPERDEX-openarm-v20-left-arm"
     },
     {
       "id": "SUPERDEX-openarm-v20-right-arm",
@@ -46355,12 +46461,12 @@
       "type": "simulation_bot",
       "description": "Meta Project SuperDex native `.superdex_bot` asset: 7-DOF articulated robot with 8 links and 5.4258 kg total mass. Ready to load via `superdex_robotics.examples.basic.example_bot_loading`.",
       "verified": true,
-      "data_quality": "ok",
+      "data_quality": "duplicate",
       "source": "facebookresearch/project_superdex (Apache-2.0)",
       "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arms/openarm_v20/right/openarm_v20_right_arm.superdex_bot",
       "source_tier": "A",
       "confidence": 0.95,
-      "entity_kind": "physical_simulation_asset",
+      "entity_kind": "component",
       "entity_kind_basis": "Ingested from upstream .superdex_bot JSON",
       "confidence_basis": "Direct file parse of upstream GitHub blob",
       "last_verified": "2026-09-29T08:51:25+00:00",
@@ -46450,7 +46556,10 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": true,
+      "duplicate_of": "SUPERDEX-openarm-v20-left-arm",
+      "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
+      "rp_id": "SUPERDEX-openarm-v20-right-arm"
     },
     {
       "id": "SUPERDEX-fr3-dg5f-short-seed-right",
@@ -46461,12 +46570,12 @@
       "type": "simulation_bot_composition",
       "description": "Meta SuperDex composition bot: base `fr3` with attachments [dg5f→fr3_link8]. This file is a kinematic composition manifest — resolve references via `superdex.robotics.Bot.from_path()`.",
       "verified": true,
-      "data_quality": "ok",
+      "data_quality": "duplicate",
       "source": "facebookresearch/project_superdex (Apache-2.0)",
       "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arm_hand_combos/fr3_dg5f_short_seed/right/fr3_dg5f_short_seed_right.superdex_bot",
       "source_tier": "A",
       "confidence": 0.95,
-      "entity_kind": "physical_simulation_asset",
+      "entity_kind": "component",
       "entity_kind_basis": "Ingested from upstream .superdex_bot JSON",
       "confidence_basis": "Direct file parse of upstream GitHub blob",
       "last_verified": "2026-09-29T08:51:25+00:00",
@@ -46541,7 +46650,10 @@
         "attach_bot_api"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": true,
+      "duplicate_of": "SUPERDEX-fr3-dg5f-short-right",
+      "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
+      "rp_id": "SUPERDEX-fr3-dg5f-short-seed-right"
     },
     {
       "id": "SUPERDEX-fr3-dg5f-short-right",
@@ -46557,7 +46669,7 @@
       "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arm_hand_combos/fr3_dg5f_short/right/fr3_dg5f_short_right.superdex_bot",
       "source_tier": "A",
       "confidence": 0.95,
-      "entity_kind": "physical_simulation_asset",
+      "entity_kind": "component",
       "entity_kind_basis": "Ingested from upstream .superdex_bot JSON",
       "confidence_basis": "Direct file parse of upstream GitHub blob",
       "last_verified": "2026-09-29T08:51:25+00:00",
@@ -46631,7 +46743,9 @@
         "attach_bot_api"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
+      "rp_id": "SUPERDEX-fr3-dg5f-short-right"
     },
     {
       "id": "SUPERDEX-example-bot-2dof",
@@ -46647,7 +46761,7 @@
       "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/fun/example_bot_2dof/example_bot_2dof.superdex_bot",
       "source_tier": "A",
       "confidence": 0.95,
-      "entity_kind": "physical_simulation_asset",
+      "entity_kind": "component",
       "entity_kind_basis": "Ingested from upstream .superdex_bot JSON",
       "confidence_basis": "Direct file parse of upstream GitHub blob",
       "last_verified": "2026-09-29T08:51:25+00:00",
@@ -46722,7 +46836,9 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
+      "rp_id": "SUPERDEX-example-bot-2dof"
     },
     {
       "id": "SUPERDEX-2f-85",
@@ -46738,7 +46854,7 @@
       "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/grippers/2f_85/2f_85.superdex_bot",
       "source_tier": "A",
       "confidence": 0.95,
-      "entity_kind": "physical_simulation_asset",
+      "entity_kind": "component",
       "entity_kind_basis": "Ingested from upstream .superdex_bot JSON",
       "confidence_basis": "Direct file parse of upstream GitHub blob",
       "last_verified": "2026-09-29T08:51:25+00:00",
@@ -46836,7 +46952,9 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
+      "rp_id": "SUPERDEX-2f-85"
     },
     {
       "id": "SUPERDEX-allegro-v5-right",
@@ -46852,7 +46970,7 @@
       "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/hands/allegro_v5/right/allegro_v5_right.superdex_bot",
       "source_tier": "A",
       "confidence": 0.95,
-      "entity_kind": "physical_simulation_asset",
+      "entity_kind": "component",
       "entity_kind_basis": "Ingested from upstream .superdex_bot JSON",
       "confidence_basis": "Direct file parse of upstream GitHub blob",
       "last_verified": "2026-09-29T08:51:25+00:00",
@@ -46976,7 +47094,9 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
+      "rp_id": "SUPERDEX-allegro-v5-right"
     },
     {
       "id": "SUPERDEX-dg5f-short-right",
@@ -46992,7 +47112,7 @@
       "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/hands/dg5f_short/right/dg5f_short_right.superdex_bot",
       "source_tier": "A",
       "confidence": 0.95,
-      "entity_kind": "physical_simulation_asset",
+      "entity_kind": "component",
       "entity_kind_basis": "Ingested from upstream .superdex_bot JSON",
       "confidence_basis": "Direct file parse of upstream GitHub blob",
       "last_verified": "2026-09-29T08:51:25+00:00",
@@ -47130,7 +47250,9 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
+      "rp_id": "SUPERDEX-dg5f-short-right"
     },
     {
       "id": "SUPERDEX-wuji-hand2-beta1-right",
@@ -47146,7 +47268,7 @@
       "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/hands/wuji_hand2_beta1/right/wuji_hand2_beta1_right.superdex_bot",
       "source_tier": "A",
       "confidence": 0.95,
-      "entity_kind": "physical_simulation_asset",
+      "entity_kind": "component",
       "entity_kind_basis": "Ingested from upstream .superdex_bot JSON",
       "confidence_basis": "Direct file parse of upstream GitHub blob",
       "last_verified": "2026-09-29T08:51:25+00:00",
@@ -47292,7 +47414,9 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
+      "rp_id": "SUPERDEX-wuji-hand2-beta1-right"
     },
     {
       "id": "SUPERDEX-dg5f-seed",
@@ -47308,7 +47432,7 @@
       "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/sensors/dg5f_seed/dg5f_seed.superdex_bot",
       "source_tier": "A",
       "confidence": 0.95,
-      "entity_kind": "physical_simulation_asset",
+      "entity_kind": "component",
       "entity_kind_basis": "Ingested from upstream .superdex_bot JSON",
       "confidence_basis": "Direct file parse of upstream GitHub blob",
       "last_verified": "2026-09-29T08:51:25+00:00",
@@ -47377,7 +47501,9 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
+      "rp_id": "SUPERDEX-dg5f-seed"
     },
     {
       "id": "SUPERDEX-openarm-v20-torso",
@@ -47393,7 +47519,7 @@
       "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/torsos/openarm_v20/openarm_v20_torso.superdex_bot",
       "source_tier": "A",
       "confidence": 0.95,
-      "entity_kind": "physical_simulation_asset",
+      "entity_kind": "component",
       "entity_kind_basis": "Ingested from upstream .superdex_bot JSON",
       "confidence_basis": "Direct file parse of upstream GitHub blob",
       "last_verified": "2026-09-29T08:51:25+00:00",
@@ -47460,7 +47586,9 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
+      "rp_id": "SUPERDEX-openarm-v20-torso"
     }
   ]
 }
