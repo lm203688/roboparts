@@ -52,6 +52,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from datetime import datetime, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -60,11 +61,18 @@ OUT_PATH = os.path.join("api", "electrical_evidence.json")
 SCHEMA = "roboparts/electrical_evidence/v1"
 
 #: MDV 层给出的正收益目标（由 api/evidence_valuation.json 现算校验，此处仅作 id 映射）
-#: key = 形态图节点 id，value = 电气接口证据。
+#: key = 实体的 **rp_id**（跨库稳定标识），不是本地 id。
+#:
+#: 2026-10-03 修正：原用本地 id（SENS-852/GRIP-002 等）作键，接进
+#: build_morphology_graph.elec_ports_of 后**一条都没命中**——
+#: 实体侧稳定键是 rp_id（RP-SEN-0091 / RP-GRI-0002），
+#: 而本表存的是本地 id。查 rp_id 交叉核对后 4/4 都能对上。
+#: 症状与 SKILL 里记的「半接线故障」完全一致：产物自洽、闸门全绿、
+#: 而取证工作对判定结果零影响。**接线前必须验证键口径一致。**
 #: 每条都必须有 source_url（一手文档），否则视为非法——见 _validate()。
 EVIDENCE = {
     # ---------- ATI 六轴力/力矩传感器族 ----------
-    "SENS-852": {
+    "RP-SEN-0091": {   # ATI Axia80（本地 id SENS-852）
         "vendor": "ATI Industrial Automation",
         "device": "Axia80-M20 F/T Sensor (Ethernet)",
         "connectors": [
@@ -107,7 +115,7 @@ EVIDENCE = {
     },
 
     # ---------- OnRobot HEX 族 ----------
-    "SENS-049": {
+    "RP-SEN-0054": {   # OnRobot HEX-E（本地 id SENS-049）
         "vendor": "OnRobot",
         "device": "HEX-E / HEX-H 6-Axis F/T Sensor",
         "connectors": [
@@ -140,7 +148,7 @@ EVIDENCE = {
     },
 
     # ---------- Robotiq 2F 族 ----------
-    "GRIP-002": {
+    "RP-GRI-0002": {   # Robotiq 2F-85（本地 id GRIP-002）
         "vendor": "Robotiq",
         "device": "2F-85 Adaptive Gripper",
         "connectors": [
@@ -186,7 +194,7 @@ EVIDENCE = {
     },
 
     # ---------- OnRobot 2FG7 ----------
-    "GRIP-001": {
+    "RP-GRI-0001": {   # OnRobot 2FG7（本地 id GRIP-001）
         "vendor": "OnRobot",
         "device": "2FG7 Parallel Gripper",
         "connectors": [
@@ -217,6 +225,117 @@ EVIDENCE = {
                              "针数与针序在任一版本中均未给出",
         "confidence": 0.75,
     },
+
+    # ---------- Robotiq FT 300 / FT 300-S 力矩传感器 ----------
+    # 2026-10-04 新增。**本轮第二个关键发现**：FT 300 用的是
+    # **M12 5-pin A-coded**（IEC 61076-2-101），而同一厂商的 2F-85 夹爪
+    # 用 **M8 5-pole**。两者都是「5 针」，但螺纹规格不同 ⇒ 物理上不可互插。
+    # 而**针数相同**意味着只比 pins 的判定器会把它们判成兼容 —— 这正是
+    # 「(family, pins, pinout) 三元组，不能只用 pins」这条判据的第二个实证。
+    "RP-SEN-0036": {   # Robotiq FT 300（本地 id SENS-31）
+        "vendor": "Robotiq",
+        "device": "FT 300 Force Torque Sensor",
+        "connectors": [
+            {
+                "id": "m12_5pin_acoded",
+                "label": "M12 5-pin A-coded (IEC 61076-2-101)",
+                "family": "M12",
+                "variant": "acoded-5",
+                "pins": 5,
+                "thread": "M12",
+                "pinout": ["1 485 GND (SHIELD)", "2 24 V (RED)",
+                           "3 GND (BLACK)", "4 485+ (WHITE)", "5 485- (GREEN)"],
+                "carries": ["power", "rs485"],
+                "voltage": "5-24 V DC (±10%, max 26.4 V)",
+                "power_w": 2,
+                "max_current_a": 1.0,
+                "fuse": "Phoenix #0916604 (UT6-TMC M 1A)",
+                "note": "**针序与 2F-85 的 M8 5-pole 完全相同，但螺纹规格不同**"
+                        "（M12 A-coded vs M8）⇒ 物理上不可互插，"
+                        "而仅比针数会误判为兼容。这是「family 必须进类型键」的"
+                        "第二个实证（第一个是 M8 家族内部的 6-pin vs 5-pin）。",
+            },
+        ],
+        "protocol": "RS-485 半双工（Modbus RTU 从站，默认地址 9 / 0x0009；"
+                    "或 100/333/1000 Hz 流式二进制）",
+        "source_url": "https://assets.robotiq.com/website-assets/support_documents/document/FT_Sensor_Instruction_Manual_PDF_20190322.pdf",
+        "source": "Robotiq FT 300 Instruction Manual §3.4 Power Supply Specifications / "
+                  "§3.5 Wiring（Fig. 3-2 Pinout，5-POLE M12 CONNECTOR）",
+        "source_tier": "A",
+        "source_tier_basis": "厂商官方文档域名 assets.robotiq.com",
+        "confidence": 0.95,
+    },
+
+    "RP-SEN-0094": {   # Robotiq FT 300-S（本地 id SENS-855）
+        "vendor": "Robotiq",
+        "device": "FT 300-S Force Torque Sensor",
+        "connectors": [
+            {
+                "id": "m12_5pin_acoded",
+                "label": "M12 5-pin A-coded (IEC 61076-2-101)",
+                "family": "M12",
+                "variant": "acoded-5",
+                "pins": 5,
+                "thread": "M12",
+                # 针序沿用 FT 300 手册：S 型号是 FT 300 的**精简版**
+                # （去掉 streaming 模式），连接器与针序未改。
+                # 依据：FT 300-S 官方页与 FT 300 手册共用同一 Fig. 3-2 pinout 表。
+                "pinout": ["1 485 GND (SHIELD)", "2 24 V (RED)",
+                           "3 GND (BLACK)", "4 485+ (WHITE)", "5 485- (GREEN)"],
+                "carries": ["power", "rs485"],
+                "voltage": "5-24 V DC (±10%)",
+                "note": "FT 300-S 与 FT 300 共用同一 5-pin M12 A-coded 接口"
+                        "（厂商文档中两者 pinout 表为同一张）。"
+                        "**这是同族同变体的合法 identity 案例**——"
+                        "与 M8 家族的「同族不同变体不可互插」形成对照，"
+                        "说明判据必须是三元组：family+variant 都相同才 identity。",
+            },
+        ],
+        "protocol": "RS-485 半双工（Modbus RTU 从站）",
+        "source_url": "https://assets.robotiq.com/website-assets/support_documents/document/FT_Sensor_Instruction_Manual_PDF_20190322.pdf",
+        "source": "Robotiq FT 300 Instruction Manual §3.5 Wiring（FT 300-S 为同接口精简型号，"
+                  "pinout 表共用）",
+        "source_tier": "A",
+        "source_tier_basis": "厂商官方文档域名 assets.robotiq.com",
+        "confidence": 0.85,
+    },
+
+    # ---------- Schunk Co-act EGP 64 ----------
+    "RP-GRI-0013": {   # Schunk Co-act EGP 64（本地 id GRIP-009）
+        "vendor": "Schunk",
+        "device": "Co-act EGP-C 64-N-N (collaborating electric gripper)",
+        "connectors": [
+            {
+                "id": "m8_schunk_dual",
+                "label": "2 x M8 (power/control + signal)",
+                "family": "M8",
+                "variant": "schunk-dual",
+                # 厂商只给「2 x M8」，未给每只的针数 ⇒ 如实留 None，
+                # 不按「M8 通常 4/5/8 针」推断。**双 M8 是 SCHUNK 的
+                # 供电 + 控制分线做法**，与单 M8 复合接口是不同拓扑。
+                "pins": None,
+                "thread": "M8",
+                "pinout": None,
+                "carries": ["power", "control"],
+                "voltage": "24 V DC (min 21.6 / nom 24 / max 26.4)",
+                "max_current_a": 2.0,
+                "note": "SCHUNK 产品页字段「Cable connector/cable end = 2 x M8」，"
+                        "配 4 路数字输入 / 2 路数字输出（控制器内置）。"
+                        "**针数与针序均未公开** ⇒ pins/pinout 留 null。"
+                        "这与 ATI/Robotiq 的「单 M8 复合 6 针或 5 针」是不同拓扑，"
+                        "不可按 family=M8 归为兼容。",
+                "evidence_gap": "pinout_unverified",
+            },
+        ],
+        "protocol": "Digital I/O（IO-Link 变体另有 COM2 PortClass B 版本）",
+        "source_url": "https://schunk.com/us/en/gripping-systems/parallel-gripper/co-act-egp-c/co-act-egp-c-64-n-n-gofa/p/000000000001468551",
+        "source": "SCHUNK Co-act EGP-C 64-N-N-GoFa 产品页技术参数表："
+                  "Power supply 24 V / Max. total current 2 A / "
+                  "Cable connector-cable end 2 x M8 / 4 DI + 2 DO",
+        "source_tier": "A",
+        "source_tier_basis": "厂商官方域名 schunk.com",
+        "confidence": 0.8,
+    },
 }
 
 #: 跨厂商「同族不同变体」冲突表——本层最有价值的产出。
@@ -239,6 +358,45 @@ M8_VARIANT_CONFLICTS = [
         "implication": "任何按「M8」字符串匹配连接器类型的判定器都会在此误判为 compatible。"
                        "类型系统必须用 (family, pins, pinout) 三元组，不能只用 family。",
     },
+    {
+        # 2026-10-04 新增。这条比 M8 家族冲突更危险，因为它**骗过只比针数的判定器**。
+        "family": "SAME_PIN_COUNT_DIFFERENT_THREAD",
+        "variants": [
+            {"variant": "m8-device-5", "pins": 5, "thread": "M8",
+             "device": "Robotiq 2F-85 gripper", "carries": "24V + RS-485"},
+            {"variant": "m12-acoded-5", "pins": 5, "thread": "M12",
+             "device": "Robotiq FT 300 F/T sensor", "carries": "24V + RS-485"},
+        ],
+        "verdict": "incompatible_despite_identical_pinout",
+        "reason": "两者**针数相同（5）且针序完全相同**（485 GND / 24V / GND / 485+ / 485-），"
+                  "承载信号也相同（24V + RS-485）—— 但螺纹规格不同："
+                  "2F-85 设备线是 M8，FT 300 传感器是 **M12 5-pin A-coded**"
+                  "（IEC 61076-2-101）。**同厂、同针数、同针序、同信号，"
+                  "仍物理上不可互插。**",
+        "implication": "这是本层最强的判据证据：`(family, pins, pinout)` 三元组里"
+                       "**family 不可省**。若判定器只比 (pins, pinout)，"
+                       "这两个连接器会被判 identity —— 而接上去必然失败。"
+                       "工程上这是「协议兼容 + 针序兼容 ≠ 物理可插」的最小反例："
+                       "唯一阻断维度就是螺纹规格。",
+    },
+    {
+        # 合法 identity 案例：family+variant 都相同 ⇒ 应当 identity。
+        # 与上面两条形成对照，说明判据不能一味判 incompatible——
+        # 否则就是另一种形式的臆断。
+        "family": "M12",
+        "variants": [
+            {"variant": "acoded-5", "pins": 5, "thread": "M12",
+             "device": "Robotiq FT 300", "carries": "24V + RS-485"},
+            {"variant": "acoded-5", "pins": 5, "thread": "M12",
+             "device": "Robotiq FT 300-S", "carries": "24V + RS-485"},
+        ],
+        "verdict": "identity_expected",
+        "reason": "同 family（M12）同 variant（acoded-5）同针数同针序 ⇒ 应当 identity。"
+                  "收录此条是为了给「合法兼容」留机读对照，防止判据退化成"
+                  "「凡是同家族一律 incompatible」——那也是臆断，只是方向相反。",
+        "implication": "三元组判据是**双向**的：family 相同但 variant 不同 ⇒ 不可互插；"
+                       "family 与 variant 都相同 ⇒ 可对接。两个方向都需要有实例。",
+    },
 ]
 
 
@@ -251,6 +409,13 @@ def _validate() -> None:
     if not EVIDENCE:
         raise SystemExit("build_electrical_evidence: EVIDENCE 为空，fail-closed")
     for nid, ev in EVIDENCE.items():
+        # 键必须是 rp_id 形态。写成本地 id 会导致接线阶段「一条都不命中」，
+        # 而产物本身完全自洽 —— 这是最难发现的一类半接线故障。
+        if not re.match(r"^RP-[A-Z]+-\d{3,}$", nid):
+            raise SystemExit(
+                f"build_electrical_evidence: 键 {nid!r} 不是 rp_id 形态"
+                "（应形如 RP-SEN-0091）—— 本表按 rp_id 被 build_morphology_graph 消费，"
+                "用本地 id 会导致取证证据一条都接不上")
         for field in ("vendor", "device", "source_url", "source", "source_tier", "confidence"):
             if not ev.get(field):
                 raise SystemExit(
@@ -267,13 +432,41 @@ def _validate() -> None:
                 if not c.get(field):
                     raise SystemExit(
                         f"build_electrical_evidence: {nid}/{c.get('id','?')} 缺字段 {field!r}")
-    # 冲突表自洽：同 family 的变体必须真的针数不同，否则「不可互插」结论无依据
+    # 冲突表自洽（2026-10-04 扩展）：每条表的**阻断维度必须真的不同**。
+    #
+    # 原校验只看「针数是否不同」，那对新增的两条表是错的：
+    #   · SAME_PIN_COUNT_DIFFERENT_THREAD —— 针数**相同**，阻断维度是螺纹
+    #   · M12（identity_expected）      —— 针数与 variant **都相同**，本来就该兼容
+    # 用「针数必须不同」去校验它们，会把**合法的 identity 案例也判红**，
+    # 于是判据退化成「同家族一律 incompatible」——那是方向相反的另一种臆断。
+    #
+    # 正确判据：**表里声明的阻断维度必须真的存在差异**。
+    #   incompatible_* ⇒ 至少一个几何维度（pins / thread / family / variant）不同
+    #   identity_*     ⇒ 所有几何维度都相同（否则该表自相矛盾）
     for cf in M8_VARIANT_CONFLICTS:
-        pins = {v["pins"] for v in cf["variants"]}
-        if len(pins) < 2:
+        verdict = cf.get("verdict", "")
+        variants = cf.get("variants") or []
+        if len(variants) < 2:
             raise SystemExit(
-                f"build_electrical_evidence: 冲突表 {cf['family']} 各变体针数相同"
-                f"（{pins}），'不可互插' 结论缺几何依据")
+                f"build_electrical_evidence: 冲突表 {cf['family']} 变体不足 2 条")
+        dims = ("pins", "thread", "family", "variant")
+        diffs = {d for d in dims if len({v.get(d) for v in variants}) > 1}
+        if verdict.startswith("incompatible"):
+            if not diffs:
+                raise SystemExit(
+                    f"build_electrical_evidence: 冲突表 {cf['family']} 判 incompatible "
+                    f"但所有几何维度都相同（{dims}），结论缺依据——"
+                    f"没有差异就没有不可插的理由")
+        elif verdict.startswith("identity"):
+            if diffs:
+                raise SystemExit(
+                    f"build_electrical_evidence: 冲突表 {cf['family']} 判 identity "
+                    f"但几何维度 {sorted(diffs)} 不同 ⇒ 自相矛盾，"
+                    f"identity 案例必须所有维度都相同")
+        else:
+            raise SystemExit(
+                f"build_electrical_evidence: 冲突表 {cf['family']} 的 verdict "
+                f"{verdict!r} 未登记（只允许 incompatible_* / identity_*）")
 
 
 def _coverage() -> dict:
@@ -321,11 +514,18 @@ def build() -> dict:
             "generated_by": "scripts/build_electrical_evidence.py",
             "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "headline_finding": (
-                "「M8」不是一个连接器类型，是一个家族。ATI Axia80 传感器端是 6-pin M8 ZC22，"
-                "Robotiq 2F-85 设备线是 5-pole M8，OnRobot HEX 传感器线是 5-pin M8 —— "
-                "三者外形都是 M8，但针数/针序/承载信号全不同，物理上不可互插。"
-                "这意味着类型系统必须用 (family, pins, pinout) 三元组，"
-                "family 单独作键会系统性误判。"),
+                "**连接器的类型键必须是 (family, pins, pinout) 三元组，缺一不可。**"
+                "本层给出三条互相独立的实证："
+                "(1) 「M8」不是类型是家族——ATI Axia80 6-pin ZC22（24V+100BASE-TX）"
+                "/ Robotiq 2F-85 5-pole（24V+RS-485）/ OnRobot HEX 5-pin，"
+                "针数针序全不同，物理不可互插；"
+                "(2) **同针数同针序也可能不可插**——Robotiq 2F-85 用 M8 5-pole、"
+                "FT 300 用 M12 5-pin A-coded，两者针数(5)、针序、承载信号(24V+RS-485)"
+                "完全相同，仅螺纹不同 ⇒ 不可互插。这一条骗过了「只比针数」的判定器，"
+                "是 family 必须进键的最小反例；"
+                "(3) 合法 identity 案例（FT 300 与 FT 300-S 同 family 同 variant）"
+                "同时收录，防止判据退化成「同家族一律 incompatible」——"
+                "那是方向相反的另一种臆断。"),
             "honest_limits": [
                 "覆盖度极低：已核实条数占电气未声明节点的比例见 coverage。"
                 "本文件不宣称补齐电气轴，只证明这条取证方向有效且成本极低。",
