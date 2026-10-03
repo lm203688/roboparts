@@ -6,7 +6,7 @@
   "anchor": "docs/RESEARCH_BARRIERS_20261003.md §3 H1",
   "upstream": "api/evidence_valuation.json（by_axis.electrical.top_targets）",
   "generated_by": "scripts/build_electrical_evidence.py",
-  "generated_at": "2026-10-03T16:31:34+00:00",
+  "generated_at": "2026-10-03T16:44:21+00:00",
   "headline_finding": "「M8」不是一个连接器类型，是一个家族。ATI Axia80 传感器端是 6-pin M8 ZC22，Robotiq 2F-85 设备线是 5-pole M8，OnRobot HEX 传感器线是 5-pin M8 —— 三者外形都是 M8，但针数/针序/承载信号全不同，物理上不可互插。这意味着类型系统必须用 (family, pins, pinout) 三元组，family 单独作键会系统性误判。",
   "honest_limits": [
    "覆盖度极低：已核实条数占电气未声明节点的比例见 coverage。本文件不宣称补齐电气轴，只证明这条取证方向有效且成本极低。",
