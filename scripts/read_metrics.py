@@ -244,7 +244,15 @@ BUSINESS_TOOLS = ('search_components', 'get_component_detail',
                   'recommend_for_application',
                   'get_parameter_semantics', 'bom_compatibility_check',
                   'semantic_search', 'get_standard_audit', 'review_compatibility',
-                  'lint_urdf')
+                  'lint_urdf',
+                  # 桥接层（2026-10-04）：把研究层三轴判据对 agent 暴露。
+                  # 见 api/reachability_gap.json——此前 5 个研究层产物在产品面
+                  # 零引用，研究者以为结论被用上了，实际 agent 拿的是另一套口径。
+                  # 列入 BUSINESS_TOOLS 是因为它返回实质技术结论（非纯抓取），
+                  # 与 check_compatibility 同属「回答用户技术问题」一类。
+                  'explain_compose_frontier',
+                  'explain_evidence_cohort', 'explain_evidence_mdv',
+                  'explain_connector_types')
 
 
 def mcp_report(total, n):
