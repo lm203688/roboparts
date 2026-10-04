@@ -59,3 +59,11 @@ tools:
     description: "对两个零部件做「多 Agent 质保复核」：Worker 层执行标准四维兼容性裁决（与 /api/compatibility 同一引擎），Governor 层独立复核结论——按证据强度给出 L0–L3 风险分级、在证据不…"
   - name: lint_urdf
     description: "对 URDF（Unified Robot Description Format）XML 文件做静态兼容性检查。"
+  - name: explain_compose_frontier
+    description: "【研究层口径 · 与 check_compatibility 的四维不同】查询 RoboParts 三轴组合判定（mechanical 机械 / electrical 电气 / signal 信号角色）的现算结论：整体…"
+  - name: explain_evidence_cohort
+    description: "【研究层口径】查询「最小可行同质集」取证判据：补哪一条数据最值、为什么单条声明的边际收益为 0、以及应按缺口画像批量取证的顺序。适合回答「取证该从哪开始」「补机械声明率到 30% 有用吗」「K=2 是什么意思」。"
+  - name: explain_evidence_mdv
+    description: "【研究层口径】查询边际声明价值（MDV）：各轴未声明节点的零贡献率、哪些取证方向边际收益恒为 0、以及瓶颈轴是哪个。适合回答「补哪个轴最划算」「某个轴还有取证价值吗」。"
+  - name: explain_connector_types
+    description: "【研究层口径】查询连接器取证与类型判据：已核实的连接器（针数/针序/供电）、「同族不同变体」的不可互插案例，以及 (family, pins, pinout) 三元组判据。"
