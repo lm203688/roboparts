@@ -5,7 +5,7 @@
     "description": "把零件目录变成「可组合的形式对象」：实体为节点、接口为带类型的端口、端口类型之间带可判定裁决。二部结构（实体→端口类型→端口类型）而非实体×实体的全对边，因为 ISO 9409-1 的语义本身就是类型系统：法兰标号即类型，两件能装当且仅当标号一致或经转接盘。",
     "anchor": "docs/PROJECT_DIRECTIONS_V2.md §1（方向锚点 v2.2）",
     "generated_by": "scripts/build_morphology_graph.py",
-    "generated_at": "2026-10-04T07:40:17+08:00",
+    "generated_at": "2026-10-04T08:31:14+08:00",
     "truth_sources": [
       "api/entities.json",
       "api/mechanical_interfaces.json",
