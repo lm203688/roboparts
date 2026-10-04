@@ -7,7 +7,7 @@
   "supersedes_semantics_of": "api/evidence_valuation.json（MDV 层，见下）",
   "generated_by": "scripts/build_cohort_feasibility.py",
   "truth_source": "api/morphology_graph.json（节点端口状态 + type_compat） + scripts/compose_engine.py（PAIR_RANK / CompatIndex，单一真相源）",
-  "generated_at": "2026-10-04T00:35:11+00:00",
+  "generated_at": "2026-10-04T07:18:10+00:00",
   "why_this_layer_exists": "MDV 层把「联合上界」误标成了「单条边际值」。探针 8 用严格语义重算，证明单条边际值恒为 0；探针 7 端到端注入验证，单独补 MDV 列出的 16 个目标，电气可判定对数 1→1 持平，**预测未兑现**。本层是修正后的判据：约束是「最小可行同质集」而非「边际收益排序」。",
   "honest_limits": [
    "可行性判据用「补到该轴**最有利**类型」作乐观上界。真实补录可能落到不利类型 ⇒ **实际可行集 ⊆ 本表**。本表是候选可行集，不是保证可行集。",
