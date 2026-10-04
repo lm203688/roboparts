@@ -1079,6 +1079,84 @@ def _reachability_errors(rg):
     return errs
 
 
+def gate_research_progress():
+    """核心目标完成度判据闸门（2026-10-04 新增）。
+
+    「完成了百分之多少」是本项目最容易变成**自欺**的一句话：
+    分项可以挑、权重可以调、口径可以混，于是报出 60% 也不难看。
+
+    本闸门守三件事：
+      ① 每个分项必须带 `caliber`（分子分母怎么算的）——
+         没有口径的百分比不可复现，不配叫完成度。
+      ② 权重必须**可被质疑**：顶层 `weight_rationale` + `honest_limits`
+         声明「加权是口径不是客观测量」+ 两个口径都报。
+      ③ **门控必须已现算**（关键）：`raw_dimension_scores` 必须等于
+         「核心判据为 0 则该维度记 0」的现算结果。
+         缺这条 ⇒ 可以把门控换成朴素值虚高（body 从 0% 变 19.5%）而不判红。
+
+    为什么门控重要：body 维 4 项算术平均里，composed（核心目标的**唯一
+    直接判据**）只占 1/4 有效权重。三项基础设施高分会把 composed 的零分
+    平均掉。那不是加权问题，是**分项平均掩盖核心判据**。
+
+    另挂 `verify_research_progress.py` 的**敏感性反向对照**：
+    把 composed 从 0 调高后完成度**必须**上升——
+    一个对核心目标不敏感的完成度指标，测多少次都是废的。
+    """
+    run_sub('完成度判据生成（fail-fast 口径守恒）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_research_progress.py')])
+    p = os.path.join(ROOT, 'api', 'research_progress.json')
+    if not os.path.exists(p):
+        bad('完成度产物', 'api/research_progress.json 缺失')
+        return
+    with open(p, encoding='utf-8') as f:
+        rp = json.load(f)
+    errs = _progress_errors(rp)
+    if errs:
+        bad('完成度判据', '；'.join(errs[:4]))
+    else:
+        sc = rp.get('scoring') or {}
+        naive_w = _naive_weighted(rp)
+        ok('完成度判据',
+           '门控 %.1f%%（朴素 %.1f%%）｜body %s→%s（门控 %s）'
+           % (rp.get('weighted_total_pct', 0), naive_w,
+              (sc.get('naive_dimension_scores') or {}).get('body'),
+              (sc.get('gated_dimension_scores') or {}).get('body'),
+              next((v for v in (sc.get('gate_explanation') or {}).values()
+                    if '门控生效' in str(v)), '无门控')[:40]))
+    run_sub('完成度自证（口径 + 权重可质疑 + 门控现算 + 敏感性 + 8 变异）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'verify_research_progress.py')],
+            timeout=600)
+
+
+def _naive_weighted(rp):
+    w = rp.get('weights') or {}
+    naive = (rp.get('scoring') or {}).get('naive_dimension_scores') or {}
+    if not (w and naive):
+        return 0.0
+    return round(sum(naive[k] * w[k] for k in w if k in naive), 1)
+
+
+def _progress_errors(rp):
+    """完成度判据的纯函数判据（与 verify_*.py 同源）。"""
+    import importlib
+    try:
+        vrp = importlib.import_module('verify_research_progress')
+    except ImportError:
+        vrp = None
+    if vrp is not None:
+        return vrp._errors(rp)
+    # 降级路径：模块不可导入时至少守住加权现算一致
+    errs = []
+    w = rp.get('weights') or {}
+    raw = rp.get('raw_dimension_scores') or {}
+    total = rp.get('weighted_total_pct')
+    if w and raw and isinstance(total, (int, float)):
+        rec = round(sum(raw[k] * w[k] for k in w if k in raw), 1)
+        if abs(rec - total) > 0.15:
+            errs.append('加权值 %s ≠ 现算 %s' % (total, rec))
+    return errs
+
+
 def _cohort_errors(cf):
     """cohort_feasibility 产物的纯函数判据。"""
     errs = []
@@ -1611,6 +1689,9 @@ GATES = [
     # 2026-10-04 新增：研究层↔产品面可达性。守「研究做了但用户触不到」这类
     # 故障——它不报错、闸门全绿，只让研究资产对用户不可见。
     ('研究层可达性（产物引用 + 桥接工具接线 + 维度登记）', gate_reachability_gap),
+    # 2026-10-04 新增：核心目标完成度判据。守「百分比不是拍脑袋出来的」——
+    # 分项带口径、权重可质疑、门控已现算、且对核心目标敏感。
+    ('核心目标完成度（口径 + 门控现算 + 敏感性 + 8 变异）', gate_research_progress),
     # 2026-09-24 新增：pipeline 框架（算子+DAG 骨架 + gap_classification 样板）。
     # 这是 GOAI 报告里识别的"缺 20%"——用算子/DAG 显式建模，把手写脚本拆成
     # 纯函数算子。骨架本身零依赖 stdlib，样板与旧脚本产出必须逐字段等价
