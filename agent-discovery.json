@@ -136,6 +136,34 @@
         "guardrails": "只读静态分析，不修改 URDF 文件、不生成新文件；severity=error 时不得视为通过，必须向用户列出全部 error 级 issue 并建议修复后再提交。"
       },
       {
+        "name": "roboparts-compose-frontier",
+        "type": "mcp_tool",
+        "tool": "explain_compose_frontier",
+        "when_to_use": "用户问「这两个零件为什么判为 type_error」「哪些配对能真的装起来」「composed 是不是 0」「为什么机械能拧上但组合判不出来」，或需要研究层口径（三轴 mechanical/electrical/signal）结论时。",
+        "guardrails": "★ 口径隔离：本报表用 signal 角色互补（执行器↔传感器），check_compatibility 用 protocol 总线 + ROS2 支持——**两者维度不同，结论不可混用或直接比较**。本工具只透传研究层现算结论，不重新裁决。库级模式下 composed=0 是关系类型错配（cobot EOAT 各占机器人侧一个接口，真实关系是共装而非直连），**不得**把它当成数据缺口或未完成。"
+      },
+      {
+        "name": "roboparts-evidence-cohort",
+        "type": "mcp_tool",
+        "tool": "explain_evidence_cohort",
+        "when_to_use": "用户问「取证该从哪开始」「补哪条数据最值」「补机械声明率到 30% 有用吗」「K=2 是什么意思」时。",
+        "guardrails": "只读透传研究层现算结论，不重新裁决。口径与 check_compatibility 的四维不同，不可混用。"
+      },
+      {
+        "name": "roboparts-evidence-mdv",
+        "type": "mcp_tool",
+        "tool": "explain_evidence_mdv",
+        "when_to_use": "用户问「补哪个轴最划算」「某轴还有取证价值吗」「机械声明率低是不是真问题」时。",
+        "guardrails": "只读透传研究层现算结论。zero_mdv_nodes=100% 的轴不得再建议取证——那是可证明的无效投入。"
+      },
+      {
+        "name": "roboparts-connector-types",
+        "type": "mcp_tool",
+        "tool": "explain_connector_types",
+        "when_to_use": "用户问「这两个连接器能不能互插」「同为 M8 为什么判不兼容」「pinout 为 null 是什么意思」时。",
+        "guardrails": "只读透传。pinout=null 表示「厂商未公开」，**不得**按同类推断针序；family 相同不等于可互插。"
+      },
+      {
         "name": "roboparts-adapter-generate",
         "type": "web_resource",
         "endpoint": "https://roboparts.cc/adapter-generator",
