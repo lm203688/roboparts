@@ -475,7 +475,246 @@ const TOOLS = [
       required: ['urdf_xml'],
     },
   },
+
+  /* ═══════════════════════════════════════════════════════════════════════
+   * 桥接层（2026-10-04 新增）——把「研究层判据」对 agent 暴露。
+   *
+   * 【为什么有这个工具】体检发现（api/reachability_gap.json）：
+   *   本项目有两套兼容性裁决引擎——
+   *     · 产品面 compat_engine.js：四维 protocol/electrical/mechanical/software，
+   *       读 entities.json 的**声明字段**
+   *     · 研究层 compose_engine.py：三轴 mechanical/electrical/signal，
+   *       读 morphology_graph 端口 + 297 条**类型级裁决**
+   *   两套维度**不互为子集**（产品层有 protocol/software，研究层有 signal）。
+   *   而研究层的 5 个产物此前在产品面**零引用**——
+   *   即「研究者以为结论被用上了，agent 实际拿的是另一套口径的答案」。
+   *
+   * 【本工具的口径纪律】
+   *   · **只读、只报研究层原样结论，不重新裁决、不做跨层合并**。
+   *     跨层合并是产品决策（见 reachability_gap.decision_options），本工具不越权。
+   *   · 每个返回值都带 `engine` 与 `caliber` 字段，明确它是研究层口径，
+   *     **不可**与 check_compatibility 的四维结论混用。
+   *   · 证据不足时返回 null + 显式 reason，**不猜**（与全站三态诚实一致）。
+   * ═══════════════════════════════════════════════════════════════════════ */
+  {
+    name: 'explain_compose_frontier',
+    description:
+      '【研究层口径 · 与 check_compatibility 的四维不同】查询 RoboParts 三轴组合判定' +
+      '（mechanical 机械 / electrical 电气 / signal 信号角色）的现算结论：' +
+      '整体 composed/type_error/unknown、逐轴裁决与理由，以及「为什么 composed 通常为 0」' +
+      '的归因（L1 跨角色 → L2 机械可判定 → L3 全轴可判定的三层分解）。' +
+      '适合回答「这两个零件为什么判为 type_error」「哪些配对能真的装起来」' +
+      '「composed=0 是数据缺口还是关系类型问题」。' +
+      '只读、免鉴权。**注意口径差异**：本工具用 signal 角色互补（执行器↔传感器），' +
+      'check_compatibility 用 protocol 总线 + ROS2 支持，两者维度不同不可混用。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        component1_id: {
+          type: 'string',
+          description: '零件 1 的 ID，形如 ACT-001 / GRIP-002 / SENS-852。请先用 search_components 取得。',
+        },
+        component2_id: {
+          type: 'string',
+          description: '零件 2 的 ID。若省略，则只返回库级聚合结论（frontier 概览 + composed 归因）。',
+        },
+      },
+      required: [],
+    },
+  },
+
+  {
+    name: 'explain_evidence_cohort',
+    description:
+      '【研究层口径】查询「最小可行同质集」取证判据：补哪一条数据最值、' +
+      '为什么单条声明的边际收益为 0、以及应按缺口画像批量取证的顺序。' +
+      '适合回答「取证该从哪开始」「补机械声明率到 30% 有用吗」' +
+      '「K=2 是什么意思」。只读、免鉴权。',
+    inputSchema: { type: 'object', properties: {}, required: [] },
+  },
+
+  {
+    name: 'explain_evidence_mdv',
+    description:
+      '【研究层口径】查询边际声明价值（MDV）：各轴未声明节点的零贡献率、' +
+      '哪些取证方向边际收益恒为 0、以及瓶颈轴是哪个。' +
+      '适合回答「补哪个轴最划算」「某个轴还有取证价值吗」。' +
+      '只读、免鉴权。口径与 check_compatibility 不同，不可混用。',
+    inputSchema: { type: 'object', properties: {}, required: [] },
+  },
+
+  {
+    name: 'explain_connector_types',
+    description:
+      '【研究层口径】查询连接器取证与类型判据：已核实的连接器（针数/针序/供电）、' +
+      '「同族不同变体」的不可互插案例，以及 (family, pins, pinout) 三元组判据。' +
+      '适合回答「这两个连接器能不能互插」「同为 M8 为什么判不兼容」' +
+      '「pinout 为 null 是什么意思」。只读、免鉴权。',
+    inputSchema: { type: 'object', properties: {}, required: [] },
+  },
 ];
+
+/**
+ * explain_compose_frontier 的实现。读两个研究层产物，不做新裁决。
+ *
+ * 数据源（均为本仓生成器的现算产物，不手写任何数字）：
+ *   api/compose_semantics.json  逐对裁决 + 库级聚合
+ *   api/compose_frontier.json   L1/L2/L3 三层分解 + 共装假说
+ */
+async function toolExplainComposeFrontier(env, request, args) {
+  const CALIBER = 'research_py_compose_engine_3axis（mechanical/electrical/signal）';
+  const out = {
+    engine: 'scripts/compose_engine.py',
+    caliber: CALIBER,
+    warning: '本口径与 check_compatibility 的四维（protocol/electrical/mechanical/software）'
+      + '维度不同，两者结论不可混用或直接比较。',
+  };
+
+  const [sem, frontier] = await Promise.all([
+    fetchAsset(env, request, 'api/compose_semantics.json'),
+    fetchAsset(env, request, 'api/compose_frontier.json'),
+  ]);
+
+  if (!sem) {
+    return {
+      ...out,
+      error: 'compose_semantics.json 不可用',
+      error_kind: 'data_unavailable',
+      note: '该产物由 scripts/build_compose_semantics.py 生成。未部署或构建失败时如实报错，'
+        + '不用其他口径的结论冒充。',
+    };
+  }
+
+  const agg = sem.aggregates || {};
+  const a1 = args?.component1_id;
+  const a2 = args?.component2_id;
+
+  // ---- 无参数：返回库级聚合 + composed=0 的归因 ----
+  if (!a1 || !a2) {
+    return {
+      ...out,
+      scope: 'library',
+      overall_counts: agg.overall_counts || null,
+      note: '本库三轴 AND 收敛下 composed 通常为 0——这是**关系类型错配而非数据缺口**：'
+        + 'cobot EOAT（夹爪 + 力传感器）共享同一 ISO 9409-1 法兰、各占机器人侧一个电气端口，'
+        + '真实关系是「共装 co-mount」而非「点对点直连」。详见 frontier 段。',
+      frontier: frontier ? {
+        l1_cross_role_pairs: frontier.summary?.l1_pairs,
+        l1_nodes: frontier.summary?.l1_cross_role_nodes,
+        l2_pairs: frontier.summary?.l2_pairs,
+        l2_nodes: frontier.summary?.l2_nodes,
+        l3_composed_pairs: frontier.summary?.l3_pairs,
+        co_mount_hypothesis: frontier.co_mount_theorem?.statement || null,
+        co_mount_sample_caveat:
+          frontier.co_mount_theorem?.empirical_support?.sample_caveat || null,
+        flange_profile: frontier.summary?.co_mount_flange_profile || null,
+      } : null,
+      how_to_ask_about_a_pair: '传入 component1_id 与 component2_id 可得逐对逐轴裁决。',
+    };
+  }
+
+  // ---- 有参数：返回逐对裁决 ----
+  if (!frontier || !frontier.pair_index) {
+    // 产物未携带逐对索引时如实说明，不现场重算（避免在本工具里造第三套口径）
+    return {
+      ...out,
+      scope: 'pair',
+      component1_id: a1,
+      component2_id: a2,
+      error: 'compose_frontier.json 未携带 pair_index，无法给出逐对结论',
+      error_kind: 'data_unavailable',
+      hint: '当前 compose_semantics.json 只存库级聚合（避免 42 万对全量落盘）。'
+        + '逐对结论请用 check_compatibility，或等本仓为研究层产物补 pair 索引。',
+      library_overall_counts: agg.overall_counts || null,
+    };
+  }
+  const key = [a1, a2].sort().join('::');
+  const rec = frontier.pair_index[key] || frontier.pair_index[`${a2}::${a1}`];
+  if (!rec) {
+    return {
+      ...out,
+      scope: 'pair',
+      component1_id: a1,
+      component2_id: a2,
+      error: '该配对不在研究层的可判定集合内（pair_index 未命中）',
+      error_kind: 'not_found',
+      note: '研究层的 213,531 对无序空间是**裁决空间**，不是全部配对；'
+        + '未命中通常意味着该对至少一侧无可组合端口。',
+    };
+  }
+  return {
+    ...out,
+    scope: 'pair',
+    component1_id: a1,
+    component2_id: a2,
+    verdict: rec,
+  };
+}
+
+/**
+ * 其余三个研究层产物的透传。
+ *
+ * 【为什么单独一个函数而不是一个大 if】
+ *   五个产物的形状与受众各不相同（见各自 meta.title_zh），
+ *   硬塞进一个函数会让工具描述无法说清「什么时候用哪个」——
+ *   而「说清何时用哪个」正是桥接层存在的意义。
+ *   口径隔离同样重要：下面每个都带 engine/caliber 字段，
+ *   明确它是研究层结论，**不可**与 check_compatibility 的四维混用。
+ */
+async function toolExplainResearchLayer(env, request, kind) {
+  const CAL = 'research_py（研究层口径，维度/数据源与 check_compatibility 不同）';
+  const map = {
+    cohort: {
+      path: 'api/cohort_feasibility.json',
+      title: '最小可行同质集（取证判据）',
+      use: '用户问「补哪条数据最值」「取证该从哪开始」「为什么单条声明没用」时。',
+      picks: ['summary', 'method', 'gap_profiles', 'mdv_reconciliation', 'evidence_targeting'],
+    },
+    mdv: {
+      path: 'api/evidence_valuation.json',
+      title: '边际声明价值（零贡献轴证明）',
+      use: '用户问「补哪个轴最值」「机械声明率低是不是问题」时。',
+      picks: ['summary', 'by_axis', 'targeting_rationale'],
+    },
+    electrical: {
+      path: 'api/electrical_evidence.json',
+      title: '连接器取证与 (family,pins,pinout) 三元组判据',
+      use: '用户问「这两个连接器能不能互插」「同为 M8 为什么不兼容」时。',
+      picks: ['meta', 'evidence', 'family_conflicts', 'coverage'],
+    },
+  };
+  const cfg = map[kind];
+  if (!cfg) {
+    return { error: `未知的研究层入口: ${kind}`, error_kind: 'invalid_params' };
+  }
+  const doc = await fetchAsset(env, request, cfg.path);
+  if (!doc) {
+    return {
+      caliber: CAL,
+      title: cfg.title,
+      error: `${cfg.path} 不可用`,
+      error_kind: 'data_unavailable',
+      note: '该产物由对应 build_*.py 生成。未部署或构建失败时如实报错，'
+        + '不用其他口径的结论冒充。',
+    };
+  }
+  const out = { caliber: CAL, title: cfg.title, when_to_use: cfg.use, source: cfg.path };
+  for (const k of cfg.picks) {
+    if (doc[k] !== undefined) out[k] = doc[k];
+  }
+  return out;
+}
+
+/** 读静态资产；不存在返回 null 而不是抛错（缺失必须如实可见）。 */
+async function fetchAsset(env, request, path) {
+  try {
+    const r = await env.ASSETS.fetch(new URL('/' + path, request.url));
+    if (!r.ok) return null;
+    return await r.json();
+  } catch {
+    return null;
+  }
+}
 
 // 对外契约的唯一真相源。skills/manifest.json、skills/README.md、agent-discovery.json
 // 的 skills 段必须由 scripts/gen_skills_manifest.mjs 从这里生成，禁止手写第二份。
@@ -1257,6 +1496,19 @@ async function handleRpc(msg, context) {
             });
           }
           payload = lintUrdf(xml, { checkLevel: args.check_level || 'all' });
+        } else if (name === 'explain_compose_frontier') {
+          // 桥接层：只透传研究层现算结论，不在本工具内重新裁决（避免第三套口径）
+          recordMcp(context, 'toolsrc:script:explain_compose_frontier');
+          payload = await toolExplainComposeFrontier(env, request, args);
+        } else if (name === 'explain_evidence_cohort') {
+          recordMcp(context, 'toolsrc:script:explain_evidence_cohort');
+          payload = await toolExplainResearchLayer(env, request, 'cohort');
+        } else if (name === 'explain_evidence_mdv') {
+          recordMcp(context, 'toolsrc:script:explain_evidence_mdv');
+          payload = await toolExplainResearchLayer(env, request, 'mdv');
+        } else if (name === 'explain_connector_types') {
+          recordMcp(context, 'toolsrc:script:explain_connector_types');
+          payload = await toolExplainResearchLayer(env, request, 'electrical');
         } else {
           return rpcError(id, -32602, `未知工具: ${name}`);
         }
