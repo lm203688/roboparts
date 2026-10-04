@@ -114,6 +114,13 @@
    "title": "连接器类型判据（三元组）",
    "when_to_use": "用户问「这两个连接器能不能互插」「同为 M8 为什么判不兼容」「pinout 为 null 是什么意思」时。",
    "guardrails": "只读透传。pinout=null 表示「厂商未公开」，**不得**按同类推断针序；family 相同不等于可互插。"
+  },
+  {
+   "tool": "get_research_progress",
+   "name": "roboparts-research-progress",
+   "title": "核心目标完成度",
+   "when_to_use": "用户问「这个项目做到什么程度了」「核心目标完成了几成」「composed 为什么是 0」时。",
+   "guardrails": "★ 这是**一个口径**下的数字，不是客观测量。权重可争议。采用门控口径：核心判据 composed=0 时 body 维记 0——**判定基础设施建成不等于组合成立**，不得把基础设施得分当作核心目标已达成。"
   }
  ],
  "non_mcp_skills": [
