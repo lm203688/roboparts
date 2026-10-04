@@ -25,6 +25,10 @@
 | `roboparts-standard-audit` | mcp_tool | `get_standard_audit` | 用户想核对某零件 / 厂商声明的标准符合性，或想知道哪些声明能被已知标准集核实、哪些是出处存疑的条目时。 |
 | `roboparts-compat-review` | mcp_tool | `review_compatibility` | 对外发布 / 采购决策前要对兼容性结论做第二双眼睛复核时：给出 L0–L3 风险分级、证据不足时降级、缺失证据显式列出。 |
 | `roboparts-urdf-lint` | mcp_tool | `lint_urdf` | 用户上传或引用 URDF XML 文件，想做兼容性预检、检查运动学树完整性、或验证是否符合 ROS 工业标准帧规范时。 |
+| `roboparts-compose-frontier` | mcp_tool | `explain_compose_frontier` | 用户问「这两个零件为什么判为 type_error」「哪些配对能真的装起来」「composed 是不是 0」「为什么机械能拧上但组合判不出来」，或需要研究层口径（三轴 mechanical/electrical/signal）结论时。 |
+| `roboparts-evidence-cohort` | mcp_tool | `explain_evidence_cohort` | 用户问「取证该从哪开始」「补哪条数据最值」「补机械声明率到 30% 有用吗」「K=2 是什么意思」时。 |
+| `roboparts-evidence-mdv` | mcp_tool | `explain_evidence_mdv` | 用户问「补哪个轴最划算」「某轴还有取证价值吗」「机械声明率低是不是真问题」时。 |
+| `roboparts-connector-types` | mcp_tool | `explain_connector_types` | 用户问「这两个连接器能不能互插」「同为 M8 为什么判不兼容」「pinout 为 null 是什么意思」时。 |
 | `roboparts-adapter-generate` | web_resource | `/adapter-generator` | 兼容性判定为不兼容、且根因是机械法兰不匹配时，直接产出解决方案而非只给结论。 |
 | `roboparts-dataset-discovery` | dataset | `/agent-discovery.json` | 用户想下载/引用原始数据、做二次分析、或确认数据来源时。 |
 | `roboparts-supplier-risk` | methodology | `/docs/supplier-risk.html` | 用户问「这家供应商靠谱吗」「这个价格是不是太低了」「哪些零件数据存疑」时，给出可审计的风险结论而非拍脑袋。 |
