@@ -552,6 +552,20 @@ const TOOLS = [
       '「pinout 为 null 是什么意思」。只读、免鉴权。',
     inputSchema: { type: 'object', properties: {}, required: [] },
   },
+
+  {
+    name: 'get_research_progress',
+    description:
+      '查询「核心目标完成度」的可复现判据：把核心目标（脑×体×智做成机器可校验的' +
+      '组合 + 全链路可溯源）拆成四个维度的分项，每项给出分子/分母/口径/剩余缺口，' +
+      '并报出门控与朴素两个口径的加权完成度。' +
+      '适合回答「这个项目做到什么程度了」「核心目标完成了几成」' +
+      '「composed 为什么是 0」。只读、免鉴权。' +
+      '★ 口径警告：这是**一个口径**下的数字，不是客观测量；权重可争议；' +
+      '且采用**门控口径**——核心判据（composed）为 0 时 body 维记 0，' +
+      '因为「判定基础设施建成」不等于「组合成立」。',
+    inputSchema: { type: 'object', properties: {}, required: [] },
+  },
 ];
 
 /**
@@ -675,6 +689,14 @@ async function toolExplainResearchLayer(env, request, kind) {
       title: '边际声明价值（零贡献轴证明）',
       use: '用户问「补哪个轴最值」「机械声明率低是不是问题」时。',
       picks: ['summary', 'by_axis', 'targeting_rationale'],
+    },
+    progress: {
+      path: 'api/research_progress.json',
+      title: '核心目标完成度（可复现判据，非拍脑袋）',
+      use: '用户问「这个项目做到什么程度了」「核心目标完成了几成」'
+        + '「composed 为什么是 0」时。',
+      picks: ['weighted_total_pct', 'scoring', 'raw_dimension_scores',
+              'weights', 'weight_rationale', 'dimensions', 'how_to_read'],
     },
     electrical: {
       path: 'api/electrical_evidence.json',
@@ -1509,6 +1531,9 @@ async function handleRpc(msg, context) {
         } else if (name === 'explain_connector_types') {
           recordMcp(context, 'toolsrc:script:explain_connector_types');
           payload = await toolExplainResearchLayer(env, request, 'electrical');
+        } else if (name === 'get_research_progress') {
+          recordMcp(context, 'toolsrc:script:get_research_progress');
+          payload = await toolExplainResearchLayer(env, request, 'progress');
         } else {
           return rpcError(id, -32602, `未知工具: ${name}`);
         }
