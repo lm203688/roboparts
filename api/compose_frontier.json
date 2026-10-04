@@ -6,7 +6,7 @@
   "anchor": "docs/RESEARCH_BARRIERS_20261003.md §2 R3",
   "generated_by": "scripts/build_compose_frontier.py",
   "truth_source": "api/morphology_graph.json（端口状态 + type_compat） + scripts/compose_engine.py（compose() 单一真相源） + api/electrical_evidence.json（取证覆盖判定）",
-  "generated_at": "2026-10-04T00:35:33+00:00",
+  "generated_at": "2026-10-04T07:18:42+00:00",
   "headline": "**composed 恒为 0 高度可能是关系类型错配，而非数据缺口。** 实测：L2 的 63 对里机械 63/63 通过、信号 63/63 通过，唯一阻点 electrical 判的是「两器件能否互插」；而 16 个 L2 节点全是 cobot EOAT（夹爪/执行器 + 六轴力传感器），共享同一 ISO 9409-1-A50-4-M6 法兰，它们各自占机器人侧的一个电气端口——**按设计就不该互插**。两侧均取证的 12 对里，判出结果的 9 对实测 9/9 incompatible、0 compatible，另 3 对因几何不可比判 unknown。⇒ 补电气声明**很可能**不会让 composed>0。**这是由 9 个样本支撑的强假说，不是已证定理**（升级条件见 empirical_support.sample_caveat）。",
   "honest_limits": [
    "本层**不改** composed=0 这一事实。判定仍由 api/compose_semantics.json 现算；本层只解释它为何为 0。",
