@@ -977,6 +977,108 @@ def _wiring_errors(ee, mg, cs, id_by_rp):
     return errs
 
 
+def gate_reachability_gap():
+    """研究层↔产品面可达性闸门（2026-10-04 新增）。
+
+    体检发现的最严重结构性问题：本项目**有两套兼容性裁决引擎**——
+      产品面 functions/_lib/compat_engine.js：四维
+        protocol/electrical/mechanical/software，读 entities.json 声明字段
+      研究层 scripts/compose_engine.py：三轴
+        mechanical/electrical/signal，读 morphology_graph 端口 + type_compat
+    两套维度**不互为子集**（产品层有 protocol/software，研究层有 signal）。
+    而研究层 5 个产物此前在产品面**零引用**——
+    即「研究者以为结论被用上了，agent 实际拿的是另一套口径的答案」。
+
+    这类故障的性质：**两套都能跑、都不报错、闸门全绿**，只是研究资产
+    对用户不可见。它不会被任何算术守卫抓到，只能靠**显式扫引用**。
+
+    本闸门守三件事：
+      ① 每个研究层产物在 functions/ 下至少有一处引用（可达性）
+      ② 桥接工具 explain_compose_frontier 必须在端点 TOOLS 里存在
+         （桥接层是「研究层变为 agent 可访问」的唯一通路）
+      ③ 两套引擎的维度集必须**显式登记**在产物里——
+         若哪天 JS 或 Py 的维度集变了而本层没跟上，必须判红。
+         理由：维度集是「两套口径是否还互为子集」的判据，
+         它变了意味着断层性质变了，而断层性质变了没人会通知闸门。
+    """
+    run_sub('可达性体检生成（fail-fast 口径守恒）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_reachability_gap.py')])
+    p = os.path.join(ROOT, 'api', 'reachability_gap.json')
+    if not os.path.exists(p):
+        bad('可达性产物', 'api/reachability_gap.json 缺失')
+        return
+    with open(p, encoding='utf-8') as f:
+        rg = json.load(f)
+    errs = _reachability_errors(rg)
+    if errs:
+        bad('研究层可达性', '；'.join(errs[:4]))
+    else:
+        rs = rg['reachability_summary']
+        ok('研究层可达性',
+           '%d/%d 产物在产品面可达（扫 %d 个源文件）；桥接工具在位；维度集已登记'
+           % (rs['artifacts_reachable'], rs['artifacts_total'],
+              rs['product_surface_files_scanned']))
+
+    # 桥接工具必须在端点 TOOLS 里真实存在（不是本层自称）
+    mp = os.path.join(ROOT, 'functions', 'mcp.js')
+    if os.path.exists(mp):
+        src = open(mp, encoding='utf-8', errors='replace').read()
+        if "name: 'explain_compose_frontier'" not in src:
+            bad('桥接工具接线', 'explain_compose_frontier 不在 functions/mcp.js 的 TOOLS 里'
+                '——研究层仍对 agent 不可见')
+        elif "name === 'explain_compose_frontier'" not in src:
+            bad('桥接工具接线', '工具已声明但 dispatch 分支缺失（调不通）')
+        else:
+            ok('桥接工具接线', 'TOOLS 声明 + dispatch 分支均已就位')
+
+    run_sub('可达性阴阳/变异自证（引用+桥接+维度守卫）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'verify_reachability_gap.py')],
+            timeout=600)
+
+
+def _reachability_errors(rg):
+    """可达性产物的纯函数判据。"""
+    errs = []
+    rs = rg.get('reachability_summary') or {}
+    if not rs.get('product_surface_files_scanned'):
+        errs.append('产品面扫描文件数为 0——扫描范围失效（可达性会假报全通）')
+    total = rs.get('artifacts_total') or 0
+    reach = rs.get('artifacts_reachable') or 0
+    unreach = rs.get('artifacts_unreachable') or 0
+    if reach + unreach != total:
+        errs.append('可达计数不守恒：%d + %d != %d' % (reach, unreach, total))
+    # 逐条：reachable 与 reference_count 必须一致（防止两处口径分叉）
+    for r in (rg.get('reachability') or []):
+        if bool(r.get('reachable')) != bool(r.get('reference_count')):
+            errs.append('%s 的 reachable 与 reference_count 不一致' % r.get('artifact'))
+    # **不可达必须判红**（2026-10-04 补）。这看似是「把『我说了我做到了』
+    # 再检查一遍」的自欺型闸门，但它的另一面才是关键：
+    # **可达产物变成不可达时必须立刻判红**。此前只查内部一致性，
+    # 于是「5 个产物全部不可达」这种最坏状态反而是自洽的、判绿。
+    # 桥接层是研究层对 agent 可见的唯一通路，因此**每个研究层产物
+    # 都必须可达**（由 mcp.js 的桥接工具统一透传），否则研究资产
+    # 又变回「算了但没人看得到」。
+    for r in (rg.get('reachability') or []):
+        if not r.get('reachable'):
+            errs.append('%s 在产品面零引用——研究结论对 agent/user 不可见。'
+                        '本层登记的 %d 个产物必须全部可达（桥接工具为统一入口）'
+                        % (r.get('artifact'), total))
+    # 维度集必须已登记（断层性质判据）
+    tax = rg.get('taxonomy') or {}
+    for k in ('shared_dimensions', 'product_only_dimensions', 'research_only_axes'):
+        if k not in tax:
+            errs.append('taxonomy 缺 %s（维度集未登记，断层性质变化不会被发现）' % k)
+    if not (rg.get('decision_options') or []):
+        errs.append('decision_options 为空——断层已量化但无处可议，'
+                    '会被读成「已修复」而实际未处理')
+    # 两套引擎指纹必须都解析到
+    fps = rg.get('engine_fingerprints') or {}
+    for eng, key in (('product_js', 'dimensions'), ('research_py', 'axes')):
+        if not (fps.get(eng) or {}).get(key):
+            errs.append('%s 的 %s 解析为空——引擎结构可能已变' % (eng, key))
+    return errs
+
+
 def _cohort_errors(cf):
     """cohort_feasibility 产物的纯函数判据。"""
     errs = []
@@ -1506,6 +1608,9 @@ GATES = [
     # 本层特有守卫是**口径守卫**——它输出的是诊断性结论，只由少量样本支撑，
     # 变异「把假说改成断言」必须判红。被过度声称的诊断比没有诊断更坏。
     ('共装前沿（L1/L2/L3 分解 + 口径守卫 + 7 变异）', gate_compose_frontier),
+    # 2026-10-04 新增：研究层↔产品面可达性。守「研究做了但用户触不到」这类
+    # 故障——它不报错、闸门全绿，只让研究资产对用户不可见。
+    ('研究层可达性（产物引用 + 桥接工具接线 + 维度登记）', gate_reachability_gap),
     # 2026-09-24 新增：pipeline 框架（算子+DAG 骨架 + gap_classification 样板）。
     # 这是 GOAI 报告里识别的"缺 20%"——用算子/DAG 显式建模，把手写脚本拆成
     # 纯函数算子。骨架本身零依赖 stdlib，样板与旧脚本产出必须逐字段等价
