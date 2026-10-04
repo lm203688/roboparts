@@ -20,7 +20,11 @@
         "semantic_search",
         "get_standard_audit",
         "review_compatibility",
-        "lint_urdf"
+        "lint_urdf",
+        "explain_compose_frontier",
+        "explain_evidence_cohort",
+        "explain_evidence_mdv",
+        "explain_connector_types"
       ],
       "documentation": "https://roboparts.cc/mcp-guide",
       "provider": {
