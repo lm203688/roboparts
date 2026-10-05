@@ -1079,6 +1079,84 @@ def _reachability_errors(rg):
     return errs
 
 
+def gate_open_vla_and_behavior():
+    """绑定层 + 行为层闸门（2026-10-05 新增）。
+
+    守三件容易过度声称的事：
+      ① 绑定只指向**真实存在**的实体，且**只绑开源 VLA**
+         —— 给闭源编造硬件绑定会污染 data_quality
+      ② 绑定强度**跨字段自洽**：`validated` 必须有具体本体
+         （只查 strength 在允许集合内 ⇒ 改成 validated 照样过闸）
+      ③ 行为证据**必须有对照组**、**sim/real 严格分列**、出处一手
+         —— 孤证可能是 cherry-pick；仿真冒充真机是过度声称
+
+    另挂 verify_open_vla_and_behavior.py 的阴阳 + 9 变异。
+    """
+    run_sub('开源 VLA 绑定（fail-fast 实体存在性 + 出处修正）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_open_vla_binding.py')])
+    run_sub('行为证据层（fail-fast 对照组 + sim/real 分列）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_behavior_evidence.py')])
+    run_sub('provenance 重建（层状态现读行为证据，防链/层口径分叉）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_provenance.py')])
+    p_ov = os.path.join(ROOT, 'api', 'open_vla_binding.json')
+    p_bh = os.path.join(ROOT, 'api', 'behavior_evidence.json')
+    for p in (p_ov, p_bh):
+        if not os.path.exists(p):
+            bad('绑定/行为产物', '%s 缺失' % os.path.basename(p))
+            return
+    with open(p_ov, encoding='utf-8') as f:
+        ov = json.load(f)
+    with open(p_bh, encoding='utf-8') as f:
+        bh = json.load(f)
+    ents = {}
+    ep = os.path.join(ROOT, 'api', 'entities.json')
+    if os.path.exists(ep):
+        with open(ep, encoding='utf-8') as f:
+            ents = json.load(f)
+    rm = {}
+    rp = os.path.join(ROOT, 'api', 'robot_ai_models.json')
+    if os.path.exists(rp):
+        with open(rp, encoding='utf-8') as f:
+            rm = json.load(f)
+    errs = _open_vla_errors(ov, bh, ents, rm)
+    if errs:
+        bad('绑定/行为层', '；'.join(errs[:4]))
+    else:
+        s1, s2 = ov['summary'], bh['summary']
+        ok('开源VLA绑定 + 行为证据',
+           '绑定 %d｜阻塞 %d｜搜索链接残留 %d｜行为 %d 条（真机有值 %d / 仿真 %d / null %d）'
+           % (s1['bound_now'], s1['bound_blocked_missing_body'],
+              s1['source_url_still_search_link'], s2['records'],
+              s2['real_with_value'], s2['sim_records'], s2['null_value_records']))
+    # 跨层不变量：behavior 层状态必须与链的 L4 判据一致
+    pp = os.path.join(ROOT, 'api', 'provenance.json')
+    if os.path.exists(pp) and bh.get('summary', {}).get('records'):
+        with open(pp, encoding='utf-8') as f:
+            pv = json.load(f)
+        li = (pv.get('layer_inventory') or {}).get('behavior') or {}
+        l4 = next((l for l in (pv.get('chains') or [{}])[0].get('links', [])
+                   if l.get('from') == 'policy'), None)
+        if li.get('available') == 'declared_empty' and l4 and l4.get('satisfied'):
+            bad('链/层口径一致', 'behavior 层声明为空但 policy→behavior 判据已满足 '
+                '—— **链说有、层说无**（实测踩过：层状态曾硬编码不现读）')
+        else:
+            ok('链/层口径一致', 'behavior 层 available=%s，policy→behavior satisfied=%s'
+               % (li.get('available'), (l4 or {}).get('satisfied')))
+    run_sub('绑定/行为自证（阴阳 + 9 变异 + 跨字段自洽 + sim/real 现算）',
+            [sys.executable, os.path.join(ROOT, 'scripts',
+                                          'verify_open_vla_and_behavior.py')],
+            timeout=600)
+
+
+def _open_vla_errors(ov, bh, ents, rm):
+    import importlib
+    try:
+        v = importlib.import_module('verify_open_vla_and_behavior')
+    except ImportError:
+        return ['verify_open_vla_and_behavior 不可导入——判据失去自证能力']
+    return v._errors(ov, bh, ents, rm)
+
+
 def gate_co_mount():
     """共装关系闸门（2026-10-05 新增）——守「第三种关系类型」不被悄悄退化。
 
@@ -1754,6 +1832,10 @@ GATES = [
     # 2026-10-05 新增：共装关系（第三种关系类型）。守它不被悄悄退化回二段互插，
     # 并强制自述未建模范畴——co_mount 覆盖范围很窄，过度声称风险高。
     ('共装关系（三段结构 + port_exhausted + 宿主取证 + 11 变异）', gate_co_mount),
+    # 2026-10-05 新增：绑定层 + 行为层。守「不编造绑定」「不收孤证」
+    # 「仿真不冒充真机」——三者都是过度声称的高发区。
+    ('开源VLA绑定 + 行为证据（实体存在性 + 强度自洽 + 对照组 + 9 变异）',
+     gate_open_vla_and_behavior),
     # 2026-09-24 新增：pipeline 框架（算子+DAG 骨架 + gap_classification 样板）。
     # 这是 GOAI 报告里识别的"缺 20%"——用算子/DAG 显式建模，把手写脚本拆成
     # 纯函数算子。骨架本身零依赖 stdlib，样板与旧脚本产出必须逐字段等价
