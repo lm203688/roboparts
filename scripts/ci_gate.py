@@ -1079,6 +1079,63 @@ def _reachability_errors(rg):
     return errs
 
 
+def gate_co_mount():
+    """共装关系闸门（2026-10-05 新增）——守「第三种关系类型」不被悄悄退化。
+
+    本项目此前只有**一种**关系：peer-to-peer（二段互插）。
+    体检发现 cobot EOAT 的真实工程关系是**共装**（三段 A↔宿主↔B），
+    两种关系不可互化 ⇒ 表现为「composed 恒为 0」。
+
+    本闸门守四件事：
+      ① 关系类型必须自述为三段（`structure=three_segment_via_host`）
+         —— 逐字段判据，不是「全文里有没有 host」那种形同虚设的守卫
+      ② `port_exhausted` 状态必须在场 —— 它是 co-mount **独有**的工程约束，
+         缺它就退化成二段关系
+      ③ 宿主侧一手取证完整（tool_flange 必须是形态图端口类型 id，非自由文本；
+         tool_io_ports 未取证时必须登记原因）
+      ④ **口径守卫**：必须自述未建模范畴、端口缺口、判定粒度上限、
+         且不改写 compose_semantics 的 composed
+         —— **被过度声称的诊断比没有诊断更坏**
+    另挂 verify_co_mount.py 的阴阳 + 11 变异 + 引擎行为验证。
+    """
+    run_sub('共装层生成（fail-fast 宿主取证校验 + 字段口径守恒）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_co_mount.py')])
+    p_cm = os.path.join(ROOT, 'api', 'co_mount.json')
+    p_ts = os.path.join(ROOT, 'api', 'robot_tool_side.json')
+    for p in (p_cm, p_ts):
+        if not os.path.exists(p):
+            bad('共装产物', '%s 缺失' % os.path.basename(p))
+            return
+    with open(p_cm, encoding='utf-8') as f:
+        cm = json.load(f)
+    with open(p_ts, encoding='utf-8') as f:
+        ts = json.load(f)
+    errs = _co_mount_errors(cm, ts)
+    if errs:
+        bad('共装关系', '；'.join(errs[:4]))
+    else:
+        s = cm['summary']
+        ok('共装关系（三段 A↔宿主↔B）',
+           '宿主 %d｜器件 %d｜单件 %s｜双件 %s'
+           % (s['hosts'], s['devices'], s['single_mount'],
+              s['pair_verdict_histogram']))
+    run_sub('共装自证（阴阳 + 引擎行为 + 11 变异 + 口径守卫）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'verify_co_mount.py')],
+            timeout=600)
+
+
+def _co_mount_errors(cm, ts):
+    """共装层判据（复用 verify_co_mount._errors，同源避免两份实现漂移）。"""
+    import importlib
+    try:
+        v = importlib.import_module('verify_co_mount')
+    except ImportError:
+        v = None
+    if v is not None:
+        return v._errors(cm, ts)
+    return ['verify_co_mount 不可导入——共装判据失去自证能力']
+
+
 def gate_research_progress():
     """核心目标完成度判据闸门（2026-10-04 新增）。
 
@@ -1122,7 +1179,9 @@ def gate_research_progress():
               (sc.get('naive_dimension_scores') or {}).get('body'),
               (sc.get('gated_dimension_scores') or {}).get('body'),
               next((v for v in (sc.get('gate_explanation') or {}).values()
-                    if '门控生效' in str(v)), '无门控')[:40]))
+                    # startswith 而非 in：「门控**未生效**」含「门控生效」子串，
+                    # 用 in 会把未生效误判成已生效（与 verify 同源缺陷，已同修）
+                    if str(v).lstrip().startswith('门控生效')), '无门控')[:40]))
     run_sub('完成度自证（口径 + 权重可质疑 + 门控现算 + 敏感性 + 8 变异）',
             [sys.executable, os.path.join(ROOT, 'scripts', 'verify_research_progress.py')],
             timeout=600)
@@ -1692,6 +1751,9 @@ GATES = [
     # 2026-10-04 新增：核心目标完成度判据。守「百分比不是拍脑袋出来的」——
     # 分项带口径、权重可质疑、门控已现算、且对核心目标敏感。
     ('核心目标完成度（口径 + 门控现算 + 敏感性 + 8 变异）', gate_research_progress),
+    # 2026-10-05 新增：共装关系（第三种关系类型）。守它不被悄悄退化回二段互插，
+    # 并强制自述未建模范畴——co_mount 覆盖范围很窄，过度声称风险高。
+    ('共装关系（三段结构 + port_exhausted + 宿主取证 + 11 变异）', gate_co_mount),
     # 2026-09-24 新增：pipeline 框架（算子+DAG 骨架 + gap_classification 样板）。
     # 这是 GOAI 报告里识别的"缺 20%"——用算子/DAG 显式建模，把手写脚本拆成
     # 纯函数算子。骨架本身零依赖 stdlib，样板与旧脚本产出必须逐字段等价
