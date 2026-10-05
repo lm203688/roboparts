@@ -1,0 +1,101 @@
+{
+ "meta": {
+  "title": "宿主工具侧接口（co-mount 三段关系的中间节点）",
+  "title_zh": "宿主工具侧接口取证层",
+  "why": "co_mount 是三段关系（A↔宿主↔B），必须有宿主侧数据。此前 865 个实体里**没有任何一条声明宿主侧工具接口**——category=platforms 的 105 条全是零件本体法兰，既无工具 I/O 位数也无连接器型号。这就是「能否同时装夹爪 A 和传感器 B」此前**无法回答**的根因：不是缺零件数据，是**模型里没有宿主这个角色**。",
+  "caliber": "本层是**研究层口径**（co_mount_engine/v1），与 check_compatibility 的四维 protocol/electrical/mechanical/software **不可混用**。前者判「三段共装」，后者判「二段互插」。",
+  "engine": "co_mount_engine/v1",
+  "hosts": 3,
+  "hosts_with_port_count": 2,
+  "evidence_gaps": [
+   "UR30（HUB-038）工具法兰是 ISO-9409-1-80-6-M8，与 A50 族不同型 ⇒ 与本库 EOAT 机械段 incompatible，故未收录。",
+   "FR3 的 tool_io_ports 未取证 ⇒ 判据走 unknown（刻意不填）。"
+  ]
+ },
+ "hosts": [
+  {
+   "tool_flange": "MECH:ISO9409-1-A50-4-M6",
+   "tool_io_ports": 1,
+   "tool_io_connector": "M8 8-pin",
+   "tool_io_pins": 8,
+   "tool_io_signals": [
+    "24V",
+    "GND",
+    "2x DO",
+    "2x DI",
+    "2x AI/RS485"
+   ],
+   "signal_direction": "bidirectional",
+   "mountable_tools": "gripper / sensor（任意 24V Tool I/O 器件）",
+   "source_url": "https://www.universal-robots.com/tw/developer/hardware-and-motion/electrical-interfaces-tool-connector/",
+   "source": "UR 官方 Tool Connector 页逐型号表（UR3e/UR5e/UR10e/UR16e/UR20/UR30 共用同一 8-pin 工具连接器规格）+ UR3e datasheet Tool Flange EN ISO-9409-1-50-4-M6",
+   "source_tier": "A",
+   "confidence": 0.95,
+   "key_facts": [
+    "UR 官方页面把 UR3e 与 UR5e 等**并列在同一张工具连接器规格表**下，字段值完全相同 ⇒ 同源取证，不是分别推断。"
+   ],
+   "id": "HUB-030",
+   "name": "UR3e",
+   "manufacturer": "Universal Robots",
+   "entity_source_tier": "A"
+  },
+  {
+   "tool_flange": "MECH:ISO9409-1-A50-4-M6",
+   "tool_io_ports": 1,
+   "tool_io_connector": "M8 8-pin",
+   "tool_io_pins": 8,
+   "tool_io_signals": [
+    "24V",
+    "GND",
+    "2x DO",
+    "2x DI",
+    "2x AI/RS485"
+   ],
+   "signal_direction": "bidirectional",
+   "mountable_tools": "gripper / sensor（任意 24V Tool I/O 器件）",
+   "source_url": "https://www.universal-robots.com/tw/developer/hardware-and-motion/electrical-interfaces-tool-connector/",
+   "source": "UR 官方开发者文档「Tool Connector」页：明写 *eight-pinned* male connector on the tool flange；UR5e User Manual §6.8 逐针表（GND / POWER / TO0 / TO1 / TI0 / TI1 / AI2-RS485+ / AI3-RS485-）+ UR5e e-Series datasheet「Tool flange EN ISO-9409-1-50-4-M6」",
+   "source_tier": "A",
+   "confidence": 0.95,
+   "key_facts": [
+    "工具侧是**单个** 8-pin M8 连接器 ⇒ 工具侧位=1，不是 8（8 是**针数**，位=连接器数）。把针数当位数会让 co_mount 误判「可同时挂 8 个工具」。",
+    "逐针表已公开（power + 2 DO + 2 DI + 2 AI/RS485）⇒ 可判定「哪些器件的电气需求能被满足」，而不只是「有几个口」。",
+    "Tool Flange = EN ISO-9409-1-50-4-M6 ⇒ 与库内 16 个 L2 节点的MECH:ISO9409-1-A50-4-M6 **同型** ⇒ 机械段 identity 成立。"
+   ],
+   "id": "HUB-031",
+   "name": "UR5e",
+   "manufacturer": "Universal Robots",
+   "entity_source_tier": "A"
+  },
+  {
+   "tool_flange": "MECH:ISO9409-1-A50-4-M6",
+   "tool_io_ports": null,
+   "tool_io_connector": "end effector connector（datasheet 未给型号/针数）",
+   "tool_io_pins": null,
+   "tool_io_signals": [
+    "2x DI",
+    "2x DO (24V, isolated, EN 61131-2 type 3)"
+   ],
+   "signal_direction": "bidirectional",
+   "mountable_tools": "datasheet 仅称 connector for end effector",
+   "source_url": "https://static.generation-robots.com/media/franka-robotics-fr3-datasheet.pdf",
+   "source": "FRANKA RESEARCH 3 datasheet：「Mounting flange DIN ISO 9409-1-A50」+「connector for end effector」+「hardware prepared for: 2x DI & 2x DO (24V, isolated)」",
+   "source_tier": "B",
+   "confidence": 0.7,
+   "key_facts": [
+    "**tool_io_ports = null 是刻意的**：datasheet 只说「有一个终端执行器连接器」，未说明位数量与连接器型号。按纪律 1，宁可判 unknown 也不填「1」。",
+    "2x DI & 2x DO 24V isolated ⇒ 信号能力已知，但这**不等于**位数为 1——是「接口电气规格」而非「物理位数」。"
+   ],
+   "id": "SUPERDEX-fr3",
+   "name": "SuperDex Franka FR3",
+   "manufacturer": "Franka Emika",
+   "entity_source_tier": "A"
+  }
+ ],
+ "coverage": {
+  "hosts": 3,
+  "tool_io_ports_verified": 2,
+  "tool_io_ports_null": 1,
+  "note": "null 表示**刻意不填**（一手数据未公开）而非漏填；判据据此走 unknown。"
+ }
+}
