@@ -252,7 +252,8 @@ BUSINESS_TOOLS = ('search_components', 'get_component_detail',
                   # 与 check_compatibility 同属「回答用户技术问题」一类。
                   'explain_compose_frontier',
                   'explain_evidence_cohort', 'explain_evidence_mdv',
-                  'explain_connector_types', 'get_research_progress')
+                  'explain_connector_types', 'get_research_progress',
+                  'check_co_mount', 'get_robot_tool_side')
 
 
 def mcp_report(total, n):
