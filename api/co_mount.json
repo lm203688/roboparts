@@ -1,0 +1,4846 @@
+{
+ "meta": {
+  "title": "共装裁决（co-mount，第三种关系类型）",
+  "title_zh": "共装裁决产物：能否同时把 A 和 B 装到同一台机器人上",
+  "caliber": "co_mount_engine/v1（研究层）。判据来自 api/robot_tool_side.json，与 check_compatibility 的四维**不可混用**。",
+  "engine": "co_mount_engine/v1",
+  "relation_type": "co_mount（三段：A↔宿主↔B）",
+  "honest_limits": [
+   "**只覆盖同一宿主工具侧共装**。跨本体（换机器人）、转接件链路、多工具同时挂载**未建模**——那属 D5 范畴论路线的多年期范畴，本层不声称解决。",
+   "**tool_io_ports 是一手取证的整数**（UR=1）。未公开者（如 FR3）留 null ⇒ 判据走 unknown，**不按型号名推断**。",
+   "**共装成功 ≠ 集成成功**。机械可装 + 端口够 + 信号互补，只说明「物理与信号层面允许共存」；实际集成还要看控制器通道分配、碰撞检测、厂商安全限制——**本层不覆盖**。",
+   "**pinout 层未参与共装判定**。工具侧逐针表已公开（UR: GND/POWER/TO0/TO1/TI0/TI1/AI2/AI3），但要判「A 的电气需求能否被工具侧满足」需逐针对照，当前只判位数与信号类。**这是已知的判定粒度上限，不是已完成。**",
+   "**单向模型缺陷：工具侧按「单连接器」建模。**本层把 host.tool_io_ports 显式建模为整数位计数，而 UR/FR3 在取证范围内确为单 8-pin 连接器（位=1）；但**本体若提供多位工具接口（如双工位法兰盘），本层能正确判位>1，而取证表当前无此类实例**（已由 verify 判据强制 tool_io_ports>1 需重新核实位数定义）。**换本体时这条假设必须重新审视**——「位」是物理连接器数，与「针」是每连接器的针数，二者不可混用。",
+   "**本层与 compose_semantics 的 composed 互不改写**。peer-to-peer 的 composed 仍为 0（那是另一个关系类型的答案）。"
+  ],
+  "why_this_layer": "compose_engine 只有 peer-to-peer（二段互插）一种关系，而 cobot EOAT 的真实工程关系是共装。实测（api/compose_frontier.json）：L2 的 63 对机械 63/63、信号 63/63 全通过，唯一阻点 electrical 判的是「两器件能否互插」；而两侧均取证的配对里判出结果的**全部 incompatible、0 compatible**（EOAT 器件按设计各占机器人侧一个电气端口）。⇒ 不新增关系类型，补再多电气声明也不会让 composed>0。",
+  "what_this_proves": "本层**不声称解决一般关系类型问题**（那属 D5 多年期范畴论路线）。只覆盖「同一宿主工具侧共装」一种关系，并给出一个此前无法回答的问题的机读答案：「这台机器人能否同时装夹爪 A 和传感器 B」。"
+ },
+ "summary": {
+  "hosts": 3,
+  "devices": 16,
+  "pair_evaluations": 360,
+  "pair_verdict_histogram": {
+   "type_error": 171,
+   "port_exhausted": 126,
+   "unknown": 63
+  },
+  "by_host": {
+   "HUB-030": {
+    "type_error": 57,
+    "port_exhausted": 63
+   },
+   "HUB-031": {
+    "type_error": 57,
+    "port_exhausted": 63
+   },
+   "SUPERDEX-fr3": {
+    "type_error": 57,
+    "unknown": 63
+   }
+  },
+  "single_mount": {
+   "mountable": 32,
+   "unknown": 16
+  },
+  "single_mount_by_host": {
+   "HUB-030": {
+    "mountable": 16
+   },
+   "HUB-031": {
+    "mountable": 16
+   },
+   "SUPERDEX-fr3": {
+    "unknown": 16
+   }
+  },
+  "counting_note": "**单件与双件分别计数**（single_* vs by_host/hist）。单件问「这个器件能不能装上去」，双件问「两个能不能同时装」——两个不同的问题，混算会让守恒判据假红（实测混算时宿主合计 136 = 16+120，而双件只有 120）。",
+  "stage_blockers": {
+   "port_budget=exhausted": 240,
+   "signal_complementary=not_complementary": 171,
+   "port_budget=unknown": 120
+  },
+  "l2_device_ids": [
+   "ACT-028",
+   "GRIP-001",
+   "GRIP-002",
+   "GRIP-006",
+   "GRIP-007",
+   "GRIP-009",
+   "GRIP-012",
+   "GRIP-014",
+   "SENS-047",
+   "SENS-049",
+   "SENS-31",
+   "SENS-37",
+   "SENS-852",
+   "SENS-854",
+   "SENS-855",
+   "SUPERDEX-2f-85"
+  ]
+ },
+ "relation_semantics": {
+  "peer_to_peer": {
+   "question": "A 能不能插进 B？",
+   "verdicts": [
+    "composed",
+    "type_error",
+    "unknown"
+   ],
+   "engine": "compose_engine"
+  },
+  "co_mount": {
+   "question": "A 和 B 能不能**同时**装到同一台机器人的工具侧？",
+   "verdicts": [
+    "mountable",
+    "port_exhausted",
+    "type_error",
+    "unknown"
+   ],
+   "engine": "co_mount_engine",
+   "structure": "three_segment_via_host",
+   "structure_note": "A 的法兰 → **宿主工具法兰** ← B 的法兰；A 的电气 → **宿主工具 I/O 位** ← B 的电气。中间节点（宿主）是判定的必需项，不是可选项。",
+   "distinct_stages": [
+    "mount_fit：器件法兰 **≡** 宿主工具法兰（同型，不是互插）",
+    "port_budget：**宿主资源有限**——UR 工具侧只有 1 个 8-pin 位，共装第二个器件即耗尽（这是 peer-to-peer 不存在的状态）",
+    "signal_complementary：共装要求一方输出、另一方感知"
+   ],
+   "new_verdict_port_exhausted": "**工程约束**（装不下，需换本体或转接），与 unknown（证据缺口）严格区分。把两者混为一谈就是把「不知道」伪装成「不行」。"
+  }
+ },
+ "single_mount": {
+  "HUB-030::ACT-028": {
+   "host": "HUB-030",
+   "device": "ACT-028",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::GRIP-001": {
+   "host": "HUB-030",
+   "device": "GRIP-001",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::GRIP-002": {
+   "host": "HUB-030",
+   "device": "GRIP-002",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::GRIP-006": {
+   "host": "HUB-030",
+   "device": "GRIP-006",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::GRIP-007": {
+   "host": "HUB-030",
+   "device": "GRIP-007",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::GRIP-009": {
+   "host": "HUB-030",
+   "device": "GRIP-009",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::GRIP-012": {
+   "host": "HUB-030",
+   "device": "GRIP-012",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::GRIP-014": {
+   "host": "HUB-030",
+   "device": "GRIP-014",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::SENS-047": {
+   "host": "HUB-030",
+   "device": "SENS-047",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::SENS-049": {
+   "host": "HUB-030",
+   "device": "SENS-049",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::SENS-31": {
+   "host": "HUB-030",
+   "device": "SENS-31",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::SENS-37": {
+   "host": "HUB-030",
+   "device": "SENS-37",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::SENS-852": {
+   "host": "HUB-030",
+   "device": "SENS-852",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::SENS-854": {
+   "host": "HUB-030",
+   "device": "SENS-854",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::SENS-855": {
+   "host": "HUB-030",
+   "device": "SENS-855",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-030::SUPERDEX-2f-85": {
+   "host": "HUB-030",
+   "device": "SUPERDEX-2f-85",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::ACT-028": {
+   "host": "HUB-031",
+   "device": "ACT-028",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::GRIP-001": {
+   "host": "HUB-031",
+   "device": "GRIP-001",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::GRIP-002": {
+   "host": "HUB-031",
+   "device": "GRIP-002",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::GRIP-006": {
+   "host": "HUB-031",
+   "device": "GRIP-006",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::GRIP-007": {
+   "host": "HUB-031",
+   "device": "GRIP-007",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::GRIP-009": {
+   "host": "HUB-031",
+   "device": "GRIP-009",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::GRIP-012": {
+   "host": "HUB-031",
+   "device": "GRIP-012",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::GRIP-014": {
+   "host": "HUB-031",
+   "device": "GRIP-014",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::SENS-047": {
+   "host": "HUB-031",
+   "device": "SENS-047",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::SENS-049": {
+   "host": "HUB-031",
+   "device": "SENS-049",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::SENS-31": {
+   "host": "HUB-031",
+   "device": "SENS-31",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::SENS-37": {
+   "host": "HUB-031",
+   "device": "SENS-37",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::SENS-852": {
+   "host": "HUB-031",
+   "device": "SENS-852",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::SENS-854": {
+   "host": "HUB-031",
+   "device": "SENS-854",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::SENS-855": {
+   "host": "HUB-031",
+   "device": "SENS-855",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "HUB-031::SUPERDEX-2f-85": {
+   "host": "HUB-031",
+   "device": "SUPERDEX-2f-85",
+   "verdict": "mountable",
+   "mount_fit": "fit",
+   "port_budget": "fit",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::ACT-028": {
+   "host": "SUPERDEX-fr3",
+   "device": "ACT-028",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::GRIP-001": {
+   "host": "SUPERDEX-fr3",
+   "device": "GRIP-001",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::GRIP-002": {
+   "host": "SUPERDEX-fr3",
+   "device": "GRIP-002",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::GRIP-006": {
+   "host": "SUPERDEX-fr3",
+   "device": "GRIP-006",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::GRIP-007": {
+   "host": "SUPERDEX-fr3",
+   "device": "GRIP-007",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::GRIP-009": {
+   "host": "SUPERDEX-fr3",
+   "device": "GRIP-009",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::GRIP-012": {
+   "host": "SUPERDEX-fr3",
+   "device": "GRIP-012",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::GRIP-014": {
+   "host": "SUPERDEX-fr3",
+   "device": "GRIP-014",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::SENS-047": {
+   "host": "SUPERDEX-fr3",
+   "device": "SENS-047",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::SENS-049": {
+   "host": "SUPERDEX-fr3",
+   "device": "SENS-049",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::SENS-31": {
+   "host": "SUPERDEX-fr3",
+   "device": "SENS-31",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::SENS-37": {
+   "host": "SUPERDEX-fr3",
+   "device": "SENS-37",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::SENS-852": {
+   "host": "SUPERDEX-fr3",
+   "device": "SENS-852",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::SENS-854": {
+   "host": "SUPERDEX-fr3",
+   "device": "SENS-854",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::SENS-855": {
+   "host": "SUPERDEX-fr3",
+   "device": "SENS-855",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  },
+  "SUPERDEX-fr3::SUPERDEX-2f-85": {
+   "host": "SUPERDEX-fr3",
+   "device": "SUPERDEX-2f-85",
+   "verdict": "unknown",
+   "mount_fit": "fit",
+   "port_budget": "unknown",
+   "reason": "器件机械端口与宿主工具法兰同型（MECH:ISO9409-1-A50-4-M6）—— ISO 9409-1 界面可重复装配，同型不冲突"
+  }
+ },
+ "pair_verdicts": [
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "GRIP-001",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "GRIP-002",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "GRIP-006",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "GRIP-007",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "GRIP-002",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "GRIP-006",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "GRIP-007",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-001",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-002",
+   "b": "GRIP-006",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-002",
+   "b": "GRIP-007",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-002",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-002",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-002",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-002",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-002",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-002",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-002",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-002",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-002",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-002",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-002",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-006",
+   "b": "GRIP-007",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-006",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-006",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-006",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-006",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-006",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-006",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-006",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-006",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-006",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-006",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-006",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-007",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-007",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-007",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-007",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-007",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-007",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-007",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-007",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-007",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-007",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-007",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-009",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-009",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-009",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-009",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-009",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-009",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-009",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-009",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-009",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-009",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-012",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-012",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-012",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-012",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-012",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-012",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-012",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-012",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-012",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-014",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-014",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-014",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-014",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-014",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-014",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-014",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "GRIP-014",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-047",
+   "b": "SENS-049",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-047",
+   "b": "SENS-31",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-047",
+   "b": "SENS-37",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-047",
+   "b": "SENS-852",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-047",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-047",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-047",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-049",
+   "b": "SENS-31",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-049",
+   "b": "SENS-37",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-049",
+   "b": "SENS-852",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-049",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-049",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-049",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-31",
+   "b": "SENS-37",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-31",
+   "b": "SENS-852",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-31",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-31",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-31",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-37",
+   "b": "SENS-852",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-37",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-37",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-37",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-852",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-852",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-852",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-854",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-854",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-030",
+   "a": "SENS-855",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "GRIP-001",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "GRIP-002",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "GRIP-006",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "GRIP-007",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "GRIP-002",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "GRIP-006",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "GRIP-007",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-001",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-002",
+   "b": "GRIP-006",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-002",
+   "b": "GRIP-007",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-002",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-002",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-002",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-002",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-002",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-002",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-002",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-002",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-002",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-002",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-002",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-006",
+   "b": "GRIP-007",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-006",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-006",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-006",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-006",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-006",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-006",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-006",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-006",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-006",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-006",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-006",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-007",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-007",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-007",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-007",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-007",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-007",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-007",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-007",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-007",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-007",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-007",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-009",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-009",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-009",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-009",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-009",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-009",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-009",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-009",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-009",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-009",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-012",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-012",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-012",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-012",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-012",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-012",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-012",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-012",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-012",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-014",
+   "b": "SENS-047",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-014",
+   "b": "SENS-049",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-014",
+   "b": "SENS-31",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-014",
+   "b": "SENS-37",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-014",
+   "b": "SENS-852",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-014",
+   "b": "SENS-854",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-014",
+   "b": "SENS-855",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "GRIP-014",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-047",
+   "b": "SENS-049",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-047",
+   "b": "SENS-31",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-047",
+   "b": "SENS-37",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-047",
+   "b": "SENS-852",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-047",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-047",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-047",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-049",
+   "b": "SENS-31",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-049",
+   "b": "SENS-37",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-049",
+   "b": "SENS-852",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-049",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-049",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-049",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-31",
+   "b": "SENS-37",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-31",
+   "b": "SENS-852",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-31",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-31",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-31",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-37",
+   "b": "SENS-852",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-37",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-37",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-37",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-852",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-852",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-852",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-854",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-854",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "HUB-031",
+   "a": "SENS-855",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "port_exhausted",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "exhausted",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "GRIP-001",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "GRIP-002",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "GRIP-006",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "GRIP-007",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "SENS-047",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "SENS-049",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "SENS-31",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "SENS-37",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "SENS-852",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "SENS-854",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "SENS-855",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "ACT-028",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "GRIP-002",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "GRIP-006",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "GRIP-007",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "SENS-047",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "SENS-049",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "SENS-31",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "SENS-37",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "SENS-852",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "SENS-854",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "SENS-855",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-001",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-002",
+   "b": "GRIP-006",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-002",
+   "b": "GRIP-007",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-002",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-002",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-002",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-002",
+   "b": "SENS-047",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-002",
+   "b": "SENS-049",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-002",
+   "b": "SENS-31",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-002",
+   "b": "SENS-37",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-002",
+   "b": "SENS-852",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-002",
+   "b": "SENS-854",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-002",
+   "b": "SENS-855",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-002",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-006",
+   "b": "GRIP-007",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-006",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-006",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-006",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-006",
+   "b": "SENS-047",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-006",
+   "b": "SENS-049",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-006",
+   "b": "SENS-31",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-006",
+   "b": "SENS-37",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-006",
+   "b": "SENS-852",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-006",
+   "b": "SENS-854",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-006",
+   "b": "SENS-855",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-006",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-007",
+   "b": "GRIP-009",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-007",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-007",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-007",
+   "b": "SENS-047",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-007",
+   "b": "SENS-049",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-007",
+   "b": "SENS-31",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-007",
+   "b": "SENS-37",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-007",
+   "b": "SENS-852",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-007",
+   "b": "SENS-854",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-007",
+   "b": "SENS-855",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-007",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-009",
+   "b": "GRIP-012",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-009",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-009",
+   "b": "SENS-047",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-009",
+   "b": "SENS-049",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-009",
+   "b": "SENS-31",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-009",
+   "b": "SENS-37",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-009",
+   "b": "SENS-852",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-009",
+   "b": "SENS-854",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-009",
+   "b": "SENS-855",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-009",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-012",
+   "b": "GRIP-014",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-012",
+   "b": "SENS-047",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-012",
+   "b": "SENS-049",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-012",
+   "b": "SENS-31",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-012",
+   "b": "SENS-37",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-012",
+   "b": "SENS-852",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-012",
+   "b": "SENS-854",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-012",
+   "b": "SENS-855",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-012",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-014",
+   "b": "SENS-047",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-014",
+   "b": "SENS-049",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-014",
+   "b": "SENS-31",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-014",
+   "b": "SENS-37",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-014",
+   "b": "SENS-852",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-014",
+   "b": "SENS-854",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-014",
+   "b": "SENS-855",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "GRIP-014",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-047",
+   "b": "SENS-049",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-047",
+   "b": "SENS-31",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-047",
+   "b": "SENS-37",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-047",
+   "b": "SENS-852",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-047",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-047",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-047",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-049",
+   "b": "SENS-31",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-049",
+   "b": "SENS-37",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-049",
+   "b": "SENS-852",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-049",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-049",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-049",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-31",
+   "b": "SENS-37",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-31",
+   "b": "SENS-852",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-31",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-31",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-31",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-37",
+   "b": "SENS-852",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-37",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-37",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-37",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-852",
+   "b": "SENS-854",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-852",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-852",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-854",
+   "b": "SENS-855",
+   "verdict": "type_error",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "not_complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-854",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  },
+  {
+   "host": "SUPERDEX-fr3",
+   "a": "SENS-855",
+   "b": "SUPERDEX-2f-85",
+   "verdict": "unknown",
+   "stage_verdicts": {
+    "mount_fit.a": "fit",
+    "mount_fit.b": "fit",
+    "port_budget": "unknown",
+    "signal_complementary": "complementary"
+   }
+  }
+ ],
+ "examples_mountable": [],
+ "examples_port_exhausted": [
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "SENS-047",
+   "port_budget": "宿主工具侧仅 1 位，已占 0，本次装 2 ⇒ 位数耗尽（工程约束：需转接/换本体，不是数据缺口）"
+  },
+  {
+   "host": "HUB-030",
+   "a": "ACT-028",
+   "b": "SENS-049",
+   "port_budget": "宿主工具侧仅 1 位，已占 0，本次装 2 ⇒ 位数耗尽（工程约束：需转接/换本体，不是数据缺口）"
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "SENS-047",
+   "port_budget": "宿主工具侧仅 1 位，已占 0，本次装 2 ⇒ 位数耗尽（工程约束：需转接/换本体，不是数据缺口）"
+  },
+  {
+   "host": "HUB-031",
+   "a": "ACT-028",
+   "b": "SENS-049",
+   "port_budget": "宿主工具侧仅 1 位，已占 0，本次装 2 ⇒ 位数耗尽（工程约束：需转接/换本体，不是数据缺口）"
+  }
+ ]
+}
