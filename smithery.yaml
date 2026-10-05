@@ -73,3 +73,7 @@ tools:
     description: "查询**共装**关系（第三种关系类型，三段 A↔宿主↔B）：某个机器人本体能否同时装下两个器件（典型问题：「这台 UR5e 能同时装夹爪和六轴力传感器吗」）。"
   - name: get_robot_tool_side
     description: "查询机器人本体的**工具侧接口取证**：工具法兰（ISO 9409-1 标号）、工具 I/O 位数、连接器型号与承载信号。"
+  - name: get_behavior_evidence
+    description: "查询**行为证据**：开源 VLA 在真机上的 benchmark 成功率（引用论文/官方报告，**非本仓自造日志**——本项目按锚点禁止造仿真器/训练栈）。"
+  - name: get_body_binding
+    description: "查询**开源 VLA → 机器人本体**的绑定及其强度分档。"
