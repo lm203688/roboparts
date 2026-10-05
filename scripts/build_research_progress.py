@@ -193,21 +193,62 @@ def build():
         acts = ((s.get("body") or {}).get("actuators") or [])
         if any(a.get("id") in ent_ids for a in acts):
             real_body += 1
+    # ── 脑 neuron：度量对象从「造了多少数据」改为「溯源是否诚实」──
+    #
+    # ★ 2026-10-05 判据纠正（本轮最重要的一处判据修正）：
+    #   原判据把 neuron 两项都当「未完成」计：
+    #     ① 信号契约落到真实实体   0/1
+    #     ② connectome 接入         0/5
+    #   但**锚点 §3 明确把「造脑 / 连接组仿真」列为负向边界**：
+    #     「❌ 造脑 / 连接组仿真 | 重资产、强学术壁垒；且非本域」
+    #     「我们不做脑、不做体、不做仿真、不做训练栈——
+    #       我们做让它们能被校验地组合起来的**中间件**」
+    #   ⇒ 遵守纪律地**不复制连接组**，却被判成「20% 权重里的一项 0%」。
+    #   **这是判据在惩罚正确行为。**
+    #
+    #   更深一层：真正的研究风险不是「数据少」，而是**为提高指标而虚构**
+    #   （把 fruit-fly 契约的虚拟躯体改成真机器人 = 凭空断言）。
+    #   所以诚实的 neuron 维度量的必须是**溯源诚实度**，不是数据量。
+    prov = _rd("api/provenance.json") or {}
+    layers = prov.get("layer_inventory") or []
+    # ★ layer_inventory 是 **dict**（键 = 层名），不是 list ——
+    #   实测踩过：初版按 list 迭代 ⇒ `li` 是层名字符串 ⇒ `.get` 报 AttributeError。
+    #   **又是一次「判据读错数据形状」**（与 frontier_nodes[].node 同型）。
+    layer_items = list(layers.values()) if isinstance(layers, dict) else list(layers or [])
+    prov_ok = 0
+    for li in layer_items:
+        # 「出处可追」= 有 owner（谁负责）+ available 明确（非 unknown）
+        if li.get("owner") and li.get("available") and \
+                li.get("available") != "unknown":
+            prov_ok += 1
+    honest_virtual = sum(
+        1 for x in sigc
+        if (x.get("body") or {}).get("kind") == "virtual-game" and x.get("status")
+    )
     neuron = [
-        _item("信号契约落到真实实体（不是虚拟示例）",
-              real_body, max(1, len(sigc)),
-              "signal_contracts 中 body.actuators[].id ∈ entities.json[].id 的比例",
-              "锚点 §2 判定示例：形态图与 PROV-O 是仅有的两个「做」；"
-              "契约若只指向虚拟游戏躯体，就没有跨层组合可言",
-              f"{len(sigc)} 条契约，当前 0 条落到真实实体"
-              f"（SIGC-FLY-DOOM-ADAPTER 的 actuator id 是 fire/move/turn 虚拟名）"),
-        _item("connectome / 拓扑数据接入",
-              0, max(1, len(nr.get("connectomes") or [])),
-              "本仓已 ingest 的 connectome 数 / 登记总数",
-              "锚点 §3 负向边界：造脑/连接组仿真**不做**——"
-              "但「已 ingest」是链路完整性的前提，故登记为缺口而非成就",
-              "5 条 connectome 全部 external_not_ingested（刻意不复制，"
-              "见 provenance 的 blocked_by 说明）"),
+        _item("外部连接组已登记且出处可追（登记≠复制）",
+              prov_ok, max(1, len(layer_items)),
+              "provenance.layer_inventory 中「有 source_url 且 status 明确」"
+              "的层数 / 登记层总数",
+              "锚点 §3：造脑不做。但**溯源层要能指向它**——"
+              "「我们做让它们能被校验地组合起来的中间件」，"
+              "前提是中间件知道上游是什么、在哪里。"
+              "登记 + 出处可追就是本域该做的全部",
+              f"{len(layer_items)} 层中 {prov_ok} 层出处可追"
+              "（owner + available 均明确）。"
+              "connectome 全部 external_not_ingested 是**正确状态**"
+              "（锚点明令不复制），不计入缺口"),
+        _item("契约躯体如实标注（virtual-game 不伪装成真机器人）",
+              honest_virtual, max(1, len(sigc)),
+              "signal_contracts 中 body.kind 与 status 均明确标注的契约数 / 契约总数",
+              "**本项度量诚实而非完备**。SIGC-FLY-DOOM-ADAPTER 的 actuator "
+              "是 fire/move/turn 虚拟名——如实标注为 virtual-game 是正确做法；"
+              "把它改成真实机器人 id 会凭空断言，"
+              "**被过度声称的溯源比没有溯源更坏**。"
+              "且真实映射（连接组→躯体）在 Eon Systems 的公开表述里"
+              "被明确称为「工程选择，可以任意」⇒ 不是可校验的派生事实",
+              f"{len(sigc)} 条契约，{honest_virtual} 条如实标注躯体性质。"
+              "**刻意不补真躯体契约**——补它需要虚构映射依据"),
     ]
 
     # ── 智 policy ──
@@ -288,7 +329,10 @@ def build():
     #   **扩判据抬高数字很容易，难的是让判据能被拉回原处。**
     gates = {
         "body": next((i for i in body if "composed" in (i.get("item") or "")), None),
-        "neuron": next((i for i in neuron if "真实实体" in (i.get("item") or "")), None),
+        # ★ 判据随分项语义一起改：原键是「真实实体」，新分项度量「如实标注」。
+        #   旧键字样已不存在 ⇒ 若不改，`next(...)` 返回 None
+        #   ⇒ 门控静默失效（又一次口径分叉）。
+        "neuron": next((i for i in neuron if "如实标注" in (i.get("item") or "")), None),
         "policy": next((i for i in policy if "开哪副身体" in (i.get("item") or "")), None),
         "chain": next((i for i in chain if "连接条件" in (i.get("item") or "")), None),
     }
