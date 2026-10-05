@@ -6,8 +6,8 @@
   "anchor": "docs/HEALTHCHECK_20261004.md §2",
   "generated_by": "scripts/build_reachability_gap.py",
   "truth_source": "functions/_lib/compat_engine.js（维度现算） + scripts/compose_engine.py（轴现算） + functions/ 全量静态引用扫描",
-  "generated_at": "2026-10-04T09:05:30+00:00",
-  "headline": "**0 / 5 个研究层产物在产品面（functions/，49 个源文件）零引用。**AI agent 实际调用的 `check_compatibility` 走 JS 引擎（四维），而三轴裁决、297 条类型级 type_compat、共装诊断、取证判据全部只存在于 Python 侧产物中，agent 触不到。",
+  "generated_at": "2026-10-05T02:57:21+00:00",
+  "headline": "**0 / 8 个研究层产物在产品面（functions/，49 个源文件）零引用。**AI agent 实际调用的 `check_compatibility` 走 JS 引擎（四维），而三轴裁决、297 条类型级 type_compat、共装诊断、取证判据全部只存在于 Python 侧产物中，agent 触不到。",
   "honest_limits": [
    "本层**不做裁决**。哪套引擎应成为产品面真相源是产品决策，不是本脚本能定的；本层只把断层量化到可讨论的程度。",
    "「可达性」按**静态引用**判定（functions/ 下是否出现该文件名）。若未来经 REST 代理等方式间接消费，本层会误报为不可达。",
@@ -119,12 +119,39 @@
    ],
    "reference_count": 1,
    "reachable": true
+  },
+  {
+   "artifact": "co_mount.json",
+   "conclusion_carried": "共装裁决：第三种关系类型（三段 A↔宿主↔B）",
+   "referenced_by": [
+    "functions\\mcp.js"
+   ],
+   "reference_count": 1,
+   "reachable": true
+  },
+  {
+   "artifact": "robot_tool_side.json",
+   "conclusion_carried": "宿主工具侧接口取证（法兰/位数/连接器）",
+   "referenced_by": [
+    "functions\\mcp.js"
+   ],
+   "reference_count": 1,
+   "reachable": true
+  },
+  {
+   "artifact": "research_progress.json",
+   "conclusion_carried": "核心目标完成度判据（门控 + 朴素双口径）",
+   "referenced_by": [
+    "functions\\mcp.js"
+   ],
+   "reference_count": 1,
+   "reachable": true
   }
  ],
  "reachability_summary": {
   "product_surface_files_scanned": 49,
-  "artifacts_total": 5,
-  "artifacts_reachable": 5,
+  "artifacts_total": 8,
+  "artifacts_reachable": 8,
   "artifacts_unreachable": 0,
   "unreachable_list": [],
   "caveat": "静态引用，下界（见 meta.honest_limits）"
