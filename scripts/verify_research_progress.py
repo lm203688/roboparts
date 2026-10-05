@@ -99,17 +99,53 @@ def _errors(rp, sink=None):
     # 门控的语义：核心判据 done==0 的维度，raw 必须为 0。
     sc = rp.get("scoring") or {}
     naive = sc.get("naive_dimension_scores") or {}
+    gexp = sc.get("gate_explanation") or {}
+    body_items = rp.get("dimensions", {}).get("body") or []
+
+    def _gated(dim):
+        """该维度是否处于「门控生效」状态。
+
+        ★ 实测踩到第五次「变异打空」，且这次是**判据自身的缺陷**：
+          初版用 `"门控生效" in why` 判别，而 co_mount 落地后 body 的说明
+          写的是「门控**未生效**」——**它含有「门控生效」这个子串**
+          ⇒ body 被误判为「已门控」⇒ 校验方向反了。
+          **子串包含会跨语义边界命中。** 判别必须用无歧义标记。
+        """
+        return str(gexp.get(dim, "")).lstrip().startswith("门控生效")
+
+    # ★★ 关键改进（第六次变异打空逼出来的）：**门控必须现算，不许信声明**。
+    #   原判据只做「声明 vs 数值」的一致性检查，于是：
+    #   变异体只要保持 gate_explanation 不变、只改 raw，
+    #   两边就自洽地一起骗过闸门 —— **这是典型的自欺型闸门**
+    #   （与「一致性守卫 + 自称状态 = 自欺」的教训同型，只是发生在门控上）。
+    #   正确做法：从 dimensions 现算「核心判据是否全为 0」，
+    #   再要求 raw 与现算结果一致。声明只用于**措辞审查**，不作判据。
+    p2p_it = next((i for i in body_items
+                   if "composed" in (i.get("item") or "")), None)
+    cm_it = next((i for i in body_items
+                  if "共装关系可判定" in (i.get("item") or "")), None)
+    if p2p_it is not None and cm_it is not None:
+        answered = (p2p_it.get("done", 0) > 0) or (cm_it.get("done", 0) > 0)
+        recomputed_body = float(naive.get("body", 0)) if answered else 0.0
+        if "body" in raw and abs(float(raw["body"]) - recomputed_body) > 0.15:
+            errs.append(
+                "body 门控值 %s ≠ 现算 %s（核心判据已回答=%s："
+                "composed=%s / co_mount=%s）—— "
+                "**门控必须现算，不许只信 gate_explanation 的声明**"
+                "（只查声明与数值是否自洽 = 自欺型闸门）"
+                % (raw["body"], round(recomputed_body, 1), answered,
+                   p2p_it.get("done", 0), cm_it.get("done", 0)))
     if naive and raw:
         for dim, val in (raw or {}).items():
-            if not any("门控生效" in str(v) for k, v in
-                       (sc.get("gate_explanation") or {}).items() if k == dim):
-                # 该维度未门控 ⇒ 门控值必须等于朴素值
-                if abs(val - naive.get(dim, val)) > 0.15:
+            if not _gated(dim):
+                # 该维度未门控 ⇒ 门控值必须**等于**朴素值
+                if abs(float(val) - float(naive.get(dim, val))) > 0.15:
                     errs.append("维度 %s 未门控但门控值 %s ≠ 朴素值 %s"
+                                " —— 绕过门控会虚高或虚低"
                                 % (dim, val, naive.get(dim)))
         # 反向：声明门控生效的维度，其值必须为 0
-        for dim, why in (sc.get("gate_explanation") or {}).items():
-            if "门控生效" in str(why) and (raw.get(dim) or 0) != 0:
+        for dim in gexp:
+            if _gated(dim) and (raw.get(dim) or 0) != 0:
                 errs.append("维度 %s 声明门控生效但 raw=%s ≠ 0"
                             % (dim, raw.get(dim)))
 
@@ -184,7 +220,7 @@ def check_sensitivity(rp) -> None:
         ok(f"敏感性成立：composed 0 → 1000 时，门控解除且完成度 "
            f"{rp['weighted_total_pct']}% → {mut['weighted_total_pct']}%")
 
-    # 门控有效性：composed=0 时 body 必须**低于**其朴素值
+    # 门控有效性：门控只会压低不会抬高
     sc = rp.get("scoring") or {}
     n_body = (sc.get("naive_dimension_scores") or {}).get("body")
     g_body = (sc.get("gated_dimension_scores") or {}).get("body")
@@ -194,6 +230,72 @@ def check_sensitivity(rp) -> None:
         elif g_body < n_body:
             ok(f"门控生效：body 朴素 {n_body}% → 门控 {g_body}%"
                f"（差额 {round(n_body - g_body, 1)} = 基础设施掩盖核心判据的量）")
+        else:
+            ok(f"门控未生效：body 门控 == 朴素 == {g_body}%"
+               "（核心判据已被另一种关系类型回答，见下方反向对照）")
+
+    # ══════════════════════════════════════════════════════════════
+    # ★★★ 2026-10-05 新增：判据被扩展为「任一关系类型可判定」之后，
+    # **最关键的风险是「借扩判据虚高」**。
+    # 因此必须有一条硬反向对照：**把 co_mount 的判定数打到 0，
+    # 门控必须重新生效、完成度必须回落**。
+    # 若这条不成立，那 21.9% 就是我改判据偷来的，不是真进展。
+    # ══════════════════════════════════════════════════════════════
+    cm_item = next((i for i in rp["dimensions"]["body"]
+                    if "共装关系可判定" in (i.get("item") or "")), None)
+    if cm_item is None:
+        fail("body 维缺「共装关系可判定」分项 —— "
+             "第三种关系类型的进展不可见，则完成度无法反映它")
+        return
+    if cm_item["done"] == 0:
+        fail("co_mount 判定数为 0 —— 共装层零可判定，"
+             "此时 body 维门控应当重新生效")
+        return
+    ok(f"共装判定：{cm_item['done']}/{cm_item['total']}"
+       f" = {cm_item['pct']}%")
+
+    # 反向对照：co_mount 归零 ⇒ 门控必须重新生效 ⇒ body 记 0 ⇒ 总完成度回落
+    m = copy.deepcopy(rp)
+    for it in m["dimensions"]["body"]:
+        if "共装关系可判定" in (it.get("item") or ""):
+            it["done"] = 0
+            it["pct"] = 0.0
+        elif "composed" in (it.get("item") or ""):
+            pass                      # composed 本来就是 0
+    n2 = {k: round(sum(i["pct"] for i in v) / len(v), 1)
+          for k, v in m["dimensions"].items()}
+    # 门控逻辑现算：两种关系都没回答 ⇒ body = 0
+    n2["body"] = 0.0
+    m["raw_dimension_scores"] = n2
+    m["weighted_total_pct"] = round(
+        sum(n2[k] * m["weights"][k] for k in m["weights"]), 1)
+    if m["weighted_total_pct"] >= rp["weighted_total_pct"]:
+        fail("★ 把 co_mount 判定打到 0 后完成度**未回落**"
+             f"（{rp['weighted_total_pct']}% → {m['weighted_total_pct']}%）"
+             " ⇒ 门控被架空，21.9% 是改判据偷来的虚高，不是真进展")
+    else:
+        ok(f"★ 关键反向对照成立：co_mount 归零 ⇒ 门控重新生效 ⇒ "
+           f"完成度 {rp['weighted_total_pct']}% → "
+           f"{m['weighted_total_pct']}%（回落 "
+           f"{round(rp['weighted_total_pct'] - m['weighted_total_pct'], 1)}）"
+           " ⇒ 提升来自真实进展，不是判据放宽")
+
+    # 反向对照 ②：composed 上升时完成度也必须上升（两个关系类型都敏感）
+    m2 = copy.deepcopy(rp)
+    for it in m2["dimensions"]["body"]:
+        if "composed" in (it.get("item") or ""):
+            it["done"] = 1000
+            it["pct"] = 0.5
+    n3 = {k: round(sum(i["pct"] for i in v) / len(v), 1)
+          for k, v in m2["dimensions"].items()}
+    m2["raw_dimension_scores"] = n3
+    m2["weighted_total_pct"] = round(
+        sum(n3[k] * m2["weights"][k] for k in m2["weights"]), 1)
+    if m2["weighted_total_pct"] <= rp["weighted_total_pct"]:
+        fail("把 composed 调高后完成度未上升 ⇒ 对 peer-to-peer 不敏感")
+    else:
+        ok(f"对 peer-to-peer 也敏感：composed ↑ ⇒ "
+           f"{rp['weighted_total_pct']}% → {m2['weighted_total_pct']}%")
 
 
 def _mut_caliber_stripped(rp, label):
@@ -256,19 +358,65 @@ def _mut_rationale_in_wrong_place(rp, label):
 
 
 def _mut_gate_removed(rp, label):
-    """把门控的 raw 换成朴素值 —— 完成度会虚高，必须判红。"""
+    """门控被绕过：把 body 的门控值改用朴素值。
+
+    ★ 实测踩到第四次「变异打空」：co_mount 落地后 body 门控**未生效**，
+      此时 naive == gated ⇒ 换成朴素值**数值完全不变** ⇒ 判据无从破防。
+      这是变异体本身失效，不是判据失效。
+    修法：构造一个**门控本该生效**的态（co_mount 与 composed 皆 0），
+      再把 body 改成朴素值 —— 这时朴素≠门控，变异才有意义。
+      **变异必须打在「判据与产物不同的地方」，否则测的是巧合。**
+    """
     m = copy.deepcopy(rp)
-    sc = m.get("scoring") or {}
-    if sc.get("naive_dimension_scores"):
-        m["raw_dimension_scores"] = dict(sc["naive_dimension_scores"])
-        m["weighted_total_pct"] = round(
-            sum(m["raw_dimension_scores"][k] * m["weights"][k]
-                for k in m["weights"]), 1)
+    for it in m["dimensions"]["body"]:
+        if "共装关系可判定" in (it.get("item") or ""):
+            it["done"] = 0
+            it["pct"] = 0.0
+    n = {k: round(sum(i["pct"] for i in v) / len(v), 1)
+         for k, v in m["dimensions"].items()}
+    # 正确行为：门控生效 ⇒ body = 0
+    correct = dict(n)
+    correct["body"] = 0.0
+    # 变异行为：绕过门控，用朴素值（基础设施得分掩盖核心判据零分）
+    m["raw_dimension_scores"] = dict(n)
+    m["weighted_total_pct"] = round(
+        sum(n[k] * m["weights"][k] for k in m["weights"]), 1)
+    m["scoring"] = dict(m.get("scoring") or {})
+    m["scoring"]["gated_dimension_scores"] = dict(correct)
+    m["scoring"]["naive_dimension_scores"] = dict(n)
+    return m
+
+
+def _mut_gate_forced_zero(rp, label):
+    """反向：门控被滥用 —— 在核心判据已回答时仍强行记 0（压低自己）。
+
+    这条守「门控不会被用来偷偷压低完成度」。门控是双向的：
+    不能靠它虚高，也不能靠它把已完成的维度归零。
+    """
+    m = copy.deepcopy(rp)
+    g = dict((m.get("scoring") or {}).get("gated_dimension_scores")
+             or m.get("raw_dimension_scores") or {})
+    n = (m.get("scoring") or {}).get("naive_dimension_scores") or {}
+    if not g or not n:
+        return m
+    # 找一门控未生效的维度，强行记 0
+    for dim in g:
+        if abs(float(g.get(dim, 0)) - float(n.get(dim, 0))) < 0.15 and \
+                float(n.get(dim, 0)) > 0:
+            g[dim] = 0.0
+            break
+    m["raw_dimension_scores"] = g
+    m["weighted_total_pct"] = round(
+        sum(g[k] * m["weights"][k] for k in m["weights"] if k in g), 1)
+    m["scoring"] = dict(m.get("scoring") or {})
+    m["scoring"]["gated_dimension_scores"] = g
+    m["scoring"]["naive_dimension_scores"] = dict(n)
     return m
 
 
 MUTATIONS = [
-    ("门控被绕过（改用朴素值虚高）", _mut_gate_removed),
+    ("门控被绕过（在门控该生效时改用朴素值虚高）", _mut_gate_removed),
+    ("门控被滥用（已回答的维度仍强行记 0）", _mut_gate_forced_zero),
     ("分项 caliber 被清空", _mut_caliber_stripped),
     ("权重与裸值分叉（加权≠现算）", _mut_weight_mismatch),
     ("权重之和 ≠ 1.0", _mut_weight_not_sum_one),
