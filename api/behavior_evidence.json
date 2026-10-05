@@ -1,0 +1,130 @@
+{
+ "meta": {
+  "title": "行为证据层（policy→behavior 链）",
+  "caliber": "论文/官方报告的 benchmark 行为度量，**非本仓自造日志**。sim 与 real 严格分列；value=null 表示官方未报告。",
+  "why_not_own_logs": "锚点 §3 硬性负向边界：❌ 造仿真器 / 训练栈（对接 Isaac/MuJoCo/LeRobot，不另起炉灶）⇒ 本项目自己跑 rollout 就是造仿真器，**直接违反锚点**。",
+  "why_these_count": "「行为证据」不等于「自己产生的日志」。官方报告的真机 benchmark 成功率是**真实、公开、可溯源**的行为度量，且 GR00T N1.5 的数字带**同任务对照组**（93.3% vs N1 46.6%）⇒ 不是孤证。这恰好回答链判据要问的问题：「这个策略在真机上表现如何」。"
+ },
+ "summary": {
+  "models": 2,
+  "records": 4,
+  "real_with_value": 2,
+  "sim_records": 1,
+  "null_value_records": 1
+ },
+ "per_model": {
+  "LLM-028": {
+   "model": "NVIDIA Isaac GR00T N1.5",
+   "records": 3,
+   "real_with_value": 2,
+   "sim": 1,
+   "null_value": 0,
+   "real_success_rates": [
+    {
+     "metric": "language_following_rate",
+     "value": 0.933,
+     "embodiment": "Fourier GR-1",
+     "control_model": "GR00T N1",
+     "control_value": 0.466
+    },
+    {
+     "metric": "novel_object_pick_place_rate",
+     "value": 0.15,
+     "embodiment": "Fourier GR-1",
+     "control_model": "GR00T N1",
+     "control_value": 0.0
+    }
+   ]
+  },
+  "LLM-029": {
+   "model": "SmolVLA",
+   "records": 1,
+   "real_with_value": 0,
+   "sim": 0,
+   "null_value": 1,
+   "real_success_rates": []
+  }
+ },
+ "records": {
+  "LLM-028": [
+   {
+    "metric": "language_following_rate",
+    "trial_kind": "real",
+    "embodiment": "Fourier GR-1",
+    "embodiment_ref": "XPLT-007",
+    "task": "two fruits on a table, place the named one onto a plate（目标水果以 50% 概率采样至左手或右手）",
+    "value": 0.933,
+    "unit": "success_rate",
+    "n_trials": null,
+    "control_value": 0.466,
+    "control_model": "GR00T N1",
+    "has_control": true,
+    "source_url": "https://research.nvidia.com/labs/gear/gr00t-n1_5/",
+    "source_scope": "first_party",
+    "note": "NVIDIA GEAR 研究页『Real GR-1 language following』段：GR00T N1.5 达 93.3%，GR00T N1 为 46.6%。同页另列 0-shot 15% 拾放新物体成功率（N1 为 0%）作为第二组对照。"
+   },
+   {
+    "metric": "novel_object_pick_place_rate",
+    "trial_kind": "real",
+    "embodiment": "Fourier GR-1",
+    "embodiment_ref": "XPLT-007",
+    "task": "拾放训练中未见过的新物体（无演示）",
+    "value": 0.15,
+    "unit": "success_rate",
+    "n_trials": null,
+    "control_value": 0.0,
+    "control_model": "GR00T N1",
+    "has_control": true,
+    "source_url": "https://research.nvidia.com/labs/gear/gr00t-n1_5/",
+    "source_scope": "first_party",
+    "note": "同页『15% success rate in picking and placing novel objects without any prior demonstrations, whereas GR00T N1 scored 0%』。**这是弱对照组（0%），故该记录只作补充，不作主证据。**"
+   },
+   {
+    "metric": "robocasa_30_demo_success",
+    "trial_kind": "sim",
+    "embodiment": "sim_robocasa",
+    "embodiment_ref": null,
+    "task": "RoboCasa，30 demos/task",
+    "value": 0.475,
+    "unit": "success_rate",
+    "n_trials": null,
+    "control_value": 0.174,
+    "control_model": "GR00T N1",
+    "has_control": true,
+    "source_url": "https://research.nvidia.com/labs/gear/gr00t-n1_5/",
+    "source_scope": "first_party",
+    "note": "仿真基准。**单独标注 sim=true**，不得与真机数字混算或互相替代。"
+   }
+  ],
+  "LLM-029": [
+   {
+    "metric": "real_world_pick_place",
+    "trial_kind": "real",
+    "embodiment": "SO-100/SO-101",
+    "embodiment_ref": null,
+    "task": "拾放立方体计数（含异步推理变体）",
+    "value": null,
+    "unit": "success_rate",
+    "n_trials": null,
+    "control_value": null,
+    "control_model": "ACT",
+    "has_control": true,
+    "source_url": "https://huggingface.co/blog/smolvla",
+    "source_scope": "first_party",
+    "note": "**刻意 value=null**：HF 官方博客以图示与定性描述为主（『outperforms ... ACT on real-world tasks (SO100, SO101)』），未给出可引用的单一成功率。**把定性描述折算成数字是编造** ⇒ 留 null。本条只证明「真机评测发生过」，不提供数值。"
+   }
+  ]
+ },
+ "not_modelled": [
+  "**不自建 rollout 日志**。锚点 §3：❌ 造仿真器/训练栈（对接 Isaac/MuJoCo/LeRobot，不另起炉灶）⇒ 自己跑仿真 = 违反锚点。",
+  "**不收录无对照的孤证数字**。单点成功率可能是 cherry-pick，登记它等于给读者一个不可靠的横向比较依据。",
+  "**不推算官方未报告的指标**。value=null 表示「官方未报告」，与 unknown 同源——缺数据必须显式可见。",
+  "**仿真（sim）与真机（real）严格分列**，不合并统计。仿真成绩不能当真机行为证据。"
+ ],
+ "honest_limits": [
+  "**样本量官方均未报告**（n_trials=null）⇒ 成功率无法算置信区间，不可用于统计比较，只可作定性参照。",
+  "**只覆盖 2 个开源 VLA**。46 个模型中闭源模型（RT-2 / π0 等）无公开真机数字 ⇒ 不登记，**不给闭源模型编造行为数据**。",
+  "**仿真记录仅作参考**，不得替代真机证据，也不得与真机数字合并统计。",
+  "**行为证据不等于本仓可复现**。我们引用官方数字，不声称能自己重跑——重跑需 Isaac/MuJoCo/LeRobot 栈（锚点不做）。"
+ ]
+}
