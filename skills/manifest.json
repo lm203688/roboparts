@@ -362,6 +362,26 @@
       "params": []
     },
     {
+      "name": "roboparts-behavior-evidence",
+      "title": "行为证据（真机 benchmark）",
+      "type": "mcp_tool",
+      "tool": "get_behavior_evidence",
+      "description": "查询**行为证据**：开源 VLA 在真机上的 benchmark 成功率（引用论文/官方报告，**非本仓自造日志**——本项目按锚点禁止造仿真器/训练栈）。适合回答「GR00T 真机成功率多少」「SmolVLA 有实测数据吗」「仿真成绩能不能当真机用」。★ 三条纪律：① 仿真（sim）与真机（real）**严格分列**，不可合并统计；② 只收录**有对照组**的数字（孤证可能是 cherry-pick）；③ 官方未报告的指标 value=null，不折算。样本量官方均未报告 ⇒ 不可用于统计比较。只读、免鉴权。",
+      "when_to_use": "用户问「这个模型真机表现如何」「有没有实测成功率」「仿真成绩能当真机用吗」时。",
+      "guardrails": "仿真(sim)与真机(real)**严格分列，不可合并统计**。只收录有对照组的数字（孤证可能是 cherry-pick）。官方未报告的指标 value=null，**不折算**。样本量官方均未报告 ⇒ 不可用于统计比较，只可作定性参照。本项目**不自造日志**（锚点禁止造仿真器/训练栈），引用官方公开数字。",
+      "params": []
+    },
+    {
+      "name": "roboparts-body-binding",
+      "title": "开源VLA→本体绑定（强度分档）",
+      "type": "mcp_tool",
+      "tool": "get_body_binding",
+      "description": "查询**开源 VLA → 机器人本体**的绑定及其强度分档。强度四档：validated（论文明写真机评测跑在该本体）/ family（论文列该族）/ adaptable（官方称可微调，非特定硬件验证）/ category_only（只登记类别）。另有两个**非绑定态**：blocked_missing_body（依据充分但本体不在库内）与 category_only。适合回答「OpenVLA 能装在哪台机器人上」「这个绑定可信吗」「为什么 SmolVLA 没有 body_robot」。★ 只绑开源 VLA——闭源模型无公开验证栈，不编造绑定。只读、免鉴权。",
+      "when_to_use": "用户问「这个模型跑在什么机器人上」「绑定可信吗」「为什么 SmolVLA 没有 body_robot」时。",
+      "guardrails": "强度四档 validated/family/adaptable/category_only + 两种非绑定态。**把 adaptable 当 validated 是过度声称**。只绑开源 VLA——闭源模型无公开验证栈，不编造绑定。blocked_missing_body 表示依据充分但**本体不在库内**，这是诚实阻塞不是缺陷。",
+      "params": []
+    },
+    {
       "name": "roboparts-adapter-generate",
       "type": "web_resource",
       "title": "生成法兰转接件",
