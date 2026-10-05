@@ -121,7 +121,8 @@ def _errors(rp, sink=None):
     #   正确做法：从 dimensions 现算「核心判据是否全为 0」，
     #   再要求 raw 与现算结果一致。声明只用于**措辞审查**，不作判据。
     p2p_it = next((i for i in body_items
-                   if "composed" in (i.get("item") or "")), None)
+                   if "composed" in (i.get("item") or "")
+                   or "确定性裁决" in (i.get("item") or "")), None)
     cm_it = next((i for i in body_items
                   if "共装关系可判定" in (i.get("item") or "")), None)
     if p2p_it is not None and cm_it is not None:
@@ -315,7 +316,7 @@ def _rescore(m):
     naive = {k: round(sum(i["pct"] for i in v) / len(v), 1)
              for k, v in m["dimensions"].items()}
     body = m["dimensions"]["body"]
-    p2p = next((i for i in body if "composed" in i["item"]), None)
+    p2p = next((i for i in body if "composed" in i["item"] or "确定性裁决" in i["item"]), None)
     cm = next((i for i in body if "共装关系可判定" in i["item"]), None)
     answered = (p2p and p2p["done"] > 0) or (cm and cm["done"] > 0)
     raw = dict(naive)
@@ -341,7 +342,8 @@ def check_sensitivity(rp) -> None:
     # 先在真实产物上确认 composed=0 时该分项也是 0（口径自洽）
     body_items = (rp.get("dimensions") or {}).get("body") or []
     composed_item = next((i for i in body_items
-                          if "composed" in (i.get("item") or "")), None)
+                          if "composed" in (i.get("item") or "")
+                          or "确定性裁决" in (i.get("item") or "")), None)
     if composed_item is None:
         fail("找不到 composed 对应的分项——核心目标的直接判据必须在场")
         return
@@ -354,7 +356,7 @@ def check_sensitivity(rp) -> None:
     # 构造假想态：composed 变成 1000（0.47%）
     mut = copy.deepcopy(rp)
     for it in mut["dimensions"]["body"]:
-        if "composed" in (it.get("item") or ""):
+        if "composed" in (it.get("item") or "") or "确定性裁决" in (it.get("item") or ""):
             it["done"] = 1000
             it["pct"] = 0.5
     naive = {k: round(sum(i["pct"] for i in v) / len(v), 1)
@@ -430,14 +432,22 @@ def check_sensitivity(rp) -> None:
     ok(f"共装判定：{cm_item['done']}/{cm_item['total']}"
        f" = {cm_item['pct']}%")
 
-    # 反向对照：co_mount 归零 ⇒ 门控必须重新生效 ⇒ body 记 0 ⇒ 总完成度回落
+    # 反向对照：两种关系都没回答 ⇒ 门控必须重新生效 ⇒ 完成度必须回落
+    #
+    # ★ 2026-10-05 修正变异前提：原版只把「共装关系可判定」归零，
+    #   而当时 `composed` 分项恒为 0 ⇒ 两种关系都没回答 ⇒ 门控生效。
+    #   但现在 body 多了「关系类型覆盖」与「确定性裁决」两项且**非零**
+    #   ⇒ 门控仍生效不了，变异**打空**（第 N 次「变异体本身过时」）。
+    #   正确做法：把**所有构成「核心判据已回答」的分项**一起归零，
+    #   才能构造出「门控该生效」的状态。
+    #   **变异必须随判据语义一起更新，否则它测的是过时的假设。**
     m = copy.deepcopy(rp)
     for it in m["dimensions"]["body"]:
-        if "共装关系可判定" in (it.get("item") or ""):
+        name = it.get("item") or ""
+        if ("共装关系可判定" in name or "确定性裁决" in name
+                or "关系类型覆盖" in name):
             it["done"] = 0
             it["pct"] = 0.0
-        elif "composed" in (it.get("item") or ""):
-            pass                      # composed 本来就是 0
     n2 = {k: round(sum(i["pct"] for i in v) / len(v), 1)
           for k, v in m["dimensions"].items()}
     # 门控逻辑现算：两种关系都没回答 ⇒ body = 0
@@ -459,7 +469,7 @@ def check_sensitivity(rp) -> None:
     # 反向对照 ②：composed 上升时完成度也必须上升（两个关系类型都敏感）
     m2 = copy.deepcopy(rp)
     for it in m2["dimensions"]["body"]:
-        if "composed" in (it.get("item") or ""):
+        if "composed" in (it.get("item") or "") or "确定性裁决" in (it.get("item") or ""):
             it["done"] = 1000
             it["pct"] = 0.5
     n3 = {k: round(sum(i["pct"] for i in v) / len(v), 1)
@@ -547,7 +557,11 @@ def _mut_gate_removed(rp, label):
     """
     m = copy.deepcopy(rp)
     for it in m["dimensions"]["body"]:
-        if "共装关系可判定" in (it.get("item") or ""):
+        name = it.get("item") or ""
+        # 把**所有**构成「核心判据已回答」的分项归零，
+        # 才能构造出「门控本该生效」的状态（否则门控仍不生效，变异打空）。
+        if ("共装关系可判定" in name or "确定性裁决" in name
+                or "关系类型覆盖" in name):
             it["done"] = 0
             it["pct"] = 0.0
     n = {k: round(sum(i["pct"] for i in v) / len(v), 1)
