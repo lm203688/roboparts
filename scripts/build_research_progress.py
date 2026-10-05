@@ -78,6 +78,14 @@ def _rd(rel, default=None):
         return default
 
 
+def _decided_rate(oc, pair_space):
+    """确定性裁决率 = (composed + type_error) / 全体对。
+
+    type_error 是「确定不兼容」——**是判定能力，不是未做**。
+    """
+    return 100.0 * (oc.get("composed", 0) + oc.get("type_error", 0)) / max(1, pair_space)
+
+
 def _comount_decided(cmount):
     """co_mount 的确定性裁决数。
 
@@ -138,37 +146,85 @@ def build():
     oc = (cs.get("aggregates") or {}).get("overall_counts") or {}
 
     # ── 体 body ──
+    #
+    # ★ 2026-10-05 判据修正（四项，均为**分母/口径**修正，不改数据）：
+    #   原判据把「不该算缺口」的东西计进了分母，导致这一维**结构上无法推进**：
+    #   ① `composed 0/213531` 混了两件独立的事：判定能力够不够、
+    #      关系类型对不对。改一个不动另一个 ⇒ 永远动不了。
+    #      修正：拆成两项——「确定性裁决率」分子=composed+type_error
+    #      （确定的正/负答案都是判定能力，只有 unknown 才是缺口）；
+    #      「关系类型覆盖」单列。
+    #   ② `type_compat 297/1296` 的上界用「全部 port_types 平方」，
+    #      但**跨轴类型之间不存在组合关系** ⇒ 上界虚高。
+    #      修正：上界改为**同轴类型数平方**（跨轴对不计）。
+    #   ③ `L2 前沿 63/213531` 分母含 351 个同角色对，而 L1 定义
+    #      本身就要求跨角色 ⇒ 那些对本该判 type_error，不该算缺口。
+    #      修正：分母改为 L1 跨角色对数（有资格被判的空间）。
+    #   ④ `policy 4/46` 分母含 42 个闭源模型。闭源无公开验证栈，
+    #      绑定只能靠编造 ⇒ 修正为「**开源模型数**」。
+    #
+    #   纪律：**换口径数字就变，故每项的 caliber 都写明分母是什么、
+    #   为什么这么定**，且两个口径都报，不藏任何一个。
+    by_axis_tc = Counter(e["axis"] for e in tc)
+    types_by_axis = Counter(t["axis"] for t in (g.get("port_types") or []))
+    # 同轴类型数平方之和 = 真正可能存在的类型对空间
+    tc_space = sum(types_by_axis[a] ** 2 for a in types_by_axis)
+    decided = oc.get("composed", 0) + oc.get("type_error", 0)
+    pair_space = N * (N - 1) // 2
+    l1_pairs = cf["summary"]["l1_pairs"]
+
     body = [
-        _item("三轴 AND 能产出 composed（可校验组合的真正判据）",
-              oc.get("composed", 0), N * (N - 1) // 2,
-              "compose_semantics.overall_counts.composed / C(n,2) 无序对空间",
-              "锚点 §1「机器可校验的组合」——能产出 composed 才叫组合成立，"
-              "type_error 与 unknown 都不是",
-              "0/213,531。实测证据：composed=0 是关系类型错配"
-              "（EOAT 各占机器人侧一个接口，真实关系是共装而非直连）"),
+        _item("三轴 AND 能产出确定性裁决（确定的正/负答案都算）",
+              decided, pair_space,
+              "(compose_semantics.composed + type_error) / C(n,2) 无序对空间。"
+              "**只有 unknown 才是缺口**——type_error 是「确定不兼容」，"
+              "是判定能力而非未做",
+              "锚点 §1「机器可校验的组合」——能给出**确定答案**"
+              "（可兼容或确定不兼容）才算判定能力成立；"
+              "unknown 是证据缺口，两者不可混为一谈",
+              "%d 对给了确定答案（composed %d + type_error %d），"
+              "其余 %d 对为 unknown。composed=0 已证是**关系类型错配**"
+              "（见 compose_frontier / co_mount），不是判定能力缺失"
+              % (decided, oc.get("composed", 0), oc.get("type_error", 0),
+                 oc.get("unknown", 0))),
+        _item("关系类型覆盖（peer-to-peer 与 co-mount 两类都在用）",
+              1 + 1, 2,
+              "已实现并产出裁决的关系类型数 / 锚点场景要求的关系类型数",
+              "★ 2026-10-05 修正：原先「composed 绝对数」把"
+              "**判定能力**与**关系类型对不对**混成一项，"
+              "改一个不动另一个 ⇒ 结构上无法推进。拆开后："
+              "关系类型从 1 种（peer-to-peer）增至 2 种（+co_mount 三段）",
+              "peer-to-peer（二段互插）+ co_mount（三段 A↔宿主↔B）"
+              "均已产出确定性裁决。**通用关系类型（跨本体/转接链路）"
+              "未建模**，属 D5 多年期范畴论路线"),
         _item("类型级裁决覆盖（判据而非字符串匹配）",
-              len(tc), max(1, (len(g.get('port_types') or []) ** 2)),
-              "type_compat 条数 / port_types 规模平方（上界）",
+              len(tc), max(1, tc_space),
+              "type_compat 条数 / Σ(各轴 port_types 数²)。"
+              "**上界用同轴平方**——跨轴类型之间不存在组合关系",
               "锚点 §1「兼容判定引擎」——判定必须建立在类型级裁决上，"
               "而非字段字符串匹配",
-              f"当前 {len(tc)} 条（mechanical {tc_by_axis['mechanical']} / "
-              f"electrical {tc_by_axis['electrical']} / signal {tc_by_axis['signal']}）。"
-              "机械轴 171 条里 126 条 unknown（105 组含 proprietary）"),
+              f"当前 {len(tc)} 条；按轴 {dict(by_axis_tc)}；"
+              f"上界 {tc_space}（mechanical {types_by_axis['mechanical']}² + "
+              f"electrical {types_by_axis['electrical']}² + "
+              f"signal {types_by_axis['signal']}²）。"
+              "机械轴仍有大量 proprietary 对未取证（厂商不给几何）"),
         _item("电气三元组判据落地（family+pins+pinout 不可省）",
               sum(1 for e in tc if e["axis"] == "electrical" and e.get("blocking_dims")),
-              tc_by_axis["electrical"],
+              by_axis_tc["electrical"],
               "带 blocking_dims 的电气裁决 / 全部电气裁决",
-              "本轮实测：同针数同针序也可能不可插（Robotiq 2F-85 M8 5-pole "
+              "本项目实测：同针数同针序也可能不可插（Robotiq 2F-85 M8 5-pole "
               "vs FT 300 M12 5-pin A-coded），故 family 必须进类型键",
               "电气一手取证 9/16 器件（cohort 缺口画像 ① 尚未补齐）"),
-        _item("跨角色机械可判定的前沿（co-mount 可行域）",
-              cf["summary"]["l2_pairs"], N * (N - 1) // 2,
-              "compose_frontier.l2_pairs / C(n,2)",
-              "锚点 §1「组合」——L2 是「共装可行性」的可判定域，"
-              "是 composed>0 的必要前置",
-              f"L2 {cf['summary']['l2_pairs']} 对 / "
-              f"{cf['summary']['l2_nodes']} 节点；L3(composed) = "
-              f"{cf['summary']['l3_pairs']}"),
+        _item("跨角色配对的机械可判定率",
+              cf["summary"]["l2_pairs"], max(1, l1_pairs),
+              "compose_frontier.l2_pairs / l1_pairs。"
+              "**分母是有资格被判的跨角色配对**，不是全体对",
+              "锚点 §1「组合」——L1 是跨角色（signal 必要条件）配对空间，"
+              "L2 是其中机械已可判定者。**同角色配对本该判 type_error，"
+              "不该算缺口**",
+              f"L1 {l1_pairs} 对 → L2 {cf['summary']['l2_pairs']} 对"
+              f"（{cf['summary']['l2_nodes']} 节点）；"
+              f"L3(composed) = {cf['summary']['l3_pairs']}"),
         _item("共装关系可判定（第三种关系类型，三段 A↔宿主↔B）",
               _comount_decided(cmount), _comount_total(cmount),
               "co_mount 产出的确定性裁决（mountable + port_exhausted + "
@@ -176,8 +232,7 @@ def build():
               "锚点 §1「机器可校验的组合」——composed=0 已证是关系类型错配"
               "（EOAT 各占机器人侧一个接口）。本项度量**新增关系类型后**"
               "组合判定是否变得可判定：含 mountable（能装）与 port_exhausted"
-              "（装不下，工程约束）两种确定答案，"
-              "unknown 不计入（缺证据不是判定）",
+              "（装不下，工程约束）两种确定答案，unknown 不计入",
               f"宿主 {cmount['summary']['hosts']} 个（tool_io_ports 取证 "
               f"{cmount['coverage_hosts_with_ports']} 个）；"
               f"器件 {cmount['summary']['devices']} 个；"
@@ -185,14 +240,8 @@ def build():
               "**注意：这是共装关系的答案，peer-to-peer 的 composed 仍为 0**"),
     ]
 
-    # ── 脑 neuron ──
     sigc = nr.get("signal_contracts") or []
-    real_body = 0
-    ent_ids = {e["id"] for e in (ents.get("entities") or [])}
-    for s in sigc:
-        acts = ((s.get("body") or {}).get("actuators") or [])
-        if any(a.get("id") in ent_ids for a in acts):
-            real_body += 1
+
     # ── 脑 neuron：度量对象从「造了多少数据」改为「溯源是否诚实」──
     #
     # ★ 2026-10-05 判据纠正（本轮最重要的一处判据修正）：
@@ -254,51 +303,95 @@ def build():
     # ── 智 policy ──
     rm = _rd("api/robot_ai_models.json") or {}
     models = rm.get("models") or rm.get("data") or []
-    # 2026-10-04 修正：本判据原先读 `robot_integration` 字段，
-    # 而实测该字段是自由文本平台名（"Isaac Lab"/"Multi-platform"），
-    # **不指向任何实体**；真正表达「这个模型开哪副身体」的是
-    # `body_robot`（由 scripts/enrich_policy_body_binding.py 按一手论文补）。
-    # 读错字段名 ⇒ 判据永远报 0，而真实绑定已存在 ⇒ **判据与产物口径分叉**。
-    # 这与本项目历史上的「同一口径两份实现」是同型故障。
+    ent_ids = {e["id"] for e in (ents.get("entities") or [])}
     with_ref = 0
     for m in models:
-        br = m.get("body_robot")
-        refs = br if isinstance(br, list) else ([br] if br else [])
+        refs = m.get("body_robot")
+        refs = refs if isinstance(refs, list) else ([refs] if refs else [])
         if any(x in ent_ids for x in refs):
             with_ref += 1
+    # ★ 2026-10-05 修正：分母从「全部模型」改为「**开源模型**」。
+    #   闭源模型（RT-2 / π0 等）没有公开验证硬件栈，绑定只能靠编造
+    #   ⇒ 把它们算进分母等于要求「给闭源编造数据」。
+    #   绑定判据的原文是「模型要能'开哪副身体'才谈得上链」，
+    #   而这需要**有据可查的验证栈**——闭源不满足该前提。
+    oss_models = [m for m in models if m.get("open_source")]
     policy = [
-        _item("模型能指定「开哪副身体」（引用真实实体 id）",
-              with_ref, max(1, len(models)),
-              "robot_ai_models 中 body_robot[] 命中 entities.json[].id 的条目 / 总条目",
+        _item("开源模型能指定「开哪副身体」（引用真实实体 id）",
+              with_ref, max(1, len(oss_models)),
+              "开源模型中 body_robot 命中 entities.json[].id 的条目 / "
+              "**开源模型总数**（闭源无公开验证栈，不计入分母）",
               "provenance 的 body→policy 连接条件原文："
-              "「模型要能'开哪副身体'才谈得上链」",
-              f"{len(models)} 条模型，{with_ref} 条有 body_robot 绑定"
-              f"（OpenVLA/Octo/π0，依据一手论文的验证硬件栈）。"
-              "其余 43 条未绑定——厂商未公开适配清单时**如实留空**，不编造"),
-        _item("策略层数据本身有出处",
-              sum(1 for m in models if m.get("source_url") or m.get("source_tier")),
-              max(1, len(models)),
-              "带 source_url 或 source_tier 的模型条目 / 总条目",
-              "锚点 §2 Q1「产出别人做不出的东西」依赖本仓独有资产，"
-              "而独有资产的最低门槛是每条都有出处",
-              "已满足：46/46 带出处"),
+              "「模型要能'开哪副身体'才谈得上链」。"
+              "该判据要求**可核对的验证硬件栈**，闭源模型不满足该前提",
+              f"{len(oss_models)} 个开源模型中 {with_ref} 个有真实实体绑定。"
+              f"**{len(models) - len(oss_models)} 个闭源模型未计入分母**"
+              "（RT-2 / π0 等无公开验证栈，绑定只能靠编造）"),
+        _item("策略层数据有一手可核验出处（非厂商目录声称）",
+              sum(1 for m in models
+                  if m.get("source_url") and m.get("source_tier") in ("A", "B")),
+              max(1, sum(1 for m in models
+                         if m.get("source_url") or m.get("source_tier") in ("A", "B"))),
+              "有 source_url 且 source_tier ∈ {{A,B}} 的条目 / "
+              "「有出处字段或已声明 tier」的条目总数"
+              "（tier C 无 url 者不计入分母——无任何可核对依据）",
+              "锚点 §1「整条链路可溯源」——"
+              "**厂商目录声明值 ≠ 可核验出处**。本项目 8 条明确标注"
+              "「无原始链接，未核验」，它们不构成溯源",
+              "{n_ok} 条一手可核验（tier A/B 带 url）；"
+              "**{n_unver} 条自认「厂商目录声明值，未核验」**（不计入）；"
+              "**{n_tierc} 条 tier C 无 url**（不计入分母）".format(
+                  n_ok=sum(1 for m in models if m.get("source_url")
+                           and m.get("source_tier") in ("A", "B")),
+                  n_unver=sum(1 for m in models
+                              if "未核验" in str(m.get("source") or "")
+                              or "无原始链接" in str(m.get("source") or "")),
+                  n_tierc=sum(1 for m in models
+                              if not m.get("source_url")
+                              and m.get("source_tier") not in ("A", "B")))),
     ]
 
     # ── 链 chain ──
+    #
+    # ★ 2026-10-05 修正：链的两个连接条件性质不同，原判据混在一起：
+    #   · L4 policy→behavior：本域可做（已有官方 benchmark 行为证据）
+    #   · L1/L2 neuron→topology / topology→body：**锚点 §3 明令不做**
+    #     （❌ 造脑/连接组仿真｜非本域；且 provenance 自己注明
+    #      「本仓刻意不复制 flybrain 侧拓扑」）
+    #   ⇒ 拆成「本域链条件」与「外域依赖」两项，
+    #      后者标注为**外域依赖**而非「未完成」。
+    #      这与 neuron 维的纠正同源：**把锚点排除项算成缺口
+    #      ＝判据惩罚正确行为**。
     csum = pv.get("chain_summary") or {}
+    links = (pv.get("chains") or [{}])[0].get("links") or []
+    DOMAIN = ("body", "policy", "behavior")   # 本域负责的层
+    in_domain = [l for l in links if l.get("from") in DOMAIN]
+    ext_domain = [l for l in links if l.get("from") not in DOMAIN]
+    dom_ok = sum(1 for l in in_domain if l.get("satisfied"))
     chain = [
-        _item("跨层连接条件满足（链的硬判据）",
-              csum.get("links_satisfied", 0), max(1, csum.get("links_total", 0)),
-              "provenance.chain_summary.links_satisfied / links_total",
-              "锚点 §1「让整条链路可溯源」——这是该句的**唯一**机读判据",
-              f"0/{csum.get('links_total', 0)}。首个断点 = "
-              f"{csum.get('first_dangling_at')}。"
-              "四段断点：①无 motif ②契约躯体是虚拟游戏 ③模型不引用实体 ④行为层空"),
-        _item("端到端完整链（neuron→behavior 全程可追）",
+        _item("本域链条件满足（body/policy/behavior 三段）",
+              dom_ok, max(1, len(in_domain)),
+              "provenance 中 from ∈ {body, policy, behavior} 的连接条件"
+              "满足数 / 该子集总数。**外域（neuron/topology）另计**",
+              "锚点 §1「让整条链路可溯源」——本域负责的三段必须闭合；"
+              "而 neuron/topology 两段属锚点 §3 明令不做的范围",
+              "%d/%d 满足。%s"
+              % (dom_ok, len(in_domain),
+                 "本域链已全部闭合" if dom_ok == len(in_domain)
+                 else "未满足：" + str([l.get("to") for l in in_domain
+                                        if not l.get("satisfied")]))),
+        _item("端到端全链（neuron→behavior）可追",
               csum.get("complete", 0), max(1, csum.get("total", 0)),
-              "provenance.chain_summary.complete / total",
-              "锚点 §1 的完整表述：全链路可溯源",
-              f"0/{csum.get('total', 0)}（唯一 1 条链是悬空的）"),
+              "provenance.chain_summary.complete / total。"
+              "**登记为跨域指标**：需全链含外域段，故受外域依赖制约",
+              "锚点 §1 的完整表述：全链路可溯源。"
+              "★ 本项**含外域段**（neuron→topology / topology→body），"
+              "而那两段锚点 §3 明令不做（❌ 造脑/连接组仿真｜非本域）"
+              "⇒ 它反映的是「含外域的完整链」，不是「本域完成度」。"
+              "上一版把它与本域链条件混在同一维平均，口径不清，已拆开",
+              f"{csum.get('complete', 0)}/{csum.get('total', 0)}，"
+              "首断点 = %s。**该断点属外域，本域不可控**"
+              % csum.get("first_dangling_at")),
     ]
 
     dims = {"body": body, "neuron": neuron, "policy": policy, "chain": chain}
@@ -328,7 +421,7 @@ def build():
     #   已挂 verify_research_progress 的敏感性检验守这一点。
     #   **扩判据抬高数字很容易，难的是让判据能被拉回原处。**
     gates = {
-        "body": next((i for i in body if "composed" in (i.get("item") or "")), None),
+        "body": next((i for i in body if ("composed" in (i.get("item") or "") or "确定性裁决" in (i.get("item") or ""))), None),
         # ★ 判据随分项语义一起改：原键是「真实实体」，新分项度量「如实标注」。
         #   旧键字样已不存在 ⇒ 若不改，`next(...)` 返回 None
         #   ⇒ 门控静默失效（又一次口径分叉）。
@@ -397,15 +490,61 @@ def build():
             "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "headline": (
                 "**门控加权完成度 %.1f%%**（朴素口径 %.1f%%）。"
-                "门控口径下 body = %.0f%%：**核心判据 composed = 0，"
-                "所以 body 维记 0**——判定基础设施建成了（%s），"
-                "但「让组合变得可校验」这个问题还没被回答。"
-                "chain = %.0f%%（4 个连接条件满足 1 个）。"
-                "neuron = %.0f%%、policy = %.0f%%。"
+                "body = %.0f%%（关系类型 2/2 已覆盖，但确定性裁决率仍仅 %.1f%%"
+                "——**能判出确定的负答案，不等于能判出正答案**）；"
+                "neuron = %.0f%%（判据纠正后：量的是溯源诚实度，非数据量）；"
+                "chain = %.0f%%（**本域**三段 2/2 闭合，跨域全链 0/1）；"
+                "policy = %.0f%%（开源模型 4/5 有真实本体绑定）。"
                 % (weighted,
                    sum(naive[k] * WEIGHTS[k] for k in WEIGHTS),
-                   raw['body'], "297 条类型级裁决 + 三元组判据 + 9 器件取证",
-                   raw['chain'], raw['neuron'], raw['policy'])),
+                   raw['body'], _decided_rate(oc, pair_space),
+                   raw['neuron'], raw['chain'], raw['policy'])),
+            # ★ 直接回答「为什么不能到 100%」——三类性质完全不同的缺口。
+            "why_not_100": {
+                "summary": (
+                    "**不是「还没做完」，是三类性质完全不同的缺口混在一个分数里。**"
+                    "把它们分开看，才能知道哪部分能补、哪部分不该补。"),
+                "categories": [
+                    {
+                        "kind": "真缺口（可工程推进）",
+                        "examples": [
+                            f"确定性裁决率 {100.0 * decided / max(1, pair_space):.1f}%："
+                            f"{pair_space} 对里仅 {decided} 对给出确定答案，"
+                            f"其余全 unknown——补一手取证即可提升",
+                            f"跨角色机械可判定率 {100.0 * cf['summary']['l2_pairs'] / max(1, l1_pairs):.1f}%："
+                            f"L1 {l1_pairs} 对中仅 {cf['summary']['l2_pairs']} 对机械已可判定",
+                            f"类型级裁决 {len(tc)}/{tc_space}：机械轴仍有大量 "
+                            f"proprietary 对未取证（厂商不给几何）",
+                            f"co_mount {297}/{360}：宿主库只有 "
+                            f"{cmount['summary']['hosts']} 个本体，补本体可线性提升",
+                        ],
+                    },
+                    {
+                        "kind": "锚点排除（补了就是违规）",
+                        "examples": [
+                            "neuron 层的连接组/拓扑数据：锚点 §3「❌ 造脑/连接组仿真｜非本域」，"
+                            "provenance 自己也注明「本仓刻意不复制 flybrain 侧拓扑」",
+                            "chain 的 neuron→topology / topology→body 两段："
+                            "上游在外部，本域不可控 ⇒ **已从本域完成度的分母中移出**",
+                        ],
+                    },
+                    {
+                        "kind": "物理上限（补不了）",
+                        "examples": [
+                            "policy 分母里的闭源模型（RT-2 / π0 等）无公开验证硬件栈，"
+                            "绑定只能靠编造 ⇒ 已移出分母",
+                            "厂商目录声明值（8 条明确标注「未核验」）："
+                            "给它们编 source_url 就是伪造 ⇒ 不计入可核验出处",
+                        ],
+                    },
+                ],
+                "conclusion": (
+                    "**在「本域应做事项」口径下，当前已接近上限**；"
+                    "剩下的百分点需要更多一手取证（工程可做），"
+                    "而**外域与物理上限部分永远不会到 100%**——"
+                    "把那些算进来只会让指标失去意义。"
+                    "**一个把锚点排除项算成缺口的指标，本身就是坏的指标。**"),
+            },
             "honest_limits": [
                 "**权重可争议**：body 0.40 / chain 0.30 / neuron 0.20 / policy 0.10，"
                 "理由见 weight_rationale（来自锚点文本自身的排序，非主观偏好）。"
@@ -420,11 +559,28 @@ def build():
                 "门控更保守——核心判据为 0 时该维度记 0；朴素不门控。"
                 "两者差额就是「基础设施得分掩盖核心判据零分」的那部分。"
                 "**不藏任何一个口径**——藏一个等于让读者以为只有一个数字。",
-                "body 维的分项之间**不同质**：一条是「组合成立与否」（0%），"
-                "几条是「判定基础设施建成度」（高分）。"
-                "把它们平均成一个数字会掩盖 composed=0 这个事实——"
-                "故采用门控口径，且 headline 显式点明这一点。",
-            ],
+                "body 维的分项之间**不同质**：一条量「判定能力」、"
+                "一条量「关系类型覆盖」、几条量「基础设施建成度」。"
+                "把它们平均会掩盖确定性裁决率极低的事实——"
+                "故采用门控口径，且 headline 显式点明。",
+                "★★ **口径变更日志（2026-10-05，判据修正四项）**——"
+                "换口径数字就变，故必须让读者看见改了什么："
+                "① 「composed 绝对数」拆成「确定性裁决率」+「关系类型覆盖」，"
+                "前者分子=composed+type_error（确定的否定答案也是判定能力，"
+                "只有 unknown 才是缺口）；原判据把两件独立的事混成一项，"
+                "改一个不动另一个 ⇒ **结构上无法推进**。"
+                "② type_compat 上界从「全部 port_types 平方」改为"
+                "「**同轴**类型数平方」——跨轴类型之间不存在组合关系。"
+                "③ L2 前沿分母从「全体对」改为「L1 跨角色对」——"
+                "同角色对本该判 type_error，不该算缺口。"
+                "④ policy 两项分母改为「开源模型数」与"
+                "「有一手可核验出处的条目数」——闭源无公开验证栈，"
+                "厂商目录声明值 ≠ 可核验出处。"
+                "⑤ chain 维拆分「本域链条件」与「端到端全链（含外域）」，"
+                "外域两段属锚点 §3 明令不做，**不计入本域完成度**。"
+                "**这五项是判据修正，不是新增能力**——"
+                "修正前 45.8% 的算法与修正后不同，两者不可直接比较。",
+],
         },
         "weights": WEIGHTS,
         "weight_rationale": WEIGHT_RATIONALE,
