@@ -30,6 +30,8 @@
 | `roboparts-evidence-mdv` | mcp_tool | `explain_evidence_mdv` | 用户问「补哪个轴最划算」「某轴还有取证价值吗」「机械声明率低是不是真问题」时。 |
 | `roboparts-connector-types` | mcp_tool | `explain_connector_types` | 用户问「这两个连接器能不能互插」「同为 M8 为什么判不兼容」「pinout 为 null 是什么意思」时。 |
 | `roboparts-research-progress` | mcp_tool | `get_research_progress` | 用户问「这个项目做到什么程度了」「核心目标完成了几成」「composed 为什么是 0」时。 |
+| `roboparts-co-mount` | mcp_tool | `check_co_mount` | 用户问「这台机器人能不能同时装夹爪 A 和传感器 B」「两个夹爪能一起装吗」「为什么判 port_exhausted」时。 |
+| `roboparts-tool-side` | mcp_tool | `get_robot_tool_side` | 用户问「这台机器人工具侧有几个电气接口」「tool_io_ports 是多少」「为什么 FR3 判 unknown」时。 |
 | `roboparts-adapter-generate` | web_resource | `/adapter-generator` | 兼容性判定为不兼容、且根因是机械法兰不匹配时，直接产出解决方案而非只给结论。 |
 | `roboparts-dataset-discovery` | dataset | `/agent-discovery.json` | 用户想下载/引用原始数据、做二次分析、或确认数据来源时。 |
 | `roboparts-supplier-risk` | methodology | `/docs/supplier-risk.html` | 用户问「这家供应商靠谱吗」「这个价格是不是太低了」「哪些零件数据存疑」时，给出可审计的风险结论而非拍脑袋。 |
