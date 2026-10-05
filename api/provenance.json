@@ -5,7 +5,7 @@
     "contract": "schemas/embodiment_provenance.schema.json",
     "anchor": "docs/PROJECT_DIRECTIONS_V2.md §1（方向锚点 v2.2 · D6）",
     "generated_by": "scripts/build_provenance.py",
-    "generated_at": "2026-10-04T16:48:38+08:00",
+    "generated_at": "2026-10-05T21:20:49+08:00",
     "prov_o_alignment": {
       "entity": "每一层的产物（连接组 / motif / 实体 / 模型 / 日志）",
       "activity": "产生该层的活动（EM 重建 / 采集 / 训练 / 运行）",
@@ -63,11 +63,11 @@
       "ref": "/api/robot_ai_models.json"
     },
     "behavior": {
-      "title_zh": "行为 / 运行日志",
-      "owner": "roboparts",
-      "available": "declared_empty",
-      "count": 0,
-      "ref": null
+      "title_zh": "行为 / 行为度量证据",
+      "owner": "external_papers",
+      "available": "partial",
+      "count": 4,
+      "ref": "/api/behavior_evidence.json"
     }
   },
   "links": [
@@ -107,8 +107,8 @@
       "requires": [
         "存在行为/运行日志数据"
       ],
-      "satisfied": false,
-      "blocked_by": "本仓无任何运行日志文件",
+      "satisfied": true,
+      "blocked_by": null,
       "note": null
     }
   ],
@@ -180,17 +180,17 @@
         },
         {
           "id": "behavior",
-          "owner": "roboparts",
-          "available": "declared_empty",
-          "count": 0,
-          "ref": null,
+          "owner": "external_papers",
+          "available": "partial",
+          "count": 4,
+          "ref": "/api/behavior_evidence.json",
           "prov": {
-            "source": "本链未涉及行为层",
-            "tier": null,
+            "source": "论文/官方报告的 benchmark 行为度量（非本仓自造日志，见 behavior_evidence.meta.why_not_own_logs）",
+            "tier": "A",
             "prov_o_class": "entity",
             "activity": null,
             "agent": null,
-            "note": null
+            "note": "实机记录 2 条（其中官方未报告数值 1 条）；仿真记录单列不与实机混算"
           }
         }
       ],
@@ -231,8 +231,8 @@
           "requires": [
             "存在行为/运行日志数据"
           ],
-          "satisfied": false,
-          "blocked_by": "本仓无任何运行日志文件",
+          "satisfied": true,
+          "blocked_by": null,
           "note": null
         }
       ],
@@ -243,7 +243,7 @@
     "total": 1,
     "complete": 0,
     "dangling": 1,
-    "links_satisfied": 1,
+    "links_satisfied": 2,
     "links_total": 4,
     "first_dangling_at": "body"
   }
