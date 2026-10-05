@@ -781,7 +781,7 @@ async function toolExplainResearchLayer(env, request, kind) {
       use: '用户问「这个项目做到什么程度了」「核心目标完成了几成」'
         + '「composed 为什么是 0」时。',
       picks: ['weighted_total_pct', 'scoring', 'raw_dimension_scores',
-              'weights', 'weight_rationale', 'dimensions', 'how_to_read'],
+              'weights', 'weight_rationale', 'dimensions', 'how_to_read', 'meta'],
     },
     electrical: {
       path: 'api/electrical_evidence.json',
