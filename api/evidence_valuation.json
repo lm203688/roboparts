@@ -15,7 +15,7 @@
   "engine_version": "mdv/v1",
   "generated_by": "scripts/build_evidence_valuation.py",
   "truth_source": "api/morphology_graph.json（节点端口状态 + type_compat 双向索引） + scripts/compose_engine.py（PAIR_RANK / CompatIndex，单一真相源）",
-  "generated_at": "2026-10-05T03:04:34+00:00",
+  "generated_at": "2026-10-05T13:16:15+00:00",
   "honest_limits": [
    "MDV 是**上界**不是预测：假定补声明能补到该轴最有利的类型。真实补录可能落到不利类型，实际收益 ≤ MDV。故 MDV=0 是可靠判定（真值必为 0），MDV>0 的实际值未知。",
    "MDV **不可叠加**：补一条声明会同时改变多轴判定，故本表的 MDV 之和 ≠ 补齐后的可判定配对数。本表用于**排序**（先补哪条），不用于**累加预测**（补完能得多少）。",
