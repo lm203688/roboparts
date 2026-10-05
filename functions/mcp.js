@@ -566,6 +566,32 @@ const TOOLS = [
       '因为「判定基础设施建成」不等于「组合成立」。',
     inputSchema: { type: 'object', properties: {}, required: [] },
   },
+
+  {
+    name: 'check_co_mount',
+    description:
+      '查询**共装**关系（第三种关系类型，三段 A↔宿主↔B）：某个机器人本体' +
+      '能否同时装下两个器件（典型问题：「这台 UR5e 能同时装夹爪和六轴力传感器吗」）。' +
+      '与 check_compatibility 的区别：后者判「A 能不能插进 B」（二段互插），' +
+      '本工具判「A 和 B 能不能同时挂在同一台机器人的工具侧」。' +
+      '★ 三段判据：机械同型 + 宿主工具侧位数预算 + 信号角色互补。' +
+      'port_exhausted 表示「**装不下**（工程约束，如需转接/换本体）」，' +
+      '与 unknown（「数据不足，不知道」）严格区分。' +
+      '只读、免鉴权。返回含 caliber 字段，口径与 check_compatibility 不同、不可混用。',
+    inputSchema: { type: 'object', properties: {}, required: [] },
+  },
+
+  {
+    name: 'get_robot_tool_side',
+    description:
+      '查询机器人本体的**工具侧接口取证**：工具法兰（ISO 9409-1 标号）、' +
+      '工具 I/O 位数、连接器型号与承载信号。' +
+      '适合回答「这台机器人工具侧有几个电气接口」「tool_io_ports 为什么是 null」' +
+      '「UR 的工具侧能挂几个传感器」。' +
+      '★ tool_io_ports 是**一手取证的整数位计数**（不是针数）；' +
+      '未取证者留 null，判据据此走 unknown，**不按型号名推断**。只读、免鉴权。',
+    inputSchema: { type: 'object', properties: {}, required: [] },
+  },
 ];
 
 /**
@@ -689,6 +715,21 @@ async function toolExplainResearchLayer(env, request, kind) {
       title: '边际声明价值（零贡献轴证明）',
       use: '用户问「补哪个轴最值」「机械声明率低是不是问题」时。',
       picks: ['summary', 'by_axis', 'targeting_rationale'],
+    },
+    comount: {
+      path: 'api/co_mount.json',
+      title: '共装裁决（第三种关系类型：三段 A↔宿主↔B）',
+      use: '用户问「这台机器人能不能同时装夹爪 A 和传感器 B」'
+        + '「两个夹爪能一起装吗」「为什么判 port_exhausted」时。',
+      picks: ['meta', 'summary', 'relation_semantics', 'single_mount',
+              'pair_verdicts', 'examples_mountable', 'examples_port_exhausted'],
+    },
+    toolside: {
+      path: 'api/robot_tool_side.json',
+      title: '宿主工具侧接口取证（法兰/位数/连接器）',
+      use: '用户问「这台机器人工具侧有几个接口」「tool_io_ports 是多少」'
+        + '「为什么 FR3 判 unknown」时。',
+      picks: ['meta', 'hosts', 'coverage'],
     },
     progress: {
       path: 'api/research_progress.json',
@@ -1534,6 +1575,12 @@ async function handleRpc(msg, context) {
         } else if (name === 'get_research_progress') {
           recordMcp(context, 'toolsrc:script:get_research_progress');
           payload = await toolExplainResearchLayer(env, request, 'progress');
+        } else if (name === 'check_co_mount') {
+          recordMcp(context, 'toolsrc:script:check_co_mount');
+          payload = await toolExplainResearchLayer(env, request, 'comount');
+        } else if (name === 'get_robot_tool_side') {
+          recordMcp(context, 'toolsrc:script:get_robot_tool_side');
+          payload = await toolExplainResearchLayer(env, request, 'toolside');
         } else {
           return rpcError(id, -32602, `未知工具: ${name}`);
         }
