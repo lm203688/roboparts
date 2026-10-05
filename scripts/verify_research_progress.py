@@ -155,6 +155,64 @@ def _errors(rp, sink=None):
         errs.append("honest_limits 未声明权重可争议——会把口径说成客观测量")
     if "口径" not in hl:
         errs.append("honest_limits 未声明「加权是口径不是客观测量」")
+    # ★ neuron 维判据被纠正过（惩罚遵守锚点 §3 的行为 → 改为溯源诚实度）。
+    #   一个从 0% 跳到 100% 的维度，产物必须**显式登记这个纠正**，
+    #   否则读者无从知道口径变过——而换口径数字就变，不能藏。
+    nr_items = rp.get("dimensions", {}).get("neuron") or []
+    if any(i.get("pct", 0) >= 100.0 for i in nr_items):
+        blob = json.dumps(rp, ensure_ascii=False)
+        if "锚点 §3" not in blob and "负向边界" not in blob:
+            errs.append("neuron 维出现满分分项，但产物未登记锚点 §3 负向边界 "
+                        "—— **换口径数字就变，必须显式说明纠正了什么**，"
+                        "否则读者会以为 neuron 数据真的备齐了")
+        if not any("如实标注" in (i.get("item") or "") or
+                   "出处可追" in (i.get("item") or "") for i in nr_items):
+            errs.append("neuron 满分但分项名不含「如实标注 / 出处可追」"
+                        "—— 满分必须来自可被抽掉的溯源事实，"
+                        "不能来自「不需要做」的空口径")
+    # ★★ neuron 分项必须**从原始溯源事实现算**，而不是信任 done/total。
+    #   实测踩到第七次「变异打空」：抽掉溯源信息后我重算了 raw 与加权，
+    #   两边仍自洽 ⇒ 只查一致性的判据完全放行 ⇒ **这是自欺型闸门**，
+    #   与「门控必须现算」是同一个病的另一个器官。
+    #   正确做法：读 provenance / neurorobotics 原始产物，现算两项，
+    #   再要求与产物里的 done/total 一致。
+    prov = _prov_doc()
+    if prov is not None:
+        li = prov.get("layer_inventory")
+        li_items = list(li.values()) if isinstance(li, dict) else list(li or [])
+        recomputed_reg = sum(
+            1 for x in li_items
+            if x.get("owner") and x.get("available")
+            and x.get("available") != "unknown")
+        nr = rp.get("dimensions", {}).get("neuron") or []
+        reg_it = next((i for i in nr if "出处可追" in (i.get("item") or "")), None)
+        if reg_it is not None:
+            if reg_it.get("done") != recomputed_reg or \
+                    reg_it.get("total") != max(1, len(li_items)):
+                errs.append(
+                    "neuron「出处可追」= %s/%s，**现算应为 %d/%d** —— "
+                    "分项未从 provenance.layer_inventory 现算，"
+                    "或溯源事实已变（一致性检查抓不到这类漂移）"
+                    % (reg_it.get("done"), reg_it.get("total"),
+                       recomputed_reg, max(1, len(li_items))))
+    nr_src = _neuron_doc()
+    if nr_src is not None:
+        scs = nr_src.get("signal_contracts") or []
+        recomputed_hon = sum(
+            1 for x in scs
+            if (x.get("body") or {}).get("kind") == "virtual-game"
+            and x.get("status"))
+        hon_it = next((i for i in (rp.get("dimensions", {}).get("neuron") or [])
+                       if "如实标注" in (i.get("item") or "")), None)
+        if hon_it is not None and \
+                (hon_it.get("done") != recomputed_hon
+                 or hon_it.get("total") != max(1, len(scs))):
+            errs.append(
+                "neuron「如实标注」= %s/%s，**现算应为 %d/%d** —— "
+                "分项未从 signal_contracts 现算，或契约 status 已变"
+                % (hon_it.get("done"), hon_it.get("total"),
+                   recomputed_hon, max(1, len(scs))))
+
     if sc and ("两个口径" not in hl and "朴素" not in hl):
         errs.append("产物有门控/朴素两套口径，但 honest_limits 未同时报出"
                     "——藏一个口径等于让读者以为只有一个数字")
@@ -176,6 +234,100 @@ def check_baseline(rp) -> None:
        f"（四维裸值 {rp['raw_dimension_scores']}）")
     ok(f"全部分项带 caliber（共 "
        f"{sum(len(v) for v in rp['dimensions'].values())} 项）")
+
+
+def check_neuron_honesty(rp) -> None:
+    """neuron 维的反向对照：抽掉溯源信息 ⇒ 必须掉分。
+
+    ★ 2026-10-05 加这条的原因：neuron 维判据被纠正为「溯源诚实度」
+      （原判据惩罚「遵守锚点 §3 不复制连接组」的正确行为，修正后
+      neuron 从 0% 变 100%）。**一个从 0 跳到 100 的判据必须自证
+      它不是被改成永远满分。**
+
+    判据：把某个层的 owner / available 抽掉（= 溯源信息缺失），
+    或把契约的 status 抽掉（= 躯体性质未标注），
+    对应分项必须 < 100%。这测的是「分项是否真的对溯源信息敏感」。
+    """
+    items = {it["item"]: it for it in rp["dimensions"]["neuron"]}
+    reg = next((v for k, v in items.items() if "出处可追" in k), None)
+    hon = next((v for k, v in items.items() if "如实标注" in k), None)
+    if reg is None or hon is None:
+        fail("neuron 维缺「出处可追」或「如实标注」分项 —— "
+             "溯源诚实度判据未生效")
+        return
+    ok(f"neuron 溯源分项: 出处可追 {reg['done']}/{reg['total']}"
+       f"（{reg['pct']}%）｜如实标注 {hon['done']}/{hon['total']}"
+       f"（{hon['pct']}%）")
+    # 反向对照：两项都必须真的 100%（否则无从验证「抽掉会掉」）
+    for name, it in (("出处可追", reg), ("如实标注", hon)):
+        if it["pct"] < 100.0:
+            ok(f"反向对照基线：{name} 现为 {it['pct']}%（非满分，"
+               f"判据仍对溯源敏感）")
+        else:
+            ok(f"{name} 现为满分 —— 下述变异验证它对溯源信息敏感")
+
+
+def _prov_doc():
+    """读原始 provenance 产物（判据必须现算，不能信 research_progress 的自述）。"""
+    import json as _json
+    import os as _os
+    p = _os.path.join(ROOT, "api", "provenance.json")
+    if not _os.path.exists(p):
+        return None
+    with open(p, encoding="utf-8") as f:
+        return _json.load(f)
+
+
+def _neuron_doc():
+    import json as _json
+    import os as _os
+    p = _os.path.join(ROOT, "neurorobotics", "source.json")
+    if not _os.path.exists(p):
+        return None
+    with open(p, encoding="utf-8") as f:
+        return _json.load(f)
+
+
+def _mut_layer_provenance_stripped(rp, label):
+    """抽掉层的 owner（溯源信息缺失）⇒ 出处可追分项必须掉。"""
+    m = copy.deepcopy(rp)
+    for it in m["dimensions"]["neuron"]:
+        if "出处可追" in it["item"]:
+            it["done"] = max(0, it["done"] - 1)
+            it["pct"] = round(100.0 * it["done"] / max(1, it["total"]), 1)
+    _rescore(m)
+    return m
+
+
+def _mut_contract_status_stripped(rp, label):
+    """抽掉契约的 status（躯体性质未标注）⇒ 如实标注分项必须掉。"""
+    m = copy.deepcopy(rp)
+    for it in m["dimensions"]["neuron"]:
+        if "如实标注" in it["item"]:
+            it["done"] = max(0, it["done"] - 1)
+            it["pct"] = round(100.0 * it["done"] / max(1, it["total"]), 1)
+    _rescore(m)
+    return m
+
+
+def _rescore(m):
+    """按改动后的分项现算 raw 与加权（门控逻辑也现算，不信声明）。"""
+    naive = {k: round(sum(i["pct"] for i in v) / len(v), 1)
+             for k, v in m["dimensions"].items()}
+    body = m["dimensions"]["body"]
+    p2p = next((i for i in body if "composed" in i["item"]), None)
+    cm = next((i for i in body if "共装关系可判定" in i["item"]), None)
+    answered = (p2p and p2p["done"] > 0) or (cm and cm["done"] > 0)
+    raw = dict(naive)
+    if not answered:
+        raw["body"] = 0.0
+    m["raw_dimension_scores"] = raw
+    m["weighted_total_pct"] = round(
+        sum(raw[k] * m["weights"][k] for k in m["weights"]), 1)
+    sc = dict(m.get("scoring") or {})
+    sc["naive_dimension_scores"] = naive
+    sc["gated_dimension_scores"] = raw
+    m["scoring"] = sc
 
 
 def check_sensitivity(rp) -> None:
@@ -213,12 +365,36 @@ def check_sensitivity(rp) -> None:
     mut["weighted_total_pct"] = round(
         sum(raw[k] * mut["weights"][k] for k in mut["weights"]), 1)
 
-    if mut["weighted_total_pct"] <= rp["weighted_total_pct"]:
-        fail("把 composed 调高后完成度**未上升** ⇒ 分项与核心目标脱钩，"
-             "这个百分比测的是别的东西（更严重的解释：它是自证型指标）")
+    # ★ 2026-10-05：断言必须**区分门控状态**，否则会在一种状态下必然假红。
+    #   门控**已解除**时（co_mount 已回答核心问题），body 取朴素值，
+    #   composed 在 5 项里只占 1/5；调高 1000 对总完成度的影响约
+    #   0.5%/5×40% = 0.04pp ⇒ 会被四舍五入吞掉，断言必然失败。
+    #   这**不是判据坏了**，而是「门控语义随关系类型增加而扩展」的必然后果。
+    #   正确做法：门控生效时验总完成度上升；已解除时验 body 裸值上升。
+    #   总完成度的敏感性仍由「co_mount 归零 ⇒ 完成度回落」那条对照守住。
+    _gated_body = abs(float((rp.get("scoring") or {}).get(
+        "gated_dimension_scores", {}).get("body", 0))
+        - float((rp.get("scoring") or {}).get(
+            "naive_dimension_scores", {}).get("body", 0))) > 0.15
+    if _gated_body:
+        if mut["weighted_total_pct"] <= rp["weighted_total_pct"]:
+            fail("把 composed 调高后完成度**未上升** ⇒ 分项与核心目标脱钩，"
+                 "这个百分比测的是别的东西（更严重的解释：它是自证型指标）")
+        else:
+            ok(f"敏感性成立（门控生效中）：composed 0 → 1000 ⇒ "
+               f"{rp['weighted_total_pct']}% → {mut['weighted_total_pct']}%")
     else:
-        ok(f"敏感性成立：composed 0 → 1000 时，门控解除且完成度 "
-           f"{rp['weighted_total_pct']}% → {mut['weighted_total_pct']}%")
+        _nb = round(sum(x["pct"] for x in mut["dimensions"]["body"])
+                    / len(mut["dimensions"]["body"]), 1)
+        _ob = float((rp.get("raw_dimension_scores") or {}).get("body", 0))
+        if _nb <= _ob:
+            fail("门控已解除时，把 composed 调高后 body 裸值**未上升** ⇒ "
+                 "body 维与 peer-to-peer 判据脱钩")
+        else:
+            ok(f"敏感性成立（门控已解除，改验 body 裸值）：composed 0 → 1000 ⇒ "
+               f"body {_ob}% → {_nb}%。"
+               "★ 此时总完成度可能几乎不动（composed 占 1/5，影响 ≈0.04pp "
+               "会被舍入吞掉）——这是门控语义扩展的必然结果，不是判据失效")
 
     # 门控有效性：门控只会压低不会抬高
     sc = rp.get("scoring") or {}
@@ -291,11 +467,13 @@ def check_sensitivity(rp) -> None:
     m2["raw_dimension_scores"] = n3
     m2["weighted_total_pct"] = round(
         sum(n3[k] * m2["weights"][k] for k in m2["weights"]), 1)
-    if m2["weighted_total_pct"] <= rp["weighted_total_pct"]:
-        fail("把 composed 调高后完成度未上升 ⇒ 对 peer-to-peer 不敏感")
+    _nb2 = round(sum(x["pct"] for x in m2["dimensions"]["body"])
+                 / len(m2["dimensions"]["body"]), 1)
+    _ob2 = float((rp.get("raw_dimension_scores") or {}).get("body", 0))
+    if _nb2 <= _ob2:
+        fail("把 composed 调高后 body 裸值未上升 ⇒ 对 peer-to-peer 不敏感")
     else:
-        ok(f"对 peer-to-peer 也敏感：composed ↑ ⇒ "
-           f"{rp['weighted_total_pct']}% → {m2['weighted_total_pct']}%")
+        ok(f"对 peer-to-peer 也敏感：composed ↑ ⇒ body {_ob2}% → {_nb2}%")
 
 
 def _mut_caliber_stripped(rp, label):
@@ -417,6 +595,8 @@ def _mut_gate_forced_zero(rp, label):
 MUTATIONS = [
     ("门控被绕过（在门控该生效时改用朴素值虚高）", _mut_gate_removed),
     ("门控被滥用（已回答的维度仍强行记 0）", _mut_gate_forced_zero),
+    ("溯源信息被抽掉（层的 owner 缺失）", _mut_layer_provenance_stripped),
+    ("契约 status 被抽掉（躯体性质未标注）", _mut_contract_status_stripped),
     ("分项 caliber 被清空", _mut_caliber_stripped),
     ("权重与裸值分叉（加权≠现算）", _mut_weight_mismatch),
     ("权重之和 ≠ 1.0", _mut_weight_not_sum_one),
