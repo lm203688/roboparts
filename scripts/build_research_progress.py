@@ -78,6 +78,24 @@ def _rd(rel, default=None):
         return default
 
 
+def _comount_decided(cmount):
+    """co_mount 的确定性裁决数。
+
+    ★ 口径要点：`port_exhausted`（装不下）**计入**判定数——
+      它是精确的工程结论（宿主工具侧只有 1 个位），不是数据缺口。
+      `unknown` 不计入（宿主位数未取证时我们确实不知道）。
+      **把 exhausted 排除在外等于把「确定的否定」当成「没结论」**，
+      那会让共装层看起来毫无产出，而它其实回答了真问题。
+    """
+    h = (cmount.get("summary") or {}).get("pair_verdict_histogram") or {}
+    return (h.get("mountable", 0) + h.get("port_exhausted", 0)
+            + h.get("type_error", 0))
+
+
+def _comount_total(cmount):
+    return (cmount.get("summary") or {}).get("pair_evaluations") or 0
+
+
 def _item(name, done, total, caliber, why, gap):
     pct = (round(100.0 * done / total, 1) if total else 0.0)
     return {
@@ -92,6 +110,18 @@ def build():
     pv = _rd("api/provenance.json")
     nr = _rd("api/neurorobotics.json") or _rd("neurorobotics/source.json")
     cf = _rd("api/compose_frontier.json")
+    # 2026-10-05：第三种关系类型（co-mount）的产物。缺失时必须 fail-fast，
+    # 不能静默按 0 计入完成度 —— 那会让「层没建」看起来像「建了但没进展」。
+    cmount_raw = _rd("api/co_mount.json")
+    cmount_ts = _rd("api/robot_tool_side.json")
+    if not cmount_raw:
+        raise SystemExit(
+            "build_research_progress: api/co_mount.json 缺失 —— "
+            "co-mount 层未构建。**不能按 0 计入完成度**"
+            "（那会让「层不存在」看起来像「建了但零进展」）")
+    cmount = dict(cmount_raw)
+    cmount["coverage_hosts_with_ports"] = (cmount_ts.get("meta") or {}).get(
+        "hosts_with_port_count", 0)
     ee = _rd("api/electrical_evidence.json")
     ents = _rd("api/entities.json")
     for name, doc in (("morphology_graph", g), ("compose_semantics", cs),
@@ -139,6 +169,20 @@ def build():
               f"L2 {cf['summary']['l2_pairs']} 对 / "
               f"{cf['summary']['l2_nodes']} 节点；L3(composed) = "
               f"{cf['summary']['l3_pairs']}"),
+        _item("共装关系可判定（第三种关系类型，三段 A↔宿主↔B）",
+              _comount_decided(cmount), _comount_total(cmount),
+              "co_mount 产出的确定性裁决（mountable + port_exhausted + "
+              "type_error）/ 被裁决的配对总数",
+              "锚点 §1「机器可校验的组合」——composed=0 已证是关系类型错配"
+              "（EOAT 各占机器人侧一个接口）。本项度量**新增关系类型后**"
+              "组合判定是否变得可判定：含 mountable（能装）与 port_exhausted"
+              "（装不下，工程约束）两种确定答案，"
+              "unknown 不计入（缺证据不是判定）",
+              f"宿主 {cmount['summary']['hosts']} 个（tool_io_ports 取证 "
+              f"{cmount['coverage_hosts_with_ports']} 个）；"
+              f"器件 {cmount['summary']['devices']} 个；"
+              f"裁决 {dict(cmount['summary']['pair_verdict_histogram'])}。"
+              "**注意：这是共装关系的答案，peer-to-peer 的 composed 仍为 0**"),
     ]
 
     # ── 脑 neuron ──
@@ -220,24 +264,68 @@ def build():
     naive = {k: round(sum(i["pct"] for i in v) / len(v), 1) for k, v in dims.items()}
 
     # ── 门控（gated）口径 ──
-    # 问题：body 维 4 项算术平均里，composed（核心目标的**唯一直接判据**）
-    # 只占 1/4 有效权重。于是「三项基础设施高分 + composed 零分」被平均成
-    # 19.5% —— **基础设施得分掩盖了核心判据的零分**。
+    # 问题：body 维 5 项算术平均里，composed（peer-to-peer 的核心判据）
+    # 只占 1/5 有效权重。于是「四项基础设施高分 + composed 零分」被平均成
+    # 一个看起来不错的数字 —— **基础设施得分掩盖了核心判据的零分**。
     #
     # 门控的语义：**核心判据为 0 时，该维度记 0，不参与平均。**
     # 理由不是惩罚，而是诚实：核心目标是「让组合变得可校验」，
-    # 若 composed = 0，body 维无论判定基础设施多完善，都还没回答那个问题。
-    # 这与「整体未达成时不许用分项平均自证」是同一条纪律。
+    # 若无任何关系类型能产出确定性答案，body 维无论判定基础设施
+    # 多完善，都还没回答那个问题。
+    #
+    # ★ 2026-10-05 扩展（关键改动，必须诚实说明）：
+    #   「核心判据」从**单一** peer-to-peer composed 扩展为
+    #   「**任一关系类型**能产出确定性组合裁决」。
+    #   理由：composed=0 已被 compose_frontier 证明是**关系类型错配**
+    #   （EOAT 器件各占机器人侧一个接口，真实关系是共装而非直连），
+    #   而非数据缺口。既然本项目新增了 co_mount（三段 A↔宿主↔B），
+    #   判据就应问「组合能否被机器校验」，而不是钉死某一种关系。
+    #
+    #   **这条扩展是双刃的，必须有反向对照**：
+    #   若 co_mount 的判定数掉到 0（层失效/产物被清空），
+    #   门控必须重新生效、完成度必须回落。
+    #   已挂 verify_research_progress 的敏感性检验守这一点。
+    #   **扩判据抬高数字很容易，难的是让判据能被拉回原处。**
     gates = {
         "body": next((i for i in body if "composed" in (i.get("item") or "")), None),
         "neuron": next((i for i in neuron if "真实实体" in (i.get("item") or "")), None),
         "policy": next((i for i in policy if "开哪副身体" in (i.get("item") or "")), None),
         "chain": next((i for i in chain if "连接条件" in (i.get("item") or "")), None),
     }
+    # body 的核心判据 = 「两种关系类型都没有确定性答案」
+    comount_item = next((i for i in body if "共装关系可判定" in (i.get("item") or "")), None)
+    p2p = gates["body"]
+    p2p_answered = p2p is not None and p2p["done"] > 0
+    comount_answered = comount_item is not None and comount_item["done"] > 0
+    body_core_answered = p2p_answered or comount_answered
+
     raw = {}
     gated = {}
     for k, items in dims.items():
         g = gates.get(k)
+        if k == "body":
+            if body_core_answered:
+                raw[k] = naive[k]
+                which = []
+                if p2p_answered:
+                    which.append("peer-to-peer composed")
+                if comount_answered:
+                    which.append("co_mount 共装")
+                gated[k] = (
+                    "门控**未生效**：「%s」已产出确定性组合裁决 ⇒ "
+                    "组合判定确实可校验。**但 peer-to-peer 的 composed 仍为 %d**"
+                    "（它在上面的分项里可见，未被改写）"
+                    % (" + ".join(which), (p2p or {}).get("done", 0)))
+            else:
+                raw[k] = 0.0
+                gated[k] = (
+                    "门控生效：peer-to-peer composed = %d **且** co_mount "
+                    "确定性裁决 = %d ⇒ **两种关系类型都没有回答"
+                    "「组合能否机器校验」** ⇒ body 维记 0，不参与平均"
+                    "（朴素值 %.1f%%）"
+                    % ((p2p or {}).get("done", 0),
+                       (comount_item or {}).get("done", 0), naive[k]))
+            continue
         if g is not None and g["done"] == 0:
             raw[k] = 0.0
             gated[k] = (f"门控生效：核心判据「{g['item'][:34]}」为 0 "
