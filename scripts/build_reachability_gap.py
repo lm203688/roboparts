@@ -63,6 +63,12 @@ RESEARCH_ARTIFACTS = {
     "cohort_feasibility.json": "最小可行同质集：取证判据（K=2 即可）",
     "evidence_valuation.json": "边际声明价值：零贡献轴的严格证明",
     "electrical_evidence.json": "连接器取证 + (family,pins,pinout) 三元组判据",
+    # 2026-10-05：第三种关系类型。compose_frontier 诊断出 composed=0 是
+    # 关系类型错配，本层是那个错配的**修复**——不登记它，
+    # 可达性闸门会以为「研究层只有诊断、没有落地」。
+    "co_mount.json": "共装裁决：第三种关系类型（三段 A↔宿主↔B）",
+    "robot_tool_side.json": "宿主工具侧接口取证（法兰/位数/连接器）",
+    "research_progress.json": "核心目标完成度判据（门控 + 朴素双口径）",
 }
 
 
