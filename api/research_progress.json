@@ -7,7 +7,7 @@
   "anchor": "docs/PROJECT_DIRECTIONS_V2.md §1",
   "generated_by": "scripts/build_research_progress.py",
   "truth_source": "api/{morphology_graph,compose_semantics,provenance,compose_frontier,electrical_evidence,entities}.json",
-  "generated_at": "2026-10-05T02:57:52+00:00",
+  "generated_at": "2026-10-05T03:07:41+00:00",
   "headline": "**门控加权完成度 21.9%**（朴素口径 21.9%）。门控口径下 body = 32%：**核心判据 composed = 0，所以 body 维记 0**——判定基础设施建成了（297 条类型级裁决 + 三元组判据 + 9 器件取证），但「让组合变得可校验」这个问题还没被回答。chain = 12%（4 个连接条件满足 1 个）。neuron = 0%、policy = 53%。",
   "honest_limits": [
    "**权重可争议**：body 0.40 / chain 0.30 / neuron 0.20 / policy 0.10，理由见 weight_rationale（来自锚点文本自身的排序，非主观偏好）。换一个口径数字就变——因此产物同时给出**四个维度的裸值**。",
