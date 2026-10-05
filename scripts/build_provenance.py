@@ -101,6 +101,16 @@ def build(with_timestamp=True):
     contracts = nr.get('signal_contracts') or []
     models = ram.get('data') or []
 
+    # 行为证据层统计（供层清单现读，避免硬编码分叉）
+    _beh = _load(os.path.join(ROOT, 'api', 'behavior_evidence.json')) or {}
+    _beh_all = [r for rs in (_beh.get('records') or {}).values() for r in rs]
+    _beh_rec = bool(_beh_all)
+    _beh_count = len(_beh_all)
+    _beh_real = sum(1 for r in _beh_all
+                    if r.get('trial_kind') == 'real' and r.get('value') is not None)
+    _beh_null = sum(1 for r in _beh_all if r.get('value') is None)
+    _beh_sim = sum(1 for r in _beh_all if r.get('trial_kind') == 'sim')
+
     # ── 层清单（全部现算） ──
     layers = [
         {
@@ -172,18 +182,30 @@ def build(with_timestamp=True):
         },
         {
             'id': 'behavior',
-            'title_zh': '行为 / 运行日志',
-            'owner': 'roboparts',
-            'available': 'declared_empty',
-            'count': 0,
-            'ref': None,
+            'title_zh': '行为 / 行为度量证据',
+            # ★ 层状态**现读**行为证据层，不硬编码。
+            #   实测踩过：L4 转绿后 layer_inventory 仍写 declared_empty
+            #   ⇒ **链说有、层说无** = 两处口径分叉（与可达性断层同型，
+            #   同样不报错、两边都自洽）。
+            'owner': 'external_papers' if _beh_rec else 'roboparts',
+            'available': 'partial' if _beh_rec else 'declared_empty',
+            'count': _beh_count,
+            'ref': '/api/behavior_evidence.json' if _beh_rec else None,
             'prov': {
-                'source': '暂无：本仓无任何具身运行日志',
-                'tier': None,
+                'source': ('论文/官方报告的 benchmark 行为度量（非本仓自造日志）'
+                           if _beh_rec else '暂无：本仓无任何行为证据'),
+                'tier': 'A' if _beh_rec else None,
                 'prov_o_class': 'entity',
-                'activity': None,
-                'agent': None,
-                'note': '行为层是链的终点。空即是空，不臆造。',
+                'activity': ('真机评测 + 官方报告' if _beh_rec else None),
+                'agent': ('各模型厂商 / 论文作者' if _beh_rec else None),
+                'note': (
+                    '实机有数值 %d 条 / 官方未报告数值 %d 条 / 仿真 %d 条。'
+                    '仿真与实机**严格分列**，不合并统计。'
+                    '**本仓不自造日志**——锚点 §3 禁止造仿真器/训练栈，'
+                    '故引用官方公开数字而非自己跑 rollout。'
+                    % (_beh_real, _beh_null, _beh_sim)
+                    if _beh_rec else
+                    '行为层是链的终点。空即是空，不臆造。'),
             },
         },
     ]
@@ -239,6 +261,16 @@ def build(with_timestamp=True):
                     if pat in fn.lower():
                         behavior_files.append(os.path.join(d, fn))
     l4_ok = bool(behavior_files)
+
+    # 行为证据层统计（供层清单现读，避免硬编码分叉）
+    _beh = _load(os.path.join(ROOT, 'api', 'behavior_evidence.json')) or {}
+    _beh_recs = _beh.get('records') or {}
+    _beh_all = [r for rs in _beh_recs.values() for r in rs]
+    _beh_real = sum(1 for r in _beh_all
+                    if r.get('trial_kind') == 'real' and r.get('value') is not None)
+    _beh_null = sum(1 for r in _beh_all if r.get('value') is None)
+    _beh_count = len(_beh_all)
+    _beh_rec = bool(_beh_all)
 
     links = [
         {'from': 'neuron', 'to': 'topology',
@@ -304,10 +336,26 @@ def build(with_timestamp=True):
                  'count': 0, 'ref': None,
                  'prov': {'source': '本链未涉及策略层', 'tier': None, 'prov_o_class': 'entity',
                           'activity': None, 'agent': None, 'note': None}},
-                {'id': 'behavior', 'owner': 'roboparts', 'available': 'declared_empty',
-                 'count': 0, 'ref': None,
-                 'prov': {'source': '本链未涉及行为层', 'tier': None, 'prov_o_class': 'entity',
-                          'activity': None, 'agent': None, 'note': None}},
+                # ★ 层状态必须**现读**行为证据层，不能硬编码。
+                #   实测踩过：L4 判据转绿（policy→behavior satisfied）后，
+                #   层清单仍写 'declared_empty'（本链未涉及行为层）
+                #   ⇒ **链说有、层说无** = 两处口径分叉。
+                #   这与「可达性断层」同型：事实不一致但两边都不报错。
+                {'id': 'behavior',
+                 'owner': ('external_papers' if _beh_rec else 'roboparts'),
+                 'available': ('partial' if _beh_rec else 'declared_empty'),
+                 'count': _beh_count,
+                 'ref': ('/api/behavior_evidence.json' if _beh_rec else None),
+                 'prov': {'source': ('论文/官方报告的 benchmark 行为度量'
+                                     '（非本仓自造日志，见 behavior_evidence'
+                                     '.meta.why_not_own_logs）') if _beh_rec
+                          else '本仓无行为层数据',
+                          'tier': ('A' if _beh_rec else None),
+                          'prov_o_class': 'entity',
+                          'activity': None, 'agent': None,
+                          'note': ('实机记录 %d 条（其中官方未报告数值 %d 条）；'
+                                   '仿真记录单列不与实机混算'
+                                   % (_beh_real, _beh_null)) if _beh_rec else None}},
             ],
             'links': [dict(l) for l in links],
             'dangling_at': dangling,
