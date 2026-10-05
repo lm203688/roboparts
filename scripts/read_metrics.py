@@ -253,7 +253,8 @@ BUSINESS_TOOLS = ('search_components', 'get_component_detail',
                   'explain_compose_frontier',
                   'explain_evidence_cohort', 'explain_evidence_mdv',
                   'explain_connector_types', 'get_research_progress',
-                  'check_co_mount', 'get_robot_tool_side')
+                  'check_co_mount', 'get_robot_tool_side',
+                  'get_behavior_evidence', 'get_body_binding')
 
 
 def mcp_report(total, n):
