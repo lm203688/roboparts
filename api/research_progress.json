@@ -7,8 +7,8 @@
   "anchor": "docs/PROJECT_DIRECTIONS_V2.md §1",
   "generated_by": "scripts/build_research_progress.py",
   "truth_source": "api/{morphology_graph,compose_semantics,provenance,compose_frontier,electrical_evidence,entities}.json",
-  "generated_at": "2026-10-04T09:05:15+00:00",
-  "headline": "**门控加权完成度 9.1%**（朴素口径 16.9%）。门控口径下 body = 0%：**核心判据 composed = 0，所以 body 维记 0**——判定基础设施建成了（297 条类型级裁决 + 三元组判据 + 9 器件取证），但「让组合变得可校验」这个问题还没被回答。chain = 12%（4 个连接条件满足 1 个）。neuron = 0%、policy = 53%。",
+  "generated_at": "2026-10-05T02:57:52+00:00",
+  "headline": "**门控加权完成度 21.9%**（朴素口径 21.9%）。门控口径下 body = 32%：**核心判据 composed = 0，所以 body 维记 0**——判定基础设施建成了（297 条类型级裁决 + 三元组判据 + 9 器件取证），但「让组合变得可校验」这个问题还没被回答。chain = 12%（4 个连接条件满足 1 个）。neuron = 0%、policy = 53%。",
   "honest_limits": [
    "**权重可争议**：body 0.40 / chain 0.30 / neuron 0.20 / policy 0.10，理由见 weight_rationale（来自锚点文本自身的排序，非主观偏好）。换一个口径数字就变——因此产物同时给出**四个维度的裸值**。",
    "**本层不预测未来工作量**，只描述当前状态。「完成了多少」问的是已达成，不问还差多少。",
@@ -46,19 +46,19 @@
  "scoring": {
   "mode": "gated",
   "naive_dimension_scores": {
-   "body": 19.5,
+   "body": 32.1,
    "neuron": 0.0,
    "policy": 53.2,
    "chain": 12.5
   },
   "gated_dimension_scores": {
-   "body": 0.0,
+   "body": 32.1,
    "neuron": 0.0,
    "policy": 53.2,
    "chain": 12.5
   },
   "gate_explanation": {
-   "body": "门控生效：核心判据「三轴 AND 能产出 composed（可校验组合的真正判据）」为 0 （0/213531）⇒ 该维度记 0，不参与平均（朴素值 19.5%）",
+   "body": "门控**未生效**：「co_mount 共装」已产出确定性组合裁决 ⇒ 组合判定确实可校验。**但 peer-to-peer 的 composed 仍为 0**（它在上面的分项里可见，未被改写）",
    "neuron": "门控生效：核心判据「信号契约落到真实实体（不是虚拟示例）」为 0 （0/1）⇒ 该维度记 0，不参与平均（朴素值 0.0%）",
    "policy": "无门控",
    "chain": "无门控"
@@ -67,12 +67,12 @@
   "both_reported": "两种口径都给出。加权值用门控口径（更保守），朴素值同时可见供对照——**换口径数字就变，故不藏任何一个**。"
  },
  "raw_dimension_scores": {
-  "body": 0.0,
+  "body": 32.1,
   "neuron": 0.0,
   "policy": 53.2,
   "chain": 12.5
  },
- "weighted_total_pct": 9.1,
+ "weighted_total_pct": 21.9,
  "dimensions": {
   "body": [
    {
@@ -110,6 +110,15 @@
     "caliber": "compose_frontier.l2_pairs / C(n,2)",
     "why_this_criterion": "锚点 §1「组合」——L2 是「共装可行性」的可判定域，是 composed>0 的必要前置",
     "remaining_gap": "L2 63 对 / 16 节点；L3(composed) = 0"
+   },
+   {
+    "item": "共装关系可判定（第三种关系类型，三段 A↔宿主↔B）",
+    "done": 297,
+    "total": 360,
+    "pct": 82.5,
+    "caliber": "co_mount 产出的确定性裁决（mountable + port_exhausted + type_error）/ 被裁决的配对总数",
+    "why_this_criterion": "锚点 §1「机器可校验的组合」——composed=0 已证是关系类型错配（EOAT 各占机器人侧一个接口）。本项度量**新增关系类型后**组合判定是否变得可判定：含 mountable（能装）与 port_exhausted（装不下，工程约束）两种确定答案，unknown 不计入（缺证据不是判定）",
+    "remaining_gap": "宿主 3 个（tool_io_ports 取证 2 个）；器件 16 个；裁决 {'type_error': 171, 'port_exhausted': 126, 'unknown': 63}。**注意：这是共装关系的答案，peer-to-peer 的 composed 仍为 0**"
    }
   ],
   "neuron": [
