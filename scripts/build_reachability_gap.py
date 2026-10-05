@@ -69,6 +69,10 @@ RESEARCH_ARTIFACTS = {
     "co_mount.json": "共装裁决：第三种关系类型（三段 A↔宿主↔B）",
     "robot_tool_side.json": "宿主工具侧接口取证（法兰/位数/连接器）",
     "research_progress.json": "核心目标完成度判据（门控 + 朴素双口径）",
+    # 2026-10-05：绑定层与行为层。policy/chain 两维的进展全靠它们，
+    # 不登记 => 可达性闸门会以为「只有 6 个产物可达」。
+    "open_vla_binding.json": "开源 VLA → 真实本体绑定（强度分档 + 阻塞登记）",
+    "behavior_evidence.json": "行为证据（真机 benchmark 度量，sim/real 分列）",
 }
 
 
