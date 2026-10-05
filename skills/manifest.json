@@ -342,6 +342,26 @@
       "params": []
     },
     {
+      "name": "roboparts-co-mount",
+      "title": "共装裁决（三段 A↔宿主↔B）",
+      "type": "mcp_tool",
+      "tool": "check_co_mount",
+      "description": "查询**共装**关系（第三种关系类型，三段 A↔宿主↔B）：某个机器人本体能否同时装下两个器件（典型问题：「这台 UR5e 能同时装夹爪和六轴力传感器吗」）。与 check_compatibility 的区别：后者判「A 能不能插进 B」（二段互插），本工具判「A 和 B 能不能同时挂在同一台机器人的工具侧」。★ 三段判据：机械同型 + 宿主工具侧位数预算 + 信号角色互补。port_exhausted 表示「**装不下**（工程约束，如需转接/换本体）」，与 unknown（「数据不足，不知道」）严格区分。只读、免鉴权。返回含 caliber 字段，口径与 check_compatibility 不同、不可混用。",
+      "when_to_use": "用户问「这台机器人能不能同时装夹爪 A 和传感器 B」「两个夹爪能一起装吗」「为什么判 port_exhausted」时。",
+      "guardrails": "只读透传研究层现算结论。**口径与 check_compatibility 不同、不可混用**：后者判二段互插，本工具判三段共装。port_exhausted = 装不下（工程约束，需转接/换本体），unknown = 数据不足（不知道）——**两者不可混为一谈**。",
+      "params": []
+    },
+    {
+      "name": "roboparts-tool-side",
+      "title": "宿主工具侧接口取证",
+      "type": "mcp_tool",
+      "tool": "get_robot_tool_side",
+      "description": "查询机器人本体的**工具侧接口取证**：工具法兰（ISO 9409-1 标号）、工具 I/O 位数、连接器型号与承载信号。适合回答「这台机器人工具侧有几个电气接口」「tool_io_ports 为什么是 null」「UR 的工具侧能挂几个传感器」。★ tool_io_ports 是**一手取证的整数位计数**（不是针数）；未取证者留 null，判据据此走 unknown，**不按型号名推断**。只读、免鉴权。",
+      "when_to_use": "用户问「这台机器人工具侧有几个电气接口」「tool_io_ports 是多少」「为什么 FR3 判 unknown」时。",
+      "guardrails": "只读透传。tool_io_ports 是**位计数（连接器数）不是针数**——UR 工具侧是单个 8-pin 连接器，位=1 针=8。未取证者留 null 并判 unknown，**不得按型号名推断**。",
+      "params": []
+    },
+    {
       "name": "roboparts-adapter-generate",
       "type": "web_resource",
       "title": "生成法兰转接件",
