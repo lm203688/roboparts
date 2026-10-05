@@ -300,6 +300,40 @@
       "guardrails": "★ 这是**一个口径**下的数字，不是客观测量。权重可争议。采用门控口径：核心判据 composed=0 时 body 维记 0——**判定基础设施建成不等于组合成立**，不得把基础设施得分当作核心目标已达成。"
     },
     {
+      "id": "roboparts-co-mount",
+      "name": "共装裁决（三段 A↔宿主↔B）",
+      "description": "用户问「这台机器人能不能同时装夹爪 A 和传感器 B」「两个夹爪能一起装吗」「为什么判 port_exhausted」时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "guardrails": "只读透传研究层现算结论。**口径与 check_compatibility 不同、不可混用**：后者判二段互插，本工具判三段共装。port_exhausted = 装不下（工程约束，需转接/换本体），unknown = 数据不足（不知道）——**两者不可混为一谈**。"
+    },
+    {
+      "id": "roboparts-tool-side",
+      "name": "宿主工具侧接口取证",
+      "description": "用户问「这台机器人工具侧有几个电气接口」「tool_io_ports 是多少」「为什么 FR3 判 unknown」时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "guardrails": "只读透传。tool_io_ports 是**位计数（连接器数）不是针数**——UR 工具侧是单个 8-pin 连接器，位=1 针=8。未取证者留 null 并判 unknown，**不得按型号名推断**。"
+    },
+    {
       "id": "roboparts-adapter-generate",
       "name": "生成法兰转接件",
       "description": "兼容性判定为不兼容、且根因是机械法兰不匹配时，直接产出解决方案而非只给结论。",
