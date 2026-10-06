@@ -1,0 +1,26 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare staging
+        run: |
+          mkdir -p .deploy-staging
+          rsync -a --exclude='.git' --exclude='.workbuddy' --exclude='ops' \
+                --exclude='node_modules' --exclude='__pycache__' --exclude='*.pyc' \
+                --exclude='.deploy-staging' ./. .deploy-staging/
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy .deploy-staging --project-name=robotparts
