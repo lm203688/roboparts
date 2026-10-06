@@ -18,7 +18,7 @@
    "gap_distance[d] = 恰有 d 轴判 unknown 的配对数（仅统计 overall=unknown；type_error 是类型冲突而非证据缺口，不计入）。d=1 即「补一轴声明即可判定」，是数据补录的最高优先级目标；gap_distance['0'] 恒为 0（无缺口就不可能是 unknown）。",
    "reflexivity 公理（同型必配）只对**几何规格型**类型成立（同标号法兰必然可装）；对**方向性角色型**类型（OUTPUT_SPIKE~OUTPUT_SPIKE）不成立——两个输出端不是必然可装，而是互为不互补。type_compat 里显式登记的自配对裁决优先于该公理。"
   ],
-  "generated_at": "2026-10-04T07:40:18+08:00"
+  "generated_at": "2026-10-06T23:20:12+08:00"
  },
  "rule_table": [
   {
@@ -86,7 +86,7 @@
     "reducers",
     "structural"
    ],
-   "node_count": 489,
+   "node_count": 492,
    "note": "物理执行/感知侧。"
   },
   "auxiliary": {
@@ -102,30 +102,30 @@
   }
  },
  "aggregates": {
-  "pairs_evaluated": 427716,
+  "pairs_evaluated": 430336,
   "overall_counts": {
    "composed": 0,
    "type_error": 114,
-   "unknown": 427602
+   "unknown": 430222
   },
   "axis_marginals": {
    "mechanical": {
     "compatible": 1958,
     "compatible_via_adapter": 2138,
     "incompatible": 0,
-    "unknown": 423620
+    "unknown": 426240
    },
    "electrical": {
     "compatible": 19,
     "compatible_via_adapter": 0,
     "incompatible": 114,
-    "unknown": 427583
+    "unknown": 430203
    },
    "signal": {
-    "compatible": 56620,
+    "compatible": 57000,
     "compatible_via_adapter": 0,
     "incompatible": 0,
-    "unknown": 371096
+    "unknown": 373336
    }
   },
   "mech_elec_cross": {
@@ -135,13 +135,13 @@
    "compatible|unknown": 1889,
    "unknown|compatible": 6,
    "unknown|incompatible": 58,
-   "unknown|unknown": 423556
+   "unknown|unknown": 426176
   },
   "gap_distance": {
    "0": 0,
    "1": 113,
-   "2": 60391,
-   "3": 367098
+   "2": 60771,
+   "3": 369338
   },
   "d1_bottleneck": {
    "mechanical": 0,
