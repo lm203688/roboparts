@@ -15,7 +15,7 @@
   "engine_version": "mdv/v1",
   "generated_by": "scripts/build_evidence_valuation.py",
   "truth_source": "api/morphology_graph.json（节点端口状态 + type_compat 双向索引） + scripts/compose_engine.py（PAIR_RANK / CompatIndex，单一真相源）",
-  "generated_at": "2026-10-05T13:55:43+00:00",
+  "generated_at": "2026-10-06T15:21:21+00:00",
   "honest_limits": [
    "MDV 是**上界**不是预测：假定补声明能补到该轴最有利的类型。真实补录可能落到不利类型，实际收益 ≤ MDV。故 MDV=0 是可靠判定（真值必为 0），MDV>0 的实际值未知。",
    "MDV **不可叠加**：补一条声明会同时改变多轴判定，故本表的 MDV 之和 ≠ 补齐后的可判定配对数。本表用于**排序**（先补哪条），不用于**累加预测**（补完能得多少）。",
@@ -49,17 +49,17 @@
   "complexity": "O(N² × 轴 × 类型²)，N=593 ⇒ 本机约 1 秒级，无需 GPU/网络。"
  },
  "summary": {
-  "nodes_evaluated": 654,
-  "total_pairs": 213531,
+  "nodes_evaluated": 656,
+  "total_pairs": 214840,
   "per_axis_decidable_pairs": {
    "mechanical": 2016,
    "electrical": 3,
-   "signal": 28310
+   "signal": 28500
   },
   "per_axis_density_pct": {
-   "mechanical": 0.9441,
+   "mechanical": 0.9384,
    "electrical": 0.0014,
-   "signal": 13.258
+   "signal": 13.2657
   },
   "two_axis_conjunction": {
    "mechanical+electrical": 2,
@@ -72,19 +72,19 @@
  },
  "by_axis": {
   "mechanical": {
-   "undeclared_nodes": 573,
+   "undeclared_nodes": 575,
    "positive_mdv_nodes": 0,
-   "zero_mdv_nodes": 573,
+   "zero_mdv_nodes": 575,
    "zero_mdv_pct": 100.0,
    "verdict": "provably_zero_mdv：该轴任何一条声明的边际可判定收益上界为 0，故无论投入多少取证，可判定配对数不增加——取证资源不应分配到此轴（**本条不受联合上界语义更正影响**：它要求另两轴已 True，是严格结论）",
    "top_targets": []
   },
   "electrical": {
-   "undeclared_nodes": 641,
+   "undeclared_nodes": 643,
    "positive_mdv_nodes": 7,
-   "zero_mdv_nodes": 634,
+   "zero_mdv_nodes": 636,
    "zero_mdv_pct": 98.91,
-   "verdict": "candidate_nodes：7/641（1.1%）条声明落在正收益候选集内。注意：正收益值是**联合上界**（假设对端同时被填充），补这些节点单独**不会**改变判定结果——正确判据见 api/cohort_feasibility.json",
+   "verdict": "candidate_nodes：7/643（1.1%）条声明落在正收益候选集内。注意：正收益值是**联合上界**（假设对端同时被填充），补这些节点单独**不会**改变判定结果——正确判据见 api/cohort_feasibility.json",
    "top_targets": [
     {
      "id": "SENS-047",
@@ -707,6 +707,8 @@
   "SENS-tesla-optimus-g3-suite::electrical": 0,
   "SENS-unitree-g1-lidar::electrical": 0,
   "SENS-unitree-h1-360depth::electrical": 0,
+  "SO-100::electrical": 0,
+  "SO-101::electrical": 0,
   "STR-001::electrical": 0,
   "STR-002::electrical": 0,
   "STR-003::electrical": 0,
@@ -1285,6 +1287,8 @@
   "SENS-tesla-optimus-g3-suite::mechanical": 0,
   "SENS-unitree-g1-lidar::mechanical": 0,
   "SENS-unitree-h1-360depth::mechanical": 0,
+  "SO-100::mechanical": 0,
+  "SO-101::mechanical": 0,
   "STR-001::mechanical": 0,
   "STR-002::mechanical": 0,
   "STR-003::mechanical": 0,
