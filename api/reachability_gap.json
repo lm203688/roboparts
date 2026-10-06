@@ -6,7 +6,7 @@
   "anchor": "docs/HEALTHCHECK_20261004.md §2",
   "generated_by": "scripts/build_reachability_gap.py",
   "truth_source": "functions/_lib/compat_engine.js（维度现算） + scripts/compose_engine.py（轴现算） + functions/ 全量静态引用扫描",
-  "generated_at": "2026-10-05T13:58:59+00:00",
+  "generated_at": "2026-10-06T15:23:50+00:00",
   "headline": "**0 / 10 个研究层产物在产品面（functions/，49 个源文件）零引用。**AI agent 实际调用的 `check_compatibility` 走 JS 引擎（四维），而三轴裁决、297 条类型级 type_compat、共装诊断、取证判据全部只存在于 Python 侧产物中，agent 触不到。",
   "honest_limits": [
    "本层**不做裁决**。哪套引擎应成为产品面真相源是产品决策，不是本脚本能定的；本层只把断层量化到可讨论的程度。",
@@ -175,36 +175,36 @@
   "caveat": "静态引用，下界（见 meta.honest_limits）"
  },
  "divergence_surface": {
-  "nodes": 654,
+  "nodes": 656,
   "research_layer_effective_ports_per_axis": {
    "mechanical": 81,
    "electrical": 13,
-   "signal": 393
+   "signal": 395
   },
   "research_layer_overall": {
    "composed": 0,
    "type_error": 114,
-   "unknown": 427602
+   "unknown": 430222
   },
   "product_layer_entity_field_coverage": {
    "protocol": {
     "count": 42,
-    "pct": 4.86
+    "pct": 4.84
    },
    "interface": {
     "count": 37,
-    "pct": 4.28
+    "pct": 4.26
    },
    "voltage": {
     "count": 42,
-    "pct": 4.86
+    "pct": 4.84
    },
    "ros_support": {
     "count": 49,
-    "pct": 5.66
+    "pct": 5.65
    }
   },
-  "entity_total": 865,
+  "entity_total": 868,
   "why_static": "两套引擎的输入结构不同（端口+类型级裁决 vs 声明字段），逐对对比需要同时驱动两个引擎；本层只登记**各自的可判定性基数**，分歧面由此估计，不做逐对实测——避免用一个 Python 脚本去'模拟'JS 引擎，那只会造出第三份口径。"
  },
  "decision_options": [
