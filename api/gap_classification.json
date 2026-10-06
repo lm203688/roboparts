@@ -4,20 +4,20 @@
     "title": "RoboParts 机械接口缺口成因分类（Gap-Cause Taxonomy）",
     "anchor": "docs/PROJECT_DIRECTIONS_V2.md §6.1（方向锚点 v2.2 · D-GAP）",
     "generated_by": "scripts/build_gap_classification.py",
-    "generated_at": "2026-10-05T13:54:50Z",
+    "generated_at": "2026-10-06T15:20:43Z",
     "open_standard_alignment": "分类维度可映射为 Croissant 1.1 数据集的 declaration_gap 属性（solved / na / proprietary / unpublished / ambiguous），PROV-O 溯源可由 source_tier 字段补出。"
   },
   "totals": {
-    "entities_total": 865,
+    "entities_total": 868,
     "mech_applicable": 500,
     "mech_declared": 81,
     "mech_not_declared": 419,
-    "mech_n_a": 365,
+    "mech_n_a": 368,
     "declared_pct": 16.2
   },
   "buckets": {
     "solved": 81,
-    "na": 365,
+    "na": 368,
     "open_gap": {
       "proprietary_suspect": 5,
       "unpublished_suspect": 355,
@@ -107,9 +107,9 @@
       "ambiguous": 0
     },
     "grippers": {
-      "total": 24,
+      "total": 26,
       "solved": 9,
-      "na": 0,
+      "na": 2,
       "proprietary_suspect": 0,
       "unpublished_suspect": 15,
       "ambiguous": 0
@@ -147,9 +147,9 @@
       "ambiguous": 0
     },
     "platforms": {
-      "total": 105,
+      "total": 106,
       "solved": 55,
-      "na": 13,
+      "na": 14,
       "proprietary_suspect": 0,
       "unpublished_suspect": 37,
       "ambiguous": 0
@@ -245,11 +245,11 @@
     ]
   },
   "signal_axis": {
-    "signal_ports_total": 393,
-    "declared_signal_ports": 393,
+    "signal_ports_total": 395,
+    "declared_signal_ports": 395,
     "declared_pct": 100.0,
     "roles": {
-      "SIG:OUTPUT_SPIKE": 298,
+      "SIG:OUTPUT_SPIKE": 300,
       "SIG:INPUT_SENSORY": 95
     },
     "note": "信号角色由品类映射派生（SIG_ROLE_BY_CATEGORY），非实体层字段——entities.json 无 signal_interface 键。此计数现读形态图，禁止手填。composed 仍为 0 的归因不要看本节，看 api/compose_semantics.json 的 aggregates.gap_distance / d1_bottleneck（配对级瓶颈定位）。"
