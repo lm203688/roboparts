@@ -6,7 +6,7 @@
   "anchor": "docs/RESEARCH_BARRIERS_20261003.md §3 H1",
   "upstream": "api/evidence_valuation.json（by_axis.electrical.top_targets）",
   "generated_by": "scripts/build_electrical_evidence.py",
-  "generated_at": "2026-10-05T13:58:53+00:00",
+  "generated_at": "2026-10-06T15:23:47+00:00",
   "headline_finding": "**连接器的类型键必须是 (family, pins, pinout) 三元组，缺一不可。**本层给出三条互相独立的实证：(1) 「M8」不是类型是家族——ATI Axia80 6-pin ZC22（24V+100BASE-TX）/ Robotiq 2F-85 5-pole（24V+RS-485）/ OnRobot HEX 5-pin，针数针序全不同，物理不可互插；(2) **同针数同针序也可能不可插**——Robotiq 2F-85 用 M8 5-pole、FT 300 用 M12 5-pin A-coded，两者针数(5)、针序、承载信号(24V+RS-485)完全相同，仅螺纹不同 ⇒ 不可互插。这一条骗过了「只比针数」的判定器，是 family 必须进键的最小反例；(3) 合法 identity 案例（FT 300 与 FT 300-S 同 family 同 variant）同时收录，防止判据退化成「同家族一律 incompatible」——那是方向相反的另一种臆断；(4) **同厂商不同系列的接口架构完全不同**：ATI Axia80 是 6-pin M8 ZC22 复合接口（24V + 100BASE-TX 一体），而 ATI Mini45 是 12-pin round Amphenol（传感器本体只出信号，供电与协议由外置电子学盒承担）。⇒ **按厂商名推断接口必错**，family 必须逐型号核实。",
   "honest_limits": [
    "覆盖度极低：已核实条数占电气未声明节点的比例见 coverage。本文件不宣称补齐电气轴，只证明这条取证方向有效且成本极低。",
@@ -449,7 +449,7 @@
   "mdv_positive_targets": 16,
   "evidenced_now": 9,
   "connectors_recorded": 11,
-  "electrical_undeclared_nodes": 641,
+  "electrical_undeclared_nodes": 643,
   "pct_of_undeclared": 1.4,
   "verdict": "已核实 9/16 个 MDV 正收益目标（占电气未声明节点 1.4%）。**本层不宣称补齐了电气轴**——它证明的是这条取证方向有效且单条成本极低（每个器件一份厂商针图），不是「已经补完」。"
  }
