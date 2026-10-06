@@ -7,7 +7,7 @@
   "supersedes_semantics_of": "api/evidence_valuation.json（MDV 层，见下）",
   "generated_by": "scripts/build_cohort_feasibility.py",
   "truth_source": "api/morphology_graph.json（节点端口状态 + type_compat） + scripts/compose_engine.py（PAIR_RANK / CompatIndex，单一真相源）",
-  "generated_at": "2026-10-05T13:58:30+00:00",
+  "generated_at": "2026-10-06T15:23:27+00:00",
   "why_this_layer_exists": "MDV 层把「联合上界」误标成了「单条边际值」。探针 8 用严格语义重算，证明单条边际值恒为 0；探针 7 端到端注入验证，单独补 MDV 列出的 16 个目标，电气可判定对数 1→1 持平，**预测未兑现**。本层是修正后的判据：约束是「最小可行同质集」而非「边际收益排序」。",
   "honest_limits": [
    "可行性判据用「补到该轴**最有利**类型」作乐观上界。真实补录可能落到不利类型 ⇒ **实际可行集 ⊆ 本表**。本表是候选可行集，不是保证可行集。",
@@ -42,14 +42,14 @@
   "complexity": "O(N² × 轴 × 类型²)，N=654 ⇒ 本机约 3 秒。"
  },
  "summary": {
-  "nodes_evaluated": 654,
-  "viable_pairs_k2": 155778,
-  "homogeneous_viable_pairs": 46092,
-  "homogeneous_share_pct": 29.59,
-  "nodes_in_any_viable_cohort": 627,
+  "nodes_evaluated": 656,
+  "viable_pairs_k2": 156468,
+  "homogeneous_viable_pairs": 46264,
+  "homogeneous_share_pct": 29.57,
+  "nodes_in_any_viable_cohort": 629,
   "min_viable_k": 2,
   "k1_status": "impossible（证明见 method.k1_impossible）",
-  "robustness": "同质可行对 46,092 对、涉及 627 个节点 —— 这是**结构性可行域**，不是刀尖上的巧合（若只有个位数对，该结论不可作为取证目标）。"
+  "robustness": "同质可行对 46,264 对、涉及 629 个节点 —— 这是**结构性可行域**，不是刀尖上的巧合（若只有个位数对，该结论不可作为取证目标）。"
  },
  "gap_profiles": [
   {
@@ -57,15 +57,15 @@
     "mechanical",
     "electrical"
    ],
-   "viable_pairs": 24252,
-   "nodes_involved": 368,
+   "viable_pairs": 24424,
+   "nodes_involved": 370,
    "min_declarations_per_node": 2,
    "category_distribution": {
     "actuators": 214,
     "sensors": 86,
     "flexible_actuators": 22,
+    "grippers": 17,
     "bionic_mechanisms": 16,
-    "grippers": 15,
     "reducers": 14,
     "integrated_joints": 1
    },
@@ -541,7 +541,7 @@
  ],
  "evidence_targeting": [
   "① 最低成本路径：缺口画像「缺 ['electrical']」——每节点只需 1 条声明，即可支撑 6 对可行配对，涉及 7 个节点（品类 ['grippers', 'actuators', 'sensors']）。",
-  "② 最广覆盖路径：缺口画像「缺 ['mechanical', 'electrical']」——支撑 24,252 对可行配对（占全部可行对 52.6%），但每节点需 2 条声明。",
+  "② 最广覆盖路径：缺口画像「缺 ['mechanical', 'electrical']」——支撑 24,424 对可行配对（占全部可行对 52.8%），但每节点需 2 条声明。",
   "③ 硬约束：**取证必须按同质集批量推送**。零散补单个器件永远不产生效果——单条声明的边际可判定收益实测恒为 0（见 meta.why_this_layer_exists）。"
  ],
  "mdv_reconciliation": {
