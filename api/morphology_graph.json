@@ -5,7 +5,7 @@
     "description": "把零件目录变成「可组合的形式对象」：实体为节点、接口为带类型的端口、端口类型之间带可判定裁决。二部结构（实体→端口类型→端口类型）而非实体×实体的全对边，因为 ISO 9409-1 的语义本身就是类型系统：法兰标号即类型，两件能装当且仅当标号一致或经转接盘。",
     "anchor": "docs/PROJECT_DIRECTIONS_V2.md §1（方向锚点 v2.2）",
     "generated_by": "scripts/build_morphology_graph.py",
-    "generated_at": "2026-10-04T08:31:14+08:00",
+    "generated_at": "2026-10-06T23:08:08+08:00",
     "truth_sources": [
       "api/entities.json",
       "api/mechanical_interfaces.json",
@@ -39,16 +39,16 @@
     ]
   },
   "summary": {
-    "nodes_total": 656,
-    "nodes_composable": 654,
-    "nodes_non_composable": 2,
+    "nodes_total": 659,
+    "nodes_composable": 656,
+    "nodes_non_composable": 3,
     "nodes_excluded_non_physical": {
       "software": 81,
       "market_intelligence": 17,
       "specification": 101,
       "organization": 10
     },
-    "ports_total": 1456,
+    "ports_total": 1460,
     "port_status_by_axis": {
       "mechanical": {
         "partial": 14,
@@ -57,10 +57,10 @@
       },
       "electrical": {
         "declared": 16,
-        "not_declared": 532
+        "not_declared": 534
       },
       "signal": {
-        "declared": 393
+        "declared": 395
       }
     },
     "port_types_total": 36,
@@ -69,7 +69,7 @@
       "electrical": 15,
       "signal": 3
     },
-    "edges_entity_to_port": 1456,
+    "edges_entity_to_port": 1460,
     "type_compat_pairs": 297,
     "type_compat_histogram": {
       "mechanical/identity": 9,
@@ -83,7 +83,7 @@
     },
     "unknown_hub_fanin": 419,
     "gap_hubs": {
-      "ELEC:UNKNOWN": 532,
+      "ELEC:UNKNOWN": 534,
       "MECH:UNKNOWN": 419
     },
     "mechanical_accounting": {
@@ -91,7 +91,7 @@
       "declared": 67,
       "partial": 14,
       "not_declared": 419,
-      "n_a": 365,
+      "n_a": 368,
       "registered_rate_pct": 16.2,
       "truth_source": "scripts/onboarding_block.py::facts()"
     }
@@ -968,6 +968,8 @@
         "SENS-tesla-optimus-g3-suite",
         "SENS-unitree-g1-lidar",
         "SENS-unitree-h1-360depth",
+        "SO-100",
+        "SO-101",
         "SUPERDEX-2f-85",
         "TDN-dyneema-sk75",
         "TDN-sava-cable",
@@ -1035,7 +1037,7 @@
         "source": "构造类型：电气接口未声明",
         "note": "电气轴覆盖率极低（见 electrical_interfaces.coverage），本类型为显式缺口。"
       },
-      "consumer_count": 532,
+      "consumer_count": 534,
       "in_use": true
     },
     {
@@ -2257,6 +2259,8 @@
         "REDUCER-RV-200",
         "REDUCER-RV-50",
         "SEAL-klueber-nbu15",
+        "SO-100",
+        "SO-101",
         "SUPERDEX-2f-85",
         "TDN-dyneema-sk75",
         "TDN-sava-cable",
@@ -2297,7 +2301,7 @@
         "tier": "B",
         "note": "schema 已定义该层；当前库内 0 条完整信号契约，故端点全为 not_declared。"
       },
-      "consumer_count": 298,
+      "consumer_count": 300,
       "in_use": true
     },
     {
@@ -18917,6 +18921,84 @@
       }
     },
     {
+      "id": "SO-100",
+      "label": "SO-100 夹爪（LeRobot v1）",
+      "kind": "component",
+      "entity_kind": "component",
+      "category": "grippers",
+      "manufacturer": "LeRobot / HuggingFace",
+      "composable": true,
+      "ports": [
+        {
+          "type": "ELEC:UNKNOWN",
+          "status": "not_declared"
+        },
+        {
+          "type": "SIG:OUTPUT_SPIKE",
+          "status": "declared",
+          "role_basis": "signal_interface.schema.json#properties.mappings 角色语义 + 品类映射",
+          "caveat": "品类级推断（Tier B），非厂商 datasheet 实测；声明的是信号**角色**，不代表该零件存在已标定的信号接头",
+          "prov_override": {
+            "source": "signal_interface.schema.json#properties.mappings 角色语义 + 品类映射",
+            "tier": "B",
+            "note": "品类级推断（Tier B），非厂商 datasheet 实测；声明的是信号**角色**，不代表该零件存在已标定的信号接头"
+          }
+        }
+      ],
+      "prov": {
+        "source": "HF 官方博客 SmolVLA「Hardware used to train and evaluate SO-100/101」段落 + leijg/SO-ARM100 开源仓 CAD",
+        "tier": "A",
+        "retrieved": "2026-10-06"
+      }
+    },
+    {
+      "id": "SO-101",
+      "label": "SO-101 夹爪（LeRobot v2）",
+      "kind": "component",
+      "entity_kind": "component",
+      "category": "grippers",
+      "manufacturer": "LeRobot / HuggingFace",
+      "composable": true,
+      "ports": [
+        {
+          "type": "ELEC:UNKNOWN",
+          "status": "not_declared"
+        },
+        {
+          "type": "SIG:OUTPUT_SPIKE",
+          "status": "declared",
+          "role_basis": "signal_interface.schema.json#properties.mappings 角色语义 + 品类映射",
+          "caveat": "品类级推断（Tier B），非厂商 datasheet 实测；声明的是信号**角色**，不代表该零件存在已标定的信号接头",
+          "prov_override": {
+            "source": "signal_interface.schema.json#properties.mappings 角色语义 + 品类映射",
+            "tier": "B",
+            "note": "品类级推断（Tier B），非厂商 datasheet 实测；声明的是信号**角色**，不代表该零件存在已标定的信号接头"
+          }
+        }
+      ],
+      "prov": {
+        "source": "HF 官方博客 SmolVLA「Hardware used to train and evaluate SO-100/101」段落",
+        "tier": "A",
+        "retrieved": "2026-10-06"
+      }
+    },
+    {
+      "id": "SO-ARM100",
+      "label": "SO-ARM100 6-DoF 机械臂",
+      "kind": "platform",
+      "entity_kind": "platform",
+      "category": "platforms",
+      "manufacturer": "LeRobot / TheRobotStudio",
+      "composable": false,
+      "ports": [],
+      "prov": {
+        "source": "GitHub 上游开源仓 TheRobotStudio/SO-ARM100 + HF 官方博客 SmolVLA「Hardware used to train and evaluate」段落",
+        "tier": "A",
+        "retrieved": "2026-10-06"
+      },
+      "non_composable_reason": "无任何端口：既无机械接口记录（或无适用声明的品类外），也不属预期有电气接口的品类——本图无法据此断言其可组合性"
+    },
+    {
       "id": "STR-001",
       "label": "MISUMI Aluminum Extrusion",
       "kind": "component",
@@ -35125,6 +35207,50 @@
     {
       "from": "SENS-unitree-h1-360depth",
       "to": "SIG:INPUT_SENSORY",
+      "type": "has_signal_port",
+      "status": "declared",
+      "prov": {
+        "source": "signal_interface.schema.json#properties.mappings 角色语义 + 品类映射",
+        "tier": "B",
+        "note": "品类级推断（Tier B），非厂商 datasheet 实测；声明的是信号**角色**，不代表该零件存在已标定的信号接头"
+      }
+    },
+    {
+      "from": "SO-100",
+      "to": "ELEC:UNKNOWN",
+      "type": "has_electrical_port",
+      "status": "not_declared",
+      "prov": {
+        "source": "api/entities.json#SO-100",
+        "tier": "A",
+        "retrieved": "2026-10-06"
+      }
+    },
+    {
+      "from": "SO-100",
+      "to": "SIG:OUTPUT_SPIKE",
+      "type": "has_signal_port",
+      "status": "declared",
+      "prov": {
+        "source": "signal_interface.schema.json#properties.mappings 角色语义 + 品类映射",
+        "tier": "B",
+        "note": "品类级推断（Tier B），非厂商 datasheet 实测；声明的是信号**角色**，不代表该零件存在已标定的信号接头"
+      }
+    },
+    {
+      "from": "SO-101",
+      "to": "ELEC:UNKNOWN",
+      "type": "has_electrical_port",
+      "status": "not_declared",
+      "prov": {
+        "source": "api/entities.json#SO-101",
+        "tier": "A",
+        "retrieved": "2026-10-06"
+      }
+    },
+    {
+      "from": "SO-101",
+      "to": "SIG:OUTPUT_SPIKE",
       "type": "has_signal_port",
       "status": "declared",
       "prov": {
