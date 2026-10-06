@@ -64,24 +64,21 @@ BINDINGS = {
         "source_tier": "A",
         "confidence": 0.95,
     },
-    "LLM-029": {   # SmolVLA
-        "body_robot": [],                     # ★ 刻意为空——本体不在库内
-        "strength": "blocked_missing_body",
+    "LLM-029": {   # SmolVLA —— 2026-10-06 解阻塞
+        # ★ 2026-10-06 状态变更：SO-100 / SO-101 / SO-ARM100 已通过
+        #   scripts/build_so_lerobot.py 摄入 entities.json（tier A 一手出处）。
+        #   绑定从 blocked_missing_body → validated。
+        "body_robot": ["SO-100", "SO-101"],
+        "strength": "validated",
         "strength_basis": (
-            "**阻塞而非绑定**：HuggingFace 官方博客明确写「Hardware used to "
-            "train and evaluate SO-100/101: github.com/TheRobotStudio/SO-ARM100」"
-            "⇒ 绑定依据充分。**但 SO-100/SO-101 不在 entities.json 里**"
-            "（实测：全库 865 实体零命中），按纪律 1 **不绑**——"
-            "绑到库内不存在的实体等于凭空断言。"),
-        "candidate_body_robot": ["SO-100", "SO-101"],
-        "blocked_by": "本体未入库：SO-100 / SO-101 在 entities.json 中不存在",
-        "unblock_action": (
-            "按 data_acquisition 四条合法通道之一摄入 SO-ARM100："
-            "① 厂商/项目一手文档（github.com/TheRobotStudio/SO-ARM100 为"
-            "上游开源仓，属通道④）② 用户提交带出处"),
+            "HuggingFace 官方博客明确写「Hardware used to train and evaluate "
+            "SO-100/101: github.com/TheRobotStudio/SO-ARM100」——真机评测跑在 "
+            "SO-100/SO-101 上，非仅仿真或仅微调。且 SMOLVLA 权重与 rollout "
+            "视频均标注 SO-100/101。2026-10-06 SO-100/101 已入库，绑定生效。"),
         "source_url": "https://huggingface.co/blog/smolvla",
         "source": ("HuggingFace 官方博客 SmolVLA TL;DR + "
-                   "「Hardware used to train and evaluate SO-100/101」链接段"),
+                   "「Hardware used to train and evaluate SO-100/101」链接段 + "
+                   "github.com/TheRobotStudio/SO-ARM100"),
         "source_tier": "A",
         "confidence": 0.9,
     },
