@@ -7,16 +7,16 @@
   "anchor": "docs/PROJECT_DIRECTIONS_V2.md §1",
   "generated_by": "scripts/build_research_progress.py",
   "truth_source": "api/{morphology_graph,compose_semantics,provenance,compose_frontier,electrical_evidence,entities}.json",
-  "generated_at": "2026-10-05T13:59:00+00:00",
-  "headline": "**门控加权完成度 62.2%**（朴素口径 62.2%）。body = 48%（关系类型 2/2 已覆盖，但确定性裁决率仍仅 0.1%——**能判出确定的负答案，不等于能判出正答案**）；neuron = 100%（判据纠正后：量的是溯源诚实度，非数据量）；chain = 50%（**本域**三段 2/2 闭合，跨域全链 0/1）；policy = 78%（开源模型 4/5 有真实本体绑定）。",
+  "generated_at": "2026-10-06T15:23:50+00:00",
+  "headline": "**门控加权完成度 63.2%**（朴素口径 63.2%）。body = 48%（关系类型 2/2 已覆盖，但确定性裁决率仍仅 0.1%——**能判出确定的负答案，不等于能判出正答案**）；neuron = 100%（判据纠正后：量的是溯源诚实度，非数据量）；chain = 50%（**本域**三段 2/2 闭合，跨域全链 0/1）；policy = 88%（开源模型 4/5 有真实本体绑定）。",
   "why_not_100": {
    "summary": "**不是「还没做完」，是三类性质完全不同的缺口混在一个分数里。**把它们分开看，才能知道哪部分能补、哪部分不该补。",
    "categories": [
     {
      "kind": "真缺口（可工程推进）",
      "examples": [
-      "确定性裁决率 0.1%：213531 对里仅 114 对给出确定答案，其余全 unknown——补一手取证即可提升",
-      "跨角色机械可判定率 0.2%：L1 28310 对中仅 63 对机械已可判定",
+      "确定性裁决率 0.1%：214840 对里仅 114 对给出确定答案，其余全 unknown——补一手取证即可提升",
+      "跨角色机械可判定率 0.2%：L1 28500 对中仅 63 对机械已可判定",
       "类型级裁决 297/558：机械轴仍有大量 proprietary 对未取证（厂商不给几何）",
       "co_mount 297/360：宿主库只有 3 个本体，补本体可线性提升"
      ]
@@ -78,13 +78,13 @@
   "naive_dimension_scores": {
    "body": 48.5,
    "neuron": 100.0,
-   "policy": 78.2,
+   "policy": 88.2,
    "chain": 50.0
   },
   "gated_dimension_scores": {
    "body": 48.5,
    "neuron": 100.0,
-   "policy": 78.2,
+   "policy": 88.2,
    "chain": 50.0
   },
   "gate_explanation": {
@@ -99,20 +99,20 @@
  "raw_dimension_scores": {
   "body": 48.5,
   "neuron": 100.0,
-  "policy": 78.2,
+  "policy": 88.2,
   "chain": 50.0
  },
- "weighted_total_pct": 62.2,
+ "weighted_total_pct": 63.2,
  "dimensions": {
   "body": [
    {
     "item": "三轴 AND 能产出确定性裁决（确定的正/负答案都算）",
     "done": 114,
-    "total": 213531,
+    "total": 214840,
     "pct": 0.1,
     "caliber": "(compose_semantics.composed + type_error) / C(n,2) 无序对空间。**只有 unknown 才是缺口**——type_error 是「确定不兼容」，是判定能力而非未做",
     "why_this_criterion": "锚点 §1「机器可校验的组合」——能给出**确定答案**（可兼容或确定不兼容）才算判定能力成立；unknown 是证据缺口，两者不可混为一谈",
-    "remaining_gap": "114 对给了确定答案（composed 0 + type_error 114），其余 427602 对为 unknown。composed=0 已证是**关系类型错配**（见 compose_frontier / co_mount），不是判定能力缺失"
+    "remaining_gap": "114 对给了确定答案（composed 0 + type_error 114），其余 430222 对为 unknown。composed=0 已证是**关系类型错配**（见 compose_frontier / co_mount），不是判定能力缺失"
    },
    {
     "item": "关系类型覆盖（peer-to-peer 与 co-mount 两类都在用）",
@@ -144,11 +144,11 @@
    {
     "item": "跨角色配对的机械可判定率",
     "done": 63,
-    "total": 28310,
+    "total": 28500,
     "pct": 0.2,
     "caliber": "compose_frontier.l2_pairs / l1_pairs。**分母是有资格被判的跨角色配对**，不是全体对",
     "why_this_criterion": "锚点 §1「组合」——L1 是跨角色（signal 必要条件）配对空间，L2 是其中机械已可判定者。**同角色配对本该判 type_error，不该算缺口**",
-    "remaining_gap": "L1 28310 对 → L2 63 对（16 节点）；L3(composed) = 0"
+    "remaining_gap": "L1 28500 对 → L2 63 对（16 节点）；L3(composed) = 0"
    },
    {
     "item": "共装关系可判定（第三种关系类型，三段 A↔宿主↔B）",
@@ -183,12 +183,12 @@
   "policy": [
    {
     "item": "开源模型能指定「开哪副身体」（引用真实实体 id）",
-    "done": 4,
+    "done": 5,
     "total": 5,
-    "pct": 80.0,
+    "pct": 100.0,
     "caliber": "开源模型中 body_robot 命中 entities.json[].id 的条目 / **开源模型总数**（闭源无公开验证栈，不计入分母）",
     "why_this_criterion": "provenance 的 body→policy 连接条件原文：「模型要能'开哪副身体'才谈得上链」。该判据要求**可核对的验证硬件栈**，闭源模型不满足该前提",
-    "remaining_gap": "5 个开源模型中 4 个有真实实体绑定。**41 个闭源模型未计入分母**（RT-2 / π0 等无公开验证栈，绑定只能靠编造）"
+    "remaining_gap": "5 个开源模型中 5 个有真实实体绑定。**41 个闭源模型未计入分母**（RT-2 / π0 等无公开验证栈，绑定只能靠编造）"
    },
    {
     "item": "策略层数据有一手可核验出处（非厂商目录声称）",
