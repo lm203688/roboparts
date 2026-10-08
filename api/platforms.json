@@ -22,8 +22,8 @@
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
-  "count": 105,
-  "updated": "2026-10-03T16:37:48.968862Z",
+  "count": 106,
+  "updated": "2026-10-08T13:52:24.878951Z",
   "data": [
     {
       "id": "ACT-patsnap-actuator",
@@ -5646,6 +5646,45 @@
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
       "rp_id": "SUPERDEX-openarm-v20-torso"
+    },
+    {
+      "id": "SO-ARM100",
+      "name": "SO-ARM100 6-DoF 机械臂",
+      "name_en": "SO-ARM100 6-DoF robotic arm (LeRobot)",
+      "category": "platforms",
+      "entity_kind": "component",
+      "manufacturer": "LeRobot / TheRobotStudio",
+      "manufacturer_en": "LeRobot / TheRobotStudio",
+      "type": "open_source_arm",
+      "description": "开源 6-DoF 桌面级机械臂，配 SO-100/SO-101 夹爪，通过 LeRobot SDK 控制。HuggingFace SmolVLA 的训练与评测硬件栈主体。",
+      "description_en": "Open-source 6-DoF desktop robotic arm with SO-100/SO-101 gripper, controlled via LeRobot SDK. Body of HuggingFace SmolVLA's training/evaluation stack.",
+      "year": 2024,
+      "status": "open_source_active",
+      "open_source": true,
+      "source_tier": "A",
+      "source_url": "https://github.com/TheRobotStudio/SO-ARM100",
+      "source": "GitHub 上游开源仓 TheRobotStudio/SO-ARM100 + HF 官方博客 SmolVLA「Hardware used to train and evaluate」段落",
+      "confidence": 0.95,
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "last_verified": "2026-10-06",
+      "entity_origin": "upstream_open_source_ingestion",
+      "mechanical_interface": {
+        "status": "n_a",
+        "declared_note": "SO-ARM100 是集成式机械臂，末端与 SO-100/101 夹爪通过内部结构件连接，无对外工具法兰。上游开源仓与 HF 官方博客均未给出工具侧 ISO 法兰标准，故**刻意不填**——编造法兰标准属凭空断言。",
+        "source_url": "https://github.com/TheRobotStudio/SO-ARM100",
+        "confidence": 0.9,
+        "retrieved": "2026-10-06",
+        "gap": "工具侧法兰标准未在公开一手文档中声明 ⇒ 判据走 not_applicable，不伪装为 declared 状态。"
+      },
+      "electrical_interface": null,
+      "evidence_gap": {
+        "axis": "mechanical + electrical",
+        "reason": "上游开源仓未公开工具侧法兰标准与外部电气接口，故机械与电气均不填声明——**不为了完成度而编造**"
+      },
+      "rp_id": "RP-PLA-0042",
+      "source_tier_basis": "deep_link:github.com/TheRobotStudio/SO-ARM100"
     }
   ]
 }
