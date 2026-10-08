@@ -22,8 +22,8 @@
       "neutrality": "本平台不生产、不代理任何零部件，与所收录厂商无销售利益关系。"
     }
   },
-  "count": 24,
-  "updated": "2026-10-03T16:37:48.968862Z",
+  "count": 26,
+  "updated": "2026-10-08T13:52:24.878951Z",
   "data": [
     {
       "verified": true,
@@ -502,7 +502,7 @@
     },
     {
       "id": "GRIPPER-ONR-VG1",
-      "rp_id": "RP-GRI-0001",
+      "rp_id": "RP1-GRI-0001",
       "name": "OnRobot VG1 气动夹爪",
       "name_en": "OnRobot VG1 Vacuum Gripper",
       "category": "grippers",
@@ -550,7 +550,7 @@
     },
     {
       "id": "GRIPPER-ONR-NG1",
-      "rp_id": "RP-GRI-0002",
+      "rp_id": "RP1-GRI-0002",
       "name": "OnRobot NG10 电动夹爪",
       "name_en": "OnRobot NG10 Robotic Gripper",
       "category": "grippers",
@@ -598,7 +598,7 @@
     },
     {
       "id": "GRIPPER-ONR-NG30",
-      "rp_id": "RP-GRI-0003",
+      "rp_id": "RP1-GRI-0003",
       "name": "OnRobot NG30 电动夹爪",
       "name_en": "OnRobot NG30 Robotic Gripper",
       "category": "grippers",
@@ -646,7 +646,7 @@
     },
     {
       "id": "GRIPPER-SCHUNK-SWG15",
-      "rp_id": "RP-GRI-0004",
+      "rp_id": "RP1-GRI-0004",
       "name": "Schunk SWG 15 气动夹爪",
       "name_en": "Schunk SWG 15 Parallel Gripper",
       "category": "grippers",
@@ -693,7 +693,7 @@
     },
     {
       "id": "GRIPPER-POS-2F20",
-      "rp_id": "RP-GRI-0005",
+      "rp_id": "RP1-GRI-0005",
       "name": "正实 2F-20 电动夹爪",
       "name_en": "ZhenShi 2F-20 Electric Gripper",
       "category": "grippers",
@@ -1400,6 +1400,84 @@
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
       "rp_id": "SUPERDEX-2f-85"
+    },
+    {
+      "id": "SO-100",
+      "name": "SO-100 夹爪（LeRobot v1）",
+      "name_en": "SO-100 gripper (LeRobot v1)",
+      "category": "grippers",
+      "entity_kind": "component",
+      "manufacturer": "LeRobot / HuggingFace",
+      "manufacturer_en": "LeRobot / HuggingFace",
+      "type": "parallel_jaw",
+      "description": "LeRobot 开源平行夹爪 v1，由 2 个微型舵机驱动，SO-ARM100 的标准末端执行器。SmolVLA 的训练硬件之一。",
+      "description_en": "LeRobot open-source parallel-jaw gripper v1, driven by 2 micro servos. Standard end effector of SO-ARM100. One of SmolVLA's training hardware.",
+      "year": 2024,
+      "status": "open_source_active",
+      "open_source": true,
+      "source_tier": "A",
+      "source_url": "https://huggingface.co/blog/smolvla",
+      "source": "HF 官方博客 SmolVLA「Hardware used to train and evaluate SO-100/101」段落 + leijg/SO-ARM100 开源仓 CAD",
+      "confidence": 0.9,
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "last_verified": "2026-10-06",
+      "entity_origin": "upstream_open_source_ingestion",
+      "mechanical_interface": {
+        "status": "n_a",
+        "declared_note": "SO-100 是舵机直驱平行夹爪（2 × MG90S 类舵机），内部固定于 SO-ARM100 末端法兰，**无对外工具法兰**。上游开源仓未给出工业标准接口，故不填声明。",
+        "source_url": "https://github.com/TheRobotStudio/SO-ARM100",
+        "confidence": 0.85,
+        "retrieved": "2026-10-06",
+        "gap": "无对外法兰，不适用 ISO 9409 系列声明。"
+      },
+      "electrical_interface": null,
+      "evidence_gap": {
+        "axis": "mechanical + electrical",
+        "reason": "舵机直驱夹爪无工业标准接口，上游开源仓未公开，不为了完成度编造。"
+      },
+      "rp_id": "RP-GRI-0020",
+      "source_tier_basis": "deep_link:huggingface.co/blog/smolvla"
+    },
+    {
+      "id": "SO-101",
+      "name": "SO-101 夹爪（LeRobot v2）",
+      "name_en": "SO-101 gripper (LeRobot v2)",
+      "category": "grippers",
+      "entity_kind": "component",
+      "manufacturer": "LeRobot / HuggingFace",
+      "manufacturer_en": "LeRobot / HuggingFace",
+      "type": "parallel_jaw",
+      "description": "LeRobot 开源平行夹爪 v2（SO-100 升级版），改进结构更坚固。SmolVLA 的训练硬件之一。",
+      "description_en": "LeRobot open-source parallel-jaw gripper v2 (SO-100 upgrade), with improved mechanical rigidity. One of SmolVLA's training hardware.",
+      "year": 2025,
+      "status": "open_source_active",
+      "open_source": true,
+      "source_tier": "A",
+      "source_url": "https://huggingface.co/blog/smolvla",
+      "source": "HF 官方博客 SmolVLA「Hardware used to train and evaluate SO-100/101」段落",
+      "confidence": 0.9,
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "last_verified": "2026-10-06",
+      "entity_origin": "upstream_open_source_ingestion",
+      "mechanical_interface": {
+        "status": "n_a",
+        "declared_note": "SO-101 是舵机直驱平行夹爪，无对外工具法兰（同 SO-100）。",
+        "source_url": "https://github.com/TheRobotStudio/SO-ARM100",
+        "confidence": 0.85,
+        "retrieved": "2026-10-06",
+        "gap": "无对外法兰，不适用 ISO 9409 系列声明。"
+      },
+      "electrical_interface": null,
+      "evidence_gap": {
+        "axis": "mechanical + electrical",
+        "reason": "同 SO-100。"
+      },
+      "rp_id": "RP-GRI-0021",
+      "source_tier_basis": "deep_link:huggingface.co/blog/smolvla"
     }
   ]
 }
