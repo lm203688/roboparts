@@ -75,7 +75,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 .acard p{color:var(--mut);font-size:13.5px;margin:0 0 10px;flex:1}
 @media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
 </style>
-<!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"865 条实体（其中 656 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
+<!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"868 条实体（其中 659 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
 </head>
 <body>
 <div class="nav"><div class="in">
@@ -179,7 +179,7 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <p>正在构建或维修开源机器人？用 RoboParts 把零件兼容性一次性查清。</p>
 <hr></article><div class="cta">
 <h3>把这篇文章的结论直接跑一遍</h3>
-<p>RoboParts 收录 <strong>865 个机器人零部件实体</strong>与 <strong>325 个开源项目组件</strong>，支持电气 / 机械 / 协议 / 软件四维兼容判定。文中提到的型号大多可直接检索。</p>
+<p>RoboParts 收录 <strong>868 个机器人零部件实体</strong>与 <strong>325 个开源项目组件</strong>，支持电气 / 机械 / 协议 / 软件四维兼容判定。文中提到的型号大多可直接检索。</p>
 <a class="btn" href="/bom-checker">免费校验我的 BOM</a>
 <a class="btn ghost" href="/oss">浏览开源组件库</a>
 <a class="btn ghost" href="/api/data.json">下载结构化数据 (JSON)</a>
@@ -215,7 +215,7 @@ background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px
 
 <h3>最省事的方式 · MCP 托管端点（不用领 key、不用装包、不用起进程）</h3>
 <p>支持 MCP 的运行环境直接填这个地址即可，提供
-<span data-rp="mcp_tool_count">11</span> 个工具（search_components / get_component_detail / check_compatibility / compare_components / recommend_for_application / get_parameter_semantics / bom_compatibility_check / semantic_search / get_standard_audit / review_compatibility / lint_urdf）：</p>
+<span data-rp="mcp_tool_count">20</span> 个工具（search_components / get_component_detail / check_compatibility / compare_components / recommend_for_application / get_parameter_semantics / bom_compatibility_check / semantic_search / get_standard_audit / review_compatibility / lint_urdf / explain_compose_frontier / explain_evidence_cohort / explain_evidence_mdv / explain_connector_types / get_research_progress / check_co_mount / get_robot_tool_side / get_behavior_evidence / get_body_binding）：</p>
 <pre class="rp-code"><code><span data-rp="mcp_endpoint">https://roboparts.cc/mcp</span></code></pre>
 <p>已收录于官方 MCP Registry，规范名
 <code><span data-rp="mcp_registry_name">cc.roboparts/roboparts</span></code>
@@ -237,8 +237,8 @@ background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px
 
 <h3>免鉴权直读（引用数据不需要任何 key）</h3>
 <ul class="rp-eps">
-<li><a href="/api/entities.json"><code>/api/entities.json</code></a> — <span data-rp="total_entities">865</span> 条实体，其中
-<span data-rp="component_entities">656</span> 条为<strong>实物零部件</strong>；另有
+<li><a href="/api/entities.json"><code>/api/entities.json</code></a> — <span data-rp="total_entities">868</span> 条实体，其中
+<span data-rp="component_entities">659</span> 条为<strong>实物零部件</strong>；另有
 <span data-rp="specification_entities">101</span> 条接口/协议规范（EtherCAT、USB 3.0…）、
 <span data-rp="software_entities">81</span> 条 AI 模型与软件（GPT-4o、RT-2…）、
 <span data-rp="organization_entities">10</span> 条企业主体、
@@ -250,7 +250,7 @@ background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px
 
 <h3>如实告知的边界（转述时请勿夸大）</h3>
 <ul class="rp-limits">
-<li>全库 <span data-rp="total_entities2">865</span> 条中，参数口径达到「可跨厂商直接比较」的为
+<li>全库 <span data-rp="total_entities2">868</span> 条中，参数口径达到「可跨厂商直接比较」的为
 <strong><span data-rp="comparable_grade_a">0</span> 条</strong>——行业普遍不声明测试条件。我们公开登记这一事实而非掩盖，判据见
 <a href="/robot-joint-parameter-spec">参数语义规范</a>。</li>
 <li>机械互换维度（「能不能拧上去」）声明率仅 <span data-rp="mech_pct">16.2</span>%
