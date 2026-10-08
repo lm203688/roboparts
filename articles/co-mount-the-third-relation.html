@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「能不能同时装」：兼容性问错了问题 | RoboParts</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="所有平台都在回答『A 能不能插进 B』，但工程师真正问的是『这台机器人能不能同时装夹爪和力传感器』。这是两个不同的关系——二段互插 vs 三段共装。本文讲清为什么缺了宿主这个角色，再多的零件数据也答不出这个问题。">
+<meta name="keywords" content="共装, co-mount, 机器人工具侧, 末端执行器, 夹爪, 力传感器, UR5e, 工具接口位数, 兼容性判定, EOAT, roboparts">
+<link rel="canonical" href="https://roboparts.cc/articles/co-mount-the-third-relation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「能不能同时装」：兼容性问错了问题 | RoboParts">
+<meta property="og:description" content="所有平台都在回答『A 能不能插进 B』，但工程师真正问的是『这台机器人能不能同时装夹爪和力传感器』。这是两个不同的关系——二段互插 vs 三段共装。本文讲清为什么缺了宿主这个角色，再多的零件数据也答不出这个问题。">
+<meta property="og:url" content="https://roboparts.cc/articles/co-mount-the-third-relation">
+<meta property="og:site_name" content="RoboParts">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="「能不能同时装」：兼容性问错了问题 | RoboParts">
+<meta name="twitter:description" content="所有平台都在回答『A 能不能插进 B』，但工程师真正问的是『这台机器人能不能同时装夹爪和力传感器』。这是两个不同的关系——二段互插 vs 三段共装。本文讲清为什么缺了宿主这个角色，再多的零件数据也答不出这个问题。">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"「能不能同时装」：兼容性问错了问题","description":"所有平台都在回答『A 能不能插进 B』，但工程师真正问的是『这台机器人能不能同时装夹爪和力传感器』。这是两个不同的关系——二段互插 vs 三段共装。本文讲清为什么缺了宿主这个角色，再多的零件数据也答不出这个问题。","keywords":"共装, co-mount, 机器人工具侧, 末端执行器, 夹爪, 力传感器, UR5e, 工具接口位数, 兼容性判定, EOAT, roboparts","inLanguage":"zh-CN","url":"https://roboparts.cc/articles/co-mount-the-third-relation","mainEntityOfPage":{"@type":"WebPage","@id":"https://roboparts.cc/articles/co-mount-the-third-relation"},"author":{"@type":"Organization","name":"RoboParts Research","url":"https://roboparts.cc"},"publisher":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc"},"isAccessibleForFree":true,"citation":{"@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","url":"https://roboparts.cc/api/data.json"},"datePublished":"2026-10-08","dateModified":"2026-10-08"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://roboparts.cc"},{"@type":"ListItem","position":2,"name":"技术文库","item":"https://roboparts.cc/articles"},{"@type":"ListItem","position":3,"name":"「能不能同时装」：兼容性问错了问题","item":"https://roboparts.cc/articles/co-mount-the-third-relation"}]}</script>
+<style>
+:root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--line:#243352}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.8}
+a{color:var(--acc2);text-decoration:none}a:hover{text-decoration:underline}
+.nav{border-bottom:1px solid var(--line);background:#0e1530}
+.nav .in{max-width:960px;margin:0 auto;padding:12px 20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px}
+.nav .brand{font-weight:800;color:var(--acc);font-size:16px}
+.nav a{color:var(--mut)}.nav a:hover{color:var(--txt)}
+.wrap{max-width:960px;margin:0 auto;padding:28px 20px 72px}
+.crumb{font-size:13px;color:var(--mut);margin-bottom:14px}
+h1{font-size:30px;line-height:1.4;margin:0 0 14px}
+h2{font-size:22px;margin:34px 0 12px;padding-top:8px;border-top:1px solid var(--line)}
+h3{font-size:18px;margin:24px 0 10px;color:var(--acc)}
+h4{font-size:16px;margin:18px 0 8px}
+.meta{color:var(--mut);font-size:13px;margin-bottom:18px}
+.lede{background:var(--card);border-left:3px solid var(--acc);border-radius:0 10px 10px 0;padding:14px 16px;color:#c8d2e6;margin:18px 0 24px;font-size:15px}
+.tags{margin:10px 0 0}
+.badge{display:inline-block;background:#0e1530;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--mut);margin:2px 4px 2px 0}
+.tablebox{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:520px}
+th,td{border-bottom:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:#0e1530;color:var(--acc);font-weight:700;white-space:nowrap}
+tbody tr:hover{background:#111a33}
+blockquote{margin:16px 0;padding:10px 16px;background:#101830;border-left:3px solid var(--acc2);border-radius:0 8px 8px 0;color:#c2cde3}
+blockquote p{margin:6px 0}
+pre.code{background:#0a1128;border:1px solid var(--line);border-radius:10px;padding:14px;overflow-x:auto;font-size:13px;line-height:1.6}
+code{background:#0e1530;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:13px;color:var(--acc)}
+pre.code code{background:0;border:0;padding:0;color:#cfe3ff}
+ul,ol{padding-left:22px}li{margin:6px 0}
+hr{border:0;border-top:1px solid var(--line);margin:26px 0}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:22px 0}
+.toc b{color:var(--acc);font-size:14px}
+.toc ol{margin:8px 0 0;padding-left:20px;font-size:14px}
+.toc li{margin:4px 0}.toc a{color:#b9c6de}
+.cta{background:linear-gradient(135deg,#13233f,#152b3a);border:1px solid #2b6;border-radius:14px;padding:18px 20px;margin:30px 0 10px}
+.cta h3{margin:0 0 8px;color:var(--acc);border:0;padding:0}
+.cta p{margin:6px 0;font-size:14.5px;color:#c8d2e6}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;font-weight:800;border-radius:9px;padding:9px 18px;margin:10px 8px 0 0;font-size:14px}
+.btn:hover{text-decoration:none;opacity:.9}
+.btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+.rel{margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+.rel h3{border:0;padding:0;margin:0 0 10px}
+.rel li{margin:8px 0;font-size:14.5px}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:20px}
+.acard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column}
+.acard h2{font-size:17px;margin:0 0 8px;border:0;padding:0;line-height:1.5}
+.acard p{color:var(--mut);font-size:13.5px;margin:0 0 10px;flex:1}
+@media(max-width:640px){h1{font-size:24px}.wrap{padding:20px 16px 56px}}
+</style>
+<!-- RP-ONBOARDING-LD:START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"RoboParts 机器人零部件兼容性数据集","description":"868 条实体（其中 659 条实物零部件、101 条接口/协议规范、81 条 AI 模型与软件、10 条企业主体、17 条市场情报）与 325 个开源组件的归一化兼容性数据。免鉴权直读，或注册后调用兼容性校验 API。","url":"https://roboparts.cc/","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@type":"Organization","name":"RoboParts","url":"https://roboparts.cc/"},"isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/entities.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://roboparts.cc/api/oss_components.json"}],"potentialAction":[{"@type":"RegisterAction","name":"领取 API Key（即时，无需审批）","target":{"@type":"EntryPoint","urlTemplate":"https://roboparts.cc/api/register","httpMethod":"POST","contentType":"application/json","description":"curl -X POST https://roboparts.cc/api/register -H \"Content-Type: application/json\" -d '{\"email\":\"you@example.com\"}'"},"result":{"@type":"Thing","name":"api_key（gtk_ 前缀）· 100 次免费额度 · 30 次/小时"}}]}</script><!-- RP-ONBOARDING-LD:END -->
+</head>
+<body>
+<div class="nav"><div class="in">
+<a class="brand" href="/">RoboParts</a>
+<a href="/articles">技术文库</a>
+<a href="/oss">开源数据层</a>
+<a href="/bom-checker">BOM 兼容检查</a>
+<a href="/selection">智能选型</a>
+<a href="/data-hub">数据中心</a>
+<a href="/pricing">定价</a>
+</div></div>
+<div class="wrap">
+<div class="crumb"><a href="/">首页</a> › <a href="/articles">技术文库</a> › 「能不能同时装」：兼容性问错了问题</div><h1>「能不能同时装」：兼容性问错了问题</h1><div class="meta">2026-10-08 · RoboParts Research · 约 1508 字 · RoboParts 机器人零件兼容性判定层</div><div class="tags"><span class="badge">compatibility</span><span class="badge">eo-at</span><span class="badge">robot-arm</span><span class="badge">open-source-robotics</span></div><div class="lede">所有平台都在回答『A 能不能插进 B』，但工程师真正问的是『这台机器人能不能同时装夹爪和力传感器』。这是两个不同的关系——二段互插 vs 三段共装。本文讲清为什么缺了宿主这个角色，再多的零件数据也答不出这个问题。</div><div class="toc"><b>本文目录</b><ol><li><a href="#能不能同时装-兼容性问错了问题">「能不能同时装」：兼容性问错了问题</a></li><li><a href="#为什么平台答不了这个问题">为什么平台答不了这个问题</a></li><li><a href="#三段判据-三个必须同时成立的约束">三段判据：三个必须同时成立的约束</a></li><li><a href="#一个真实的踩坑-位数-针数-器件数是三个量">一个真实的踩坑：位数、针数、器件数是三个量</a></li><li><a href="#第三种答案-装不下-不知道">第三种答案：装不下 ≠ 不知道</a></li><li><a href="#这对你的意义">这对你的意义</a></li></ol></div><article><h2 id="能不能同时装-兼容性问错了问题">「能不能同时装」：兼容性问错了问题</h2>
+<blockquote><p>本文首发于 <a href="https://roboparts.cc">RoboParts 机器人零件兼容性判定层</a>。</p></blockquote>
+<p>几乎所有兼容性平台，都在回答同一个问题：</p>
+<blockquote><p><strong>A 能不能插进 B？</strong></p></blockquote>
+<p>这是一个<strong>二段关系</strong>：两个零件，一个接口，插得上还是插不上。</p>
+<p>但工程师真正在问的，往往是另一个问题：</p>
+<blockquote><p><strong>我这台机器人，能不能同时装一个夹爪和一个力传感器？</strong></p></blockquote>
+<p>这不是二段关系。这是<strong>三段关系</strong>：</p>
+<pre class="code"><code>        宿主机器人（工具侧）
+         /            \
+      器件 A          器件 B
+     （夹爪）        （力传感器）</code></pre>
+<p>A 和 B 之间<strong>根本没有直接的接口</strong>——它们各自插到宿主上。所以"A 能不能插进 B"这个问题，在这里<strong>问错了</strong>。</p>
+<hr>
+<h2 id="为什么平台答不了这个问题">为什么平台答不了这个问题</h2>
+<p>不是数据不够。是<strong>模型里没有"宿主"这个角色</strong>。</p>
+<p>我们查过自己库里所有 <code>platforms</code> 类别的实体：它们记录的都是<strong>零件本体自己的法兰</strong>（"我这个关节怎么装到别人身上"），<strong>没有一条</strong>声明"我是一台机器人，我的工具侧有几个电气接口"。</p>
+<p>缺的不是零件数据，是<strong>角色</strong>。</p>
+<p>补再多零件，也补不出一个"宿主"。</p>
+<hr>
+<h2 id="三段判据-三个必须同时成立的约束">三段判据：三个必须同时成立的约束</h2>
+<p>要回答"能不能同时装"，需要三个独立判据：</p>
+<div class="tablebox"><table><thead><tr><th>判据</th><th>问什么</th><th>与二段关系的区别</th></tr></thead><tbody><tr><td><strong>机械同型</strong> <code>mount_fit</code></td><td>器件法兰 ≡ 宿主工具法兰？</td><td>问"是否<strong>同型</strong>"，而非"是否<strong>互插</strong>"</td></tr><tr><td><strong>位数预算</strong> <code>port_budget</code></td><td>已装 + 本次 ≤ 宿主工具侧位数？</td><td><strong>共装独有</strong>：二段关系里不存在争抢有限资源</td></tr><tr><td><strong>信号互补</strong> <code>signal_complementary</code></td><td>一方输出、另一方感知？</td><td>沿用跨角色判据</td></tr></tbody></table></div>
+<p>注意第二个判据——<strong>位数预算</strong>。这是二段关系里根本不存在的概念：一个接口要么插上要么没插上，不存在"装了两个就装不下第三个"。</p>
+<hr>
+<h2 id="一个真实的踩坑-位数-针数-器件数是三个量">一个真实的踩坑：位数、针数、器件数是三个量</h2>
+<p>我们初版实现时犯过一个错：把"每次装 1 件"当成预算。</p>
+<p>结果：UR（工具侧是<strong>单个</strong> 8-pin 连接器）被判成"可以同时装两个器件"。</p>
+<p><strong>把唯一正确的约束判反了。</strong></p>
+<p>正确算法是：共装的语义是<strong>同时装两个器件，各占一位</strong>，所以要算 <code>已占 + 2 ≤ 位数</code>。UR 只有 1 位，所以"同时装夹爪 + 传感器"在 UR 上<strong>物理不可行</strong>。</p>
+<p><strong>位数、针数、器件数是三个不同的量。</strong> 任何两个混用，都会得出反向结论。</p>
+<hr>
+<h2 id="第三种答案-装不下-不知道">第三种答案：装不下 ≠ 不知道</h2>
+<p>这里有一个关键的区分。</p>
+<p>UR 工具侧只有 1 个连接器位——这不是"我们不知道能不能装"，而是<strong>确定装不下</strong>（需要转接件或换本体）。</p>
+<p>所以我们在三态（是 / 否 / 不知道）之外，引入了第四个裁决态：</p>
+<ul>
+<li><strong><code>port_exhausted</code></strong> = 装不下（<strong>工程约束</strong>）</li>
+<li><strong><code>unknown</code></strong> = 数据不足（我们不知道）</li>
+</ul>
+<p>把这两者混为一谈，就是<strong>把"不知道"伪装成"不行"</strong>——这会让你错误地排除一个其实可行的方案（比如加个转接件就能装）。</p>
+<hr>
+<h2 id="这对你的意义">这对你的意义</h2>
+<p>下次当你的工具问你"这两个零件兼容吗"，先问清楚：</p>
+<ul>
+<li>你在问"<strong>A 插 B</strong>"（二段互插）？</li>
+<li>还是"<strong>A 和 B 同时装在一台机器人上</strong>"（三段共装）？</li>
+</ul>
+<p>这是两个问题，答案可能相反。一个力传感器和一个夹爪可能"互不兼容"（因为它们的接口都是输出侧），但<strong>完全可以同时装在同一台机器人的工具侧</strong>。</p>
+<p><strong>问题问对了，答案才有意义。</strong></p>
+<hr>
+<p><em>RoboParts 的共装查询：<code>check_co_mount({host, a, b})</code> 或 <code>GET /api/co-mount?host=&amp;a=&amp;b=</code>。四态裁决：可共装 / 装不下 / 类型错误 / 未知。</em></p></article><div class="cta">
+<h3>把这篇文章的结论直接跑一遍</h3>
+<p>RoboParts 收录 <strong>868 个机器人零部件实体</strong>与 <strong>325 个开源项目组件</strong>，支持电气 / 机械 / 协议 / 软件四维兼容判定。文中提到的型号大多可直接检索。</p>
+<a class="btn" href="/bom-checker">免费校验我的 BOM</a>
+<a class="btn ghost" href="/oss">浏览开源组件库</a>
+<a class="btn ghost" href="/api/data.json">下载结构化数据 (JSON)</a>
+</div><div class="rel"><h3>相关阅读</h3><ul><li><a href="/articles/why-we-refuse-to-fabricate-data">为什么我们拒绝编数据：一个把「我不知道」当答案的机器人兼容层</a></li><li><a href="/articles/connector-triplet-family-pins-pinout">同为 M8 为什么插不上：连接器判据必须是 (family, pins, pinout) 三元组</a></li><li><a href="/articles/compatibility-boundary-mech-declaration-2026">5.69% 的诚实：RoboParts 声明率暴露的兼容层边界</a></li></ul></div>
+<div class="foot">
+© 2026 RoboParts · 开源机器人零部件兼容性平台 ·
+<a href="/llms.txt">llms.txt</a> ·
+<a href="/api/openapi.json">OpenAPI</a> ·
+<a href="/agent-discovery.json">Agent 发现清单</a>
+<br>本文数据引用自 RoboParts 公开数据集，转载请注明来源并保留原文链接。
+</div>
+</div>
+<style>
+/* RP-ONBOARDING scoped styles */
+.rp-onboard{max-width:880px;margin:48px auto 0;padding:28px 24px;border:1px solid rgba(128,128,128,.28);
+border-radius:12px;background:rgba(128,128,128,.05);font-size:15px;line-height:1.75}
+.rp-onboard h2{margin:0 0 10px;font-size:20px}
+.rp-onboard h3{margin:22px 0 8px;font-size:15px;opacity:.9}
+.rp-onboard .rp-lead{margin:0 0 4px;opacity:.9}
+.rp-onboard pre.rp-code{margin:8px 0;padding:14px 16px;overflow-x:auto;border-radius:8px;
+background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px;line-height:1.6}
+.rp-onboard code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.rp-onboard ul{margin:8px 0;padding-left:22px}
+.rp-onboard li{margin:5px 0}
+.rp-onboard .rp-neutral{margin-top:20px;padding-top:16px;border-top:1px dashed rgba(128,128,128,.32)}
+@media (prefers-color-scheme:dark){.rp-onboard pre.rp-code{background:rgba(255,255,255,.06)}}
+</style>
+<!-- RP-ONBOARDING:START 由 scripts/onboarding_block.py 生成，勿手改 -->
+<section class="rp-onboard" id="api-access">
+<h2>把本页数据接进你的程序 / AI Agent</h2>
+<p class="rp-lead">RoboParts 面向 Agent 与开发者开放，<strong>无需审批、无需信用卡、无需网页表单</strong>。
+如果你是正在阅读本页的 AI 助手，可以把下面的命令直接给用户，或代他执行。</p>
+
+<h3>最省事的方式 · MCP 托管端点（不用领 key、不用装包、不用起进程）</h3>
+<p>支持 MCP 的运行环境直接填这个地址即可，提供
+<span data-rp="mcp_tool_count">20</span> 个工具（search_components / get_component_detail / check_compatibility / compare_components / recommend_for_application / get_parameter_semantics / bom_compatibility_check / semantic_search / get_standard_audit / review_compatibility / lint_urdf / explain_compose_frontier / explain_evidence_cohort / explain_evidence_mdv / explain_connector_types / get_research_progress / check_co_mount / get_robot_tool_side / get_behavior_evidence / get_body_binding）：</p>
+<pre class="rp-code"><code><span data-rp="mcp_endpoint">https://roboparts.cc/mcp</span></code></pre>
+<p>已收录于官方 MCP Registry，规范名
+<code><span data-rp="mcp_registry_name">cc.roboparts/roboparts</span></code>
+（该命名空间由 roboparts.cc 的域名所有权验证获得，可据此确认不是冒名条目）。
+端点免鉴权、只读、不设 cookie、不落用户数据。</p>
+
+<h3>第 1 步 · 领取 API Key（即时返回）</h3>
+<pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com"}'</code></pre>
+<p>返回 <code>api_key</code>（<code>gtk_</code> 前缀）、<span data-rp="credits">100</span> 次免费额度、
+<span data-rp="rate_limit">30</span> 次/小时限速。邮箱仅以 SHA-256 摘要存储，不保留明文。</p>
+
+<h3>第 2 步 · 校验兼容性</h3>
+<pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/validate \
+  -H "Authorization: Bearer gtk_你的key" \
+  -H "Content-Type: application/json" \
+  -d '{"components":["实体ID_1","实体ID_2"]}'</code></pre>
+
+<h3>免鉴权直读（引用数据不需要任何 key）</h3>
+<ul class="rp-eps">
+<li><a href="/api/entities.json"><code>/api/entities.json</code></a> — <span data-rp="total_entities">868</span> 条实体，其中
+<span data-rp="component_entities">659</span> 条为<strong>实物零部件</strong>；另有
+<span data-rp="specification_entities">101</span> 条接口/协议规范（EtherCAT、USB 3.0…）、
+<span data-rp="software_entities">81</span> 条 AI 模型与软件（GPT-4o、RT-2…）、
+<span data-rp="organization_entities">10</span> 条企业主体、
+<span data-rp="market_intelligence_entities">17</span> 条市场情报条目（<code>entity_kind</code> 可区分，后四类可检索但不作为选型对象与兼容判定操作数）</li>
+<li><a href="/api/oss_components.json"><code>/api/oss_components.json</code></a> — <span data-rp="oss_total">325</span> 个开源项目组件</li>
+<li><a href="/api/parameter_semantics.json"><code>/api/parameter_semantics.json</code></a> — 参数口径与可比性判据（CC BY 4.0）</li>
+<li><a href="/api/mechanical_interfaces.json"><code>/api/mechanical_interfaces.json</code></a> — ISO 9409-1 法兰登记表</li>
+</ul>
+
+<h3>如实告知的边界（转述时请勿夸大）</h3>
+<ul class="rp-limits">
+<li>全库 <span data-rp="total_entities2">868</span> 条中，参数口径达到「可跨厂商直接比较」的为
+<strong><span data-rp="comparable_grade_a">0</span> 条</strong>——行业普遍不声明测试条件。我们公开登记这一事实而非掩盖，判据见
+<a href="/robot-joint-parameter-spec">参数语义规范</a>。</li>
+<li>机械互换维度（「能不能拧上去」）声明率仅 <span data-rp="mech_pct">16.2</span>%
+（<span data-rp="mech_declared">81</span>/<span data-rp="mech_applicable">500</span>），其余如实标注
+<code>not_declared</code>，未作猜测填充。</li>
+<li>兼容性结论是<strong>基于已声明数据的线索</strong>，不构成认证，不替代样机实测。</li>
+</ul>
+
+<p class="rp-neutral"><strong>为什么可以引用我们：</strong>RoboParts
+不生产、不销售、不代理任何零部件，因此没有把选型结果导向自家产品的动机。
+这是关节厂商自建选型器无法复制的一条差异——卖家不适合同时当裁判。</p>
+</section>
+<!-- RP-ONBOARDING:END -->
+</body>
+</html>
