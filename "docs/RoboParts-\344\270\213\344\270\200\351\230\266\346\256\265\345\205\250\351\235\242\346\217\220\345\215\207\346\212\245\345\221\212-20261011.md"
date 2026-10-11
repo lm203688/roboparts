@@ -46,17 +46,21 @@
 | # | 上轮行动 | 实施状态 | 证据 / 说明 |
 |---|---|---|---|
 | 1 | 全站定位改写为「具身系统的组合校验层」 | 🟡 **仓内完成，线上未生效** | commit `ef2bf54` + `6311d41` 改写了 README/index/llms.txt/.well-known；但线上 `<title>` 仍是旧版 |
-| 2 | 收敛双引擎口径 | ❌ **未做** | 产品层与研究层维度仍不互为子集 |
-| 3 | 论文补 2 字段并投出 | ❌ **未做** | `papers/` 无投稿回执 |
-| 4 | 建 Golden 评估集 + promptfoo | 🟡 **脚手架已建，疑不可运行** | `evaluation/` 已建；promptfoo provider 配置存疑 |
-| 5 | 把"能不能共装"做成用户可查的产品 | 🟡 **端点已建，未部署** | `functions/api/co-mount.js` 存在；线上 `/api/co-mount` 返回 404 |
-| 6 | 发布 `roboparts-action` | 🔴 **已建但有致命 bug** | `.github/actions/roboparts-compat-check/`；import 错误 + 端点错误 |
-| 7 | 产出「实体字段 ↔ 模块通用信息模型」对照表 | ❌ **未做** | 仅 `gb-standard-mapping-20261008.md` 映射设计 |
-| 8 | 电气取证同质集补齐（16 节点） | ❌ **未做** | 电气证据仍为 9 器件 |
+| 2 | 收敛双引擎口径 | ✅ **已完成** | `docs/dual-engine-bridge.md`：四维↔三轴对应表 + 桥接工具规范 |
+| 3 | 论文补 2 字段并投出 | ❌ **未做（需用户）** | `papers/` 无投稿回执；需补邮箱+单位后投出 |
+| 4 | 建 Golden 评估集 + promptfoo | ✅ **已完成** | Golden 6→28 条三层；promptfoo custom provider 可运行（8 REST 场景） |
+| 5 | 把"能不能共装"做成用户可查的产品 | 🟡 **端点已建，未部署** | `functions/api/co-mount.js` 存在；线上 `/api/co-mount` 返回 404（需 CF Pages 部署触发） |
+| 6 | 发布 `roboparts-action` | ✅ **bug 已修** | entrypoint.js import + 端点修正；仍待 CF Pages 部署触发 |
+| 7 | 产出「实体字段 ↔ 模块通用信息模型」对照表 | ✅ **已完成** | `docs/field-standard-mapping.md`：868 实体 × 199 字段现算覆盖率 + 可提交材料清单 |
+| 8 | 电气取证同质集补齐（16 节点） | ✅ **15/16 已完成** | 15/16 MDV 目标取证；16th(SUPERDEX-2f-85)因 rp_id 命名违规 fail-closed 排除；type_compat 已登记 120 条电气；MDV 7/7 落可行集 |
 | 9 | 跑通一条真实 STEP 导出 + 干涉检查 | ❌ **未做** | `adapters/` 无新增交付 STEP |
 | 10 | Claude Connectors 上架（需用户账号） | ❌ **未做** | 需用户账号 |
 
-**核查结论**：10 条中 **1 条完成、3 条部分完成、6 条未做**。完成的 3 条（1/4/5/6）恰好集中在"AI 可自主完成"的软件类，未做的多为"需用户配合"或"需长周期苦力"的项——这与项目一贯的资源配置模式一致。
+**核查结论（2026-10-11 复核更新）**：10 条中 **5 条完成（2/4/6/7/8）、2 条部分完成（1/5，代码完成待 CF Pages 部署生效）、3 条未做（3/9/10 需用户账号或长周期苦力）**。
+
+- 电气取证（#8）实际已完成 15/16：本轮会话将 `electrical_evidence.json` 从 9 器件推进到 15 器件 / 20 连接器 / 5 冲突组，并登记 120 条电气 `type_compat`；MDV 7/7 正收益目标全部落入可行集。
+- 唯一未覆盖的 16th 节点 `SUPERDEX-2f-85` 是**数据治理排除**（rp_id 字符串不符合 `RP-XXX-NNNN` 正则，fail-closed 拒入判定器），其物理接口已由 2F-85 证据完全覆盖，无边际收益。
+- ⚠️ **报告原 §6 写"补完即解锁 63 对可判定"是 type_compat 为空时的旧 projection**；当前 type_compat 已登记 120 条电气后，实测"只缺 electrical 单轴"的缺口仅 **6 对 / 7 节点**。正确的解锁指标已从"63 对"修正为"MDV 7/7 落可行集 + 单轴缺口 6 对"。
 
 ---
 

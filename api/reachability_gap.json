@@ -6,8 +6,8 @@
   "anchor": "docs/HEALTHCHECK_20261004.md §2",
   "generated_by": "scripts/build_reachability_gap.py",
   "truth_source": "functions/_lib/compat_engine.js（维度现算） + scripts/compose_engine.py（轴现算） + functions/ 全量静态引用扫描",
-  "generated_at": "2026-10-11T02:32:48+00:00",
-  "headline": "**0 / 10 个研究层产物在产品面（functions/，52 个源文件）零引用。**AI agent 实际调用的 `check_compatibility` 走 JS 引擎（四维），而三轴裁决、297 条类型级 type_compat、共装诊断、取证判据全部只存在于 Python 侧产物中，agent 触不到。",
+  "generated_at": "2026-10-11T06:36:02+00:00",
+  "headline": "**0 / 10 个研究层产物在产品面（functions/，52 个源文件）零引用。**AI agent 实际调用的 `check_compatibility` 走 JS 引擎（四维），而三轴裁决、348 条类型级 type_compat、共装诊断、取证判据全部只存在于 Python 侧产物中，agent 触不到。",
   "honest_limits": [
    "本层**不做裁决**。哪套引擎应成为产品面真相源是产品决策，不是本脚本能定的；本层只把断层量化到可讨论的程度。",
    "「可达性」按**静态引用**判定（functions/ 下是否出现该文件名）。若未来经 REST 代理等方式间接消费，本层会误报为不可达。",
@@ -182,13 +182,13 @@
   "nodes": 656,
   "research_layer_effective_ports_per_axis": {
    "mechanical": 81,
-   "electrical": 13,
+   "electrical": 19,
    "signal": 395
   },
   "research_layer_overall": {
    "composed": 0,
-   "type_error": 114,
-   "unknown": 430222
+   "type_error": 262,
+   "unknown": 430074
   },
   "product_layer_entity_field_coverage": {
    "protocol": {

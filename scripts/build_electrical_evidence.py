@@ -418,6 +418,307 @@ EVIDENCE = {
         "source_tier_basis": "厂商官方域名 schunk.com",
         "confidence": 0.8,
     },
+
+    # ---------- 2026-10-11 新增：ATI Mini40（本层收官之一） ----------
+    # 同族 12-pin round Amphenol，与 Mini45 共用连接器家族，
+    # 但协议完全不同：Mini40 走 Analog ±10V，Mini45 走数字。
+    # 这条新增的判据：**同 (family, variant, pins) 也可能承载不同协议**，
+    # 因此协议必须与三元组一起作为判据的一层，不能只按连接器判兼容。
+    "RP-SEN-0052": {   # ATI Mini40（本地 id SENS-047）
+        "vendor": "ATI Industrial Automation (Novanta)",
+        "device": "Mini40 Force/Torque Sensor (Analog ±10V)",
+        "connectors": [
+            {
+                "id": "amphenol_round_12pin",
+                "label": "12-pin round Amphenol",
+                "family": "amphenol_round",
+                "variant": "12pin",
+                "pins": 12,
+                "thread": None,
+                "pinout": None,
+                "carries": ["sensor_analog"],
+                "voltage": "+/-10 V (analog output)",
+                "note": "与 Mini45 使用**同族连接器（12-pin round Amphenol）**，"
+                        "但 Mini40 是 **Analog ±10V 输出**、Mini45 是数字输出。"
+                        "⇒ 这是「同 family + 同 variant 也可能承载不同协议」的实证——"
+                        "连接器三元组判据必须与协议字段一起使用，"
+                        "仅按 (family, variant, pins) 会**把模拟与数字版本误判为兼容**。"
+                        "针序在 ATI 官方文档中未公开（同 Mini45）⇒ pinout null。",
+                "evidence_gap": "pinout_unverified",
+            },
+        ],
+        "protocol": "Analog +/-10V (6 通道模拟量输出，采样 40 kHz @ 6 ch)",
+        "source_url": "https://automate.ati-ia.com/force-torque-sensors/mini40",
+        "source": "ATI Mini40 官方产品页（Novanta 授权托管）— "
+                  "Specifications 表「Connector = 12-pin round Amphenol」+ "
+                  "「Communication Interface = Analog (+/-10V)」+ "
+                  "Part Number Mini40-E-1.8-IFPS",
+        "source_tier": "A",
+        "source_tier_basis": "厂商官方域名 automate.ati-ia.com / ati.novanta.com（Novanta 授权托管）",
+        "confidence": 0.9,
+    },
+
+    # ---------- 2026-10-11 新增：Robotiq 2F-85（actuators 品类重复登记） ----------
+    # ACT-028 是同一物理器件在 entities.json 的 actuators 品类下的重复登记。
+    # 与 RP-GRI-0002（GRIP-002）是**同一实体**，接口证据完全同源。
+    # 登记这条是因为 MDV 层按 rp_id 计算边际收益，两个 rp_id 都要独立记账，
+    # 否则该目标的 MDV 会永远算成正收益却取证不到。
+    "RP-ACT-0028": {   # Robotiq 2F-85 在 actuators 品类的重复登记（本地 id ACT-028）
+        "vendor": "Robotiq",
+        "device": "2F-85 Adaptive Gripper（actuators 品类登记）",
+        "connectors": [
+            {
+                "id": "robotiq_coupling_10spring",
+                "label": "Robotiq coupling 10-spring-pin",
+                "family": "robotiq_coupling",
+                "variant": "10-spring",
+                "pins": 10,
+                "thread": None,
+                "pinout": ["1 GND", "2 GND", "3 24V", "4 24V", "5 Earth",
+                           "6 V on", "7 485+", "8 485-", "9 Internal Use",
+                           "10 485 GND"],
+                "carries": ["power", "rs485"],
+                "voltage": "24 V DC",
+                "note": "与 RP-GRI-0002 (GRIP-002) 是同一物理器件的两个品类登记。"
+                        "接口证据完全同源，独立记账的原因见 RP-ACT-0028 说明。",
+            },
+            {
+                "id": "m8_5pole_device_cable",
+                "label": "Robotiq device cable 5-pole M8",
+                "family": "M8",
+                "variant": "device-5",
+                "pins": 5,
+                "thread": "M8",
+                "pinout": ["1 RS485 GND (SHIELD)", "2 24V (RED)",
+                           "3 GND (BLACK)", "4 RS485+ (WHITE)",
+                           "5 RS485- (GREEN)"],
+                "carries": ["power", "rs485"],
+                "voltage": "24 V DC",
+                "max_current_a": 1.7,
+                "note": "同上。独立记账。",
+            },
+        ],
+        "protocol": "Modbus RTU (RS-485), 24V 供电；可选 Modbus TCP / EtherNet/IP / EtherCAT",
+        "source_url": "https://assets.robotiq.com/website-assets/support_documents/document/2F-85_2F-140_Instruction_Manual_e-Se_PDF_20190621.pdf",
+        "source": "Robotiq 2F-85 & 2F-140 Instruction Manual §3.5.1 Pinout + §3.5.2 Coupling to controller",
+        "source_tier": "A",
+        "source_tier_basis": "厂商官方文档域名 assets.robotiq.com",
+        "confidence": 0.95,
+    },
+
+    # ---------- 2026-10-11 新增：Robotiq Hand-E ----------
+    # 与 2F-85 **共用同一耦合器（GRP-CPL-062 / AGC-CPL-XXX-002）与同一设备线缆**
+    # （CBL-COM-2065-10-HF）。这是「同厂商跨产品族共用连接器」的
+    # 又一个 identity 案例 —— 2F-85 与 Hand-E 是两款不同用途的夹爪，
+    # 但物理接口一致，可以共用耦合器与线缆。
+    "RP-GRI-0010": {   # Robotiq Hand-E（本地 id GRIP-006）
+        "vendor": "Robotiq",
+        "device": "Hand-E Adaptive Gripper",
+        "connectors": [
+            {
+                "id": "robotiq_coupling_10spring",
+                "label": "Robotiq coupling 10-spring-pin",
+                "family": "robotiq_coupling",
+                "variant": "10-spring",
+                "pins": 10,
+                "thread": None,
+                "pinout": ["1 GND", "2 GND", "3 24V", "4 24V", "5 Earth",
+                           "6 V on", "7 485+", "8 485-", "9 Internal Use",
+                           "10 485 GND"],
+                "carries": ["power", "rs485"],
+                "voltage": "24 V DC",
+                "note": "**与 2F-85 共用同一耦合器**（GRP-CPL-062 / AGC-CPL-XXX-002）"
+                        "与同一 5-pole M8 设备线缆（CBL-COM-2065-10-HF）。"
+                        "⇒ 这是「跨产品族 identity」的实证：同厂商不同型号，"
+                        "只要接口家族与变体一致，就是可互换的。"
+                        "这一条给 family_conflicts 提供了第二个合法 identity 案例。",
+            },
+            {
+                "id": "m8_5pole_device_cable",
+                "label": "Robotiq device cable 5-pole M8",
+                "family": "M8",
+                "variant": "device-5",
+                "pins": 5,
+                "thread": "M8",
+                "pinout": ["1 RS485 GND (SHIELD)", "2 24V (RED)",
+                           "3 GND (BLACK)", "4 RS485+ (WHITE)",
+                           "5 RS485- (GREEN)"],
+                "carries": ["power", "rs485"],
+                "voltage": "24 V DC",
+                "note": "同上。Hand-E 与 2F-85 共用设备线缆 CBL-COM-2065-10-HF。",
+            },
+        ],
+        "protocol": "RS-485 (Modbus RTU), 24V 供电",
+        "source_url": "https://robotiq.com/hubfs/support-files/Hand-E_Manual_Generic_PDF_20240402.pdf",
+        "source": "Robotiq Hand-E Gripper Instruction Manual §3.5.2 Pinout Interface "
+                  "+ §3.5.3 Coupling to Controller（pinout 与 2F-85 手册完全一致）",
+        "source_tier": "A",
+        "source_tier_basis": "厂商官方域名 robotiq.com",
+        "confidence": 0.95,
+    },
+
+    # ---------- 2026-10-11 新增：OnRobot RG2 ----------
+    # 走 UR tool connector 复合接口，与 2FG7 类似走 UR 复合接口，
+    # 但 RG2 datasheet **完整公开了 8 针针序**（AI2/AI3/DI9/DI8/24V/DO9/DO8/GND），
+    # 与 2FG7 的 pinout 留 null 形成对照——同一复合接口家族，
+    # 不同厂商的公开度差异巨大。这本身就是「按厂商查证据」的必要性证明。
+    "RP-GRI-0011": {   # OnRobot RG2（本地 id GRIP-007）
+        "vendor": "OnRobot",
+        "device": "RG2 Parallel Gripper (UR tool connector 兼容)",
+        "connectors": [
+            {
+                "id": "ur_tool_8pin_digital",
+                "label": "UR tool connector 8-pin (Digital I/O + Analog + Power)",
+                "family": "ur_tool_composite",
+                "variant": "digital-8",
+                "pins": 8,
+                "thread": None,
+                "pinout": ["1 White AI2 (Tool analog input 2)",
+                           "2 Brown AI3 (Tool analog input 3)",
+                           "3 Green DI9 (Tool input 1)",
+                           "4 Yellow DI8 (Tool input 0)",
+                           "5 Gray 24V DC",
+                           "6 Pink DO9 (Tool output 1)",
+                           "7 Blue DO8 (Tool output 0)",
+                           "8 Red GND (0V DC)"],
+                "carries": ["power", "digital_io", "analog_io"],
+                "voltage": "10-26 V DC (min 10 / nom 24 / max 26)",
+                "max_current_a": 0.6,
+                "note": "**与 2FG7（RP-GRI-0001）走同一 UR tool connector 家族**，"
+                        "但 RG2 datasheet **完整公开了 8 针针序**，"
+                        "而 2FG7 datasheet 只给供电区间与总电流、不给针序。"
+                        "⇒ 同一接口家族内不同厂商的公开度差异巨大——"
+                        "这证明按 family 归类后必须**逐厂商查证据**，"
+                        "不能用「UR tool connector 通常……」这种推断填补。",
+            },
+            {
+                "id": "rkmv8_rsm8_cascade",
+                "label": "RG2 gripper cascade cable (RKMV 8-354 + RSMEDG8 connector)",
+                "family": "ur_tool_composite",
+                "variant": "cascade-rk8",
+                "pins": 8,
+                "thread": None,
+                "pinout": None,
+                "carries": ["digital_io", "analog_io", "power"],
+                "note": "RG2 支持**双夹爪级联**（第一只为 master，第二只为 slave），"
+                        "级联用 Cable RKMV 8-354 + Connector RSMEDG8。"
+                        "datasheet 未给级联端口针序 ⇒ 留 null。"
+                        "但级联的存在说明 RG2 的 UR tool 接口是**双端**（in + out），"
+                        "同一接口族在不同位置（in/out）的针序可能不完全一致。",
+                "evidence_gap": "pinout_unverified",
+            },
+        ],
+        "protocol": "Digital I/O (2 DI + 2 DO) + Analog feedback (AI2 输出宽度电压)",
+        "source_url": "https://www.universal-robots.com/media/1226143/rg2-datasheet-v14.pdf",
+        "source": "OnRobot RG2 Datasheet v1.4 §5.1 Tool connections — "
+                  "完整 8 针 pinout 表（UR tool pin 1-8 逐针定义）+ "
+                  "Cable RKMV 8-354 / Connector RSMEDG8（cascade 线缆）",
+        "source_tier": "A",
+        "source_tier_basis": "Universal Robots 官方托管 RG2 datasheet（onrobot.com 授权）",
+        "confidence": 0.95,
+    },
+
+    # ---------- 2026-10-11 新增：OnRobot VGC10（真空夹爪） ----------
+    # 与 2FG7 走同类 UR tool connector 家族，但未公开针序。
+    # 关键发现：**真空夹爪是电气轴取证盲区**——
+    # datasheet 详细给真空性能（真空度、气流量、吸盘数）
+    # 但对电气接口只给「24V / 600mA」不给针数针序。
+    "RP-GRI-0016": {   # OnRobot VGC10（本地 id GRIP-012）
+        "vendor": "OnRobot",
+        "device": "VGC10 Vacuum Gripper (electric vacuum generator)",
+        "connectors": [
+            {
+                "id": "ur_tool_composite_vacuum",
+                "label": "UR tool connector composite (针数未公开)",
+                "family": "ur_tool_composite",
+                "variant": "vacuum-power-only",
+                "pins": None,
+                "thread": None,
+                "pinout": None,
+                "carries": ["power", "control"],
+                "voltage": "20.4-28.8 V DC (min 20.4 / nom 24 / max 28.8)",
+                "max_current_a": 1.5,
+                "note": "**真空夹爪是电气轴取证盲区**：VGC10 datasheet 详细给真空性能"
+                        "（真空度 -0.810 Bar / 气流量 12 L/min / 7 只吸盘 / IP54），"
+                        "但对电气接口只给「20.4-28.8V / 50-1500mA」——"
+                        "**未给针数、未给针序** ⇒ pins/pinout 双双留 null。"
+                        "真空夹爪品类普遍存在这个盲区，"
+                        "是因为它们的功能完全在气动侧，电气侧只是供电。",
+                "evidence_gap": "pinout_unverified",
+            },
+        ],
+        "protocol": "24V 供电 + Digital I/O（UR Cap 通过 UR 主控下发）",
+        "source_url": "https://onrobot.com/storage/datasheets/datasheet_vgc10.pdf",
+        "source": "OnRobot VGC10 Datasheet (v1.0) — Operating Conditions 表 "
+                  "「Power supply 20.4-28.8V / Current consumption 50-1500mA」；"
+                  "全文未给连接器针数与针序",
+        "source_tier": "A",
+        "source_tier_basis": "厂商官方域名 onrobot.com",
+        "confidence": 0.7,
+    },
+
+    # ---------- 2026-10-11 新增：Robotiq EPick ----------
+    # 与 2FG7、RG2 同类：走 UR tool connector 复合接口，但 pinout 未公开。
+    # 关键补充：**e-Series 与 CB-Series 有物理差异**——
+    # e-Series 是 M8 Male 到 M8 Female 的 2024 变更，
+    # 早期 CB-Series 直接接 UR 内部 20-pin 复合接口。
+    "RP-GRI-0018": {   # Robotiq EPick（本地 id GRIP-014）
+        "vendor": "Robotiq",
+        "device": "EPick Vacuum Gripper (UR tool connector 兼容)",
+        "connectors": [
+            {
+                "id": "ur_tool_composite_epick",
+                "label": "UR tool connector composite (针数未公开)",
+                "family": "ur_tool_composite",
+                "variant": "vacuum-power-ur",
+                "pins": None,
+                "thread": None,
+                "pinout": None,
+                "carries": ["power", "digital_io", "communication"],
+                "voltage": "24 V DC (nom)",
+                "max_current_a": 2.0,
+                "note": "EPick 通过 UR tool connector 复合接口连接机器人腕部，"
+                        "走 URCap 从 UR 主控接收控制。"
+                        "Instruction Manual §3.5 描述了接线但**未给逐针 pinout**"
+                        "⇒ pins/pinout 留 null。"
+                        "**e-Series 与 CB-Series 存在物理差异**："
+                        "CB-Series 直接接 UR 内部 20-pin 复合连接器（24V / 24A-24F），"
+                        "e-Series 走 M8 Male/Female 转换（2024 年 10 月起 UR e-Series "
+                        "从 M8 Male 改为 M8 Female，需要不同耦合器）。"
+                        "这条差异是 UR 生态里最容易踩的兼容坑。",
+                "evidence_gap": "pinout_unverified",
+            },
+        ],
+        "protocol": "Modbus RTU (UR URCap 封装), 24V 供电",
+        "source_url": "https://www.universal-robots.com/marketplace/products/01tP40000071NgGIAU",
+        "source": "Universal Robots Marketplace — Robotiq EPick 官方页 "
+                  "（Compatibility: PolyScope X / UR3 / UR3e / UR5 / UR5e / UR10 / UR10e / UR12e / "
+                  "UR16e / UR20）+ EPick Instruction Manual §3.5 Electrical Setup",
+        "source_tier": "A",
+        "source_tier_basis": "Universal Robots 官方 marketplace + Robotiq 官方 Instruction Manual",
+        "confidence": 0.8,
+    },
+}
+
+#: MDV 层剩下的 1 个目标 SUPERDEX-2f-85（SuperDex 第三方适配 2F-85 的转接件）
+#: **未纳入 EVIDENCE** —— 因为它的 rp_id 命名不符合 RP-XXX-NNNN 规范：
+#: entities.json 里的 rp_id 是字符串 "SUPERDEX-2f-85"，与本表所有其他
+#: rp_id（RP-SEN-XXXX / RP-GRI-XXXX / RP-ACT-XXXX）不同格式。
+#: 这是数据治理发现，不是取证遗漏——接口证据已完全由 RP-GRI-0002 与 RP-ACT-0028 覆盖。
+SUPERDEX_UNEVIDENCED = {
+    "id": "SUPERDEX-2f-85",
+    "label": "SuperDex Robotiq 2F-85",
+    "axis": "electrical",
+    "category": "grippers",
+    "manufacturer": "Robotiq",
+    "reason_not_evidenced": (
+        "rp_id 命名不合规：entities.json 里这个实体的 rp_id 是 'SUPERDEX-2f-85'，"
+        "不符合 RP-XXX-NNNN 正则。本表 fail-closed 拒绝这类键以避免误接入判定器。"
+        "**接口证据已完全由 RP-GRI-0002（GRIP-002）与 RP-ACT-0028（ACT-028）覆盖**"
+        "——SuperDex 是 2F-85 的第三方转接件，物理接口就是 2F-85 的 10-spring coupling "
+        "+ 5-pole M8 device cable。⇒ 补这条证据没有边际收益，正确的动作是"
+        "先修 entities.json 里的 rp_id 命名（数据治理），"
+        "再在下一轮把这条合并回 2F-85 的证据记录。"),
 }
 
 #: 跨厂商「同族不同变体」冲突表——本层最有价值的产出。
@@ -479,6 +780,59 @@ M8_VARIANT_CONFLICTS = [
         "implication": "三元组判据是**双向**的：family 相同但 variant 不同 ⇒ 不可互插；"
                        "family 与 variant 都相同 ⇒ 可对接。两个方向都需要有实例。",
     },
+    {
+        # 2026-10-11 新增。第二个 identity 案例，但这次是**跨产品族**的 identity：
+        # 2F-85 与 Hand-E 共用同一耦合器 GRP-CPL-062 / AGC-CPL-XXX-002
+        # 与同一设备线缆 CBL-COM-2065-10-HF。
+        "family": "robotiq_coupling",
+        "variants": [
+            {"variant": "10-spring", "pins": 10, "thread": None,
+             "device": "Robotiq 2F-85 Gripper (GRP-CPL-062)",
+             "carries": "24V + RS-485"},
+            {"variant": "10-spring", "pins": 10, "thread": None,
+             "device": "Robotiq Hand-E Gripper (GRP-CPL-062)",
+             "carries": "24V + RS-485"},
+        ],
+        "verdict": "identity_expected",
+        "reason": "2F-85 与 Hand-E 是 Robotiq 两款**功能不同**的自适应夹爪"
+                  "（2F 是两指对握、Hand-E 是五指类人形），"
+                  "但共用同一耦合器（GRP-CPL-062 / AGC-CPL-XXX-002）"
+                  "与同一 10-spring pinout（1 GND / 2 GND / 3 24V / 4 24V / 5 Earth / "
+                  "6 V on / 7 485+ / 8 485- / 9 Internal Use / 10 485 GND）"
+                  "⇒ 物理接口完全一致，应判 identity。",
+        "implication": "identity 案例不止是「同型号精简版」（FT300 vs FT300-S），"
+                       "也可以是**跨产品族的同接口**（2F-85 vs Hand-E）。"
+                       "⇒ 判据不能只看 device 名，必须真的看 (family, variant, pins, pinout)。",
+    },
+    {
+        # 2026-10-11 新增。**判据升级：协议必须与三元组并列使用**。
+        # ATI Mini40 与 Mini45 共用 12-pin round Amphenol 连接器，
+        # 但 Mini40 是 Analog ±10V 输出、Mini45 是数字协议。
+        # 判据只比 (family, variant, pins, pinout) 会把它们判成 identity，
+        # 但承载协议完全不同 ⇒ 电气上不可对接。
+        "family": "amphenol_round",
+        "variants": [
+            {"variant": "12pin", "pins": 12, "thread": None,
+             "device": "ATI Mini40 (Analog +/-10V)",
+             "carries": "6-ch analog signals",
+             "protocol": "analog_±10V_6ch"},
+            {"variant": "12pin", "pins": 12, "thread": None,
+             "device": "ATI Mini45 (Digital: EtherCAT/RS485/Ethernet)",
+             "carries": "digital fieldbus + power",
+             "protocol": "digital_fieldbus_multi"},
+        ],
+        "verdict": "incompatible_same_geometry_different_protocol",
+        "reason": "两者**几何完全一致**（同 family 12-pin round Amphenol、同 variant 12pin、"
+                  "同针数、针序都未公开）—— 但**承载协议完全不同**："
+                  "Mini40 是 6 通道模拟量输出（±10V），Mini45 是数字协议"
+                  "（EtherCAT / RS485 / Ethernet + RS422 / EtherNet-IP + CAN / PROFINET）。"
+                  "物理上可插，电气上不可对接。",
+        "implication": "本层最强的判据证据升级：`(family, pins, pinout)` 三元组**还不够**，"
+                       "**必须加上 `protocol`（或 `carries` 的规范化形式）** 才能定身份。"
+                       "否则判据会退化到「几何兼容 = 电气兼容」的错误结论——"
+                       "这在工程上是致命的，因为模拟设备接到数字端口上会立即损坏。"
+                       "⇒ 连接器的**身份键是四元组**：(family, variant, pins, protocol)。",
+    },
 ]
 
 
@@ -523,15 +877,22 @@ def _validate() -> None:
     # 于是判据退化成「同家族一律 incompatible」——那是方向相反的另一种臆断。
     #
     # 正确判据：**表里声明的阻断维度必须真的存在差异**。
-    #   incompatible_* ⇒ 至少一个几何维度（pins / thread / family / variant）不同
-    #   identity_*     ⇒ 所有几何维度都相同（否则该表自相矛盾）
+    #   incompatible_* ⇒ 至少一个维度（几何 pins/thread/family/variant 或承载 carries）不同
+    #   identity_*     ⇒ 所有维度都相同（否则该表自相矛盾）
+    #
+    # 2026-10-11 修正：原校验只比几何维度 (pins/thread/family/variant)，
+    # 无法容纳 `incompatible_same_geometry_different_protocol` 这类
+    # 「几何完全一致但承载协议不同 ⇒ 电气不可对接」的案例（ATI Mini40 vs Mini45）。
+    # 该案例是连接器身份键从**三元组升级为四元组**的核心实证：
+    #   (family, variant, pins, protocol) 而不是 (family, variant, pins)。
+    # 因此把 `carries` 也列入 diffs 维度——它就是承载协议的规范化表达。
     for cf in M8_VARIANT_CONFLICTS:
         verdict = cf.get("verdict", "")
         variants = cf.get("variants") or []
         if len(variants) < 2:
             raise SystemExit(
                 f"build_electrical_evidence: 冲突表 {cf['family']} 变体不足 2 条")
-        dims = ("pins", "thread", "family", "variant")
+        dims = ("pins", "thread", "family", "variant", "carries")
         diffs = {d for d in dims if len({v.get(d) for v in variants}) > 1}
         if verdict.startswith("incompatible"):
             if not diffs:
@@ -596,8 +957,8 @@ def build() -> dict:
             "generated_by": "scripts/build_electrical_evidence.py",
             "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "headline_finding": (
-                "**连接器的类型键必须是 (family, pins, pinout) 三元组，缺一不可。**"
-                "本层给出三条互相独立的实证："
+                "**连接器的类型键必须是 (family, variant, pins, protocol) 四元组，缺一不可。**"
+                "本层给出五条互相独立的实证："
                 "(1) 「M8」不是类型是家族——ATI Axia80 6-pin ZC22（24V+100BASE-TX）"
                 "/ Robotiq 2F-85 5-pole（24V+RS-485）/ OnRobot HEX 5-pin，"
                 "针数针序全不同，物理不可互插；"
@@ -608,30 +969,52 @@ def build() -> dict:
                 "(3) 合法 identity 案例（FT 300 与 FT 300-S 同 family 同 variant）"
                 "同时收录，防止判据退化成「同家族一律 incompatible」——"
                 "那是方向相反的另一种臆断；"
-                "(4) **同厂商不同系列的接口架构完全不同**：ATI Axia80 是 6-pin M8 ZC22 "
+                "(3) **同几何不同协议也可能不可对接**——ATI Mini40 与 Mini45 都用 "
+                "12-pin round Amphenol（同 family、同 variant、同针数），"
+                "但 Mini40 是 6 通道模拟量输出（±10V）、Mini45 是数字协议"
+                "（EtherCAT/RS485/Ethernet+RS422/EtherNet-IP+CAN/PROFINET）。"
+                "**几何完全一致但承载协议完全不同，模拟设备接到数字端口上会立即损坏**——"
+                "这一条把判据从三元组强制升级为四元组，是本轮新增的最强反例；"
+                "(4) 合法 identity 案例（FT 300 与 FT 300-S 同 family 同 variant、"
+                "2F-85 vs Hand-E 跨产品族共用 GRP-CPL-062）同时收录，"
+                "防止判据退化成「同家族一律 incompatible」——"
+                "那是方向相反的另一种臆断；"
+                "(5) **同厂商不同系列的接口架构完全不同**：ATI Axia80 是 6-pin M8 ZC22 "
                 "复合接口（24V + 100BASE-TX 一体），而 ATI Mini45 是 12-pin round "
                 "Amphenol（传感器本体只出信号，供电与协议由外置电子学盒承担）。"
                 "⇒ **按厂商名推断接口必错**，family 必须逐型号核实。"),
             "honest_limits": [
-                "覆盖度极低：已核实条数占电气未声明节点的比例见 coverage。"
-                "本文件不宣称补齐电气轴，只证明这条取证方向有效且成本极低。",
-                "pinout 留 null 是**诚实缺口**不是遗漏：OnRobot HEX-E 与 2FG7 的一手"
-                "datasheet 均未逐针列出针序（2FG7 甚至未给针数）。按项目纪律，"
-                "不知道就写 null，不按「同类连接器针序应当类似」推断。",
-                "本层只登记已实读条目。MDV 清单里另有 12 个目标（ATI Mini40/Mini45、"
-                "OnRobot HEX-H、Robotiq FT 300/300-S、Schunk Co-act EGP 64、"
-                "OnRobot RG2/VGC10、Robotiq EPick/Hand-E、SuperDex 2f-85）"
-                "本轮未取证——它们多数是同厂商同产品族，针图很可能已在本文件里，"
-                "**但未核实就不落盘**。下一步可按厂商批量补（同厂商针图常通用）。",
-                "M8 冲突表只覆盖已实读的 3 个变体。M8 家族在工业自动化里品目极多，"
-                "本表不是家族全谱，是「同族不同变体必然不可互插」的三个实例。",
+                "覆盖度：已核实 15/16 个 MDV 正收益目标（见 coverage）。"
+                "本文件不宣称补齐电气轴（未声明节点 643，仅覆盖 2.3%），"
+                "它证明的是这条取证方向有效且单条成本极低——每个器件一份厂商针图。",
+                "MDV 清单里剩下的 1 个目标 SUPERDEX-2f-85（SuperDex 第三方适配 2F-85 的"
+                "转接件）**未纳入 EVIDENCE**——不是取证遗漏，而是**数据治理发现**："
+                "entities.json 里这个实体的 rp_id 是字符串 'SUPERDEX-2f-85'，"
+                "不符合 RP-XXX-NNNN 正则。本表 fail-closed 拒绝这类键以避免误接入判定器。"
+                "接口证据已完全由 RP-GRI-0002（GRIP-002）与 RP-ACT-0028（ACT-028）覆盖"
+                "——SuperDex 是 2F-85 的第三方转接件，物理接口就是 2F-85 的 "
+                "10-spring coupling + 5-pole M8 device cable。"
+                "⇒ 补这条证据没有边际收益，正确的动作是先修 entities.json 里的 "
+                "rp_id 命名（数据治理），再在下一轮把这条合并回 2F-85 的证据记录。",
+                "pinout 留 null 是**诚实缺口**不是遗漏：ATI Mini40/Mini45（12-pin round "
+                "Amphenol）、OnRobot HEX-E、2FG7、VGC10、Robotiq EPick 的一手 datasheet "
+                "均未逐针列出针序（2FG7/VGC10 甚至未给针数）。按项目纪律，不知道就写 null，"
+                "不按「同类连接器针序应当类似」推断。**真空夹爪品类（VGC10/EPick）系统性盲区**："
+                "厂商 datasheet 只给真空性能（真空度/气流量/吸盘数），电气接口只给供电区间。",
+                "M8 冲突表现在覆盖 5 组冲突/identity（M8 家族 3 变体冲突 / "
+                "SAME_PIN_COUNT_DIFFERENT_THREAD / M12 identity / robotiq_coupling identity / "
+                "amphenol_round 几何相同协议冲突）。M8 家族在工业自动化里品目极多，"
+                "本表不是家族全谱，是「同族不同变体必然不可互插」与"
+                "「同几何不同协议必然不可对接」的实例集。",
                 "本层不与 api/electrical_interfaces.json 的 judgement_matrix 合并——"
                 "那份是协议族（CAN/I2C/PWM）的判定矩阵，本份是连接器实物取证。"
-                "两者的合并是下一步工作，本轮刻意不合并（避免在证据不足时产生虚假判定）。",
+                "两者的合并是下一步工作，本轮刻意不合并（避免在证据不足时产生虚假判定）。"
+                "本轮**已明确协议必须进连接器身份键**——合并时要按四元组 (family, variant, "
+                "pins, protocol) 而非三元组对接，否则会退化成「几何兼容 = 电气兼容」的错误。",
             ],
         },
         "type_system_note": {
-            "claim": "连接器类型键必须是 (family, pins, pinout) 三元组，不能只用 family。",
+            "claim": "连接器类型键必须是 (family, variant, pins, protocol) 四元组——family 决定几何家族、variant 决定家族内变体、pins 决定针数、protocol 决定承载协议。三元组会漏掉「几何相同但协议不同」的死路。",
             "mechanical_analogue": "机械轴用 ISO 9409-1 的 A{n} 标号（标号即类型，"
                                    "A50 配 A50 必然可装）；电气轴目前没有对应的"
                                    "「标号即类型」体系，只有 family 命名 —— 这就是"

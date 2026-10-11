@@ -182,6 +182,17 @@ def build():
         involvement[a] += 1
         involvement[b] += 1
 
+    # ---- 可行集成员：任意 K=2 可行对涉及的节点（用于 MDV 对账） ----
+    # 语义区分：
+    #   involvement（homog）→ 同质集参与节点，用于批量取证规划
+    #   viable_ids（viable）→ 任意可行对参与节点，用于 MDV「单条正收益」对账
+    # MDV 定义是「补这一条声明会解锁多少 pair」，查的是**任意可行对**（viable），
+    # 而非同质批（homog）。字段名 landed_in_viable_cohort 与此一致。
+    viable_ids = set()
+    for a, b in viable:
+        viable_ids.add(a)
+        viable_ids.add(b)
+
     # ---- 与 MDV 层对照：MDV 的单条目标是否真落在可行集里 ----
     mdv_path = os.path.join(ROOT, "api", "evidence_valuation.json")
     mdv_check = None
@@ -191,21 +202,26 @@ def build():
         mdv_ids = {t["id"] for t in
                    (mdv.get("by_axis", {}).get("electrical", {}).get("top_targets") or [])
                    if t.get("mdv", 0) > 0}
-        inside = sorted(mdv_ids & set(involvement))
+        inside = sorted(mdv_ids & viable_ids)
+        in_homog = sorted(mdv_ids & set(involvement))
         mdv_check = {
             "mdv_single_declaration_targets": len(mdv_ids),
             "landed_in_viable_cohort": len(inside),
+            "landed_in_homogeneous_cohort": len(in_homog),
+            "orphans_no_viable_pair": sorted(mdv_ids - viable_ids),
+            "solo_rescuable_no_homog_partner": sorted(viable_ids & (set(mdv_ids) - set(involvement))),
             "ids": inside,
             "verdict": (
                 f"MDV 列出的 {len(mdv_ids)} 个「单条正收益」目标，"
-                f"**全部 {len(inside)} 个**落在同质可行集内。"
+                f"**全部 {len(inside)} 个**落在任意可行集（viable）内。"
                 if mdv_ids and len(inside) == len(mdv_ids) else
                 f"MDV 目标仅 {len(inside)}/{len(mdv_ids)} 落在可行集内。"),
             "correction": (
-                "这些节点的真正价值不是「补了就有用」（探针 7 实测：单独补，"
-                "电气可判定对数 1→1 持平），而是「能凑成可行对的节点」"
-                "（探针 10 实测：16/16 全部命中）。取证必须按同质集批量推送，"
-                "零散补单个器件永远不产生效果。"),
+                "MDV 语义 = 「补这一条声明会解锁多少 pair」→ 与**任意可行对**对齐。"
+                "落地到**同质集**（同缺口画像批量补）才能真正解锁判定"
+                "（探针 10 实测：16/16 全部命中同质批）。"
+                "solo_rescuable_no_homog_partner 里的是「补一条能解锁 pair 但无同质伙伴」"
+                "的孤儿节点——单独补一条不会真正产生组合效果，需找同缺口画像的另一侧凑批。"),
         }
 
     out = {

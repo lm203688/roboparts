@@ -7,17 +7,17 @@
   "anchor": "docs/PROJECT_DIRECTIONS_V2.md §1",
   "generated_by": "scripts/build_research_progress.py",
   "truth_source": "api/{morphology_graph,compose_semantics,provenance,compose_frontier,electrical_evidence,entities}.json",
-  "generated_at": "2026-10-11T02:32:49+00:00",
-  "headline": "**门控加权完成度 60.2%**（朴素口径 60.2%）。body = 48%（关系类型 2/2 已覆盖，但确定性裁决率仍仅 0.1%——**能判出确定的负答案，不等于能判出正答案**）；neuron = 100%（判据纠正后：量的是溯源诚实度，非数据量）；chain = 50%（**本域**三段 2/2 闭合，跨域全链 0/1）；policy = 58%（开源模型 4/5 有真实本体绑定）。",
+  "generated_at": "2026-10-11T06:36:02+00:00",
+  "headline": "**门控加权完成度 60.6%**（朴素口径 60.6%）。body = 50%（关系类型 2/2 已覆盖，但确定性裁决率仍仅 0.1%——**能判出确定的负答案，不等于能判出正答案**）；neuron = 100%（判据纠正后：量的是溯源诚实度，非数据量）；chain = 50%（**本域**三段 2/2 闭合，跨域全链 0/1）；policy = 58%（开源模型 4/5 有真实本体绑定）。",
   "why_not_100": {
    "summary": "**不是「还没做完」，是三类性质完全不同的缺口混在一个分数里。**把它们分开看，才能知道哪部分能补、哪部分不该补。",
    "categories": [
     {
      "kind": "真缺口（可工程推进）",
      "examples": [
-      "确定性裁决率 0.1%：214840 对里仅 114 对给出确定答案，其余全 unknown——补一手取证即可提升",
+      "确定性裁决率 0.1%：214840 对里仅 262 对给出确定答案，其余全 unknown——补一手取证即可提升",
       "跨角色机械可判定率 0.2%：L1 28500 对中仅 63 对机械已可判定",
-      "类型级裁决 297/558：机械轴仍有大量 proprietary 对未取证（厂商不给几何）",
+      "类型级裁决 348/657：机械轴仍有大量 proprietary 对未取证（厂商不给几何）",
       "co_mount 297/360：宿主库只有 3 个本体，补本体可线性提升"
      ]
     },
@@ -76,19 +76,19 @@
  "scoring": {
   "mode": "gated",
   "naive_dimension_scores": {
-   "body": 48.5,
+   "body": 49.5,
    "neuron": 100.0,
    "policy": 58.2,
    "chain": 50.0
   },
   "gated_dimension_scores": {
-   "body": 48.5,
+   "body": 49.5,
    "neuron": 100.0,
    "policy": 58.2,
    "chain": 50.0
   },
   "gate_explanation": {
-   "body": "门控**未生效**：「peer-to-peer composed + co_mount 共装」已产出确定性组合裁决 ⇒ 组合判定确实可校验。**但 peer-to-peer 的 composed 仍为 114**（它在上面的分项里可见，未被改写）",
+   "body": "门控**未生效**：「peer-to-peer composed + co_mount 共装」已产出确定性组合裁决 ⇒ 组合判定确实可校验。**但 peer-to-peer 的 composed 仍为 262**（它在上面的分项里可见，未被改写）",
    "neuron": "无门控",
    "policy": "无门控",
    "chain": "无门控"
@@ -97,22 +97,22 @@
   "both_reported": "两种口径都给出。加权值用门控口径（更保守），朴素值同时可见供对照——**换口径数字就变，故不藏任何一个**。"
  },
  "raw_dimension_scores": {
-  "body": 48.5,
+  "body": 49.5,
   "neuron": 100.0,
   "policy": 58.2,
   "chain": 50.0
  },
- "weighted_total_pct": 60.2,
+ "weighted_total_pct": 60.6,
  "dimensions": {
   "body": [
    {
     "item": "三轴 AND 能产出确定性裁决（确定的正/负答案都算）",
-    "done": 114,
+    "done": 262,
     "total": 214840,
     "pct": 0.1,
     "caliber": "(compose_semantics.composed + type_error) / C(n,2) 无序对空间。**只有 unknown 才是缺口**——type_error 是「确定不兼容」，是判定能力而非未做",
     "why_this_criterion": "锚点 §1「机器可校验的组合」——能给出**确定答案**（可兼容或确定不兼容）才算判定能力成立；unknown 是证据缺口，两者不可混为一谈",
-    "remaining_gap": "114 对给了确定答案（composed 0 + type_error 114），其余 430222 对为 unknown。composed=0 已证是**关系类型错配**（见 compose_frontier / co_mount），不是判定能力缺失"
+    "remaining_gap": "262 对给了确定答案（composed 0 + type_error 262），其余 430074 对为 unknown。composed=0 已证是**关系类型错配**（见 compose_frontier / co_mount），不是判定能力缺失"
    },
    {
     "item": "关系类型覆盖（peer-to-peer 与 co-mount 两类都在用）",
@@ -125,18 +125,18 @@
    },
    {
     "item": "类型级裁决覆盖（判据而非字符串匹配）",
-    "done": 297,
-    "total": 558,
-    "pct": 53.2,
+    "done": 348,
+    "total": 657,
+    "pct": 53.0,
     "caliber": "type_compat 条数 / Σ(各轴 port_types 数²)。**上界用同轴平方**——跨轴类型之间不存在组合关系",
     "why_this_criterion": "锚点 §1「兼容判定引擎」——判定必须建立在类型级裁决上，而非字段字符串匹配",
-    "remaining_gap": "当前 297 条；按轴 {'mechanical': 171, 'electrical': 120, 'signal': 6}；上界 558（mechanical 18² + electrical 15² + signal 3²）。机械轴仍有大量 proprietary 对未取证（厂商不给几何）"
+    "remaining_gap": "当前 348 条；按轴 {'mechanical': 171, 'electrical': 171, 'signal': 6}；上界 657（mechanical 18² + electrical 18² + signal 3²）。机械轴仍有大量 proprietary 对未取证（厂商不给几何）"
    },
    {
     "item": "电气三元组判据落地（family+pins+pinout 不可省）",
-    "done": 66,
-    "total": 120,
-    "pct": 55.0,
+    "done": 105,
+    "total": 171,
+    "pct": 61.4,
     "caliber": "带 blocking_dims 的电气裁决 / 全部电气裁决",
     "why_this_criterion": "本项目实测：同针数同针序也可能不可插（Robotiq 2F-85 M8 5-pole vs FT 300 M12 5-pin A-coded），故 family 必须进类型键",
     "remaining_gap": "电气一手取证 9/16 器件（cohort 缺口画像 ① 尚未补齐）"

@@ -1558,13 +1558,15 @@ def gate_electrical_evidence():
             # dimensions", thread/variant still differed ⇒ no longer broke ⇒ false alarm.
             # Lesson (recorded in SKILL): **the mutant itself must be verified to actually hit
             # the breach**.
-            ('conflict table incompatible verdict loses geometric basis (thread/pins/variant '
-             'flattened)',
-             lambda d: [v.update({'pins': 5, 'thread': 'M8', 'variant': 'x'})
+            ('conflict table incompatible verdict loses geometric basis (thread/pins/variant/'
+             'protocol flattened)',
+             lambda d: [v.update({'pins': 5, 'thread': 'M8', 'variant': 'x', 'protocol': 'x'})
                         for v in [t for t in d['family_conflicts']
                                   if t['verdict'].startswith('incompatible')][0]['variants']]),
             ('conflict table identity case altered to differ (self-contradictory)',
-             lambda d: d['family_conflicts'][-1]['variants'][0].update({'thread': 'M8'})),
+             lambda d: [t for t in d['family_conflicts']
+                        if t['verdict'].startswith('identity')][0]['variants'][0]
+             .update({'thread': 'M8'})),
             ('erase honest-gap registration',
              lambda d: d['evidence']['RP-SEN-0054']['connectors'][0].pop('evidence_gap', None)),
     ):
@@ -1757,7 +1759,7 @@ def _electrical_evidence_errors(ee):
         if len(variants) < 2:
             errs.append('conflict table %s has fewer than 2 variants' % cf.get('family'))
             continue
-        diffs = {d for d in ('pins', 'thread', 'family', 'variant')
+        diffs = {d for d in ('pins', 'thread', 'family', 'variant', 'protocol')
                  if len({v.get(d) for v in variants}) > 1}
         if verdict.startswith('incompatible'):
             if not diffs:
