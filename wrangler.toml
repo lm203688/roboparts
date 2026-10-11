@@ -16,12 +16,15 @@ CREEM_PRODUCT_ID_LIFETIME = "prod_4LiR28oho8KGWey9dkjvpS"
 # 请在本机执行（写入 Cloudflare 加密变量）：
 #   wrangler pages secret put CREEM_API_KEY
 #   wrangler pages secret put CREEM_WEBHOOK_SECRET
-# P0 安全修复：供应商审核/报价仅允许下列管理员 key（逗号分隔）。
+# P0 安全修复（2026-10-11）：供应商审核/报价仅允许管理员 key 调用。
 # 配置方式二选一：
-#   1) 在此填写你自己的 gtk_ 管理员 key，例如 ADMIN_API_KEYS = "gtk_abc123,gtk_def456"
-#   2) 或在 Cloudflare 后台将你 USER_CREDITS 里该 key 的 JSON 记录加 "role":"admin"
+#   1) 在 Cloudflare 后台将 USER_CREDITS 里该 key 的 JSON 记录加 "role":"admin"
+#   2) 或用 `wrangler pages secret put ADMIN_API_KEYS` 把管理员 key 写入加密变量
+#      （不要在 wrangler.toml 里明文写；明文会被 ci_gate 的凭据闸门判红）
 # 两者皆为空时，审批/报价接口将一律返回 403（fail-closed，安全默认）。
-ADMIN_API_KEYS = "gtk_45ac14dcd46eecabc4c59ba80af20bbe144b4a8c32a3aa79"
+#
+# 历史注记：本文件曾在 2026-10-11 之前把 gtk_ 明文写在此处，导致公开仓库暴露
+# 管理员 key。轮换该 key 后清空并改用 Secrets，才修好这个洞。
 
 [[kv_namespaces]]
 binding = "USER_CREDITS"

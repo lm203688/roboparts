@@ -5,6 +5,11 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# 2026-10-11 P1 修复：与 ci.yml 一致，防止批量推送把部署互相取消。
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest

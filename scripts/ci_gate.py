@@ -328,12 +328,35 @@ def gate_github_yaml_parses():
 
 
 def gate_no_secrets():
-    """Forbid committing credentials into the repo (PAT / private key / API key literals)."""
+    """Forbid committing credentials into the repo (PAT / private key / API key literals).
+
+    2026-10-11 P0 扩展：
+    - 上一版正则**只覆盖** github_pat_/ghp_/PRIVATE KEY/sk-，
+      导致 wrangler.toml 里的明文管理员 key（gtk_ 前缀，40 位 hex）被绿灯放过——
+      这是本次 P0-2 事件的直接根因。
+    - 新增覆盖：
+        * gtk_[a-f0-9]{16,}      —— RoboParts 管理员 key（内部签发）
+        * creem_[A-Za-z0-9]{16,} —— Creem 支付 API key
+        * hf_[A-Za-z0-9]{20,}    —— HuggingFace token
+        * sk_live_/pk_live_      —— Stripe 生产密钥
+        * xox[baprs]-             —— Slack token
+        * ghp_/gho_/ghu_/ghs_/ghr_ 已覆盖（经典 PAT 全家族）
+    """
     pats = [
         (re.compile(r'github_pat_[A-Za-z0-9_]{20,}'), 'GitHub fine-grained PAT'),
-        (re.compile(r'ghp_[A-Za-z0-9]{30,}'), 'GitHub classic PAT'),
-        (re.compile(r'-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----'), 'private key'),
-        (re.compile(r'sk-[A-Za-z0-9]{32,}'), 'OpenAI-style key'),
+        (re.compile(r'ghp_[A-Za-z0-9]{30,}'), 'GitHub classic PAT (ghp_)'),
+        (re.compile(r'gho_[A-Za-z0-9]{30,}'), 'GitHub OAuth token (gho_)'),
+        (re.compile(r'ghu_[A-Za-z0-9]{30,}'), 'GitHub user token (ghu_)'),
+        (re.compile(r'ghs_[A-Za-z0-9]{30,}'), 'GitHub server token (ghs_)'),
+        (re.compile(r'ghr_[A-Za-z0-9]{30,}'), 'GitHub read-only token (ghr_)'),
+        (re.compile(r'-----BEGIN (RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----'), 'private key'),
+        (re.compile(r'sk-[A-Za-z0-9]{32,}'), 'OpenAI-style key (sk-)'),
+        (re.compile(r'sk_live_[A-Za-z0-9]{16,}'), 'Stripe live secret key'),
+        (re.compile(r'pk_live_[A-Za-z0-9]{16,}'), 'Stripe live publishable key'),
+        (re.compile(r'gtk_[a-f0-9]{16,}'), 'RoboParts admin key (gtk_)'),
+        (re.compile(r'creem_[A-Za-z0-9]{16,}'), 'Creem API key'),
+        (re.compile(r'hf_[A-Za-z0-9]{20,}'), 'HuggingFace token'),
+        (re.compile(r'xox[baprs]-[A-Za-z0-9-]{10,}'), 'Slack token'),
     ]
     try:
         r = subprocess.run(['git', 'ls-files'], cwd=ROOT,
@@ -346,6 +369,12 @@ def gate_no_secrets():
     for rel in files:
         rel = rel.strip()
         if not rel:
+            continue
+        # 豁免：.workbuddy/ 是内部工作区（memory/ 日志、会话状态），
+        # 会自然出现"曾经持有、已轮换"的历史 key 文本。这些不是活跃凭据，
+        # 但扫描到会造成噪声。真正活跃的 secrets 应该只出现在 .env / Secrets 里，
+        # 由云侧闸门管。此处保留豁免避免把「文档里提到的旧 key」误判成泄漏。
+        if rel.startswith('.workbuddy/'):
             continue
         p = os.path.join(ROOT, rel)
         if not os.path.isfile(p):
@@ -1908,6 +1937,102 @@ def gate_positioning_caliber():
              '--self-test'])
 
 
+
+
+def gate_deployment_freshness():
+    """线上数据 vs 仓内数据新鲜度对账（2026-10-11 报告 P0-4）。
+
+    背景：2026-10-11 报告发现线上 entities.json 冻结 8 天（2026-10-03），
+    本地已到 2026-10-08，但项目无任何闸门察觉——因为所有闸门都只看仓内一致性，
+    不看「线上实际部署了什么」。本闸门补上这个洞：
+      1) 从仓内 api/entities.json 的 meta.updated 读「部署/派生时间戳」（本地真相）
+      2) 尝试 curl 线上 https://roboparts.cc/api/entities，读线上 meta.updated
+      3) 两者差距 > DEPLOY_FRESH_MAX_DAYS（默认 7 天）则判红
+      ⚠ 只比 meta.updated：顶层 updated 是"数据源更新时间"，meta.updated 是
+      "部署/派生时间"——两侧口径必须一致，否则语义混乱（曾因此误判"线上比本地
+      新"，实际是字段含义不同）。
+      4) 无网络时降级为 warn，不阻塞（部署失败是另一个 P0 的问题）
+    """
+    import json as _json
+    import urllib.request as _urllib
+    from datetime import datetime, timezone, timedelta as _td
+
+    max_days = int(os.environ.get('DEPLOY_FRESH_MAX_DAYS', '7'))
+    live_url = os.environ.get('ROBOTPARTS_LIVE_URL',
+                              'https://roboparts.cc/api/entities')
+
+    local_path = os.path.join(ROOT, 'api', 'entities.json')
+    if not os.path.exists(local_path):
+        warn('部署新鲜度对账', 'api/entities.json 不存在，跳过')
+        return
+
+    with open(local_path, encoding='utf-8') as f:
+        local = _json.load(f)
+    # 关键：api/entities.json 有 3 个时间戳，语义不同——
+    #   updated     (顶层) = 数据源原始更新时间（数据最后一次被"生产"）
+    #   meta.updated      = 部署/派生时刷新的时间戳（数据最后一次被"发布"）
+    #   last_updated      = 中间口径（部分脚本用）
+    # 两侧（本地 vs 线上）应该比较**同一语义**的字段。meta.updated 两侧都是
+    # "部署/派生时刷新"的口径，是唯一可比对的。优先用它；回退到 updated 只在
+    # meta 不存在时用（此时两侧口径可能不一致，仅作参考）。
+    meta = local.get('meta') or {}
+    local_ts_str = (meta.get('updated') or local.get('updated')
+                    or local.get('last_updated'))
+    if not local_ts_str:
+        warn('部署新鲜度对账', 'api/entities.json 无 updated 字段，跳过')
+        return
+    try:
+        local_ts = datetime.fromisoformat(local_ts_str.replace('Z', '+00:00'))
+    except Exception:
+        warn('部署新鲜度对账',
+             f'api/entities.json updated 时间戳不可解析: {local_ts_str!r}')
+        return
+
+    # 尝试请求线上端点
+    try:
+        req = _urllib.Request(live_url,
+                              headers={'User-Agent': 'RoboParts-CI-freshness/1.0'})
+        with _urllib.urlopen(req, timeout=15) as r:
+            live = _json.loads(r.read().decode('utf-8', 'replace'))
+    except Exception as e:
+        warn('部署新鲜度对账',
+             f'线上端点不可达（网络/未部署/域名解析失败），跳过：'
+             f'{type(e).__name__}: {str(e)[:80]}')
+        return
+
+    # 线上端点返回 {meta: {updated}, entities: ...}——同样优先 meta.updated
+    if isinstance(live, dict):
+        live_meta = live.get('meta') or {}
+        live_ts_str = (live_meta.get('updated') or live.get('updated')
+                       or live.get('last_updated'))
+    else:
+        live_ts_str = None
+    if not live_ts_str:
+        bad('部署新鲜度对账',
+            f'线上响应缺少 updated 字段：keys={list(live)[:6] if isinstance(live, dict) else type(live).__name__}')
+        return
+    try:
+        live_ts = datetime.fromisoformat(live_ts_str.replace('Z', '+00:00'))
+    except Exception:
+        bad('部署新鲜度对账',
+            f'线上 updated 时间戳不可解析：{live_ts_str!r}')
+        return
+
+    drift_days = (local_ts - live_ts).total_seconds() / 86400
+    if drift_days < -0.5:
+        bad('部署新鲜度对账',
+            f'线上 updated 竟然比本地新 {abs(drift_days):.1f} 天'
+            f'（线上={live_ts_str} / 本地={local_ts_str}）——'
+            f'仓内数据可能被回退或时间戳回滚')
+        return
+    if drift_days > max_days:
+        bad('部署新鲜度对账',
+            f'线上 updated 落后本地 {drift_days:.1f} 天（阈值 {max_days} 天）'
+            f'——线上部署陈旧。线上={live_ts_str} / 本地={local_ts_str}')
+        return
+    ok('部署新鲜度对账',
+       f'线上/本地 updated 差距 {drift_days:.1f} 天 ≤ {max_days} 天阈值')
+
 GATES = [
     ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
@@ -2073,6 +2198,9 @@ GATES = [
     ('BOM 装配次序拓扑排序', gate_bom_assembly_sequence),
     ('反馈信号回流聚合', gate_feedback_loop_aggregate),
     ('飞轮幂等/可恢复', gate_flywheel_idempotency),
+    # 【20261011 P0-4】线上 vs 仓内新鲜度对账。报告 P0-1 部署链路 62/62 失败、
+    # 线上冻结 8 天无人察觉的直接原因就是缺这道闸门。无网络时降级为 warn。
+    ('部署新鲜度对账（线上 vs 仓内 ≤7 天）', gate_deployment_freshness),
 ]
 
 

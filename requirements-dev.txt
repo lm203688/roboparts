@@ -1,0 +1,9 @@
+# RoboParts 本地开发依赖（用于让本地 python scripts/ci_gate.py 拿到与线上 CI 一致的绿灯）
+#
+# 为什么需要这份文件：
+# - .github/workflows/ci.yml 里显式 `pip install PyYAML`（因为「GitHub 配置 YAML 可解析」闸门
+#   依赖它）；本地没有这一步的话，跑 ci_gate.py 会稳定卡在 84/85，
+#   制造「本地红/线上绿」的假分歧，诱导排查者误判方向。
+# - 2026-10-11 报告 P2-1 明确记录此问题。
+
+PyYAML>=6.0,<7.0

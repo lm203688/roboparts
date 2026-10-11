@@ -21,7 +21,10 @@ permissions:
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  # 2026-10-11 P1 修复：批量 API 推送会在短时间内触发多次 push 事件，
+  # cancel-in-progress=true 会把前序运行取消（近 30 次 CI 里 26 次 cancelled），
+  # 导致 CI 绿灯不可信。改成 false 让每次推送都完整跑完。
+  cancel-in-progress: false
 
 jobs:
   gate:
@@ -45,9 +48,10 @@ jobs:
           node-version: '20'
 
       - name: 安装依赖
-        # 仅 PyYAML：供「GitHub 配置 YAML 可解析」闸门使用（Issue 模板 / workflow
-        # 写坏时 GitHub 是**静默失效**而非报错，必须自己校验）
-        run: python -m pip install --quiet PyYAML
+        # 走 requirements-dev.txt（PyYAML 供「GitHub 配置 YAML 可解析」闸门使用；
+        # Issue 模板 / workflow 写坏时 GitHub 是**静默失效**而非报错，必须自己校验）。
+        # 与本地 bootstrap 共用一份清单，避免「本地红 / 线上绿」的假分歧。
+        run: python -m pip install --quiet -r requirements-dev.txt
 
       - name: 列出闸门清单
         run: python scripts/ci_gate.py --list

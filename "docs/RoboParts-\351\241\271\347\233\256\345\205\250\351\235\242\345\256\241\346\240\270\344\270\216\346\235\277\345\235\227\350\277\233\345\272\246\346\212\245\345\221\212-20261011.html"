@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts 项目全面审核与板块进度报告 · 2026-10-11</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --panel:#ffffff; --ink:#1a1d21; --muted:#5b6470;
+    --line:#e3e6ea; --accent:#2f6fed; --red:#d92b2b; --orange:#e08a1e;
+    --yellow:#c9a227; --green:#1f9d55; --code:#f2f4f7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.75;font-size:15px}
+  .wrap{max-width:1040px;margin:0 auto;padding:48px 28px 96px}
+  header{border-bottom:3px solid var(--accent);padding-bottom:24px;margin-bottom:36px}
+  h1{font-size:30px;margin:0 0 12px;letter-spacing:-.5px}
+  .meta{color:var(--muted);font-size:13.5px;line-height:1.9}
+  .meta b{color:var(--ink)}
+  h2{font-size:21px;margin:44px 0 16px;padding-left:12px;border-left:4px solid var(--accent)}
+  h3{font-size:17px;margin:30px 0 12px;color:#2b3038}
+  h4{font-size:15px;margin:22px 0 10px;color:#3a4048}
+  p{margin:10px 0}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px;background:var(--panel);
+    border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  th,td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+  th{background:#eef1f5;font-weight:600;font-size:13px;color:#333a44}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafbfc}
+  code{background:var(--code);padding:2px 6px;border-radius:4px;font-size:12.5px;
+    font-family:"SF Mono",Consolas,"Courier New",monospace}
+  .callout{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--accent);
+    padding:16px 20px;border-radius:8px;margin:20px 0}
+  .callout.red{border-left-color:var(--red);background:#fff6f6}
+  .callout.warn{border-left-color:var(--orange);background:#fffaf2}
+  .callout.ok{border-left-color:var(--green);background:#f4fbf6}
+  .callout .t{font-weight:700;margin-bottom:6px;font-size:14.5px}
+  .badge{display:inline-block;padding:1px 8px;border-radius:11px;font-size:12px;font-weight:600;white-space:nowrap}
+  .b-red{background:#fde8e8;color:#a81c1c}
+  .b-orange{background:#fdf0dc;color:#a86410}
+  .b-green{background:#e2f5ea;color:#15703c}
+  .b-yellow{background:#fbf6dd;color:#8a7412}
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:22px 0}
+  .kpi .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .kpi .n{font-size:24px;font-weight:700;color:var(--accent);letter-spacing:-.5px}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:4px}
+  ul,ol{margin:10px 0;padding-left:24px}
+  li{margin:6px 0}
+  .lead{font-size:16px;color:#2b3038}
+  hr{border:none;border-top:1px dashed var(--line);margin:36px 0}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:12.5px}
+  .small{font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>RoboParts 项目全面审核与板块进度报告</h1>
+  <div class="meta">
+    <b>报告日期</b>：2026-10-11　|　<b>扫描范围</b>：robopart 全仓 1,686 文件（排除 node_modules/.git）<br>
+    <b>方法</b>：仓内产物现算 + 一手 curl 实测（roboparts.cc + GitHub REST API）+ git 历史核对<br>
+    <b>口径声明</b>：所有数字为本轮实测；凡与仓内文档口径不一致处，以实测为准并显式标注分歧
+  </div>
+</header>
+
+<h2>0. 摘要</h2>
+
+<h3>0.1 本轮 7 个关键发现</h3>
+<table>
+<thead><tr><th style="width:44px">#</th><th>发现</th><th style="width:96px">严重度</th><th style="width:210px">证据</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><b>CI 部署工作流 62 次运行，62 次全部失败（成功率 0%）</b>——从未成功部署过一次</td><td><span class="badge b-red">最高</span></td><td>Actions API：<code>{failure: 62}</code></td></tr>
+<tr><td>2</td><td><b>上轮"47 提交未推送"是误报</b>——远端 main 实为 <code>a0c950a8</code>，与本地 HEAD 内容一致</td><td><span class="badge b-red">高·修正</span></td><td><code>git ls-remote</code> + commits API</td></tr>
+<tr><td>3</td><td><b>线上冻结 8 天真因 = CI 部署从未跑通</b>（非推送问题）；本地 <code>deploy.mjs</code> 是唯一可用路径</td><td><span class="badge b-red">最高</span></td><td>线上 <code>updated=10-03</code> vs 本地 <code>10-08</code></td></tr>
+<tr><td>4</td><td><b>高危：公开仓库 <code>wrangler.toml</code> 明文含管理员密钥</b>，凭据闸门不覆盖 <code>gtk_</code> 前缀</td><td><span class="badge b-red">最高</span></td><td>远端 Contents API 读取成功（1894 B）</td></tr>
+<tr><td>5</td><td><b>上轮 P0 缺陷已全部修复</b>（Action import / URDF 端点 / BOM 一次性 POST / promptfoo）</td><td><span class="badge b-green">正向</span></td><td>commit <code>f120e27</code> 逐行核对</td></tr>
+<tr><td>6</td><td><b>CI 信号不可靠</b>：近 30 次 CI 运行中 26 次 <code>cancelled</code></td><td><span class="badge b-orange">中高</span></td><td><code>{success:2, cancelled:26, failure:2}</code></td></tr>
+<tr><td>7</td><td><b><code>_STATUS.md</code>（自称"唯一对外接口"）陈旧 20 天</b>：798 实体 vs 实际 868</td><td><span class="badge b-orange">中高</span></td><td>文件时间 <code>2026-09-21</code></td></tr>
+</tbody>
+</table>
+
+<div class="callout red">
+  <div class="t">一句话结论</div>
+  <p style="margin:0">上一轮的判断（"成果被锁在本地"）<b>方向对，但归因错</b>。真正的病灶不是"推不上去"，而是<b>"推上去了却部署不了"</b>：代码已到 GitHub（CI 也绿），但 <b>Cloudflare Pages 部署链路 100% 失败</b>，导致全部成果对世界不可见。同时暴露一个比部署更危险的洞：<b>公开仓库里躺着一把明文管理员密钥</b>，而自建的凭据闸门恰好不检查它的格式。<br><br>
+  <b>下一阶段第一优先级 = 修部署 + 换密钥</b>（两者都是"止血"，不是"加功能"）。</p>
+</div>
+
+<h3>0.2 上轮结论修正表</h3>
+<table>
+<thead><tr><th style="width:34%">上轮报告结论</th><th style="width:38%">本轮实测</th><th style="width:28%">修正</th></tr></thead>
+<tbody>
+<tr><td>"47 个提交未推送，推送阻断"</td><td>远端 main = <code>a0c950a8</code>（含 10-11 全部提交），<b>推送已成功</b></td><td><span class="badge b-red">误报</span> 源于本地 <code>origin/main</code> 陈旧（停在 9-29）</td></tr>
+<tr><td>"deploy 由 Actions on push 触发 ⇒ 推送阻断 = 部署阻断"</td><td>部署确实由 Actions 触发，但<b>从未成功</b>（62/62 失败）</td><td><span class="badge b-orange">方向对·归因错</span></td></tr>
+<tr><td>"需用户重生成 PAT"</td><td>PAT 已可用（API 推送成功），PAT 不是当前瓶颈</td><td><span class="badge b-red">误判</span></td></tr>
+<tr><td>"promptfoo 只能算脚手架"</td><td>已修为可运行（custom provider + prompts + 8 场景）</td><td><span class="badge b-green">已解决</span></td></tr>
+</tbody>
+</table>
+
+<h2>1. 项目画像</h2>
+<div class="kpi">
+  <div class="card"><div class="n">1,686</div><div class="l">文件总数</div></div>
+  <div class="card"><div class="n">868</div><div class="l">实体 / 20 品类</div></div>
+  <div class="card"><div class="n">71</div><div class="l">数据产物 api/*.json</div></div>
+  <div class="card"><div class="n">42</div><div class="l">API 端点</div></div>
+  <div class="card"><div class="n">21</div><div class="l">MCP 工具</div></div>
+  <div class="card"><div class="n">39</div><div class="l">前端页面</div></div>
+  <div class="card"><div class="n">40 / 85</div><div class="l">命名闸门 / 检查项</div></div>
+  <div class="card"><div class="n">54.38%</div><div class="l">Tier A 可点开复核</div></div>
+  <div class="card"><div class="n">60.6%</div><div class="l">核心目标门控加权</div></div>
+</div>
+
+<h2>2. 阻断项清单（按严重度）</h2>
+
+<div class="callout red">
+  <div class="t">🔴 P0-1｜CI 部署 100% 失败（线上冻结的真因）</div>
+  <ul>
+    <li><b>证据</b>：<code>Deploy to Cloudflare Pages</code> 共 <b>62 次运行，0 次成功</b>。最近 5 次全 <code>failure</code>。</li>
+    <li><b>失败步骤</b>：<code>Set up job</code> ✅ → <code>checkout</code> ✅ → <code>Prepare staging</code> ✅ → <b><code>Deploy to Cloudflare Pages</code> ❌</b>。</li>
+    <li><b>关键背景</b>：该 workflow 于 commit <code>7255812</code>（<b>2026-10-07</b>）才首次纳入版本控制（此前未跟踪）。纳入后每次 push 都触发、每次都失败。</li>
+    <li><b>最可能根因</b>：① 仓库 Secrets <code>CLOUDFLARE_API_TOKEN</code>/<code>CLOUDFLARE_ACCOUNT_ID</code> 未配置或过期；② wrangler-action 与 <code>pages_build_output_dir</code> 约定冲突；③ Pages 项目名 <code>robotparts</code> 不匹配。</li>
+    <li><b>影响</b>：自 10-07 起所有 push 都不会上线。线上停在 <code>2026-10-03</code>（865 实体 / 旧定位 / co-mount 404）。上一轮全部成果<b>对世界不可见</b>。</li>
+  </ul>
+</div>
+
+<div class="callout red">
+  <div class="t">🔴 P0-2｜公开仓库明文管理员密钥</div>
+  <ul>
+    <li><b>证据</b>：<code>wrangler.toml</code> 含 <code>ADMIN_API_KEYS = "gtk_45ac14…"</code>（40 位 hex），<b>已随远端 main 公开</b>（Contents API HTTP 200，1894 B）。</li>
+    <li><b>闸门失效原因</b>：<code>ci_gate.py::gate_no_secrets</code> 的正则只覆盖 <code>github_pat_</code>/<code>ghp_</code>/私钥/<code>sk-</code>，<b>不覆盖 <code>gtk_</code> 前缀</b> → 报"✅ 无凭据"绿灯放过。</li>
+    <li><b>风险</b>：<code>wrangler.toml</code> 的 <code>[vars]</code> 会作为明文变量部署到 Cloudflare。若该 key 生效，<b>任何人可调用供应商审批/报价接口</b>。</li>
+    <li><b>处置</b>：<b>立即轮换</b>该 key，并扩展闸门正则。</li>
+  </ul>
+</div>
+
+<div class="callout warn">
+  <div class="t">🟠 P1-1｜本地 <code>origin/main</code> 跟踪引用陈旧 → <code>git status</code> 长期误导</div>
+  <p style="margin:0">本地 <code>origin/main</code> = <code>066482b</code>（<b>2026-09-29</b>）；实际远端 = <code>a0c950a8</code>（10-11）。<code>git rev-list --count origin/main..HEAD</code> 长期返回 52，让人误判"52 提交未推送"，把排查引向 PAT，<b>掩盖了真正的部署失败</b>。</p>
+</div>
+
+<div class="callout warn">
+  <div class="t">🟠 P1-2｜CI 信号不可靠（26/30 cancelled）</div>
+  <p style="margin:0">近 30 次 CI = <code>{success:2, cancelled:26, failure:2}</code>。API 批量推送短时间触发多次 push，<code>concurrency</code> 组取消前序运行 → <b>CI 绿灯不可信</b>。</p>
+</div>
+
+<div class="callout warn">
+  <div class="t">🟠 P1-3｜<code>_STATUS.md</code> 陈旧 20 天（"唯一对外接口"失真）</div>
+  <p style="margin:0">文件生成于 <code>2026-09-21</code>，自述"实体 798 / git HEAD <code>9e1be03</code>"，实际为 868 / <code>bf27fbc</code>。文件自称"所有状态只看本文件"，却已 20 天未刷新。</p>
+</div>
+
+<div class="callout warn">
+  <div class="t">🟡 P2-1｜本地 CI 闸门 84/85（缺 PyYAML）</div>
+  <p style="margin:0">本地跑 <code>ci_gate.py</code> → <code>BLOCKED: passed 84</code>，失败项 <code>GitHub 配置 YAML 可解析</code>（<code>PyYAML missing</code>）。<code>ci.yml</code> 第 50 行已 <code>pip install PyYAML</code>，故线上通过、<b>本地永远拿不到全绿</b>。</p>
+</div>
+
+<div class="callout warn">
+  <div class="t">🟡 P2-2｜品类口径分歧</div>
+  <p style="margin:0"><code>api/entities.json</code> 的 <code>category_counts</code> 为 <b>20</b> 品类；<code>docs/field-standard-mapping.md</code> 写 <b>15</b> 品类。建议以 <code>entities.json</code> 现算为准。</p>
+</div>
+
+<h2>3. 各功能板块进度审核</h2>
+
+<h3>3.1 板块总览</h3>
+<table>
+<thead><tr><th style="width:40px">#</th><th style="width:200px">板块</th><th style="width:70px">完成度</th><th style="width:70px">状态</th><th>一句话判读</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>数据层（api/*.json）</td><td>85%</td><td><span class="badge b-yellow">🟡</span></td><td>868 实体、71 产物、溯源纪律强；但 Tier A 仅 54%、机械声明率低</td></tr>
+<tr><td>2</td><td>判定引擎层（双引擎）</td><td>80%</td><td><span class="badge b-green">🟢</span></td><td>工程完整、三态语义清晰；<b>确定性裁决率仅 0.1%</b>（composed=0）</td></tr>
+<tr><td>3</td><td>API 层（42 端点）</td><td>90%</td><td><span class="badge b-green">🟢</span></td><td>端点齐备、线上可用；<code>/api/co-mount</code> 未部署</td></tr>
+<tr><td>4</td><td>MCP 层（21 工具）</td><td>85%</td><td><span class="badge b-yellow">🟡</span></td><td>工具全、清单齐；<b>分发生效未验证</b></td></tr>
+<tr><td>5</td><td>Agent 分发层（Action/A2A）</td><td>75%</td><td><span class="badge b-yellow">🟡</span></td><td>上轮缺陷已修 ✅；但从未实跑，且依赖部署（P0-1）</td></tr>
+<tr><td>6</td><td>前端页面层（39 页）</td><td>70%</td><td><span class="badge b-yellow">🟡</span></td><td>页面多、覆盖广；<b>线上仍是旧定位</b>，与仓内新定位倒挂</td></tr>
+<tr><td>7</td><td>评估层（Golden 28 + promptfoo）</td><td>75%</td><td><span class="badge b-green">🟢</span></td><td>6→28 三层，可运行；仍缺"外部对照基准"</td></tr>
+<tr><td>8</td><td>研究层（进度判据）</td><td>60.6%</td><td><span class="badge b-yellow">🟡</span></td><td>判据可复现、诚实；核心判据 <code>composed</code> 为 0</td></tr>
+<tr><td>9</td><td>论文层（papers/）</td><td>40%</td><td><span class="badge b-yellow">🟡</span></td><td>三态诚实论文稿在仓；<b>未投出</b>（需用户补邮箱/单位）</td></tr>
+<tr><td>10</td><td>工程化 / CI</td><td>88%</td><td><span class="badge b-yellow">🟡</span></td><td>40 闸门 / 85 检查项纪律极强；<b>部署链路 0%</b>、CI 被取消污染</td></tr>
+<tr><td>11</td><td>运营 / 闭环（ops/）</td><td>65%</td><td><span class="badge b-yellow">🟡</span></td><td>闭环台账齐；<b><code>_STATUS.md</code> 陈旧 20 天</b></td></tr>
+<tr><td>12</td><td>安全</td><td>40%</td><td><span class="badge b-red">🔴</span></td><td><b>明文管理员密钥公开</b>；闸门覆盖不全</td></tr>
+</tbody>
+</table>
+
+<h3>3.2 逐板块审核与建议</h3>
+
+<h4>① 数据层 — 85% 🟡</h4>
+<p><b>现状</b>：868 实体 / 20 品类 / 71 个 JSON 产物。溯源体系 Tier A/B/C 定义清晰，<code>source_tier</code> 由证据形态推导（非录入者自封），这是<b>真壁垒</b>。</p>
+<p><b>问题</b>：Tier A 可点开复核仅 <b>54.38%</b>；<code>electrical_interfaces</code> 覆盖 14.1%；<code>compatibility</code> 声明 18.5%。</p>
+<p><b>建议</b>：① 不再追求"实体数量"，转向<b>同质集批量取证</b>（<code>cohort_feasibility</code> 已给出最低成本路径：缺口画像 <code>[mechanical, electrical]</code>，每节点 2 条声明即可解锁 24,424 对可行配对）；② 把 Tier A 占比做成对外可展示的<b>质量指标</b>。</p>
+
+<h4>② 判定引擎层 — 80% 🟢</h4>
+<p><b>现状</b>：双引擎——产品层 <code>compat_engine.js</code>（四维）+ 研究层 <code>compose_engine.py</code>（三轴）。三态语义 fail-closed 诚实。</p>
+<p><b>问题</b>：<b>确定性裁决率仅 0.1%</b>——214,840 对中仅 262 对给出确定答案，其中 <code>composed=0</code>。已证实是<b>关系类型错配</b>而非能力缺失。</p>
+<p><b>建议</b>：① 把"提高 composed"作为核心判据攻关；② 双引擎桥接应<b>从文档升级为可执行工具</b>，防止 Agent 侧混用维度。</p>
+
+<h4>③ API 层 — 90% 🟢</h4>
+<p><b>现状</b>：42 个端点。线上 <code>/api/compatibility</code>、<code>/api/bom/check</code>、<code>/api/entity</code> 实测 200。</p>
+<p><b>问题</b>：<code>/api/co-mount</code> 线上 <b>404（未部署）</b>。</p>
+<p><b>建议</b>：co-mount 是"共装"差异化能力的对外出口，<b>优先级最高</b>——它直接对应战略 A 方案的护城河。</p>
+
+<h4>④ MCP 层 — 85% 🟡</h4>
+<p><b>现状</b>：21 个工具，<code>.well-known/mcp</code> 与 <code>server.json</code> 齐备。</p>
+<p><b>问题</b>：<b>分发生效无外部证据</b>。</p>
+<p><b>建议</b>：补<b>调用遥测</b>（匿名计数），这是从"有工具"到"有用户"的唯一桥。</p>
+
+<h4>⑤ Agent 分发层 — 75% 🟡</h4>
+<p><b>现状</b>：GitHub Action 上轮 4 处缺陷<b>已全部修复</b>（<code>import * as core/github</code> + <code>getOctokit</code>、URDF 走 <code>/api/urdf/lint</code> JSON body、BOM 一次性 POST）。</p>
+<p><b>问题</b>：① 从未在真实仓库跑过一次；② 依赖线上 API，而线上冻结在 10-03 → Action 的"零成本触达"承诺目前无法兑现。</p>
+<p><b>建议</b>：修好部署后，<b>在一个真实开源机器人仓库跑通一次</b>并留下 run 链接。</p>
+
+<h4>⑥ 前端页面层 — 70% 🟡</h4>
+<p><b>现状</b>：39 个 HTML 页面，功能覆盖广。</p>
+<p><b>问题</b>：<b>线上仍是旧定位</b>（<code>&lt;title&gt;RoboParts — 机器人零件兼容性判定层</code>），而仓内 <code>index.html</code>/<code>README.md</code>/<code>llms.txt</code> 已改为"具身系统的组合校验层"（本地出现 7 次）。<b>机器可读清单比人看的页面更懂定位</b>——历史性倒挂。</p>
+<p><b>建议</b>：部署修复后线上定位会自然同步——再次说明 P0-1 是总开关。</p>
+
+<h4>⑦ 评估层 — 75% 🟢</h4>
+<p><b>现状</b>：Golden 集 6→<b>28</b> 条三层（L1 规则 14 / L2 语义边界 9 / L3 证据 5）；<code>eval_compat.mjs</code> 支持 <code>evidence_count_exact</code> 精确断言防 fail-open；promptfoo 配置已可运行。</p>
+<p><b>问题</b>：仍是<b>自评</b>（自己出题自己答），缺外部对照基准。</p>
+<p><b>建议</b>：引入一个<b>外部锚点</b>（如公开 URDF/MJCF 样例集）做交叉验证。</p>
+
+<h4>⑧ 研究层 — 60.6% 🟡</h4>
+<p><b>现状</b>：门控加权 <b>60.6%</b>（body 49.5 / neuron 100 / chain 50 / policy 58.2）。权重来源可复现，且诚实给出裸值。</p>
+<p><b>问题</b>：body 被"确定性裁决率 0.1%"拖住；chain 跨域全链 0/1。</p>
+<p><b>建议</b>：保持"裸值优先于加权值"的诚实纪律（这是项目最稀缺的品格）；攻关 body 的 composed。</p>
+
+<h4>⑨ 论文层 — 40% 🟡</h4>
+<p><b>现状</b>：<code>papers/paper1-three-state-honesty.md</code> 在仓，<code>mechatronics_submission/</code> 目录存在。</p>
+<p><b>问题</b>：<b>未投出</b>（需用户补邮箱 + 单位）。</p>
+<p><b>建议</b>：这是把"验证纪律"软资产转成学术硬通货的最低成本路径——列为 P1。</p>
+
+<h4>⑩ 工程化 / CI — 88% 🟡</h4>
+<p><b>现状</b>：40 个命名闸门 / 85 个检查项，含"定位口径阴阳自证""绑定/行为自证""变异自证"等高阶闸门，纪律远超同类。</p>
+<p><b>问题</b>：<b>部署链路 0% 成功率</b>；CI 被 26 次 cancelled 污染；本地缺 PyYAML 导致 84/85。</p>
+<p><b>建议</b>：① 把"部署成功"本身做成一个闸门（deploy 后 curl 线上端点校验 <code>updated</code> 新鲜度）——<b>当前正是缺这道闸门才让"8 天没上线"无人察觉</b>；② 扩凭据闸门正则。</p>
+
+<h4>⑪ 运营 / 闭环 — 65% 🟡</h4>
+<p><b>现状</b>：<code>ops/results/</code> 台账齐备。</p>
+<p><b>问题</b>：<code>_STATUS.md</code> 陈旧 20 天。</p>
+<p><b>建议</b>：<code>closure_status.py --write</code> 刷新 + 把"刷新时效"纳入闸门。</p>
+
+<h4>⑫ 安全 — 40% 🔴</h4>
+<p><b>现状</b>：有 <code>_middleware.js</code> 边缘兜底（私有路径 404），有凭据闸门。</p>
+<p><b>问题</b>：<b>明文管理员密钥公开</b>；闸门正则覆盖不全。</p>
+<p><b>建议</b>：见 P0-2。</p>
+
+<h2>4. 修复方向（可执行）</h2>
+
+<h3>4.1 P0 · 止血（本周必修）</h3>
+<table>
+<thead><tr><th style="width:40px">#</th><th>动作</th><th style="width:38%">验收判据</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><b>诊断并修复 Cloudflare 部署</b>：检查 Secrets <code>CLOUDFLARE_API_TOKEN</code>/<code>CLOUDFLARE_ACCOUNT_ID</code>；或先本地 <code>node scripts/deploy.mjs</code> 手动上线止血</td><td><code>deploy.yml</code> 出现 ≥1 次 <code>success</code>；线上 <code>updated</code> ≥ 2026-10-08</td></tr>
+<tr><td>2</td><td><b>轮换 <code>ADMIN_API_KEYS</code></b>：Cloudflare 后台重新生成，写入 Secrets（<code>wrangler pages secret put</code>）而非 <code>wrangler.toml</code></td><td>远端 <code>wrangler.toml</code> 不再出现 <code>gtk_</code> 明文</td></tr>
+<tr><td>3</td><td><b>扩展凭据闸门正则</b>：增加 <code>gtk_[a-f0-9]{16,}</code>、<code>creem_</code>、<code>hf_</code> 等前缀</td><td>人为植入 <code>gtk_</code> 测试串 → 闸门判红</td></tr>
+<tr><td>4</td><td><b>新增"部署新鲜度"闸门</b>：deploy 后 curl 线上端点，校验 <code>updated</code> 与仓内差距 ≤ 1 天</td><td>人为让线上陈旧 → 闸门判红</td></tr>
+</tbody>
+</table>
+
+<h3>4.2 P1 · 恢复可信（本周至下周）</h3>
+<table>
+<thead><tr><th style="width:40px">#</th><th>动作</th><th style="width:38%">验收判据</th></tr></thead>
+<tbody>
+<tr><td>5</td><td><b>刷新 <code>_STATUS.md</code></b>：<code>python scripts/closure_status.py --write</code></td><td>文件内实体数 = 868，git HEAD = 当前 HEAD</td></tr>
+<tr><td>6</td><td><b>修 CI 并发取消</b>：<code>concurrency.cancel-in-progress: false</code></td><td>批量推送后 CI 不再大面积 cancelled</td></tr>
+<tr><td>7</td><td><b>同步本地 remote-tracking ref</b>：<code>git fetch origin</code>（或改走 API 对账）</td><td><code>git rev-list --count origin/main..HEAD</code> 归零</td></tr>
+<tr><td>8</td><td><b>加 <code>requirements-dev.txt</code></b>（含 PyYAML）+ bootstrap 说明</td><td>本地 <code>ci_gate.py</code> → 85/85</td></tr>
+<tr><td>9</td><td><b>GitHub Action 实跑一次</b>：在真实开源机器人仓库引用并留 run 链接</td><td>有可点击的 Actions run 证据</td></tr>
+</tbody>
+</table>
+
+<h3>4.3 P2 · 收敛与加固（两周内）</h3>
+<table>
+<thead><tr><th style="width:40px">#</th><th>动作</th><th style="width:38%">验收判据</th></tr></thead>
+<tbody>
+<tr><td>10</td><td>统一品类口径（20 vs 15）以 <code>entities.json</code> 为准</td><td>全仓文档无 <code>15 品类</code> 残留</td></tr>
+<tr><td>11</td><td>部署 <code>/api/co-mount</code> + 共装前端页</td><td>线上 <code>/api/co-mount</code> 返 200</td></tr>
+<tr><td>12</td><td>双引擎桥接从文档升级为可执行工具</td><td>有 <code>scripts/bridge_engine.py</code> 或等价物</td></tr>
+<tr><td>13</td><td>给 MCP 加匿名调用遥测</td><td>有调用计数产物</td></tr>
+</tbody>
+</table>
+
+<h2>5. 提升方向（短 / 中 / 长）</h2>
+
+<h3>5.1 短期（1 个月）— 让资产可见、可信</h3>
+<ol>
+  <li><b>部署即产品</b>：把"上线"从"事后手动"变成"push 即上线 + 闸门校验"——这是所有后续工作的放大器。</li>
+  <li><b>定位落地到线上</b>：仓内已改好，部署一修即生效。</li>
+  <li><b>Action 实跑</b>：一个真实的 run 链接胜过十页白皮书。</li>
+</ol>
+
+<h3>5.2 中期（1 个季度）— 把真壁垒做深</h3>
+<ol start="4">
+  <li><b>composed 攻关</b>：body 维度确定性裁决率 0.1% → 20%+（战略 A 方案核心指标）。</li>
+  <li><b>国标参考实现</b>：把"文档"变成"提交给标准委的参考实现 + 公开可复核的字段映射 API"。</li>
+  <li><b>论文投出</b>：完成"软资产 → 学术硬通货"转换。</li>
+</ol>
+
+<h3>5.3 长期（半年）— 建立生态位</h3>
+<ol start="7">
+  <li><b>成为"编译期类型检查器"的事实标准</b>：让机器人项目的 CI 默认接入 <code>roboparts-compat-check</code>。</li>
+  <li><b>数据飞轮改"同质集批量"</b>：用 <code>cohort_feasibility</code> 的缺口画像批量取证。</li>
+  <li><b>明确边界并对外宣告</b>：判"能不能装"，不判"能不能真的动"——边界清晰本身就是信任资产。</li>
+</ol>
+
+<h2>6. 结论</h2>
+<p class="lead">RoboParts 的<b>工程与研究完成度依然罕见地高</b>（40 闸门 / 85 检查项 / 三态诚实 / 868 实体 / 可复现判据），但本轮扫描揭示：<b>它当前的最大风险不是"做得不够好"，而是"做得再好也没人看得见，且门没锁好"</b>。</p>
+
+<p>三个层次的问题，按优先级：</p>
+<ol>
+  <li><b>可见性（🔴 最急）</b>：CI 部署 62/62 失败 → 线上冻结 8 天 → 上轮全部成果对世界不可见。<b>这是总开关。</b></li>
+  <li><b>安全性（🔴 最急）</b>：公开仓库明文管理员密钥 + 闸门覆盖不全 → 需立即轮换 + 补闸门。</li>
+  <li><b>产品化（🟡 持续）</b>：核心目标 5 项中 3 项仍"有数据、无产品"；<code>composed=0</code> 是硬骨头。</li>
+</ol>
+
+<div class="callout ok">
+  <div class="t">行动口诀</div>
+  <p style="margin:0"><b>先修部署（让成果可见）→ 再换密钥（把门锁上）→ 然后才是加功能（把壁垒做深）。</b><br>
+  顺序不可颠倒——在前两项完成前，任何新功能都只会继续躺在本地。</p>
+</div>
+
+<footer>
+  本报告全部数字为 2026-10-11 本轮实测，可复现。凡与仓内文档口径不一致处，已在正文显式标注。<br>
+  生成路径：<code>docs/RoboParts-项目全面审核与板块进度报告-20261011.html</code>（Markdown 版同名 .md）
+</footer>
+
+</div>
+</body>
+</html>

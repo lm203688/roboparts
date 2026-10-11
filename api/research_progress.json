@@ -7,7 +7,7 @@
   "anchor": "docs/PROJECT_DIRECTIONS_V2.md §1",
   "generated_by": "scripts/build_research_progress.py",
   "truth_source": "api/{morphology_graph,compose_semantics,provenance,compose_frontier,electrical_evidence,entities}.json",
-  "generated_at": "2026-10-11T06:36:02+00:00",
+  "generated_at": "2026-10-11T14:53:50+00:00",
   "headline": "**门控加权完成度 60.6%**（朴素口径 60.6%）。body = 50%（关系类型 2/2 已覆盖，但确定性裁决率仍仅 0.1%——**能判出确定的负答案，不等于能判出正答案**）；neuron = 100%（判据纠正后：量的是溯源诚实度，非数据量）；chain = 50%（**本域**三段 2/2 闭合，跨域全链 0/1）；policy = 58%（开源模型 4/5 有真实本体绑定）。",
   "why_not_100": {
    "summary": "**不是「还没做完」，是三类性质完全不同的缺口混在一个分数里。**把它们分开看，才能知道哪部分能补、哪部分不该补。",
