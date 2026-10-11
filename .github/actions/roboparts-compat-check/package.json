@@ -1,0 +1,15 @@
+{
+  "name": "@roboparts/compat-check-action",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "RoboParts Compatibility Check — GitHub Action 入口（具身系统组合校验）",
+  "main": "entrypoint.js",
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

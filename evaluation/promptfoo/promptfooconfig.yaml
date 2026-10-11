@@ -1,0 +1,142 @@
+# RoboParts REST/MCP 工具的 L5 评估集 —— promptfoo 可运行配置
+#
+# 定位：把 RoboParts 的「三态 fail-closed 判定 + 溯源纪律」做成 Agent 可校验的评估面。
+# 与 api/eval/compatibility-golden.json（规则引擎锚点）互补：
+#   - golden.json 测「判定引擎规则」是否稳定（6 条冻结锚点）
+#   - 本配置测「Agent 通过 REST 拿到的引擎输出」是否满足三态契约
+#
+# 用法：
+#   npx --yes promptfoo@latest eval --config evaluation/promptfoo/promptfooconfig.yaml
+#
+# 2026-10-11 修复：
+#   1. 去掉 model: mcp:https://... 的伪 provider 配置（promptfoo 不支持这种形式）
+#   2. 增加 prompts 段：把每个 tool 参数化，vars 里的 {{tool}} 真正注入到 provider
+#   3. 断言对齐 curl 实测的真实 REST 返回字段（source_tier / overall / verdict / evidence / matrix）
+#   4. 加 negative case：未收录型号必须返 404「实体不存在」而非编造 compatible；未部署端点必须诚实 404
+#
+# 线上契约锚定（2026-10-11 curl 实测）：
+#   GET  /api/entity/{id}      → 200 {entity:{...source_tier:"B"...}, meta:{tier:"free"...}}
+#   GET  /api/search?q=        → 200 {results:[...], meta:{matched:N...}}
+#   GET  /api/compatibility?a=&b= → 200 {overall, dimensions[], evidence[]}；b 未收录 → 404 {"error":"实体不存在: X"}
+#   GET  /api/co-mount?...     → **404 未部署**（与下一阶段报告 §2.5 一致，属待部署资产）
+#   POST /api/bom/check        → 200 {matrix[], summary{...}, assembly_sequence[]}
+#   POST /api/urdf/lint        → 200 {severity, issues[], summary, stats}
+
+description: RoboParts L5 semantic evaluation — three-state fail-closed contract
+version: 2.0.0
+
+providers:
+  # Custom provider：REST 直连，无 MCP handshake / 无 API key
+  - id: file://provider-roboparts.mjs
+    label: RoboParts REST (roboparts.cc)
+
+prompts:
+  # 单一 prompt：把 tool + 参数序列化为 JSON 请求，provider 内部路由到对应 REST 端点
+  - |
+    RoboParts 工具调用：{{tool}} 参数 {{vars}}
+
+tests:
+  # ── 场景 1：单件详情必须带 source_tier 溯源 ──
+  - description: get_component_detail ACT-001 必须返回 source_tier
+    vars: { tool: get_component_detail, id: ACT-001 }
+    assert:
+      - type: regex
+        value: '"source_tier"\s*:\s*"[ABC]"'
+      - type: contains
+        value: "ACT-001"
+      - type: contains
+        value: "ROBOTIS"
+
+  # ── 场景 2：四维兼容判定 —— 正例（已知锚点） ──
+  - description: check_compatibility ACT-001 vs ACT-002 判兼容
+    vars: { tool: check_compatibility, a: ACT-001, b: ACT-002 }
+    assert:
+      - type: regex
+        value: '"overall[_a-z]*"\s*:\s*"(compatible|true)"'
+      - type: contains
+        value: "evidence"
+
+  # ── 场景 3：四维兼容判定 —— 电压冲突 ──
+  - description: check_compatibility ACT-001 vs ACT-003 电压冲突判 incompatible
+    vars: { tool: check_compatibility, a: ACT-001, b: ACT-003 }
+    assert:
+      - type: regex
+        value: '"overall[_a-z]*"\s*:\s*"(incompatible|false)"'
+      - type: regex
+        value: '"electrical"\s*:\s*(false|0|"false")'
+
+  # ── 场景 4：共装查询端点未部署 —— 诚实 404 ──
+  - description: check_co_mount 端点尚未部署（诚实标注，与报告 §2.5 一致）
+    vars: { tool: check_co_mount, host: HUB-030, a: ACT-028, b: SENS-047 }
+    assert:
+      - type: is-error
+
+  # ── 场景 5：未收录型号必须诚实 404，不能编 compatible ──
+  - description: check_compatibility 未收录 ACT-999 必须诚实报错
+    vars: { tool: check_compatibility, a: ACT-001, b: ACT-999 }
+    assert:
+      - type: is-error
+      - type: regex
+        value: '实体不存在'
+
+  # ── 场景 6：BOM 一次性 POST 三态 ──
+  - description: bom_compatibility_check 三态输出
+    vars:
+      tool: bom_compatibility_check
+      bom: '{"items":[{"id":"ACT-001"},{"id":"ACT-002"},{"id":"ACT-003"}]}'
+    assert:
+      - type: regex
+        value: '"summary"\s*:\s*\{'
+      - type: regex
+        value: '"(compatible_pairs|incompatible_pairs|undecided_pairs)"'
+      - type: contains
+        value: "matrix"
+      - type: contains
+        value: "assembly_sequence"
+
+  # ── 场景 7：URDF lint 端点真实调用 ──
+  - description: lint_urdf 合法 URDF 返回 severity
+    vars:
+      tool: lint_urdf
+      urdf_xml: '<robot name="test"><link name="base"/><link name="link1"/><joint name="j1" type="revolute"><parent link="base"/><child link="link1"/></joint></robot>'
+    assert:
+      - type: regex
+        value: '"severity"\s*:\s*"(error|warning|info)"'
+      - type: contains
+        value: "issues"
+
+  # ── 场景 8：关键词检索诚实边界（未收录型号必须返回空） ──
+  - description: search_components 未收录型号返回空结果，不编
+    vars: { tool: search_components, query: "XYZ-Bot-9000-NONEXISTENT" }
+    assert:
+      - type: regex
+        value: '"(results|entities|hits)"\s*:\s*\[\s*\]|"matched"\s*:\s*0|"count"\s*:\s*0'
+
+  # ── 场景 9：溯源 tier 分布（第二件） ──
+  - description: get_component_detail ACT-006 必须返回 source_tier
+    vars: { tool: get_component_detail, id: ACT-006 }
+    assert:
+      - type: regex
+        value: '"source_tier"\s*:\s*"[ABC]"'
+
+  # ── 场景 10：未知工具必须报错，不能静默成功 ──
+  - description: 未知 tool 名 → 报错
+    vars: { tool: nonsense_tool, a: x, b: y }
+    assert:
+      - type: is-error
+      - type: regex
+        value: '"unknown_tool"'
+
+metadata:
+  rubric: |
+    三条硬性判据（RoboParts 三态 fail-closed 契约）：
+    1. 未声明维度必须判 unknown/false/null，不能 fail-open 判 compatible。
+    2. 每个判定必须带 evidence 链或 source_tier 溯源（引用了哪些实体的哪些字段）。
+    3. 未收录的型号必须诚实返 404「实体不存在」或空结果，不能编造型号详情或参数。
+    违反任一条 → 该场景判定失败。
+
+    已知缺口（诚实标注，不是评估失败）：
+    - check_co_mount 端点尚未部署（线上 404）。部署前该场景固定为 is-error，
+      部署成功后应翻转为断言 4 态 verdict 之一（见 provider 注释）。
+    - 本报告基于 REST 层引擎输出，不含 LLM 复述噪声。如需评估 LLM 语义层，
+      另开一套 provider 走 MCP SDK，或接入 OpenAI-compatible 代理。

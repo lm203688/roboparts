@@ -1,5 +1,5 @@
 const DB = {
-  "updated": "2026-10-03T16:37:48.968862Z",
+  "updated": "2026-10-08T22:36:22.135323Z",
   "stats": {
     "actuators": 222,
     "sensors": 95,
@@ -7,7 +7,7 @@ const DB = {
     "interfaces": 44,
     "protocols": 64,
     "llms": 42,
-    "platforms": 105,
+    "platforms": 106,
     "flexible_actuators": 22,
     "robot_ai_models": 46,
     "data_acquisition": 46,
@@ -15,7 +15,7 @@ const DB = {
     "integrated_joints": 1,
     "reducers": 14,
     "controllers": 4,
-    "grippers": 24,
+    "grippers": 26,
     "structural": 3,
     "cables": 2,
     "power": 2,
@@ -32258,7 +32258,8 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0010",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "RPLAT-010"
+      "duplicate_of": "RPLAT-010",
+      "quarantine_reason": "Duplicate of RPLAT-010 (Tesla Optimus Gen 3) - same name/manufacturer, deduplication isolation per 2026-10-08 audit"
     },
     {
       "id": "RPLAT-010",
@@ -36099,7 +36100,8 @@ const DB = {
         "confidence": 0.95,
         "declared_note": "Franka FR3 v2 (post-2024) tool flange is unchanged from FR3 v1: ISO 9409-1-50-4-M6. See Franka API docs `tool_flange_joint_name`.",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "source": "Meta SuperDex upstream + vendor datasheet cross-ref"
+        "source": "Meta SuperDex upstream + vendor datasheet cross-ref",
+        "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arms/fr3_v2/fr3_v2.superdex_bot"
       },
       "standard_conformance": {
         "format": "superdex_bot_v1",
@@ -36209,7 +36211,8 @@ const DB = {
         "confidence": 0.95,
         "declared_note": "Franka FR3 tool flange is fixed ISO 9409-1-50-4-M6 (50 mm bore, 6×M6 bolt circle, 37.4 mm depth) per Franka robot_specs. Not user-interchangeable — no adapter plate is offered by Franka for other standards.",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "source": "Meta SuperDex upstream + vendor datasheet cross-ref"
+        "source": "Meta SuperDex upstream + vendor datasheet cross-ref",
+        "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arms/fr3/fr3.superdex_bot"
       },
       "standard_conformance": {
         "format": "superdex_bot_v1",
@@ -36319,7 +36322,8 @@ const DB = {
         "confidence": 0.8,
         "declared_note": "OpenArm V20 end-effector interface is proprietary — 3×M4 on a 39 mm BCD per Agilex V20 hardware spec. Not ISO 9409-1.",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "source": "Meta SuperDex upstream + vendor datasheet cross-ref"
+        "source": "Meta SuperDex upstream + vendor datasheet cross-ref",
+        "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arms/openarm_v20/left/openarm_v20_left_arm.superdex_bot"
       },
       "standard_conformance": {
         "format": "superdex_bot_v1",
@@ -36427,7 +36431,8 @@ const DB = {
         "confidence": 0.8,
         "declared_note": "OpenArm V20 end-effector interface is proprietary — 3×M4 on a 39 mm BCD per Agilex V20 hardware spec. Not ISO 9409-1.",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "source": "Meta SuperDex upstream + vendor datasheet cross-ref"
+        "source": "Meta SuperDex upstream + vendor datasheet cross-ref",
+        "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arms/openarm_v20/right/openarm_v20_right_arm.superdex_bot"
       },
       "standard_conformance": {
         "format": "superdex_bot_v1",
@@ -36815,7 +36820,8 @@ const DB = {
         "confidence": 0.85,
         "declared_note": "Allegro Hand V5 uses a proprietary 4-bolt flange (Ø52 mm, 4×M5 sockets). No ISO 9409-1 adapter is officially offered; community adapters exist. See Allegro Hand Manual section 5.3.",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "source": "Meta SuperDex upstream + vendor datasheet cross-ref"
+        "source": "Meta SuperDex upstream + vendor datasheet cross-ref",
+        "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/hands/allegro_v5/right/allegro_v5_right.superdex_bot"
       },
       "standard_conformance": {
         "format": "superdex_bot_v1",
@@ -37422,6 +37428,45 @@ const DB = {
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
       "rp_id": "SUPERDEX-openarm-v20-torso"
+    },
+    {
+      "id": "SO-ARM100",
+      "name": "SO-ARM100 6-DoF 机械臂",
+      "name_en": "SO-ARM100 6-DoF robotic arm (LeRobot)",
+      "category": "platforms",
+      "entity_kind": "component",
+      "manufacturer": "LeRobot / TheRobotStudio",
+      "manufacturer_en": "LeRobot / TheRobotStudio",
+      "type": "open_source_arm",
+      "description": "开源 6-DoF 桌面级机械臂，配 SO-100/SO-101 夹爪，通过 LeRobot SDK 控制。HuggingFace SmolVLA 的训练与评测硬件栈主体。",
+      "description_en": "Open-source 6-DoF desktop robotic arm with SO-100/SO-101 gripper, controlled via LeRobot SDK. Body of HuggingFace SmolVLA's training/evaluation stack.",
+      "year": 2024,
+      "status": "open_source_active",
+      "open_source": true,
+      "source_tier": "A",
+      "source_url": "https://github.com/TheRobotStudio/SO-ARM100",
+      "source": "GitHub 上游开源仓 TheRobotStudio/SO-ARM100 + HF 官方博客 SmolVLA「Hardware used to train and evaluate」段落",
+      "confidence": 0.95,
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "last_verified": "2026-10-06",
+      "entity_origin": "upstream_open_source_ingestion",
+      "mechanical_interface": {
+        "status": "n_a",
+        "declared_note": "SO-ARM100 是集成式机械臂，末端与 SO-100/101 夹爪通过内部结构件连接，无对外工具法兰。上游开源仓与 HF 官方博客均未给出工具侧 ISO 法兰标准，故**刻意不填**——编造法兰标准属凭空断言。",
+        "source_url": "https://github.com/TheRobotStudio/SO-ARM100",
+        "confidence": 0.9,
+        "retrieved": "2026-10-06",
+        "gap": "工具侧法兰标准未在公开一手文档中声明 ⇒ 判据走 not_applicable，不伪装为 declared 状态。"
+      },
+      "electrical_interface": null,
+      "evidence_gap": {
+        "axis": "mechanical + electrical",
+        "reason": "上游开源仓未公开工具侧法兰标准与外部电气接口，故机械与电气均不填声明——**不为了完成度而编造**"
+      },
+      "rp_id": "RP-PLA-0042",
+      "source_tier_basis": "deep_link:github.com/TheRobotStudio/SO-ARM100"
     }
   ],
   "flexible_actuators": [
@@ -43328,7 +43373,7 @@ const DB = {
       },
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.prnewswire.com/news-releases/molex-introduces-minimix-hy",
-      "rp_id": "RP-CON-0001",
+      "rp_id": "RP1-CON-0001",
       "entity_kind_basis": "默认归类"
     },
     {
@@ -43379,7 +43424,7 @@ const DB = {
       },
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.prnewswire.com/news-releases/molex-introduces-minimix-hy",
-      "rp_id": "RP-CON-0002",
+      "rp_id": "RP1-CON-0002",
       "entity_kind_basis": "默认归类"
     }
   ],
@@ -43433,7 +43478,7 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.google.com/search",
       "source_tier_prev": "B",
-      "rp_id": "RP-INT-0001",
+      "rp_id": "RP1-INT-0001",
       "source_url": "https://www.google.com/search?q=%E7%9F%A9%E9%98%B5%E8%B6%85%E6%99%BA%20Matrix%20%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20(MATRIX-1%2F3)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类"
@@ -43605,7 +43650,7 @@ const DB = {
     },
     {
       "id": "REDUCER-HD-25",
-      "rp_id": "RP-RED-0001",
+      "rp_id": "RP1-RED-0001",
       "name": "Harmonic Drive CSF-25-100-H-D",
       "name_en": "Harmonic Drive CSF-25-100-H-D",
       "category": "reducers",
@@ -43653,7 +43698,7 @@ const DB = {
     },
     {
       "id": "REDUCER-HD-32",
-      "rp_id": "RP-RED-0002",
+      "rp_id": "RP1-RED-0002",
       "name": "Harmonic Drive CSF-32-100-H-D",
       "name_en": "Harmonic Drive CSF-32-100-H-D",
       "category": "reducers",
@@ -43701,7 +43746,7 @@ const DB = {
     },
     {
       "id": "REDUCER-HD-50",
-      "rp_id": "RP-RED-0003",
+      "rp_id": "RP1-RED-0003",
       "name": "Harmonic Drive CSF-50-100-H-D",
       "name_en": "Harmonic Drive CSF-50-100-H-D",
       "category": "reducers",
@@ -44862,7 +44907,7 @@ const DB = {
     },
     {
       "id": "GRIPPER-ONR-VG1",
-      "rp_id": "RP-GRI-0001",
+      "rp_id": "RP1-GRI-0001",
       "name": "OnRobot VG1 气动夹爪",
       "name_en": "OnRobot VG1 Vacuum Gripper",
       "category": "grippers",
@@ -44910,7 +44955,7 @@ const DB = {
     },
     {
       "id": "GRIPPER-ONR-NG1",
-      "rp_id": "RP-GRI-0002",
+      "rp_id": "RP1-GRI-0002",
       "name": "OnRobot NG10 电动夹爪",
       "name_en": "OnRobot NG10 Robotic Gripper",
       "category": "grippers",
@@ -44958,7 +45003,7 @@ const DB = {
     },
     {
       "id": "GRIPPER-ONR-NG30",
-      "rp_id": "RP-GRI-0003",
+      "rp_id": "RP1-GRI-0003",
       "name": "OnRobot NG30 电动夹爪",
       "name_en": "OnRobot NG30 Robotic Gripper",
       "category": "grippers",
@@ -45006,7 +45051,7 @@ const DB = {
     },
     {
       "id": "GRIPPER-SCHUNK-SWG15",
-      "rp_id": "RP-GRI-0004",
+      "rp_id": "RP1-GRI-0004",
       "name": "Schunk SWG 15 气动夹爪",
       "name_en": "Schunk SWG 15 Parallel Gripper",
       "category": "grippers",
@@ -45053,7 +45098,7 @@ const DB = {
     },
     {
       "id": "GRIPPER-POS-2F20",
-      "rp_id": "RP-GRI-0005",
+      "rp_id": "RP1-GRI-0005",
       "name": "正实 2F-20 电动夹爪",
       "name_en": "ZhenShi 2F-20 Electric Gripper",
       "category": "grippers",
@@ -45675,7 +45720,8 @@ const DB = {
         "confidence": 0.9,
         "declared_note": "Robotiq 2F-85 ships with interchangeable coupling rings: AGC-CPL-062-002=ISO 9409-1-50-4-M6, AGC-CPL-062-001=40-4-M6, AGC-CPL-062-003=31.5-4-M5. See Datasheet R-252-1 rev C.",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "source": "Meta SuperDex upstream + vendor datasheet cross-ref"
+        "source": "Meta SuperDex upstream + vendor datasheet cross-ref",
+        "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/grippers/2f_85/2f_85.superdex_bot"
       },
       "standard_conformance": {
         "format": "superdex_bot_v1",
@@ -45760,6 +45806,84 @@ const DB = {
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
       "rp_id": "SUPERDEX-2f-85"
+    },
+    {
+      "id": "SO-100",
+      "name": "SO-100 夹爪（LeRobot v1）",
+      "name_en": "SO-100 gripper (LeRobot v1)",
+      "category": "grippers",
+      "entity_kind": "component",
+      "manufacturer": "LeRobot / HuggingFace",
+      "manufacturer_en": "LeRobot / HuggingFace",
+      "type": "parallel_jaw",
+      "description": "LeRobot 开源平行夹爪 v1，由 2 个微型舵机驱动，SO-ARM100 的标准末端执行器。SmolVLA 的训练硬件之一。",
+      "description_en": "LeRobot open-source parallel-jaw gripper v1, driven by 2 micro servos. Standard end effector of SO-ARM100. One of SmolVLA's training hardware.",
+      "year": 2024,
+      "status": "open_source_active",
+      "open_source": true,
+      "source_tier": "A",
+      "source_url": "https://huggingface.co/blog/smolvla",
+      "source": "HF 官方博客 SmolVLA「Hardware used to train and evaluate SO-100/101」段落 + leijg/SO-ARM100 开源仓 CAD",
+      "confidence": 0.9,
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "last_verified": "2026-10-06",
+      "entity_origin": "upstream_open_source_ingestion",
+      "mechanical_interface": {
+        "status": "n_a",
+        "declared_note": "SO-100 是舵机直驱平行夹爪（2 × MG90S 类舵机），内部固定于 SO-ARM100 末端法兰，**无对外工具法兰**。上游开源仓未给出工业标准接口，故不填声明。",
+        "source_url": "https://github.com/TheRobotStudio/SO-ARM100",
+        "confidence": 0.85,
+        "retrieved": "2026-10-06",
+        "gap": "无对外法兰，不适用 ISO 9409 系列声明。"
+      },
+      "electrical_interface": null,
+      "evidence_gap": {
+        "axis": "mechanical + electrical",
+        "reason": "舵机直驱夹爪无工业标准接口，上游开源仓未公开，不为了完成度编造。"
+      },
+      "rp_id": "RP-GRI-0020",
+      "source_tier_basis": "deep_link:huggingface.co/blog/smolvla"
+    },
+    {
+      "id": "SO-101",
+      "name": "SO-101 夹爪（LeRobot v2）",
+      "name_en": "SO-101 gripper (LeRobot v2)",
+      "category": "grippers",
+      "entity_kind": "component",
+      "manufacturer": "LeRobot / HuggingFace",
+      "manufacturer_en": "LeRobot / HuggingFace",
+      "type": "parallel_jaw",
+      "description": "LeRobot 开源平行夹爪 v2（SO-100 升级版），改进结构更坚固。SmolVLA 的训练硬件之一。",
+      "description_en": "LeRobot open-source parallel-jaw gripper v2 (SO-100 upgrade), with improved mechanical rigidity. One of SmolVLA's training hardware.",
+      "year": 2025,
+      "status": "open_source_active",
+      "open_source": true,
+      "source_tier": "A",
+      "source_url": "https://huggingface.co/blog/smolvla",
+      "source": "HF 官方博客 SmolVLA「Hardware used to train and evaluate SO-100/101」段落",
+      "confidence": 0.9,
+      "verified": true,
+      "data_quality": "ok",
+      "quarantine": false,
+      "last_verified": "2026-10-06",
+      "entity_origin": "upstream_open_source_ingestion",
+      "mechanical_interface": {
+        "status": "n_a",
+        "declared_note": "SO-101 是舵机直驱平行夹爪，无对外工具法兰（同 SO-100）。",
+        "source_url": "https://github.com/TheRobotStudio/SO-ARM100",
+        "confidence": 0.85,
+        "retrieved": "2026-10-06",
+        "gap": "无对外法兰，不适用 ISO 9409 系列声明。"
+      },
+      "electrical_interface": null,
+      "evidence_gap": {
+        "axis": "mechanical + electrical",
+        "reason": "同 SO-100。"
+      },
+      "rp_id": "RP-GRI-0021",
+      "source_tier_basis": "deep_link:huggingface.co/blog/smolvla"
     }
   ],
   "structural": [

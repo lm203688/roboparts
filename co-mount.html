@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts · 能不能共装？（Co-mount 查询）</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<link rel="canonical" href="https://roboparts.cc/co-mount">
+<meta name="description" content="查询「这台机器人能不能同时装器件 A 和器件 B」。三段判据（机械同型 + 工具侧位数预算 + 信号互补），四种裁决态：可共装 / 装不下（工程约束）/ 类型错误 / 未知。返回判定证据链。">
+<style>
+  :root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--bad:#ff6b6b;--ok:#37e0a6;--warn:#ffd166}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.6}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 64px}
+  h1{font-size:26px;margin:0 0 6px}
+  h3{margin:0 0 10px}
+  h4{margin:16px 0 6px}
+  .sub{color:var(--mut);margin-bottom:20px}
+  .card{background:var(--card);border:1px solid #233;border-radius:14px;padding:18px 20px;margin-bottom:18px}
+  button{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;border:0;border-radius:10px;padding:10px 18px;font-weight:700;cursor:pointer;font-size:14px}
+  button.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+  .row{display:flex;gap:10px;align-items:center;margin:10px 0;flex-wrap:wrap}
+  select{background:#0e1530;color:var(--txt);border:1px solid #2a3556;border-radius:8px;padding:9px 10px;font-size:14px;flex:1;min-width:200px}
+  label{font-size:13px;color:var(--mut);min-width:78px}
+  .pill{display:inline-block;background:#0e1530;border:1px solid #2a3556;border-radius:999px;padding:2px 10px;font-size:12px;color:var(--mut)}
+  .verdict{font-size:20px;font-weight:800;padding:14px 18px;border-radius:12px;margin:8px 0}
+  .v-mountable{background:#0c2a1e;color:var(--ok);border-left:4px solid var(--ok)}
+  .v-port_exhausted{background:#2a2410;color:var(--warn);border-left:4px solid var(--warn)}
+  .v-type_error{background:#2a1414;color:var(--bad);border-left:4px solid var(--bad)}
+  .v-unknown{background:#161c2e;color:var(--mut);border-left:4px solid var(--mut)}
+  .stage{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+  @media(max-width:720px){.stage{grid-template-columns:1fr}}
+  .stage .box{background:#0e1530;border:1px solid #2a3556;border-radius:10px;padding:10px 12px}
+  .stage .box .k{font-size:12px;color:var(--mut)}
+  .stage .box .v{font-weight:700;margin-top:2px}
+  .ev{background:#0e1530;border-left:3px solid var(--acc2);border-radius:0 8px 8px 0;padding:10px 12px;margin:8px 0;font-size:13px}
+  .ev .meta{color:var(--mut);font-size:12px;margin-top:4px;word-break:break-all}
+  .tip{color:var(--mut);font-size:12.5px}
+  .warn{color:var(--warn);background:#2a2410;border-left:3px solid var(--warn);padding:8px 12px;border-radius:6px;margin:8px 0;font-size:13px}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin-top:6px}
+  th,td{border:1px solid #243;padding:6px 8px;text-align:left}
+  th{background:#0e1530;color:var(--acc)}
+  a{color:var(--acc2)}
+  code{background:#0e1530;padding:1px 6px;border-radius:5px;font-size:12.5px}
+  #result{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🔩 能不能共装？ <span class="pill">免费 · 只读</span></h1>
+  <div class="sub">
+    问的不是「A 能不能插进 B」（那是二段互插，见 <a href="/compatibility-viewer">兼容性判定</a>），
+    而是「<b>A 和 B 能不能同时装在同一台机器人的工具侧</b>」——这是三段共装关系（A↔宿主↔B）。
+    典型问题：「这台 UR5e 能同时装夹爪和六轴力传感器吗？」
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <label>宿主机器人</label>
+      <select id="host"><option value="">— 加载中… —</option></select>
+    </div>
+    <div class="row">
+      <label>器件 A</label>
+      <select id="devA"><option value="">— 请先选宿主 —</option></select>
+      <label>器件 B</label>
+      <select id="devB"><option value="">— 请先选宿主 —</option></select>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <button onclick="query()">▶ 查询能否共装</button>
+      <button class="ghost" onclick="demo()">💡 试一个示例</button>
+    </div>
+    <div class="tip" id="hint"></div>
+  </div>
+
+  <div class="card" id="result">
+    <div id="verdictBox"></div>
+    <div id="stages"></div>
+    <h4>判定证据链 <span class="tip">这条判定依据了哪几条取证</span></h4>
+    <div id="evidence"></div>
+    <div class="tip" id="caliber"></div>
+  </div>
+
+  <div class="card">
+    <div class="tip">
+      口径说明：本页为<b>研究层三段判据</b>（mount_fit + port_budget + signal_complementary），
+      与兼容性判定的四维（protocol/electrical/mechanical/software）<b>口径不同、不可混用</b>。
+      <code>port_exhausted</code>（装不下）是<b>工程约束</b>，与 <code>unknown</code>（数据不足）严格区分——
+      我们宁可判「不知道」，也不把不知道伪装成「不行」。
+      我们不生产、不销售任何零件，判定不会被导向自家产品。
+    </div>
+  </div>
+</div>
+
+<script>
+const API='/api';
+let HOSTS=[];
+
+async function init(){
+  try{
+    const r=await fetch(API+'/co-mount');
+    const j=await r.json();
+    HOSTS=j.hosts||[];
+    const sel=document.getElementById('host');
+    sel.innerHTML='<option value="">— 选择宿主机器人 —</option>';
+    HOSTS.forEach(h=>{
+      const o=document.createElement('option');
+      o.value=h.id;
+      o.textContent=`${h.name}（${h.id}）` + (h.tool_io_ports==null?' · 工具位数未取证':` · 工具位 ${h.tool_io_ports}`);
+      sel.appendChild(o);
+    });
+    const ids=(j.summary&&j.summary.l2_device_ids)||[];
+    document.getElementById('hint').textContent =
+      `当前库内可查：宿主 ${HOSTS.length} 个 · 器件 ${ids.length} 个（共装可判定 ${(j.summary&&j.summary.pair_evaluations)||0} 组配对）。`;
+  }catch(e){
+    document.getElementById('hint').innerHTML='<span class="warn">数据源暂时不可用。</span>';
+  }
+}
+
+async function onHostChange(){
+  const host=document.getElementById('host').value;
+  const a=document.getElementById('devA'), b=document.getElementById('devB');
+  if(!host){ a.innerHTML='<option value="">— 请先选宿主 —</option>'; b.innerHTML=a.innerHTML; return; }
+  try{
+    const r=await fetch(API+'/co-mount?host='+encodeURIComponent(host));
+    const j=await r.json();
+    const devs=(j.single_mount||[]).map(s=>s.device);
+    const opts='<option value="">— 选择器件 —</option>'+devs.map(d=>`<option value="${d}">${d}</option>`).join('');
+    a.innerHTML=opts; b.innerHTML=opts;
+  }catch(e){}
+}
+
+async function query(){
+  const host=document.getElementById('host').value;
+  const a=document.getElementById('devA').value;
+  const b=document.getElementById('devB').value;
+  const box=document.getElementById('result');
+  if(!host||!a||!b){ document.getElementById('hint').innerHTML='<span class="warn">请先选择宿主与两个器件。</span>'; return; }
+  const url=API+'/co-mount?host='+encodeURIComponent(host)+'&a='+encodeURIComponent(a)+'&b='+encodeURIComponent(b);
+  const r=await fetch(url);
+  const j=await r.json();
+  box.style.display='block';
+  render(j);
+}
+
+const LABEL={mountable:'✅ 可共装',port_exhausted:'⚠ 装不下（工程约束）',type_error:'✖ 类型错误（确定不兼容）',unknown:'？未知（数据不足）'};
+
+function render(j){
+  const vb=document.getElementById('verdictBox');
+  if(j.error){
+    vb.innerHTML=`<div class="warn">${j.error}${j.hint?'<br>'+j.hint:''}${j.known_hosts?'<br>已知宿主：'+j.known_hosts.join(' / '):''}</div>`;
+    document.getElementById('stages').innerHTML='';
+    document.getElementById('evidence').innerHTML='';
+    document.getElementById('caliber').textContent='';
+    return;
+  }
+  const v=j.verdict;
+  vb.innerHTML=`<div class="verdict v-${v}">${LABEL[v]||v}</div>
+    <div class="tip">宿主 <b>${j.host_name||''}</b>（${j.host}） · ${j.a} × ${j.b}</div>
+    <div class="tip" style="margin-top:6px">${j.interpretation||''}</div>`;
+
+  const s=j.stage_verdicts||{};
+  const stage=(k,label)=>{const val=s[k]||'—';const cls=(val==='fit'||val==='complementary')?'ok':(val==='unknown'?'':'');return `<div class="box"><div class="k">${label}</div><div class="v">${val}</div></div>`;};
+  document.getElementById('stages').innerHTML='<div class="stage">'+
+    stage('mount_fit.a','机械同型 · A')+stage('mount_fit.b','机械同型 · B')+
+    stage('port_budget','工具侧位数预算')+'</div>'+
+    '<div class="stage">'+stage('signal_complementary','信号角色互补')+'<div class="box"><div class="k">综合裁决</div><div class="v">'+v+'</div></div></div>';
+
+  document.getElementById('evidence').innerHTML=(j.evidence||[]).map(e=>{
+    const src=e.source_url?`<a href="${e.source_url}" target="_blank" rel="noopener">${e.source||e.source_url}</a> · Tier ${e.source_tier||'?'}`:(e.source||'—');
+    return `<div class="ev"><b>${e.kind}</b> · ${e.ref||''}${e.name?'（'+e.name+'）':''}<br>${e.claim||''}
+      <div class="meta">出处：${src}${e.confidence!=null?' · confidence '+e.confidence:''}</div></div>`;
+  }).join('');
+
+  document.getElementById('caliber').textContent='口径：'+(j.caliber||'')+'　'+((j.warning)||'');
+}
+
+function demo(){
+  document.getElementById('host').value='HUB-031';
+  onHostChange().then(()=>{
+    document.getElementById('devA').value='ACT-028';
+    document.getElementById('devB').value='SENS-047';
+    query();
+  });
+}
+
+document.getElementById('host').addEventListener('change',onHostChange);
+init();
+</script>
+</body>
+</html>

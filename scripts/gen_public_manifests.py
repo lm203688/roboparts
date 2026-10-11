@@ -143,7 +143,7 @@ def render_server_json(f, cats, version):
     doc = {
         "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
         "name": "cc.roboparts/roboparts",
-        "title": "RoboParts 机器人零部件兼容性",
+        "title": "RoboParts 具身系统组合校验层",
         "description": registry_description(f["total_entities"], cats),
         "version": version,
         "websiteUrl": SITE,
@@ -172,7 +172,7 @@ startCommand:
     required: []
 
 name: roboparts
-displayName: RoboParts 机器人零部件兼容性
+displayName: RoboParts 具身系统组合校验层
 description: >-
 {desc_lines}
 homepage: {site}
@@ -205,10 +205,11 @@ def _fold(sentences, indent="  "):
 
 def render_smithery(f, cats):
     desc_lines = _fold([
-        f"仿生/人形机器人零部件兼容性数据层。{f['total_entities']} 条实体、{cats} 个品类。",
-        "支持 protocol / electrical / mechanical / ROS2 四维兼容判定与参数口径可比性核对。",
+        "面向开源机器人构建者的组合校验层（vendor-neutral composition checker for embodied systems）。",
+        f"判定零件能否装配/共装/互换，输出可核验的三态结论（能/不能/不知道），生成可 3D 打印转接件。",
+        f"{f['total_entities']} 实体、{cats} 个品类，支持 protocol / electrical / mechanical / ROS2 四维兼容判定。",
         "中立数据层：既不生产也不转售任何零部件；兼容性结论基于厂商公开声明字段的规则推断",
-        "而非实测，未声明维度显式标为「无法判定」。",
+        "而非实测，未声明维度显式标为「无法判定」。真正的护城河是判定引擎 + 三条定理 + 40 项 CI 闸门。",
     ])
     return SMITHERY_TEMPLATE.format(
         site=SITE,
@@ -230,13 +231,16 @@ def render_well_known(f, tools):
         "servers": [
             {
                 "name": "roboparts",
-                "title": "RoboParts 机器人零部件兼容性",
+                "title": "RoboParts 具身系统组合校验层",
                 "description": (
-                    f"仿生/人形机器人零部件兼容性数据层：{f['total_entities']} 条实体"
+                    "面向开源机器人构建者的组合校验层（vendor-neutral composition checker for embodied systems）："
+                    f"判定零件能否装配/共装/互换，输出可核验的三态结论（能/不能/不知道），生成可 3D 打印转接件。"
+                    f"{f['total_entities']} 实体"
                     f"（{f['component_entities']} 实物零部件 / {f['specification_entities']} 接口规范 / "
                     f"{f['software_entities']} AI 模型软件 / {f['organization_entities']} 企业主体 / "
-                    f"{f['market_intelligence_entities']} 市场情报），支持协议/电气/机械/ROS2 四维兼容判定。"
-                    f"中立数据层 —— 既不生产也不转售任何零部件。"
+                    f"{f['market_intelligence_entities']} 市场情报）。"
+                    "中立数据层 —— 既不生产也不转售任何零部件；"
+                    "真正的护城河是判定引擎 + 三条定理 + 40 项 CI 闸门。"
                 ),
                 "transport": "streamable-http",
                 "url": f"{SITE}/mcp",

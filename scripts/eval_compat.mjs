@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { judgePair } from '../functions/_lib/compat_engine.js';
+import { judgePair, DIMENSIONS } from '../functions/_lib/compat_engine.js';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const ENTITIES_PATH = join(ROOT, 'api', 'entities.json');
@@ -49,13 +49,21 @@ function evalCase(c) {
         failures.push(`overall_compatible: 实得 ${result.overall_compatible} 不在期望范围 ${exp.overall_in.join(',')}`);
       }
     }
-    // evidence_count_min
+    // evidence_count_min / evidence_count_exact
+    // 两个断言并存：min 是下界（数据增长也能通过），exact 是精确匹配（防引擎多算/少算声明维度）。
+    // 精确匹配是「fail-open 检测器」：若引擎把未声明维度算成有证据，exact 会立即报错。
     const evCount = result.evidence_count ?? (result.evidence_sources || []).length;
     if (exp.evidence_count_min !== undefined && evCount < exp.evidence_count_min) {
       failures.push(`evidence_count: 期望 >=${exp.evidence_count_min} 实得 ${evCount}`);
     }
-    // dimensions_expected: 用 DIMENSION_BY_IDX 索引（0=electrical 1=mechanical 2=protocol 3=software）
-    const DIMENSION_BY_IDX = ['electrical', 'mechanical', 'protocol', 'software'];
+    if (exp.evidence_count_exact !== undefined && evCount !== exp.evidence_count_exact) {
+      failures.push(`evidence_count: 期望精确 ${exp.evidence_count_exact} 实得 ${evCount}`);
+    }
+    // dimensions_expected: 维度顺序必须**取自引擎**（DIMENSIONS），
+    // 不得在评估器里手抄第二份。此前此处硬编码 ['electrical','mechanical','protocol','software']，
+    // 与引擎的 ['protocol','electrical','mechanical','software'] 错位 ⇒ 4/6 锚点长期假红，
+    // 而错位不报错、只是把每个维度比到另一个维度上（2026-10-08 修复）。
+    const DIMENSION_BY_IDX = DIMENSIONS;
     if (exp.dimensions_expected) {
       for (const [dimName, expected] of Object.entries(exp.dimensions_expected)) {
         const idx = DIMENSION_BY_IDX.indexOf(dimName);

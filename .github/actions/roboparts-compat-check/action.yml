@@ -1,0 +1,62 @@
+name: 'RoboParts Compatibility Check'
+description: 'Compile-time composition checker for embodied systems — validates robot URDF/BOM against RoboParts 868-entity composition graph. Returns three-state verdicts (compatible / incompatible / unknown) with evidence chain and printable adapters. Vendor-neutral: we do not sell parts, so we have no reason to mislead you.'
+author: 'RoboParts (roboparts.cc)'
+branding:
+  icon: 'box'
+  color: 'blue'
+
+inputs:
+  mode:
+    description: '检查模式：bom（BOM 两两兼容）、urdf（URDF 结构校验）、compose（共装判定）'
+    required: true
+    default: 'bom'
+  bom-path:
+    description: 'BOM 文件路径（相对 repo 根），JSON 或 CSV 格式。仅 mode=bom 时必填。'
+    required: false
+    default: 'bom.json'
+  urdf-path:
+    description: 'URDF 文件路径。仅 mode=urdf 时必填。'
+    required: false
+    default: 'urdf/robot.urdf'
+  host-id:
+    description: '共装查询的宿主机器人 ID（如 HUB-030/UR3e）。仅 mode=compose 时使用。'
+    required: false
+    default: ''
+  part-a:
+    description: '共装查询的器件 A（如 ACT-028）。'
+    required: false
+    default: ''
+  part-b:
+    description: '共装查询的器件 B（如 SENS-047）。'
+    required: false
+    default: ''
+  strict:
+    description: '严格模式：unknown 视为失败（默认 false — 三态 fail-closed 语义，unknown 是有效答案）。'
+    required: false
+    default: 'false'
+  fail-on-incompatible:
+    description: '遇到 incompatible 时以非零退出码失败（CI 阻断用）。'
+    required: false
+    default: 'true'
+  comment-on-pr:
+    description: '把判定结果作为 GitHub PR comment 发布。'
+    required: false
+    default: 'true'
+
+outputs:
+  verdict:
+    description: '三态裁决：compatible | incompatible | unknown | needs_review'
+    value: ${{ steps.run.outputs.verdict }}
+  verdict-counts:
+    description: '各裁决态的配对数量（JSON 字符串）'
+    value: ${{ steps.run.outputs.verdict_counts }}
+  incompatible-pairs:
+    description: '判定为 incompatible 的配对列表（JSON 字符串）'
+    value: ${{ steps.run.outputs.incompatible_pairs }}
+  unknown-pairs:
+    description: '判定为 unknown（证据缺口）的配对列表（JSON 字符串）'
+    value: ${{ steps.run.outputs.unknown_pairs }}
+
+runs:
+  using: 'node20'
+  main: 'entrypoint.js'

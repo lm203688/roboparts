@@ -185,7 +185,7 @@ def main() -> int:
             url_open.append(mid)
 
     with open(rm_path, "w", encoding="utf-8") as f:
-        json.dump(rm, f, ensure_ascii=False, indent=1)
+        json.dump(rm, f, ensure_ascii=False, indent=2)
         f.write("\n")
 
     out = {
@@ -226,7 +226,7 @@ def main() -> int:
     }
     p = os.path.join(ROOT, "api", "open_vla_binding.json")
     with open(p, "w", encoding="utf-8") as f:
-        json.dump(out, f, ensure_ascii=False, indent=1)
+        json.dump(out, f, ensure_ascii=False, indent=2)
         f.write("\n")
 
     s = out["summary"]

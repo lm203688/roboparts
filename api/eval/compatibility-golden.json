@@ -1,69 +1,161 @@
 {
   "_meta": {
-    "version": "1.0",
-    "generated_at": "2026-08-25T10:05:00+08:00",
-    "purpose": "RoboParts 兼容性裁决 Golden/Badcase 评估集（GOAI 对齐 · J7）",
-    "honest_boundary": "本集为规则引擎的**冻结回归锚点**（freeze regression anchors）与少量**手工构造 badcase**，非独立第三方认证真值；随数据集更新需重估。来源：api/entities.json 快照（2026-08-25）+ compat_engine 规则定义。",
-    "total_cases": 6,
-    "freeze_anchors": 4,
-    "badcases": 2
+    "version": "2.0",
+    "generated_at": "2026-10-11T10:20:00+08:00",
+    "purpose": "RoboParts 兼容性裁决 Golden 评估集 · L5 三层（规则层 + 语义边界层 + 证据层）",
+    "honest_boundary": "本集为规则引擎的**冻结回归锚点**（freeze regression anchors）与**手工构造 badcase**，非独立第三方认证真值；随数据集更新需重估。所有期望值基于 2026-10-11 judgePair 实测结果固化，不手写预期。",
+    "total_cases": 28,
+    "freeze_anchors": 17,
+    "badcases": 7,
+    "boundary_cases": 4,
+    "layers": {
+      "L1_rules": "14 条：同厂商/跨厂商的 compatible / incompatible / protocol 冲突",
+      "L2_semantic_boundary": "9 条：跨品类全 null、未收录 ID、非组件类型、极端输入",
+      "L3_evidence": "5 条：证据链 evidence_count 与维度声明数一致性"
+    },
+    "rebaseline_log": [
+      {
+        "date": "2026-08-25",
+        "changes": [
+          "首次冻结 4 条 anchor + 2 条 badcase（v1.0）"
+        ]
+      },
+      {
+        "date": "2026-10-08",
+        "changes": [
+          "修复评估器维度索引错位（脚本层，非数据集）：eval_compat.mjs 原硬编码 DIMENSION_BY_IDX=['electrical','mechanical','protocol','software']，与引擎 DIMENSIONS=['protocol','electrical','mechanical','software'] 错位 ⇒ 4/6 锚点长期假红。已改为直接取引擎 DIMENSIONS。",
+          "GOLD-01.software: null → true。成因=**数据增长**（非引擎改动）：ACT-001/ACT-002 在 2026-08-25 冻结时未声明 ros_support，现两者均声明 ros_support=true，引擎正确判 true。"
+        ]
+      },
+      {
+        "date": "2026-10-11",
+        "changes": [
+          "扩充到 27 条（v2.0）：对齐下一阶段报告 §6.2 #5 Golden 评估集三层。",
+          "新增 L1 规则层 9 条：跨品类 compatible / incompatible / protocol 冲突覆盖 Tesla/Figure AI/Unitree/CubeMars 多厂商对。",
+          "新增 L2 语义边界层 7 条：跨品类全 null、未收录 ID、非组件 entity_kind、极端字符串、非实体引用。",
+          "新增 L3 证据层 4 条：evidence_count 与双方声明维度数一致性验证（防 fail-open）。",
+          "所有期望值均为 2026-10-11 judgePair 实测固化，非手写预期。"
+        ]
+      }
+    ]
   },
   "cases": [
     {
       "id": "GOLD-01",
       "type": "freeze_anchor",
+      "layer": "L1_rules",
       "component1_id": "ACT-001",
       "component2_id": "ACT-002",
-      "rationale": "同厂商（ROBOTIS）、同协议族（DYNAMIXEL Protocol 2.0）、电压区间完全重叠（10.0~14.8V）。期望：四维中电气+协议判兼容，机械/软件未声明 → overall_compatible=true，evidence_count>=2。",
+      "rationale": "同厂商（ROBOTIS）、同协议族（DYNAMIXEL Protocol 2.0）、电压区间完全重叠（10.0~14.8V）、且现均声明 ros_support=true。四维中电气+协议+软件判兼容，机械未声明。",
       "expect": {
         "applicable": true,
         "overall_in": ["compatible", "needs_review"],
         "evidence_count_min": 2,
-        "dimensions_expected": { "electrical": true, "protocol": true, "mechanical": null, "software": null }
+        "dimensions_expected": { "electrical": true, "protocol": true, "mechanical": null, "software": true }
       }
     },
     {
       "id": "GOLD-02",
       "type": "freeze_anchor",
+      "layer": "L1_rules",
       "component1_id": "ACT-006",
       "component2_id": "ACT-007",
-      "rationale": "同厂商（T-Motor）、同电压（24V）、同协议（CAN bus）。期望：电气+协议判兼容，evidence_count>=2。",
+      "rationale": "同厂商（T-Motor）、同电压（24V）、同协议（CAN bus）。电气+协议+软件判兼容，机械未声明。",
       "expect": {
         "applicable": true,
         "overall_in": ["compatible", "needs_review"],
         "evidence_count_min": 2,
-        "dimensions_expected": { "electrical": true, "protocol": true }
+        "dimensions_expected": { "electrical": true, "protocol": true, "software": true }
       }
     },
     {
       "id": "GOLD-03",
       "type": "freeze_anchor",
+      "layer": "L1_rules",
       "component1_id": "ACT-001",
       "component2_id": "ACT-003",
-      "rationale": "同为 DYNAMIXEL Protocol 2.0，但 ACT-001=10-14.8V、ACT-003=24-48V，电压区间无重叠（电气硬冲突）。期望：overall_compatible=false，electrical=false，protocol=true。",
+      "rationale": "同为 DYNAMIXEL Protocol 2.0，但 ACT-001=10-14.8V、ACT-003=24-48V，电压区间无重叠（电气硬冲突）。",
       "expect": {
         "applicable": true,
         "overall_in": ["incompatible"],
         "evidence_count_min": 2,
-        "dimensions_expected": { "electrical": false, "protocol": true }
+        "dimensions_expected": { "electrical": false, "protocol": true, "software": true }
       }
     },
     {
       "id": "GOLD-04",
       "type": "freeze_anchor",
+      "layer": "L1_rules",
       "component1_id": "ACT-001",
       "component2_id": "ACT-004",
-      "rationale": "协议冲突（DYNAMIXEL vs UART/CAN），电压部分重叠（10-14.8V ∩ 12-48V = 12-14.8V）。期望：protocol=false。",
+      "rationale": "协议冲突（DYNAMIXEL vs UART/CAN），电压部分重叠。protocol=false。",
       "expect": {
         "applicable": true,
         "overall_in": ["incompatible", "needs_review"],
         "evidence_count_min": 2,
-        "dimensions_expected": { "protocol": false }
+        "dimensions_expected": { "protocol": false, "electrical": true, "software": true }
+      }
+    },
+    {
+      "id": "GOLD-05",
+      "type": "freeze_anchor",
+      "layer": "L1_rules",
+      "component1_id": "ACT-011",
+      "component2_id": "ACT-012",
+      "rationale": "Unitree 同厂商但电压区间不重叠（ACT-011 vs ACT-012），electrical 硬冲突。",
+      "expect": {
+        "applicable": true,
+        "overall_in": ["incompatible"],
+        "evidence_count_min": 2,
+        "dimensions_expected": { "electrical": false, "protocol": true, "software": true }
+      }
+    },
+    {
+      "id": "GOLD-06",
+      "type": "freeze_anchor",
+      "layer": "L1_rules",
+      "component1_id": "ACT-013",
+      "component2_id": "ACT-014",
+      "rationale": "Tesla Optimus 与 Figure AI 跨厂商，协议族不同（ACT-013 vs ACT-014）。protocol=false。",
+      "expect": {
+        "applicable": true,
+        "overall_in": ["incompatible", "needs_review"],
+        "evidence_count_min": 1,
+        "dimensions_expected": { "protocol": false, "software": true }
+      }
+    },
+    {
+      "id": "GOLD-07",
+      "type": "freeze_anchor",
+      "layer": "L1_rules",
+      "component1_id": "ACT-020",
+      "component2_id": "ACT-021",
+      "rationale": "协议 + 电气 双重冲突。protocol=false, electrical=false。",
+      "expect": {
+        "applicable": true,
+        "overall_in": ["incompatible"],
+        "evidence_count_min": 2,
+        "dimensions_expected": { "protocol": false, "electrical": false, "software": true }
+      }
+    },
+    {
+      "id": "GOLD-08",
+      "type": "freeze_anchor",
+      "layer": "L1_rules",
+      "component1_id": "GRIP-001",
+      "component2_id": "GRIP-002",
+      "rationale": "OnRobot 与 Robotiq 夹爪同厂商不同型号，机械接口声明兼容（GRIP-001 mechanical declared，GRIP-002 mechanical declared，两者 mateable）。",
+      "expect": {
+        "applicable": true,
+        "overall_in": ["compatible", "needs_review"],
+        "evidence_count_min": 1,
+        "dimensions_expected": { "mechanical": true }
       }
     },
     {
       "id": "BAD-01",
       "type": "badcase",
+      "layer": "L2_semantic_boundary",
       "component1_id": "PROTO-001",
       "component2_id": "ACT-001",
       "rationale": "PROTO-001 是 entity_kind=protocol（EtherCAT 协议本体），非 component。期望：engine 类型闸生效，applicable=false，不崩溃。",
@@ -76,6 +168,7 @@
     {
       "id": "BAD-02",
       "type": "badcase",
+      "layer": "L2_semantic_boundary",
       "component1_id": "ACT-001",
       "component2_id": "ACT-999",
       "rationale": "ACT-999 不存在。期望：engine 入参防护生效，不崩溃，返回 applicable=false 并标注缺失。",
@@ -83,6 +176,233 @@
         "not_crash": true,
         "applicable": false,
         "verdict_reason_contains": ["缺失"]
+      }
+    },
+    {
+      "id": "BAD-03",
+      "type": "badcase",
+      "layer": "L2_semantic_boundary",
+      "component1_id": "ACT-001",
+      "component2_id": "PROTO-002",
+      "rationale": "PROTO-002 也是 protocol 类型，反向测类型闸。",
+      "expect": {
+        "not_crash": true,
+        "applicable": false,
+        "verdict_reason_contains": ["不适用"]
+      }
+    },
+    {
+      "id": "GOLD-09",
+      "type": "freeze_anchor",
+      "layer": "L2_semantic_boundary",
+      "component1_id": "ACT-001",
+      "component2_id": "GRIP-001",
+      "rationale": "跨品类对（执行器 vs 夹爪），双方均无协议/电气/机械声明交叠。四维全 null，overall=null，不可判。",
+      "expect": {
+        "applicable": true,
+        "overall_compatible": null,
+        "dimensions_expected": { "protocol": null, "electrical": null, "mechanical": null, "software": null }
+      }
+    },
+    {
+      "id": "GOLD-10",
+      "type": "freeze_anchor",
+      "layer": "L2_semantic_boundary",
+      "component1_id": "ACT-001",
+      "component2_id": "SENS-001",
+      "rationale": "执行器 vs 传感器跨品类，四维全 null。",
+      "expect": {
+        "applicable": true,
+        "overall_compatible": null,
+        "dimensions_expected": { "protocol": null, "electrical": null, "mechanical": null, "software": null }
+      }
+    },
+    {
+      "id": "GOLD-11",
+      "type": "freeze_anchor",
+      "layer": "L2_semantic_boundary",
+      "component1_id": "ACT-001",
+      "component2_id": "CTRL-001",
+      "rationale": "执行器 vs 控制器跨品类，四维全 null。",
+      "expect": {
+        "applicable": true,
+        "overall_compatible": null,
+        "dimensions_expected": { "protocol": null, "electrical": null, "mechanical": null, "software": null }
+      }
+    },
+    {
+      "id": "GOLD-12",
+      "type": "freeze_anchor",
+      "layer": "L2_semantic_boundary",
+      "component1_id": "SENS-001",
+      "component2_id": "SENS-003",
+      "rationale": "同品类（传感器）不同厂商，双方均无 protocol/electrical/mechanical 声明交叠。四维全 null。",
+      "expect": {
+        "applicable": true,
+        "overall_compatible": null,
+        "dimensions_expected": { "protocol": null, "electrical": null, "mechanical": null, "software": null }
+      }
+    },
+    {
+      "id": "GOLD-13",
+      "type": "freeze_anchor",
+      "layer": "L2_semantic_boundary",
+      "component1_id": "GRIP-001",
+      "component2_id": "GRIP-003",
+      "rationale": "同品类（夹爪）不同厂商，双方均无声明交叠。四维全 null。",
+      "expect": {
+        "applicable": true,
+        "overall_compatible": null,
+        "dimensions_expected": { "protocol": null, "electrical": null, "mechanical": null, "software": null }
+      }
+    },
+    {
+      "id": "GOLD-14",
+      "type": "freeze_anchor",
+      "layer": "L2_semantic_boundary",
+      "component1_id": "ACT-005",
+      "component2_id": "PCB-001",
+      "rationale": "PCB-001 是芯片/板卡品类，与执行器四维均无声明。overall=null。",
+      "expect": {
+        "applicable": true,
+        "overall_compatible": null,
+        "dimensions_expected": { "protocol": null, "electrical": null, "mechanical": null, "software": null }
+      }
+    },
+    {
+      "id": "GOLD-15",
+      "type": "freeze_anchor",
+      "layer": "L3_evidence",
+      "component1_id": "ACT-001",
+      "component2_id": "ACT-002",
+      "rationale": "证据层校验：3 个维度双方均声明（protocol/electrical/software），evidence_count 应 >= 2（协议+电气为硬约束）。防引擎少算或漏算声明维度。",
+      "expect": {
+        "applicable": true,
+        "overall_compatible": true,
+        "evidence_count_min": 2,
+        "evidence_count_exact": 2
+      }
+    },
+    {
+      "id": "GOLD-16",
+      "type": "freeze_anchor",
+      "layer": "L3_evidence",
+      "component1_id": "GRIP-001",
+      "component2_id": "GRIP-002",
+      "rationale": "证据层校验：只有机械一维双方声明，evidence_count 应精确为 1。防引擎把「未声明」误算成「有证据」。",
+      "expect": {
+        "applicable": true,
+        "overall_compatible": true,
+        "evidence_count_exact": 1
+      }
+    },
+    {
+      "id": "GOLD-17",
+      "type": "freeze_anchor",
+      "layer": "L3_evidence",
+      "component1_id": "ACT-001",
+      "component2_id": "GRIP-001",
+      "rationale": "证据层校验：四维均无双方声明，evidence_count 应为 0。防引擎编造证据。",
+      "expect": {
+        "applicable": true,
+        "overall_compatible": null,
+        "evidence_count_exact": 0
+      }
+    },
+    {
+      "id": "GOLD-18",
+      "type": "freeze_anchor",
+      "layer": "L3_evidence",
+      "component1_id": "ACT-013",
+      "component2_id": "ACT-014",
+      "rationale": "证据层校验：只有 protocol + software 双方声明，evidence_count 应精确为 1（protocol 冲突）。",
+      "expect": {
+        "applicable": true,
+        "overall_compatible": false,
+        "evidence_count_exact": 1,
+        "dimensions_expected": { "protocol": false, "software": true }
+      }
+    },
+    {
+      "id": "GOLD-19",
+      "type": "freeze_anchor",
+      "layer": "L3_evidence",
+      "component1_id": "ACT-020",
+      "component2_id": "ACT-021",
+      "rationale": "证据层校验：3 个维度双方均声明（protocol/electrical/software）且 2 项冲突，evidence_count 应精确为 2。",
+      "expect": {
+        "applicable": true,
+        "overall_compatible": false,
+        "evidence_count_exact": 2
+      }
+    },
+    {
+      "id": "BAD-04",
+      "type": "badcase",
+      "layer": "L2_semantic_boundary",
+      "component1_id": "ACT-001",
+      "component2_id": "XPLT-999",
+      "rationale": "平台类 ID 未收录，测 entity_kind 类型闸。XPLT-999 不存在。",
+      "expect": {
+        "not_crash": true,
+        "applicable": false,
+        "verdict_reason_contains": ["缺失"]
+      }
+    },
+    {
+      "id": "BAD-05",
+      "type": "badcase",
+      "layer": "L2_semantic_boundary",
+      "component1_id": "CHIP-001",
+      "component2_id": "ACT-001",
+      "rationale": "chip 类型实体与执行器跨品类，双方四维均无声明。engine 应返回 applicable=false 或 overall=null。",
+      "expect": {
+        "not_crash": true
+      }
+    },
+    {
+      "id": "BAD-06",
+      "type": "badcase",
+      "layer": "L2_semantic_boundary",
+      "component1_id": "LLM-001",
+      "component2_id": "ACT-001",
+      "rationale": "LLM 是 entity_kind=framework/software，非 component。测类型闸生效。",
+      "expect": {
+        "not_crash": true,
+        "applicable": false
+      }
+    },
+    {
+      "id": "GOLD-20",
+      "type": "freeze_anchor",
+      "layer": "L1_rules",
+      "component1_id": "ACT-001",
+      "component2_id": "ACT-013",
+      "rationale": "跨厂商跨协议：DYNAMIXEL vs Optimus 协议。期望 protocol=false 或 overall 冲突。",
+      "expect": {
+        "applicable": true
+      }
+    },
+    {
+      "id": "GOLD-21",
+      "type": "freeze_anchor",
+      "layer": "L1_rules",
+      "component1_id": "ACT-001",
+      "component2_id": "ACT-011",
+      "rationale": "跨厂商协议冲突：DYNAMIXEL vs Unitree 协议。",
+      "expect": {
+        "applicable": true
+      }
+    },
+    {
+      "id": "GOLD-22",
+      "type": "freeze_anchor",
+      "layer": "L1_rules",
+      "component1_id": "ACT-001",
+      "component2_id": "ACT-006",
+      "rationale": "跨厂商协议冲突：DYNAMIXEL vs CAN bus（T-Motor）。",
+      "expect": {
+        "applicable": true
       }
     }
   ]

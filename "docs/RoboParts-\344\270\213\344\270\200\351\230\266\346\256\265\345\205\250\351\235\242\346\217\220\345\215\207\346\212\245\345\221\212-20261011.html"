@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts 下一阶段全面提升报告 · 2026-10-11</title>
+<style>
+  :root{
+    --bg:#f5f7fa; --card:#fff; --ink:#1a2230; --sub:#5b6779; --line:#e3e8ef;
+    --accent:#1f5fbf; --accent2:#0f8f8f; --warn:#b45309; --bad:#b91c1c; --good:#15803d; --chip:#eef2f8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Roboto,Arial,sans-serif;
+    line-height:1.75;font-size:15.5px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 26px 90px}
+  header.hero{background:linear-gradient(135deg,#3a1d0e 0%,#b45309 45%,#1f5fbf 100%);color:#fff;padding:52px 26px 44px;margin-bottom:34px}
+  header.hero .inner{max-width:1060px;margin:0 auto}
+  .kicker{font-size:12.5px;letter-spacing:3px;text-transform:uppercase;opacity:.85;font-weight:600}
+  header.hero h1{margin:12px 0 10px;font-size:33px;line-height:1.3;font-weight:800}
+  header.hero p.sub{margin:0;font-size:15px;opacity:.93;max-width:840px}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .meta-row span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:4px 13px;font-size:12.5px}
+  h2{font-size:23px;margin:52px 0 6px;padding-bottom:10px;border-bottom:3px solid var(--accent);display:inline-block;font-weight:800}
+  h2 .n{color:var(--accent);font-weight:800;margin-right:8px}
+  h3{font-size:17.5px;margin:30px 0 10px;color:#12305e;font-weight:700}
+  h4{font-size:15px;margin:20px 0 6px;color:#2a3a52;font-weight:700}
+  p{margin:10px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin:18px 0;box-shadow:0 1px 3px rgba(16,30,54,.05)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;background:#fff}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:#eef3fa;font-weight:700;color:#1a2b47}
+  tr:nth-child(even) td{background:#fafcff}
+  code{background:#eef1f6;padding:1.5px 6px;border-radius:5px;font-size:13px;font-family:"SFMono-Regular",Consolas,monospace;color:#1f3b66}
+  pre{background:#0f1c2e;color:#dbe7f5;padding:16px 18px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.6}
+  pre code{background:none;color:inherit;padding:0}
+  .tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--chip);color:#2a3a52;border:1px solid var(--line)}
+  .tag.good{background:#e7f6ec;color:var(--good);border-color:#bfe6cb}
+  .tag.warn{background:#fdf0e3;color:var(--warn);border-color:#f3d3a8}
+  .tag.bad{background:#fdeaea;color:var(--bad);border-color:#f3c2c2}
+  .callout{border-left:5px solid var(--accent);background:#f0f6ff;padding:15px 20px;border-radius:0 10px 10px 0;margin:18px 0}
+  .callout.warn{border-color:var(--warn);background:#fdf6ec}
+  .callout.bad{border-color:var(--bad);background:#fdf0f0}
+  .callout.good{border-color:var(--good);background:#eefaf1}
+  .callout .t{font-weight:800;margin-bottom:4px}
+  .kpi{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0}
+  @media(max-width:860px){.kpi{grid-template-columns:repeat(2,1fr)}}
+  .kpi .box{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 12px;text-align:center}
+  .kpi .box .num{font-size:24px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
+  .kpi .box .cap{font-size:12.5px;color:var(--sub);margin-top:3px}
+  ul,ol{margin:8px 0;padding-left:22px} li{margin:5px 0}
+  .lead{font-size:16.5px;color:#2b3850}
+  .footnote{font-size:12.5px;color:var(--sub);margin-top:6px}
+  .toc{columns:2;column-gap:30px;font-size:14px}
+  @media(max-width:760px){.toc{columns:1}}
+  .toc a{color:var(--accent);text-decoration:none;display:block;padding:3px 0;border-bottom:1px dotted #dbe2ec}
+  hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+  .small{font-size:13px;color:var(--sub)}
+  .num-strong{font-variant-numeric:tabular-nums;font-weight:700;color:#12305e}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <div class="kicker">Next-Phase Improvement Report · 2026-10-11</div>
+    <h1>RoboParts 下一阶段全面提升报告</h1>
+    <p class="sub">全面扫描 + 核心目标对标 + 上轮实施核查 + 国际竞品对标 + 最新技术对位，给出下一阶段的止血、护城河与生态增长方案。</p>
+    <div class="meta-row">
+      <span>扫描范围 · 1670+ 文件 / 39 页面 / 52 functions / 72 API 产物 / 21 MCP 工具 / 40 闸门</span>
+      <span>对标 · 5 大核心目标 + roboxdb 等国际竞品</span>
+      <span>方法 · 静态扫描 + 产物现算 + 线上回探 + 联网核实</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="card">
+  <div class="toc">
+    <a href="#s0">0 · 摘要：5 个关键发现</a>
+    <a href="#s1">1 · 上轮报告实施核查</a>
+    <a href="#s2">2 · 致命缺陷清单（P0）</a>
+    <a href="#s3">3 · 核心目标对标与完成度</a>
+    <a href="#s4">4 · 国际竞品与市场需求对标</a>
+    <a href="#s5">5 · 最新技术发展对位</a>
+    <a href="#s6">6 · 下一阶段全面提升方案</a>
+    <a href="#s7">7 · 各板块专项提升建议</a>
+    <a href="#s8">8 · 完成度总判断与优先级矩阵</a>
+    <a href="#s9">9 · 风险与诚实边界</a>
+    <a href="#s10">10 · 结论与 30 天行动清单</a>
+  </div>
+</div>
+
+<!-- 0 -->
+<h2 id="s0"><span class="n">0</span>摘要：本轮扫描的 5 个关键发现</h2>
+<table>
+  <thead><tr><th>#</th><th>发现</th><th>严重度</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><b>上一轮报告已部分落地</b>（定位上移 + GitHub Action + L5 评估），方向正确</td><td><span class="tag good">正向</span></td></tr>
+    <tr><td>2</td><td><b>但 4 处实施缺陷</b>：GitHub Action 致命 import 错误、URDF 模式调错端点、BOM 注释与代码不符、promptfoo 配置疑似不可运行</td><td><span class="tag bad">高</span></td></tr>
+    <tr><td>3</td><td><b>总阻塞：47 个提交未推送</b>，线上站点停留在 2026-10-03（旧定位、865 实体、<code>/api/co-mount</code> 404）——上一轮全部成果对世界不可见</td><td><span class="tag bad">最高</span></td></tr>
+    <tr><td>4</td><td><b>出现直接竞品 roboxdb.com</b>：同样主打 "source-backed parts + 浏览器工程工具"，且多了一层 MuJoCo 物理验证</td><td><span class="tag warn">中高</span></td></tr>
+    <tr><td>5</td><td>核心目标 5 项中，接口标准化 / 协议标准化 / 大模型产业化三项停在"有数据、无产品"状态</td><td><span class="tag warn">中</span></td></tr>
+  </tbody>
+</table>
+
+<div class="callout bad">
+  <div class="t">一句话结论</div>
+  上一阶段最大的问题不再是"方向错"，而是<b>"成果被锁在本地"</b>：47 个提交未推送、线上陈旧 8 天、新定位未上线。下一阶段的第一优先级不是加功能，而是<b>打通推送-部署链路，让已完成的资产可见</b>；随后补齐实施缺陷，再把护城河从"判定"扩展到"判定 + 物理验证"。
+</div>
+
+<div class="kpi">
+  <div class="box"><div class="num">47</div><div class="cap">未推送提交</div></div>
+  <div class="box"><div class="num">8 天</div><div class="cap">线上数据陈旧</div></div>
+  <div class="box"><div class="num">4</div><div class="cap">实施缺陷</div></div>
+  <div class="box"><div class="num">60.2%</div><div class="cap">门控加权完成度</div></div>
+  <div class="box"><div class="num">1</div><div class="cap">新直接竞品</div></div>
+</div>
+
+<!-- 1 -->
+<h2 id="s1"><span class="n">1</span>上轮报告实施核查</h2>
+<table>
+  <thead><tr><th>#</th><th>上轮行动</th><th>状态</th><th>证据 / 说明</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>全站定位改写为「具身系统的组合校验层」</td><td><span class="tag warn">仓内完成，线上未生效</span></td><td>commit ef2bf54 + 6311d41；线上 title 仍是旧版</td></tr>
+    <tr><td>2</td><td>收敛双引擎口径</td><td><span class="tag bad">未做</span></td><td>产品层与研究层维度仍不互为子集</td></tr>
+    <tr><td>3</td><td>论文补 2 字段并投出</td><td><span class="tag bad">未做</span></td><td>无投稿回执</td></tr>
+    <tr><td>4</td><td>建 Golden 评估集 + promptfoo</td><td><span class="tag warn">脚手架已建，疑不可运行</span></td><td>promptfoo provider 配置存疑</td></tr>
+    <tr><td>5</td><td>"能不能共装"用户可查产品</td><td><span class="tag warn">端点已建，未部署</span></td><td>线上 /api/co-mount 返回 404</td></tr>
+    <tr><td>6</td><td>发布 roboparts-action</td><td><span class="tag bad">已建但有致命 bug</span></td><td>import 错误 + 端点错误</td></tr>
+    <tr><td>7</td><td>产出「实体字段 ↔ 模块通用信息模型」对照表</td><td><span class="tag bad">未做</span></td><td>仅映射设计文档</td></tr>
+    <tr><td>8</td><td>电气取证同质集补齐（16 节点）</td><td><span class="tag bad">未做</span></td><td>电气证据仍为 9 器件</td></tr>
+    <tr><td>9</td><td>跑通真实 STEP 导出 + 干涉检查</td><td><span class="tag bad">未做</span></td><td>无新增交付 STEP</td></tr>
+    <tr><td>10</td><td>Claude Connectors 上架</td><td><span class="tag bad">未做</span></td><td>需用户账号</td></tr>
+  </tbody>
+</table>
+<p class="small"><b>核查结论</b>：10 条中 1 条完成、3 条部分完成、6 条未做。完成的集中在"AI 可自主完成"的软件类，未做的多为"需用户配合"或"长周期苦力"。</p>
+
+<!-- 2 -->
+<h2 id="s2"><span class="n">2</span>致命缺陷清单（P0 · 必须本周修）</h2>
+
+<h3>2.1 🔴 GitHub Action 存在致命 import 错误</h3>
+<p><b>文件</b>：<code>.github/actions/roboparts-compat-check/entrypoint.js</code> 第 19–20 行</p>
+<pre><code>import { core } from '@actions/core';      // ❌ 错误
+import { github } from '@actions/github';  // ❌ 错误</code></pre>
+<p><b>问题</b>：这两个包均<b>没有名为 <code>core</code> / <code>github</code> 的命名导出</b>。<code>@actions/core</code> 导出的是 <code>getInput</code>/<code>setOutput</code>/<code>setFailed</code> 等具名函数；<code>@actions/github</code> 导出的是 <code>context</code>/<code>getOctokit</code>。Node 的 ESM-CJS 互操作不会凭空造出 <code>core</code> 绑定 ⇒ <b><code>core</code> 为 <code>undefined</code>，第一行 <code>core.getInput(...)</code> 立即抛 <code>TypeError</code>，Action 100% 无法运行</b>。</p>
+<p><b>正确写法</b>：</p>
+<pre><code>import * as core from '@actions/core';
+import * as github from '@actions/github';
+// 且 github.rest.issues.createComment 需改为：
+const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+await octokit.rest.issues.createComment({ ... });</code></pre>
+
+<h3>2.2 🔴 URDF 模式调用错误端点</h3>
+<p>第 89 行 POST URDF XML 到 <code>/api/compatibility/validate</code>，但该端点期望 JSON <code>{modules:[...]}</code>。正确的 URDF 校验端点是 <b><code>/api/urdf/lint</code></b>（线上返回 405 = 存在且仅接受 POST）。⇒ URDF 模式必然失败。</p>
+
+<h3>2.3 🟠 BOM 模式注释与代码不符 + 效率问题</h3>
+<p>第 49 行注释写"调用 <code>/api/bom/validate</code>"——<b>该端点不存在</b>（正确为 <code>/api/bom/check</code>，POST）。实际代码调 <code>/api/compatibility?a=&amp;b=</code>（端点存在）。但对 N 个零件做 <b>N² 次串行 HTTP 请求</b>，建议改用一次性 POST <code>/api/bom/check</code>（服务端已实现两两矩阵）。</p>
+
+<h3>2.4 🟠 promptfoo 评估配置疑似不可运行</h3>
+<pre><code>providers:
+  - id: openai:responses
+    config:
+      model: mcp:https://roboparts.cc/mcp   # ❌ 非合法 provider 配置
+tests:
+  - vars: { a: "ACT-001", b: "ACT-002" }     # ❌ 有 vars 但无 prompts / 工具调用链
+    assert: [...]</code></pre>
+<p>① <code>model: mcp:...</code> 不是 promptfoo 支持的 provider 形式；② tests 定义了 <code>vars</code> 但<b>没有 <code>prompts</code> 段</b>把变量注入，断言不会跑到 MCP。⇒ 这份评估当前<b>只能算脚手架，不能产出任何信号</b>。</p>
+
+<h3>2.5 🔴 总阻塞：47 提交未推送 + 线上陈旧 8 天</h3>
+<table>
+  <thead><tr><th>项</th><th>仓内（本地）</th><th>线上 roboparts.cc</th><th>差距</th></tr></thead>
+  <tbody>
+    <tr><td>实体数</td><td>868</td><td><b>865</b></td><td>落后 3</td></tr>
+    <tr><td>数据更新时间</td><td>2026-10-10</td><td><b>2026-10-03</b></td><td><b>落后 8 天</b></td></tr>
+    <tr><td>定位</td><td>具身系统的组合校验层</td><td><b>机器人零件兼容性判定层</b></td><td>旧版</td></tr>
+    <tr><td><code>/api/co-mount</code></td><td>存在</td><td><b>404</b></td><td>未部署</td></tr>
+    <tr><td>origin/main</td><td>落后 <b>47 个提交</b></td><td>—</td><td>未推送</td></tr>
+  </tbody>
+</table>
+<div class="callout bad">
+  <div class="t">根因链</div>
+  PAT 过期 → <code>git push</code> 401 → deploy workflow（<code>on: push</code>）不触发 → Cloudflare Pages 部署陈旧 → <b>上一轮全部成果（定位/引擎/评估/Action）对世界不可见</b>。且示例 workflow 以 <code>uses: lm203688/roboparts/.github/actions/...@main</code> 引用该 Action，但该路径在 GitHub 上尚不存在。<br>
+  <b>P0 结论：打通推送-部署链路是下一阶段一切工作的前置条件</b>（需用户重生成 PAT，非 AI 可自主完成）。
+</div>
+
+<!-- 3 -->
+<h2 id="s3"><span class="n">3</span>核心目标对标与完成度判断</h2>
+
+<h3>3.1 五大核心目标完成度</h3>
+<table>
+  <thead><tr><th>#</th><th>核心目标</th><th>完成度</th><th>关键缺口</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>模块化配件：标准参数库 + 筛选组合</td><td><span class="tag good">70%</span></td><td>参数口径不统一（19 种 torque / 37 种 speed）</td></tr>
+    <tr><td>2</td><td>接口标准化：对齐国标，建兼容库</td><td><span class="tag warn">35%</span></td><td>国标字段未挂标准号；机械声明率仅 16.2%</td></tr>
+    <tr><td>3</td><td>协议标准化：对比 + 实时性能 + 跨协议桥接</td><td><span class="tag warn">40%</span></td><td>"实时性能 benchmark" 无实测；桥接未成产品</td></tr>
+    <tr><td>4</td><td>大模型产业化：VLA 部署硬件 + 推理性能对比</td><td><span class="tag warn">45%</span></td><td>对比是静态表；部署硬件需求未结构化</td></tr>
+    <tr><td>5</td><td>用户数据集成：端到端加密</td><td><span class="tag bad">20%</span></td><td><b>"端到端加密"无实现证据</b></td></tr>
+  </tbody>
+</table>
+
+<h3>3.2 研究进度（门控加权 60.2%）</h3>
+<table>
+  <thead><tr><th>维度</th><th>完成度</th><th>判据</th></tr></thead>
+  <tbody>
+    <tr><td>body（体）</td><td><b>48%</b></td><td>关系类型 2/2 覆盖；但确定性裁决率仅 <b>0.1%</b>（214,840 对中仅 114 对确定）</td></tr>
+    <tr><td>neuron（脑）</td><td><b>100%</b></td><td>量的是溯源诚实度（非数据量），已满分</td></tr>
+    <tr><td>chain（链）</td><td><b>50%</b></td><td>本域三段 2/2 闭合；跨域全链 0/1</td></tr>
+    <tr><td>policy（智）</td><td><b>58%</b></td><td>开源模型 4/5 有真实本体绑定</td></tr>
+  </tbody>
+</table>
+<div class="callout warn">
+  <div class="t">关键判读</div>
+  <code>body</code> 维度卡在"确定性裁决率 0.1%"——系统能判出<b>确定的否定</b>（type_error 114 对），但几乎判不出<b>确定肯定</b>（composed 0）。这是下一阶段硬骨头的核心。
+</div>
+
+<!-- 4 -->
+<h2 id="s4"><span class="n">4</span>国际竞品与市场需求对标</h2>
+
+<h3>4.1 🔴 新发现的直接竞品：roboxdb.com</h3>
+<table>
+  <thead><tr><th>维度</th><th>roboxdb</th><th>RoboParts</th><th>谁占优</th></tr></thead>
+  <tbody>
+    <tr><td>定位</td><td>Source-backed robot specifications / parts / build references</td><td>Vendor-neutral composition checker</td><td>均主打 source-backed / 中立</td></tr>
+    <tr><td>数据</td><td>机器人规格 + 零件数据 + 构建参考</td><td>868 实体 / 20 品类</td><td>相近</td></tr>
+    <tr><td>工程工具</td><td>浏览器内 Maker tools</td><td>选型 / 转接件生成 / URDF</td><td>RoboParts 更专</td></tr>
+    <tr><td><b>物理验证</b></td><td>✅ <b>Robot Physics Validator（MuJoCo 验证 MJCF/URDF）</b></td><td>❌ 无（仅几何一致性闸门）</td><td><b>roboxdb 领先</b></td></tr>
+    <tr><td>形态</td><td>网站 + 工具</td><td>网站 + MCP + API + Action</td><td>RoboParts 分发面更广</td></tr>
+    <tr><td>Agent 接入</td><td>未突出</td><td>21 个 MCP 工具 + A2A Card</td><td>RoboParts 领先</td></tr>
+  </tbody>
+</table>
+<div class="callout warn">
+  <div class="t">威胁判断</div>
+  roboxdb 用 <b>MuJoCo 物理验证</b>补齐了 RoboParts 缺失的"能不能真的动起来"这一层。若其再补上"跨厂商接口判定"，RoboParts 的差异化将被大幅压缩。<b>RoboParts 必须明确：自己是"接口判定层"（静态类型），还是也要做"物理验证层"（动态行为）——二者是不同壁垒，需要战略选择。</b>
+</div>
+
+<h3>4.2 竞品全景（2026）</h3>
+<table>
+  <thead><tr><th>竞品</th><th>做什么</th><th>与 RoboParts 关系</th><th>威胁</th></tr></thead>
+  <tbody>
+    <tr><td><b>roboxdb.com</b></td><td>Source-backed parts + MuJoCo 物理验证工具</td><td><b>直接重叠 + 物理验证领先</b></td><td><span class="tag bad">高</span></td></tr>
+    <tr><td><b>text-to-cad</b></td><td>开源 AI agent，自然语言 → STEP/URDF</td><td>在"生成"侧竞争，可互补</td><td><span class="tag warn">中</span></td></tr>
+    <tr><td>TraceParts / GrabCAD</td><td>千万级 CAD 零件库</td><td>只做目录，不做判定</td><td><span class="tag good">低</span></td></tr>
+    <tr><td>Octopart / PartKeepr</td><td>电子元器件采购 + 库存报价</td><td>只做电气采购</td><td><span class="tag good">低</span></td></tr>
+    <tr><td>Tnkr / RoboInfra</td><td>整机 BOM / 供应链</td><td>只做整机 BOM</td><td><span class="tag good">低</span></td></tr>
+    <tr><td>robotichina.com</td><td>中国机器人公司数据库</td><td>公司级目录</td><td><span class="tag good">低</span></td></tr>
+    <tr><td>lerobot.tech/hardware</td><td>LeRobot 官方硬件对比指南</td><td>抢占"选型入口"内容位</td><td><span class="tag warn">中低</span></td></tr>
+  </tbody>
+</table>
+
+<h3>4.3 市场需求（2026）</h3>
+<table>
+  <thead><tr><th>市场信号</th><th>含义</th></tr></thead>
+  <tbody>
+    <tr><td>人形机器人量产窗口（2026–2028），供应链碎片化</td><td>接口不统一痛点放大 → 中立判定层需求真实存在</td></tr>
+    <tr><td>开源硬件生态成熟（OpenArm/SO-101/ALOHA/Unitree），成本为组装价 40–60% 但需 40–100 小时调试</td><td><b>"装不上/接不对"是开源构建者最大时间黑洞</b> → 正是 RoboParts 的位</td></tr>
+    <tr><td>厂商文档关键参数普遍缺失</td><td>"三态诚实"价值锚点被侧证</td></tr>
+    <tr><td>MCP 2026 引入 <code>.well-known</code> 发现机制</td><td>RoboParts 已有 <code>.well-known/mcp.json</code>，✅ 踩中</td></tr>
+  </tbody>
+</table>
+
+<!-- 5 -->
+<h2 id="s5"><span class="n">5</span>最新技术发展对位</h2>
+<table>
+  <thead><tr><th>技术前沿（2026）</th><th>进展</th><th>RoboParts 的应对</th></tr></thead>
+  <tbody>
+    <tr><td>NVIDIA GR00T N1/N1.5/N2</td><td>开放人形基础模型 + Cosmos 世界模型 + Newton 物理引擎</td><td>做 VLA ↔ 硬件信号契约（无人区），不做部署</td></tr>
+    <tr><td>Gemini Robotics 2</td><td>全身控制 + 22 自由度手 + 跨本体迁移</td><td>同上</td></tr>
+    <tr><td>π0.5 / SmolVLA / Helix</td><td>开源/半开源 VLA 生态成型</td><td>数据格式对齐（LeRobot），薄层切入</td></tr>
+    <tr><td><b>MuJoCo 成为物理验证事实标准</b></td><td>roboxdb 已用 MuJoCo 做浏览器内验证</td><td><b>战略抉择点：补物理验证 or 明确划界</b></td></tr>
+    <tr><td>MCP 2026 <code>.well-known</code> 发现</td><td>从"知道地址"到"自动发现能力"</td><td>已有 <code>.well-known/mcp.json</code>，✅ 踩中</td></tr>
+    <tr><td>text-to-cad</td><td>AI 从文本生成 STEP/URDF</td><td>互补：生成 → RoboParts 判定</td></tr>
+  </tbody>
+</table>
+<div class="callout">
+  <div class="t">技术对位的核心结论</div>
+  行业正在把"设计（text-to-cad）→ 判定（RoboParts?）→ 物理验证（roboxdb/MuJoCo）→ 训练（LeRobot/GR00T）"串成流水线。RoboParts 当前占据"判定"环，但<b>上游被 text-to-cad 挤压、下游被 roboxdb 的物理验证挤压</b>。下一阶段必须在"判定"环做深（三态类型系统 + 标准共建），或向"物理验证"环延伸——<b>不能停在中间不动</b>。
+</div>
+
+<!-- 6 -->
+<h2 id="s6"><span class="n">6</span>下一阶段全面提升方案</h2>
+
+<h3>6.1 P0 · 止血与可见（本周，最高优先级）</h3>
+<table>
+  <thead><tr><th>#</th><th>动作</th><th>成本</th><th>验收判据</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><b>用户重生成 PAT</b>（Contents:write + Workflows:write）</td><td>用户手动</td><td><code>git push</code> 成功</td></tr>
+    <tr><td>2</td><td><b>推送 47 个提交</b></td><td>5 分钟</td><td>origin/main 与本地一致</td></tr>
+    <tr><td>3</td><td><b>触发部署</b>并验证线上同步</td><td>10 分钟</td><td>线上 title = 新定位；co-mount 200；868 实体</td></tr>
+    <tr><td>4</td><td><b>修 Action import bug</b></td><td>30 分钟</td><td>dry-run 通过</td></tr>
+    <tr><td>5</td><td><b>修 URDF 模式端点</b>（→ /api/urdf/lint）</td><td>30 分钟</td><td>返回真实 lint 结果</td></tr>
+    <tr><td>6</td><td><b>BOM 模式改一次性 POST</b> /api/bom/check</td><td>1 小时</td><td>12 件 BOM 一次请求完成</td></tr>
+    <tr><td>7</td><td><b>修 promptfoo 配置</b>为可运行</td><td>半天</td><td><code>promptfoo eval</code> 跑到 MCP</td></tr>
+  </tbody>
+</table>
+
+<h3>6.2 P1 · 差异化护城河（本月）</h3>
+<table>
+  <thead><tr><th>#</th><th>动作</th><th>战略意图</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><b>战略抉择：判定层做深 vs 延伸物理验证</b></td><td>决定下一阶段资源投向</td></tr>
+    <tr><td>2</td><td><b>三态判定产品化</b>：共装查询公开可查</td><td>价值主张升级为"集成决策器"</td></tr>
+    <tr><td>3</td><td><b>标准共建</b>：产出「实体字段 ↔ 模块通用信息模型」对照表</td><td>抢占国标开源参考实现位</td></tr>
+    <tr><td>4</td><td><b>收敛双引擎口径</b>（OPT-1）</td><td>消除 agent 口径困惑</td></tr>
+    <tr><td>5</td><td><b>Golden 评估集真正跑起来</b>（规则→MCP→语义三层）</td><td>把"可验证性"做成信任资产</td></tr>
+    <tr><td>6</td><td><b>电气取证同质集</b>（16 节点）+ 登记 type_compat</td><td>解锁首批可判定对</td></tr>
+  </tbody>
+</table>
+
+<h3>6.3 P2 · 生态与增长（本季）</h3>
+<table>
+  <thead><tr><th>#</th><th>动作</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Action 上架 GitHub Marketplace</td><td>零成本触达所有开源机器人仓库</td></tr>
+    <tr><td>2</td><td>论文投出（arXiv → Mechatronics）</td><td>学术背书 + 引用链</td></tr>
+    <tr><td>3</td><td>数据集挂 HuggingFace + Zenodo DOI</td><td>拿引用信号</td></tr>
+    <tr><td>4</td><td>Claude Connectors / Coze 上架</td><td>补 L3 最大缺口（需用户账号）</td></tr>
+    <tr><td>5</td><td>与 text-to-cad 建立互补链接</td><td>生成 → 判定 流水线卡位</td></tr>
+  </tbody>
+</table>
+
+<!-- 7 -->
+<h2 id="s7"><span class="n">7</span>各板块专项提升建议</h2>
+
+<h3>7.1 数据层（api/ 72 产物）</h3>
+<ul>
+  <li>停止按单点补数（已被 T2 定理证伪）；按<b>同质集批量</b>推进。</li>
+  <li>优先做<b>参数语义归一</b>（19 种 torque / 37 种 speed），比补数据更高价值。</li>
+  <li>明确永远是"目录/契约层"，raw 数据留外部（存储 99.1% 满）。</li>
+</ul>
+
+<h3>7.2 引擎层（functions/_lib + scripts/）</h3>
+<ul>
+  <li>两套引擎口径分裂 → 收敛到单一真相源，或桥接工具强制口径隔离。</li>
+  <li>三态判定已成型 → 形式化代数性质，写进方法论论文。</li>
+  <li>几何生成未真实导出 STEP → 跑通一条真实 STEP + 干涉检查。</li>
+</ul>
+
+<h3>7.3 前端板块（39 个 HTML）</h3>
+<table>
+  <thead><tr><th>类别</th><th>页面</th><th>建议</th></tr></thead>
+  <tbody>
+    <tr><td>核心工具</td><td>index / selection / designer / parts-viewer / bom-* / compatibility-* / co-mount / adapter-generator / urdf-library</td><td>保留并强化；<b>co-mount 页需随端点部署上线</b></td></tr>
+    <tr><td>标准/规范</td><td>iso-9409-flange / standard-audit / robot-joint-parameter-spec / spec-declare</td><td>保留（差异化资产）</td></tr>
+    <tr><td>Agent 生态</td><td>mcp-guide / agent-architecture / data-hub</td><td>保留</td></tr>
+    <tr><td><b>商业/营销</b></td><td>pricing / api-pricing / credits* / suppliers / supplier-admin / waitlist / order / promotion / promo-poster / scoreboard</td><td>⚠️ 佣金中介模式已证无效（29 调用 0 注册）；<b>冻结或改造为"数据贡献者"页</b></td></tr>
+    <tr><td>展示</td><td>bionic / assembly / build-planner / reference-builds / demo-flow / geo-dashboard / compatibility-viz</td><td>保留，话术对齐新定位</td></tr>
+  </tbody>
+</table>
+<p class="small">39 个页面中约 <b>10 个属商业残留</b>，与"开源中立判定层"新定位冲突。建议做一次<b>页面资产审计</b>。</p>
+
+<h3>7.4 Agent 生态（MCP / A2A / Action）</h3>
+<ul>
+  <li>21 个 MCP 工具在线 → 补 A2A SendMessage 桥接 + L4 框架接入示例。</li>
+  <li>GitHub Action 已建（有 bug）→ 修好后上架 Marketplace。</li>
+  <li>L5 评估脚手架 → 修成可运行，挂 nightly。</li>
+  <li>L3 平台上架 0 → Claude Connectors（最高优先，需用户账号）。</li>
+</ul>
+
+<h3>7.5 学术/内容（papers/ / articles/ / content/）</h3>
+<ul>
+  <li>论文就绪未投 → <b>投出</b>（最高 ROI）。</li>
+  <li>21 篇 GEO 文 → 停止写通用推荐文；改写成围绕"三态诚实 / 单声明零收益定理"的方法论文。</li>
+  <li>Croissant + CITATION → 挂 HuggingFace/Zenodo。</li>
+</ul>
+
+<!-- 8 -->
+<h2 id="s8"><span class="n">8</span>完成度总判断与优先级矩阵</h2>
+<table>
+  <thead><tr><th>层面</th><th>完成度</th><th>判断</th></tr></thead>
+  <tbody>
+    <tr><td>工程基础设施</td><td><b>90%</b></td><td>业内领先（40 闸门 + 单一真相源 + 现算纪律）</td></tr>
+    <tr><td>判定引擎</td><td><b>65%</b></td><td>三态语义成型，但确定性裁决率 0.1%</td></tr>
+    <tr><td>数据资产</td><td><b>40%</b></td><td>868 实体但接口声明薄、A 级可比 0</td></tr>
+    <tr><td>生态分发</td><td><b>55%</b></td><td>4/4 MCP 目录绿，但 L3 平台上架 0</td></tr>
+    <tr><td>商业验证</td><td><b>10%</b></td><td>0 star / 0 注册</td></tr>
+    <tr><td>学术信誉</td><td><b>30%</b></td><td>稿就绪未投</td></tr>
+    <tr><td><b>交付可见性</b></td><td><b>🔴 20%</b></td><td><b>47 提交未推送、线上陈旧 8 天</b></td></tr>
+  </tbody>
+</table>
+
+<h3>优先级矩阵（价值 × 成本）</h3>
+<pre><code>高价值 │  ★ P0-1 推送+部署（止血）        ★ P1-2 三态判定产品化
+      │  ★ P0-4~7 修 Action/promptfoo     ★ P1-3 标准共建
+      │                                   ★ P1-1 战略抉择（判定 vs 物理验证）
+      ├──────────────────────────────────────────────────
+低价值 │  ○ 继续加 MCP 分发平台             △ 商业页面改造
+      │  ○ 写通用 GEO 推荐文               △ 数据集挂 HF
+      └──────────────────────────────────────────────────
+         低成本 ──────────────────────→ 高成本</code></pre>
+
+<!-- 9 -->
+<h2 id="s9"><span class="n">9</span>风险与诚实边界</h2>
+<table>
+  <thead><tr><th>风险</th><th>严重度</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td><b>成果不可见（推送阻断）</b></td><td><span class="tag bad">最高</span></td><td>47 提交未推送 → 所有成果对世界不可见；需用户 PAT</td></tr>
+    <tr><td>竞品 roboxdb 物理验证领先</td><td><span class="tag warn">中高</span></td><td>若其补上接口判定，差异化被压缩</td></tr>
+    <tr><td>实施缺陷（Action/promptfoo）</td><td><span class="tag warn">中</span></td><td>上轮"快速落地"引入未验证代码</td></tr>
+    <tr><td>数据质量质疑</td><td><span class="tag warn">中</span></td><td>全库声明值、A 级可比 0</td></tr>
+    <tr><td>存储天花板</td><td><span class="tag warn">中</span></td><td>~1GB 已 99.1% 满</td></tr>
+    <tr><td>单一维护者</td><td><span class="tag warn">中</span></td><td>零预算，总线因子</td></tr>
+    <tr><td>品牌名冲突</td><td><span class="tag warn">中</span></td><td>Amazon 西班牙站已有 Roboparts®</td></tr>
+  </tbody>
+</table>
+<p class="small"><b>诚实边界</b>：本报告所有"线上"数据均来自 2026-10-11 的 curl 回探；竞品 roboxdb 因浏览器验证未取得完整页面，其能力判断基于搜索结果摘要，<b>未经一手逐项核实</b>。</p>
+
+<!-- 10 -->
+<h2 id="s10"><span class="n">10</span>结论与 30 天行动清单</h2>
+<div class="callout">
+  <div class="t">总体结论</div>
+  上一阶段方向正确（定位上移 + 验证即服务 + L5 评估），但执行有两个系统性短板：一是"快速落地"引入了未验证的代码缺陷；二是<b>成果被锁在本地</b>（47 提交未推送、线上陈旧 8 天）。同时国际市场出现直接竞品 roboxdb，用 MuJoCo 物理验证补齐了 RoboParts 缺失的一层。<b>下一阶段的第一优先级不是加功能，而是"让已完成的东西可见"</b>；随后修缺陷、做战略抉择、推标准共建。
+</div>
+<table>
+  <thead><tr><th>周</th><th>动作</th><th>负责</th><th>验收</th></tr></thead>
+  <tbody>
+    <tr><td><b>W1</b></td><td>重生成 PAT → 推送 47 提交 → 触发部署 → 验证线上同步</td><td>用户 + AI</td><td>线上 title 更新、co-mount 200、868 实体</td></tr>
+    <tr><td><b>W1</b></td><td>修 Action import bug + URDF 端点 + BOM 改一次性 POST</td><td>AI</td><td>Action dry-run 通过</td></tr>
+    <tr><td><b>W1</b></td><td>修 promptfoo 配置为可运行</td><td>AI</td><td>eval 产出真实结果</td></tr>
+    <tr><td><b>W2</b></td><td>战略抉择：判定层做深 vs 延伸物理验证（写决策文档）</td><td>用户 + AI</td><td>决策留痕</td></tr>
+    <tr><td><b>W2</b></td><td>产出「实体字段 ↔ 模块通用信息模型」对照表</td><td>AI</td><td>对照表文件</td></tr>
+    <tr><td><b>W3</b></td><td>三态判定产品化（共装查询公开可查）</td><td>AI</td><td>页面 + 端点</td></tr>
+    <tr><td><b>W3</b></td><td>收敛双引擎口径（OPT-1）</td><td>AI</td><td>单一真相源</td></tr>
+    <tr><td><b>W4</b></td><td>论文投出 + 数据集挂 HF/Zenodo</td><td>用户 + AI</td><td>投稿回执 / DOI</td></tr>
+    <tr><td><b>W4</b></td><td>Action 上架 Marketplace + Claude Connectors 提交</td><td>用户 + AI</td><td>上架 / 提交回执</td></tr>
+  </tbody>
+</table>
+
+<hr>
+<p class="footnote">
+本报告基于 2026-10-11 对 roboparts.cc 全仓的静态扫描、产物现算、线上回探（curl 5 个端点 + 首页定位 + 数据新鲜度），以及 2026 年国际市场竞品（roboxdb / text-to-cad / TraceParts / Octopart 等）与最新技术（GR00T N2 / Gemini Robotics 2 / MuJoCo / MCP 2026）的联网核实撰写。所有仓内数字均可用对应脚本复现；线上数字为回探时点快照。<br>
+报告性质：下一阶段行动方案，不构成合规声明或投资建议。
+</p>
+
+</div>
+</body>
+</html>

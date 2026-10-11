@@ -23,7 +23,7 @@
     }
   },
   "count": 26,
-  "updated": "2026-10-08T13:52:24.878951Z",
+  "updated": "2026-10-08T22:36:22.135323Z",
   "data": [
     {
       "verified": true,
@@ -1315,7 +1315,8 @@
         "confidence": 0.9,
         "declared_note": "Robotiq 2F-85 ships with interchangeable coupling rings: AGC-CPL-062-002=ISO 9409-1-50-4-M6, AGC-CPL-062-001=40-4-M6, AGC-CPL-062-003=31.5-4-M5. See Datasheet R-252-1 rev C.",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "source": "Meta SuperDex upstream + vendor datasheet cross-ref"
+        "source": "Meta SuperDex upstream + vendor datasheet cross-ref",
+        "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/grippers/2f_85/2f_85.superdex_bot"
       },
       "standard_conformance": {
         "format": "superdex_bot_v1",

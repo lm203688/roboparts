@@ -8,7 +8,7 @@
  "provider": "RoboParts",
  "mcp_server": "https://roboparts.cc/mcp",
  "mcp_registry_name": "cc.roboparts/roboparts",
- "summary": "把 RoboParts 机器人零部件兼容性能力封装为可被其他 Agent 框架（WorkBuddy / Dify / Coze / Cursor / Claude）一键接入的 Skills。底层统一走免鉴权只读 MCP 端点，零安装、零 API Key。本清单由 MCP 工具定义自动生成，参数与线上端点逐字一致。",
+ "summary": "把 RoboParts 具身系统组合校验能力封装为可被其他 Agent 框架（WorkBuddy / Dify / Coze / Cursor / Claude）一键接入的 Skills。判定零件能否装配/共装/互换，输出可核验的三态结论。底层统一走免鉴权只读 MCP 端点，零安装、零 API Key。本清单由 MCP 工具定义自动生成，参数与线上端点逐字一致。",
  "mcp_skills": [
   {
    "tool": "search_components",
@@ -98,7 +98,7 @@
    "tool": "explain_evidence_cohort",
    "name": "roboparts-evidence-cohort",
    "title": "最小可行同质集取证判据",
-   "when_to_use": "用户问「取证该从哪开始」「补哪条数据最值」「补机械声明率到 30% 有用吗」「K=2 是什么意思」时。",
+   "when_to_use": "用户问「取证该从哪开始」「补哪条数据最值」「补机械声明率有没有用」「K=2 是什么意思」时。",
    "guardrails": "只读透传研究层现算结论，不重新裁决。口径与 check_compatibility 的四维不同，不可混用。"
   },
   {

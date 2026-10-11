@@ -1,13 +1,13 @@
-# RoboParts — 机器人零件兼容性判定层
-> 面向开源机器人构建者的跨厂商零件接口兼容性判定层：ISO 9409-1 法兰判定、BOM 可装性筛查、机械/电气/协议/ROS 四维兼容检查、可 3D 打印的转接件生成。中立第三方——不生产、不销售、不代理任何零部件。
+# RoboParts — 具身系统的组合校验层（Vendor-neutral composition checker for embodied systems）
+> 面向开源机器人构建者的组合校验层：判定零件能否装配 / 共装 / 互换，输出可核验的三态结论（能 / 不能 / 不知道），并生成可 3D 打印的转接件。核心资产不是零件数量，而是三态 fail-closed compose 引擎 + 三条定理（T1/T2/T3）+ 40 项 CI 闸门 + 溯源纪律。中立第三方——不生产、不销售、不代理任何零部件。
 
 ## 概述
-- 定位：机器人零件兼容性判定层（vendor-neutral）
+- 定位：具身系统的组合校验层（vendor-neutral composition checker）；不是"零件数据库"——数据是载体，判定能力 + 可验证性是真正的护城河
 - 受众：开源机器人构建者（ROS / URDF 生态做整机的个人与小团队）；第二受众为机器人集成商的接口工程师
 - 品类词说明：「仿生」是本库 20 个品类之一（bionic_mechanisms，17 条），不是平台定位词
-- 数据量：865实体（222执行器 · 95传感器 · 108芯片 · 44接口 · 64协议 · 42LLM · 105平台 · 22柔性执行器 · 46机器人AI模型 · 46数据采集设备 · 2连接器 · 1一体化关节模组 · 14减速器 · 4控制器 · 24夹爪 · 3结构件 · 2线缆 · 2电源 · 2PCB · 17仿生机械）
+- 数据量：868实体（222执行器 · 95传感器 · 108芯片 · 44接口 · 64协议 · 42LLM · 106平台 · 22柔性执行器 · 46机器人AI模型 · 46数据采集设备 · 2连接器 · 1一体化关节模组 · 14减速器 · 4控制器 · 26夹爪 · 3结构件 · 2线缆 · 2电源 · 2PCB · 17仿生机械）
 - 更新频率：持续更新
-- 最后更新：2026-10-04T04:16:00Z
+- 最后更新：2026-10-08T04:16:00Z
 - 数据来源：官方规格手册、厂商文档、ROS2文档、国家标准
 
 ## 核心功能
@@ -24,7 +24,7 @@
 - `source_tier: "A"` — 一手可复核来源（官方规格书 / 标准文本 / 带链接厂商文档），419 条（48.44%）。**建议 Agent 默认只采信 Tier A。**
 - `source_tier: "B"` — 弱归因（厂商目录声明值、二手摘录，无原始链接），296 条（34.22%）。可参考，需二次核验。
 - `source_tier: "C"` — 无溯源（历史导入待补来源），150 条，`confidence` 上限 0.30，且带 `needs_provenance: true`。**不建议直接引用。**
-- `quarantine: true` — 已隔离实体 101 条。干净集为 764 条（Tier A 可追溯率 54.22%），该数可直接当作「不重复可信条目数」使用。
+- `quarantine: true` — 已隔离实体 101 条。干净集为 767 条（Tier A 可追溯率 54.38%），该数可直接当作「不重复可信条目数」使用。
 - 过滤示例：`entities.filter(e => !e.quarantine && e.source_tier === "A" && e.confidence >= 0.6)`
 - 覆盖率快照见 `api/entities.json` → `meta.provenance_coverage`（内含 `tier_definition` 自解释字段）。
 - 我们主动公开 Tier C 与隔离数据的存在，而非隐藏：**可核验性优先于数量宣称**。
@@ -39,7 +39,7 @@
 - 《人形机器人与具身智能标准体系（2026 版）》（工信部标委会）— 六大领域框架，新增 WG7 数据工作组（工作组 6→7，全链条覆盖）；本库 interfaces / protocols 类目对齐其「类人肢体与模块化部件」维度。
 
 字段语义（`standard_conformance`）：
-- `assessed` — 该实体是否声明了足以推导符合度的接口/协议数据。当前 **90/865（10.4%）** 可评估，其余如实标记 `false` + `unknown`，**未作任何推测**。
+- `assessed` — 该实体是否声明了足以推导符合度的接口/协议数据。当前 **90/868（10.37%）** 可评估，其余如实标记 `false` + `unknown`，**未作任何推测**。
 - `bus_class` — 归一化总线类别：CAN 10 · EtherCAT 8 · proprietary 5 · RS485 4 · UART 3 · Ethernet 3 · PROFINET 1 · other 2 · unknown 731。
 - `interop_stack_20262893` — 对最小互操作技术栈的匹配度：`full` 11 · `partial` 42 · `none` 30 · `unknown` 684。
 - `interop_posture` — 厂商互操作立场：`closed`（全栈自研封闭，如 Tesla Optimus / Figure AI）17 · `semi_open`（半开放自研，如宇树 / 智元）20 · `multi_protocol`（多协议兼容第三方部件厂）1 · `unknown` 729。
@@ -48,7 +48,7 @@
 产业前提：EtherCAT / CAN·CANopen / RS-485 三线并行，各厂 ROS2 二次开发接口互不通用，接口不兼容显著推高跨场景落地开发成本 —— 这正是本库兼容性矩阵存在的意义。
 
 ## 机械互换维度（Mechanical Interface）— 2026-08-05 新增
-兼容性判定的四个维度中，电气 / 协议 / 软件三维已有数据，**机械维（"能不能拧上去"）此前为 0/802 空白**。本次建立标准登记表填补该缺口，并对全库 865 条实体标注显式状态。
+兼容性判定的四个维度中，电气 / 协议 / 软件三维已有数据，**机械维（"能不能拧上去"）此前为 0/868 空白**。本次建立标准登记表填补该缺口，并对全库 865 条实体标注显式状态。
 
 登记表端点：`https://roboparts.cc/api/mechanical_interfaces.json`
 
@@ -62,7 +62,7 @@
   - 定位销孔 H7 / 工装销 g6 过渡配合，严禁过盈硬敲；螺栓须 12.9 级，禁用 4.8/8.8 级及不锈钢。
   - 存在厂商专用非标法兰（如 ABB IRB140 / IRB2400 早期版本），不能套用标准转接板。
 
-**覆盖率如实披露**：865 条中 500 条为机械可耦合实体（具备物理安装面的实物零部件）。现状：尺寸级已声明 67 条、partial 14 条（声明率 16.2%，含 partial），not_declared 419 条，n_a 365 条。【2026-09-25】+50 工业机械臂（KUKA/ABB/UR/FANUC/Yaskawa/Doosan/Techman）回填后从 5.69% → 15.34%，来源 Industrial Robotics Hub OEM datasheets。
+**覆盖率如实披露**：868 条中 500 条为机械可耦合实体（具备物理安装面的实物零部件）。现状：尺寸级已声明 67 条、partial 14 条（声明率 16.2%，含 partial），not_declared 419 条，n_a 368 条。【2026-09-25】+50 工业机械臂（KUKA/ABB/UR/FANUC/Yaskawa/Doosan/Techman）回填后从 5.69% → 15.34%，来源 Industrial Robotics Hub OEM datasheets。
 ⚠️ **`not_declared` 表示"厂商未公开或尚未采集"，不等于"无机械接口"** —— 请勿据此推断不兼容。我们选择把缺口显式暴露为可查询字段，而不是让字段静默缺失。
 
 ## 数据分类
@@ -81,8 +81,11 @@
 <!-- ARTICLES:BEGIN -->
 ## 技术文库（原创长文，允许引用，请注明来源链接）
 索引页：https://roboparts.cc/articles
-共 18 篇，约 119631 字。全部基于本站公开数据集撰写，免费无需注册。
+共 21 篇，约 124549 字。全部基于本站公开数据集撰写，免费无需注册。
 
+- [为什么我们拒绝编数据：一个把「我不知道」当答案的机器人兼容层](https://roboparts.cc/articles/why-we-refuse-to-fabricate-data)（2026-10-08） — 所有零件数据库都在比谁的数字多。RoboParts 反其道而行：公开登记答不出来的部分。本文讲清三态诚实判定（是 / 否 / 不知道）为什么比「填满字段」更有用，以及我们为此付出的代价——为什么 94% 的机械接口我们宁
+- [同为 M8 为什么插不上：连接器判据必须是 (family, pins, pinout) 三元组](https://roboparts.cc/articles/connector-triplet-family-pins-pinout)（2026-10-08） — 兼容性平台最容易犯的错，是把『针数相同』当成『能互插』。本文用三条一手实证说明：M8 是家族不是类型，同针数同针序也可能因螺纹不同而插不上，缺任何一元都会把装不上的判成装得上。
+- [「能不能同时装」：兼容性问错了问题](https://roboparts.cc/articles/co-mount-the-third-relation)（2026-10-08） — 所有平台都在回答『A 能不能插进 B』，但工程师真正问的是『这台机器人能不能同时装夹爪和力传感器』。这是两个不同的关系——二段互插 vs 三段共装。本文讲清为什么缺了宿主这个角色，再多的零件数据也答不出这个问题。
 - [5.69% 的诚实：RoboParts 声明率暴露的兼容层边界](https://roboparts.cc/articles/compatibility-boundary-mech-declaration-2026)（2026-09-22） — RoboParts 机械声明率这个数字难看，但把分子分母拆开看，是收录品类先天不在 ISO 9409-1 覆盖范围内，不是数据缺失。本文用 declared 的全部分布、not_declared actuators 的真
 - [信号契约：当兼容层从螺栓孔延伸到脉冲线](https://roboparts.cc/articles/signal-contract-compatibility-layer-2026)（2026-09-22） — 神经机器人的兼容层缺口：每次手工接线、无可移植格式。RoboParts 把机械兼容延伸到脉冲/感觉/运动信号契约。
 - [SONIC 与 OM-1 之后：为什么「脑×体解耦」反而让机械兼容层变刚需](https://roboparts.cc/articles/brain-body-decoupling-compatibility-layer-2026)（2026-09-21） — 2026 年下半年，NVIDIA 把 SONIC 全身控制器定位在 GR00T 之下并跑在商用 Unitree G1 上，Reward AI 的 OM-1 宣称零样本适配全硬件，非夕推出模块化双臂平台 MICO。本文从开
@@ -157,7 +160,7 @@ curl -X POST https://roboparts.cc/api/validate \
 `GET /api/entities.json` · `/api/parameter_semantics.json` · `/api/compatibility_matrix.json` · `/api/mechanical_interfaces.json`
 
 **如实告知的边界（请勿在转述时夸大）**：
-- 全库 865 条中，参数口径达到「可跨厂商直接比较」的为 **0 条**——行业普遍不声明测试条件。我们公开登记这一事实而非掩盖，判据见 `/robot-joint-parameter-spec`。
+- 全库 868 条中，参数口径达到「可跨厂商直接比较」的为 **0 条**——行业普遍不声明测试条件。我们公开登记这一事实而非掩盖，判据见 `/robot-joint-parameter-spec`。
 - 机械互换维度（"能不能拧上去"）声明率仅 16.2%，其余如实标注 `not_declared`，未作猜测填充。
 - 兼容性结论是**基于已声明数据的线索**，不构成认证，不替代样机实测。
 

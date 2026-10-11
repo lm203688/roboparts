@@ -31,6 +31,7 @@
 
 import { judgePair, loadEntityMap, loadCuratedList, semanticSearch } from './_lib/compat_engine.js';
 import { lintUrdf } from './_urdf_lint.js';
+import { queryCoMount } from './_lib/co_mount_engine.js';
 
 const SERVER_NAME = 'roboparts';
 const SERVER_VERSION = '1.1.1';
@@ -528,7 +529,7 @@ const TOOLS = [
     description:
       '【研究层口径】查询「最小可行同质集」取证判据：补哪一条数据最值、' +
       '为什么单条声明的边际收益为 0、以及应按缺口画像批量取证的顺序。' +
-      '适合回答「取证该从哪开始」「补机械声明率到 30% 有用吗」' +
+      '适合回答「取证该从哪开始」「补机械声明率有没有用」' +
       '「K=2 是什么意思」。只读、免鉴权。',
     inputSchema: { type: 'object', properties: {}, required: [] },
   },
@@ -577,8 +578,18 @@ const TOOLS = [
       '★ 三段判据：机械同型 + 宿主工具侧位数预算 + 信号角色互补。' +
       'port_exhausted 表示「**装不下**（工程约束，如需转接/换本体）」，' +
       '与 unknown（「数据不足，不知道」）严格区分。' +
+      '★ 参数：传 host+a+b 得单对裁决（附证据链）；只传 host 得该宿主的单件可装性 + 工具侧取证；' +
+      '不传参得全层摘要（含关系语义与示例）。' +
       '只读、免鉴权。返回含 caliber 字段，口径与 check_compatibility 不同、不可混用。',
-    inputSchema: { type: 'object', properties: {}, required: [] },
+    inputSchema: {
+      type: 'object',
+      properties: {
+        host: { type: 'string', description: '宿主机器人 id，如 HUB-030（UR3e）、HUB-031（UR5e）、SUPERDEX-fr3。' },
+        a: { type: 'string', description: '器件 A 的实体 id，如 ACT-028。需与 b 同时给。' },
+        b: { type: 'string', description: '器件 B 的实体 id，如 SENS-047。需与 a 同时给。' },
+      },
+      required: [],
+    },
   },
 
   {
@@ -717,6 +728,23 @@ async function toolExplainComposeFrontier(env, request, args) {
     component2_id: a2,
     verdict: rec,
   };
+}
+
+/**
+ * check_co_mount 的实现：把共装层从「整包透传」升级为**可定向查询**。
+ *
+ * 背景（2026-10-08）：此前 check_co_mount 无参数、只把 co_mount.json 的 picks 整包返回，
+ * 调用方拿不到「这一对到底判了什么」。而共装正是本仓唯一能回答真实用户问题
+ * （「能不能同时装夹爪 A 和传感器 B」）的能力。本函数只负责**取数**，
+ * 判定与证据链逻辑在 _lib/co_mount_engine.js —— 与 REST /api/co-mount **共用同一份**，
+ * 杜绝两条通道对同一对零件给出不同答案（见 compatibility.js 顶部的同型纪律）。
+ */
+async function toolCheckCoMount(env, request, args = {}) {
+  const [cm, ts] = await Promise.all([
+    fetchAsset(env, request, 'api/co_mount.json'),
+    fetchAsset(env, request, 'api/robot_tool_side.json'),
+  ]);
+  return queryCoMount(cm, ts, args);
 }
 
 /**
@@ -1621,7 +1649,7 @@ async function handleRpc(msg, context) {
           payload = await toolExplainResearchLayer(env, request, 'progress');
         } else if (name === 'check_co_mount') {
           recordMcp(context, 'toolsrc:script:check_co_mount');
-          payload = await toolExplainResearchLayer(env, request, 'comount');
+          payload = await toolCheckCoMount(env, request, args);
         } else if (name === 'get_behavior_evidence') {
           recordMcp(context, 'toolsrc:script:get_behavior_evidence');
           payload = await toolExplainResearchLayer(env, request, 'behavior');

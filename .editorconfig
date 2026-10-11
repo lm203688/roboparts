@@ -1,0 +1,27 @@
+# EditorConfig — 让不同编辑器/IDE 保持一致的缩进/行尾/换行行为。
+# 参考：https://editorconfig.org/
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# Python 与 shell 脚本用 4 空格（PEP 8 与 shell 惯例）
+[*.py]
+indent_size = 4
+
+[*.sh]
+indent_size = 4
+
+# Markdown 允许行尾空格（保留两空格换行语义）
+[*.md]
+trim_trailing_whitespace = false
+
+# YAML 允许尾随空白（缩进敏感）
+[*.{yml,yaml,toml,ini,cfg}]
+indent_size = 2

@@ -1,0 +1,43 @@
+{
+  "name": "roboparts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "机器人零部件兼容性判定层（vendor-neutral）。Cloudflare Pages + GitHub Actions + Python 数据管线。",
+  "homepage": "https://roboparts.cc",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lm203688/roboparts.git"
+  },
+  "engines": {
+    "node": ">=22.22.0",
+    "python": ">=3.12"
+  },
+  "packageManager": "npm@10",
+  "scripts": {
+    "ci": "python scripts/ci_gate.py",
+    "ci:list": "python scripts/ci_gate.py --list",
+    "regression": "python scripts/regression.py",
+    "verify:live": "python scripts/verify_live_numbers.py",
+    "verify:mcp": "python scripts/verify_mcp_coverage.py",
+    "verify:host-parity": "node scripts/verify_host_parity.mjs",
+    "verify:deploy-snapshot": "node scripts/verify_deploy_snapshot.mjs",
+    "probe": "node scripts/probe.mjs --json",
+    "deploy": "node scripts/deploy.mjs",
+    "deploy:check": "python scripts/pre_deploy_check.py",
+    "build:dataset": "node scripts/export_training_dataset.mjs",
+    "sync:dist": "python scripts/sync_dataset_dist.py",
+    "sync:dist:check": "python scripts/sync_dataset_dist.py --check",
+    "fmt": "prettier --write \"**/*.{js,mjs,json,md,html,yml,yaml}\"",
+    "fmt:check": "prettier --check \"**/*.{js,mjs,json,md,html,yml,yaml}\"",
+    "lint": "eslint \"scripts/**/*.mjs\" \"scripts/**/*.js\" \"functions/**/*.js\" \"mcp-server/**/*.js\"",
+    "doctor": "npm run fmt:check && npm run lint && python scripts/ci_gate.py --list"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "eslint": "^9.11.1"
+  },
+  "workspaces": [
+    "mcp-server"
+  ]
+}

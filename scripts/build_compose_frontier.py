@@ -390,7 +390,7 @@ def _access_block() -> dict:
             "command": "curl -X POST https://roboparts.cc/api/key -d '{\"email\":\"you@example.com\"}'",
             "step_1": "POST 上述命令，邮箱仅用于发放 key。",
             "step_2": "把返回的 key 放进 Authorization: Bearer <key> 头。",
-            "step_3": "免费额度 100 次 / 小时，无需绑卡。",
+            "step_3": "免费额度 100（credits）；限速 30 次 / 小时；无需绑卡。",
         },
         "free_credits": 100,
         "rate_limit_per_hour": 30,

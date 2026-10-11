@@ -1,0 +1,69 @@
+# RoboParts Compatibility Check — 使用示例（供开源机器人项目复制）
+#
+# 用法：把本文件复制到你的机器人项目 .github/workflows/，改 bom-path / urdf-path 即可。
+# 无需装依赖，无需 API Key，RoboParts 免鉴权只读端点。
+#
+# 三种模式：
+#   mode: bom      → 批量检查 BOM 里所有零件两两兼容性
+#   mode: urdf     → 校验 URDF 结构（关节、link、碰撞、几何一致性）
+#   mode: compose  → 检查"这台机器人能否同时装器件 A 和器件 B"（共装判定）
+#
+# 三态 fail-closed 语义：unknown 是有效答案（证据缺口），不是错误。
+
+name: RoboParts Compatibility Check
+
+on:
+  pull_request:
+    paths:
+      - 'bom/**'
+      - 'urdf/**'
+      - '**/*.urdf'
+  push:
+    branches: [main]
+    paths:
+      - 'bom/**'
+      - 'urdf/**'
+  workflow_dispatch:
+
+jobs:
+  # 模式 1：BOM 两两兼容（默认开启）
+  bom-compat:
+    name: BOM composition check
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check BOM composition against RoboParts registry
+        uses: lm203688/roboparts/.github/actions/roboparts-compat-check@main
+        with:
+          mode: bom
+          bom-path: bom.json          # ← 改成你的 BOM 路径
+          fail-on-incompatible: true  # CI 阻断
+          comment-on-pr: true         # 自动评论 PR
+
+  # 模式 2：URDF 结构校验
+  urdf-lint:
+    name: URDF composition check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint URDF against RoboParts
+        uses: lm203688/roboparts/.github/actions/roboparts-compat-check@main
+        with:
+          mode: urdf
+          urdf-path: urdf/robot.urdf  # ← 改成你的 URDF 路径
+
+  # 模式 3：共装判定（"能不能同时装两个"）
+  comount:
+    name: Co-mount composition check
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check co-mount on UR3e
+        uses: lm203688/roboparts/.github/actions/roboparts-compat-check@main
+        with:
+          mode: compose
+          host-id: HUB-030    # UR3e
+          part-a: ACT-028     # ← 换你要查的器件
+          part-b: SENS-047

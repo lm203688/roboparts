@@ -202,8 +202,16 @@ def main() -> int:
         # 更新时间戳
         ents_doc["last_updated"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
         with open(ENTS_PATH, "w", encoding="utf-8") as f:
-            json.dump(ents_doc, f, ensure_ascii=False, indent=1)
+            # 【20261008】原为 indent=1，与其余所有 entities.json 写者（add_real_parts /
+            # ingest_superdex / sync_hub_to_entities / normalize_categories 均 indent=2）
+            # 及派生文件（分类JSON/data.js 均 2 空格）不一致，会把整个真相源重排成 1 空格。
+            # 已统一为 indent=2。
+            json.dump(ents_doc, f, ensure_ascii=False, indent=2)
             f.write("\n")
+        # ⚠️ 本脚本只改真相源 api/entities.json。**必须**随后跑
+        #    python scripts/regen_derived.py 把 868 传播到 data.js / 分类JSON /
+        #    api/data.json / llms.txt 等派生文件，否则会出现
+        #    「entities.json 868 vs 派生 865」的七处总数不一致（2026-10-06 即因此漂移）。
     print(f"build_so_lerobot: added={added}, skipped={skipped}")
     return 0
 

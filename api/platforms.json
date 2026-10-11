@@ -23,7 +23,7 @@
     }
   },
   "count": 106,
-  "updated": "2026-10-08T13:52:24.878951Z",
+  "updated": "2026-10-08T22:36:22.135323Z",
   "data": [
     {
       "id": "ACT-patsnap-actuator",
@@ -482,7 +482,8 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0010",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "RPLAT-010"
+      "duplicate_of": "RPLAT-010",
+      "quarantine_reason": "Duplicate of RPLAT-010 (Tesla Optimus Gen 3) - same name/manufacturer, deduplication isolation per 2026-10-08 audit"
     },
     {
       "id": "RPLAT-010",
@@ -4323,7 +4324,8 @@
         "confidence": 0.95,
         "declared_note": "Franka FR3 v2 (post-2024) tool flange is unchanged from FR3 v1: ISO 9409-1-50-4-M6. See Franka API docs `tool_flange_joint_name`.",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "source": "Meta SuperDex upstream + vendor datasheet cross-ref"
+        "source": "Meta SuperDex upstream + vendor datasheet cross-ref",
+        "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arms/fr3_v2/fr3_v2.superdex_bot"
       },
       "standard_conformance": {
         "format": "superdex_bot_v1",
@@ -4433,7 +4435,8 @@
         "confidence": 0.95,
         "declared_note": "Franka FR3 tool flange is fixed ISO 9409-1-50-4-M6 (50 mm bore, 6×M6 bolt circle, 37.4 mm depth) per Franka robot_specs. Not user-interchangeable — no adapter plate is offered by Franka for other standards.",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "source": "Meta SuperDex upstream + vendor datasheet cross-ref"
+        "source": "Meta SuperDex upstream + vendor datasheet cross-ref",
+        "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arms/fr3/fr3.superdex_bot"
       },
       "standard_conformance": {
         "format": "superdex_bot_v1",
@@ -4543,7 +4546,8 @@
         "confidence": 0.8,
         "declared_note": "OpenArm V20 end-effector interface is proprietary — 3×M4 on a 39 mm BCD per Agilex V20 hardware spec. Not ISO 9409-1.",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "source": "Meta SuperDex upstream + vendor datasheet cross-ref"
+        "source": "Meta SuperDex upstream + vendor datasheet cross-ref",
+        "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arms/openarm_v20/left/openarm_v20_left_arm.superdex_bot"
       },
       "standard_conformance": {
         "format": "superdex_bot_v1",
@@ -4651,7 +4655,8 @@
         "confidence": 0.8,
         "declared_note": "OpenArm V20 end-effector interface is proprietary — 3×M4 on a 39 mm BCD per Agilex V20 hardware spec. Not ISO 9409-1.",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "source": "Meta SuperDex upstream + vendor datasheet cross-ref"
+        "source": "Meta SuperDex upstream + vendor datasheet cross-ref",
+        "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/arms/openarm_v20/right/openarm_v20_right_arm.superdex_bot"
       },
       "standard_conformance": {
         "format": "superdex_bot_v1",
@@ -5039,7 +5044,8 @@
         "confidence": 0.85,
         "declared_note": "Allegro Hand V5 uses a proprietary 4-bolt flange (Ø52 mm, 4×M5 sockets). No ISO 9409-1 adapter is officially offered; community adapters exist. See Allegro Hand Manual section 5.3.",
         "registry_ref": "/api/mechanical_interfaces.json",
-        "source": "Meta SuperDex upstream + vendor datasheet cross-ref"
+        "source": "Meta SuperDex upstream + vendor datasheet cross-ref",
+        "source_url": "https://github.com/facebookresearch/project_superdex/blob/main/assets/bots/hands/allegro_v5/right/allegro_v5_right.superdex_bot"
       },
       "standard_conformance": {
         "format": "superdex_bot_v1",

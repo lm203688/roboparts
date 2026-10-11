@@ -51,6 +51,8 @@ temp/
 # Local agent memory / private ops — never deploy to public Pages
 .workbuddy/
 .workbuddy/**
+.workbuddy-ai/
+.workbuddy-ai/**
 ops/
 ops/**
 
@@ -96,3 +98,13 @@ api/training_dataset.json
 
 # Backup files (from ingest scripts)
 *.bak.*
+
+# 工程化配置文件（.env.example 入库，实际 .env.* 已排除）
+# 保留 package-lock.json（若使用 npm ci）；本仓未启用 npm ci，先忽略
+package-lock.json
+
+# AOCI 索引/元数据（AOCI 工具的本地索引快照，非交付物）
+.aoci/
+aoci.code.txt
+aoci.meta.txt
+aoci.txt

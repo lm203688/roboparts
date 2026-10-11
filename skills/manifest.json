@@ -2,7 +2,7 @@
   "schema_version": "1.1",
   "generated_by": "scripts/gen_skills_manifest.mjs（从 functions/mcp.js 的 TOOLS 生成，勿手改）",
   "provider": "RoboParts",
-  "summary": "把 RoboParts 机器人零部件兼容性能力封装为可被其他 Agent 框架（WorkBuddy / Dify / Coze / Cursor / Claude）一键接入的 Skills。底层统一走免鉴权只读 MCP 端点，零安装、零 API Key。本清单由 MCP 工具定义自动生成，参数与线上端点逐字一致。",
+  "summary": "把 RoboParts 具身系统组合校验能力封装为可被其他 Agent 框架（WorkBuddy / Dify / Coze / Cursor / Claude）一键接入的 Skills。判定零件能否装配/共装/互换，输出可核验的三态结论。底层统一走免鉴权只读 MCP 端点，零安装、零 API Key。本清单由 MCP 工具定义自动生成，参数与线上端点逐字一致。",
   "mcp_server": "https://roboparts.cc/mcp",
   "mcp_registry_name": "cc.roboparts/roboparts",
   "skills": [
@@ -306,8 +306,8 @@
       "title": "最小可行同质集取证判据",
       "type": "mcp_tool",
       "tool": "explain_evidence_cohort",
-      "description": "【研究层口径】查询「最小可行同质集」取证判据：补哪一条数据最值、为什么单条声明的边际收益为 0、以及应按缺口画像批量取证的顺序。适合回答「取证该从哪开始」「补机械声明率到 30% 有用吗」「K=2 是什么意思」。只读、免鉴权。",
-      "when_to_use": "用户问「取证该从哪开始」「补哪条数据最值」「补机械声明率到 30% 有用吗」「K=2 是什么意思」时。",
+      "description": "【研究层口径】查询「最小可行同质集」取证判据：补哪一条数据最值、为什么单条声明的边际收益为 0、以及应按缺口画像批量取证的顺序。适合回答「取证该从哪开始」「补机械声明率有没有用」「K=2 是什么意思」。只读、免鉴权。",
+      "when_to_use": "用户问「取证该从哪开始」「补哪条数据最值」「补机械声明率有没有用」「K=2 是什么意思」时。",
       "guardrails": "只读透传研究层现算结论，不重新裁决。口径与 check_compatibility 的四维不同，不可混用。",
       "params": []
     },
@@ -346,10 +346,29 @@
       "title": "共装裁决（三段 A↔宿主↔B）",
       "type": "mcp_tool",
       "tool": "check_co_mount",
-      "description": "查询**共装**关系（第三种关系类型，三段 A↔宿主↔B）：某个机器人本体能否同时装下两个器件（典型问题：「这台 UR5e 能同时装夹爪和六轴力传感器吗」）。与 check_compatibility 的区别：后者判「A 能不能插进 B」（二段互插），本工具判「A 和 B 能不能同时挂在同一台机器人的工具侧」。★ 三段判据：机械同型 + 宿主工具侧位数预算 + 信号角色互补。port_exhausted 表示「**装不下**（工程约束，如需转接/换本体）」，与 unknown（「数据不足，不知道」）严格区分。只读、免鉴权。返回含 caliber 字段，口径与 check_compatibility 不同、不可混用。",
+      "description": "查询**共装**关系（第三种关系类型，三段 A↔宿主↔B）：某个机器人本体能否同时装下两个器件（典型问题：「这台 UR5e 能同时装夹爪和六轴力传感器吗」）。与 check_compatibility 的区别：后者判「A 能不能插进 B」（二段互插），本工具判「A 和 B 能不能同时挂在同一台机器人的工具侧」。★ 三段判据：机械同型 + 宿主工具侧位数预算 + 信号角色互补。port_exhausted 表示「**装不下**（工程约束，如需转接/换本体）」，与 unknown（「数据不足，不知道」）严格区分。★ 参数：传 host+a+b 得单对裁决（附证据链）；只传 host 得该宿主的单件可装性 + 工具侧取证；不传参得全层摘要（含关系语义与示例）。只读、免鉴权。返回含 caliber 字段，口径与 check_compatibility 不同、不可混用。",
       "when_to_use": "用户问「这台机器人能不能同时装夹爪 A 和传感器 B」「两个夹爪能一起装吗」「为什么判 port_exhausted」时。",
       "guardrails": "只读透传研究层现算结论。**口径与 check_compatibility 不同、不可混用**：后者判二段互插，本工具判三段共装。port_exhausted = 装不下（工程约束，需转接/换本体），unknown = 数据不足（不知道）——**两者不可混为一谈**。",
-      "params": []
+      "params": [
+        {
+          "name": "host",
+          "type": "string",
+          "required": false,
+          "desc": "宿主机器人 id，如 HUB-030（UR3e）、HUB-031（UR5e）、SUPERDEX-fr3。"
+        },
+        {
+          "name": "a",
+          "type": "string",
+          "required": false,
+          "desc": "器件 A 的实体 id，如 ACT-028。需与 b 同时给。"
+        },
+        {
+          "name": "b",
+          "type": "string",
+          "required": false,
+          "desc": "器件 B 的实体 id，如 SENS-047。需与 a 同时给。"
+        }
+      ]
     },
     {
       "name": "roboparts-tool-side",

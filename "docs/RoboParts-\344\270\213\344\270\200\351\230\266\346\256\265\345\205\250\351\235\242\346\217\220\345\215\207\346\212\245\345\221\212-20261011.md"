@@ -1,0 +1,397 @@
+# RoboParts 下一阶段全面提升报告
+
+> **生成日期**：2026-10-11
+> **扫描范围**：全仓 1670+ 文件 · 39 个 HTML 板块 · 52 个 functions · 72 个 API 产物 · 21 个 MCP 工具 · 40 项 CI 闸门
+> **对标基准**：项目 5 大核心目标 + 2026 国际市场竞品 + 最新开源技术
+> **方法**：仓内静态扫描 + 产物现算 + 线上回探（curl）+ 国际竞品联网核实
+> **性质**：下一阶段行动方案，不构成合规声明或投资建议
+
+---
+
+## 目录
+
+- [0. 摘要：本轮扫描的 5 个关键发现](#0-摘要本轮扫描的-5-个关键发现)
+- [1. 上轮报告实施核查](#1-上轮报告实施核查)
+- [2. 致命缺陷清单（P0 · 必须本周修）](#2-致命缺陷清单p0--必须本周修)
+- [3. 核心目标对标与完成度判断](#3-核心目标对标与完成度判断)
+- [4. 国际竞品与市场需求对标](#4-国际竞品与市场需求对标)
+- [5. 最新技术发展对位](#5-最新技术发展对位)
+- [6. 下一阶段全面提升方案](#6-下一阶段全面提升方案)
+- [7. 各板块专项提升建议](#7-各板块专项提升建议)
+- [8. 完成度总判断与优先级矩阵](#8-完成度总判断与优先级矩阵)
+- [9. 风险与诚实边界](#9-风险与诚实边界)
+- [10. 结论与 30 天行动清单](#10-结论与-30-天行动清单)
+
+---
+
+## 0. 摘要：本轮扫描的 5 个关键发现
+
+| # | 发现 | 严重度 |
+|---|---|---|
+| 1 | **上一轮报告已部分落地**（定位上移 + GitHub Action + L5 评估），方向正确 | ✅ 正向 |
+| 2 | **但 4 处实施缺陷**：GitHub Action 存在致命 import 错误、URDF 模式调错端点、BOM 注释与代码不符、promptfoo 配置疑似不可运行 | 🔴 高 |
+| 3 | **总阻塞：47 个提交未推送**，线上站点停留在 2026-10-03（旧定位、865 实体、`/api/co-mount` 404）——**上一轮全部成果对世界不可见** | 🔴 最高 |
+| 4 | **出现直接竞品 roboxdb.com**：同样主打 "source-backed parts + 浏览器工程工具"，且多了一层 **MuJoCo 物理验证** | 🟠 中高 |
+| 5 | 核心目标 5 项中，**接口标准化 / 协议标准化 / 大模型产业化**三项停在"有数据、无产品"状态 | 🟠 中 |
+
+> **一句话结论**
+> 上一阶段最大的问题不再是"方向错"，而是**"成果被锁在本地"**：47 个提交未推送、线上陈旧 8 天、新定位未上线。下一阶段的第一优先级不是加功能，而是**打通推送-部署链路，让已完成的资产可见**；随后补齐实施缺陷，再把护城河从"判定"扩展到"判定 + 物理验证"。
+
+---
+
+## 1. 上轮报告实施核查
+
+上轮报告《RoboParts 全面评估与生态发展建议报告-20261010》的 10 条行动清单，逐条核查实施状态：
+
+| # | 上轮行动 | 实施状态 | 证据 / 说明 |
+|---|---|---|---|
+| 1 | 全站定位改写为「具身系统的组合校验层」 | 🟡 **仓内完成，线上未生效** | commit `ef2bf54` + `6311d41` 改写了 README/index/llms.txt/.well-known；但线上 `<title>` 仍是旧版 |
+| 2 | 收敛双引擎口径 | ❌ **未做** | 产品层与研究层维度仍不互为子集 |
+| 3 | 论文补 2 字段并投出 | ❌ **未做** | `papers/` 无投稿回执 |
+| 4 | 建 Golden 评估集 + promptfoo | 🟡 **脚手架已建，疑不可运行** | `evaluation/` 已建；promptfoo provider 配置存疑 |
+| 5 | 把"能不能共装"做成用户可查的产品 | 🟡 **端点已建，未部署** | `functions/api/co-mount.js` 存在；线上 `/api/co-mount` 返回 404 |
+| 6 | 发布 `roboparts-action` | 🔴 **已建但有致命 bug** | `.github/actions/roboparts-compat-check/`；import 错误 + 端点错误 |
+| 7 | 产出「实体字段 ↔ 模块通用信息模型」对照表 | ❌ **未做** | 仅 `gb-standard-mapping-20261008.md` 映射设计 |
+| 8 | 电气取证同质集补齐（16 节点） | ❌ **未做** | 电气证据仍为 9 器件 |
+| 9 | 跑通一条真实 STEP 导出 + 干涉检查 | ❌ **未做** | `adapters/` 无新增交付 STEP |
+| 10 | Claude Connectors 上架（需用户账号） | ❌ **未做** | 需用户账号 |
+
+**核查结论**：10 条中 **1 条完成、3 条部分完成、6 条未做**。完成的 3 条（1/4/5/6）恰好集中在"AI 可自主完成"的软件类，未做的多为"需用户配合"或"需长周期苦力"的项——这与项目一贯的资源配置模式一致。
+
+---
+
+## 2. 致命缺陷清单（P0 · 必须本周修）
+
+### 2.1 🔴 GitHub Action 存在致命 import 错误
+
+**文件**：`.github/actions/roboparts-compat-check/entrypoint.js` 第 19–20 行
+
+```js
+import { core } from '@actions/core';      // ❌ 错误
+import { github } from '@actions/github';  // ❌ 错误
+```
+
+**问题**：`@actions/core` 与 `@actions/github` 均**没有名为 `core` / `github` 的命名导出**。`@actions/core` 导出的是 `getInput` / `setOutput` / `setFailed` 等具名函数；`@actions/github` 导出的是 `context` / `getOctokit`。Node 的 ESM-CJS 互操作不会凭空造出 `core` 这个绑定 ⇒ **`core` 为 `undefined`，第一行 `core.getInput(...)` 立即抛 `TypeError`，Action 100% 无法运行**。
+
+**正确写法**：
+
+```js
+import * as core from '@actions/core';
+import * as github from '@actions/github';
+```
+
+**连带问题**：代码里用 `github.rest.issues.createComment(...)`，这是 `getOctokit()` 的用法，而 `import * as github` 后需改为：
+
+```js
+const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+await octokit.rest.issues.createComment({ ... });
+```
+
+### 2.2 🔴 URDF 模式调用错误端点
+
+**文件**：同 `entrypoint.js` 第 89 行
+
+```js
+const url = `${API_BASE}/api/compatibility/validate`;
+// POST text/xml body = URDF
+```
+
+**问题**：`/api/compatibility/validate` 期望的是 JSON `{ modules: [...] }`（见 `functions/api/compatibility/validate.js`），**不接受 URDF XML**。正确的 URDF 校验端点是 **`/api/urdf/lint`**（`functions/api/urdf/lint.js`，线上返回 405 = 存在且仅接受 POST）。
+
+**后果**：Action 的 URDF 模式必然失败或返回无意义结果。
+
+### 2.3 🟠 BOM 模式注释与代码不符 + 效率问题
+
+- 第 49 行注释写"调用 REST `/api/bom/validate`"——**该端点不存在**（正确为 `/api/bom/check`，且是 POST）。
+- 实际代码第 69 行调用 `/api/compatibility?a=&b=`（端点存在，✅）。
+- 但 BOM 模式对 N 个零件做 **N² 次串行 HTTP 请求**，且无并发、无缓存；对 12 件 BOM 即 66 次请求。建议改用一次性 POST `/api/bom/check`（服务端已实现两两矩阵）。
+
+### 2.4 🟠 promptfoo 评估配置疑似不可运行
+
+**文件**：`evaluation/promptfoo/promptfooconfig.yaml`
+
+```yaml
+providers:
+  - id: openai:responses
+    config:
+      model: mcp:https://roboparts.cc/mcp   # ❌ 非合法 provider 配置
+tests:
+  - vars: { a: "ACT-001", b: "ACT-002" }     # ❌ 有 vars 但无 prompts / 工具调用链
+    assert: [...]
+```
+
+**问题**：① `model: mcp:...` 不是 promptfoo 支持的 provider 形式，promptfoo 无法据此调用 MCP 工具；② tests 定义了 `vars` 但**没有 `prompts` 段**把 `{{a}}`/`{{b}}` 注入，也没有工具调用声明 ⇒ 断言实际不会跑到 MCP。这份评估**当前只能算脚手架，不能产出任何信号**。
+
+**建议**：改用 promptfoo 的 MCP 集成方式（或先用 `npx @modelcontextprotocol/inspector` 做工具级回归），把 8 个场景落到可执行的调用链上。
+
+### 2.5 🔴 总阻塞：47 个提交未推送 + 线上陈旧 8 天
+
+| 项 | 仓内（本地） | 线上（roboparts.cc） | 差距 |
+|---|---|---|---|
+| 实体数 | 868 | **865** | 落后 3 |
+| 数据更新时间 | 2026-10-10 | **2026-10-03** | **落后 8 天** |
+| 定位 | 具身系统的组合校验层 | **机器人零件兼容性判定层** | 旧版 |
+| `/api/co-mount` | 存在 | **404** | 未部署 |
+| origin/main | 落后 **47 个提交** | — | 未推送 |
+
+**根因链**：PAT 过期 → `git push` 401 → GitHub Actions 的 deploy workflow（`on: push`）不触发 → Cloudflare Pages 部署陈旧 → **上一轮全部成果（定位/引擎/评估/Action）对世界不可见**。
+
+**连带后果**：`.github/actions/roboparts-compat-check` 被示例 workflow 以 `uses: lm203688/roboparts/.github/actions/...@main` 引用，但**该路径在 GitHub 上尚不存在**（未推送）⇒ 即使 import bug 修好，外部项目也无法使用。
+
+> **P0 结论**：**打通推送-部署链路是下一阶段一切工作的前置条件**。此项需用户重新生成 PAT（Contents:write + Workflows:write），非 AI 可自主完成。
+
+---
+
+## 3. 核心目标对标与完成度判断
+
+### 3.1 五大核心目标完成度
+
+README §2 列出的 5 大核心目标，逐项对标：
+
+| # | 核心目标 | 完成度 | 证据 | 关键缺口 |
+|---|---|---|---|---|
+| 1 | **模块化配件**：标准模块参数库，按自由度/扭矩/尺寸/协议筛选组合 | 🟢 **70%** | 868 实体 / 20 品类；选型引擎五维评分 | 参数口径不统一（19 种 torque 口径 / 37 种 speed） |
+| 2 | **接口标准化**：对齐国标《人形机器人模块化通用技术要求》，建兼容库 | 🟡 **35%** | ISO 9409-1 九档已对齐；国标映射仅为设计文档 | 国标字段未挂标准号；机械声明率仅 16.2% |
+| 3 | **协议标准化**：EtherCAT/CANopen/ROS2/MQTT 对比 + 实时性能 + 跨协议桥接 | 🟡 **40%** | 64 条协议实体；`protocol_bridges.json` | "实时性能 benchmark" 无实测；跨协议桥接未成产品 |
+| 4 | **大模型产业化**：VLA 部署硬件需求 + 推理性能对比 | 🟡 **45%** | 46 个 robot_ai_models + 42 llms | 对比是静态表；"部署硬件需求"未结构化 |
+| 5 | **用户数据集成**：选型方案/BOM/设计文件端到端加密 | 🔴 **20%** | copilot / credits / 账本 | **"端到端加密"无实现证据**（未见加密层代码） |
+
+### 3.2 研究进度（门控加权 60.2%）
+
+来自 `api/research_progress.json`（2026-10-10 生成）：
+
+| 维度 | 完成度 | 判据 |
+|---|---|---|
+| body（体） | **48%** | 关系类型 2/2 覆盖；但**确定性裁决率仅 0.1%**（214,840 对中仅 114 对给出确定答案） |
+| neuron（脑） | **100%** | 量的是溯源诚实度（非数据量），已满分 |
+| chain（链） | **50%** | 本域三段 2/2 闭合；跨域全链 0/1 |
+| policy（智） | **58%** | 开源模型 4/5 有真实本体绑定 |
+
+> **关键判读**：`body` 维度的 48% 卡在"确定性裁决率 0.1%"——系统能判出**确定的否定**（type_error 114 对），但几乎判不出**确定肯定**（composed 0）。这是下一阶段硬骨头的核心。
+
+### 3.3 工程健康度
+
+| 项 | 状态 |
+|---|---|
+| CI 闸门 | **40 项全绿** |
+| 单一真相源 | ✅ `facts()` 现算，禁手改 |
+| 溯源覆盖 | source 92.97% / traceable 54.38% / Tier A 可追溯 472 |
+| 数据质量 | A 级跨厂商可比条目 = **0**（诚实边界） |
+| 部署 | 🔴 **陈旧 8 天**（见 2.5） |
+
+---
+
+## 4. 国际竞品与市场需求对标
+
+### 4.1 🔴 新发现的直接竞品：roboxdb.com
+
+**这是本轮最重要的竞品发现。** roboxdb 的定位与 RoboParts 高度重叠：
+
+| 维度 | roboxdb | RoboParts | 谁占优 |
+|---|---|---|---|
+| 定位 | Source-backed robot specifications, parts data, build references | Vendor-neutral composition checker | 均主打 "source-backed / 中立" |
+| 数据 | 机器人规格 + 零件数据 + 构建参考 | 868 实体 / 20 品类 | 相近 |
+| 工程工具 | 浏览器内 Maker tools | 选型引擎 / 转接件生成 / URDF | RoboParts 更专 |
+| **物理验证** | ✅ **Robot Physics Validator（MuJoCo 编译验证 MJCF/URDF）** | ❌ 无（仅几何一致性闸门） | **roboxdb 领先** |
+| 形态 | 网站 + 工具 | 网站 + MCP + API + Action | RoboParts 分发面更广 |
+| Agent 接入 | 未突出 | 21 个 MCP 工具 + A2A Card | RoboParts 领先 |
+
+> **威胁判断**：roboxdb 用 **MuJoCo 物理验证**补齐了 RoboParts 缺失的"能不能真的动起来"这一层。如果 roboxdb 再补上"跨厂商接口判定"，RoboParts 的差异化将被大幅压缩。**RoboParts 必须明确：自己是"接口判定层"（静态类型），还是也要做"物理验证层"（动态行为）——二者是不同壁垒，需要战略选择。**
+
+### 4.2 竞品全景（2026）
+
+| 竞品 | 做什么 | 与 RoboParts 关系 | 威胁 |
+|---|---|---|---|
+| **roboxdb.com** | Source-backed parts + MuJoCo 物理验证工具 | **直接重叠 + 物理验证领先** | 🔴 高 |
+| **text-to-cad** | 开源 AI agent，自然语言 → STEP/URDF/3D 打印 | 在"生成"侧竞争，可互补（生成→判定） | 🟠 中 |
+| TraceParts / GrabCAD | 千万级 CAD 零件库下载 | 只做目录，不做判定 | 🟢 低 |
+| Octopart / PartKeepr | 电子元器件采购 + 库存报价 | 只做电气采购 | 🟢 低 |
+| Tnkr / RoboInfra | 整机 BOM / 供应链 | 只做整机 BOM | 🟢 低 |
+| robotichina.com | 中国机器人公司数据库 | 公司级目录，非零件级判定 | 🟢 低 |
+| lerobot.tech/hardware | LeRobot 官方硬件对比指南 | 抢占"选型入口"内容位 | 🟡 中低 |
+| roboticscenter.ai | 开源机器人硬件 landscape 研究 | 内容侧 | 🟢 低 |
+
+### 4.3 市场需求（2026）
+
+| 市场信号 | 对 RoboParts 的含义 |
+|---|---|
+| 人形机器人量产窗口（2026–2028），供应链碎片化 | 接口不统一痛点放大 → 中立判定层需求真实存在 |
+| 开源硬件生态成熟（OpenArm / SO-101 / ALOHA / Unitree），成本为组装价 40–60% 但需 40–100 小时调试 | **"装不上/接不对"是开源构建者的最大时间黑洞** → 正是 RoboParts 的位 |
+| 厂商文档关键参数普遍缺失（官方标准验证活动实测） | "三态诚实"价值锚点被侧证 |
+| MCP 2026 路线图引入 `.well-known` 发现机制 | RoboParts 已有 `.well-known/mcp.json`，**踩中** |
+| Agent 生态需要"机器人硬件数据"工具 | 21 个 MCP 工具是稀缺供给 |
+
+---
+
+## 5. 最新技术发展对位
+
+| 技术前沿（2026） | 进展 | RoboParts 的应对 |
+|---|---|---|
+| **NVIDIA GR00T N1/N1.5/N2** | 开放人形基础模型 + Cosmos 世界模型 + Newton 物理引擎 | 做 VLA ↔ 硬件信号契约（无人区），不做部署 |
+| **Gemini Robotics 2** | 全身控制 + 22 自由度手 + 跨本体迁移 | 同上 |
+| **π0.5 / SmolVLA / Helix** | 开源/半开源 VLA 生态成型 | 数据格式对齐（LeRobot），薄层切入 |
+| **MuJoCo 成为物理验证事实标准** | roboxdb 已用 MuJoCo 做浏览器内 MJCF/URDF 验证 | **战略抉择点**：补物理验证 or 明确划界 |
+| **MCP 2026 `.well-known` 发现** | 从"知道地址"到"自动发现能力" | 已有 `.well-known/mcp.json`，✅ 踩中 |
+| **text-to-cad** | AI 从文本生成 STEP/URDF | 互补：生成 → RoboParts 判定 |
+
+> **技术对位的核心结论**：行业正在把"设计（text-to-cad）→ 判定（RoboParts?）→ 物理验证（roboxdb/MuJoCo）→ 训练（LeRobot/GR00T）"串成流水线。RoboParts 当前占据"判定"环，但**上游被 text-to-cad 挤压、下游被 roboxdb 的物理验证挤压**。下一阶段必须在"判定"环做深（三态类型系统 + 标准共建），或向"物理验证"环延伸——**不能停在中间不动**。
+
+---
+
+## 6. 下一阶段全面提升方案
+
+### 6.1 P0 · 止血与可见（本周，最高优先级）
+
+| # | 动作 | 成本 | 验收判据 |
+|---|---|---|---|
+| 1 | **用户重生成 PAT**（Contents:write + Workflows:write） | 用户手动 | `git push` 成功 |
+| 2 | **推送 47 个提交** | 5 分钟 | origin/main 与本地一致 |
+| 3 | **触发部署**，验证线上同步 | 10 分钟 | 线上 `<title>` = 新定位；`/api/co-mount` = 200；entities = 868 |
+| 4 | **修 GitHub Action import bug**（`import * as core/github` + `getOctokit`） | 30 分钟 | 本地 `act` 或 dry-run 通过 |
+| 5 | **修 URDF 模式端点**（→ `/api/urdf/lint`） | 30 分钟 | URDF 模式返回真实 lint 结果 |
+| 6 | **BOM 模式改一次性 POST** `/api/bom/check` | 1 小时 | 12 件 BOM 一次请求完成 |
+| 7 | **修 promptfoo 配置**（用合法 MCP 调用链） | 半天 | `promptfoo eval` 实际跑到 MCP 工具 |
+
+### 6.2 P1 · 差异化护城河（本月）
+
+| # | 动作 | 战略意图 |
+|---|---|---|
+| 1 | **战略抉择：判定层做深 vs 延伸物理验证** | 决定下一阶段的资源投向（见 §5 结论） |
+| 2 | **三态判定产品化**：把共装查询上线为公开可查产品 | 价值主张从"查询"升级为"集成决策器" |
+| 3 | **标准共建**：产出「实体字段 ↔ 模块通用信息模型」对照表 | 抢占国标开源参考实现位 |
+| 4 | **收敛双引擎口径**（OPT-1） | 消除 agent 口径困惑 |
+| 5 | **Golden 评估集真正跑起来**（规则→MCP→语义三层） | 把"可验证性"做成可售卖的信任资产 |
+| 6 | **电气取证同质集**（16 节点）+ 登记 type_compat | 解锁首批可判定对，提升 body 维度完成度 |
+
+### 6.3 P2 · 生态与增长（本季）
+
+| # | 动作 | 说明 |
+|---|---|---|
+| 1 | Action 上架 GitHub Marketplace | 零成本触达所有开源机器人仓库 |
+| 2 | 论文投出（arXiv → Mechatronics） | 学术背书 + 引用链 |
+| 3 | 数据集挂 HuggingFace + Zenodo DOI | 拿引用信号 |
+| 4 | Claude Connectors / Coze 上架 | 补 L3 最大缺口（需用户账号） |
+| 5 | 与 text-to-cad 建立互补链接 | 生成 → 判定 的流水线卡位 |
+
+---
+
+## 7. 各板块专项提升建议
+
+### 7.1 数据层（`api/` 72 产物）
+
+| 现状 | 建议 |
+|---|---|
+| 868 实体，机械声明率 16.2%，A 级可比条目 0 | 停止按单点补数（已被 T2 定理证伪）；按**同质集批量**推进 |
+| 参数口径混乱（19 种 torque / 37 种 speed） | 优先做**参数语义归一**，比补数据更高价值（已具 `parameter_semantics`） |
+| 存储 99.1% 满 | 明确永远是"目录/契约层"，raw 数据留外部 |
+
+### 7.2 引擎层（`functions/_lib` + `scripts/`）
+
+| 现状 | 建议 |
+|---|---|
+| 两套引擎口径分裂 | 收敛到单一真相源，或桥接工具强制口径隔离 |
+| 三态判定已成型（composed/type_error/unknown） | 形式化代数性质，写进方法论论文 |
+| 几何生成未真实导出 STEP | 跑通一条真实 STEP + 干涉检查（把承诺变交付） |
+
+### 7.3 前端板块（39 个 HTML）
+
+| 类别 | 页面 | 建议 |
+|---|---|---|
+| 核心工具 | index / selection / designer / parts-viewer / bom-* / compatibility-* / co-mount / adapter-generator / urdf-library | 保留并强化；**co-mount 页需随端点部署上线** |
+| 标准/规范 | iso-9409-flange / standard-audit / robot-joint-parameter-spec / spec-declare | 保留（差异化资产） |
+| Agent 生态 | mcp-guide / agent-architecture / data-hub | 保留 |
+| **商业/营销** | pricing / api-pricing / credits* / suppliers / supplier-admin / waitlist / order / promotion / promo-poster / scoreboard | ⚠️ 定位审计已判定"佣金中介模式无效"（29 调用 0 注册）；建议**冻结或改造为"数据贡献者"页** |
+| 展示 | bionic / assembly / build-planner / reference-builds / demo-flow / geo-dashboard / compatibility-viz | 保留，但需与新定位话术对齐 |
+
+> **建议**：39 个页面中约 **10 个属商业残留**，与"开源中立判定层"新定位冲突。应做一次**页面资产审计**：核心工具页强化，商业页冻结或改造。
+
+### 7.4 Agent 生态（MCP / A2A / Action）
+
+| 现状 | 建议 |
+|---|---|
+| 21 个 MCP 工具在线 | 补 A2A SendMessage 桥接；L4 框架接入示例 |
+| GitHub Action 已建（有 bug） | 修好后上架 Marketplace |
+| L5 评估脚手架 | 修成可运行，挂 nightly |
+| L3 平台上架 0 | Claude Connectors（最高优先，需用户账号） |
+
+### 7.5 学术/内容（`papers/` / `articles/` / `content/`）
+
+| 现状 | 建议 |
+|---|---|
+| 论文就绪未投 | **投出**（最高 ROI） |
+| 21 篇 GEO 文 | 停止写通用推荐文；改写成围绕"三态诚实 / 单声明零收益定理"的方法论文 |
+| Croissant + CITATION | 挂 HuggingFace/Zenodo |
+
+---
+
+## 8. 完成度总判断与优先级矩阵
+
+### 8.1 总判断
+
+| 层面 | 完成度 | 判断 |
+|---|---|---|
+| 工程基础设施 | **90%** | 业内领先（40 闸门 + 单一真相源 + 现算纪律） |
+| 判定引擎 | **65%** | 三态语义成型，但确定性裁决率 0.1% |
+| 数据资产 | **40%** | 868 实体但接口声明薄、A 级可比 0 |
+| 生态分发 | **55%** | 4/4 MCP 目录绿，但 L3 平台上架 0 |
+| 商业验证 | **10%** | 0 star / 0 注册 |
+| 学术信誉 | **30%** | 稿就绪未投 |
+| **交付可见性** | **🔴 20%** | **47 提交未推送、线上陈旧 8 天** |
+
+### 8.2 优先级矩阵（价值 × 成本）
+
+```
+高价值 │  ★ P0-1 推送+部署（止血）        ★ P1-2 三态判定产品化
+      │  ★ P0-4~7 修 Action/promptfoo     ★ P1-3 标准共建
+      │                                    ★ P1-1 战略抉择（判定 vs 物理验证）
+      ├──────────────────────────────────────────────────
+低价值 │  ○ 继续加 MCP 分发平台             △ 商业页面改造
+      │  ○ 写通用 GEO 推荐文               △ 数据集挂 HF
+      └──────────────────────────────────────────────────
+         低成本 ──────────────────────→ 高成本
+```
+
+---
+
+## 9. 风险与诚实边界
+
+| 风险 | 严重度 | 说明 |
+|---|---|---|
+| **成果不可见（推送阻断）** | 🔴 最高 | 47 提交未推送 → 所有成果对世界不可见；需用户 PAT |
+| **竞品 roboxdb 物理验证领先** | 🟠 中高 | 若其补上接口判定，RoboParts 差异化被压缩 |
+| 实施缺陷（Action/promptfoo） | 🟠 中 | 上轮"快速落地"引入了未验证的代码 |
+| 数据质量质疑 | 🟠 中 | 全库声明值、A 级可比 0 |
+| 存储天花板 | 🟠 中 | ~1GB 已 99.1% 满 |
+| 单一维护者 | 🟠 中 | 零预算，总线因子 |
+| 品牌名冲突 | 🟠 中 | Amazon 西班牙站已有 Roboparts® |
+| 两引擎口径分裂 | 🟡 低中 | agent 困惑风险 |
+
+> **诚实边界**：本报告所有"线上"数据均来自 2026-10-11 的 curl 回探；竞品 roboxdb 因浏览器验证未取得完整页面，其能力判断基于搜索结果摘要（工具页标题与描述），**未经一手逐项核实**。
+
+---
+
+## 10. 结论与 30 天行动清单
+
+> **总体结论**
+> 上一阶段方向正确（定位上移 + 验证即服务 + L5 评估），但**执行有两个系统性短板**：一是"快速落地"引入了未验证的代码缺陷（Action import 错误 / promptfoo 不可运行）；二是**成果被锁在本地**（47 提交未推送、线上陈旧 8 天）。同时国际市场出现直接竞品 roboxdb，用 MuJoCo 物理验证补齐了 RoboParts 缺失的一层。
+> **下一阶段的第一优先级不是加功能，而是"让已完成的东西可见"**——打通推送-部署链路；随后修缺陷、做战略抉择（判定层做深 vs 延伸物理验证）、推标准共建。
+
+### 30 天行动清单
+
+| 周 | 动作 | 负责 | 验收 |
+|---|---|---|---|
+| **W1** | 重生成 PAT → 推送 47 提交 → 触发部署 → 验证线上同步 | 用户 + AI | 线上 title 更新、co-mount 200、868 实体 |
+| **W1** | 修 Action import bug + URDF 端点 + BOM 改一次性 POST | AI | Action dry-run 通过 |
+| **W1** | 修 promptfoo 配置为可运行 | AI | `promptfoo eval` 产出真实结果 |
+| **W2** | **战略抉择**：判定层做深 vs 延伸物理验证（写决策文档） | 用户 + AI | 决策留痕 |
+| **W2** | 产出「实体字段 ↔ 模块通用信息模型」对照表 | AI | 对照表文件 |
+| **W3** | 三态判定产品化（共装查询公开可查） | AI | 页面 + 端点 |
+| **W3** | 收敛双引擎口径（OPT-1） | AI | 单一真相源 |
+| **W4** | 论文投出 + 数据集挂 HF/Zenodo | 用户 + AI | 投稿回执 / DOI |
+| **W4** | Action 上架 Marketplace + Claude Connectors 提交 | 用户 + AI | 上架 / 提交回执 |
+
+---
+
+*本报告基于 2026-10-11 对 roboparts.cc 全仓的静态扫描、产物现算、线上回探（curl 5 个端点 + 首页定位 + 数据新鲜度），以及 2026 年国际市场竞品（roboxdb / text-to-cad / TraceParts / Octopart 等）与最新技术（GR00T N2 / Gemini Robotics 2 / MuJoCo / MCP 2026）的联网核实撰写。所有仓内数字均可用对应脚本复现；线上数字为回探时点快照。*
+
+*报告性质：下一阶段行动方案，不构成合规声明或投资建议。*

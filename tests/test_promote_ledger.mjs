@@ -4,7 +4,7 @@
  * 断言：fingerprintUrls 顺序无关 + 非空；buildPromoEntry 字段完整。
  * 非零退出即判红（被 ci_gate 的「飞轮幂等/可恢复」闸门调用）。
  */
-import { fingerprintUrls, buildPromoEntry } from './promote.mjs';
+import { fingerprintUrls, buildPromoEntry } from '../scripts/promote.mjs';
 
 let pass = 0, fail = 0;
 function ck(cond, msg) {

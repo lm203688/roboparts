@@ -1,0 +1,30 @@
+# 构建产物 / 派生产物 / 私有目录（与 .gitignore 对齐）
+node_modules/
+.deploy-staging/
+.wrangler/
+.tools/
+.workbuddy/
+ops/
+.chk/
+.tmp_scan/
+
+# 数据文件（体积大且是生成物，格式化无意义）
+api/*.json
+api/data.js
+data.js
+agent-discovery.json
+llms.txt
+
+# 第三方
+mcp-server/node_modules/
+roboparts-dataset-github/
+
+# 大二进制
+*.mp4
+*.zip
+*.exe
+*.tar.gz
+
+# 由生成器产出、格式化会引发大 diff
+scripts/__pycache__/
+**/__pycache__/

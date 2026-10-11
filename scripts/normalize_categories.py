@@ -165,6 +165,11 @@ def main():
     doc['meta']['total'] = len(entities)
     doc['meta']['total_entities'] = len(entities)
     doc['meta']['updated'] = updated
+    # 顶层 count 与 entities[] 长度同源。
+    # 【20261008】此前无任何生成器维护它 —— 数据增长后停在 865 而 entities[] 已是 868，
+    # 对外 /api/entities.json 的 count 与列表长度静默不一致（无闸门盯）。
+    # 归一到本归一化器，与各分类 JSON 的 count 口径一致（见下方 out['count']）。
+    doc['count'] = len(entities)
     if unmapped:
         # 【20260809-07】此处原为一行 ⚠️ 警告后继续写盘 —— 等于把误分类固化进真相源。
         # 未映射类目只有两种成因：新类目忘了登记，或原始值拼错。两者都必须人来定夺，

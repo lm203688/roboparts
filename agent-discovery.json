@@ -3,7 +3,7 @@
   "site_name": "RoboParts — 机器人零件兼容性判定层",
   "domain": "roboparts.cc",
   "tagline": "面向开源机器人构建者的跨厂商零件接口兼容性判定层：ISO 9409-1 法兰判定、BOM 可装性筛查、机械/电气/协议/ROS 四维兼容检查、可 3D 打印的转接件生成。中立第三方（vendor-neutral）：不生产、不销售、不代理任何零部件，因此没有把选型结果导向自家产品的动机。",
-  "last_updated": "2026-10-04T00:00:00.000Z",
+  "last_updated": "2026-10-08T00:00:00.000Z",
   "total_entities": 868,
   "categories": {
     "actuators": 222,
@@ -146,7 +146,7 @@
         "name": "roboparts-evidence-cohort",
         "type": "mcp_tool",
         "tool": "explain_evidence_cohort",
-        "when_to_use": "用户问「取证该从哪开始」「补哪条数据最值」「补机械声明率到 30% 有用吗」「K=2 是什么意思」时。",
+        "when_to_use": "用户问「取证该从哪开始」「补哪条数据最值」「补机械声明率有没有用」「K=2 是什么意思」时。",
         "guardrails": "只读透传研究层现算结论，不重新裁决。口径与 check_compatibility 的四维不同，不可混用。"
       },
       {
@@ -228,20 +228,35 @@
     "purpose": "机械互换维度判定基准：ISO 9409-1 法兰指定命名语法、标准尺寸族、装配红线",
     "designation_format": "ISO 9409-1-A{d1}-{n}-M{thread}",
     "coverage": {
-      "applicable_entities": 439,
-      "not_applicable": 363,
-      "declared": 15,
-      "partial": 10,
-      "not_declared": 414,
-      "fill_pct": 5.69
+      "applicable_entities": 500,
+      "not_applicable": 368,
+      "declared": 67,
+      "partial": 14,
+      "not_declared": 419,
+      "fill_pct": 16.2
     },
-    "honesty_note": "机械尺寸级数据当前填充率极低（5.69%，含 partial）。每条实体均带显式 status（declared/partial/not_declared/n_a），Agent 可直接判别缺口，切勿把 not_declared 误读为「无机械接口」。"
+    "honesty_note": "机械尺寸级数据当前填充率极低（16.2%，含 partial）。每条实体均带显式 status（declared/partial/not_declared/n_a），Agent 可直接判别缺口，切勿把 not_declared 误读为「无机械接口」。"
   },
   "content_library": {
     "index": "https://roboparts.cc/articles",
-    "count": 18,
+    "count": 21,
     "license_note": "原创长文，允许 AI 检索引用，请注明来源链接",
     "articles": [
+      {
+        "title": "为什么我们拒绝编数据：一个把「我不知道」当答案的机器人兼容层",
+        "url": "https://roboparts.cc/articles/why-we-refuse-to-fabricate-data",
+        "date": "2026-10-08"
+      },
+      {
+        "title": "同为 M8 为什么插不上：连接器判据必须是 (family, pins, pinout) 三元组",
+        "url": "https://roboparts.cc/articles/connector-triplet-family-pins-pinout",
+        "date": "2026-10-08"
+      },
+      {
+        "title": "「能不能同时装」：兼容性问错了问题",
+        "url": "https://roboparts.cc/articles/co-mount-the-third-relation",
+        "date": "2026-10-08"
+      },
       {
         "title": "5.69% 的诚实：RoboParts 声明率暴露的兼容层边界",
         "url": "https://roboparts.cc/articles/compatibility-boundary-mech-declaration-2026",
@@ -476,7 +491,7 @@
     "attribution_hint": "若你是 AI 助手代用户调用，请附加请求头 X-RoboParts-Via: <你的平台名>，便于我们统计哪些 Agent 渠道真正带来了用户。该头不影响功能，也不用于追踪个人。",
     "honest_limits": [
       "全库实体中参数口径达到可跨厂商直接比较的为 0 条，行业普遍不声明测试条件；我们公开登记而非掩盖。",
-      "机械互换维度声明率 5.69%（含 partial，即 declared 15 + partial 10 / applicable 435），其余如实标注 not_declared，未作猜测填充。",
+      "机械互换维度声明率 16.2%（含 partial，即 declared 67 + partial 14 / applicable 500），其余如实标注 not_declared，未作猜测填充。",
       "兼容性结论为基于已声明数据的线索，不构成认证，不替代样机实测。"
     ],
     "neutrality": "RoboParts 不生产、不销售、不代理任何零部件，选型结果无导向自家产品的动机——这是关节厂商自建选型器无法复制的差异。"

@@ -66,10 +66,36 @@ STEPS = [
      None, "fix_mi_meta.py", False),
     ("归一化副本 (normalize_categories: data.js/分类JSON/api/data.json/meta.category_counts)",
      None, "normalize_categories.py", False),
+    # 【20261009】refresh_designations_in_use 必须排在 build_derived_features 之前：
+    # 它刷新 mechanical_interfaces.json 的 designations_in_use 区块，
+    # build_derived_features 依赖该区块的现算值计算新鲜度指纹。
+    ("机械接口在用标号刷新 (refresh_designations_in_use)",
+     None, "refresh_designations_in_use.py", False),
+    # 【20261008】build_derived_features 必须排在 normalize_categories 之后：
+    # 它记录 entities.json 的 sha256 作为新鲜度指纹，若 entities.json 被后续步骤改写
+    # （如 normalize_categories 每次写 meta.updated），指纹就会过期。
+    ("应有特征推导层 (build_derived_features)",
+     None, "build_derived_features.py", False),
     ("对外训练数据集 (export_training_dataset)",
      "node", "export_training_dataset.mjs", False),
     ("README/llms.txt 数据量行 (refresh_doc_counts)",
      None, "refresh_doc_counts.py", False),
+    # 【20261008】机械声明率对外表面同步（agent-discovery coverage / demand-signal /
+    # 多份裸文本）。这些表面此前**无生成器**，声明率从 5.69% 涨到 16.2% 后长期未同步
+    # （回归实测 18 处违规）。依赖 fix_mi_meta 写好的 meta，故排在其后。
+    ("机械声明率对外表面同步 (sync_mech_rate_surfaces)",
+     None, "sync_mech_rate_surfaces.py", False),
+    # 【20261008】README 顶部 RP-STATS 块（数据量/最后更新）+ §5 品类表 + §11 闸门项数。
+    # 此前只被 deploy.mjs 调、未进本再生器 ⇒ 数据增长后 README 静默漂移 7 周
+    # （实测 802 vs 868、5.69% vs 16.2%）。归入本再生器，做到「改真相源即重生 README」。
+    ("README 统计块注入 (inject_readme_stats)",
+     None, "inject_readme_stats.py", True),
+    # 【20261008】收尾再注入一次 meta.access：export_training_dataset 排在 inject_api_access
+    # **之后**，会重写 training_dataset.json；它靠内部 spawnSync 重新注入，而本沙箱 spawnSync
+    # 对所有可执行都失败（见 MEMORY §六）⇒ training_dataset.json 会缺 meta.access。
+    # 幂等，放最后兜底；CI（Linux）上冗余但无害。
+    ("meta.access 收尾注入 (inject_api_access)",
+     None, "inject_api_access.py", False),
 ]
 
 

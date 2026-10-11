@@ -6,7 +6,7 @@ We're building **RoboParts** (https://roboparts.cc), an open structured dataset 
 
 ## What is RoboParts?
 
-A curated, structured dataset of **802 entities** across **20 categories**:
+A curated, structured dataset of **868 entities** across **20 categories**:
 
 | Category | Count | Example Data Points |
 |---|---|---|
@@ -17,7 +17,7 @@ A curated, structured dataset of **802 entities** across **20 categories**:
 | Robot AI Models | 46 | VLA models (GR00T N1.7, LeRobot v0.6.0, π0.5, SmolVLA, InternVLA-A1.5) |
 | Data Acquisition | 46 | Teleoperation, motion capture, tactile (ALOHA, UMI, GELLO, OptiTrack, GelSight) |
 | LLMs | 42 | Parameters, open-source, embodied-AI fine-tuning |
-| Platforms | 43 | Simulation support, ROS 2 compatibility, open-source |
+| Platforms | 106 | Simulation support, ROS 2 compatibility, open-source |
 | Interfaces | 44 | Power rating, connector type, speed |
 | Flexible Actuators | 22 | Series Elastic Actuators, soft robotics, bio-inspired |
 | Connectors | 2 | Current rating, data rate, routing opening, mating orientation |
@@ -30,9 +30,9 @@ Most component databases quietly turn "we don't know" into "no". We think that's
 
 Concretely, on ROS support:
 
-- **47 of 802** entities explicitly declare ROS support
+- **49 of 868** entities explicitly declare ROS support
 - **27** explicitly declare no ROS support
-- **751 (94%)** have *never declared it*
+- **792 (91%)** have *never declared it*
 
 So if you query an actuator and get no ROS flag, the API tells you **"not declared by vendor"**, not "incompatible". Same rule applies to mechanical, electrical and protocol dimensions, and to our compatibility engine — it returns `undecided` rather than inventing a verdict.
 
@@ -40,10 +40,10 @@ Field coverage is published rather than hidden:
 
 | Field | Coverage |
 |---|---|
-| `confidence`, `source_tier`, `data_quality`, `standard_conformance` | 802/802 (100%) |
-| `source` | 737/802 (92%) |
-| `last_verified` | 495/802 (62%) |
-| `ros_support` | 47/802 (6%) |
+| `confidence`, `source_tier`, `data_quality`, `standard_conformance` | 868/868 (100%) |
+| `source` | 807/868 (93%) |
+| `last_verified` | 567/868 (65%) |
+| `ros_support` | 49/868 (6%) |
 
 Filling in the sparse mechanical and ROS fields is our current priority. If you have vendor-confirmed data, contributions are very welcome.
 

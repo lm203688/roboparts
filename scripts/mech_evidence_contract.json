@@ -11,7 +11,9 @@
     "universal-robots.com",
     "iso.org",
     "openstd.samr.gov.cn",
-    "xjcsensor.cn"
+    "xjcsensor.cn",
+    "industrialroboticshub.com",
+    "github.com"
   ],
   "source_hosts_note": "厂商官方资产域 / 标准机构。软文站、聚合站、电商页、代码托管站一律不算。白名单里有某域 ≠ 已收录任何 declared 条目（仅表示「允许引用」）。",
   "std_token_evidence": {
@@ -23,7 +25,12 @@
     "ISO 9409-1-100-6-M8": "https://schunk.com/konfigurator-elg",
     "ISO 9409-1-125-6-M10": "https://schunk.com/konfigurator-elg",
     "ISO 9409-1-160-6-M10": "https://schunk.com/konfigurator-elg",
-    "ISO 9409-1-160-11-M12": "https://schunk.com/konfigurator-elg"
+    "ISO 9409-1-160-11-M12": "https://schunk.com/konfigurator-elg",
+    "ISO 9409-1-20-4-M3": "https://www.industrialroboticshub.com/product/hub-mount-20mm/",
+    "ISO 9409-1-63-6-M6": "https://www.industrialroboticshub.com/product/hub-mount-63mm/",
+    "ISO 9409-1-100-4-M8": "https://www.industrialroboticshub.com/product/hub-mount-100mm/",
+    "ISO 9409-1-160-4-M12": "https://www.industrialroboticshub.com/product/hub-mount-160mm/",
+    "ISO 9409-1-250-4-M16": "https://www.industrialroboticshub.com/product/hub-mount-250mm/"
   },
   "std_token_evidence_note": "token → 证明该编码确实被厂商官方文档以 ISO 编码形式列出的深链。加新 token 的唯一合法路径是往这里加一行并附深链——这正是该摩擦要制造的阻力。20260915 扩容：Schunk 官方配置器页(ELG 系列适配板)逐字列出 6 个中/大规格编码（厂商写作 'EN ISO 9409-1-…'，前缀 EN 为欧标采用标记，token 按 ISO 记法规范化），补上此前只有 50mm 级三档的空白 —— Ø63/80/100/125/160 正是工业机器人腕法兰的主体区间。",
   "retrieved": {

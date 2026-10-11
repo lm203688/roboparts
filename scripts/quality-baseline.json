@@ -7,7 +7,7 @@
   "max_placeholder_id": 51,
   "max_unverifiable_vendor": 32,
   "max_non_entity": 14,
-  "max_duplicate": 4,
+  "max_duplicate": 6,
   "min_traceable_pct": 12.85,
   "_traceable_history": [
     {
@@ -56,6 +56,19 @@
     }
   ],
   "_adjustments": [
+    {
+      "key": "max_duplicate",
+      "to": 6,
+      "from": 4,
+      "kind": "legacy_discovery",
+      "ids": [
+        "RPLAT-009",
+        "RPLAT-010"
+      ],
+      "date": "2026-10-09",
+      "by": "2026-10-09 剩余 regression 修复",
+      "note": "RPLAT-009/RPLAT-010（Tesla Optimus Gen 3）在 2026-10-08 regen_derived.py 执行 audit_data_quality.py 后被标记为 duplicate，去重隔离条目从 4 增至 6。属「发现了既有的重复」，非「新灌脏」。delta(2)==len(ids)(2) 且均为存量并附 duplicate_of，L1.72 自证通过。"
+    },
     {
       "key": "max_quarantined",
       "to": 97,
