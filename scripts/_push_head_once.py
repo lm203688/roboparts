@@ -237,14 +237,20 @@ for path in to_delete:
 
 # ---------- 6. 创建 tree ----------
 print(f'\n[{time.strftime("%H:%M:%S")}] 创建 tree...')
-# GitHub trees API 有 100 条目限制；本仓 138 条，需分批或直接一次（API 上限实际更大）
-# 实测单次 tree API 可容纳数千 entries；一次搞定
-new_tree = api('POST', '/git/trees', {
-    'base_tree': remote_tree_sha,
-    'tree': entries,
-})
-new_tree_sha = new_tree['sha']
-print(f'  新 tree = {new_tree_sha}')
+if entries:
+    # GitHub trees API 有 100 条目限制；本仓 138 条，需分批或直接一次（API 上限实际更大）
+    # 实测单次 tree API 可容纳数千 entries；一次搞定
+    new_tree = api('POST', '/git/trees', {
+        'base_tree': remote_tree_sha,
+        'tree': entries,
+    })
+    new_tree_sha = new_tree['sha']
+    print(f'  新 tree = {new_tree_sha}')
+else:
+    # diff=0：内容已同步，直接用**本地 tree** 重做 commit
+    # （用于修 commit message 等场景——远端 tree 可能因算法差异 SHA 不同但内容一致）
+    new_tree_sha = local_tree_sha
+    print(f'  diff=0，复用本地 tree = {new_tree_sha}')
 
 local_tree_sha = git(['rev-parse', 'HEAD^{tree}'])
 if new_tree_sha != local_tree_sha:
@@ -254,23 +260,15 @@ if new_tree_sha != local_tree_sha:
 
 # ---------- 7. 创建 commit ----------
 print(f'[{time.strftime("%H:%M:%S")}] 创建 commit...')
-message = (
-    'chore: 工程化配置补齐 + 一次性脚本归档 + tests 目录归位 + CI 路径修复\n'
-    '\n'
-    '【工程化补齐】(新增，additive，无行为变更)\n'
-    '- package.json / .editorconfig / .prettierrc / .prettierignore / eslint.config.mjs\n'
-    '- .nvmrc / .node-version / .env.example\n'
-    '\n'
-    '【一次性脚本归档】scripts/_archive/ (29 个)\n'
-    '- fix_* / curate_* / expand_* / upgrade_* / patch_* / seed_* / recover_*\n'
-    '- _deploy_cf_pages.py / _push_head_*.py\n'
-    '\n'
-    '【测试归位】scripts/test_*.mjs -> tests/ (5 个)\n'
-    '\n'
-    '【CI 修复】ci_gate.py 3 处硬编码路径 + test_promote_ledger.mjs 1 处 ESM import\n'
-    '\n'
-    '本地两个 commit (7255812 + d05e313) 用单提交 squash 推送；tree SHA 与本地 HEAD 一致。\n'
-)
+# 从本地 git log 读实际 commit message（不再硬编码）
+_local_msg = subprocess.run(
+    ['git', 'log', '-1', '--pretty=%B'],
+    cwd=ROOT, capture_output=True, text=True, check=True,
+).stdout.strip()
+if not _local_msg:
+    raise RuntimeError('本地 HEAD 无 commit message')
+message = _local_msg + '\n'
+print(f'  本地 commit message 首行: {_local_msg.splitlines()[0]}')
 new_commit = api('POST', '/git/commits', {
     'message': message,
     'tree': new_tree_sha,
