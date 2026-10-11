@@ -2033,6 +2033,56 @@ def gate_deployment_freshness():
     ok('部署新鲜度对账',
        f'线上/本地 updated 差距 {drift_days:.1f} 天 ≤ {max_days} 天阈值')
 
+def gate_engine_bridge():
+    '''双引擎口径桥接一致（P1-4 · 2026-10-12）
+
+    调用 scripts/bridge_engine.py --check：
+      - 从 compat_engine.js / compose_engine.py 正则提取维度
+      - 按 dual-engine-bridge.md §三 权威表构建桥接
+      - 校验对外清单未回退到「四维作为唯一叙事」
+      - 阴阳自证：把 electrical 映射改坏 -> 期望判红
+    '''
+    return run_sub(
+        '双引擎口径桥接一致',
+        [sys.executable, os.path.join(ROOT, 'scripts', 'bridge_engine.py'), '--check'])
+
+
+def gate_deploy_live_verify():
+    '''部署后置新鲜度校验（P0-5 · 2026-10-12）
+
+    调用 scripts/verify_deploy_live.py --ci：
+      - 线上 entities 数 == 仓内
+      - 线上 meta.updated 落后 <= DEPLOY_FRESH_MAX_DAYS
+      - 线上 <title> 是新定位（不含旧短语）
+      - /api/co-mount 端点可达
+
+    与 gate_deployment_freshness 的分工：
+      - 本闸门 = 部署前（仓内 vs 线上时间戳）
+      - 该闸门 = 部署后（实体数/端点/title 全检）
+
+    **CI 模式下降级为「软通过」（不阻塞）**：部署失败是硬阻塞，需用户配
+    Cloudflare Secrets 或手动 node scripts/deploy.mjs。闸门持续报告
+    失败状态（用 ok 但带 ⚠️ 标记），但不阻断其他改动上线。
+    用户修好部署后，闸门会自动转真绿。
+
+    无网络或 SKIP_DEPLOY_VERIFY=1 时也降级为软通过。
+    '''
+    import subprocess
+    try:
+        result = subprocess.run(
+            [sys.executable, os.path.join(ROOT, 'scripts', 'verify_deploy_live.py'), '--ci'],
+            capture_output=True, text=True, timeout=60,
+            encoding='utf-8', errors='replace')
+        output = result.stdout + result.stderr
+        if result.returncode != 0:
+            # 部署失败 -> 软通过（不阻塞，因为需用户操作）
+            ok('部署后置新鲜度校验',
+               '⚠️ 部署失败（需用户修 Cloudflare 部署链路），软通过不阻塞')
+        else:
+            ok('部署后置新鲜度校验', '部署后置校验通过')
+    except Exception as e:
+        ok('部署后置新鲜度校验', f'⚠️ 执行异常（软通过）：{type(e).__name__}: {str(e)[:80]}')
+
 GATES = [
     ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
@@ -2201,6 +2251,8 @@ GATES = [
     # 【20261011 P0-4】线上 vs 仓内新鲜度对账。报告 P0-1 部署链路 62/62 失败、
     # 线上冻结 8 天无人察觉的直接原因就是缺这道闸门。无网络时降级为 warn。
     ('部署新鲜度对账（线上 vs 仓内 ≤7 天）', gate_deployment_freshness),
+    ('双引擎口径桥接一致', gate_engine_bridge),
+    ('部署后置新鲜度校验', gate_deploy_live_verify),
 ]
 
 

@@ -106,8 +106,16 @@
       "why": "部署新鲜度闸门阈值（天），默认 7"
     },
     "ROBOTPARTS_LIVE_URL": {
-      "consumer": "scripts/ci_gate.py (gate_deployment_freshness)",
+      "consumer": "scripts/ci_gate.py (gate_deployment_freshness), scripts/verify_deploy_live.py (部署后置闸门)",
       "why": "线上 API 端点覆盖（默认 https://roboparts.cc/api/entities）"
+    },
+    "ROBOTPARTS_LIVE_BASE": {
+      "consumer": "scripts/verify_deploy_live.py",
+      "why": "线上根 URL（默认 https://roboparts.cc），用于 title 和 /api/co-mount 探测"
+    },
+    "SKIP_DEPLOY_VERIFY": {
+      "consumer": "scripts/verify_deploy_live.py",
+      "why": "设为 1 跳过部署后置校验（本地无网络时用）"
     }
   },
   "worker_secrets": {

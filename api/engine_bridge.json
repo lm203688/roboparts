@@ -1,0 +1,87 @@
+{
+  "bridge_version": "1.0.0",
+  "generated_at": "2026-10-11T22:49:12Z",
+  "product_engine": {
+    "location": "functions\\_lib\\compat_engine.js",
+    "dimensions": [
+      "protocol",
+      "electrical",
+      "mechanical",
+      "software"
+    ],
+    "hard_dimensions": [
+      "protocol",
+      "electrical",
+      "mechanical"
+    ],
+    "note": "产品层四维查询：面向用户的可执行兼容结论（协议+生态覆盖）"
+  },
+  "research_engine": {
+    "location": "scripts\\compose_engine.py",
+    "axes": [
+      "mechanical",
+      "electrical",
+      "signal"
+    ],
+    "note": "研究层三轴类型系统：面向数据完整性评估与三态 fail-closed compose"
+  },
+  "mapping": {
+    "canonical_source": "docs\\dual-engine-bridge.md §三",
+    "dimension_to_axis": {
+      "protocol": null,
+      "electrical": "electrical",
+      "mechanical": "mechanical",
+      "software": null
+    },
+    "intersection": [
+      "electrical",
+      "mechanical"
+    ],
+    "product_only": [
+      "protocol",
+      "software"
+    ],
+    "research_only": [
+      "signal"
+    ],
+    "non_union_reason": "两套引擎不互为子集：signal（通道方向性，微观）与 protocol（协议族，宏观）是不同抽象层，合并会让 agent 误以为「协议+signal」是一维"
+  },
+  "scenario_routing": [
+    {
+      "scenario": "用户查 ACT-001 能否和 ACT-002 一起用",
+      "engine": "product",
+      "reason": "用户要「能不能」的可执行结论，四维覆盖协议 + 生态"
+    },
+    {
+      "scenario": "Agent 通过 MCP 调用 check_compatibility",
+      "engine": "product",
+      "reason": "MCP 是产品面入口"
+    },
+    {
+      "scenario": "Agent 通过 MCP 调用 check_co_mount",
+      "engine": "research",
+      "reason": "共装是三段关系，需要 signal 通道互补"
+    },
+    {
+      "scenario": "研究进度评估（research_progress.json）",
+      "engine": "research",
+      "reason": "研究层量化数据完整性，不看协议族"
+    },
+    {
+      "scenario": "评估「补哪条数据最值」（MDV 判据）",
+      "engine": "research",
+      "reason": "MDV 判据建立在三轴 verdict 分布上"
+    },
+    {
+      "scenario": "论文方法学描述",
+      "engine": "both",
+      "reason": "论文要说明为什么两套并存"
+    }
+  ],
+  "honest_boundaries": [
+    "electrical 与 mechanical 同名同义，可跨引擎直接传递",
+    "protocol / software 只在产品层存在（研究层不评生态支持）",
+    "signal 只在研究层存在（产品层不评通道方向性）",
+    "跨引擎调用前必须经本桥接转换，禁止裸用维度名"
+  ]
+}

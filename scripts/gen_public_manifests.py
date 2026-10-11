@@ -65,13 +65,13 @@ def registry_description(total, cats):
     降级是从长到短的**完整句式**，且结果只由 (total, cats) 决定，仍是确定性的。
     """
     candidates = [
-        f"{total} humanoid/bionic robot parts across {cats} categories, "
-        f"4-dimension compatibility checking. Vendor-neutral.",
-        f"{total} humanoid/bionic robot parts, {cats} categories, "
-        f"4-dimension compatibility checking. Vendor-neutral.",
-        f"{total} humanoid/bionic robot parts, {cats} categories, "
-        f"4-dim compatibility. Vendor-neutral.",
-        f"{total} robot parts, {cats} categories, 4-dim compatibility. Vendor-neutral.",
+        f"{total} robot parts across {cats} categories, "
+        f"three-state fail-closed verdicts. Vendor-neutral.",
+        f"{total} robot parts, {cats} categories, "
+        f"three-state verdicts. Vendor-neutral.",
+        f"{total} robot parts, {cats} categories, "
+        f"trinary compatibility. Vendor-neutral.",
+        f"{total} robot parts, {cats} cats, trinary verdicts. Vendor-neutral.",
     ]
     for c in candidates:
         if len(c) <= REGISTRY_DESC_MAX:
@@ -207,7 +207,8 @@ def render_smithery(f, cats):
     desc_lines = _fold([
         "面向开源机器人构建者的组合校验层（vendor-neutral composition checker for embodied systems）。",
         f"判定零件能否装配/共装/互换，输出可核验的三态结论（能/不能/不知道），生成可 3D 打印转接件。",
-        f"{f['total_entities']} 实体、{cats} 个品类，支持 protocol / electrical / mechanical / ROS2 四维兼容判定。",
+        f"{f['total_entities']} 实体、{cats} 个品类，支持三态 fail-closed 兼容判定"
+        f"（研究层三轴类型系统：机械/电气/信号；产品层四维查询：协议/电气/机械/软件）。",
         "中立数据层：既不生产也不转售任何零部件；兼容性结论基于厂商公开声明字段的规则推断",
         "而非实测，未声明维度显式标为「无法判定」。真正的护城河是判定引擎 + 三条定理 + 40 项 CI 闸门。",
     ])
