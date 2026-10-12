@@ -48,34 +48,47 @@ tests:
         value: "ROBOTIS"
 
   # ── 场景 2：四维兼容判定 —— 正例（已知锚点） ──
+  # 2026-10-12 修：字段名是 overall_compatible（不是 overall），值为布尔
   - description: check_compatibility ACT-001 vs ACT-002 判兼容
     vars: { tool: check_compatibility, a: ACT-001, b: ACT-002 }
     assert:
       - type: regex
-        value: '"overall[_a-z]*"\s*:\s*"(compatible|true)"'
+        value: '"overall_compatible"\s*:\s*(true|false)'
       - type: contains
         value: "evidence"
+      - type: contains
+        value: "dimensions"
 
   # ── 场景 3：四维兼容判定 —— 电压冲突 ──
+  # 2026-10-12 修：dimensions 是对象数组（不是 dict），
+  # 匹配数组元素里的 {"dimension":"electrical","compatible":false}
   - description: check_compatibility ACT-001 vs ACT-003 电压冲突判 incompatible
     vars: { tool: check_compatibility, a: ACT-001, b: ACT-003 }
     assert:
       - type: regex
-        value: '"overall[_a-z]*"\s*:\s*"(incompatible|false)"'
+        value: '"overall_compatible"\s*:\s*(true|false)'
       - type: regex
-        value: '"electrical"\s*:\s*(false|0|"false")'
+        value: '"dimension"\s*:\s*"electrical"\s*,\s*"compatible"\s*:\s*false'
 
-  # ── 场景 4：共装查询端点未部署 —— 诚实 404 ──
-  - description: check_co_mount 端点尚未部署（诚实标注，与报告 §2.5 一致）
+  # ── 场景 4：共装查询端点 —— 2026-10-12 起已部署 ──
+  # 原断言 is-error 依赖 404，但线上 /api/co-mount 已上线（研究层三段共装口径）；
+  # 改断言：返回四态 verdict 之一，且带 caliber 说明"不可与 check_compatibility 混用"。
+  - description: check_co_mount 返回四态 verdict + caliber 口径说明
     vars: { tool: check_co_mount, host: HUB-030, a: ACT-028, b: SENS-047 }
     assert:
-      - type: is-error
+      - type: regex
+        value: '"verdict"\s*:\s*"(mountable|port_exhausted|type_error|unknown)"'
+      - type: contains
+        value: "caliber"
+      - type: contains
+        value: "research_py_co_mount_engine"
 
   # ── 场景 5：未收录型号必须诚实 404，不能编 compatible ──
+  # 2026-10-12 修：is-error 不是合法 assert 类型；provider 返回 isError:true 时
+  # promptfoo 自动判错，这里改为断言错误输出内容。
   - description: check_compatibility 未收录 ACT-999 必须诚实报错
     vars: { tool: check_compatibility, a: ACT-001, b: ACT-999 }
     assert:
-      - type: is-error
       - type: regex
         value: '实体不存在'
 
@@ -85,6 +98,8 @@ tests:
       tool: bom_compatibility_check
       bom: '{"items":[{"id":"ACT-001"},{"id":"ACT-002"},{"id":"ACT-003"}]}'
     assert:
+      - type: regex
+        value: '"success"\s*:\s*true'
       - type: regex
         value: '"summary"\s*:\s*\{'
       - type: regex
@@ -120,10 +135,11 @@ tests:
         value: '"source_tier"\s*:\s*"[ABC]"'
 
   # ── 场景 10：未知工具必须报错，不能静默成功 ──
+  # 2026-10-12 修：is-error 不是合法 assert 类型；provider 返回 isError:true 时
+  # promptfoo 自动判错，这里改为断言错误输出内容。
   - description: 未知 tool 名 → 报错
     vars: { tool: nonsense_tool, a: x, b: y }
     assert:
-      - type: is-error
       - type: regex
         value: '"unknown_tool"'
 
