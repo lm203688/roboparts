@@ -2033,9 +2033,9 @@ def gate_mutation_score():
       ③ 所有变异体状态必须为 killed 或 survived（无 unknown/error）
       ④ total_mutants ≥ 6（六条最小变异清单）
     """
-    p = os.path.join(ROOT, 'ops', 'metrics', 'mutation-score.json')
+    p = os.path.join(ROOT, 'api', 'mutation-score.json')
     if not os.path.exists(p):
-        bad('变异评分', 'ops/metrics/mutation-score.json 不存在')
+        bad('变异评分', 'api/mutation-score.json 不存在')
         return
     try:
         with open(p, encoding='utf-8') as f:

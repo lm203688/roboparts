@@ -118,9 +118,9 @@
 - [RoboParts Skills（Agent 技能包）](https://roboparts.cc/skills/manifest.json) — 机器可读 Skill 清单（search/component-detail/compat-check/recommend/parameter-semantics/dataset-discovery/adapter-generate），零安装接入其它 Agent 框架；由 MCP 工具定义自动生成，参数名与线上端点逐字一致。
 
 ### 工程可信信号（可验证性优先）
-- [变异评分报告](https://roboparts.cc/ops/metrics/mutation-score.json) — 6 变异体 / kill rate 1.00（≥0.85 阈值），度量 CI 闸门对已知失效模式的捕获率；本项目独有的跨维度可信信号，竞品无此性质。
+- [变异评分报告](https://roboparts.cc/api/mutation-score.json) — 6 变异体 / kill rate 1.00（≥0.85 阈值），度量 CI 闸门对已知失效模式的捕获率；本项目独有的跨维度可信信号，竞品无此性质。
 - [验证反模式档案](https://roboparts.cc/docs/verification-antipatterns-2026.md) — 12 条工程事故反模式（AP-01~AP-12），每条含事故/失效模式/根因/判据修正/可复用规则/阴性测试闸门，从 170+ 条运行流水提炼。
-- [负结果档案](https://roboparts.cc/ops/results/negative-results.md) — 10 条负结果（NR-01~NR-10），三层结构（取证层/分发层/指标层），每条含"反哺建议"——不是"此路不通"而是"此路不通时应转向何处"。
+- [负结果档案](https://roboparts.cc/docs/negative-results.md) — 10 条负结果（NR-01~NR-10），三层结构（取证层/分发层/指标层），每条含"反哺建议"——不是"此路不通"而是"此路不通时应转向何处"。
 - [研究进度跨维度信号](https://roboparts.cc/api/research_progress.json#cross_cutting_signals) — 变异评分作为独立跨维度信号段（不进四维评分），诚实边界含 4 条限制说明。
 - [CI 闸门清单](https://roboparts.cc/scripts/ci_gate.py) — 46 闸门 / 92 checks，可复现运行：`python scripts/ci_gate.py --list`。
 <!-- ARTICLES:END -->

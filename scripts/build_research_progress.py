@@ -646,7 +646,7 @@ if __name__ == "__main__":
     # 【2026-10-13 四维深化 P2-1】注入变异评分为跨维度工程信号。
     # 变异率度量测试套件对已知失效模式的覆盖，跨四维——不归属任何单一维度，
     # 故独立成段 cross_cutting_signals，不进四维评分。
-    _mut_path = os.path.join(ROOT, "ops", "metrics", "mutation-score.json")
+    _mut_path = os.path.join(ROOT, "api", "mutation-score.json")
     if os.path.exists(_mut_path):
         try:
             with open(_mut_path, encoding="utf-8") as _mf:
@@ -667,7 +667,7 @@ if __name__ == "__main__":
                     "pass": _ms.get("pass_threshold"),
                     "killed": _ms.get("killed"),
                     "total_mutants": _ms.get("total_mutants"),
-                    "source": "ops/metrics/mutation-score.json",
+                    "source": "api/mutation-score.json",
                     "honest_limits": [
                         "变异体作用点在产物层（compose_semantics.json），"
                         "S2 抽出 compose_core 后可升级到引擎层",

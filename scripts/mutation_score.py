@@ -33,7 +33,7 @@ co_mount.json），通过独立脚本生成 → 跑现有闸门 → 统计杀死
 
 用法
 ----
-    python scripts/mutation_score.py                    # 打印报告，写 ops/metrics/mutation-score.json
+    python scripts/mutation_score.py                    # 打印报告，写 api/mutation-score.json
     python scripts/mutation_score.py --ci              # 阈值不达则 exit 1
     python scripts/mutation_score.py --self-test       # 阴阳自证（含"恒全杀桩"对照）
 
@@ -263,7 +263,7 @@ def score() -> Dict[str, Any]:
 
 
 def write_report(report: Dict[str, Any], path: str) -> str:
-    """写入 ops/metrics/mutation-score.json，返回绝对路径。"""
+    """写入 api/mutation-score.json，返回绝对路径。"""
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
@@ -336,7 +336,7 @@ def main():
 
     ci_mode = '--ci' in sys.argv
     report = score()
-    out_path = os.path.join(ROOT, 'ops', 'metrics', 'mutation-score.json')
+    out_path = os.path.join(ROOT, 'api', 'mutation-score.json')
     write_report(report, out_path)
 
     s = report['summary']
