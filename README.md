@@ -125,6 +125,16 @@ For the complete cross-file consistency regression (seven-number single-source, 
 
 After changing data, regenerate derived files: `python scripts/regen_derived.py`.
 
+### Cross-dimensional credibility signals
+
+Beyond the gate count, three signals make this project verifiable beyond "we say it works":
+
+- **Mutation score** — `scripts/mutation_score.py` generates 6 mutant variants (M1~M6) targeting known failure modes (three-state conservation break / axis marginal / evidence pointer / honest boundary / denominator shrink) and runs them against the existing 46 gates. Kill rate **1.00** (6/6 ≥ 0.85 threshold). Metric lives at `ops/metrics/mutation-score.json`.
+- **Verification antipatterns** — [`docs/verification-antipatterns-2026.md`](./docs/verification-antipatterns-2026.md) distills 12 incident-driven rules (AP-01~AP-12) from 170+ runs in `ops/results/_SUMMARY.md`. Each rule has a falsifiable negative test mapped to a `verify_*.py` self-test.
+- **Negative results** — [`ops/results/negative-results.md`](./ops/results/negative-results.md) records 10 explicitly-failed hypotheses (NR-01~NR-10) across three layers (evidence / distribution / metrics), each with a "re-route recommendation" so the failure is reusable rather than a dead end.
+
+These three signals are wired into the site as public URLs and are surfaced in `llms.txt`'s "工程可信信号" section so that LLMs discovering RoboParts via search see the verifiability story, not just the entity count.
+
 ## 12. Contributing
 The biggest gap in this project is the **mechanical interface declaration rate** — for most cases we cannot answer "can these two parts screw together".
 This number is not hand-written here (see the computed value on the "Data volume" line at the top of this document);
