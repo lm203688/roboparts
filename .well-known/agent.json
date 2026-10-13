@@ -2,7 +2,7 @@
   "$comment": "由 scripts/gen_skills_manifest.mjs 从 functions/mcp.js 的 TOOLS 生成，勿手改",
   "protocolVersion": "0.2.0",
   "name": "RoboParts",
-  "description": "把 RoboParts 具身系统组合校验能力封装为可被其他 Agent 框架（WorkBuddy / Dify / Coze / Cursor / Claude）一键接入的 Skills。判定零件能否装配/共装/互换，输出可核验的三态结论。底层统一走免鉴权只读 MCP 端点，零安装、零 API Key。本清单由 MCP 工具定义自动生成，参数与线上端点逐字一致。",
+  "description": "把 RoboParts 具身系统组合校验能力封装为可被其他 Agent 框架（WorkBuddy / Dify / Coze / Cursor / Claude）一键接入的 Skills。判定零件能否装配/共装/互换，输出可核验的三态结论。国际标准锚点：ISO 9409-1（法兰几何）+ ISO 22166-1（模块化框架，德国主导，ISO/AWI 22166-1 FDIS 2026-04-05）+ GB/T 20255807-T-604（国内模块化信息模型，审查中）。底层统一走免鉴权只读 MCP 端点，零安装、零 API Key。本清单由 MCP 工具定义自动生成，参数与线上端点逐字一致。",
   "url": "https://roboparts.cc/mcp",
   "preferredTransport": "JSONRPC",
   "provider": {

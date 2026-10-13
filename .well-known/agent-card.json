@@ -2,7 +2,7 @@
   "$schema": "https://spec.agentcard.dev/schema-v1.0.json",
   "protocolVersion": "1.0",
   "name": "RoboParts",
-  "description": "具身系统的组合校验层（vendor-neutral composition checker for embodied systems）。20 个品类、868 条实体，提供三态 fail-closed 兼容判定（能/不能/不知道）、BOM 矩阵检查、共装关系判定（A↔宿主↔B）、标准合规审计、URDF 校验与研究进度溯源。输出可核验的三态结论（能/不能/不知道），未声明维度显式标为 unknown 而非 fail-open。既不生产也不转售任何零部件——因为不卖零件，所以没有理由骗你选一个。真正的护城河是三态 fail-closed compose 引擎 + 三条定理 + 40 项 CI 闸门。",
+  "description": "厂商中立的机器人零部件兼容性数据层。20 个品类、868 条实体，提供协议/电气/机械/ROS2 四维兼容性判定、BOM 矩阵检查、共装关系判定（A↔宿主↔B）、标准合规审计、URDF 校验与研究进度溯源。**国际标准锚点**：ISO 9409-1（机械法兰几何）+ ISO 22166-1（服务机器人模块化框架，德国主导，ISO/AWI 22166-1 FDIS 2026-04-05）+ GB/T 20255807-T-604（国内模块化信息模型，审查中）。既不生产也不转售任何零部件，兼容性结论基于厂商公开声明字段的规则推断，未声明维度显式标为 unknown。",
   "version": "1.1.1",
   "provider": {
     "organization": "RoboParts",

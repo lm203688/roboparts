@@ -16,16 +16,19 @@
 | 唯一字段数 | 199 |
 | 品类数 | 20 |
 | 头部品类 | actuators 222 · chips 108 · platforms 106 · sensors 95 · protocols 64 · robot_ai_models 46 |
-| Tier A 溯源实体 | 472（54.9%） |
-| Tier B 溯源实体 | 249（28.7%） |
-| Tier C 溯源实体 | 147（16.9%） |
+| Tier A 溯源实体 | 472（54.38%） |
+| Tier B 溯源实体 | 246（28.34%） |
+| Tier C 溯源实体 | 150（17.28%） |
 | 有 `source_url` | 581（66.9%） |
 | 有 `source`（出处描述） | 807（92.97%） |
 | 有 `standard_conformance` | 815（93.9%） |
 | 有 `mechanical_interface` | 868（100%） |
-| 有 `electrical_interfaces` | 122（14.1%） |
+| 有电气相关字段（`connector`∪`voltage`∪`protocol`∪`electrical_interface`） | 70（8.06%） |
+| 独立产物 `api/electrical_interfaces.json` 连接器条目 | 5（v0.1.0，非实体字段） |
 | 有 `derived_properties` | 310（35.7%） |
 | 有 `compatibility` 声明 | 161（18.5%） |
+
+> **⚠️ 口径澄清（2026-10-13 修订）**：早前版本曾写「有 `electrical_interfaces` 122（14.1%）」——该字段名与独立产物 `api/electrical_interfaces.json` 同名，读者必然误读为「14.1% 实体声明了电气接口」。实际 `entities.json` 内**无** `electrical_interfaces` 字段，电气相关键分布为 `connector` 32 / `voltage` 42 / `protocol` 42 / `electrical_interface` 3（复数形式 0），四者并集仅 70。独立产物 `electrical_interfaces.json` 是 CC-BY-4.0 电气接口事实登记，含 5 个已一手核实的连接器（JST EHR-03 等），与实体字段无关联。
 
 > **诚实边界**：`standard_conformance` 覆盖率高不等于「合规」——它登记的是**已评估状态**（`assessed: true`），
 > 具体 `status` 值分布见 §三。
@@ -48,7 +51,9 @@
 | `mechanical_interface.declared_note` | 见下 | **GB/T 43210.1-2023** 附录 C 接口声明 | 人工可读的接口描述 | 🟡 需挂标准号 |
 | `mechanical_interface.gap` | 见下 | — | 显式登记证据缺口 | 🟢 独有（诚实层） |
 | `connector` | 见下 | **GB/T 38560-2020** 通用驱动模块接口 | 连接器型号 | 🟡 字段可映射 |
-| `electrical_interfaces` | 14.1% | **GB/T 38560-2020** §4 电气接口 | 引脚 / pitch / family | 🟡 字段可映射 |
+| `connector` | 3.68%（32 条） | **GB/T 38560-2020** §4 电气接口 | 连接器型号 | 🟡 字段可映射 |
+| `voltage` | 4.84%（42 条） | **GB/T 43200-2023** §5 电压规格 | 电压区间字符串 | 🟡 需挂标准号 |
+| `electrical_interface` | 0.35%（3 条） | **GB/T 38560-2020** §4 电气接口 | 引脚 / pitch / family（实体侧字段，与独立产物 `api/electrical_interfaces.json` 无关联） | 🟡 字段可映射 |
 | `protocol` | 见下 | **GB/T 20255807-T-604** §6.3 通信协议字段 | EtherCAT / CANopen / ROS2 / DYNAMIXEL 等 | 🟡 需挂标准号 |
 | `voltage` | 见下 | **GB/T 43200-2023** §5 电压规格 | 电压区间字符串 `10.0~14.8V` | 🟡 需挂标准号 |
 | `torque` | 见下 | **GB/T 43200-2023** §5.1 额定转矩 | 字符串（口径 19 种） | 🟡 需归一 |

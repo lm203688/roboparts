@@ -6,8 +6,8 @@
 ## 1. Project Overview
 - **Name**: RoboParts — 具身系统的组合校验层（Vendor-neutral composition checker for embodied systems）
 - **Positioning**: 面向开源机器人构建者的组合校验层。判定零件能否装配/共装/互换，输出可核验的三态结论（能/不能/不知道），并生成可打印转接件。开源、中立、可追溯。
-- **English positioning**: Vendor-neutral composition checker for embodied systems — decide whether parts can be assembled / co-mounted / interchanged, returning verifiable three-state verdicts (compatible / incompatible / unknown) and printing transfer adapters.
-- **Why not a "part database"**: 数据只是载体，真正不可复制的是判定引擎（三态 fail-closed compose）+ 三条定理（T1/T2/T3）+ 40 项 CI 闸门 + 溯源纪律。
+- **English positioning**: Vendor-neutral composition checker for embodied systems — decide whether parts can be assembled / co-mounted / interchanged, returning verifiable three-state verdicts (compatible / incompatible / unknown) and printing transfer adapters. **International anchoring**: ISO 9409-1 (flange geometry) + **ISO 22166-1** (modular frameworks for service robots, Germany-led, revision `ISO/AWI 22166-1` FDIS 2026-04-05) + GB/T 20255807-T-604 (draft, domestic modular information model).
+- **Why not a "part database"**: 数据只是载体，真正不可复制的是判定引擎（三态 fail-closed compose）+ 三条定理（T1/T2/T3）+ 43 项 CI 闸门 + 溯源纪律。
 - **Domain**: roboparts.cc
 - **Live URL / 线上地址**: https://roboparts.cc
 - **线上地址（正式入口，外链一律指向此域）**: https://roboparts.cc
@@ -32,7 +32,7 @@
 ## 4. Core Features
 - 🔧 **Intelligent selection engine** — five-dimension scoring (torque / speed / accuracy / weight / cost) multi-factor selection + multi-result comparison table
 - 📋 **Data quality labeling** — every entity labeled with source / confidence / last_verified
-- ✅ **Standard conformance** — GB modular general tech / ISO 8373 / IEC 61508 / ROS2 compatibility status
+- ✅ **Standard conformance** — **ISO 22166-1** (modularity) / **ISO 9409-1** (flanges) / GB modular general tech / GB/T 20255807-T-604 (draft) / ISO 8373 / IEC 61508 / ROS2 compatibility status
 - 🧬 **Bionic categories** — SEA series-elastic actuators, flexible actuators, bionic spine, dexterous hands, artificial muscles
 - 🔗 **Compatibility matrix** — electrical / mechanical / protocol / software four-dimensional compatibility detection
 

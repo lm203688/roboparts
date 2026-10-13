@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts 国际对标 · 技术深度评估与提升方案报告 V2 · 2026-10-13</title>
+<style>
+  :root{
+    --bg:#f5f7fa; --card:#fff; --ink:#1a2230; --sub:#5b6779; --line:#e3e8ef;
+    --accent:#1f5fbf; --accent2:#0f8f8f; --warn:#b45309; --bad:#b91c1c; --good:#15803d; --chip:#eef2f8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Roboto,Arial,sans-serif;
+    line-height:1.75;font-size:15.5px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 26px 90px}
+  header.hero{background:linear-gradient(135deg,#0f1c2e 0%,#1f5fbf 55%,#0f8f8f 100%);color:#fff;padding:52px 26px 44px;margin-bottom:34px}
+  header.hero .inner{max-width:1080px;margin:0 auto}
+  .kicker{font-size:12.5px;letter-spacing:3px;text-transform:uppercase;opacity:.85;font-weight:600}
+  header.hero h1{margin:12px 0 10px;font-size:33px;line-height:1.3;font-weight:800}
+  header.hero p.sub{margin:0;font-size:15px;opacity:.93;max-width:880px}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .meta-row span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:4px 13px;font-size:12.5px}
+  h2{font-size:23px;margin:52px 0 6px;padding-bottom:10px;border-bottom:3px solid var(--accent);display:inline-block;font-weight:800}
+  h2 .n{color:var(--accent);font-weight:800;margin-right:8px}
+  h3{font-size:17.5px;margin:30px 0 10px;color:#12305e;font-weight:700}
+  h4{font-size:15px;margin:20px 0 6px;color:#2a3a52;font-weight:700}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0;padding-left:24px}
+  li{margin:5px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin:18px 0;box-shadow:0 1px 3px rgba(16,30,54,.05)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;background:#fff}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:#eef3fa;font-weight:700;color:#1a2b47}
+  tr:nth-child(even) td{background:#fafcff}
+  code{background:#eef1f6;padding:1.5px 6px;border-radius:5px;font-size:13px;font-family:"SFMono-Regular",Consolas,monospace;color:#1f3b66}
+  pre{background:#0f1c2e;color:#dbe7f5;padding:16px 18px;border-radius:10px;overflow:auto;font-size:13px;line-height:1.6}
+  pre code{background:none;color:inherit;padding:0}
+  .tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--chip);color:#2a3a52;border:1px solid var(--line)}
+  .tag.good{background:#e7f6ec;color:var(--good);border-color:#bfe6cb}
+  .tag.warn{background:#fdf0e3;color:var(--warn);border-color:#f3d3a8}
+  .tag.bad{background:#fdeaea;color:var(--bad);border-color:#f3c2c2}
+  .callout{border-left:5px solid var(--accent);background:#f0f6ff;padding:15px 20px;border-radius:0 10px 10px 0;margin:18px 0}
+  .callout.warn{border-color:var(--warn);background:#fdf6ec}
+  .callout.bad{border-color:var(--bad);background:#fdf0f0}
+  .callout.good{border-color:var(--good);background:#eefaf1}
+  .callout .t{font-weight:800;margin-bottom:4px}
+  .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+  @media(max-width:860px){.kpi{grid-template-columns:repeat(2,1fr)}}
+  .kpi .box{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center}
+  .kpi .box .v{font-size:22px;font-weight:800;color:var(--accent)}
+  .kpi .box .l{font-size:12.5px;color:var(--sub);margin-top:2px}
+  .score{font-weight:800}
+  .score.hi{color:var(--good)} .score.mid{color:var(--warn)} .score.lo{color:var(--bad)}
+  .toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 24px;margin:18px 0}
+  .toc a{color:var(--accent);text-decoration:none}
+  .toc a:hover{text-decoration:underline}
+  .toc ol{columns:2;column-gap:32px}
+  @media(max-width:700px){.toc ol{columns:1}}
+  footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);color:var(--sub);font-size:13px}
+  .bar{height:10px;background:#e9eef5;border-radius:6px;overflow:hidden;margin-top:4px}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,#1f5fbf,#0f8f8f)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="inner">
+    <div class="kicker">RoboParts · 国际对标与技术深度评估 · V2</div>
+    <h1>RoboParts 国际对标 · 技术深度评估与提升方案报告（V2）</h1>
+    <p class="sub">增量深化版：复扫全仓、复算全部产物、复探线上与 GitHub，补做 V1 遗漏的 ISO 22166-1 等国际标准核实。核心结论：第一方可见性风险已解除，缺口转移到第三方分发面与自动化基础设施。</p>
+    <div class="meta-row">
+      <span>生成日期 2026-10-13</span>
+      <span>全仓 11,000+ 文件</span>
+      <span>868 实体 / 20 品类</span>
+      <span>43 项 CI 闸门</span>
+      <span>21 个 MCP 工具</span>
+      <span>增量对比 V1（10-12）</span>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+<h1 id="roboparts-v2">RoboParts 国际对标 · 技术深度评估与提升方案报告（V2）</h1>
+<blockquote>
+<p><strong>生成日期</strong>：2026-10-13
+<strong>版本性质</strong>：<strong>增量深化版</strong>——在 V1（<code>docs/RoboParts-国际对标与技术深度评估报告-20261012.md</code>）基础上，复扫全仓、复算全部产物、复探线上与 GitHub，并补做 V1 遗漏的国际标准与前沿核实
+<strong>扫描范围</strong>：全仓 11,000+ 文件（排除 <code>.git</code> / <code>node_modules</code>）· 868 实体 / 20 品类 / 199 字段 · 72 个 <code>api/*.json</code> · 52 个 <code>functions/**.js</code> · 39 个根 HTML 页面 · 43 项 CI 闸门 · 21 个 MCP 工具 · 42 份 <code>docs/*.md</code>
+<strong>对标基准</strong>：项目 5 大核心目标（README §2）+ 国际竞品一手回探（roboxdb / text-to-cad / TraceParts / Octopart / robotic-infrastructure）+ 国际/国内标准（<strong>ISO 22166-1</strong> / ISO 9409-1 / GB/T 20255807-T-604 / 工信部 2026 版标准体系指南）+ 2026 最新技术（GR00T N1.7/N2 / Isaac Teleop / LeRobot / MuJoCo 3.12 / MCP 2026 路线图）
+<strong>方法</strong>：全仓静态扫描 + 产物现算（<code>api/*.json</code>，禁手改）+ 线上回探（<code>curl roboparts.cc</code>）+ GitHub REST API + 竞品与标准联网核实（时点 2026-10-13）
+<strong>口径声明</strong>：凡仓内文档与实测不一致处，<strong>以实测为准并显式标注</strong>；凡外部事实，标注来源与核实时点
+<strong>性质</strong>：评估与提升方案，不构成合规声明、标准符合性声明或投资建议</p>
+</blockquote>
+<hr />
+<h2 id="_1">目录</h2>
+<ul>
+<li><a href="#0-执行摘要含与-v1-的差异">0. 执行摘要（含与 V1 的差异）</a></li>
+<li><a href="#1-扫描方法与口径声明">1. 扫描方法与口径声明</a></li>
+<li><a href="#2-项目完整性评估">2. 项目完整性评估</a></li>
+<li><a href="#3-科学先进性评估">3. 科学先进性评估</a></li>
+<li><a href="#4-国际化定位诊断含新锚点-iso-22166-1">4. 国际化定位诊断（含新锚点 ISO 22166-1）</a></li>
+<li><a href="#5-国际竞品比较2026-10-更新">5. 国际竞品比较（2026-10 更新）</a></li>
+<li><a href="#6-技术壁垒与技术深度深挖">6. 技术壁垒与技术深度深挖</a></li>
+<li><a href="#7-最新科技发展跟踪与对位">7. 最新科技发展跟踪与对位</a></li>
+<li><a href="#8-本轮关键新发现实测增量">8. 本轮关键新发现（实测增量）</a></li>
+<li><a href="#9-提升方案v2-修订版">9. 提升方案（V2 修订版）</a></li>
+<li><a href="#10-风险与诚实边界">10. 风险与诚实边界</a></li>
+<li><a href="#11-结论">11. 结论</a></li>
+</ul>
+<hr />
+<h2 id="0-v1">0. 执行摘要（含与 V1 的差异）</h2>
+<h3 id="01">0.1 一句话结论</h3>
+<blockquote>
+<p><strong>V1 判定的"最大风险是成果不可见"，在 24 小时内已被基本解除——线上站点已刷新到最新定位与最新数据。</strong>
+但<strong>可见性缺口只是从"第一方"转移到了"第三方"</strong>：官网已更新，而 LobeHub、ROS Discourse、搜索引擎快照、GitHub 之外的目录站<strong>仍全部停留在旧定位</strong>；同时<strong>部署自动化仍 100% 失败</strong>（站点靠手动路径更新）、<strong>本地与远端 git 历史分叉进一步扩大</strong>（502 / 331）。
+一句话：<strong>"能不能被看见"已解决一半，"能不能被持续、自动、一致地看见"仍未解决。</strong></p>
+</blockquote>
+<h3 id="02-10">0.2 综合评分卡（满分 10，专家判断，证据见各章）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>维度</th>
+<th>V1 (10-12)</th>
+<th><strong>V2 (10-13)</strong></th>
+<th>变化</th>
+<th>一句话判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>完整性</strong> Completeness</td>
+<td>8.6</td>
+<td><strong>8.7</strong></td>
+<td>▲0.1</td>
+<td>共装层上线，产品面补齐一环</td>
+</tr>
+<tr>
+<td><strong>科学先进性</strong> Scientific Advance</td>
+<td>7.8</td>
+<td><strong>7.8</strong></td>
+<td>—</td>
+<td>三态类型系统 + T2 定理具备可发表性，仍停 L2–L3</td>
+</tr>
+<tr>
+<td><strong>技术深度</strong> Depth</td>
+<td>8.0</td>
+<td><strong>8.0</strong></td>
+<td>—</td>
+<td>连接器四元组 / 缺口杠杆 / 同质集三层仍是真深度</td>
+</tr>
+<tr>
+<td><strong>技术壁垒</strong> Moat</td>
+<td>7.0</td>
+<td><strong>7.2</strong></td>
+<td>▲0.2</td>
+<td>共装判定产品化，判定层护城河加宽一格</td>
+</tr>
+<tr>
+<td><strong>国际化定位</strong> Intl Positioning</td>
+<td>6.5</td>
+<td><strong>6.5</strong></td>
+<td>—</td>
+<td>第一方已改，<strong>第三方仍是旧定位</strong>；ISO 22166-1 提供更强锚点</td>
+</tr>
+<tr>
+<td><strong>前沿对位</strong> Forward-looking</td>
+<td>8.2</td>
+<td><strong>8.3</strong></td>
+<td>▲0.1</td>
+<td>精准踩中标准立规 / Agent 基础设施 / VLA 硬件栈</td>
+</tr>
+<tr>
+<td><strong>市场验证</strong> Traction</td>
+<td>1.5</td>
+<td><strong>1.5</strong></td>
+<td>—</td>
+<td>0 star / 0 fork / 0 issue；<strong>唯一未被触动的短板</strong></td>
+</tr>
+<tr>
+<td><strong>交付可见性</strong> Visibility</td>
+<td>2.0</td>
+<td><strong>6.0</strong></td>
+<td><strong>▲4.0</strong></td>
+<td>线上已是最新；但部署自动化仍失败、git 分叉扩大</td>
+</tr>
+<tr>
+<td><strong>组织可持续性</strong> Sustainability</td>
+<td>4.0</td>
+<td><strong>4.0</strong></td>
+<td>—</td>
+<td>单人零预算，总线因子风险</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>加权综合：V1 ≈ 6.2 → V2 ≈ 6.6</strong>。提升几乎全部来自"交付可见性"一项；其余维度基本冻结。
+评分为专家判断，证据分布见第 2–8 章。</p>
+</blockquote>
+<h3 id="03-v1-vs">0.3 V1 承诺 vs 本轮实测（逐条对账）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>V1 提出的 P0 动作</th>
+<th>本轮实测（2026-10-13）</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本地 <code>deploy.mjs</code> 手动上线止血</td>
+<td>线上 <code>entities.json</code> = <strong>868</strong>（与仓内一致）、<code>&lt;title&gt;</code> = <strong>新定位</strong>、<code>/api/co-mount</code> = <strong>200</strong></td>
+<td>✅ <strong>已兑现</strong></td>
+</tr>
+<tr>
+<td>改 GitHub description：798→868、删"四维"</td>
+<td>远端 description = "<strong>868 实体</strong> … <strong>三态 fail-closed 兼容判定（能/不能/不知道）</strong>"</td>
+<td>✅ <strong>已兑现</strong></td>
+</tr>
+<tr>
+<td>统一机器可读清单口径（四维→三轴）</td>
+<td><code>server.json</code> = "three-state fail-closed verdicts"；<code>llms.txt</code> = "三轴类型系统（机械/电气/信号）+ 产品层四维判定"（<strong>已显式桥接</strong>）</td>
+<td>✅ <strong>已兑现</strong></td>
+</tr>
+<tr>
+<td>修 Actions 部署</td>
+<td><code>Deploy to Cloudflare Pages</code> 最近一次 <code>2026-10-12T15:16:29Z</code> = <strong>failure</strong>（连续第 N 次）</td>
+<td>❌ <strong>未兑现</strong></td>
+</tr>
+<tr>
+<td>修 git 历史分叉</td>
+<td><code>HEAD..origin/main</code> = <strong>502</strong>、<code>origin/main..HEAD</code> = <strong>331</strong>（V1 为 498 / 327）</td>
+<td>❌ <strong>未兑现，且扩大</strong></td>
+</tr>
+<tr>
+<td>把"部署新鲜度"做成部署后置闸门</td>
+<td><code>ci_gate.py</code> 新增 <code>部署后置新鲜度校验</code> + <code>双引擎口径桥接一致</code>（闸门数 41 → <strong>43</strong>）</td>
+<td>✅ <strong>已兑现</strong></td>
+</tr>
+<tr>
+<td>统一对外口径（四维→三轴）</td>
+<td>已完成（见上）</td>
+<td>✅ <strong>已兑现</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>判读</strong>：V1 的 6 项 P0 中 <strong>4 项已兑现、2 项未兑现</strong>。<strong>"让世界看得见"的第一方动作全部完成；剩下的两个硬骨头（部署自动化 + git 历史）恰恰是"持续可见"的基础设施。</strong></p>
+</blockquote>
+<h3 id="04-6">0.4 本轮 6 个关键新发现</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>#</th>
+<th>发现</th>
+<th>严重度</th>
+<th>证据（本轮实测）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>可见性缺口从"第一方"转移到"第三方"</strong></td>
+<td>🟠 中高</td>
+<td>官网已是新定位，但 LobeHub 收录页（2026-08-05）仍写"机器人零件兼容性判定层"；ROS Discourse 帖（2026-08-12）仍写"Structured Dataset &amp; Selection Engine for Bionic Robot Components"；搜索引擎快照仍显示旧标题</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>部署自动化仍 100% 失败</strong>（站点靠手动路径更新）</td>
+<td>🔴 高</td>
+<td>Actions <code>Deploy to Cloudflare Pages</code> 最近一次 <code>2026-10-12T15:16:29Z</code> = failure；但线上内容是最新的 ⇒ <strong>存在一条绕过 Actions 的手动部署通路</strong>，自动化链路从未修通</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>git 历史分叉扩大</strong></td>
+<td>🔴 高</td>
+<td><code>HEAD..origin/main</code> = 502、<code>origin/main..HEAD</code> = 331（V1 为 498 / 327）——<strong>过去 24 小时又各自新增了提交</strong>，两条平行历史继续各自生长</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>发现更强的国际标准锚点：ISO 22166-1</strong></td>
+<td>🟢 机会</td>
+<td><code>ISO 22166-1:2021 Robotics — Modularity for service robots</code>（德国主导），修订版 <code>ISO/AWI 22166-1</code> 最终草案 <strong>2026-04-05</strong> 发布；<strong>仓内实体已含 <code>iso22166_relevant</code> 子字段</strong>（覆盖率 ≈85%），但对外从未把它作为国际化锚点</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>机器可读清单出现陈旧数字</strong>（自身不一致）</td>
+<td>🟠 中</td>
+<td><code>llms.txt</code> 写"Tier A 419 条（48.44%）"——<strong>现算实为 472 条（54.4%）</strong>；写"40 项 CI 闸门"——<strong>实为 43 项</strong>；写"最后更新 2026-10-08T04:16"——<code>entities.meta.updated</code> 实为 <strong>2026-10-08T22:36</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>字段覆盖口径歧义</strong>（<code>electrical_interfaces</code>）</td>
+<td>🟡 低中</td>
+<td><code>field-standard-mapping.md</code> 称"有 <code>electrical_interfaces</code> 122（14.1%）"，但 <code>entities.json</code> <strong>无此字段</strong>（实际键：<code>connector</code> 32 / <code>voltage</code> 42 / <code>electrical_interface</code> 3）；122 应来自独立产物 <code>api/electrical_interfaces.json</code>——<strong>字段名与产物名同名，读者必然误读</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1">1. 扫描方法与口径声明</h2>
+<table class="tbl">
+<thead>
+<tr>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>扫描对象</strong></td>
+<td><code>C:\Users\xing\Desktop\robopart</code> 全仓（11,000+ 文件，排除 <code>.git</code> / <code>node_modules</code>）</td>
+</tr>
+<tr>
+<td><strong>仓内数字</strong></td>
+<td>一律现算自 <code>api/*.json</code> 与生成器脚本，<strong>禁手改</strong>（项目纪律：单一真相源 <code>onboarding_block.facts()</code>）</td>
+</tr>
+<tr>
+<td><strong>线上数字</strong></td>
+<td><code>curl</code> 回探 <code>roboparts.cc</code>（时点 2026-10-13）</td>
+</tr>
+<tr>
+<td><strong>GitHub 数字</strong></td>
+<td><code>api.github.com</code> REST（时点 2026-10-13）</td>
+</tr>
+<tr>
+<td><strong>竞品/标准数字</strong></td>
+<td>联网检索 + 官方页面（时点 2026-10-13）；<strong>未逐工具实测</strong>，属公开信息判读</td>
+</tr>
+<tr>
+<td><strong>两套配对口径（禁止混用）</strong></td>
+<td><code>C(n,2)</code> 无序对（如 214,840）= 统计"多少对能配"；<code>n²</code> 有向全交叉（如 430,336）= 引擎评测空间。引用必带口径名</td>
+</tr>
+<tr>
+<td><strong>本轮新增口径</strong></td>
+<td><strong>共装（co-mount）三段口径</strong>：mount_fit + port_budget + signal_complementary，与产品层四维<strong>不可直接比较</strong>（线上端点自带 warning，见 §6.3）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2">2. 项目完整性评估</h2>
+<h3 id="21">2.1 资产完整性（七层盘点）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>层</th>
+<th>资产</th>
+<th>实测状态</th>
+<th>完整度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>数据真相源</strong></td>
+<td><code>api/entities.json</code>：868 实体 / 20 品类 / 199 字段（<code>updated 2026-10-08T22:36Z</code>）</td>
+<td>✅ 单一真相源 + 现算注入</td>
+<td>🟢 90%</td>
+</tr>
+<tr>
+<td><strong>判定引擎</strong></td>
+<td>产品层 <code>compat_engine.js</code>（协议/电气/机械/软件四维）· 研究层 <code>compose_engine.py</code>（机械/电气/信号三轴，三态 fail-closed）· <strong>共装引擎</strong>（三段）</td>
+<td>⚠️ 三套口径并存，已用 <code>dual-engine-bridge.md</code> 显式桥接</td>
+<td>🟡 70%</td>
+</tr>
+<tr>
+<td><strong>形式化产物</strong></td>
+<td><code>compose_semantics</code> · <code>compose_frontier</code> · <code>gap_classification</code> · <code>evidence_valuation</code>（MDV）· <code>cohort_feasibility</code> · <code>reachability_gap</code> · <code>morphology_graph</code> · <strong><code>co-mount</code>（新上线）</strong></td>
+<td>✅ 全部挂闸、含变异自证</td>
+<td>🟢 87%</td>
+</tr>
+<tr>
+<td><strong>接口标准</strong></td>
+<td>ISO 9409-1 九档标号 + 判定语法 · ISO 22166 相关子字段 · <code>electrical_interfaces.json</code>（独立产物，v0.1.0）</td>
+<td>🟡 机械已对齐，电气/信号薄</td>
+<td>🟡 48%</td>
+</tr>
+<tr>
+<td><strong>转接件工程</strong></td>
+<td><code>adapters/gen_adapter.py</code>（BREP STEP）+ 三方几何一致性闸门 + 9 档预设</td>
+<td>⚠️ <strong>几何生成未真实导出可交付 STEP</strong></td>
+<td>🟡 50%</td>
+</tr>
+<tr>
+<td><strong>分发面</strong></td>
+<td>MCP Registry / Smithery / LobeHub / Glama（4/4）· A2A Card · npm stdio 包 · AgenticROS skill · GitHub Action</td>
+<td>✅ 渠道齐；⚠️ <strong>第三方目录内容陈旧</strong>；0 外部调用证据</td>
+<td>🟡 58%</td>
+</tr>
+<tr>
+<td><strong>治理层</strong></td>
+<td><strong>43 项</strong> CI 闸门（含反向注入/变异自证/部署后置新鲜度/双引擎桥接一致）· 溯源 A/B/C 分级 · 风险矩阵 · 决策契约</td>
+<td>✅ <strong>业内罕见</strong></td>
+<td>🟢 92%</td>
+</tr>
+<tr>
+<td><strong>内容/学术</strong></td>
+<td>22 篇 GEO 长文 · 论文稿（Mechatronics 投稿版就绪）· Croissant + CITATION.cff</td>
+<td>⚠️ <strong>未投出</strong></td>
+<td>🟡 45%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-readme-2">2.2 五大核心目标完成度（对标 README §2）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>#</th>
+<th>核心目标</th>
+<th>V1</th>
+<th><strong>V2</strong></th>
+<th>证据</th>
+<th>关键缺口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>模块化配件</strong>：标准模块参数库，按自由度/扭矩/尺寸/协议筛选组合</td>
+<td>70%</td>
+<td><strong>72%</strong></td>
+<td>868 实体 / 20 品类；五维评分选型引擎</td>
+<td>参数口径不统一（19 种 torque / 37 种 speed）</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>接口标准化</strong>：对齐国标《人形机器人模块化通用技术要求》，建兼容库</td>
+<td>40%</td>
+<td><strong>44%</strong></td>
+<td>ISO 9409-1 九档对齐 + <strong>ISO 22166 子字段已登记</strong>；<code>field-standard-mapping.md</code> 具可提交物形态</td>
+<td>机械声明率仅 16.2%；国标字段未挂标准号</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>协议标准化</strong>：EtherCAT/CANopen/ROS2/MQTT 对比 + 实时性能 + 跨协议桥接</td>
+<td>40%</td>
+<td><strong>40%</strong></td>
+<td>64 条协议实体；<code>protocol_bridges.json</code></td>
+<td>"实时性能 benchmark"无实测；桥接未成产品</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>大模型产业化</strong>：VLA 部署硬件需求 + 推理性能对比</td>
+<td>48%</td>
+<td><strong>50%</strong></td>
+<td>46 个 <code>robot_ai_models</code> + 42 <code>llms</code>；GR00T/LeRobot 已收录</td>
+<td>对比是静态表；"部署硬件需求"未结构化</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>用户数据集成</strong>：选型方案/BOM/设计文件端到端加密</td>
+<td>20%</td>
+<td><strong>20%</strong></td>
+<td>copilot / credits / 账本</td>
+<td><strong>"端到端加密"无实现证据</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>判读不变</strong>：目标 1 已达"可用"，目标 2–4 停在"<strong>有数据、无产品</strong>"，目标 5 几乎空白。<strong>定位上移到"判定能力"仍是正确方向</strong>，共装层上线是这条路上的第一个可见成果。</p>
+</blockquote>
+<h3 id="23">2.3 研究进度与工程健康度（现算）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>维度</th>
+<th>实测</th>
+<th>判据来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>门控加权完成度</td>
+<td><strong>60.6%</strong></td>
+<td><code>api/research_progress.json</code>（<code>generated_at 2026-10-12T15:05Z</code>）</td>
+</tr>
+<tr>
+<td>body（体）</td>
+<td><strong>50%</strong></td>
+<td>关系类型 2/2 覆盖；<strong>确定性裁决率 0.1%</strong>（214,840 无序对中 composed=0 / type_error=262）</td>
+</tr>
+<tr>
+<td>neuron（脑）</td>
+<td><strong>100%</strong></td>
+<td>量的是溯源诚实度（非数据量）</td>
+</tr>
+<tr>
+<td>chain（链）</td>
+<td><strong>50%</strong></td>
+<td>本域三段 2/2 闭合；跨域全链 0/1</td>
+</tr>
+<tr>
+<td>policy（智）</td>
+<td><strong>58%</strong></td>
+<td>开源模型 4/5 有真实本体绑定</td>
+</tr>
+<tr>
+<td>溯源</td>
+<td>source 92.97% / traceable <strong>54.38%</strong> / Tier A <strong>472</strong> / Tier B 246 / Tier C 150</td>
+<td><code>provenance_coverage</code> 现算</td>
+</tr>
+<tr>
+<td>CI 闸门</td>
+<td><strong>43 项</strong>（V1 为 41；新增"部署后置新鲜度校验""双引擎口径桥接一致"）</td>
+<td><code>ci_gate.py --list</code></td>
+</tr>
+<tr>
+<td>MCP 工具</td>
+<td><strong>21 个</strong></td>
+<td><code>functions/mcp.js</code></td>
+</tr>
+<tr>
+<td>数据质量</td>
+<td><strong>A 级跨厂商可比条目 = 0</strong>（诚实边界）</td>
+<td><code>provenance_coverage.note</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3">3. 科学先进性评估</h2>
+<h3 id="31-l0l4">3.1 形式化程度分级（L0–L4）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>级别</th>
+<th>定义</th>
+<th>RoboParts 所处位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L0</td>
+<td>散文/表格描述兼容性</td>
+<td>行业现状（多数厂商矩阵停在此层）</td>
+</tr>
+<tr>
+<td>L1</td>
+<td>结构化数据 + 布尔判定</td>
+<td>TraceParts / Octopart（只做目录，不做判定）</td>
+</tr>
+<tr>
+<td>L2</td>
+<td><strong>多轴类型系统 + 三态裁决 + fail-closed</strong></td>
+<td>✅ <strong>RoboParts 在此</strong>（<code>compose_engine/v1</code>）</td>
+</tr>
+<tr>
+<td>L3</td>
+<td>公理化 + 定理 + 可复现自证</td>
+<td>✅ <strong>部分达到</strong>（reflexivity 边界公理 + T1/T2/T3 定理 + 43 闸门）</td>
+</tr>
+<tr>
+<td>L4</td>
+<td>依赖类型 / 范畴论形式化（Lean/Coq）</td>
+<td>❌ 未做（被自身定义为"多年期"，明确不许冒进）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>判断（与 V1 一致）</strong>：RoboParts 稳定处于 <strong>L2–L3 之间</strong>，是<strong>全球范围内极少数</strong>把"零件兼容性"从散文推进到"类型系统 + 定理"的项目。先进性不在算法复杂度，而在<strong>问题定义的跃迁</strong>：把"能不能装"从布尔升级为三态，并证明"unknown 是一等公民"。</p>
+</blockquote>
+<h3 id="32-t1t2t3">3.2 三条定理（T1/T2/T3）——科学先进性的核心载体</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>定理</th>
+<th>内容</th>
+<th>实测支撑（本轮复算）</th>
+<th>科学价值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T1 · 可判定下界</strong></td>
+<td>在 k 轴 AND 收敛的 fail-closed 语义下，<code>P(可判定) ≤ ∏ P(该轴可判定)</code>；某轴密度 &lt; 1/N 时全局可判定对数期望 → 0，此时任何其他轴的改进都不改变结论</td>
+<td>electrical 轴密度 <strong>0.0037%</strong>（214,840 对中仅 8 对）；三轴 AND = <strong>0 对</strong></td>
+<td>解释了"为什么堆数据没用"的结构性原因</td>
+</tr>
+<tr>
+<td><strong>T2 · 单声明零收益定理</strong></td>
+<td>在任何 k≥2 轴 AND 收敛系统中，若每个配对至少有一侧在某轴无声明端口，则<strong>单条声明的边际可判定收益恒为 0</strong></td>
+<td>全库三轴正收益恒为 0；而同质可行对达 <strong>46,258 对（K=2）</strong></td>
+<td><strong>负结果定理</strong>：否掉"按实体逐个补数据"的通用策略，给出正确替代（按同质集批量）</td>
+</tr>
+<tr>
+<td><strong>T3 · 缺口杠杆</strong></td>
+<td>开放缺口的头部集中度决定取证路径；头部 10 家 &lt; 30% ⇒ 批量抓取必要但不充分</td>
+<td>419 缺口散布 <strong>246 家</strong>制造商，头部 10 家仅 <strong>28.2%</strong>；14.1% 连厂商都不知</td>
+<td><strong>负向证据</strong>：防"抓少数 datasheet 解决主缺口"的幻想</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>T2 仍是全项目最值钱的一条</strong>：数据层论文里，"我们数据不够"是抱怨，"<strong>关于取证组织方式的负结果定理</strong>"是贡献。它稀缺、可被引用、且直接给出工程替代方案（同质集批量取证）。</p>
+</blockquote>
+<h3 id="33-2026-10">3.3 与学术前沿的位次（2026-10 复核）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>相关研究</th>
+<th>层次</th>
+<th>与 RoboParts 的关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linkify（装配图 + 点云接口几何）</td>
+<td>几何层</td>
+<td><strong>互补</strong>：Linkify 说"接触面什么形状"，RoboParts 说"能不能组成系统"</td>
+</tr>
+<tr>
+<td>CAD-Based Relation Learning</td>
+<td>几何→符号装配图</td>
+<td>同哲学（人机回环，不猜）</td>
+</tr>
+<tr>
+<td>ExtruOnt（单机本体）</td>
+<td>单机本体</td>
+<td><strong>对照</strong>：ExtruOnt 是单机本体，RoboParts 是<strong>跨厂商组合</strong>判定</td>
+</tr>
+<tr>
+<td>ReconVLA（决策层不确定性/保形预测）</td>
+<td>策略层</td>
+<td><strong>同哲学两层</strong>：ReconVLA 让策略承认未知，RoboParts 让数据层承认未知</td>
+</tr>
+<tr>
+<td>Robot HAL 综述</td>
+<td>通信层标准化</td>
+<td><strong>对照</strong>：HAL 管"怎么通信"，RoboParts 管"能不能装"</td>
+</tr>
+<tr>
+<td><strong>ISO 22166-1 模块化框架</strong>（标准，非论文）</td>
+<td>模块化框架</td>
+<td><strong>强对位</strong>：ISO 22166 管"模块化框架怎么定"，RoboParts 提供"模块间能不能组合"的<strong>可判定实现</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>位次判断（与 V1 一致）</strong>：RoboParts 在"<strong>零件级组合类型系统</strong>"这一细分上<strong>没有直接学术对手</strong>。学术风险不是"被抢"，而是"<strong>不够深以致不被承认</strong>"（停在 L2–L3，未达 L4，且论文未投出）。</p>
+</blockquote>
+<h3 id="34">3.4 可发表性评估</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>出口</th>
+<th>成本</th>
+<th>匹配度</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>arXiv 预印本（cs.RO）</td>
+<td>极低</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td><strong>立即投</strong>（占时间戳与优先权，免费无审稿）</td>
+</tr>
+<tr>
+<td>IROS/ICRA workshop（具身组件标准化）</td>
+<td>低</td>
+<td>⭐⭐⭐⭐</td>
+<td>短文 4–6 页</td>
+</tr>
+<tr>
+<td>RAM（RA-Letters）/ Science Robotics Technical Comment</td>
+<td>中</td>
+<td>⭐⭐⭐</td>
+<td>需更强实证</td>
+</tr>
+<tr>
+<td>Mechatronics（稿已就绪）</td>
+<td>低</td>
+<td>⭐⭐⭐⭐</td>
+<td><strong>最高 ROI</strong>——把"验证纪律"软资产转成学术硬通货</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>V2 补充</strong>：<code>papers/</code> 目录仍是 4 个文件（3 篇 md + 1 个投稿目录），<strong>距 V1 无变化</strong>——论文未动。这是 V1→V2 唯一"完全冻结"的高价值资产。</p>
+</blockquote>
+<hr />
+<h2 id="4-iso-22166-1">4. 国际化定位诊断（含新锚点 ISO 22166-1）</h2>
+<h3 id="41">4.1 当前定位的三层结构（第一方已统一）</h3>
+<pre><code>L1 载体层：开源接口注册表（对齐 GB/T 20255807-T-604「模块通用信息模型」）
+L2 引擎层：具身组合类型系统 + 三态 fail-closed compose + 共装判定 + 转接件几何
+L3 信任层：三态诚实 + 溯源 A/B/C + 43 项验证闸门
+</code></pre>
+<p><strong>第一方统一表述</strong>（本轮实测，全部已生效）：
+- 线上 <code>&lt;title&gt;</code> = <strong>"RoboParts — 具身系统的组合校验层（开源）"</strong> ✅
+- <code>llms.txt</code> 首行 = <strong>"具身系统的组合校验层（Vendor-neutral composition checker for embodied systems）"</strong> ✅
+- <code>server.json</code> description = <strong>"868 robot parts across 20 categories, three-state fail-closed verdicts. Vendor-neutral."</strong> ✅
+- GitHub description = <strong>"…868 实体 / 20 品类 / ISO 9409-1 法兰判定 / 三态 fail-closed 兼容判定（能/不能/不知道）…"</strong> ✅</p>
+<h3 id="42">4.2 国际化三要素评估</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>要素</th>
+<th>现状</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>语言</strong></td>
+<td>机器可读清单中英双写且质量高；人类页面中英混排</td>
+<td>🟡 页面侧英文覆盖不齐</td>
+</tr>
+<tr>
+<td><strong>标准锚点</strong></td>
+<td>ISO 9409-1（法兰）+ <strong>ISO 22166-1（模块化框架，本轮新增认定）</strong> + GB/T 系列</td>
+<td>🟢 <strong>这是最强的国际化资产</strong>（见 §4.3）</td>
+</tr>
+<tr>
+<td><strong>受众</strong></td>
+<td>"开源机器人构建者（ROS/URDF 生态）"，第二受众为集成商接口工程师</td>
+<td>🟢 收窄正确</td>
+</tr>
+<tr>
+<td><strong>渠道</strong></td>
+<td>全部国际英文圈：官方 MCP Registry / Glama / LobeHub / Smithery / ROS Discourse / Tnkr</td>
+<td>🟢 与受众一致</td>
+</tr>
+<tr>
+<td><strong>品牌</strong></td>
+<td>与 Amazon 西班牙站 <code>Roboparts®</code> 撞名；<code>api-pricing.html</code> 曾误写 <code>RobotParts DB</code></td>
+<td>🔴 品牌风险未清</td>
+</tr>
+</tbody>
+</table>
+<h3 id="43-iso-22166-1-iso-9409-1">4.3 新认定：ISO 22166-1 比 ISO 9409-1 更贴合项目内核</h3>
+<p><strong>核实事实</strong>（2026-10-13 联网）：
+- <code>ISO 22166-1:2021 — Robotics — Modularity for service robots — Part 1: General requirements</code>，<strong>德国主导</strong>，ISO 正式标准。
+- 修订版 <strong><code>ISO/AWI 22166-1</code> 最终草案于 2026-04-05 发布</strong>（WTO/FTA 咨询网）。
+- 标准范围原文：<em>"presents requirements and guidelines on the specification of </em><em>modular frameworks</em><em>, on </em><em>open modular design</em><em> and on the …"</em>。</p>
+<p><strong>为什么它比 ISO 9409-1 更关键</strong>：</p>
+<table class="tbl">
+<thead>
+<tr>
+<th>维度</th>
+<th>ISO 9409-1</th>
+<th><strong>ISO 22166-1</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>管什么</td>
+<td>机械法兰<strong>几何标号</strong>（A50/A63…）</td>
+<td><strong>模块化框架 + 开放模块化设计</strong></td>
+</tr>
+<tr>
+<td>与项目内核关系</td>
+<td>提供了一个可判定的机械锚点</td>
+<td><strong>直接对应项目核心命题"具身系统的组合"</strong></td>
+</tr>
+<tr>
+<td>国际属性</td>
+<td>国际标准</td>
+<td>国际标准，<strong>且是德/欧主导的活跃修订项</strong></td>
+</tr>
+<tr>
+<td>仓内已有基础</td>
+<td>九档标号 + 判定语法</td>
+<td><strong>实体已含 <code>iso22166_relevant</code> 子字段（覆盖率 ≈85%）</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>结论</strong>：项目<strong>事实上已经在跟踪 ISO 22166</strong>（实体子字段里有 <code>iso22166_relevant</code>），但<strong>对外从未把 ISO 22166-1 作为国际化锚点讲出来</strong>。这是一个"手里有牌没打"的机会——把"我们的组合判定层可作为 ISO 22166-1 模块化框架的开源实现参考"写成一句话，比十页 GEO 内容更有国际化说服力。</p>
+</blockquote>
+<h3 id="44-v1">4.4 定位残留问题（本轮实测，与 V1 相比的转移）</h3>
+<p><strong>已解决（第一方）</strong>：四维 vs 三轴口径（已在 <code>llms.txt</code> 显式桥接）、线上旧定位、GitHub description 陈旧数字。</p>
+<p><strong>新暴露（第三方）</strong>：</p>
+<ol>
+<li><strong>LobeHub 收录页仍是旧定位</strong>：2026-08-05 收录，标题仍为"RoboParts — 机器人零部件兼容性数据层 / 机器人零件兼容性判定层"——<strong>旧叙事</strong>。</li>
+<li><strong>ROS Discourse 帖子仍是旧定位</strong>：2026-08-12 帖标题 = "RoboParts — Structured Dataset &amp; Selection Engine for Bionic Robot Components"——<strong>"数据集+选型引擎"旧叙事</strong>，且把"仿生"当定位词（项目自己已明确"仿生"只是一个品类词）。</li>
+<li><strong>搜索引擎快照仍是旧标题</strong>：检索结果摘要显示"RoboParts — 机器人零件兼容性判定层（开源）"。</li>
+<li><strong>旧叙事与新叙事的落差</strong>：新叙事是"<strong>组合校验层（judgment/checker）</strong>"，旧叙事是"<strong>数据集/选型引擎（dataset/selection）</strong>"。前者强调"判定能力与诚实"，后者强调"数据量"——<strong>恰恰是项目自己判定为"伪壁垒"的方向</strong>。第三方全部停在伪壁垒叙事上。</li>
+</ol>
+<h3 id="45-v1-iso-22166">4.5 建议的国际化定位表述（三版，与 V1 一致 + ISO 22166 补充）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>场景</th>
+<th>建议表述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>一句话</strong>（GitHub desc / MCP 目录 / tagline）</td>
+<td><code>RoboParts — Vendor-neutral composition checker for embodied systems \| 868 entities, ISO 9409-1 flange + ISO 22166-aligned modularity judgment, three-state fail-closed verdicts</code></td>
+</tr>
+<tr>
+<td><strong>标准版</strong>（meta / README §1 / llms.txt 概述）</td>
+<td>面向开源机器人构建者的组合校验层：判定零件能否装配/共装/互换，输出可核验的三态结论（能/不能/不知道），并生成可打印转接件。<strong>不生产、不销售、不代理任何零部件。</strong></td>
+</tr>
+<tr>
+<td><strong>差异版</strong>（首页 H1 下方 / README 顶部）</td>
+<td>我们公开登记答不出来的部分，并用 43 项闸门守住"宁可判未知，不判假绿"——因为不卖零件，所以没有理由骗你选一个。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>V2 新增动作</strong>：<strong>第三方分发面反向同步</strong>——把新定位推回 LobeHub / ROS Discourse / Glama / Smithery 的收录页，并在这些页面显式引用 ISO 22166-1 作为国际化锚点。</p>
+</blockquote>
+<hr />
+<h2 id="5-2026-10">5. 国际竞品比较（2026-10 更新）</h2>
+<h3 id="51">5.1 竞品全景矩阵</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>竞品</th>
+<th>做什么</th>
+<th>与 RoboParts 关系</th>
+<th>威胁</th>
+<th>核实状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>roboxdb.com</strong></td>
+<td>Source-backed robot specs/parts + <strong>浏览器内 MuJoCo 物理验证器</strong>（MJCF/URDF）</td>
+<td><strong>直接重叠 + 物理验证领先</strong></td>
+<td>🔴 高</td>
+<td>✅ 工具页在线（页面更新至 2026-09-30）</td>
+</tr>
+<tr>
+<td><strong>text-to-cad</strong></td>
+<td>开源 AI Agent 技能库：自然语言 → STEP/URDF/G-code/3D 打印，<strong>可离线</strong></td>
+<td><strong>上游"生成"侧</strong>，可互补（生成→判定）</td>
+<td>🟠 中（<strong>在成熟化</strong>）</td>
+<td>✅ 已确认（2026-10-10 仍有新文）</td>
+</tr>
+<tr>
+<td><strong>robotic-infrastructure/robot-interoperability</strong></td>
+<td>版本化的机器人互操作规范（GitHub，2026-01 建）</td>
+<td>概念邻近，偏"接口规范"非"判定引擎"</td>
+<td>🟡 中低</td>
+<td>✅ 已确认存在</td>
+</tr>
+<tr>
+<td>TraceParts / GrabCAD</td>
+<td>千万级 CAD 零件库下载</td>
+<td>只做目录，<strong>不做判定</strong></td>
+<td>🟢 低</td>
+<td>公开信息</td>
+</tr>
+<tr>
+<td>Octopart / PartKeepr</td>
+<td>电子元器件采购 + 库存报价</td>
+<td>只做电气采购，<strong>不懂机械接口语义</strong></td>
+<td>🟢 低</td>
+<td>公开信息</td>
+</tr>
+<tr>
+<td>Tnkr / RoboInfra</td>
+<td>整机 BOM / 供应链</td>
+<td>只做整机 BOM</td>
+<td>🟢 低</td>
+<td>公开信息</td>
+</tr>
+<tr>
+<td><strong>厂商自建选型器</strong></td>
+<td>自家产品线内选型</td>
+<td><strong>结构性做不到中立</strong>（卖家不适合当裁判）</td>
+<td>🟡 中低</td>
+<td>结构性判断</td>
+</tr>
+<tr>
+<td><strong>国标参考实现位</strong></td>
+<td>GB/T 20255807-T-604 的官方开源实现</td>
+<td>窗口期机会，非竞品</td>
+<td>🟢 机会</td>
+<td>✅ 标准审查中</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-roboxdb">5.2 直接竞品 roboxdb 深析（威胁未减）</h3>
+<p><strong>已确认事实</strong>（联网核实 2026-10-13）：roboxdb.com 提供 <code>Robot Physics Validator</code>——"Compile and validate MJCF and URDF robot packages with MuJoCo physics <strong>in your browser</strong>"，并有 <code>Maker tools</code>（"Analyze fabrication data in the browser and export source-backed robot properties"）。</p>
+<table class="tbl">
+<thead>
+<tr>
+<th>维度</th>
+<th>roboxdb</th>
+<th>RoboParts</th>
+<th>谁占优</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定位</td>
+<td>Source-backed robot specs / parts / build references</td>
+<td>Vendor-neutral composition checker</td>
+<td>均主打"中立 + 有据"</td>
+</tr>
+<tr>
+<td><strong>物理验证</strong></td>
+<td>✅ <strong>浏览器内 MuJoCo MJCF/URDF 验证</strong></td>
+<td>❌ 无（仅几何一致性闸门 + URDF 语法 lint）</td>
+<td><strong>roboxdb 领先</strong></td>
+</tr>
+<tr>
+<td><strong>跨厂商接口判定</strong></td>
+<td>未突出</td>
+<td>✅ <strong>三态类型系统 + ISO 9409-1 判定 + 共装判定（新上线）</strong></td>
+<td><strong>RoboParts 领先</strong></td>
+</tr>
+<tr>
+<td>分发面</td>
+<td>网站 + 工具</td>
+<td>MCP + API + GitHub Action + A2A</td>
+<td>RoboParts 更广</td>
+</tr>
+<tr>
+<td>数据规模</td>
+<td>未公开</td>
+<td>868 实体 / 20 品类</td>
+<td>相近</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>威胁判断（不变）</strong>：roboxdb 补齐了 RoboParts 缺的"<strong>能不能真的动</strong>"这一层。若 roboxdb 再补"跨厂商接口判定"，RoboParts 的差异化会被<strong>上下夹击</strong>。
+<strong>缓冲（本轮强化）</strong>：RoboParts 的战略抉择（<code>strategy-decision-20261011.md</code>：走 A 方案"判定层做深"，不做物理验证）是<strong>正确的划界</strong>——把资源集中在<strong>唯一没人做的层</strong>（静态类型判定）。<strong>且共装判定已上线，判定层的纵深又加了一格。</strong></p>
+</blockquote>
+<h3 id="53-text-to-cad">5.3 上游 text-to-cad：正在从"潜在挤压者"变成"确定的上游"</h3>
+<p>text-to-cad 代表"<strong>生成</strong>"侧，2026-10 仍在活跃迭代（"offline 直接出 STEP/URDF/G-code"）。它与 RoboParts 构成流水线：</p>
+<pre><code>text-to-cad（生成 STEP/URDF） → RoboParts（判定：能不能装） → MuJoCo/roboxdb（物理验证） → 训练（LeRobot/GR00T）
+</code></pre>
+<blockquote>
+<p><strong>结论（V2 强化）</strong>：text-to-cad 越成熟，"生成"侧越不需要 RoboParts 去做——<strong>RoboParts 应尽快把自己钉死在"判定"环上</strong>，并主动与 text-to-cad 建立互补链接（生成 → 判定）。这是零成本、高杠杆的卡位动作。<strong>V1 提出后至今未执行。</strong></p>
+</blockquote>
+<h3 id="54">5.4 生态位结论</h3>
+<blockquote>
+<p>RoboParts 的位子——<strong>跨厂商、中立、机器可读、可判定的零件级接口契约层</strong>——是真实且未被占据的。
+<strong>当前它的差异化没有被竞品压缩（因为没人做判定），风险全部来自"自己没把基础设施修好"。</strong></p>
+</blockquote>
+<hr />
+<h2 id="6">6. 技术壁垒与技术深度深挖</h2>
+<h3 id="61-vs">6.1 真壁垒 vs 伪壁垒（诚实拆分）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>候选壁垒</th>
+<th>性质</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>零件数据量（868 实体）</td>
+<td>❌ <strong>伪壁垒</strong></td>
+<td>TraceParts 零件量千万级；数据量不是护城河</td>
+</tr>
+<tr>
+<td>分发渠道（4 家 MCP 目录）</td>
+<td>❌ <strong>伪壁垒</strong></td>
+<td>0 star 已证渠道不是瓶颈；渠道可被任意复制</td>
+</tr>
+<tr>
+<td>GEO 内容（22 篇）</td>
+<td>❌ <strong>伪壁垒</strong></td>
+<td>锚点自判"旧问题、无独特贡献"；且第三方仍停留在旧叙事</td>
+</tr>
+<tr>
+<td><strong>三态兼容判定引擎 + fail-closed 语义</strong></td>
+<td>✅ <strong>真壁垒</strong></td>
+<td>形式化定义 + reflexivity 边界 + 三轴 AND 收敛；无第二家同时持有引擎+数据+类型系统</td>
+</tr>
+<tr>
+<td><strong>T1/T2/T3 三条定理</strong></td>
+<td>✅ <strong>真壁垒</strong></td>
+<td>T2 是关于取证组织方式的负结果定理，稀缺且被引用</td>
+</tr>
+<tr>
+<td><strong>ISO 9409-1 结构化判定 + 转接件几何</strong></td>
+<td>✅ <strong>真壁垒</strong></td>
+<td>全网唯一开放源</td>
+</tr>
+<tr>
+<td><strong>43 项闸门 + 反向注入验证纪律</strong></td>
+<td>✅ <strong>真壁垒</strong></td>
+<td>"可验证性"本身是可售卖的信任资产，极难复制</td>
+</tr>
+<tr>
+<td><strong>连接器 (family, variant, pins, protocol) 四元组语义</strong></td>
+<td>✅ <strong>真壁垒</strong></td>
+<td>"M8 不是一个连接器，是一个家族"——按字符串匹配必然误判</td>
+</tr>
+<tr>
+<td><strong>最小可行同质集（cohort feasibility）</strong></td>
+<td>✅ <strong>真壁垒</strong></td>
+<td>需要 214,840 无序对三轴 compose + 逐实体端口 + type_compat 双向索引 + 缺口画像枚举，四者缺一不可</td>
+</tr>
+<tr>
+<td><strong>共装（co-mount）三段判定</strong></td>
+<td>✅ <strong>真壁垒（V2 新增）</strong></td>
+<td>mount_fit + port_budget + signal_complementary 三段，是"点对点直连"之外的第二类关系；已上线为可查产品</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62">6.2 五层技术深度模型</h3>
+<pre><code>深度 L5 ─ 形式化理论（Lean/依赖类型）              ❌ 未做（多年期，纪律明确不许冒进）
+深度 L4 ─ 定理 + 公理 + 可复现自证                 ✅ T1/T2/T3 + reflexivity 边界 + 43 闸门
+深度 L3 ─ 多轴类型系统 + 三态裁决 + 瓶颈归因       ✅ compose 三轴 + gap_distance + d1_bottleneck
+深度 L2 ─ 结构化判定 + 证据链 + 溯源分级           ✅ ISO 9409-1 判定 + Tier A/B/C
+深度 L1 ─ 目录 + 布尔兼容                          ✅（且已超越）
+</code></pre>
+<blockquote>
+<p><strong>RoboParts 的技术深度稳定在 L3–L4</strong>。它"深"的地方不是代码复杂度（<code>compose_engine.py</code> 仅约 300 行），而是<strong>把可判定性本身变成被检验对象</strong>——每一层产物都配 <code>verify_*.py</code>（阳性 + 阴性 + 变异三对照）。这是<strong>方法论深度</strong>，比算法深度更难复制。</p>
+</blockquote>
+<h3 id="63">6.3 四个最深的技术点</h3>
+<p><strong>① 三态类型系统与 reflexivity 边界（引擎级）</strong></p>
+<ul>
+<li>单轴裁决四值序：<code>compatible ≺ compatible_via_adapter ≺ incompatible ≺ unknown</code>。</li>
+<li>总裁决：任一轴 incompatible ⇒ <code>type_error</code>；任一轴 unknown ⇒ <code>unknown</code>；全 compatible ⇒ <code>composed</code>。<strong><code>unknown</code> 优先于 <code>composed</code></strong>——这是与所有二元矩阵的分界线。</li>
+<li><strong>reflexivity 边界</strong>：<code>same type ⇒ composable</code> 仅对<strong>几何规格型</strong>（ISO 9409-1 法兰）成立；对<strong>方向性角色型</strong>（<code>OUTPUT_SPIKE</code>）不成立。且<strong>显式登记优先于公理</strong>——早期实现无条件对 <code>ta==tb</code> 返回 identity，静默覆盖了 type_compat 登记，产出过 <code>composed</code> 却 <code>sensory_links=[]</code> 的自相矛盾结果。已修。</li>
+</ul>
+<p><strong>② 连接器四元组语义（电气轴）</strong></p>
+<ul>
+<li>核心洞察：<strong>"M8"不是一个连接器类型，是一个家族</strong>。实测三条同为 M8 的连接器互不兼容：ATI Axia80-M20（6-pin）、Robotiq 2F-85（5-pin）、OnRobot HEX-E（5-pin，针序未公开）——<strong>外形都是"M8 螺纹 + 针"，针数与针序完全不同 ⇒ 物理上不可互插</strong>。</li>
+<li>类型键必须是 <strong><code>(family, variant, pins, protocol)</code> 四元组</strong>——三元组会漏掉"几何相同但协议不同"的死路。</li>
+<li><strong>诚实纪律</strong>：<code>pinout</code> 为 null 时必须登记 <code>evidence_gap</code>，否则"不知道"会被下游误读为"该连接器无针序要求"。</li>
+<li>取证进度：MDV 正收益目标 <strong>16 个，已核实 15 个</strong>（93.75%），登记 20 条连接器；电气未声明节点 637，覆盖率仅 2.35%。</li>
+</ul>
+<p><strong>③ 共装（co-mount）三段判定——"点对点直连"之外的第二类关系（V2 新增）</strong></p>
+<ul>
+<li>线上 <code>/api/co-mount</code> 实测返回：<strong>3 个宿主（HUB-030/031/…）× 16 个器件 = 360 对</strong>共装评估，verdict 分布 <code>type_error 171 / port_exhausted 126 / unknown 63</code>。</li>
+<li>判据三段：<code>mount_fit</code>（法兰共装）+ <code>port_budget</code>（宿主端口预算是否够）+ <code>signal_complementary</code>（信号互补）。</li>
+<li><strong>新增 verdict <code>port_exhausted</code></strong>——这是"装得下但端口不够"的第三种失败态，比二元"能/不能"更贴近工程现实。</li>
+<li><strong>端点自带诚实 warning</strong>：明确声明"本口径为研究层三段共装判据，与 check_compatibility 的四维维度不同，两者结论不可混用或直接比较"——<strong>这是全项目最好的"口径隔离"实践</strong>。</li>
+</ul>
+<p><strong>④ 缺口杠杆与最小可行同质集（数据飞轮的组织方式）</strong></p>
+<ul>
+<li><strong>T2 定理</strong>证明单条声明边际收益恒为 0 ⇒ 取证必须按<strong>同质集（≥2 条）</strong>批量。</li>
+<li><strong>cohort feasibility</strong> 给出答案：<code>K=1</code> 不可能（定义性），<strong><code>K=2</code> 即可</strong>——同质可行对 <strong>46,258 对</strong>（占可行对 29.57%），涉及 <strong>622 个节点</strong>。</li>
+<li><strong>最低成本路径</strong>：缺口画像"只缺 electrical"的 16 个节点（恰好 = MDV 层筛出的 16 个，构成<strong>跨层独立验证</strong>）。</li>
+</ul>
+<h3 id="64">6.4 壁垒的脆弱面（诚实登记）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>脆弱点</th>
+<th>说明</th>
+<th>缓解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>确定性裁决率 0.1%</strong></td>
+<td>214,840 对中 composed=0——判不出"确定肯定"</td>
+<td>战略 A 方案：body 维度 0.1% → 20%+</td>
+</tr>
+<tr>
+<td><strong>三套引擎口径</strong></td>
+<td>产品层四维 / 研究层三轴 / 共装三段，交集有限</td>
+<td><code>dual-engine-bridge.md</code> 已桥接 + CI 新增"双引擎口径桥接一致"闸门；<strong>但仍是文档 + 断言，非可执行桥接工具</strong></td>
+</tr>
+<tr>
+<td><strong>A 级可比条目 = 0</strong></td>
+<td>全库为厂商声明值，非实测；跨厂商不可横比</td>
+<td>定位为 coverage map 而非 benchmark，显式 limitations</td>
+</tr>
+<tr>
+<td><strong>存储 99.1% 满</strong></td>
+<td>Cloudflare Pages 单项目约 1GB</td>
+<td>永远是目录/契约层，raw 数据留外部</td>
+</tr>
+<tr>
+<td><strong>单一维护者</strong></td>
+<td>零预算，总线因子</td>
+<td>方法论沉淀为可复现脚本与留痕文档</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7">7. 最新科技发展跟踪与对位</h2>
+<h3 id="71-vla">7.1 基础模型（VLA / 人形）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>前沿</th>
+<th>2026 进展（本轮核实）</th>
+<th>RoboParts 的应对</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NVIDIA GR00T N1 / N1.5 / N2</strong></td>
+<td>GTC 2026 发布 <strong>GR00T N2</strong>；<strong>GR00T N1.7 开放商用授权早期访问</strong>；配 Cosmos 世界模型 + Newton 物理引擎；<strong>Isaac Teleop + GR00T 1.7 已接入 LeRobot</strong>（2026-07）</td>
+<td>不做部署，做 <strong>VLA ↔ 硬件信号契约</strong>（无人区）</td>
+</tr>
+<tr>
+<td><strong>Gemini Robotics 2</strong></td>
+<td>全身控制 + 22 自由度手 + 跨本体迁移</td>
+<td>同上；已收录为实体（<code>robot_ai_models</code>）</td>
+</tr>
+<tr>
+<td><strong>π0.5 / SmolVLA / Helix</strong></td>
+<td>开源/半开源 VLA 生态成型</td>
+<td>数据格式对齐（LeRobot），薄层切入</td>
+</tr>
+<tr>
+<td><strong>LeRobot 生态</strong></td>
+<td>建在 SO-10X / ALOHA-2 / Koch 等低成本开源硬件之上；与 Open X-Embodiment / DROID 形成大规模采集</td>
+<td><strong>关键机会</strong>：RoboParts 的 868 实体可与 LeRobot 硬件清单建立映射（"这些零件能不能组成一台 LeRobot"）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="72">7.2 仿真与物理验证</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>前沿</th>
+<th>进展</th>
+<th>对位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MuJoCo 3.12</strong></td>
+<td>版本更新，仿真迁移风险前置成为工程关注点</td>
+<td><strong>战略抉择</strong>：RoboParts 明确<strong>不做</strong> MuJoCo 物理验证（roboxdb 领地），只输出结构化契约 JSON 供其消费</td>
+</tr>
+<tr>
+<td><strong>URDF / MJCF / USD 三格式并存</strong></td>
+<td>2026 三大描述格式</td>
+<td>RoboParts 的 <code>lint_urdf</code> 只做<strong>语法 lint</strong>（不查物理合理性），定位清晰</td>
+</tr>
+</tbody>
+</table>
+<h3 id="73-agent">7.3 Agent 基础设施</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>前沿</th>
+<th>进展（本轮核实）</th>
+<th>对位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MCP 2026 路线图</strong></td>
+<td>四大方向：传输层演进 / Agent 通信 / 治理成熟化 / 企业就绪；<strong>2026-07-28 规范转向无状态核心</strong>；新增 <strong>DPoP（Agent Identity WG）</strong> 身份机制</td>
+<td>21 个工具在线；<code>.well-known/mcp.json</code> <strong>踩中</strong>发现机制；⚠️ <strong>DPoP/Agent Identity 是新的合规方向，尚未覆盖</strong></td>
+</tr>
+<tr>
+<td><strong>MCP Registry</strong></td>
+<td>官方注册表成为分发主入口</td>
+<td><code>server.json</code> 已按官方 schema（<code>2025-12-11</code>）提交</td>
+</tr>
+</tbody>
+</table>
+<h3 id="74-v2">7.4 标准（最大机会窗口，V2 大幅扩充）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>标准</th>
+<th>状态（本轮核实）</th>
+<th>对位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ISO 22166-1:2021</strong> 模块化服务机器人框架</td>
+<td>现行标准；修订版 <code>ISO/AWI 22166-1</code> 最终草案 <strong>2026-04-05</strong> 发布（德国主导）</td>
+<td><strong>新认定：最强国际化锚点</strong>（见 §4.3）；实体已含 <code>iso22166_relevant</code> 子字段</td>
+</tr>
+<tr>
+<td><strong>《国家人形机器人产业标准体系建设指南（2026版）》</strong></td>
+<td>工信部 <strong>2026-08</strong> 发布征求意见稿：<strong>6 大板块 / 44 个子类 / 100 项标准目标</strong></td>
+<td>对应 README 目标 2–4；<strong>政策窗口明确</strong></td>
+</tr>
+<tr>
+<td><strong>全球首个人形机器人数据集国际标准</strong></td>
+<td><strong>北自所</strong>牵头立项（2026-04），全球首个</td>
+<td>RoboParts 的 868 实体数据集可作为<strong>中国侧数据格式参考</strong></td>
+</tr>
+<tr>
+<td><strong>GB/T 20255807-T-604</strong> 模块通用信息模型</td>
+<td>审查中（征求意见稿已出）</td>
+<td><code>field-standard-mapping.md</code> 已具<strong>可提交物</strong>形态</td>
+</tr>
+<tr>
+<td><strong>GB/T 20262893-T-604</strong> 模块化通用技术要求</td>
+<td>起草中</td>
+<td>关注征求意见</td>
+</tr>
+<tr>
+<td><strong>GB/T 20255810-T-604</strong> 软件模块信息模型</td>
+<td>审查中</td>
+<td>对应 <code>robot_ai_models</code> 对照</td>
+</tr>
+<tr>
+<td><strong>一体化关节接口标准</strong>（北京人形牵头）</td>
+<td>即将征求意见</td>
+<td>抢首发响应</td>
+</tr>
+<tr>
+<td><strong>GB/T 20255577-T-604</strong> 旋转关节技术要求</td>
+<td>征求意见</td>
+<td>提交字段映射</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>这是当前最大的机会窗口</strong>：把一份私有数据集转成<strong>公共基础设施</strong>。窗口期内对齐 schema 并提交开源实现，可获得"<strong>标准开源参考实现</strong>"身份——信任权重比任何 GEO 内容高一个数量级。<strong>V2 新增：ISO 22166-1 的国际化属性（德国主导、活跃修订）比纯国内标准更适合作为"国际化"叙事的第一锚点。</strong></p>
+</blockquote>
+<h3 id="75">7.5 技术对位总表</h3>
+<blockquote>
+<p>行业正在把流水线串成：<strong>设计（text-to-cad）→ 判定（RoboParts?）→ 物理验证（roboxdb/MuJoCo）→ 训练（LeRobot/GR00T）</strong>。
+RoboParts 占据"判定"环，<strong>上游被 text-to-cad 挤压、下游被 roboxdb 挤压</strong>。
+出路：<strong>把"判定"环做深（三态类型系统 + 共装 + 标准共建），而不是停在中间不动</strong>——这正是 20261011 战略抉择的结论，本轮再次确认其正确性。</p>
+</blockquote>
+<hr />
+<h2 id="8">8. 本轮关键新发现（实测增量）</h2>
+<h3 id="81-p0v1">8.1 ✅ P0｜第一方可见性已修复（V1 最大风险解除）</h3>
+<ul>
+<li><strong>线上实测</strong>（<code>curl roboparts.cc</code>，2026-10-13）：</li>
+<li><code>entities.json</code> = <strong>868</strong> 实体（<strong>与仓内一致</strong>，V1 时为 865）</li>
+<li><code>&lt;title&gt;</code> = <strong>"RoboParts — 具身系统的组合校验层（开源）"</strong>（<strong>新定位已生效</strong>，V1 时为旧定位）</li>
+<li><code>/api/co-mount</code> = <strong>200</strong>（V1 时为 404），返回 3 宿主 × 16 器件 = 360 对共装评估</li>
+<li><code>/server.json</code> = "three-state fail-closed verdicts"（<strong>四维残留已清</strong>）</li>
+<li><strong>判读</strong>：<strong>V1 的头号风险（成果不可见）已被解除。</strong> 这是 24 小时内最大的正向变化。</li>
+</ul>
+<h3 id="82-p0-100">8.2 🔴 P0｜部署自动化仍 100% 失败（但存在手动通路）</h3>
+<ul>
+<li><strong>证据</strong>：GitHub Actions API，<code>Deploy to Cloudflare Pages</code> 最近一次 <code>2026-10-12T15:16:29Z</code> = <strong>failure</strong>；此前多次亦全 <code>failure</code>。</li>
+<li><strong>关键推论</strong>：线上内容是最新的 ⇒ <strong>存在一条绕过 Actions 的手动部署通路</strong>（很可能就是 <code>scripts/deploy.mjs</code>）。<strong>自动化链路从未修通，只是被手动路径掩盖了。</strong></li>
+<li><strong>风险</strong>：只要依赖手动，就永远可能忘记；且 CI 里的"部署后置新鲜度校验"闸门在 Actions 部署失败时<strong>根本没机会跑</strong>。</li>
+<li><strong>建议</strong>：把"手动 deploy.mjs 成功"也纳入闸门（本地部署后自动校验线上新鲜度），并继续修 Actions Secrets/wrangler 配置。</li>
+</ul>
+<h3 id="83-p0git">8.3 🔴 P0｜git 历史分叉扩大</h3>
+<ul>
+<li><strong>证据</strong>：<code>git fetch origin main</code> 后，<code>HEAD..origin/main</code> = <strong>502</strong>、<code>origin/main..HEAD</code> = <strong>331</strong>（V1 为 498 / 327）。</li>
+<li><strong>判读</strong>：两条平行历史在过去 24 小时<strong>各自又新增了提交</strong>——分叉在扩大，不在收敛。</li>
+<li><strong>根因</strong>：此前用 API 推送（<code>_push_head_once.py</code>）创建了与本地不同的 commit 对象。</li>
+<li><strong>建议</strong>：<strong>立即停止 API 推送</strong>；选定一条为权威（建议以远端 GitHub 为准），备份后 <code>git reset --hard origin/main</code>，恢复单一线性历史。</li>
+</ul>
+<h3 id="84">8.4 🟠 中高｜可见性缺口转移到第三方分发面</h3>
+<ul>
+<li><strong>证据</strong>：</li>
+<li>LobeHub 收录页（2026-08-05）：仍写"机器人零件兼容性判定层"——<strong>旧叙事</strong></li>
+<li>ROS Discourse 帖（2026-08-12）：仍写"Structured Dataset &amp; Selection Engine for Bionic Robot Components"——<strong>旧叙事 + 把"仿生"当定位词</strong>（项目自己已否定）</li>
+<li>搜索引擎快照：仍显示旧标题</li>
+<li><strong>判读</strong>：<strong>第一方已改，第三方全未改。</strong> 外部世界看到的第一印象仍是"数据集/选型引擎"——恰恰是项目自判的<strong>伪壁垒叙事</strong>。</li>
+<li><strong>建议</strong>：把新定位推回所有第三方收录页；在第三方页面显式引用 ISO 22166-1。</li>
+</ul>
+<h3 id="85">8.5 🟠 中｜机器可读清单出现陈旧数字（自身不一致）</h3>
+<ul>
+<li><strong>证据</strong>（<code>llms.txt</code> 现读 vs 现算）：</li>
+</ul>
+<table class="tbl">
+<thead>
+<tr>
+<th>llms.txt 声称</th>
+<th>现算实测</th>
+<th>偏差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tier A <strong>419 条（48.44%）</strong></td>
+<td>Tier A <strong>472 条（54.4%）</strong></td>
+<td>❌ 差 53 条</td>
+</tr>
+<tr>
+<td><strong>40 项</strong> CI 闸门</td>
+<td><strong>43 项</strong></td>
+<td>❌ 差 3 项</td>
+</tr>
+<tr>
+<td>最后更新 <strong>2026-10-08T04:16</strong></td>
+<td><code>entities.meta.updated</code> = <strong>2026-10-08T22:36</strong></td>
+<td>❌ 差 18 小时</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>判读</strong>：对一个以"可核验性优先于数量宣称"为核心价值的项目，<strong>机器可读清单自己出现陈旧数字</strong>是最不该的——因为 Agent 会直接采信 <code>llms.txt</code>。</li>
+<li><strong>建议</strong>：把 <code>llms.txt</code> 的这些数字改为<strong>现算注入</strong>（与 <code>README</code> 派生同机制），纳入 CI 断言。</li>
+</ul>
+<h3 id="86-electrical_interfaces">8.6 🟡 低中｜字段覆盖口径歧义（<code>electrical_interfaces</code>）</h3>
+<ul>
+<li><strong>证据</strong>：<code>field-standard-mapping.md</code> §一 称"有 <code>electrical_interfaces</code> | 122（14.1%）"，但 <code>entities.json</code> <strong>无此字段</strong>；实际电气相关键为 <code>connector</code> 32 / <code>voltage</code> 42 / <code>electrical_interface</code> 3。122 应来自独立产物 <code>api/electrical_interfaces.json</code>（v0.1.0）。</li>
+<li><strong>判读</strong>：<strong>字段名与独立产物同名</strong>，读者必然误读为"14.1% 实体声明了电气接口"，而 <code>entities.json</code> 层面电气覆盖实际远低于此。</li>
+<li><strong>建议</strong>：改名为 <code>electrical_interfaces.json 覆盖实体数</code>，或在表中标注来源文件。</li>
+</ul>
+<h3 id="87">8.7 ✅ 正向｜共装判定产品化上线</h3>
+<ul>
+<li>线上 <code>/api/co-mount</code> 已上线（200），带<strong>自解释的口径隔离 warning</strong>，返回三段共装判定 + <code>port_exhausted</code> 新 verdict。这是"判定层做深"战略的第一个对外可见成果。</li>
+</ul>
+<hr />
+<h2 id="9-v2">9. 提升方案（V2 修订版）</h2>
+<blockquote>
+<p><strong>与 V1 的差异</strong>：V1 的 P0 中"让世界看得见"的第一方动作<strong>已完成</strong>。V2 的 P0 收缩为<strong>两个基础设施硬骨头</strong> + <strong>第三方同步</strong>。</p>
+</blockquote>
+<h3 id="91-p0">9.1 P0 · 基础设施与一致性（本周）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>成本</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>修 git 历史分叉</strong>（备份 → 以远端为准 reset → 恢复线性）</td>
+<td>30 分钟</td>
+<td><code>git rev-list --count origin/main..HEAD</code> = 0</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>修 Actions 部署</strong>（检查 Secrets / wrangler-action 版本 / 项目名）</td>
+<td>1–2 小时</td>
+<td><code>deploy.yml</code> 出现至少 1 次 <code>success</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>把"手动部署"也纳入新鲜度闸门</strong>（本地 deploy 后 curl 校验线上 <code>updated</code>）</td>
+<td>1 小时</td>
+<td>人为让线上陈旧 → 闸门判红</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>修正 <code>llms.txt</code> 陈旧数字</strong>（Tier A 419→472、40→43 闸门、更新时间）</td>
+<td>30 分钟</td>
+<td><code>llms.txt</code> 数字与现算一致，且改为注入</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>第三方分发面反向同步</strong>（LobeHub / ROS Discourse / Glama / Smithery 新定位）</td>
+<td>1–2 小时</td>
+<td>第三方页面标题含"组合校验层"</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong><code>electrical_interfaces</code> 口径改名</strong>（消除字段/产物同名歧义）</td>
+<td>15 分钟</td>
+<td><code>field-standard-mapping.md</code> 无歧义表述</td>
+</tr>
+</tbody>
+</table>
+<h3 id="92-p1">9.2 P1 · 差异化护城河（本月）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>战略意图</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>composed 攻关</strong>：body 维度确定性裁决率 0.1% → 20%+</td>
+<td>战略 A 方案核心指标</td>
+<td><code>research_progress.json</code> body ≥ 20%</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>电气取证同质集</strong>（cohort 画像①，16 节点）批量补齐 + 登记 <code>type_compat</code></td>
+<td>解锁首批可判定对</td>
+<td>单轴缺口对数量下降</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>双引擎桥接升级为可执行工具</strong>（<code>scripts/dual_engine_bridge.mjs</code>）</td>
+<td>消除 Agent 口径困惑（目前只有文档 + 断言）</td>
+<td>有可执行桥接工具 + 口径隔离说明</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>ISO 22166-1 国际化锚点叙事落地</strong>（对外文案 + 第三方页面引用）</td>
+<td>把"手里有牌"打出去</td>
+<td>官网/清单/GitHub 均出现 ISO 22166-1</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>国标对照表落地为可提交物</strong> + 字段挂标准号（additive）</td>
+<td>抢占国标开源参考实现位</td>
+<td>可提交材料包（含 entities 快照）</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>论文投出</strong>（arXiv 预印本优先，补 <code>TODO_email</code> + <code>TODO_affiliation</code>）</td>
+<td>学术背书，最高 ROI；<strong>V1→V2 唯一完全冻结项</strong></td>
+<td>arXiv 编号 / Mechatronics 投稿回执</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>跑通一条真实 STEP 导出 + 干涉检查</strong></td>
+<td>把"可打印可信"从承诺变交付</td>
+<td><code>adapters/</code> 出现可交付 STEP</td>
+</tr>
+</tbody>
+</table>
+<h3 id="93-p2">9.3 P2 · 生态与国际化（本季）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>GitHub Action 实跑一次</strong>（在真实开源机器人仓库引用并留 run 链接）</td>
+<td>一个真实 run 链接胜过十页白皮书</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>与 text-to-cad 建立互补链接</strong>（生成 → 判定）</td>
+<td>上游卡位（V1 提出，<strong>至今未执行</strong>）</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>与 LeRobot 硬件清单建立映射</strong>（"这些零件能不能组成一台 LeRobot"）</td>
+<td>切入最热生态</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>数据集挂 HuggingFace + Zenodo DOI</strong></td>
+<td>拿引用信号</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Action 上架 GitHub Marketplace</strong></td>
+<td>零成本触达所有开源机器人仓库</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Claude Connectors / Coze 上架</strong></td>
+<td>补 L3 最大缺口（需用户账号）</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>MCP 匿名调用遥测</strong></td>
+<td>从"有工具"到"有用户"的唯一桥</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>品牌风险处置</strong>：统一对外 "RoboParts.cc" + 标题带"组合校验"</td>
+<td>规避 Amazon Roboparts® 撞名</td>
+</tr>
+</tbody>
+</table>
+<h3 id="94-30-60-90-v2">9.4 30 / 60 / 90 天路线（V2 修订）</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>周期</th>
+<th>目标</th>
+<th>关键动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>30 天</strong></td>
+<td><strong>让可见可持续、可一致</strong></td>
+<td>修 git 分叉 → 修 Actions 部署 → 手动部署纳入闸门 → 修 <code>llms.txt</code> 陈旧数字 → 第三方同步</td>
+</tr>
+<tr>
+<td><strong>60 天</strong></td>
+<td><strong>把真壁垒做深</strong></td>
+<td>composed 攻关（0.1%→20%）→ 电气取证同质集 → ISO 22166-1 叙事 → 国标对照表提交 → 论文投出</td>
+</tr>
+<tr>
+<td><strong>90 天</strong></td>
+<td><strong>建立生态位</strong></td>
+<td>Action 实跑 + 上架 → text-to-cad / LeRobot 互补链接 → 数据集挂 HF/Zenodo → 成为"编译期类型检查器"事实标准</td>
+</tr>
+</tbody>
+</table>
+<h3 id="95">9.5 国际化专项</h3>
+<table class="tbl">
+<thead>
+<tr>
+<th>动作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>以 ISO 22166-1 为第一锚点，ISO 9409-1 为第二锚点</strong></td>
+<td>ISO 22166-1 是德国主导的模块化框架国际标准，<strong>比纯机械法兰标准更贴合"组合"内核</strong></td>
+</tr>
+<tr>
+<td><strong>机器可读清单为定位真相源</strong></td>
+<td><code>server.json</code> / <code>llms.txt</code> 质量高于人类页面，<strong>反向同步</strong>所有人类页面与第三方收录页</td>
+</tr>
+<tr>
+<td><strong>英文技术博客 3 篇</strong></td>
+<td>"为什么我们拒绝编数据""单声明零收益定理""M8 不是一种连接器" → ROS Discourse / HN / Reddit r/robotics</td>
+</tr>
+<tr>
+<td><strong>标准共建走国际+国内双线</strong></td>
+<td>国际：ISO 22166-1 开源实现参考 + ISO 9409-1 判定语法；国内：GB/T 20255807-T-604 开源参考实现</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10">10. 风险与诚实边界</h2>
+<table class="tbl">
+<thead>
+<tr>
+<th>风险</th>
+<th>严重度</th>
+<th>说明与缓解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>部署自动化仍 100% 失败</strong></td>
+<td>🔴 高</td>
+<td>站点靠手动路径更新；缓解：修 Secrets + 把手动部署纳入闸门</td>
+</tr>
+<tr>
+<td><strong>git 历史分叉扩大</strong></td>
+<td>🔴 高</td>
+<td>502/331 且继续生长；缓解：停止 API 推送，以远端为准 reset</td>
+</tr>
+<tr>
+<td><strong>第三方仍是旧叙事</strong></td>
+<td>🟠 中高</td>
+<td>外部第一印象 = "数据集/选型引擎"（伪壁垒叙事）；缓解：反向同步</td>
+</tr>
+<tr>
+<td><strong>竞品 roboxdb 物理验证领先</strong></td>
+<td>🟠 中高</td>
+<td>已用战略抉择划界；缓解：把判定做深（共装已上线）</td>
+</tr>
+<tr>
+<td><strong>市场验证为零</strong></td>
+<td>🟠 中高</td>
+<td>0 star / 0 fork / 0 issue；缓解：Action 实跑 + 标准共建 + 论文</td>
+</tr>
+<tr>
+<td><strong>论文未投出（V1→V2 冻结）</strong></td>
+<td>🟠 中高</td>
+<td>最高 ROI 资产停滞；缓解：arXiv 预印本先占时间戳</td>
+</tr>
+<tr>
+<td><strong>机器可读清单自身陈旧</strong></td>
+<td>🟠 中</td>
+<td><code>llms.txt</code> Tier A / 闸门数 / 更新时间均陈旧；缓解：改注入 + CI 断言</td>
+</tr>
+<tr>
+<td><strong>数据质量质疑</strong></td>
+<td>🟠 中</td>
+<td>全库声明值、A 级可比 0；缓解：定位为 coverage map，显式 limitations</td>
+</tr>
+<tr>
+<td><strong>三套引擎口径</strong></td>
+<td>🟡 低中</td>
+<td>四维/三轴/共装三段；缓解：桥接文档 + 闸门 + 工具化</td>
+</tr>
+<tr>
+<td><strong>存储天花板</strong></td>
+<td>🟠 中</td>
+<td>~1GB 已 99.1% 满；缓解：永远是目录/契约层</td>
+</tr>
+<tr>
+<td><strong>单一维护者 / 总线因子</strong></td>
+<td>🟠 中</td>
+<td>零预算；缓解：方法论沉淀为可复现脚本与留痕文档</td>
+</tr>
+<tr>
+<td><strong>品牌名冲突</strong></td>
+<td>🟠 中</td>
+<td>Amazon 西班牙站 Roboparts®；缓解：统一 "RoboParts.cc"</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>诚实边界</strong>：
+1. 本报告仓内数字均为 2026-10-13 实测、可复现；线上/GitHub 数字为回探时点快照。
+2. 竞品能力判断基于公开页面与检索摘要，<strong>未逐工具实测</strong>。
+3. 本仓无国标/ISO 原文，标准映射粒度受限于公开征求意见稿与标准摘要页，<strong>非条款级一致</strong>，不构成合规声明。
+4. <code>llms.txt</code> 等文档中与本报告不符的数字，<strong>以本报告实测为准</strong>（本报告所有数字均给出复现命令或来源）。
+5. "30/60/90 天"为行动建议，非承诺。</p>
+</blockquote>
+<hr />
+<h2 id="11">11. 结论</h2>
+<blockquote>
+<p><strong>V1 说：先让世界看得见。V2 说：世界已经看见了——但看到的还不是最新的那句话。</strong>
+过去 24 小时，项目把<strong>第一方可见性</strong>这个头号风险基本解除：官网刷新到最新定位、最新数据、共装判定上线、机器可读清单口径统一。这是真实的进步。
+但<strong>两个基础设施硬骨头没啃</strong>（部署自动化 100% 失败、git 分叉扩大到 502/331），而<strong>可见性缺口从第一方转移到了第三方</strong>——LobeHub、ROS Discourse、搜索快照仍全部停留在"数据集/选型引擎"的<strong>旧叙事</strong>，而那恰是项目自判的<strong>伪壁垒</strong>。</p>
+</blockquote>
+<p><strong>下一步三件事，顺序不可颠倒：</strong></p>
+<ol>
+<li><strong>修基础设施</strong>（P0）：停止 API 推送 → 修 git 分叉 → 修 Actions 部署 → 手动部署纳入闸门。</li>
+<li><strong>修一致性</strong>（P0）：<code>llms.txt</code> 陈旧数字改注入 → 第三方分发面反向同步新定位。</li>
+<li><strong>把真壁垒做深</strong>（P1）：composed 攻关（0.1%→20%）+ 电气取证同质集 + <strong>ISO 22166-1 国际化锚点叙事</strong> + 论文投出。</li>
+</ol>
+<blockquote>
+<p>一句话收束：<strong>第一方已亮灯，下一步是让灯一直亮着（自动化），并让所有人都看到同一盏灯（一致性）。</strong></p>
+</blockquote>
+<hr />
+<p><em>本报告基于 2026-10-13 对 <code>C:\Users\xing\Desktop\robopart</code> 全仓（11,000+ 文件）的静态扫描、产物现算（<code>api/*.json</code>）、线上回探（<code>curl roboparts.cc</code>）、GitHub REST API 回探，以及 2026 年国际竞品（roboxdb / text-to-cad / robotic-infrastructure / TraceParts / Octopart）、国际与国内标准（ISO 22166-1 / ISO 9409-1 / GB/T 20255807-T-604 / 工信部 2026 版标准体系指南）、最新技术（GR00T N1.7-N2 / Isaac Teleop / LeRobot / MuJoCo 3.12 / MCP 2026 路线图）的联网核实撰写。仓内数字均可用对应脚本复现；线上与 GitHub 数字为回探时点快照。</em></p>
+<p><em>报告性质：评估与提升方案，不构成合规声明、标准符合性声明或投资建议。</em></p>
+<hr style="margin:48px 0 18px;border:none;border-top:1px solid #e3e8ef">
+<p style="color:#5b6779;font-size:13px">本报告基于 2026-10-13 对全仓的静态扫描、产物现算、线上回探、GitHub REST API 回探，以及国际竞品、国际/国内标准与 2026 最新技术的联网核实撰写。报告性质：评估与提升方案，不构成合规声明、标准符合性声明或投资建议。</p>
+</div>
+</body>
+</html>
