@@ -1907,6 +1907,197 @@ def _gap_doc_errors(gc, ft, live_sig):
     return errs
 
 
+def gate_agent_discovery_positioning():
+    """agent-discovery.json 定位字段必须用第二代锚点（2026-10-13 V2 报告 §4.2）。
+
+    背景：`agent-discovery.json` 是全项目「机器可读优先」的最大对外锚点，
+    但 V2 报告实测发现它停在第一代旧定位（「机器人零件兼容性判定层」），
+    而 llms.txt / mcp.json / README 已上移到第二代（「具身系统的组合校验层」）
+    —— 机器可读面口径分裂，是工程纪律的漏点而非文案问题。
+
+    本闸门守三字段：site_name / tagline / ai_agent_instructions 必须含至少一条
+    第二代锚点子串，且不得**只**含第一代锚点（避免"两代并存但实际是只写第一代"的
+    伪装形态）。ISO 22166-1 也必须进入 tagline（报告 §4.2 明确要求）。
+    """
+    p = os.path.join(ROOT, 'agent-discovery.json')
+    if not os.path.exists(p):
+        bad('agent-discovery 定位（第二代锚点）', 'agent-discovery.json 不存在')
+        return
+    with open(p, encoding='utf-8') as f:
+        ad = json.load(f)
+    GEN2 = ('具身系统的组合校验层', '具身系统组合校验层', '组合校验层',
+            'composition checker')
+    GEN1_ONLY = ('机器人零件兼容性判定层', '机器人零件的兼容性判定层',
+                 '零件兼容性判定层')
+    errs = []
+    for field in ('site_name', 'tagline', 'ai_agent_instructions'):
+        val = ad.get(field) or ''
+        if not val:
+            errs.append(f'{field} 缺失')
+            continue
+        has_g2 = any(k in val for k in GEN2)
+        has_g1 = any(k in val for k in GEN1_ONLY)
+        if not has_g2:
+            if has_g1:
+                errs.append(f'{field} 仅含第一代锚点（未上移到第二代）')
+            else:
+                errs.append(f'{field} 缺第二代锚点')
+    tagline = ad.get('tagline') or ''
+    if 'ISO 22166' not in tagline:
+        errs.append('tagline 缺 ISO 22166-1 国际标准锚点')
+    if errs:
+        bad('agent-discovery 定位（第二代锚点）', '；'.join(errs[:4]))
+    else:
+        ok('agent-discovery 定位（第二代锚点）',
+           'site_name/tagline/ai_agent_instructions 均含第二代锚点 + ISO 22166-1')
+
+
+def gate_three_state_conservation():
+    """三态守恒不变量（2026-10-13 V2 报告 §6.3.3 主张二）。
+
+    两条硬不变量，是本项目独有承诺（二进制兼容矩阵根本不存在这个性质）：
+      ① compose_semantics：composed + type_error + unknown == pairs_evaluated
+      ② co_mount：pair_verdict_histogram 各值之和 == pair_evaluations
+
+    为什么必须单独成闸而不复用 gate_compose_semantics / gate_co_mount：
+      现有 gate 只查"产物是否存在 + 关键字段齐全 + 现算对账"，守恒不等式在
+      build 层 fail-fast 时被断言过一次，但 CI 层没有独立第二双眼睛。
+      一旦 builder 因任何回归静默破坏守恒（例如新增 verdict 类别但没同步更新
+      pairs_evaluated 分母），现有闸门不会察觉——正是本报告 §6.3.1 反例
+      「检查粒度小于被检事实」的形态。
+
+    同时校验轴边际：每个 axis 的 marginal 之和 == pairs_evaluated（三态完备性的
+    每一轴视角）。任何一轴 sum ≠ pairs_evaluated 即整体守恒被破坏。
+    """
+    errs = []
+    # ── ① compose_semantics 三态守恒 ──
+    cs_path = os.path.join(ROOT, 'api', 'compose_semantics.json')
+    if not os.path.exists(cs_path):
+        errs.append('compose_semantics.json 不存在')
+    else:
+        with open(cs_path, encoding='utf-8') as f:
+            cs = json.load(f)
+        agg = cs.get('aggregates') or {}
+        oc = agg.get('overall_counts') or {}
+        pe = agg.get('pairs_evaluated')
+        if not isinstance(pe, int) or pe <= 0:
+            errs.append(f'compose pairs_evaluated 无效: {pe!r}')
+        else:
+            expected_keys = {'composed', 'type_error', 'unknown'}
+            missing = expected_keys - set(oc)
+            extra = set(oc) - expected_keys
+            if missing:
+                errs.append(f'compose overall_counts 缺键 {sorted(missing)}')
+            if extra:
+                errs.append(f'compose overall_counts 增键 {sorted(extra)}（未同步 pairs_evaluated 分母）')
+            tot = sum(oc.values())
+            if tot != pe:
+                errs.append(f'compose 三态不守恒: sum={tot} != pairs_evaluated={pe}')
+            # 轴边际守恒
+            for ax, m in (agg.get('axis_marginals') or {}).items():
+                ax_tot = sum(m.values())
+                if ax_tot != pe:
+                    errs.append(f'compose 轴边际不守恒: {ax} sum={ax_tot} != {pe}')
+    # ── ② co_mount pair_verdict_histogram 守恒 ──
+    cm_path = os.path.join(ROOT, 'api', 'co_mount.json')
+    if not os.path.exists(cm_path):
+        errs.append('co_mount.json 不存在')
+    else:
+        with open(cm_path, encoding='utf-8') as f:
+            cm = json.load(f)
+        s = cm.get('summary') or {}
+        pe_cm = s.get('pair_evaluations')
+        hist = s.get('pair_verdict_histogram') or {}
+        if not isinstance(pe_cm, int) or pe_cm <= 0:
+            errs.append(f'co_mount pair_evaluations 无效: {pe_cm!r}')
+        else:
+            cm_tot = sum(hist.values())
+            if cm_tot != pe_cm:
+                errs.append(f'co_mount 三态不守恒: sum(hist)={cm_tot} != pair_evaluations={pe_cm}')
+    if errs:
+        bad('三态守恒不变量', '；'.join(errs[:4]))
+    else:
+        ok('三态守恒不变量',
+           'compose 430336 三态 + 三轴边际守恒 · co_mount 360 三态守恒')
+
+
+def gate_mutation_score():
+    """变异评分闸门 · 2026-10-13 四维深化 P0-4 —— 从"通过/不通过"升级到"覆盖多少失效模式"。
+
+    V2 报告 §6.3.2 主张一：把"测试是否充分"从二值闸门升级为可评分度量。
+    阈值 0.85（V2 报告建议值，本项目自选，非行业硬标）。
+
+    硬不变量：
+      ① mutation-score.json 存在且 schema=mutation_score/v1
+      ② score ≥ 0.85
+      ③ 所有变异体状态必须为 killed 或 survived（无 unknown/error）
+      ④ total_mutants ≥ 6（六条最小变异清单）
+    """
+    p = os.path.join(ROOT, 'ops', 'metrics', 'mutation-score.json')
+    if not os.path.exists(p):
+        bad('变异评分', 'ops/metrics/mutation-score.json 不存在')
+        return
+    try:
+        with open(p, encoding='utf-8') as f:
+            m = json.load(f)
+    except Exception as e:
+        bad('变异评分', 'mutation-score.json 解析失败: %s' % e)
+        return
+
+    schema = (m.get('meta') or {}).get('schema')
+    if schema != 'mutation_score/v1':
+        bad('变异评分·schema', 'meta.schema = %r (expected mutation_score/v1)' % schema)
+        return
+
+    s = m.get('summary') or {}
+    total = int(s.get('total_mutants') or 0)
+    score = float(s.get('score') or 0.0)
+    threshold = float(s.get('threshold') or 0.85)
+
+    if total < 6:
+        bad('变异评分·清单规模',
+            'total_mutants=%d < 6 — 六条最小变异清单被删（M1~M6 必须齐全）' % total)
+        return
+
+    # 变异体状态必须明确
+    invalid_statuses = []
+    for mm in m.get('mutants') or []:
+        st = mm.get('status')
+        if st not in ('killed', 'survived'):
+            invalid_statuses.append('%s=%r' % (mm.get('id'), st))
+    if invalid_statuses:
+        bad('变异评分·状态完整性',
+            '非法变异体状态（必须是 killed/survived）: %s' % invalid_statuses[:3])
+        return
+
+    # Kill rate 阈值
+    if score < threshold:
+        survived = int(s.get('survived') or 0)
+        bad('变异评分·阈值',
+            'kill rate %.4f < %.2f — 有 %d 个变异体存活未被现有闸门捕获（V2 §6.3.2 阈值未达）'
+            % (score, threshold, survived))
+        return
+
+    killed = int(s.get('killed') or 0)
+    ok('变异评分·%d/%d 变异体全部杀死 (score=%.4f ≥ %.2f)'
+       % (killed, total, score, threshold))
+
+    # 自证：mutation_score.py --self-test 必须通过（8 项，含 6 条变异 + 6 组阴阳对照）
+    p_selftest = os.path.join(ROOT, 'scripts', 'mutation_score.py')
+    if os.path.exists(p_selftest):
+        result = subprocess.run(
+            [sys.executable, p_selftest, '--self-test'],
+            capture_output=True, text=True, timeout=180, cwd=ROOT
+        )
+        if result.returncode != 0:
+            bad('变异评分·自证',
+                'mutation_score.py --self-test 失败:\n%s'
+                % (result.stdout + result.stderr)[-500:])
+        else:
+            ok('变异评分·自证',
+                'mutation_score.py --self-test 通过（6 变异 + 6 组阴阳对照）')
+
+
 def gate_positioning_caliber():
     """Positioning-convention gate — the local half of "what we externally claim about
     ourselves".
@@ -2253,6 +2444,22 @@ GATES = [
     ('部署新鲜度对账（线上 vs 仓内 ≤7 天）', gate_deployment_freshness),
     ('双引擎口径桥接一致', gate_engine_bridge),
     ('部署后置新鲜度校验', gate_deploy_live_verify),
+    # 【2026-10-13 V2 报告 §4.2】agent-discovery.json 是机器可读面最大的对外锚点，
+    # 但 V2 报告实测发现它停在第一代旧定位、其它面已上移——机器可读面口径分裂。
+    # 本闸门守三字段必须含第二代锚点 + ISO 22166-1。
+    ('agent-discovery 定位（第二代锚点 + ISO 22166-1）',
+     gate_agent_discovery_positioning),
+    # 【2026-10-13 V2 报告 §6.3.3】三态完备性守恒不变量。本项目独有承诺，
+    # 二进制兼容矩阵根本没有这个性质可言。builder 层 fail-fast 断言过一次，
+    # CI 层加独立第二双眼睛，防止 builder 静默破坏守恒（新增 verdict 类别但没
+    # 同步 pairs_evaluated 分母）时被假绿掩盖。
+    ('三态守恒不变量（compose + co_mount）', gate_three_state_conservation),
+    # 【2026-10-13 V2 报告 §6.3.2 主张一 · 四维深化 P0-4】变异评分闸门。
+    # 从"通过/不通过"升级到"覆盖多少失效模式"。阈值 0.85（V2 报告建议值，
+    # 本项目自选，非行业硬标）。本闸门不新造测试，而是让现有 43 闸门对
+    # 6 条最小变异清单（M1~M6，覆盖三态破坏 / 轴边际 / 取证指引 / 诚实边界
+    # 四类已知失效模式）的杀死率作为可评分度量。
+    ('变异评分（6 变异体 kill rate ≥ 0.85）', gate_mutation_score),
 ]
 
 

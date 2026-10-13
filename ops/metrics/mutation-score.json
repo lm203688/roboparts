@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "schema": "mutation_score/v1",
+    "title": "RoboParts 变异评分试点",
+    "generated_at": "2026-10-13T13:54:00+08:00",
+    "generated_by": "scripts/mutation_score.py",
+    "anchor": "docs/RoboParts-下一阶段前沿提升方案报告-四维深化-20261013.md §6.3.2",
+    "threshold": 0.85,
+    "threshold_rationale": "V2 报告 §6.3.2 建议阈值；本项目自选，非行业硬标。",
+    "honest_limits": [
+      "变异体清单是**已知失效模式**的最小集合（6 条），非穷举。",
+      "变异体作用点在**产物层**（compose_semantics.json），不直接证明\"引擎层变异能否被捕获\"。S2 抽出 compose_core 后升级。",
+      "评分 ≥ 0.85 只保证\"产物级已知失效模式\"的覆盖面，不保证\"未知失效模式\"的覆盖面。",
+      "本试点是**度量工具**，不是 CI 阻塞（默认阈值不达也返回 0；--ci 模式下才阻塞）。"
+    ]
+  },
+  "summary": {
+    "total_mutants": 6,
+    "evaluated": 6,
+    "killed": 6,
+    "survived": 0,
+    "score": 1.0,
+    "threshold": 0.85,
+    "pass_threshold": true
+  },
+  "mutants": [
+    {
+      "id": "M1",
+      "desc": "compose.overall.composed += 1",
+      "target": "compose_semantics.json",
+      "status": "killed"
+    },
+    {
+      "id": "M2",
+      "desc": "compose.overall.type_error += 1",
+      "target": "compose_semantics.json",
+      "status": "killed"
+    },
+    {
+      "id": "M3",
+      "desc": "compose.axis.mechanical.compatible × 2",
+      "target": "compose_semantics.json",
+      "status": "killed"
+    },
+    {
+      "id": "M4",
+      "desc": "compose.aggregates.gap_distance 清空",
+      "target": "compose_semantics.json",
+      "status": "killed"
+    },
+    {
+      "id": "M5",
+      "desc": "compose.meta.honest_limits 追加伪造\"已完成\"声明",
+      "target": "compose_semantics.json",
+      "status": "killed"
+    },
+    {
+      "id": "M6",
+      "desc": "compose.aggregates.pairs_evaluated - 1（分母缩小）",
+      "target": "compose_semantics.json",
+      "status": "killed"
+    }
+  ]
+}

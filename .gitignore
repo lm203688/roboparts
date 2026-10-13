@@ -55,6 +55,11 @@ temp/
 .workbuddy-ai/**
 ops/
 ops/**
+# Exception: mutation score is a public-facing credibility signal (CI gate 45 硬依赖，
+# 2026-10-13 四维深化 P0-4)。ops/ 整体排除为默认，但 mutation-score.json 必须入库
+# 供 CI gate + research_progress.cross_cutting_signals 引用。
+!ops/metrics/
+!ops/metrics/mutation-score.json
 
 # Project-local analysis artifacts & dataset tooling (not served by the site)
 mcp-server/
