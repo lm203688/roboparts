@@ -212,7 +212,7 @@ def render_smithery(f, cats):
         f"{f['total_entities']} 实体、{cats} 个品类，支持三态 fail-closed 兼容判定"
         f"（研究层三轴类型系统：机械/电气/信号；产品层四维查询：协议/电气/机械/软件）。",
         "中立数据层：既不生产也不转售任何零部件；兼容性结论基于厂商公开声明字段的规则推断",
-        "而非实测，未声明维度显式标为「无法判定」。真正的护城河是判定引擎 + 三条定理 + 43 项 CI 闸门。国际标准锚点：ISO 9409-1 + ISO 22166-1（模块化框架，ISO/AWI 22166-1 FDIS 2026-04-05）。",
+        "而非实测，未声明维度显式标为「无法判定」。真正的护城河是判定引擎 + 三条定理 + 46 项 CI 闸门。国际标准锚点：ISO 9409-1 + ISO 22166-1（模块化框架，ISO/AWI 22166-1 FDIS 2026-04-05）。",
     ])
     return SMITHERY_TEMPLATE.format(
         site=SITE,
@@ -243,7 +243,7 @@ def render_well_known(f, tools):
                     f"{f['software_entities']} AI 模型软件 / {f['organization_entities']} 企业主体 / "
                     f"{f['market_intelligence_entities']} 市场情报）。"
                     "中立数据层 —— 既不生产也不转售任何零部件；"
-                    "真正的护城河是判定引擎 + 三条定理 + 43 项 CI 闸门。国际标准锚点：ISO 9409-1 + ISO 22166-1（模块化框架，ISO/AWI 22166-1 FDIS 2026-04-05）。"
+                    "真正的护城河是判定引擎 + 三条定理 + 46 项 CI 闸门。国际标准锚点：ISO 9409-1 + ISO 22166-1（模块化框架，ISO/AWI 22166-1 FDIS 2026-04-05）。"
                 ),
                 "transport": "streamable-http",
                 "url": f"{SITE}/mcp",

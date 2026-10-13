@@ -44,7 +44,7 @@
       "B": 246,
       "C": 150
     },
-    "updated": "2026-10-13T14:25:10+0800",
+    "updated": "2026-10-13T14:55:48+0800",
     "generated_by": "scripts/sync_dataset_dist.py",
     "truth_source": "api/entities.json"
   },
@@ -23720,8 +23720,8 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0010",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "RPLAT-010",
-      "quarantine_reason": "Duplicate of RPLAT-010 (Tesla Optimus Gen 3) - same name/manufacturer, deduplication isolation per 2026-10-08 audit"
+      "quarantine_reason": "Duplicate of RPLAT-010 (Tesla Optimus Gen 3) - same name/manufacturer, deduplication isolation per 2026-10-08 audit",
+      "duplicate_of": "RPLAT-010"
     },
     {
       "id": "RPLAT-010",

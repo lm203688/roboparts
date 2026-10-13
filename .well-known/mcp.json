@@ -4,7 +4,7 @@
     {
       "name": "roboparts",
       "title": "RoboParts 具身系统组合校验层",
-      "description": "面向开源机器人构建者的组合校验层（vendor-neutral composition checker for embodied systems）：判定零件能否装配/共装/互换，输出可核验的三态结论（能/不能/不知道），生成可 3D 打印转接件。868 实体（659 实物零部件 / 101 接口规范 / 81 AI 模型软件 / 10 企业主体 / 17 市场情报）。中立数据层 —— 既不生产也不转售任何零部件；真正的护城河是判定引擎 + 三条定理 + 43 项 CI 闸门。国际标准锚点：ISO 9409-1 + ISO 22166-1（模块化框架，ISO/AWI 22166-1 FDIS 2026-04-05）。",
+      "description": "面向开源机器人构建者的组合校验层（vendor-neutral composition checker for embodied systems）：判定零件能否装配/共装/互换，输出可核验的三态结论（能/不能/不知道），生成可 3D 打印转接件。868 实体（659 实物零部件 / 101 接口规范 / 81 AI 模型软件 / 10 企业主体 / 17 市场情报）。中立数据层 —— 既不生产也不转售任何零部件；真正的护城河是判定引擎 + 三条定理 + 46 项 CI 闸门。国际标准锚点：ISO 9409-1 + ISO 22166-1（模块化框架，ISO/AWI 22166-1 FDIS 2026-04-05）。",
       "transport": "streamable-http",
       "url": "https://roboparts.cc/mcp",
       "authentication": "none",
