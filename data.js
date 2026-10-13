@@ -1,5 +1,5 @@
 const DB = {
-  "updated": "2026-10-08T22:36:22.135323Z",
+  "updated": "2026-10-13T06:25:15.790731Z",
   "stats": {
     "actuators": 222,
     "sensors": 95,
@@ -32258,8 +32258,8 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0010",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "RPLAT-010",
-      "quarantine_reason": "Duplicate of RPLAT-010 (Tesla Optimus Gen 3) - same name/manufacturer, deduplication isolation per 2026-10-08 audit"
+      "quarantine_reason": "Duplicate of RPLAT-010 (Tesla Optimus Gen 3) - same name/manufacturer, deduplication isolation per 2026-10-08 audit",
+      "duplicate_of": "RPLAT-010"
     },
     {
       "id": "RPLAT-010",

@@ -642,6 +642,61 @@ def _access_block():
 if __name__ == "__main__":
     out = build()
     out["meta"]["access"] = _access_block()
+
+    # 【2026-10-13 四维深化 P2-1】注入变异评分为跨维度工程信号。
+    # 变异率度量测试套件对已知失效模式的覆盖，跨四维——不归属任何单一维度，
+    # 故独立成段 cross_cutting_signals，不进四维评分。
+    _mut_path = os.path.join(ROOT, "ops", "metrics", "mutation-score.json")
+    if os.path.exists(_mut_path):
+        try:
+            with open(_mut_path, encoding="utf-8") as _mf:
+                _mut = json.load(_mf)
+            _ms = _mut.get("summary") or {}
+            out["cross_cutting_signals"] = {
+                "title": "跨维度工程信号（不进四维评分，作为独立可信指标）",
+                "rationale": (
+                    "变异率度量的是测试套件对已知失效模式的覆盖，跨四维——"
+                    "不归属任何单一维度，故独立成段。"
+                ),
+                "anchor": (
+                    "docs/RoboParts-下一阶段前沿提升方案报告-四维深化-20261013.md §6.3.2 主张一"
+                ),
+                "mutation_score": {
+                    "value": _ms.get("score"),
+                    "threshold": _ms.get("threshold"),
+                    "pass": _ms.get("pass_threshold"),
+                    "killed": _ms.get("killed"),
+                    "total_mutants": _ms.get("total_mutants"),
+                    "source": "ops/metrics/mutation-score.json",
+                    "honest_limits": [
+                        "变异体作用点在产物层（compose_semantics.json），"
+                        "S2 抽出 compose_core 后可升级到引擎层",
+                        "6 条最小变异清单覆盖已知失效模式"
+                        "（三态破坏/轴边际/取证指引/诚实边界），非穷举",
+                        "阈值 0.85 是 V2 报告建议值，本项目自选，非行业硬标",
+                    ],
+                    "interpretation": (
+                        "kill rate %.2f = 现有闸门对已知失效模式的捕获率。"
+                        "1.0 表示所有变异都被至少一个闸门判红——"
+                        "但只证明已知失效模式被覆盖，不证明未知失效模式也被覆盖。"
+                        % (_ms.get("score") or 0.0)
+                    ),
+                },
+                "generated_at": datetime.now(timezone.utc).strftime(
+                    "%Y-%m-%dT%H:%M:%S+00:00"
+                ),
+            }
+            # 更新 headline 加入变异率
+            _old_h = out["meta"].get("headline", "")
+            if "变异评分" not in _old_h:
+                out["meta"]["headline"] = _old_h + (
+                    " 变异评分 %d/%d=%.2f（≥%.2f 达阈）。"
+                    % (_ms.get("killed", 0), _ms.get("total_mutants", 0),
+                       _ms.get("score", 0.0), _ms.get("threshold", 0.85))
+                )
+        except Exception as _e:
+            print("  ⚠️  变异评分注入失败（非阻塞）: %s" % _e)
+
     with open(os.path.join(ROOT, OUT_PATH), "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
         f.write("\n")
