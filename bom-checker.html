@@ -186,6 +186,10 @@ async function runCheck(){
 
   document.getElementById('warns').innerHTML = j.warnings.length
     ? j.warnings.map(w=>`<div class="warn">⚠ ${w}</div>`).join('')
+      + `<div class="tip" style="margin-top:8px;padding:8px 12px;background:rgba(255,180,80,0.1);border:1px solid rgba(255,180,80,0.3);border-radius:6px">
+          <a href="/adapter-generator?bom=${encodeURIComponent(bomId || 'current')}" style="color:var(--acc2);font-weight:600">🔧 生成转接件解决不兼容</a>
+          <span style="color:var(--mut);margin-left:8px">→ 两侧法兰不一致时，自动生成可 3D 打印的转接板（会带上本 BOM 上下文）</span>
+        </div>`
     : '<div class="tip">无明确冲突。</div>';
 
   // 建议装配次序（GRASP 借鉴）
@@ -239,5 +243,6 @@ function exportProcure(){
 }
 init();
 </script>
+<script>(function(){var s=localStorage.getItem('roboparts_session_id');if(!s){s='sess_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);localStorage.setItem('roboparts_session_id',s);}fetch('/api/analytics/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_type:'page_view',event_data:{page:'/bom-checker'},session_id:s})}).catch(function(){});})();</script>
 </body>
 </html>
