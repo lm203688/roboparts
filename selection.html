@@ -311,12 +311,14 @@ footer a{color:var(--accent);text-decoration:none}
           <span class="hint">选择需要推荐的零部件分类</span>
         </div>
 
-        <!-- API Key -->
+        <!-- API Key（可选 · 匿名首单免费） -->
         <div class="form-group full">
-          <label>API Key <span class="required">*</span></label>
-          <input type="text" id="api_key" placeholder="gtk_xxxxxxxx" style="font-family:'JetBrains Mono',Consolas,monospace" />
-          <span class="hint">用于身份验证与积分扣减，<a href="/#api-access" style="color:var(--accent)">免费注册</a> 即赠 100 积分</span>
-          <span class="error-msg" id="err-api_key">请输入有效的 API Key（gtk_ 开头）</span>
+          <label>API Key <span class="optional">（可选 · 未登录免费体验 1 次）</span></label>
+          <input type="text" id="api_key" placeholder="gtk_xxxxxxxx — 留空即用匿名免费额度" style="font-family:'JetBrains Mono',Consolas,monospace" />
+          <span class="hint">
+            <strong style="color:var(--accent)">匿名首单免费</strong>：不填 API Key 也能跑完整选型（每设备限 1 次），体验后 <a href="/#api-access" style="color:var(--accent)">免费注册</a> 即赠 100 积分（登录后可无限调用直至余额耗尽）。
+          </span>
+          <span class="error-msg" id="err-api_key">API Key 若填写必须以 gtk_ 开头；留空即走匿名试用</span>
         </div>
 
       </div>
@@ -326,7 +328,9 @@ footer a{color:var(--accent);text-decoration:none}
           启动智能选型
         </button>
         <button class="btn btn-outline" type="button" onclick="resetForm()">重置参数</button>
-        <span style="font-size:.82rem;color:var(--dim)">本次调用将消耗 <strong style="color:var(--accent)">1 积分</strong></span>
+        <span style="font-size:.82rem;color:var(--dim)">
+          登录账户消耗 <strong style="color:var(--accent)">2 积分/次</strong> · 匿名首单 <strong style="color:var(--success)">免费</strong>
+        </span>
       </div>
     </form>
 
@@ -444,9 +448,9 @@ async function runSelection() {
   const rosRequired = document.getElementById('ros_required').checked;
   const categories = Array.from(document.querySelectorAll('#categoryGrid input:checked')).map(cb => cb.value);
 
-  // 校验 API Key
+  // 校验 API Key（允许留空 → 走匿名免费试用；填了必须以 gtk_ 开头）
   let hasError = false;
-  if (!apiKey || !apiKey.startsWith('gtk_')) {
+  if (apiKey && !apiKey.startsWith('gtk_')) {
     setFieldError('api_key', true);
     hasError = true;
   } else {
@@ -463,8 +467,9 @@ async function runSelection() {
     return;
   }
 
-  // 保存 API Key
+  // 保存 API Key（空字符串表示本次走匿名试用）
   localStorage.setItem('roboparts_api_key', apiKey);
+  window._selectionIsTrial = !apiKey;
 
   // 构造请求体
   const payload = {
@@ -668,6 +673,8 @@ function renderResults(recommendations, respData) {
       <div class="ri-actions">
         <a href="/bom-manager?add=${encodeURIComponent(bomParams.toString())}" class="btn btn-success btn-sm">+ 添加到 BOM</a>
         ${item.id ? '<a href="/designer?module=' + encodeURIComponent(item.id) + '" class="btn btn-outline btn-sm" target="_blank">🔧 导入设计画布</a>' : ''}
+        <a href="/build-planner" class="btn btn-outline btn-sm">📋 下一步：构建规划</a>
+        ${item.id ? '<a href="/adapter-generator?a=' + encodeURIComponent(item.id) + '" class="btn btn-outline btn-sm" target="_blank">🔗 下一步：生成转接件</a>' : ''}
         ${item.id ? '<button class="btn btn-outline btn-sm" onclick="copyComponentId(\'' + escapeHtml(item.id) + '\')">复制零部件 ID</button>' : ''}
       </div>
     `;
@@ -728,5 +735,6 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+<script>(function(){var s=localStorage.getItem('roboparts_session_id');if(!s){s='sess_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);localStorage.setItem('roboparts_session_id',s);}fetch('/api/analytics/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_type:'page_view',event_data:{page:'/selection'},session_id:s})}).catch(function(){});})();</script>
 </body>
 </html>
