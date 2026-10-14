@@ -59,10 +59,21 @@ export async function onRequestGet(context) {
 
   const verdict = judgePair(a, b);
 
-  return new Response(JSON.stringify({
-    success: true,
-    ...verdict,
-  }, null, 2), { status: 200, headers: corsHeaders });
+  // 三态 → 可执行跳转：incompatible 时给一条"生成转接件"的直链（两侧零件 id 自动带过去）。
+  // 目的：让"发现不兼容"不再是流程终点，而是通向解决的一步（M4-P0-1 + M5-P0-3）。
+  // 只在明确 incompatible 时给；compatible / unknown 都不给——
+  // unknown 是给"我不知道"用的诚实态，绝不能暗示"我们能修"。
+  const verdictStr = String(verdict.verdict || verdict.result || verdict.compatible || '').toLowerCase();
+  const isIncompatible = verdictStr.includes('incompatible') ||
+    verdictStr === 'false' || verdictStr === 'no' || verdictStr === '0';
+  const out = { success: true, ...verdict };
+  if (isIncompatible) {
+    const base = 'https://roboparts.cc/adapter-generator';
+    out.adapter_url = base + '?a=' + encodeURIComponent(idA) + '&b=' + encodeURIComponent(idB);
+    out.adapter_cta = '两侧法兰不一致，生成转接件把它变兼容 →';
+  }
+
+  return new Response(JSON.stringify(out, null, 2), { status: 200, headers: corsHeaders });
 }
 
 // HEAD 探活：Pages 不把 HEAD 映射到 onRequestGet，缺此导出则一律 404 ——
