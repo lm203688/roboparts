@@ -872,14 +872,26 @@ export async function onRequestPost(context) {
     const body = await request.json();
     const { api_key, application, requirements, categories, count_per_category } = body;
 
-    // 1. 验证 api_key
+    // 1. 验证 api_key（或匿名免费试用）
+    let isFreeTrial = false;
+    let user;
     if (!api_key) {
-      return new Response(JSON.stringify({
-        error: 'api_key is required',
-        message: '请提供 api_key（gtk_ 前缀），可在 https://roboparts.cc 获取。',
-      }), { status: 401, headers: corsHeaders });
-    }
-
+      // 匿名免费试用：每个 IP 限 1 次
+      const clientIp = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For') || 'anonymous';
+      const trialKey = 'trial:selection:' + clientIp;
+      const trialUsed = await env.USER_CREDITS.get(trialKey);
+      if (trialUsed) {
+        return new Response(JSON.stringify({
+          error: 'Free trial already used',
+          message: '免费试用次数已用完（每个 IP 限 1 次）。请注册获取 API Key 继续调用。',
+          register_url: 'https://roboparts.cc/register',
+        }), { status: 402, headers: { ...corsHeaders, 'X-Trial-Used': 'true' } });
+      }
+      // 标记试用已使用
+      await env.USER_CREDITS.put(trialKey, 'true', { expirationTtl: 86400 * 30 }); // 30 天
+      isFreeTrial = true;
+      user = { credits: 0, api_calls: 0, free_trial: true };
+    } else {
     // 2. 验证 application
     const app = application || 'humanoid';
     if (!VALID_APPLICATIONS.includes(app)) {
@@ -907,70 +919,74 @@ export async function onRequestPost(context) {
     const count = Math.min(20, Math.max(1, Number(count_per_category) || 3));
     const weights = APPLICATION_WEIGHTS[app];
 
-    // 4. 验证积分系统
-    if (!env.USER_CREDITS) {
-      return new Response(JSON.stringify({
-        error: 'Credits system not configured',
-        message: 'USER_CREDITS KV 绑定缺失，无法完成积分扣费。',
-      }), { status: 500, headers: corsHeaders });
-    }
-
-    const userData = await env.USER_CREDITS.get(api_key);
-    if (!userData) {
-      return new Response(JSON.stringify({
-        error: 'Invalid API key',
-        message: 'api_key 未在系统中注册，请前往 https://roboparts.cc 获取有效密钥。',
-      }), { status: 403, headers: corsHeaders });
-    }
-
-    const user = JSON.parse(userData);
-
-    // 5. 积分不足
-    if (user.credits < CREDIT_COST) {
-      return new Response(JSON.stringify({
-        error: 'Insufficient credits',
-        credits_remaining: user.credits,
-        required: CREDIT_COST,
-        credits_needed: CREDIT_COST - user.credits,
-        recharge_url: UPGRADE_URL,
-        message: '积分不足，每次选型引擎调用消耗 ' + CREDIT_COST + ' 积分。',
-      }), {
-        status: 402,
-        headers: {
-          ...corsHeaders,
-          'X-Credits-Remaining': String(user.credits),
-          'X-Upgrade-URL': UPGRADE_URL,
-        },
-      });
-    }
-
-    // 6. 扣除积分
-    user.credits -= CREDIT_COST;
-    user.api_calls = (user.api_calls || 0) + 1;
-    await bumpStat(env, 'stat:selection_calls:total');
-    await bumpStat(env, 'stat:credits_consumed:total', CREDIT_COST);
-
-    const INITIAL_CREDITS = user.initial_credits || 100;
-    const LOW_THRESHOLD = Math.max(20, Math.floor(INITIAL_CREDITS * 0.2));
-    const responseExtraHeaders = {
-      'X-API-Tier': 'credits',
-      'X-Credits-Remaining': String(user.credits),
-      'X-Upgrade-URL': UPGRADE_URL,
-    };
-    if (user.credits <= LOW_THRESHOLD) {
-      responseExtraHeaders['X-Credits-Warning'] = 'low';
-      responseExtraHeaders['X-Credits-Threshold'] = String(LOW_THRESHOLD);
-      if (!user.low_alert_sent) {
-        user.low_alert_sent = true;
-        user.low_alert_at = new Date().toISOString();
+    // 4. 验证积分系统（免费试用跳过）
+    if (!isFreeTrial) {
+      if (!env.USER_CREDITS) {
+        return new Response(JSON.stringify({
+          error: 'Credits system not configured',
+          message: 'USER_CREDITS KV 绑定缺失，无法完成积分扣费。',
+        }), { status: 500, headers: corsHeaders });
       }
-    }
-    if (user.credits > LOW_THRESHOLD && user.low_alert_sent) {
-      user.low_alert_sent = false;
-      delete user.low_alert_at;
-    }
 
-    await env.USER_CREDITS.put(api_key, JSON.stringify(user));
+      const userData = await env.USER_CREDITS.get(api_key);
+      if (!userData) {
+        return new Response(JSON.stringify({
+          error: 'Invalid API key',
+          message: 'api_key 未在系统中注册，请前往 https://roboparts.cc 获取有效密钥。',
+        }), { status: 403, headers: corsHeaders });
+      }
+
+      user = JSON.parse(userData);
+
+      // 5. 积分不足
+      if (user.credits < CREDIT_COST) {
+        return new Response(JSON.stringify({
+          error: 'Insufficient credits',
+          credits_remaining: user.credits,
+          required: CREDIT_COST,
+          credits_needed: CREDIT_COST - user.credits,
+          recharge_url: UPGRADE_URL,
+          message: '积分不足，每次选型引擎调用消耗 ' + CREDIT_COST + ' 积分。',
+        }), {
+          status: 402,
+          headers: {
+            ...corsHeaders,
+            'X-Credits-Remaining': String(user.credits),
+            'X-Upgrade-URL': UPGRADE_URL,
+          },
+        });
+      }
+
+      // 6. 扣除积分
+      user.credits -= CREDIT_COST;
+      user.api_calls = (user.api_calls || 0) + 1;
+      await bumpStat(env, 'stat:selection_calls:total');
+      await bumpStat(env, 'stat:credits_consumed:total', CREDIT_COST);
+
+      const INITIAL_CREDITS = user.initial_credits || 100;
+      const LOW_THRESHOLD = Math.max(20, Math.floor(INITIAL_CREDITS * 0.2));
+      responseExtraHeaders['X-Credits-Remaining'] = String(user.credits);
+      if (user.credits <= LOW_THRESHOLD) {
+        responseExtraHeaders['X-Credits-Warning'] = 'low';
+        responseExtraHeaders['X-Credits-Threshold'] = String(LOW_THRESHOLD);
+        if (!user.low_alert_sent) {
+          user.low_alert_sent = true;
+          user.low_alert_at = new Date().toISOString();
+        }
+      }
+      if (user.credits > LOW_THRESHOLD && user.low_alert_sent) {
+        user.low_alert_sent = false;
+        delete user.low_alert_at;
+      }
+
+      await env.USER_CREDITS.put(api_key, JSON.stringify(user));
+    } else {
+      // 免费试用：只统计调用，不扣积分
+      await bumpStat(env, 'stat:selection_calls:total');
+      await bumpStat(env, 'stat:selection_free_trial:total');
+      responseExtraHeaders['X-Trial-Used'] = 'true';
+      responseExtraHeaders['X-Register-URL'] = 'https://roboparts.cc/register';
+    }
 
     // 7. 加载数据并执行选型
     const recommendations = {};
