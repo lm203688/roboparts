@@ -1450,6 +1450,53 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
         },
         required: ['project_name', 'items']
       }
+    },
+    // 【2026-10-15 Phase A · A4】装配级工作流工具——把「成对判定」升级为「装配预检」
+    {
+      name: 'plan_assembly',
+      description: '装配级类型检查：给定目标 + 候选零件集，判定能否组成良类型装配。返回 well_typed（存在良类型子装配）/ ill_typed（最小缺失接口集）/ unknown（证据不足）。与 MDV 对账。',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          goal: {
+            type: 'string',
+            description: '能力目标，如 "6-DOF force-controlled grasping"、"1kg payload robot arm"'
+          },
+          candidate_ids: {
+            type: 'array',
+            items: { type: 'string' },
+            description: '候选零件 ID 列表（至少 2 个）'
+          }
+        },
+        required: ['goal', 'candidate_ids']
+      }
+    },
+    {
+      name: 'preflight_check',
+      description: 'BOM 出单前守门人：对候选 BOM 做一次装配预检，在生成几何/下单之前拦截 ill_typed。返回是否通过 + 缺失接口清单。零摩擦采纳的关键——把 RoboParts 变成 Agent 工具循环里的守门人。',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          bom_items: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                id: { type: 'string' },
+                quantity: { type: 'number', default: 1 }
+              },
+              required: ['id']
+            },
+            description: 'BOM 条目（id + 可选 quantity）'
+          },
+          strict: {
+            type: 'boolean',
+            description: '严格模式：任一 ill_typed 即拦截；false 时仅警告',
+            default: true
+          }
+        },
+        required: ['bom_items']
+      }
     }
   ]
 }));
