@@ -1,0 +1,100 @@
+{
+  "meta": {
+    "version": "evidence_ledger/v1",
+    "generated_at": "2026-10-15T14:10:18.104808+00:00",
+    "source_schema": "schemas/evidence_contribution.schema.json",
+    "total_contributions": 2
+  },
+  "contributions": [
+    {
+      "contribution_id": "EC-20261015-0001",
+      "contributor": {
+        "name": "RoboParts Seed",
+        "contact": "seed@roboparts.dev",
+        "organization": "RoboParts Foundation"
+      },
+      "timestamp": "2026-10-15T00:00:00Z",
+      "evidence_type": "iso_table",
+      "target": {
+        "entity_id": "M8-3-FRAME",
+        "axis": "mechanical",
+        "field": "flange"
+      },
+      "source_url": "https://en.wikipedia.org/wiki/ISO_9409",
+      "falsifiable_check": {
+        "type": "geometry_parse",
+        "description": "解析 ISO 9409-1 的 M8-3 法兰直径与孔数",
+        "expected_outcome": "pcd=20.0mm, holes=3"
+      },
+      "verification_path": "python scripts/iso9409_verify.py M8-3",
+      "claimed_value": {
+        "pcd_mm": 20.0,
+        "holes": 3,
+        "thread": "M8"
+      },
+      "confidence": 0.95,
+      "signature": "iso9409-1:20261015",
+      "prev_contribution_id": null,
+      "hash": "fff2927739ad6f6c59ea12886114965673d41b494ec34096fc6a8de0e5b81ea4"
+    },
+    {
+      "contribution_id": "EC-20261015-0002",
+      "contributor": {
+        "name": "RoboParts Seed",
+        "contact": "seed@roboparts.dev",
+        "organization": "RoboParts Foundation"
+      },
+      "timestamp": "2026-10-15T00:01:00Z",
+      "evidence_type": "datasheet",
+      "target": {
+        "entity_id": "M8-3-CONN",
+        "axis": "electrical",
+        "field": "pinout"
+      },
+      "source_url": "https://example-datasheet.com/m8-3-connector.pdf",
+      "falsifiable_check": {
+        "type": "checksum_match",
+        "description": "验证 pinout 字段与 datasheet 一致",
+        "expected_outcome": "pinout=[VCC, GND, IO]"
+      },
+      "verification_path": "python scripts/datasheet_verify.py --check M8-3-CONN",
+      "claimed_value": {
+        "pinout": [
+          "VCC",
+          "GND",
+          "IO"
+        ],
+        "pitch_mm": 2.5
+      },
+      "confidence": 0.85,
+      "signature": "datasheet-v1.0",
+      "prev_contribution_id": "fff2927739ad6f6c59ea12886114965673d41b494ec34096fc6a8de0e5b81ea4",
+      "hash": "0450de41f11333fd42cebd5d8cec4f81f9c0db74dcbe9ab0a315e6eb57a6da2c"
+    }
+  ],
+  "rejected": [],
+  "mdv_crosscheck": {
+    "binding_axis": "electrical",
+    "contributions_on_positive_axis": 0,
+    "contributions": [
+      {
+        "contribution_id": "EC-20261015-0001",
+        "target": "M8-3-FRAME::mechanical",
+        "mdv": 0,
+        "positive": false
+      },
+      {
+        "contribution_id": "EC-20261015-0002",
+        "target": "M8-3-CONN::electrical",
+        "mdv": 0,
+        "positive": false
+      }
+    ]
+  },
+  "kpi": {
+    "decidable_pairs": 2,
+    "prev_decidable_pairs": 0,
+    "monotonic_non_decreasing": true
+  },
+  "note": "证据账本——追加式、不可改写、可复验。每条贡献必须通过 schema 校验 + 有溯源 + falsifiable_check 可复验。KPI 棘轮：decidable_pairs 单调不降。"
+}
