@@ -222,6 +222,56 @@ footer a{color:var(--accent);text-decoration:none}
     <div class="apikey-balance" id="balanceResult"></div>
   </div>
 
+  <!-- ========== 机械接口筛选 ========== -->
+  <div class="card">
+    <h2>🔌 机械接口状态筛选</h2>
+    <p class="subtitle">按机械接口声明状态筛选实体。868 个实体中仅 81 个（16.2%）有机械接口线索，这是本库最大的数据缺口。筛选后可直接查看/导出有声明的实体。</p>
+    <div class="mech-filter">
+      <div class="filter-row">
+        <label><input type="radio" name="mechStatus" value="all" checked> 全部实体（868）</label>
+        <label><input type="radio" name="mechStatus" value="declared"> 已声明 declared（15）</label>
+        <label><input type="radio" name="mechStatus" value="partial"> 部分声明 partial（10）</label>
+        <label><input type="radio" name="mechStatus" value="not_declared"> 未声明 not_declared（420）</label>
+      </div>
+      <div class="filter-actions">
+        <button class="btn btn-primary btn-sm" onclick="filterByMechStatus()">🔍 筛选实体</button>
+        <a href="/mech-declare" class="btn btn-outline btn-sm">📝 补声明（贡献通道）</a>
+      </div>
+      <div class="filter-result" id="mechFilterResult"></div>
+    </div>
+    <div class="gap-note" style="margin-top:12px;padding:10px 14px;background:rgba(255,180,80,0.1);border:1px solid rgba(255,180,80,0.3);border-radius:6px;font-size:13px">
+      <b>为什么这很重要：</b>机械接口声明率 16.2% 是 RoboParts 的最大数据缺口。每补一条带出处的 PCD/螺栓规格，就能让兼容性判定从「不知道」变成「能/不能」。<a href="/contributing" style="color:var(--acc2)">前往贡献 →</a>
+    </div>
+  </div>
+
+  <!-- ========== ISO 9409-1 法兰型号筛选 (M1 P0-1) ========== -->
+  <div class="card">
+    <h2>📐 按 ISO 9409-1 法兰型号筛选</h2>
+    <p class="subtitle">直接按具体法兰标号（如 <code style="font-family:'JetBrains Mono',Consolas,monospace">ISO 9409-1-50-4-M6</code>）筛选——回答「我要找的法兰，有哪些零件在用？」这个工程师最刚性的问题。共 72 个实体带 <code>mechanical_interface.standard</code> 结构化声明，覆盖 ISO 9409-1 全部现行梯级。</p>
+    <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
+      <button class="btn btn-outline btn-sm" onclick="quickFlange('A50')" style="border-color:var(--accent);color:var(--accent)">A50 · 4×M6</button>
+      <button class="btn btn-outline btn-sm" onclick="quickFlange('A80')" style="border-color:var(--accent);color:var(--accent)">A80 · 6×M8</button>
+      <button class="btn btn-outline btn-sm" onclick="quickFlange('A40')" style="border-color:var(--accent);color:var(--accent)">A40 · 4×M6</button>
+      <button class="btn btn-outline btn-sm" onclick="quickFlange('A63')" style="border-color:var(--accent);color:var(--accent)">A63 · 6×M6</button>
+      <button class="btn btn-outline btn-sm" onclick="quickFlange('A31.5')" style="border-color:var(--accent);color:var(--accent)">A31.5 · 4×M5</button>
+      <button class="btn btn-outline btn-sm" onclick="quickFlange('A100')" style="border-color:var(--accent);color:var(--accent)">A100 · 4×M8</button>
+      <button class="btn btn-outline btn-sm" onclick="quickFlange('A160')" style="border-color:var(--accent);color:var(--accent)">A160 · 4×M12</button>
+      <button class="btn btn-outline btn-sm" onclick="quickFlange('A20')" style="border-color:var(--accent);color:var(--accent)">A20 · 4×M3</button>
+      <button class="btn btn-outline btn-sm" onclick="quickFlange('A250')" style="border-color:var(--accent);color:var(--accent)">A250 · 4×M16</button>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:12px;align-items:center;flex-wrap:wrap">
+      <input type="text" id="flangeSearchInput" placeholder="输入任意标号关键字，如 50-4-M6、A50、ISO 9409-1-160-4-M12" style="flex:1;min-width:260px;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.88rem;font-family:'JetBrains Mono',Consolas,monospace" onkeydown="if(event.key==='Enter')filterByFlange(this.value)">
+      <button class="btn btn-primary btn-sm" onclick="filterByFlange(document.getElementById('flangeSearchInput').value)">🔍 自定义筛选</button>
+      <button class="btn btn-outline btn-sm" onclick="document.getElementById('flangeFilterResult').innerHTML=''">清除结果</button>
+    </div>
+    <div class="result-box" id="flangeFilterResult"></div>
+    <div class="gap-note" style="margin-top:14px;padding:10px 14px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);border-radius:6px;font-size:13px">
+      <b>怎么用：</b>选 <b>A50</b> → 直接看到「用 ISO 9409-1-A50-4-M6 法兰的所有零件」，例如 Robotiq 2F-85 兼容的抓手、ATI 六维力、OnRobot EOAT、UR 协作臂本体等。这是把「机械声明率 16.2%」这个数据缺口变成「查得到的具体答案」的关键入口。
+      <a href="/adapter-generator" style="color:var(--accent)">→ 找到两侧后用转接件生成器解决不兼容</a> ·
+      <a href="/mech-declare" style="color:var(--accent)">→ 想补一条数据？</a>
+    </div>
+  </div>
+
   <!-- ========== 9 大品类导出 ========== -->
   <div class="card">
     <h2>📂 分类数据导出</h2>
@@ -339,6 +389,224 @@ function renderCategories() {
   // 更新总数
   const statTotal = document.getElementById('statTotal');
   if (statTotal) statTotal.textContent = total;
+}
+
+// ============ 机械接口状态筛选 ============
+async function filterByMechStatus() {
+  const status = document.querySelector('input[name="mechStatus"]:checked').value;
+  const resultBox = document.getElementById('mechFilterResult');
+  resultBox.innerHTML = '<div class="tip">筛选中...</div>';
+
+  try {
+    // 获取全量实体（免鉴权摘要）
+    const res = await fetch('/api/entities.json?summary=1');
+    const data = await res.json();
+    const entities = data.entities || data.data || [];
+
+    let filtered;
+    if (status === 'all') {
+      filtered = entities;
+    } else {
+      filtered = entities.filter(e => {
+        const mi = e.mechanical_interface || {};
+        return (mi.status || 'not_declared') === status;
+      });
+    }
+
+    // 统计
+    const statusCounts = {
+      declared: entities.filter(e => (e.mechanical_interface?.status || '') === 'declared').length,
+      partial: entities.filter(e => (e.mechanical_interface?.status || '') === 'partial').length,
+      not_declared: entities.filter(e => !e.mechanical_interface?.status).length,
+    };
+
+    const statusLabels = {
+      declared: '✅ 已声明 declared',
+      partial: '⚠️ 部分声明 partial',
+      not_declared: '❌ 未声明 not_declared',
+      all: '📦 全部实体'
+    };
+
+    // 展示前 20 条
+    const preview = filtered.slice(0, 20).map(e => {
+      const mi = e.mechanical_interface || {};
+      return `<div class="mech-item">
+        <b>${e.id}</b> · ${e.name || e.name_en || ''}
+        <span class="mech-status ${mi.status || 'none'}">${mi.status || 'not_declared'}</span>
+        ${mi.pcd ? `<span class="mech-detail">PCD ${mi.pcd}mm</span>` : ''}
+        ${mi.bolt_count ? `<span class="mech-detail">${mi.bolt_count}×${mi.bolt_thread || ''}</span>` : ''}
+      </div>`;
+    }).join('');
+
+    resultBox.innerHTML = `
+      <div class="result-title">${statusLabels[status]} — 匹配 ${filtered.length} 条</div>
+      <div class="result-detail">
+        <p style="margin:6px 0">声明率分布：declared ${statusCounts.declared} · partial ${statusCounts.partial} · not_declared ${statusCounts.not_declared}</p>
+        <details><summary>查看前 20 条</summary><div style="margin-top:8px">${preview || '<div class="tip">无匹配实体</div>'}</div></details>
+        <p style="margin-top:8px;font-size:12px;color:var(--mut)">完整数据请导出 JSON 后本地筛选。机械接口声明是兼容性判定的前提——<a href="/mech-declare">补一条声明 →</a></p>
+      </div>
+    `;
+  } catch (e) {
+    resultBox.innerHTML = `<div class="tip" style="color:var(--red)">筛选失败：${e.message}</div>`;
+  }
+}
+
+// 快速筛选：预设按钮填关键字到输入框并触发筛选
+function quickFlange(kw) {
+  document.getElementById('flangeSearchInput').value = kw;
+  filterByFlange(kw);
+}
+
+// ============ ISO 9409-1 法兰型号筛选 (M1 P0-1) ============
+// 目标：让工程师能问「我要找的 ISO 9409-1-A50-4-M6，有哪些零件在用？」
+//
+// 匹配口径（与实测数据模型对齐，2026-10-15 校准）：
+//   1. mechanical_interface.standard 是 **数组**（多法兰件如 UR/ATI 力传感器支持多个法兰），
+//      不是字符串——原稿误用 std.includes()，已改为 Array.includes + 归一化。
+//   2. 用户短输入自动前缀 ISO 9409-1-：A50 → ISO 9409-1-50-4-M6；A80 → ISO 9409-1-80-6-M8
+//      （短式 A{n} 只取 PCD 号，不硬编孔数/螺纹——那是不同 A{n} 下可能变化的）
+//   3. 主匹配走 standard 数组（72 实体覆盖 60+ 型号）；兜底扫 declared_note 文本（26 实体含 9409/A#）
+//      —— 两个口径合并去重。
+//   4. 结果按声明强度排序：declared > partial > 仅 note 提及。
+//   5. 前 30 条内嵌展示；超过则提示导出后本地筛选。
+
+async function filterByFlange(keyword) {
+  const kw = (keyword || '').trim();
+  const resultBox = document.getElementById('flangeFilterResult');
+  if (!kw) {
+    resultBox.className = 'result-box';
+    resultBox.innerHTML = '<div class="tip">请输入法兰型号关键字，或点击上方预设按钮。</div>';
+    resultBox.classList.add('show', 'info');
+    return;
+  }
+  resultBox.className = 'result-box show info';
+  resultBox.innerHTML = '<div class="tip">🔍 正在从 868 个实体中筛选「' + escapeHtml(kw) + '」…</div>';
+
+  try {
+    // 与现有 filterByMechStatus 一致：优先全量端点，失败回落 summary 端点
+    let res = await fetch('/api/entities.json');
+    if (!res.ok) res = await fetch('/api/entities.json?summary=1');
+    const data = await res.json();
+    const entities = data.entities || data.data || [];
+
+    // 用户输入 → 匹配模式（归一化：全部删空格、小写，与下方 sNorm 一致）
+    const norm = kw.toLowerCase().replace(/\s+/g, '');
+    const variants = new Set();
+    variants.add(norm);
+    // A{n} 短式 → ISO 9409-1-{n}-*（通配，避免硬编孔数/螺纹）
+    // 注意：variant 也必须删空格，否则与 sNorm（已删空格）对不上
+    const mShort = norm.match(/^a(\d+(?:\.\d+)?)$/);
+    if (mShort) variants.add('iso9409-1-' + mShort[1] + '-');
+    // 纯数字（如 50）→ 也接受
+    if (/^\d+(\.\d+)?$/.test(norm)) variants.add('iso9409-1-' + norm + '-');
+
+    const matches = [];
+    for (const e of entities) {
+      const mi = e.mechanical_interface || {};
+      // standard 可能是数组或字符串（历史/未来兼容）
+      const stdArr = Array.isArray(mi.standard) ? mi.standard : (mi.standard ? [mi.standard] : []);
+      // flange 有 3 种形态（2026-10-15 实测校准）：
+      //   - None (811): 无声明
+      //   - str  (7):   文本描述，如 "ISO 9409-1-A50-4-M6"
+      //   - dict (50):  结构化，如 {pcd_mm:50, bolt_count:4, thread:"M6"} ← 全部 HUB 实体
+      //   把 dict 重建为 ISO 9409-1-{pcd}-{n}-{thread} 形式，让 HUB 实体也能被型号筛选命中。
+      let flangeStr = '';
+      if (Array.isArray(mi.flange)) flangeStr = mi.flange.join(',');
+      else if (typeof mi.flange === 'object' && mi.flange !== null) {
+        const f = mi.flange;
+        const parts = [];
+        if (f.pcd_mm != null) parts.push('pcd=' + f.pcd_mm);
+        if (f.bolt_count != null) parts.push(f.bolt_count + '×' + (f.thread || '?'));
+        flangeStr = parts.join(', ');
+        // 同时生成 ISO 9409-1 判定式，让 dict 也能匹配型号
+        if (f.pcd_mm != null) {
+          stdArr.push('ISO 9409-1-' + f.pcd_mm + (f.bolt_count ? '-' + f.bolt_count : '') + (f.thread ? '-' + f.thread : ''));
+        }
+      } else if (typeof mi.flange === 'string') flangeStr = mi.flange;
+      flangeStr = flangeStr.toLowerCase().replace(/\s+/g, '');
+      const noteStr = (mi.declared_note || '').toLowerCase().replace(/\s+/g, '');
+
+      // 主匹配：standard 数组任一元素命中 variant
+      let hitViaStandard = false;
+      for (const s of stdArr) {
+        const sNorm = String(s).toLowerCase().replace(/\s+/g, '');
+        for (const v of variants) {
+          if (v && sNorm.includes(v)) { hitViaStandard = true; break; }
+        }
+        if (hitViaStandard) break;
+      }
+      // 兜底匹配：note 文本或 flange 文本命中
+      let hitViaNote = false;
+      for (const v of variants) {
+        if (v && (noteStr.includes(v) || flangeStr.includes(v))) { hitViaNote = true; break; }
+      }
+
+      if (!hitViaStandard && !hitViaNote) continue;
+
+      matches.push({
+        id: e.id,
+        name: e.name || e.name_en || '',
+        category: e.category || '',
+        standard: stdArr.join(', '),
+        flange: flangeStr,
+        status: mi.status || 'unknown',
+        mount_type: mi.mount_type || '',
+        source: mi.source || '',
+        hit_via: hitViaStandard ? 'standard_field' : 'note_text',
+      });
+    }
+
+    // 按声明强度排序：declared > partial > 其它
+    const rank = { declared: 0, partial: 1, not_declared: 2, unknown: 3 };
+    matches.sort((a, b) => (rank[a.status] ?? 9) - (rank[b.status] ?? 9));
+
+    const declaredCount = matches.filter(m => m.status === 'declared').length;
+    const partialCount = matches.filter(m => m.status === 'partial').length;
+    const noteOnlyCount = matches.filter(m => m.hit_via === 'note_text').length;
+    const stdFieldCount = matches.filter(m => m.hit_via === 'standard_field').length;
+
+    // 展示前 30 条
+    const preview = matches.slice(0, 30).map(m => `
+      <div style="margin:8px 0;padding:10px 12px;background:rgba(0,0,0,0.2);border-radius:8px;border-left:3px solid var(--accent)">
+        <div style="font-weight:700;color:var(--accent);font-family:'JetBrains Mono',Consolas,monospace;font-size:.85rem">${escapeHtml(m.id)}</div>
+        <div style="font-size:.9rem;margin-top:2px">${escapeHtml(m.name)}</div>
+        ${m.standard ? `<div style="font-size:.78rem;color:var(--muted);margin-top:4px;font-family:'JetBrains Mono',Consolas,monospace">standard: ${escapeHtml(m.standard)}</div>` : ''}
+        ${m.flange && m.flange !== m.standard ? `<div style="font-size:.78rem;color:var(--muted);margin-top:2px;font-family:'JetBrains Mono',Consolas,monospace">flange: ${escapeHtml(m.flange)}</div>` : ''}
+        <div style="font-size:.72rem;color:var(--dim);margin-top:4px">
+          状态 <span style="padding:1px 6px;background:rgba(6,182,212,0.15);border-radius:4px">${m.status}</span>
+          · 匹配来源 <span style="padding:1px 6px;background:rgba(6,182,212,0.15);border-radius:4px">${m.hit_via === 'standard_field' ? '🎯 结构化 standard' : '📝 仅 note 文本'}</span>
+          ${m.mount_type ? ' · ' + escapeHtml(m.mount_type) : ''}
+          ${m.category ? ' · ' + escapeHtml(m.category) : ''}
+        </div>
+      </div>
+    `).join('');
+
+    resultBox.className = 'result-box show info';
+    resultBox.innerHTML = `
+      <div class="result-title" style="color:var(--accent)">🎯 匹配「${escapeHtml(kw)}」— ${matches.length} 个实体</div>
+      <div class="result-detail">
+        <p style="margin:6px 0;font-size:.88rem">
+          <span style="color:var(--success)">✅ 结构化 standard 命中: ${stdFieldCount}</span> ·
+          <span style="color:var(--muted)">📝 note 文本提及: ${noteOnlyCount}</span> ·
+          <span style="color:var(--success)">declared ${declaredCount}</span> ·
+          <span style="color:var(--warning)">partial ${partialCount}</span>
+        </p>
+        <details ${matches.length > 10 ? 'open' : ''}><summary style="cursor:pointer;color:var(--accent);margin-top:8px">查看前 ${Math.min(30, matches.length)} 条</summary><div style="margin-top:8px">${preview || '<div class="tip">无匹配实体</div>'}</div></details>
+        ${matches.length > 30 ? `<p style="margin-top:8px;font-size:.78rem;color:var(--dim)">共 ${matches.length} 条，仅显示前 30 条。完整清单请导出全量数据后本地筛选。</p>` : ''}
+        <p style="margin-top:10px;font-size:.82rem;color:var(--muted)">
+          <b>下一步：</b>
+          <a href="/bom-checker" style="color:var(--accent)">→ 把这些零件放进 BOM 检查兼容性</a> ·
+          <a href="/adapter-generator" style="color:var(--accent)">→ 两侧不匹配？生成转接件</a> ·
+          <a href="/api/mechanical_interfaces.json" target="_blank" rel="noopener" style="color:var(--accent)">→ 查法兰登记表</a>
+        </p>
+      </div>
+    `;
+    showToast(`匹配到 ${matches.length} 个实体（structured ${stdFieldCount} / note ${noteOnlyCount}）`, 'success');
+  } catch (e) {
+    resultBox.className = 'result-box show error';
+    resultBox.innerHTML = `<div class="result-title">✕ 筛选失败</div><div class="result-detail">${escapeHtml(e.message)}</div>`;
+    showToast('筛选失败：' + e.message, 'error');
+  }
 }
 
 // ============ 导出单品类 JSON ============

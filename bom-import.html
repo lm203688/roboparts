@@ -10,6 +10,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0b1020">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
   :root { --bg:#0d1117; --card:#161b22; --fg:#e6edf3; --mut:#8b949e; --acc:#2f81f7; --ok:#3fb950; --warn:#d29922; --bd:#30363d; }
   * { box-sizing: border-box; }
@@ -20,20 +21,40 @@
   .card { background: var(--card); border:1px solid var(--bd); border-radius: 10px; padding: 18px; margin-bottom: 18px; }
   label { display:block; font-size:13px; color:var(--mut); margin-bottom:6px; }
   textarea { width:100%; height: 220px; background:#0d1117; color:var(--fg); border:1px solid var(--bd); border-radius:8px; padding:12px; font-family: ui-monospace, monospace; font-size:12px; resize:vertical; }
-  button { background:var(--acc); color:#fff; border:none; padding:10px 18px; border-radius:8px; font-size:14px; cursor:pointer; margin-top:12px; }
+  button { background:var(--acc); color:#fff; border:none; padding:10px 18px; border-radius:8px; font-size:14px; cursor:pointer; margin-top:12px; margin-right:8px; }
   button:hover { filter: brightness(1.1); }
+  button.ghost { background:transparent; color:var(--acc); border:1px solid var(--acc); }
   pre { background:#0d1117; border:1px solid var(--bd); border-radius:8px; padding:12px; font-size:12px; overflow:auto; max-height:320px; }
   .ok { color:var(--ok); } .warn { color:var(--warn); }
   code { background:#0d1117; padding:1px 5px; border-radius:4px; }
   .hint { font-size:12px; color:var(--mut); margin-top:8px; }
+  .tabs { display:flex; gap:4px; margin-bottom:12px; border-bottom:1px solid var(--bd); }
+  .tab { padding:8px 16px; cursor:pointer; color:var(--mut); border-bottom:2px solid transparent; font-size:14px; }
+  .tab.active { color:var(--acc); border-bottom-color:var(--acc); }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+  .drop-zone { border:2px dashed var(--bd); border-radius:8px; padding:32px; text-align:center; cursor:pointer; transition:all 0.2s; }
+  .drop-zone:hover, .drop-zone.dragover { border-color:var(--acc); background:rgba(47,129,247,0.05); }
+  .file-list { margin-top:12px; }
+  .file-item { background:#0d1117; border:1px solid var(--bd); border-radius:6px; padding:8px 12px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; }
+  .preview-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:12px; }
+  .preview-table th, .preview-table td { border:1px solid var(--bd); padding:6px 8px; text-align:left; }
+  .preview-table th { background:#0d1117; color:var(--acc); }
+  .preview-table tr:hover { background:rgba(47,129,247,0.05); }
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>导入 BOM · RoboParts 数据飞轮</h1>
-  <p class="sub">提交你的机器人 BOM（零件清单 + 接口声明），经审核后合入公开兼容数据库，让更多人受益。机械接口声明须附 <code>source_url</code> 方可采信。</p>
+  <p class="sub">提交你的机器人 BOM（零件清单 + 接口声明），经审核后合入公开兼容数据库，让更多人受益。支持 Excel/xlsx 直读导入。机械接口声明须附 <code>source_url</code> 方可采信。</p>
 
-  <div class="card">
+  <div class="tabs">
+    <div class="tab active" data-tab="json">JSON 粘贴</div>
+    <div class="tab" data-tab="excel">Excel 导入</div>
+  </div>
+
+  <!-- JSON 粘贴模式 -->
+  <div class="card tab-panel active" id="jsonPanel">
     <label>粘贴 BOM（JSON 数组，或 { "components": [...] }）</label>
     <textarea id="bom" placeholder='[
   {
@@ -52,6 +73,29 @@
     <div class="hint" id="status"></div>
   </div>
 
+  <!-- Excel 导入模式 -->
+  <div class="card tab-panel" id="excelPanel">
+    <label>上传 Excel 文件（.xlsx / .xls）</label>
+    <div class="drop-zone" id="dropZone">
+      <div style="font-size:32px;margin-bottom:8px">📊</div>
+      <div>点击选择或拖拽 xlsx 文件到此处</div>
+      <div class="hint" style="margin-top:8px">支持 .xlsx / .xls 格式，第一行为列名</div>
+    </div>
+    <input type="file" id="fileInput" accept=".xlsx,.xls" style="display:none">
+    
+    <div class="file-list" id="fileList"></div>
+    
+    <div id="previewContainer" style="display:none;margin-top:16px;">
+      <label>预览数据（前 5 行）</label>
+      <div style="overflow-x:auto;">
+        <table class="preview-table" id="previewTable"></table>
+      </div>
+      <button id="convertBtn" class="ghost" style="margin-top:12px">转换为 JSON 并提交</button>
+    </div>
+    
+    <div class="hint" id="excelStatus" style="margin-top:12px"></div>
+  </div>
+
   <div class="card" id="resultCard" style="display:none;">
     <label>提交结果</label>
     <pre id="result"></pre>
@@ -59,6 +103,19 @@
 </div>
 <script>
 const $ = (s) => document.querySelector(s);
+const $$ = (s) => document.querySelectorAll(s);
+
+// Tab 切换
+$$('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    $$('.tab').forEach(t => t.classList.remove('active'));
+    $$('.tab-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    $(`#${tab.dataset.tab}Panel`).classList.add('active');
+  });
+});
+
+// JSON 提交
 $('#submit').addEventListener('click', async () => {
   const raw = $('#bom').value.trim();
   const status = $('#status');
@@ -66,6 +123,13 @@ $('#submit').addEventListener('click', async () => {
   let payload;
   try { payload = JSON.parse(raw); }
   catch (e) { status.innerHTML = '<span class="warn">JSON 解析失败：' + e.message + '</span>'; return; }
+  await submitPayload(payload);
+});
+
+// 提交通用函数
+async function submitPayload(payload) {
+  const status = $('#status');
+  status.textContent = '提交中…';
   try {
     const r = await fetch('/api/bom/import', {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
@@ -73,15 +137,168 @@ $('#submit').addEventListener('click', async () => {
     const data = await r.json();
     $('#result').textContent = JSON.stringify(data, null, 2);
     $('#resultCard').style.display = 'block';
-    if (data.accepted) status.innerHTML = '<span class="ok">已接收 ' + data.queued + ' 条，' + data.rejected + ' 条被拒（见结果）。待审核后合入。</span>';
-    else status.innerHTML = '<span class="warn">拒绝：' + (data.error || '未知') + '</span>';
+    if (data.accepted) {
+      status.innerHTML = '<span class="ok">已接收 ' + data.queued + ' 条，' + data.rejected + ' 条被拒（见结果）。待审核后合入。</span>';
+      // 切换到 JSON 面板显示结果
+      $$('.tab').forEach(t => t.classList.remove('active'));
+      $$('.tab-panel').forEach(p => p.classList.remove('active'));
+      $('.tab[data-tab="json"]').classList.add('active');
+      $('#jsonPanel').classList.add('active');
+    } else {
+      status.innerHTML = '<span class="warn">拒绝：' + (data.error || '未知') + '</span>';
+    }
   } catch (e) {
     status.innerHTML = '<span class="warn">请求失败：' + e.message + '</span>';
   }
+}
+
+// Excel 导入
+const dropZone = $('#dropZone');
+const fileInput = $('#fileInput');
+
+dropZone.addEventListener('click', () => fileInput.click());
+
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropZone.classList.add('dragover');
+});
+
+dropZone.addEventListener('dragleave', () => {
+  dropZone.classList.remove('dragover');
+});
+
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  if (e.dataTransfer.files.length) {
+    handleFile(e.dataTransfer.files[0]);
+  }
+});
+
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files.length) {
+    handleFile(e.target.files[0]);
+  }
+});
+
+let parsedData = null;
+
+function handleFile(file) {
+  const status = $('#excelStatus');
+  const fileList = $('#fileList');
+  
+  // 验证文件类型
+  if (!file.name.match(/\.(xlsx|xls)$/i)) {
+    status.innerHTML = '<span class="warn">不支持的文件格式，请上传 .xlsx 或 .xls 文件</span>';
+    return;
+  }
+  
+  status.textContent = '解析中…';
+  
+  // 读取文件
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const json = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+      
+      if (json.length === 0) {
+        status.innerHTML = '<span class="warn">Excel 文件为空或没有有效数据</span>';
+        return;
+      }
+      
+      parsedData = json;
+      
+      // 显示文件列表
+      fileList.innerHTML = json.map((item, idx) => {
+        const id = item.id || item['ID'] || `Row-${idx+1}`;
+        const name = item.name || item['Name'] || item['名称'] || '-';
+        return `<div class="file-item">
+          <span>${idx+1}. ${id} - ${name}</span>
+          <span style="color:var(--mut);font-size:12px">${Object.keys(item).length} 个字段</span>
+        </div>`;
+      }).join('');
+      
+      // 显示预览
+      showPreview(json);
+      status.innerHTML = '<span class="ok">成功解析 ' + json.length + ' 条数据</span>';
+      
+    } catch (err) {
+      status.innerHTML = '<span class="warn">解析失败：' + err.message + '</span>';
+      console.error('Excel parse error:', err);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function showPreview(data) {
+  const container = $('#previewContainer');
+  const table = $('#previewTable');
+  container.style.display = 'block';
+  
+  // 取前 5 行
+  const preview = data.slice(0, 5);
+  const headers = Object.keys(preview[0]);
+  
+  let html = '<thead><tr>';
+  headers.forEach(h => {
+    html += `<th>${h}</th>`;
+  });
+  html += '</tr></thead><tbody>';
+  
+  preview.forEach(row => {
+    html += '<tr>';
+    headers.forEach(h => {
+      const val = row[h] !== undefined ? String(row[h]) : '';
+      html += `<td>${val}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody>';
+  
+  table.innerHTML = html;
+}
+
+// 转换为 JSON 并提交
+$('#convertBtn').addEventListener('click', () => {
+  if (!parsedData) return;
+  
+  // 标准化字段名
+  const normalized = parsedData.map(item => {
+    const result = {};
+    for (const [key, value] of Object.entries(item)) {
+      // 标准化常见字段名
+      const lowerKey = key.toLowerCase().trim();
+      if (lowerKey === 'id' || lowerKey === '编号') result.id = value;
+      else if (lowerKey === 'name' || lowerKey === '名称' || lowerKey === '型号') result.name = value;
+      else if (lowerKey === 'category' || lowerKey === '品类' || lowerKey === '类型') result.category = value;
+      else if (lowerKey === 'protocol' || lowerKey === '协议') result.protocol = value;
+      else if (lowerKey === 'interface' || lowerKey === '接口' || lowerKey === '通讯接口') result.interface = value;
+      else if (lowerKey === 'voltage' || lowerKey === '电压') result.voltage = value;
+      else if (lowerKey === 'source_url' || lowerKey === 'sourceurl' || lowerKey === '来源' || lowerKey === '链接') result.source_url = value;
+      else result[lowerKey] = value;
+    }
+    return result;
+  });
+  
+  // 切换到 JSON 面板
+  $$('.tab').forEach(t => t.classList.remove('active'));
+  $$('.tab-panel').forEach(p => p.classList.remove('active'));
+  $('.tab[data-tab="json"]').classList.add('active');
+  $('#jsonPanel').classList.add('active');
+  
+  // 填入 JSON
+  $('#bom').value = JSON.stringify(normalized, null, 2);
+  
+  // 提示
+  $('#status').innerHTML = '<span class="ok">已从 Excel 转换 ' + normalized.length + ' 条数据，请检查后提交</span>';
 });
 </script>
 <div class="wrap" style="margin-top:8px;">
   <p class="sub">相关：<a href="/standard-audit.html">标准自校验</a> · <a href="/compatibility-viz.html">兼容性可视化</a> · <a href="/bom-checker.html">BOM 兼容性检查</a></p>
 </div>
+<script>(function(){var s=localStorage.getItem('roboparts_session_id');if(!s){s='sess_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);localStorage.setItem('roboparts_session_id',s);}fetch('/api/analytics/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_type:'page_view',event_data:{page:'/bom-import'},session_id:s})}).catch(function(){});})();</script>
 </body>
 </html>

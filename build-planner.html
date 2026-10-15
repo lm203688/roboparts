@@ -164,8 +164,9 @@ function select(k){
   const ml=document.getElementById('missList');
   if(missRows.length){
     ml.innerHTML='<div class="miss"><b>⚠️ 缺失转接件（'+missRows.length+' 处）：</b><br>'+
-      missRows.map(m=>`• ${m.from} (${m.a}) ↔ ${m.to} (${m.b}) —— <a href="${adapterUrl(m.a,m.b)}" target="_blank" rel="noopener">生成 ${m.a}→${m.b} 转接板</a>`).join('<br>')+'</div>';
-  } else { ml.innerHTML='<div style="margin-top:10px;color:var(--acc);font-size:13px">✅ 所有法兰关节标准一致，无需转接件。</div>'; }
+      missRows.map(m=>`• ${m.from} (${m.a}) ↔ ${m.to} (${m.b}) —— <a href="${adapterUrl(m.a,m.b)}" target="_blank" rel="noopener">生成 ${m.a}→${m.b} 转接板</a>`).join('<br>')+
+      '<br><a href="/designer" class="btn btn-outline btn-sm" style="margin-top:8px">🔧 下一步：导入设计画布</a>'+'</div>';
+  } else { ml.innerHTML='<div style="margin-top:10px;color:var(--acc);font-size:13px">✅ 所有法兰关节标准一致，无需转接件。<a href="/designer" class="btn btn-outline btn-sm" style="margin-left:8px">🔧 导入设计画布</a></div>'; }
 
   // 批量入口：取第一处缺失
   const ba=document.getElementById('bulkAdapter');

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>板块 8：标准合规与工程治理 — 提升评估报告 · RoboParts 分板块提升评估</title>
+<style>
+  :root{
+    --ink:#111827; --ink2:#374151; --muted:#6b7280; --line:#e5e7eb;
+    --bg:#f7f8fa; --card:#ffffff;
+    --brand:#2563eb; --brand-d:#1e40af; --brand-l:#eff4ff;
+    --red:#dc2626; --amber:#d97706; --green:#059669; --purple:#7c3aed; --teal:#0d9488;
+    --p0:#dc2626; --p1:#d97706; --p2:#0891b2;
+    --shadow:0 1px 2px rgba(16,24,40,.04),0 4px 16px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.72;-webkit-font-smoothing:antialiased;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* header */
+  header.hero{background:linear-gradient(135deg,#0b1220 0%,#12203f 45%,#1e3a8a 100%);color:#fff;padding:56px 0 46px;position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(37,99,235,.55),transparent 62%)}
+  .hero .wrap{padding-bottom:0}
+  .hero .eyebrow{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#93b4ff;font-weight:600}
+  .hero h1{font-size:34px;line-height:1.28;margin:14px 0 12px;font-weight:800;letter-spacing:-.01em}
+  .hero p.sub{color:#c7d2fe;font-size:16px;max-width:760px;margin:0}
+  .hero .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+    color:#e5e7eb;font-size:12.5px;padding:5px 11px;border-radius:999px}
+
+  /* section */
+  section{margin-top:44px}
+  h2{font-size:23px;font-weight:800;letter-spacing:-.01em;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+  h2 .num{display:inline-flex;width:30px;height:30px;border-radius:9px;background:var(--brand);color:#fff;font-size:15px;
+    align-items:center;justify-content:center;font-weight:700;flex:none}
+  .lead{color:var(--ink2);font-size:15px;margin:6px 0 20px}
+  h3{font-size:17.5px;font-weight:750;margin:30px 0 10px;color:var(--ink)}
+  h4{font-size:15px;font-weight:700;margin:18px 0 8px;color:var(--ink2)}
+  p{margin:9px 0}
+  ul,ol{margin:9px 0;padding-left:22px}
+  li{margin:5px 0}
+
+  /* cards */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);margin:14px 0}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .kpi .v{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:5px}
+  .kpi .d{font-size:12px;margin-top:6px}
+  .v-blue{color:var(--brand)} .v-green{color:var(--green)} .v-amber{color:var(--amber)}
+  .v-red{color:var(--red)} .v-purple{color:var(--purple)} .v-teal{color:var(--teal)}
+
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.6px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#f3f5f9;font-weight:700;color:var(--ink2);font-size:12.6px;letter-spacing:.02em}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafbfd}
+
+  .badge{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:6px;letter-spacing:.02em;white-space:nowrap}
+  .b-p0{background:#fee2e2;color:#b91c1c} .b-p1{background:#fef3c7;color:#b45309}
+  .b-p2{background:#cffafe;color:#0e7490} .b-ok{background:#d1fae5;color:#047857}
+  .b-warn{background:#fef3c7;color:#b45309} .b-bad{background:#fee2e2;color:#b91c1c}
+  .b-neutral{background:#eef2ff;color:#3730a3}
+
+  .bar{height:9px;border-radius:999px;background:#eef1f6;overflow:hidden;margin-top:7px}
+  .bar > i{display:block;height:100%;border-radius:999px}
+
+  .callout{border-left:4px solid var(--brand);background:var(--brand-l);border-radius:0 12px 12px 0;padding:14px 18px;margin:14px 0}
+  .callout.warn{border-color:var(--amber);background:#fffbeb}
+  .callout.bad{border-color:var(--red);background:#fef2f2}
+  .callout.good{border-color:var(--green);background:#ecfdf5}
+  .callout .t{font-weight:750;margin-bottom:3px}
+  .callout p:last-child{margin-bottom:0}
+
+  .quote{font-size:15px;color:var(--ink2);border-left:3px solid var(--line);padding-left:14px;margin:14px 0;font-style:italic}
+
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 22px;box-shadow:var(--shadow);margin-top:-26px;position:relative;z-index:2}
+  .toc ol{columns:2;column-gap:34px;margin:6px 0 0;padding-left:20px}
+  @media(max-width:820px){.toc ol{columns:1}}
+  .toc a{color:var(--ink2);font-size:13.6px}
+  .toc a:hover{color:var(--brand)}
+
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;background:#eef2ff;color:#3730a3;margin-right:6px}
+  hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+  .small{font-size:12.6px;color:var(--muted)}
+  .nowrap{white-space:nowrap}
+  .center{text-align:center}
+  footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:12.6px}
+  .step{display:flex;gap:14px;margin:14px 0}
+  .step .dot{flex:none;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px}
+  .timeline{border-left:2px solid var(--line);margin-left:8px;padding-left:22px}
+  .tl-item{position:relative;margin:0 0 22px}
+  .tl-item::before{content:"";position:absolute;left:-29px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid #fff;box-shadow:0 0 0 2px var(--brand)}
+  .tl-item.p1::before{background:var(--amber);box-shadow:0 0 0 2px var(--amber)}
+  .tl-item.p2::before{background:var(--p2);box-shadow:0 0 0 2px var(--p2)}
+  code{background:#f1f3f8;padding:1.5px 6px;border-radius:5px;font-size:12.6px;font-family:ui-monospace,Menlo,Consolas,monospace}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1 id="8">板块 8：标准合规与工程治理 — 提升评估报告</h1>
+<blockquote>
+<p><strong>生成日期</strong>：2026-10-14 ｜ <strong>板块编号</strong>：M8 ｜ <strong>成熟度</strong>：A 档（全仓最强，已越过独立开发者水位）
+<strong>证据来源</strong>：<code>scripts/ci_gate.py --list</code>（<strong>49 项</strong>）、<code>scripts/mutation_score.py</code> + <code>api/mutation-score.json</code>、<code>docs/verification-antipatterns-2026.md</code>（AP-01~AP-12）、<code>docs/negative-results.md</code>（NR-01~NR-10）、<code>docs/technical-decisions-20261014.md</code>（TDD-2026-01）、<code>scripts/loop_matrix.py</code>、<code>scripts/closure_status.py</code>、<code>scripts/auto_{freshness,drift}_heal.py</code>、<code>api/standard-audit.json</code>、<code>api/mechanical_interfaces.json</code>、<code>docs/field-standard-mapping.md</code>、<code>docs/gb-standard-mapping-20261008.md</code>、页面 <code>standard-audit.html</code> / <code>iso-9409-flange.html</code> / <code>robot-joint-parameter-spec.html</code></p>
+</blockquote>
+<hr />
+<h2 id="_1">一、板块定位与边界</h2>
+<p><strong>一句话</strong>：RoboParts 的「免疫系统」——用 49 项闸门 + 变异评分 + 反模式档案 + 负结果档案，保证「我们自己说的是真的」。</p>
+<p><strong>四类资产</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>资产</th>
+<th>实测规模</th>
+<th>性质</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CI 闸门</strong></td>
+<td><strong>49 项</strong>（<code>ci_gate.py --list</code>）</td>
+<td>每条含阴阳/变异自证的占多数</td>
+</tr>
+<tr>
+<td><strong>变异评分</strong></td>
+<td><code>mutation_score.py</code>，M1~M6，杀死率 <strong>1.00</strong>（阈值 0.85）</td>
+<td>锚点直接引用四维报告 §6.3.2</td>
+</tr>
+<tr>
+<td><strong>反模式档案</strong></td>
+<td><code>verification-antipatterns-2026.md</code>，<strong>AP-01~AP-12</strong></td>
+<td>12 条事故驱动规则，每条有可证伪的阴性测试</td>
+</tr>
+<tr>
+<td><strong>负结果档案</strong></td>
+<td><code>negative-results.md</code>，<strong>NR-01~NR-10</strong></td>
+<td>10 条显式失败假设，每条有「改道建议」</td>
+</tr>
+<tr>
+<td><strong>决策留痕</strong></td>
+<td><code>technical-decisions-20261014.md</code>（TDD-2026-01）</td>
+<td>挂第 47 号闸门守护，防静默篡改</td>
+</tr>
+<tr>
+<td><strong>自愈</strong></td>
+<td><code>auto_freshness_heal.py</code> / <code>auto_drift_heal.py</code> / <code>auto_fill_stubs.py</code></td>
+<td>检测 → 自修 → 复测 → 上线 / 回滚 / 升级</td>
+</tr>
+<tr>
+<td><strong>闭环审计</strong></td>
+<td><code>loop_matrix.py</code>（M1…M5 等）+ <code>closure_status.py</code>（唯一对外状态）</td>
+<td>把「闭环」变成结构化事实</td>
+</tr>
+<tr>
+<td><strong>标准映射</strong></td>
+<td><code>field-standard-mapping.md</code> / <code>gb-standard-mapping-20261008.md</code> / <code>standard-audit.json</code></td>
+<td>标准登记表 ↔ 实体声明 自动交叉校验</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_2">二、流程审计</h2>
+<h3 id="21">2.1 流程是否合理</h3>
+<p><strong>这是全仓唯一「已经越到独立开发者项目水位之上」的板块。</strong> 它不只做判定，还做<strong>关于判定的判定</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>元层能力</th>
+<th>实测证据</th>
+<th>为什么稀有</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>变异评分（测试够不够）</td>
+<td>6 个变异体针对「三态守恒破坏 / 轴边际 / 证据指针 / 诚实边界 / 分母收缩」，杀死率 1.00</td>
+<td>多数项目只有覆盖率，覆盖率会说谎</td>
+</tr>
+<tr>
+<td>反模式档案（怎么错的）</td>
+<td>AP-01「无价格冒充在预算内」、AP-05「接入路径断裂」、AP-10「mount_type 当身份键」、AP-12「truthy 判断压三态」</td>
+<td>把事故变成<strong>可复用规则 + 阴性测试</strong></td>
+</tr>
+<tr>
+<td>负结果档案（什么路不通）</td>
+<td>NR-09「单一标量适应度做多目标进化」= <strong>否决</strong>；NR-10「桥接映射表代码化 S1」= <strong>未启动</strong></td>
+<td>系统产出「此路不通」的可证结论</td>
+</tr>
+<tr>
+<td>决策留痕（为什么这样定）</td>
+<td>TDD-2026-01 用<strong>四条硬指标</strong>排除世界模型，并挂闸门守护</td>
+<td>「不引入」也有依据且可被 CI 核对</td>
+</tr>
+<tr>
+<td>自愈（怎么自己修）</td>
+<td>数字保鲜 / 部署漂移 自动修复 + 复测 + 上线，失败回滚</td>
+<td>从「检测→写待办」升级为「检测→修复→复测」</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>判断</strong>：流程<strong>不仅合理，而且已经形成方法论</strong>。这是 RoboParts 最不可复制的资产。</p>
+</blockquote>
+<h3 id="22">2.2 是否全面走通</h3>
+<table>
+<thead>
+<tr>
+<th>子链路</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据变更 → 闸门 → 拦截</td>
+<td>✅ 通（49 项）</td>
+</tr>
+<tr>
+<td>事故 → 反模式规则 → 阴性测试</td>
+<td>✅ 通（AP-01~AP-12）</td>
+</tr>
+<tr>
+<td>失败假设 → 负结果档案 → 改道</td>
+<td>✅ 通（NR-01~NR-10）</td>
+</tr>
+<tr>
+<td>决策 → 留痕 → 闸门守护</td>
+<td>✅ 通（TDD-2026-01 + 第 47 号闸门）</td>
+</tr>
+<tr>
+<td>数字过期 → 自愈 → 上线</td>
+<td>✅ 通</td>
+</tr>
+<tr>
+<td>部署漂移 → 自愈 → 回滚</td>
+<td>✅ 通（逻辑）</td>
+</tr>
+<tr>
+<td><strong>闸门 → 对外可见</strong></td>
+<td>✅ 已做（<code>llms.txt</code> 的「工程可信信号」段 + README §11）</td>
+</tr>
+<tr>
+<td><strong>治理成果 → 外部引用</strong></td>
+<td>❌ <strong>断</strong>：无外部项目引用这套方法论</td>
+</tr>
+<tr>
+<td><strong>闸门成本控制</strong></td>
+<td>⚠️ <strong>隐患</strong>：49 项闸门 + 177 脚本的维护负担在单人项目上是<strong>高风险</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>结论</strong>：治理链路<strong>全面走通</strong>且对外可见；断点在「外部认可」与「维护负担」。</p>
+</blockquote>
+<h3 id="23">2.3 是否符合人类使用习惯</h3>
+<p>本板块的用户是<strong>维护者自己</strong>（+ 潜在贡献者）：</p>
+<table>
+<thead>
+<tr>
+<th>真实动作</th>
+<th>本板块支持</th>
+<th>契合度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「我改完怎么知道没搞坏」</td>
+<td><code>ci_gate.py</code> 一键跑 49 项</td>
+<td>✅ 极好</td>
+</tr>
+<tr>
+<td>「我怎么知道测试够不够」</td>
+<td>变异评分</td>
+<td>✅ 好</td>
+</tr>
+<tr>
+<td>「我上次为什么这么改」</td>
+<td>反模式档案 + 决策留痕</td>
+<td>✅ 极好</td>
+</tr>
+<tr>
+<td>「哪条路试过不行」</td>
+<td>负结果档案</td>
+<td>✅ 极好</td>
+</tr>
+<tr>
+<td><strong>「新人怎么接手」</strong></td>
+<td>文档极全，但<strong>总线因子=1</strong></td>
+<td>⚠️ 高门槛</td>
+</tr>
+<tr>
+<td><strong>「我想贡献但怕搞坏」</strong></td>
+<td>有 <code>CONTRIBUTING.md</code>，但门槛不低</td>
+<td>⚠️</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>关键观察</strong>：<strong>这套治理体系是为「单人长期维护」优化的</strong>——它极大地降低了「自己犯错的概率」，但没有降低「别人接手的门槛」。这是一个<strong>有意的取舍</strong>，但也是单点风险。</p>
+</blockquote>
+<hr />
+<h2 id="_3">三、市场竞品与市场需求比较</h2>
+<h3 id="31">3.1 竞品对照</h3>
+<table>
+<thead>
+<tr>
+<th>竞品</th>
+<th>定位</th>
+<th>强项</th>
+<th>RoboParts 的差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>各国标/ISO 合规工具</strong></td>
+<td>合规检查</td>
+<td>官方</td>
+<td>只查「是否符合标准」，不查「自己说的是否为真」</td>
+</tr>
+<tr>
+<td><strong>开源项目的 CI 体系</strong>（多数）</td>
+<td>测试 + lint</td>
+<td>通用</td>
+<td>极少有<strong>变异评分 + 反模式档案 + 负结果档案</strong></td>
+</tr>
+<tr>
+<td><strong>AI 生成代码验证（2026 热点）</strong></td>
+<td>保证 AI 产出正确</td>
+<td>主流关注</td>
+<td>多数项目<strong>没有真实事故记录</strong>；RoboParts 有</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>生态位</strong>：<strong>这是 RoboParts 最被低估的资产</strong>。2026 年「AI 生成代码/数据怎么保证正确」是巨大需求，而<strong>多数团队没有一手事故案例</strong>——RoboParts 有 12 条 AP + 10 条 NR + 完整治理史（<code>ops/results/_SUMMARY.md</code> 170+ 轮）。</p>
+</blockquote>
+<h3 id="32">3.2 市场需求实测</h3>
+<ul>
+<li>该板块<strong>没有直接的商业需求</strong>（没人买「治理方法论」），但有<strong>学术与声誉需求</strong>。</li>
+<li>项目已把三个信号（变异评分 / 反模式 / 负结果）接入 <code>llms.txt</code> 的「工程可信信号」段——<strong>这是正确的对外策略</strong>。</li>
+<li>但<strong>无外部引用</strong>：没有论文、没有其他项目采纳这套规则。</li>
+</ul>
+<blockquote>
+<p><strong>判断</strong>：<strong>这套方法论的价值远未被兑现</strong>。它应该是一篇论文的核心，而不是 README 的一节。</p>
+</blockquote>
+<hr />
+<h2 id="_4">四、最新开源技术融合评估</h2>
+<table>
+<thead>
+<tr>
+<th>开源技术 / 标准</th>
+<th>2026 状态</th>
+<th>接入点</th>
+<th>融合形态</th>
+<th>拒绝条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ISO 22166-201 模块通用信息模型</strong></td>
+<td>2026 发布</td>
+<td>标准映射</td>
+<td>把标准登记表对齐 201 信息模型条目</td>
+<td>无原文 ⇒ 只做方向性映射</td>
+</tr>
+<tr>
+<td><strong>ISO 22166-202 软件模块信息模型</strong></td>
+<td>2025 发布</td>
+<td>标准映射</td>
+<td>AI 模型实体对齐 202</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><strong>GB/T 43210.1-2023</strong>（ISO 22166-1 IDT）</td>
+<td>已发布</td>
+<td><code>gb-standard-mapping</code></td>
+<td>已有映射，补 ME-SSCP 能力声明对照</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><strong>国家标准项目（ME-SSCP + PlugFest）</strong></td>
+<td>审查中</td>
+<td>标准映射</td>
+<td>对照其「机器可读能力声明」条目</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Hypothesis / fast-check</strong>（property-based testing）</td>
+<td>2026 主流</td>
+<td>三态语义</td>
+<td>把不变量写成 property 测试</td>
+<td>需外部数据的不变量降为 fixture</td>
+</tr>
+<tr>
+<td><strong>变异测试工具</strong>（已有自研）</td>
+<td>已落地</td>
+<td><code>mutation_score.py</code></td>
+<td>扩展到三套引擎 + 全部产物</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>SLSA / in-toto</strong>（供应链完整性）</td>
+<td>标准</td>
+<td>闸门</td>
+<td>为产物生成可验证的供应链证明</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>arXiv / 期刊投稿</strong></td>
+<td>—</td>
+<td>方法论</td>
+<td>把治理方法论写成论文</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>首选融合</strong>：<strong>把治理方法论学术化</strong>。项目已有 <code>paper-compose-calculus-outline.md</code>，但那是「判定引擎」的论文；<strong>「验证方法论」本身是另一篇、且更稀缺的论文</strong>。</p>
+</blockquote>
+<hr />
+<h2 id="_5">五、提升方案</h2>
+<h3 id="p0">P0（不做则板块不成立）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>治理方法论成文并投出</strong>：把 AP-01~AP-12 + NR-01~NR-10 + 变异评分 + 决策留痕写成一篇 arXiv 预印本</td>
+<td>arXiv 编号</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>降低接手门槛</strong>：写一份「维护者手册」（怎么加闸门 / 怎么处理假绿 / 怎么记录负结果）</td>
+<td>新人可在无原作者情况下跑通一次变更</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>恢复 git 历史</strong>：当前 <code>No commits yet on master</code>，治理体系赖以成立的「可回溯」在版本层失效</td>
+<td><code>git log</code> 有提交历史</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p1">P1（不做则板块无竞争力）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>闸门成本控制：给每项闸门标注「维护成本」，超预算的降为夜间跑</td>
+<td>有成本清单</td>
+</tr>
+<tr>
+<td>5</td>
+<td>标准映射对齐 ISO 22166-201/-202</td>
+<td>映射文档成稿</td>
+</tr>
+<tr>
+<td>6</td>
+<td>对外发布方法论（ROS Discourse / HN / 知乎）</td>
+<td>至少 1 个外部引用</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p2">P2</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>SLSA / in-toto 供应链证明</td>
+</tr>
+<tr>
+<td>8</td>
+<td>闸门可视化（一页看全 49 项状态）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_6">六、诚实边界</h2>
+<ol>
+<li><strong>本板块是全仓最强资产，但也是全仓最大的单点风险</strong>：177 脚本 + 49 闸门 + 完整治理史全部依赖单一维护者。</li>
+<li>变异评分杀死率 1.00 是<strong>试点范围</strong>（6 个变异体，主要针对 <code>compose_semantics.json</code>），不等于全仓测试强度。</li>
+<li><code>NR-10</code>（桥接映射代码化 S1）状态为「未启动」，说明四维报告的框架收敛建议<strong>尚未落地</strong>。</li>
+<li>标准映射不构成符合性声明（仓内无 ISO/GB 原文）。</li>
+</ol>
+</div>
+</body>
+</html>

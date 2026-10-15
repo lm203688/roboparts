@@ -337,6 +337,23 @@ function generate(){
   const thick = parseFloat(document.getElementById('thick').value)||10;
   const bore = parseFloat(document.getElementById('bore').value)||20;
   const p = {a,b,thick,bore};
+
+  // ── 几何自校验（M4 P0-2）─────────────────────────────────────────────────
+  const warnings = validateGeometry(p);
+  const specEl = document.getElementById('spec');
+
+  // 显示校验警告
+  if (warnings.length > 0) {
+    const warnHtml = warnings.map(w => `<div style="color:#fbbf24;font-size:12px;margin-top:4px">⚠️ ${w}</div>`).join('');
+    specEl.innerHTML = '';
+    specEl.appendChild(document.createTextNode(
+      `外径 Ø${(Math.max(a.pcd/2, b.pcd/2) + 18)*2} mm · 板厚 ${thick} mm · 中心孔 Ø${bore} mm\n`+
+      `侧A ${a.label}（PCD ${a.pcd}, ${a.holes}×${a.thread}${a.pins?', '+a.pins+'×pinφ'+a.pinD:''}）\n`+
+      `侧B ${b.label}（PCD ${b.pcd}, ${b.holes}×${b.thread}${b.pins?', '+b.pins+'×pinφ'+b.pinD:''}）`
+    ));
+    specEl.innerHTML += warnHtml;
+  }
+
   const {geo, outerR} = buildGeometry(p);
   if(mesh){ scene.remove(mesh); mesh.geometry.dispose(); }
   curGeom = geo; curParams = p;
@@ -348,13 +365,53 @@ function generate(){
   const md = Math.max(size.x,size.y,size.z);
   camera.position.set(md*0.9, md*0.8, md*1.1);
   controls.target.set(0,0,0);
-  document.getElementById('spec').textContent =
-    `外径 Ø${(outerR*2).toFixed(1)} mm · 板厚 ${thick} mm · 中心孔 Ø${bore} mm\n`+
-    `侧A ${a.label}（PCD ${a.pcd}, ${a.holes}×${a.thread}${a.pins?', '+a.pins+'×pinφ'+a.pinD:''}）\n`+
-    `侧B ${b.label}（PCD ${b.pcd}, ${b.holes}×${b.thread}${b.pins?', '+b.pins+'×pinφ'+b.pinD:''}）`;
+
   buildScad(p, outerR); updateShare(p); updatePrintEstimate();
   document.getElementById('printBox').hidden = false;
   document.getElementById('feedbackBox').hidden = false;
+}
+
+// ── 几何自校验：孔位是否在板面内、最小壁厚是否足够 ──
+function validateGeometry(p){
+  const warnings = [];
+  const outerR = Math.max(p.a.pcd/2, p.b.pcd/2) + 18;
+  const aHoles = holesOf(p.a);
+  const bHoles = holesOf(p.b);
+
+  // 检查所有孔是否在板面内
+  for (const side of [{label:'A', holes:aHoles}, {label:'B', holes:bHoles}]) {
+    for (const h of side.holes) {
+      const dist = Math.sqrt(h.x*h.x + h.y*h.y);
+      if (dist + h.rad > outerR) {
+        warnings.push(`${side.label} 侧孔位超出板面边缘（距中心 ${dist.toFixed(1)}mm + 孔径 ${h.rad}mm > 外径 ${outerR.toFixed(1)}mm），需增大板径或调整孔位。`);
+      }
+    }
+  }
+
+  // 检查中心孔与螺栓孔的最小间距
+  for (const side of [{label:'A', holes:aHoles}, {label:'B', holes:bHoles}]) {
+    for (const h of side.holes) {
+      const dist = Math.sqrt(h.x*h.x + h.y*h.y);
+      const minGap = dist - (p.bore/2) - h.rad;
+      if (minGap < 2) {
+        warnings.push(`${side.label} 侧螺栓孔与中心孔间距仅 ${minGap.toFixed(1)}mm（<2mm），可能导致断裂。`);
+      }
+    }
+  }
+
+  // 检查板厚与螺栓头高度
+  const maxBoltHeight = Math.max(p.a.thread * 0.7, p.b.thread * 0.7); // 估算螺栓头高度
+  if (p.thick < maxBoltHeight * 2 + 2) {
+    warnings.push(`板厚 ${p.thick}mm 偏薄，建议 ≥ ${(maxBoltHeight * 2 + 2).toFixed(0)}mm 以容纳螺栓头。`);
+  }
+
+  // 检查两侧 PCD 差异是否过大
+  const pcdDiff = Math.abs(p.a.pcd - p.b.pcd);
+  if (pcdDiff > 40) {
+    warnings.push(`两侧 PCD 差异 ${pcdDiff}mm 较大，转接板可能较重，建议考虑中间件方案。`);
+  }
+
+  return warnings;
 }
 
 function scadHoleLine(cx,cy,r,h){
@@ -511,5 +568,6 @@ initScene();
 // 首屏：优先还原分享配置，否则默认生成
 window.addEventListener('load', ()=>{ readParamsFromUrl(); setTimeout(generate,200); });
 </script>
+<script>(function(){var s=localStorage.getItem('roboparts_session_id');if(!s){s='sess_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);localStorage.setItem('roboparts_session_id',s);}fetch('/api/analytics/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_type:'page_view',event_data:{page:'/adapter-generator'},session_id:s})}).catch(function(){});})();</script>
 </body>
 </html>

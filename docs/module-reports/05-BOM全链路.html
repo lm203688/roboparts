@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>板块 5：BOM 全链路 — 提升评估报告 · RoboParts 分板块提升评估</title>
+<style>
+  :root{
+    --ink:#111827; --ink2:#374151; --muted:#6b7280; --line:#e5e7eb;
+    --bg:#f7f8fa; --card:#ffffff;
+    --brand:#2563eb; --brand-d:#1e40af; --brand-l:#eff4ff;
+    --red:#dc2626; --amber:#d97706; --green:#059669; --purple:#7c3aed; --teal:#0d9488;
+    --p0:#dc2626; --p1:#d97706; --p2:#0891b2;
+    --shadow:0 1px 2px rgba(16,24,40,.04),0 4px 16px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.72;-webkit-font-smoothing:antialiased;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* header */
+  header.hero{background:linear-gradient(135deg,#0b1220 0%,#12203f 45%,#1e3a8a 100%);color:#fff;padding:56px 0 46px;position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(37,99,235,.55),transparent 62%)}
+  .hero .wrap{padding-bottom:0}
+  .hero .eyebrow{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#93b4ff;font-weight:600}
+  .hero h1{font-size:34px;line-height:1.28;margin:14px 0 12px;font-weight:800;letter-spacing:-.01em}
+  .hero p.sub{color:#c7d2fe;font-size:16px;max-width:760px;margin:0}
+  .hero .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+    color:#e5e7eb;font-size:12.5px;padding:5px 11px;border-radius:999px}
+
+  /* section */
+  section{margin-top:44px}
+  h2{font-size:23px;font-weight:800;letter-spacing:-.01em;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+  h2 .num{display:inline-flex;width:30px;height:30px;border-radius:9px;background:var(--brand);color:#fff;font-size:15px;
+    align-items:center;justify-content:center;font-weight:700;flex:none}
+  .lead{color:var(--ink2);font-size:15px;margin:6px 0 20px}
+  h3{font-size:17.5px;font-weight:750;margin:30px 0 10px;color:var(--ink)}
+  h4{font-size:15px;font-weight:700;margin:18px 0 8px;color:var(--ink2)}
+  p{margin:9px 0}
+  ul,ol{margin:9px 0;padding-left:22px}
+  li{margin:5px 0}
+
+  /* cards */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);margin:14px 0}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .kpi .v{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:5px}
+  .kpi .d{font-size:12px;margin-top:6px}
+  .v-blue{color:var(--brand)} .v-green{color:var(--green)} .v-amber{color:var(--amber)}
+  .v-red{color:var(--red)} .v-purple{color:var(--purple)} .v-teal{color:var(--teal)}
+
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.6px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#f3f5f9;font-weight:700;color:var(--ink2);font-size:12.6px;letter-spacing:.02em}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafbfd}
+
+  .badge{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:6px;letter-spacing:.02em;white-space:nowrap}
+  .b-p0{background:#fee2e2;color:#b91c1c} .b-p1{background:#fef3c7;color:#b45309}
+  .b-p2{background:#cffafe;color:#0e7490} .b-ok{background:#d1fae5;color:#047857}
+  .b-warn{background:#fef3c7;color:#b45309} .b-bad{background:#fee2e2;color:#b91c1c}
+  .b-neutral{background:#eef2ff;color:#3730a3}
+
+  .bar{height:9px;border-radius:999px;background:#eef1f6;overflow:hidden;margin-top:7px}
+  .bar > i{display:block;height:100%;border-radius:999px}
+
+  .callout{border-left:4px solid var(--brand);background:var(--brand-l);border-radius:0 12px 12px 0;padding:14px 18px;margin:14px 0}
+  .callout.warn{border-color:var(--amber);background:#fffbeb}
+  .callout.bad{border-color:var(--red);background:#fef2f2}
+  .callout.good{border-color:var(--green);background:#ecfdf5}
+  .callout .t{font-weight:750;margin-bottom:3px}
+  .callout p:last-child{margin-bottom:0}
+
+  .quote{font-size:15px;color:var(--ink2);border-left:3px solid var(--line);padding-left:14px;margin:14px 0;font-style:italic}
+
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 22px;box-shadow:var(--shadow);margin-top:-26px;position:relative;z-index:2}
+  .toc ol{columns:2;column-gap:34px;margin:6px 0 0;padding-left:20px}
+  @media(max-width:820px){.toc ol{columns:1}}
+  .toc a{color:var(--ink2);font-size:13.6px}
+  .toc a:hover{color:var(--brand)}
+
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;background:#eef2ff;color:#3730a3;margin-right:6px}
+  hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+  .small{font-size:12.6px;color:var(--muted)}
+  .nowrap{white-space:nowrap}
+  .center{text-align:center}
+  footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:12.6px}
+  .step{display:flex;gap:14px;margin:14px 0}
+  .step .dot{flex:none;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px}
+  .timeline{border-left:2px solid var(--line);margin-left:8px;padding-left:22px}
+  .tl-item{position:relative;margin:0 0 22px}
+  .tl-item::before{content:"";position:absolute;left:-29px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid #fff;box-shadow:0 0 0 2px var(--brand)}
+  .tl-item.p1::before{background:var(--amber);box-shadow:0 0 0 2px var(--amber)}
+  .tl-item.p2::before{background:var(--p2);box-shadow:0 0 0 2px var(--p2)}
+  code{background:#f1f3f8;padding:1.5px 6px;border-radius:5px;font-size:12.6px;font-family:ui-monospace,Menlo,Consolas,monospace}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1 id="5bom">板块 5：BOM 全链路 — 提升评估报告</h1>
+<blockquote>
+<p><strong>生成日期</strong>：2026-10-14 ｜ <strong>板块编号</strong>：M5 ｜ <strong>成熟度</strong>：C 档（能跑但未验证）
+<strong>证据来源</strong>：<code>functions/api/bom/check.js</code>（385 行）、<code>functions/api/bom/export.js</code>（399 行）、<code>functions/api/bom/import.js</code>（90 行）、页面 <code>bom-checker.html</code>（243 行）、<code>bom-manager.html</code>（659 行）、<code>bom-import.html</code>（87 行）、<code>order.html</code>（14 行重定向）</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、板块定位与边界</h2>
+<p><strong>一句话</strong>：从「一堆零件清单」到「能不能装、要多少钱、去哪买、怎么改」的全链路。</p>
+<p><strong>三个子功能</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>子功能</th>
+<th>页面</th>
+<th>端点</th>
+<th>做什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>兼容性检查</strong></td>
+<td><code>bom-checker.html</code></td>
+<td><code>/api/bom/check</code></td>
+<td>两两兼容矩阵 + 可互换组 + 冲突告警 + 采购可购性标注</td>
+</tr>
+<tr>
+<td><strong>BOM 管理</strong></td>
+<td><code>bom-manager.html</code></td>
+<td>前端 localStorage</td>
+<td>本地 BOM 增删改 + 导出 CSV/JSON</td>
+</tr>
+<tr>
+<td><strong>BOM 导入（飞轮入口）</strong></td>
+<td><code>bom-import.html</code></td>
+<td><code>/api/bom/import</code></td>
+<td>用户提交 BOM → 结构校验 → 待审队列（<code>bom:pending:*</code>）</td>
+</tr>
+<tr>
+<td><strong>导出</strong></td>
+<td>—</td>
+<td><code>/api/bom/export</code></td>
+<td>CSV / JSON，含供应商建议与总成本</td>
+</tr>
+</tbody>
+</table>
+<p><strong>实测关键参数</strong>：
+- <code>bom/check</code>：免费层 ≤ <strong>12</strong> 个组件，Pro 无限制；三源目录加载（<code>data.json</code> / <code>oss_components.json</code> / <code>entities.json</code>），全失败返回 503（不静默降级）。
+- <code>bom/export</code>：每次消耗 <strong>1 积分</strong>。
+- <code>bom/import</code>：机械接口声明<strong>必须附 <code>source_url</code></strong> 才采信，否则拒绝该条；写入待审队列，不直接进裁决流。</p>
+<hr />
+<h2 id="_2">二、流程审计</h2>
+<h3 id="21">2.1 流程是否合理</h3>
+<table>
+<thead>
+<tr>
+<th>环节</th>
+<th>是否合理</th>
+<th>实测证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BOM → 两两判定</td>
+<td>✅ 合理</td>
+<td>复用 <code>compat_engine</code> 的 <code>evalDimension</code>，不自带副本（曾自带副本已删，注释留痕）</td>
+</tr>
+<tr>
+<td>目录加载失败处理</td>
+<td>✅ 强</td>
+<td>「全失败 → 503；部分失败 → 显式标注目录降级」——避免「我们没读到库」被渲染成「这些零件没数据」（假证据不足）</td>
+</tr>
+<tr>
+<td>降级标记按请求创建</td>
+<td>✅ 强</td>
+<td>注释明确「模块级可变状态会跨请求累积」（同 mcp.js 模块顶层 <code>Math.random()</code> 事故）</td>
+</tr>
+<tr>
+<td>导出计费</td>
+<td>⚠️ 合理但摩擦</td>
+<td>1 积分/次</td>
+</tr>
+<tr>
+<td>导入的诚实闸门</td>
+<td>✅ 强</td>
+<td>「不可核实的接口事实 = 污染」；机械声明必须附 source_url</td>
+</tr>
+<tr>
+<td>导入不直接进裁决流</td>
+<td>✅ 强</td>
+<td>走待审队列，避免任意提交污染线上结论</td>
+</tr>
+<tr>
+<td>自检流量隔离</td>
+<td>✅ 强</td>
+<td><code>x-roboparts-selftest</code> 只预览不落盘</td>
+</tr>
+<tr>
+<td><strong>BOM 存储</strong></td>
+<td>⚠️ <strong>弱</strong></td>
+<td><code>bom-manager</code> 用 <strong>localStorage</strong>（本地），换设备即丢失；无账户级持久化</td>
+</tr>
+<tr>
+<td><strong>BOM → 采购</strong></td>
+<td>⚠️ <strong>半通</strong></td>
+<td><code>check</code> 有采购可购性标注，但无「一键下单」真实链路（<code>order.html</code> 仅 14 行重定向）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>判断</strong>：<strong>判定与导入环节的纪律极强</strong>（防假绿、防污染、防降级误读），但<strong>存储与交易环节弱</strong>。</p>
+</blockquote>
+<h3 id="22">2.2 是否全面走通</h3>
+<table>
+<thead>
+<tr>
+<th>子链路</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入 BOM（手填/粘贴）→ 检查 → 矩阵</td>
+<td>✅ 通</td>
+</tr>
+<tr>
+<td>检查 → 可互换组 / 冲突告警</td>
+<td>✅ 通</td>
+</tr>
+<tr>
+<td>检查 → 采购可购性标注</td>
+<td>✅ 通（<code>getPurchaseOptions</code>）</td>
+</tr>
+<tr>
+<td>本地管理 → 导出 CSV/JSON</td>
+<td>✅ 通（需 key + 积分）</td>
+</tr>
+<tr>
+<td>导入 → 待审 → 飞轮合入</td>
+<td>⚠️ <strong>链路完整但无真实贡献数据</strong></td>
+</tr>
+<tr>
+<td><strong>BOM → 转接件生成</strong></td>
+<td>❌ 断</td>
+</tr>
+<tr>
+<td><strong>BOM → 下单</strong></td>
+<td>❌ 断（<code>order.html</code> 只是重定向）</td>
+</tr>
+<tr>
+<td><strong>BOM → 账户级持久化</strong></td>
+<td>❌ 无</td>
+</tr>
+<tr>
+<td><strong>真实用户使用</strong></td>
+<td>❌ 无证据</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>结论</strong>：<strong>检查链路完整</strong>，但「存、改、买、改件」四步全断或弱。</p>
+</blockquote>
+<h3 id="23">2.3 是否符合人类使用习惯</h3>
+<p>真实采购/工程师的 BOM 工作流：<strong>Excel 里维护清单 → 查兼容 → 改清单 → 询价 → 下单 → 收货</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>真实动作</th>
+<th>本板块支持</th>
+<th>契合度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「我在 Excel 里有清单」</td>
+<td>支持粘贴/导入</td>
+<td>⚠️ 需确认 Excel 直读能力</td>
+</tr>
+<tr>
+<td>「我常改这个清单」</td>
+<td>localStorage 本地存</td>
+<td>⚠️ 换设备丢</td>
+</tr>
+<tr>
+<td>「给同事看」</td>
+<td>无分享链接</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>「询价」</td>
+<td>供应商板块有 inquiry，但未从 BOM 串起</td>
+<td>❌ 断</td>
+</tr>
+<tr>
+<td>「下单」</td>
+<td><code>order.html</code> 空</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>关键 UX 缺口</strong>：<strong>BOM 是「一次性工具」而非「持续资产」</strong>。用户每次来都要重新粘贴。人类习惯是「我的 BOM 一直在那儿」。</p>
+</blockquote>
+<hr />
+<h2 id="_3">三、市场竞品与市场需求比较</h2>
+<h3 id="31">3.1 竞品对照</h3>
+<table>
+<thead>
+<tr>
+<th>竞品</th>
+<th>定位</th>
+<th>强项</th>
+<th>RoboParts 的差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OpenBOM</strong></td>
+<td>云 BOM/PLM</td>
+<td>多 CAD 集成、版本管理、ERP 对接</td>
+<td>通用制造业；<strong>不做兼容判定</strong></td>
+</tr>
+<tr>
+<td><strong>PLMore</strong></td>
+<td>开源 PLM</td>
+<td>开源、现代</td>
+<td>通用 PLM；无机器人语义</td>
+</tr>
+<tr>
+<td><strong>KiCad BOM</strong></td>
+<td>电子 BOM 导出</td>
+<td>与 EDA 深度集成</td>
+<td>电子域；无机械兼容</td>
+</tr>
+<tr>
+<td><strong>厂商 BOM 工具</strong></td>
+<td>单厂配套</td>
+<td>准确</td>
+<td>不跨品牌</td>
+</tr>
+<tr>
+<td><strong>Excel / Google Sheets</strong></td>
+<td>通用表格</td>
+<td>人人会用</td>
+<td><strong>无兼容判定</strong>——这正是 RoboParts 的价值点</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>生态位</strong>：RoboParts 的独特价值是「<strong>BOM + 跨品牌兼容判定</strong>」的组合。OpenBOM 管 BOM 不判兼容，Excel 判不了兼容。<strong>这个组合目前无对手。</strong></p>
+</blockquote>
+<h3 id="32">3.2 市场需求实测</h3>
+<ul>
+<li>无独立需求信号。</li>
+<li>但 <code>bom/check</code> 的 <code>FREE_ITEM_LIMIT = 12</code> 暗示设计者认为「免费用户会来试」——<strong>但没有使用量证据</strong>。</li>
+<li><code>bom/import</code> 作为「数据飞轮入口」被定位为 P0，但<strong>没有任何真实提交</strong>。</li>
+</ul>
+<blockquote>
+<p><strong>判断</strong>：BOM 检查是<strong>最容易被理解和传播</strong>的功能（「粘贴清单，告诉你哪里装不上」），但<strong>转化路径被计费和存储摩擦挡住</strong>。</p>
+</blockquote>
+<hr />
+<h2 id="_4">四、最新开源技术融合评估</h2>
+<table>
+<thead>
+<tr>
+<th>开源技术</th>
+<th>2026 状态</th>
+<th>接入点</th>
+<th>融合形态</th>
+<th>拒绝条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OpenBOM API</strong></td>
+<td>商业（有 API）</td>
+<td>导出层</td>
+<td>借鉴其「BOM 版本 + 多 CAD 集成」；不自建 ERP</td>
+<td>商业依赖需评估</td>
+</tr>
+<tr>
+<td><strong>PLMore</strong></td>
+<td>开源 PLM</td>
+<td>BOM 存储</td>
+<td>借鉴其数据模型做账户级 BOM 持久化</td>
+<td>不宜整仓引入</td>
+</tr>
+<tr>
+<td><strong>KiCad / IPC-2581 / STEP AP242</strong></td>
+<td>标准</td>
+<td>导出层</td>
+<td>支持标准 BOM 交换格式（含 STEP AP242 BOM）</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Cloudflare KV / D1</strong></td>
+<td>已用 KV</td>
+<td>存储层</td>
+<td>把 BOM 从 localStorage 迁到 KV/D1（账户级持久化）</td>
+<td>需设计隐私（对齐「端到端加密」目标 5）</td>
+</tr>
+<tr>
+<td><strong>spreadsheet 解析（SheetJS）</strong></td>
+<td>开源</td>
+<td>导入层</td>
+<td>支持 Excel/xlsx 直接导入</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Workflow-as-tool（MCP）</strong></td>
+<td>2026 趋势</td>
+<td>已有端点</td>
+<td>把「BOM 检查 + 拓扑排序 + 缺口报告」暴露为一个工具</td>
+<td>不得另写判定逻辑</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>首选融合</strong>：<strong>BOM 账户级持久化（KV/D1）+ Excel 直读</strong>。当前 localStorage 是最弱的一环，而人类习惯是「BOM 一直在那儿」。</p>
+</blockquote>
+<hr />
+<h2 id="_5">五、提升方案</h2>
+<h3 id="p0">P0（不做则板块不成立）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>BOM 账户级持久化</strong>：从 localStorage 迁到 KV/D1，登录后跨设备可见</td>
+<td>换设备能取回同一 BOM</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Excel/xlsx 直读导入</strong></td>
+<td>上传 .xlsx 直接解析成 BOM</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>BOM → 转接件一键跳转</strong>：不兼容项旁给「生成转接件」</td>
+<td>从 BOM 检查结果直达生成器并带参</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p1">P1（不做则板块无竞争力）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>BOM 可分享链接（只读）</td>
+<td>生成可分享 URL</td>
+</tr>
+<tr>
+<td>5</td>
+<td>BOM → 供应商询价一键发起</td>
+<td>从 BOM 直接生成询价单</td>
+</tr>
+<tr>
+<td>6</td>
+<td>导出支持标准交换格式（STEP AP242 BOM / IPC-2581 电子侧）</td>
+<td>至少 1 种标准格式</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p2">P2</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>BOM 版本历史（对齐 PLM 的版本管理）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>端到端加密（对齐核心目标 5）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_6">六、诚实边界</h2>
+<ol>
+<li>本板块<strong>无真实用户使用证据</strong>。</li>
+<li><code>order.html</code> 仅 14 行重定向，<strong>不存在真实下单链路</strong>——本报告不把它算作已实现能力。</li>
+<li>导入飞轮链路完整但<strong>零真实贡献</strong>。</li>
+<li>竞品信息为联网核实时点快照。</li>
+</ol>
+</div>
+</body>
+</html>

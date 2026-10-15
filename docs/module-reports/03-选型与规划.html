@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>板块 3：选型与规划 — 提升评估报告 · RoboParts 分板块提升评估</title>
+<style>
+  :root{
+    --ink:#111827; --ink2:#374151; --muted:#6b7280; --line:#e5e7eb;
+    --bg:#f7f8fa; --card:#ffffff;
+    --brand:#2563eb; --brand-d:#1e40af; --brand-l:#eff4ff;
+    --red:#dc2626; --amber:#d97706; --green:#059669; --purple:#7c3aed; --teal:#0d9488;
+    --p0:#dc2626; --p1:#d97706; --p2:#0891b2;
+    --shadow:0 1px 2px rgba(16,24,40,.04),0 4px 16px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.72;-webkit-font-smoothing:antialiased;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* header */
+  header.hero{background:linear-gradient(135deg,#0b1220 0%,#12203f 45%,#1e3a8a 100%);color:#fff;padding:56px 0 46px;position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(37,99,235,.55),transparent 62%)}
+  .hero .wrap{padding-bottom:0}
+  .hero .eyebrow{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#93b4ff;font-weight:600}
+  .hero h1{font-size:34px;line-height:1.28;margin:14px 0 12px;font-weight:800;letter-spacing:-.01em}
+  .hero p.sub{color:#c7d2fe;font-size:16px;max-width:760px;margin:0}
+  .hero .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+    color:#e5e7eb;font-size:12.5px;padding:5px 11px;border-radius:999px}
+
+  /* section */
+  section{margin-top:44px}
+  h2{font-size:23px;font-weight:800;letter-spacing:-.01em;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+  h2 .num{display:inline-flex;width:30px;height:30px;border-radius:9px;background:var(--brand);color:#fff;font-size:15px;
+    align-items:center;justify-content:center;font-weight:700;flex:none}
+  .lead{color:var(--ink2);font-size:15px;margin:6px 0 20px}
+  h3{font-size:17.5px;font-weight:750;margin:30px 0 10px;color:var(--ink)}
+  h4{font-size:15px;font-weight:700;margin:18px 0 8px;color:var(--ink2)}
+  p{margin:9px 0}
+  ul,ol{margin:9px 0;padding-left:22px}
+  li{margin:5px 0}
+
+  /* cards */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);margin:14px 0}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .kpi .v{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:5px}
+  .kpi .d{font-size:12px;margin-top:6px}
+  .v-blue{color:var(--brand)} .v-green{color:var(--green)} .v-amber{color:var(--amber)}
+  .v-red{color:var(--red)} .v-purple{color:var(--purple)} .v-teal{color:var(--teal)}
+
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.6px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#f3f5f9;font-weight:700;color:var(--ink2);font-size:12.6px;letter-spacing:.02em}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafbfd}
+
+  .badge{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:6px;letter-spacing:.02em;white-space:nowrap}
+  .b-p0{background:#fee2e2;color:#b91c1c} .b-p1{background:#fef3c7;color:#b45309}
+  .b-p2{background:#cffafe;color:#0e7490} .b-ok{background:#d1fae5;color:#047857}
+  .b-warn{background:#fef3c7;color:#b45309} .b-bad{background:#fee2e2;color:#b91c1c}
+  .b-neutral{background:#eef2ff;color:#3730a3}
+
+  .bar{height:9px;border-radius:999px;background:#eef1f6;overflow:hidden;margin-top:7px}
+  .bar > i{display:block;height:100%;border-radius:999px}
+
+  .callout{border-left:4px solid var(--brand);background:var(--brand-l);border-radius:0 12px 12px 0;padding:14px 18px;margin:14px 0}
+  .callout.warn{border-color:var(--amber);background:#fffbeb}
+  .callout.bad{border-color:var(--red);background:#fef2f2}
+  .callout.good{border-color:var(--green);background:#ecfdf5}
+  .callout .t{font-weight:750;margin-bottom:3px}
+  .callout p:last-child{margin-bottom:0}
+
+  .quote{font-size:15px;color:var(--ink2);border-left:3px solid var(--line);padding-left:14px;margin:14px 0;font-style:italic}
+
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 22px;box-shadow:var(--shadow);margin-top:-26px;position:relative;z-index:2}
+  .toc ol{columns:2;column-gap:34px;margin:6px 0 0;padding-left:20px}
+  @media(max-width:820px){.toc ol{columns:1}}
+  .toc a{color:var(--ink2);font-size:13.6px}
+  .toc a:hover{color:var(--brand)}
+
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;background:#eef2ff;color:#3730a3;margin-right:6px}
+  hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+  .small{font-size:12.6px;color:var(--muted)}
+  .nowrap{white-space:nowrap}
+  .center{text-align:center}
+  footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:12.6px}
+  .step{display:flex;gap:14px;margin:14px 0}
+  .step .dot{flex:none;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px}
+  .timeline{border-left:2px solid var(--line);margin-left:8px;padding-left:22px}
+  .tl-item{position:relative;margin:0 0 22px}
+  .tl-item::before{content:"";position:absolute;left:-29px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid #fff;box-shadow:0 0 0 2px var(--brand)}
+  .tl-item.p1::before{background:var(--amber);box-shadow:0 0 0 2px var(--amber)}
+  .tl-item.p2::before{background:var(--p2);box-shadow:0 0 0 2px var(--p2)}
+  code{background:#f1f3f8;padding:1.5px 6px;border-radius:5px;font-size:12.6px;font-family:ui-monospace,Menlo,Consolas,monospace}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1 id="3">板块 3：选型与规划 — 提升评估报告</h1>
+<blockquote>
+<p><strong>生成日期</strong>：2026-10-14 ｜ <strong>板块编号</strong>：M3 ｜ <strong>成熟度</strong>：C 档（能跑但未验证）
+<strong>证据来源</strong>：<code>functions/api/selection/engine.js</code>（1097 行）、<code>functions/api/recommend.js</code>、<code>functions/api/recommend-feedback.js</code>、<code>functions/_lib/recommender.js</code>、页面 <code>selection.html</code>（732 行）、<code>build-planner.html</code>（200 行）、<code>assembly.html</code>（801 行）、<code>designer.html</code>（4065 行）</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、板块定位与边界</h2>
+<p><strong>一句话</strong>：把「我要做一台人形机器人，给我一份能买、能装、能跑的清单」变成一条自动化的规划流水线。</p>
+<p><strong>四个子功能（彼此独立、无互调）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>子功能</th>
+<th>页面</th>
+<th>后端</th>
+<th>做什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>场景选型</strong></td>
+<td><code>selection.html</code></td>
+<td><code>/api/selection/engine</code></td>
+<td>按场景（humanoid/quadruped/robot_arm/amr/industrial）给五维加权推荐</td>
+</tr>
+<tr>
+<td><strong>构建规划</strong></td>
+<td><code>build-planner.html</code></td>
+<td>复用选型 + BOM</td>
+<td>选型 → BOM 与兼容性清单</td>
+</tr>
+<tr>
+<td><strong>组装模拟</strong></td>
+<td><code>assembly.html</code></td>
+<td>前端</td>
+<td>拖拽组装（智能家具式）</td>
+</tr>
+<tr>
+<td><strong>设计画布</strong></td>
+<td><code>designer.html</code></td>
+<td>前端（three.js + URDFLoader）</td>
+<td>URDF 导入预览 + BOM + 一键 3D 打印 + 导出 STL/URDF/CSV</td>
+</tr>
+</tbody>
+</table>
+<p><strong>实测规模</strong>：选型引擎 1097 行，含 <code>APPLICATION_WEIGHTS</code> 场景权重、<code>scoreActuator/Sensor/Chip</code> 三套打分、<code>analyzeCompatibility</code> 兼容性分析；设计画布 4065 行（全仓最大页面），含 URDF 加载、关节控制、物料清单、3D 打印导出。</p>
+<hr />
+<h2 id="_2">二、流程审计</h2>
+<h3 id="21">2.1 流程是否合理</h3>
+<table>
+<thead>
+<tr>
+<th>环节</th>
+<th>是否合理</th>
+<th>实测证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>场景 → 权重</td>
+<td>✅ 合理</td>
+<td><code>APPLICATION_WEIGHTS</code> 按场景配置扭矩/重量/协议/精度/功耗/可靠性优先级</td>
+</tr>
+<tr>
+<td>需求 → 筛选</td>
+<td>✅ 合理</td>
+<td><code>filterActuators/Sensors/Chips</code> 按预算/扭矩/重量/电压/协议/ROS 过滤</td>
+</tr>
+<tr>
+<td>筛选 → 打分</td>
+<td>✅ 合理</td>
+<td>性能匹配 40% + 成本效益 30% + 生态兼容 20% + 成熟度 10%</td>
+</tr>
+<tr>
+<td>打分 → 推荐</td>
+<td>✅ 合理</td>
+<td>含理由（<code>actuatorCompatNotes</code>）与 TRL 估算（<code>estimateTRL</code>）</td>
+</tr>
+<tr>
+<td><strong>选型 → BOM</strong></td>
+<td>⚠️ <strong>重复实现</strong></td>
+<td><code>build-planner</code> 与 <code>selection</code> 各自有选型逻辑；<code>bom/check</code> 又有一套目录加载</td>
+</tr>
+<tr>
+<td><strong>选型 → 设计画布</strong></td>
+<td>❌ <strong>断</strong></td>
+<td>两者无互调：选型结果不能一键导入画布</td>
+</tr>
+<tr>
+<td><strong>设计画布 → 转接件</strong></td>
+<td>❌ <strong>断</strong></td>
+<td>画布发现孔位不匹配时，不能跳到 adapter-generator</td>
+</tr>
+<tr>
+<td>计费</td>
+<td>⚠️ 需注意</td>
+<td>选型每次消耗 2 积分（<code>CREDIT_COST = 2</code>），免费层无试用</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>判断</strong>：<strong>单点流程合理，但端到端流程断裂</strong>。这四个子功能本应是一条流水线（选型 → 规划 → 组装 → 设计 → 转接），实际是四个孤岛。</p>
+</blockquote>
+<h3 id="22">2.2 是否全面走通</h3>
+<table>
+<thead>
+<tr>
+<th>子链路</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>selection 页 → 引擎 → 结果表</td>
+<td>✅ 通（需积分或 key）</td>
+</tr>
+<tr>
+<td>引擎 → 兼容性分析</td>
+<td>✅ 通</td>
+</tr>
+<tr>
+<td>designer 导入 URDF → 3D 预览</td>
+<td>✅ 通（three.js + URDFLoader）</td>
+</tr>
+<tr>
+<td>designer 导出 STL/URDF/CSV</td>
+<td>✅ 通</td>
+</tr>
+<tr>
+<td><strong>选型结果 → designer</strong></td>
+<td>❌ 无入口</td>
+</tr>
+<tr>
+<td><strong>designer 不匹配 → adapter-generator</strong></td>
+<td>❌ 无入口</td>
+</tr>
+<tr>
+<td><strong>推荐反馈闭环</strong></td>
+<td>⚠️ <code>/api/recommend-feedback</code> 存在，但无真实反馈数据</td>
+</tr>
+<tr>
+<td><strong>真实用户使用</strong></td>
+<td>❌ 无证据</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>结论</strong>：每个子功能内部走通，<strong>跨子功能的流水线未走通</strong>。这是本板块最大的结构性缺陷。</p>
+</blockquote>
+<h3 id="23">2.3 是否符合人类使用习惯</h3>
+<p>真实工程师的工作流是：<strong>明确需求 → 选型 → 组 BOM → 查兼容 → 发现装不上 → 做转接件 → 出图/下单</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>工作流步骤</th>
+<th>本板块覆盖</th>
+<th>契合度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>明确需求</td>
+<td>✅ 场景选择器</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>选型</td>
+<td>✅ 五维推荐</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>组 BOM</td>
+<td>✅ build-planner</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>查兼容</td>
+<td>⚠️ 要跳去 bom-checker（另一板块）</td>
+<td>⚠️ 跳转断</td>
+</tr>
+<tr>
+<td>做转接件</td>
+<td>❌ 要跳去 adapter-generator（另一板块）</td>
+<td>❌ 断</td>
+</tr>
+<tr>
+<td>出图/下单</td>
+<td>⚠️ 画布能出图，下单在 order.html</td>
+<td>⚠️ 弱</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>关键 UX 缺口</strong>：<strong>四个子功能之间没有「下一步」按钮。</strong> 用户选完型后，页面不会引导他去查兼容、做转接件、下单。人类习惯是「一条龙」，本项目给的是「四家店」。</p>
+</blockquote>
+<hr />
+<h2 id="_3">三、市场竞品与市场需求比较</h2>
+<h3 id="31">3.1 竞品对照</h3>
+<table>
+<thead>
+<tr>
+<th>竞品</th>
+<th>定位</th>
+<th>强项</th>
+<th>RoboParts 的差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>厂商选型工具</strong>（Thomson、KISSsoft、Max Jac）</td>
+<td>单厂商选型</td>
+<td>参数精准、含工程计算</td>
+<td><strong>只覆盖自家产品</strong>；RoboParts 跨品牌</td>
+</tr>
+<tr>
+<td><strong>TraceParts / GrabCAD 选型</strong></td>
+<td>目录检索</td>
+<td>模型+规格</td>
+<td>不做多因子推荐</td>
+</tr>
+<tr>
+<td><strong>OpenLoong / OpenLET</strong></td>
+<td>开源整机方案</td>
+<td>提供参考构型</td>
+<td>提供<strong>方案</strong>不做<strong>选型推荐</strong></td>
+</tr>
+<tr>
+<td><strong>Onshape / Fusion 360</strong></td>
+<td>云 CAD</td>
+<td>完整设计能力</td>
+<td>无兼容判定；RoboParts 画布是「兼容感知」的</td>
+</tr>
+<tr>
+<td><strong>text-to-cad</strong>（earthtojake，8.3K star）</td>
+<td>Agent 技能，自然语言→CAD</td>
+<td>生成能力强</td>
+<td>它<strong>生成</strong>，RoboParts <strong>判定</strong>；互补</td>
+</tr>
+<tr>
+<td><strong>JellyCAD</strong></td>
+<td>机器人可编程 CAD（Lua）</td>
+<td>面向机器人</td>
+<td>无兼容判定</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>生态位</strong>：RoboParts 的选型引擎独特在「<strong>跨品牌 + 兼容感知</strong>」——推荐的不只是「参数达标」的零件，而是「能和你已有零件装一起」的零件。<strong>这个组合目前无对手。</strong></p>
+</blockquote>
+<h3 id="32">3.2 市场需求实测</h3>
+<ul>
+<li><code>demand-signal.json</code> 的 <code>real_query_count: 0</code> —— 没有捕捉到选型类真实提问。</li>
+<li>但项目自己产出了 22 篇技术文库（<code>content/article-01~21</code>），其中「膝关节执行器选型」「触觉传感器选型指南」「机器人边缘芯片选型」等<strong>正是选型需求</strong>——说明项目<strong>自己判断需求存在</strong>，但外部信号未验证。</li>
+<li>选型引擎消耗积分（2 分/次），<strong>免费用户无法试用</strong>——这是需求验证的阻碍：连试用门槛都高。</li>
+</ul>
+<blockquote>
+<p><strong>判断</strong>：需求<strong>可能真实存在</strong>（选型是机器人开发的刚需），但本板块<strong>没有任何免费试用入口</strong>，导致需求无法被验证。</p>
+</blockquote>
+<hr />
+<h2 id="_4">四、最新开源技术融合评估</h2>
+<table>
+<thead>
+<tr>
+<th>开源技术</th>
+<th>2026 状态</th>
+<th>接入点</th>
+<th>融合形态</th>
+<th>拒绝条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>build123d / CadQuery</strong></td>
+<td>活跃，Python 参数化 CAD</td>
+<td>designer 导出</td>
+<td>用 build123d 生成可编辑的参数化零件（而非只导出静态 STL）</td>
+<td>引入 OCCT 依赖需评估体积</td>
+</tr>
+<tr>
+<td><strong>JellyCAD</strong></td>
+<td>机器人专用可编程 CAD（Lua DSL）</td>
+<td>designer</td>
+<td>借鉴其「机器人语义建模」</td>
+<td>不宜引入第二套脚本语言</td>
+</tr>
+<tr>
+<td><strong>urdf-loaders</strong>（three.js）</td>
+<td><strong>已采用</strong></td>
+<td>designer</td>
+<td>保持；可升级至最新版</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>URDF-Studio</strong></td>
+<td>Web URDF 可视化 + ROS 调试</td>
+<td>designer</td>
+<td>借鉴其「多机器人同载 + 姿态调整」</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>varyMorph</strong>（2026，自动生成腿部机器人形态，输出 URDF/USDA）</td>
+<td>学术开源</td>
+<td>build-planner</td>
+<td>借鉴「形态生成」到「构建规划」</td>
+<td>属研究性质，不直接进产品</td>
+</tr>
+<tr>
+<td><strong>LeRobot / Isaac Lab</strong></td>
+<td>2026 主流</td>
+<td>—</td>
+<td>⚠️ 属训练/仿真栈，<strong>TDD-2026-01 已排除</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>MCP workflow-as-tool</strong></td>
+<td>2026 趋势</td>
+<td>已有端点</td>
+<td>把「选型→BOM→兼容」整体暴露为一个工具（<code>plan_assembly</code>）</td>
+<td>不得另写判定逻辑</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>首选融合</strong>：<strong>把选型流水线做成一个 workflow-as-tool</strong>。现有可复用件极多（selection + bom/check + co-mount + adapter），<strong>缺的只是编排，不是能力</strong>。</p>
+</blockquote>
+<hr />
+<h2 id="_5">五、提升方案</h2>
+<h3 id="p0">P0（不做则板块不成立）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>串成流水线</strong>：selection → build-planner → designer → adapter-generator 之间加「下一步」入口，结果可传递</td>
+<td>从选型到出图全程无需手抄；挂闸门断言各跳转存在</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>给免费试用额度</strong>：选型引擎首次免费（如 1 次），否则需求无法验证</td>
+<td>匿名用户可跑通一次完整选型</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>消除重复实现</strong>：<code>build-planner</code> / <code>selection</code> / <code>bom/check</code> 的选型逻辑收敛为一处</td>
+<td>同一输入给同一结果；挂闸门</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p1">P1（不做则板块无竞争力）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>designer 内联「孔位不匹配 → 一键生成转接件」</td>
+<td>画布内可直接跳转并带参</td>
+</tr>
+<tr>
+<td>5</td>
+<td>选型结果可导出为可采购 BOM（含供应商）</td>
+<td>导出含供应商列</td>
+</tr>
+<tr>
+<td>6</td>
+<td>引入 build123d 生成参数化零件（可选）</td>
+<td>可导出可编辑模型</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p2">P2</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>组装模拟支持物理约束提示（哪些关节可达）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>参考构型（reference-builds）与选型联动</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_6">六、诚实边界</h2>
+<ol>
+<li>本板块<strong>无真实用户使用证据</strong>（<code>demand-signal</code> 为 0），功能「能跑」不等于「被需要」。</li>
+<li>「五维加权 40/30/20/10」是启发式权重，未经真实选型结果校验。</li>
+<li>设计画布 4065 行中大部分是前端渲染逻辑，本报告未逐行审计其正确性。</li>
+<li>竞品信息为联网核实时点快照。</li>
+</ol>
+</div>
+</body>
+</html>

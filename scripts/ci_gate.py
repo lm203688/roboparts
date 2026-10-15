@@ -2098,6 +2098,352 @@ def gate_mutation_score():
                 'mutation_score.py --self-test 通过（6 变异 + 6 组阴阳对照）')
 
 
+def gate_synthesized_pair_pool():
+    """合成测试对池闸门 · 2026-10-14 阶段 C —— 合成对独立存放，Golden 集不污染。
+
+    背景：RoboParts 现有 Golden 评估集（api/eval/compatibility-golden.json）28 条，
+    全部人工手写 freeze_anchor。阶段 C 引入「合成池」把扩池瓶颈解开：规则从
+    cohort 可行集生成候选对，独立存放于 api/synthesized-pair-pool.json，
+    **不进入 Golden 集**（人工审阅纯净保持）。
+
+    与 gate_eval_compat 的分工：
+      - gate_eval_compat:      守 Golden 28 条的兼容性裁决正确性
+      - 本闸门:                守合成池的存在性 + schema + 大小上限 + 生成器自证
+
+    硬不变量：
+      ① api/synthesized-pair-pool.json 存在且 schema=synthesized_pair_pool/v1
+      ② 池大小 1 ≤ N ≤ POOL_CAP（100 对，绝对上限，防止无限膨胀）
+      ③ 每条 pair 的两端都在 entities.json 里（无幽灵实体）
+      ④ 每条 gap_profile_ref 在 cohort_feasibility.gap_profiles 定义内
+      ⑤ 每条 combination_type ∈ {intra_profile, cross_profile}
+      ⑥ 无重复 id、无自配对（node_a ≠ node_b）
+      ⑦ 生成器 --self-test 通过（run_sub 调用 build_synthesized_pair_pool.py）
+
+    设计诚实：MDV index 里 top_nodes 值几乎全为 0（637 electrical 只有 1 非零、
+    575 mechanical 全 0），不能作为排序键。合成策略用 category 分层抽样 +
+    RNG 种子固定（__synth_v0__），保证可复现、可 regression。MDV 值仅作
+    元数据记录（诚实记录），非排序依据。
+    """
+    p = os.path.join(ROOT, 'api', 'synthesized-pair-pool.json')
+    if not os.path.exists(p):
+        bad('合成对池', 'api/synthesized-pair-pool.json 不存在')
+        return
+
+    try:
+        with open(p, encoding='utf-8') as f:
+            d = json.load(f)
+    except Exception as e:
+        bad('合成对池·schema', 'JSON 解析失败: %s' % e)
+        return
+
+    schema = (d.get('meta') or {}).get('schema')
+    if schema != 'roboparts/synthesized_pair_pool/v1':
+        bad('合成对池·schema', 'meta.schema = %r（应为 synthesized_pair_pool/v1）' % schema)
+        return
+
+    pairs = d.get('pairs') or []
+    if not pairs:
+        bad('合成对池·规模', 'pairs 为空——合成池应至少 1 对')
+        return
+
+    POOL_CAP = 100
+    if len(pairs) > POOL_CAP:
+        bad('合成对池·规模',
+            '池大小 %d 超过硬上限 %d——合成对无限膨胀后与 Golden 集边界模糊'
+            % (len(pairs), POOL_CAP))
+        return
+
+    # ③ 实体存在性
+    p_ent = os.path.join(ROOT, 'api', 'entities.json')
+    if not os.path.exists(p_ent):
+        bad('合成对池·实体', 'api/entities.json 不存在，无法校验实体存在性')
+        return
+    with open(p_ent, encoding='utf-8') as f:
+        ents = json.load(f)
+    ent_ids = {e.get('id') for e in ents.get('entities', [])}
+    missing = [pp.get('id') for pp in pairs
+               if pp.get('node_a') not in ent_ids or pp.get('node_b') not in ent_ids]
+    if missing:
+        bad('合成对池·实体',
+            '%d pair 端点不在 entities.json（幽灵实体）：%s' % (len(missing), missing[:5]))
+        return
+
+    # ④ gap_profile_ref 合法性（含跨桶组合 'A × B'）
+    p_cfp = os.path.join(ROOT, 'api', 'cohort_feasibility.json')
+    if os.path.exists(p_cfp):
+        with open(p_cfp, encoding='utf-8') as f:
+            cfp = json.load(f)
+        profile_keys = []
+        for gp in cfp.get('gap_profiles') or []:
+            axes = tuple(sorted(gp.get('missing_axes') or []))
+            profile_keys.append(','.join(axes))
+        known_gaps = set(profile_keys)
+        keys_list = sorted(profile_keys)
+        for i, k1 in enumerate(keys_list):
+            for j, k2 in enumerate(keys_list):
+                if i < j:
+                    known_gaps.add('%s × %s' % (k1, k2))
+                    known_gaps.add('%s × %s' % (k2, k1))
+        bad_gap = [pp.get('id') for pp in pairs
+                   if pp.get('gap_profile_ref') not in known_gaps]
+        if bad_gap:
+            bad('合成对池·溯源',
+                '%d pair 的 gap_profile_ref 不在 cohort 定义里：%s'
+                % (len(bad_gap), bad_gap[:5]))
+            return
+
+    # ⑤ combination_type 枚举
+    ALLOWED = ('intra_profile', 'cross_profile')
+    bad_type = [pp.get('id') for pp in pairs
+                if pp.get('combination_type') not in ALLOWED]
+    if bad_type:
+        bad('合成对池·类型',
+            '%d pair 的 combination_type 非法（应 ∈ %s）：%s'
+            % (len(bad_type), list(ALLOWED), bad_type[:5]))
+        return
+
+    # ⑥ 无重复 id、无自配对
+    from collections import Counter
+    dup_ids = [i for i, c in Counter(pp.get('id') for pp in pairs).items() if c > 1]
+    if dup_ids:
+        bad('合成对池·唯一性', '重复 id：%s' % dup_ids)
+        return
+    self_pair = [pp.get('id') for pp in pairs if pp.get('node_a') == pp.get('node_b')]
+    if self_pair:
+        bad('合成对池·自配对', 'node_a == node_b：%s' % self_pair[:5])
+        return
+
+    intra = sum(1 for pp in pairs if pp.get('combination_type') == 'intra_profile')
+    cross = len(pairs) - intra
+    ok('合成对池·结构',
+       'pool=%d（intra=%d cross=%d）≤ %d cap · schema/溯源/类型/唯一性全通过'
+       % (len(pairs), intra, cross, POOL_CAP))
+
+    # ⑦ 生成器 --self-test 通过（外部脚本自证，含幂等/阴阳对照）
+    p_script = os.path.join(ROOT, 'scripts', 'build_synthesized_pair_pool.py')
+    if os.path.exists(p_script):
+        result = subprocess.run(
+            [sys.executable, p_script, '--self-test'],
+            capture_output=True, text=True, timeout=60, cwd=ROOT
+        )
+        if result.returncode != 0:
+            bad('合成对池·自证',
+                'build_synthesized_pair_pool.py --self-test 失败:\n%s'
+                % (result.stdout + result.stderr)[-500:])
+        else:
+            ok('合成对池·自证',
+               'build_synthesized_pair_pool.py --self-test 通过（含实体存在性/gap 溯源/类型/唯一性对照）')
+
+
+def gate_vlm_extraction_confidence():
+    """VLM 抽取队列闸门 · 2026-10-14 阶段 B —— 抽取产物 schema 合规 + 门控正确。
+
+    背景：阶段 B 用 VLM / 规则从 PDF 产品手册抽取结构化属性，扩充 entities。
+    所有抽取产物走 confidence 门控：
+      - confidence < 0.7 → 进 api/vlm-extraction-pending.json（待人工评审）
+      - confidence ≥ 0.7 → 进 api/vlm-extraction-approved.json（可通过 CI 后迁移）
+    本闸门守两个队列的 schema 合规 + confidence 门控正确 + 生成器自证。
+
+    与 gate_entities_meta_consistent / gate_evidence_valuation 的分工：
+      - 那些守主库 entities.json 的质量
+      - 本闸门守抽取队列（pending / approved）的入口质量
+      → 抽取产物必须过本闸门，才可能人工评审后迁移到 entities.json
+
+    硬不变量：
+      ① 两个队列文件都存在且 schema=vvlm_extraction/v1
+      ② 每条 entity 的 confidence ∈ [0, 1]
+      ③ confidence < 0.7 的条目必须 status=pending_review，且在 pending 队列里
+      ④ confidence ≥ 0.7 的条目必须 status=approved，且在 approved 队列里
+      ⑤ 每条 entity 必须含 4 维字段（mechanical_interface / standard_conformance /
+         electrical / signal / software），字段集合与 schema 定义对齐
+      ⑥ 生成器 --self-test 通过（run_sub 调用 vlm_extract.py --self-test）
+
+    设计诚实：
+      - 不自动入主库：所有输出进队列，人工评审后迁移到 entities.json
+      - 不预测 verdict：只抽取属性，不判定兼容性（引擎的事）
+      - mock 模式：无 PDF 时也能生成 mock 数据让 CI 跑通（不阻塞主链路）
+    """
+    SCHEMA = 'roboparts/vlm_extraction/v1'
+    CONFIDENCE_THRESHOLD = 0.7
+    REQUIRED_DIMS = ('mechanical_interface', 'standard_conformance',
+                     'electrical', 'signal', 'software')
+
+    queues = [
+        ('api/vlm-extraction-pending.json', 'pending_review'),
+        ('api/vlm-extraction-approved.json', 'approved'),
+    ]
+
+    for path, expected_status in queues:
+        p = os.path.join(ROOT, path)
+        if not os.path.exists(p):
+            bad('VLM 抽取·存在性', '%s 不存在' % path)
+            return
+
+        try:
+            with open(p, encoding='utf-8') as f:
+                queue = json.load(f)
+        except Exception as e:
+            bad('VLM 抽取·schema', '%s 解析失败：%s' % (path, e))
+            return
+
+        schema = (queue.get('meta') or {}).get('schema')
+        if schema != SCHEMA:
+            bad('VLM 抽取·schema',
+                '%s meta.schema=%r（应为 %r）' % (path, schema, SCHEMA))
+            return
+
+        items = queue.get('items') or []
+        if not items:
+            bad('VLM 抽取·规模', '%s 为空——至少应含 1 条 mock 数据（--mock 生成）' % path)
+            return
+
+        for idx, item in enumerate(items):
+            entity = item.get('entity') or {}
+            eid = entity.get('id') or ('%s[%d]' % (path, idx))
+
+            # ② confidence ∈ [0, 1]
+            conf = entity.get('confidence')
+            if conf is None or not (0 <= float(conf) <= 1):
+                bad('VLM 抽取·confidence',
+                    '%s %s confidence=%r 不在 [0,1]' % (path, eid, conf))
+                return
+
+            # ③ / ④ confidence 门控 + status 匹配
+            if float(conf) < CONFIDENCE_THRESHOLD:
+                expected = 'pending_review'
+            else:
+                expected = 'approved'
+            if entity.get('status') != expected:
+                bad('VLM 抽取·门控',
+                    '%s %s confidence=%.2f 但 status=%r（应为 %r）'
+                    % (path, eid, conf, entity.get('status'), expected))
+                return
+
+            # ⑤ 4 维字段必须齐全
+            for dim in REQUIRED_DIMS:
+                if dim not in entity:
+                    bad('VLM 抽取·schema',
+                        '%s %s 缺少 %s 维度' % (path, eid, dim))
+                    return
+
+        ok('VLM 抽取·%s 队列' % ('pending' if 'pending' in path else 'approved'),
+           '%d items · schema 合规 · confidence 门控正确 · 4 维字段齐全'
+           % len(items))
+
+    # ⑥ 生成器 --self-test 通过
+    p_script = os.path.join(ROOT, 'scripts', 'vlm_extract.py')
+    if os.path.exists(p_script):
+        result = subprocess.run(
+            [sys.executable, p_script, '--self-test'],
+            capture_output=True, text=True, timeout=30, cwd=ROOT
+        )
+        if result.returncode != 0:
+            bad('VLM 抽取·自证',
+                'vlm_extract.py --self-test 失败:\n%s'
+                % (result.stdout + result.stderr)[-500:])
+        else:
+            ok('VLM 抽取·自证',
+               'vlm_extract.py --self-test 通过（schema / confidence / 4 维字段对照）')
+
+
+def gate_world_model_exclusion():
+    """世界模型排除闸门 · 2026-10-14 TDD-2026-01 —— 把「不做什么」变成可验证的决策。
+
+    背景：RoboParts 定位是「符号/规则层」（composition checker），非「感知-规划-控制」
+    闭环。世界模型（H-JEPA / Odyssey-3 / Cosmos 3）与本项目的输入范式、可追溯要求、
+    部署形态存在结构性冲突（4 条硬判据同时冲突）。若不写死为「决策留痕」，后续
+    PR 里很容易因为「前沿追踪」把某个 world model 悄悄塞进定位面或依赖面，而
+    没人会当场喊停——因为「引入一个前沿模型」听起来总像是加东西，不是减东西。
+
+    与相邻闸门的分工：
+      - gate_positioning_caliber: 管「对外叫什么」（口径单一）
+      - gate_engine_bridge:      管「双引擎口径一致」（产品 4 维 ↔ 研究 3 轴）
+      - 本闸门:                  管「不做什么」（决策留痕 + 声明面不越界）
+
+    硬不变量：
+      ① docs/technical-decisions-20261014.md 存在且含 TDD-2026-01 + 三个模型名
+      ② requirements-dev.txt 无世界模型推理依赖库
+      ③ 五处定位声明面（agent-discovery.json / llms.txt / positioning_contract.py /
+         scripts/gen_public_manifests.py / scripts/gen_agent_card.mjs）不出现具体
+         模型名（H-JEPA / Odyssey-3 / Cosmos 3 / Cosmos3）
+
+    允许列表（不构成违规）：
+      - README.md 数据分类段提到 `world models` 作为**类别词**（描述 robot_ai_models
+        数据集 46 条生态实体），是数据分类不是引擎依赖。
+      - api/robot_ai_models.json / api/data.json / api/entities.json 等**数据面**
+        追踪这些模型作为**生态实体**（竞品监测的一部分），不在本闸门扫描范围。
+      - docs/RoboParts-*.md 报告 / articles/ / content/ 中的**行业对标引用**，
+        是研究背景不是引擎声明。
+    """
+    # ① 决策文档存在性 + 关键锚点
+    p_tdd = os.path.join(ROOT, 'docs', 'technical-decisions-20261014.md')
+    if not os.path.exists(p_tdd):
+        bad('世界模型排除·决策文档',
+            'docs/technical-decisions-20261014.md 不存在——TDD-2026-01 留痕缺失')
+        return
+    with open(p_tdd, encoding='utf-8') as f:
+        tdd_text = f.read()
+    required_tokens = ['TDD-2026-01', 'H-JEPA', 'Odyssey-3', 'Cosmos 3',
+                       '不引入', '替代路径']
+    missing = [t for t in required_tokens if t not in tdd_text]
+    if missing:
+        bad('世界模型排除·决策文档',
+            'TDD-2026-01 缺少关键锚点: %s' % missing)
+        return
+    ok('世界模型排除·决策文档',
+       'TDD-2026-01 完整（含 H-JEPA / Odyssey-3 / Cosmos 3 显式命名 + 结论 + 替代路径）')
+
+    # ② requirements-dev.txt 无世界模型推理依赖
+    p_req = os.path.join(ROOT, 'requirements-dev.txt')
+    if os.path.exists(p_req):
+        with open(p_req, encoding='utf-8') as f:
+            req_text = f.read().lower()
+        forbidden_pkgs = [
+            'torch', 'transformers', 'diffusers', 'accelerate',
+            'openvla', 'cosmos', 'odyssey', 'jepa',
+        ]
+        hits = [p for p in forbidden_pkgs if p in req_text]
+        if hits:
+            bad('世界模型排除·依赖',
+                'requirements-dev.txt 引入了禁用依赖: %s（应改用 API 调用而非落地推理栈）' % hits)
+            return
+        ok('世界模型排除·依赖',
+           'requirements-dev.txt 无世界模型推理依赖（仅 PyYAML）')
+
+    # ③ 定位声明面无具体模型名
+    surfaces = [
+        ('agent-discovery.json', os.path.join(ROOT, 'agent-discovery.json')),
+        ('llms.txt', os.path.join(ROOT, 'llms.txt')),
+        ('positioning_contract.py', os.path.join(ROOT, 'scripts', 'positioning_contract.py')),
+        ('gen_public_manifests.py', os.path.join(ROOT, 'scripts', 'gen_public_manifests.py')),
+        ('gen_agent_card.mjs', os.path.join(ROOT, 'scripts', 'gen_agent_card.mjs')),
+    ]
+    # 只禁止**具体模型名**；允许 world model 作为**类别词**出现在数据面（不在扫描范围）
+    forbidden_pat = re.compile(
+        r'\b(H-JEPA|Hjepa|ODYSSEY[- ]?3|Odyssey-3|Cosmos\s?3|Cosmos3|COSMOS\s?3)\b',
+        re.IGNORECASE,
+    )
+    violations = []
+    for name, path in surfaces:
+        if not os.path.exists(path):
+            # 定位声明面文件缺失 = 更严重的问题，走单独告警
+            bad('世界模型排除·定位面',
+                '定位声明面文件不存在: %s (%s)' % (name, path))
+            return
+        with open(path, encoding='utf-8') as f:
+            text = f.read()
+        for i, line in enumerate(text.splitlines(), start=1):
+            for m in forbidden_pat.finditer(line):
+                violations.append('%s:%d -> %r' % (name, i, m.group(0)))
+    if violations:
+        bad('世界模型排除·定位面',
+            '%d 处定位声明面出现具体世界模型名（应只在决策留痕文档中提及）:\n  %s'
+            % (len(violations), '\n  '.join(violations[:5])))
+        return
+    ok('世界模型排除·定位面',
+       '5 处定位声明面均无具体世界模型名（H-JEPA / Odyssey-3 / Cosmos 3）')
+
+
 def gate_positioning_caliber():
     """Positioning-convention gate — the local half of "what we externally claim about
     ourselves".
@@ -2460,6 +2806,28 @@ GATES = [
     # 6 条最小变异清单（M1~M6，覆盖三态破坏 / 轴边际 / 取证指引 / 诚实边界
     # 四类已知失效模式）的杀死率作为可评分度量。
     ('变异评分（6 变异体 kill rate ≥ 0.85）', gate_mutation_score),
+    # 【2026-10-14 TDD-2026-01】世界模型排除闸门。把「不引入 H-JEPA / Odyssey-3 /
+    # Cosmos 3 到核心链路」的决策从「被动回避」变成「可验证的留痕」。守三个不变量：
+    # 决策文档存在、依赖面无推理库、五处定位声明面不出现具体模型名。与
+    # gate_positioning_caliber（管对外叫什么）/ gate_engine_bridge（管双引擎口径）
+    # 分工互补——本闸门管「不做什么」。
+    ('世界模型排除（TDD-2026-01 决策留痕 + 声明面无隐性依赖）',
+     gate_world_model_exclusion),
+    # 【2026-10-14 阶段 C】合成测试对池闸门。与 gate_eval_compat 分工互补：
+    # gate_eval_compat 守 Golden 28 条的裁决正确性，本闸门守合成池的
+    # schema / 大小上限 / 溯源合法性 / 生成器自证。合成池独立存放于
+    # api/synthesized-pair-pool.json，**不进入 Golden 集**（人工审阅纯净
+    # 保持）。绝对上限 100 对——超过即判红，防止合成对无限膨胀后与
+    # Golden 集边界模糊。
+    ('合成测试对池（schema + 上限 + 溯源 + 生成器自证）',
+     gate_synthesized_pair_pool),
+    # 【2026-10-14 阶段 B】VLM 抽取队列闸门。守两个队列
+    # （pending / approved）的 schema 合规 + confidence 门控正确 +
+    # 4 维字段齐全 + 生成器自证。抽取产物必须过本闸门，才可能
+    # 人工评审后迁移到 entities.json。mock 模式让 CI 无 PDF 时
+    # 也能跑通（不阻塞主链路）。
+    ('VLM 抽取队列（confidence 门控 + 4 维 schema + 自证）',
+     gate_vlm_extraction_confidence),
 ]
 
 

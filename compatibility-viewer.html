@@ -169,7 +169,7 @@ function updatePanel(A,B,needAdapter){
     document.getElementById('adaptSpec').textContent='';
   }else{
     v.className='verdict adapter';
-    v.innerHTML=`<b>→ adapter_required · 需转接盘</b><br>PCD ${A.pcd}→${B.pcd}mm / 孔数 ${A.holes}→${B.holes} 不同，螺栓孔在圆周上对不上，必须加转接盘。`;
+    v.innerHTML=`<b>→ adapter_required · 需转接盘</b><br>PCD ${A.pcd}→${B.pcd}mm / 孔数 ${A.holes}→${B.holes} 不同，螺栓孔在圆周上对不上，必须加转接盘。<br><a href="/adapter-generator" style="color:var(--acc);font-weight:600">🔧 一键生成转接件 →</a>`;
     tag.textContent='adapter_required';tag.style.color='#6ea8fe';
     document.getElementById('adaptSpec').innerHTML=
       `转接盘规格（示意）：<br>上表面开孔 <code>${A.holes}×M${A.thread}</code> @ PCD <code>${A.pcd}mm</code><br>`+

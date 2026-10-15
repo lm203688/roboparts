@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts · 贡献者排行榜</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<link rel="canonical" href="https://roboparts.cc/contributors">
+<meta name="description" content="RoboParts 贡献者排行榜：开源机器人项目贡献者、仓库维护者与机械接口声明贡献者。所有条目均为真实贡献，不虚构、不匿名。">
+<style>
+  :root{--bg:#0b1020;--card:#141b30;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--warn:#f0c674}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.6}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 20px 64px}
+  header{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1c2540;position:sticky;top:0;background:rgba(11,16,32,.92);backdrop-filter:blur(8px);z-index:5;max-width:100%;margin-bottom:0}
+  header .logo{font-weight:800;font-size:18px}
+  header .logo span{color:var(--acc)}
+  nav a{color:var(--mut);text-decoration:none;margin-left:14px;font-size:14px}
+  nav a:hover{color:var(--acc)}
+  h1{font-size:26px;margin:24px 0 6px}
+  .sub{color:var(--mut);margin-bottom:20px;font-size:15px}
+  .card{background:var(--card);border:1px solid #233;border-radius:14px;padding:18px 20px;margin-bottom:18px}
+  .card h2{font-size:19px;margin:0 0 12px;color:var(--acc)}
+  .stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .pill{background:#0e1530;border:1px solid #2a3556;border-radius:999px;padding:5px 14px;font-size:13px}
+  .pill b{color:var(--acc)}
+  .warn{background:rgba(240,198,116,.08);border:1px solid rgba(240,198,116,.35);border-radius:10px;padding:12px 16px;color:var(--warn);font-size:14px;margin-bottom:16px}
+  table{border-collapse:collapse;width:100%;font-size:13px}
+  th,td{border-bottom:1px solid #243;padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#0e1530;color:var(--acc);font-weight:700;position:sticky;top:0}
+  tr:hover td{background:#0e1530}
+  .badge-core{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:800;margin-left:6px}
+  .muted{color:var(--mut);font-size:12px}
+  a{color:var(--acc2)}
+  .cta{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;border-radius:10px;padding:10px 18px;text-decoration:none;font-weight:800;font-size:14px;margin-top:6px}
+  .cta.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+  footer{text-align:center;color:var(--mut);font-size:13px;padding:24px 0;border-top:1px solid #1c2540;margin-top:24px}
+  .cat-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+  .cat-tag{background:#0e1530;border:1px solid #2a3556;border-radius:4px;padding:1px 6px;font-size:11px;color:var(--mut)}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Robo<span>Parts</span></div>
+  <nav>
+    <a href="/">首页</a>
+    <a href="/oss.html">开源数据</a>
+    <a href="/pricing.html">定价</a>
+    <a href="/CONTRIBUTING" style="color:var(--acc);font-weight:700">如何贡献</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <h1>🙏 贡献者排行榜</h1>
+  <div class="sub">
+    所有条目均为<strong>真实贡献</strong>——开源机器人项目 URDF 摄取、仓库提交者、机械接口声明提交者。
+    我们不虚构贡献者、不填假名、不做匿名贡献者集合。机械接口声明贡献者集合为空时如实标注「空」。
+  </div>
+
+  <div class="warn" id="badgeNote">正在加载徽章说明…</div>
+
+  <div class="card">
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <div class="card">
+    <h2>🤖 开源项目贡献者 <span class="muted" style="font-size:13px;font-weight:400">（按 URDF 摄取行数聚合）</span></h2>
+    <table id="leadersTbl">
+      <thead><tr><th>#</th><th>项目</th><th>贡献类型</th><th>许可说明</th><th>贡献条目</th><th>覆盖品类</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🔧 仓库维护者 <span class="muted" style="font-size:13px;font-weight:400">（git 作者）</span></h2>
+    <table id="maintTbl">
+      <thead><tr><th>Handle</th><th>姓名</th><th>提交数</th><th>主页</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <p class="muted" style="margin-top:10px">
+      git 历史已按项目治理纪律重置，仓库仅保留 1 位维护者。我们不宣传「多作者」。
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>🔩 机械接口声明贡献者 <span class="muted" style="font-size:13px;font-weight:400">（一手孔位 / 螺纹数据）</span></h2>
+    <div id="mechList"></div>
+  </div>
+
+  <div class="card">
+    <h2>⭐ 核心贡献者徽章 <span class="muted" style="font-size:13px;font-weight:400">（门槛：≥10 条 URDF 摄取条目）</span></h2>
+    <div id="badges"></div>
+  </div>
+
+  <div class="card">
+    <h2>📬 如何成为贡献者</h2>
+    <p style="margin:0 0 12px;color:var(--mut);font-size:14px">
+      三条通道，按门槛从低到高排列：
+    </p>
+    <table>
+      <tbody>
+        <tr><td style="width:38%">有厂商手册但不想碰 JSON</td><td><a href="https://github.com/lm203688/roboparts/issues/new?template=mechanical-interface.yml" target="_blank">Mechanical interface declaration Issue</a> → 贴链接，我们记录并署名</td></tr>
+        <tr><td>发现数据有误</td><td><a href="https://github.com/lm203688/roboparts/issues/new?template=data-correction.yml" target="_blank">Data correction Issue</a></td></tr>
+        <tr><td>能写 JSON、想直接改</td><td>Fork → 编辑 <code>api/entities.json</code> → 本地跑闸门 → PR</td></tr>
+      </tbody>
+    </table>
+    <p style="margin:14px 0 0">
+      <a class="cta" href="/CONTRIBUTING">阅读贡献指南</a>
+      &nbsp;
+      <a class="cta ghost" href="/data-hub.html">数据 API 文档</a>
+    </p>
+  </div>
+
+  <footer>
+    RoboParts · 中立第三方，不销售不代理任何零部件 ·
+    数据 CC BY 4.0 · 代码 MIT ·
+    <a href="https://github.com/lm203688/roboparts">GitHub</a>
+  </footer>
+</div>
+
+<script>
+async function loadContributors() {
+  try {
+    const r = await fetch('/api/contributors', { cache: 'no-cache' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return await r.json();
+  } catch (e) {
+    return { error: e.message };
+  }
+}
+
+async function render() {
+  const json = await loadContributors();
+  if (json.error) {
+    document.getElementById('badgeNote').innerHTML =
+      '⚠️ 贡献者数据源未能读取：' + json.error +
+      '<br>空排行榜 ≠ 没有人贡献。请稍后重试或直接访问 <code>/api/entities.contrib.json</code>。';
+    return;
+  }
+  const { meta, leaders, maintainers, mechanical_declare_contributors: mech, badges } = json;
+
+  document.getElementById('badgeNote').innerHTML =
+    '🏅 ' + (meta.badge_note || '');
+
+  // Stats
+  document.getElementById('stats').innerHTML = `
+    <span class="pill">总贡献条目 <b>${meta.total_contributions}</b></span>
+    <span class="pill">开源项目贡献者 <b>${meta.total_oss_projects}</b></span>
+    <span class="pill">仓库维护者 <b>${meta.total_maintainers}</b></span>
+    <span class="pill">机械接口声明贡献者 <b>${meta.total_mechanical_declare_contributors}</b></span>
+    <span class="pill">核心贡献者徽章 <b>${meta.badge_granted_count}</b></span>
+  `;
+
+  // Leaders
+  const lt = document.querySelector('#leadersTbl tbody');
+  if (leaders.length === 0) {
+    lt.innerHTML = '<tr><td colspan="6" class="muted">暂无条目（数据源为空）。</td></tr>';
+  } else {
+    lt.innerHTML = leaders.map((l, i) => `
+      <tr>
+        <td>${i + 1}</td>
+        <td><strong>${l.display_name}</strong>${l.badge ? '<span class="badge-core">核心贡献者</span>' : ''}</td>
+        <td><span class="muted">${l.kind}</span></td>
+        <td>${l.license_note || '—'}</td>
+        <td><strong>${l.entities_count}</strong> 条</td>
+        <td>
+          ${Object.entries(l.categories || {}).map(([k, v]) => `<span class="cat-tag">${k}×${v}</span>`).join('')}
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // Maintainers
+  const mt = document.querySelector('#maintTbl tbody');
+  if (maintainers.length === 0) {
+    mt.innerHTML = '<tr><td colspan="4" class="muted">数据源不可达（GitHub API 无响应）。</td></tr>';
+  } else {
+    mt.innerHTML = maintainers.map(m => `
+      <tr>
+        <td><code>@${m.handle}</code></td>
+        <td>${m.display_name}</td>
+        <td>${m.commits}</td>
+        <td><a href="${m.url}" target="_blank">GitHub 主页</a></td>
+      </tr>
+    `).join('');
+  }
+
+  // Mechanical contributors
+  const ml = document.getElementById('mechList');
+  if (mech.length === 0) {
+    ml.innerHTML = `
+      <p style="margin:0 0 8px"><strong>当前集合：空。</strong></p>
+      <p class="muted" style="margin:0 0 10px">
+        机械接口声明贡献者指提供一手孔位/螺纹数据、经 RoboParts 收录并署名的贡献者。
+        该集合目前为空，因为 issue 提交通道尚未收到真实条目——我们不虚构。
+        一旦有人提交并被收录，其 handle 会出现在这里，永久留名于数据集。
+      </p>
+      <p class="muted" style="margin:0">
+        机械接口声明率目前 <strong>16.2%</strong>（81/500 applicable），
+        补一条 Robotiq 2F-85 的孔位数据比重构算法 10 次更有用。
+      </p>
+    `;
+  } else {
+    ml.innerHTML = '<table><thead><tr><th>Handle</th><th>声明条目</th><th>覆盖实体</th></tr></thead><tbody>'
+      + mech.map(m => `<tr><td><code>@${m.handle}</code></td><td>${m.declarations}</td><td>${m.entities}</td></tr>`).join('')
+      + '</tbody></table>';
+  }
+
+  // Badges
+  const bl = document.getElementById('badges');
+  if (badges.length === 0) {
+    bl.innerHTML = `
+      <p style="margin:0 0 8px"><strong>当前颁发：0 枚。</strong></p>
+      <p class="muted" style="margin:0">
+        徽章门槛为 ≥10 条 URDF 摄取条目。当前开源项目贡献者按项目聚合，
+        前几名的行数远高于门槛——但按「项目级」判定尚未启用。
+        机械接口声明贡献者集合为空，也不参与徽章评定。
+      </p>
+    `;
+  } else {
+    bl.innerHTML = badges.map(b => `<span class="pill" style="margin:3px">${b.display_name} <span class="badge-core">${b.level}</span></span>`).join('');
+  }
+}
+
+render();
+</script>
+</body>
+</html>

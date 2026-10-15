@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>板块 6：Agent 与 MCP 基础设施 — 提升评估报告 · RoboParts 分板块提升评估</title>
+<style>
+  :root{
+    --ink:#111827; --ink2:#374151; --muted:#6b7280; --line:#e5e7eb;
+    --bg:#f7f8fa; --card:#ffffff;
+    --brand:#2563eb; --brand-d:#1e40af; --brand-l:#eff4ff;
+    --red:#dc2626; --amber:#d97706; --green:#059669; --purple:#7c3aed; --teal:#0d9488;
+    --p0:#dc2626; --p1:#d97706; --p2:#0891b2;
+    --shadow:0 1px 2px rgba(16,24,40,.04),0 4px 16px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.72;-webkit-font-smoothing:antialiased;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* header */
+  header.hero{background:linear-gradient(135deg,#0b1220 0%,#12203f 45%,#1e3a8a 100%);color:#fff;padding:56px 0 46px;position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(37,99,235,.55),transparent 62%)}
+  .hero .wrap{padding-bottom:0}
+  .hero .eyebrow{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#93b4ff;font-weight:600}
+  .hero h1{font-size:34px;line-height:1.28;margin:14px 0 12px;font-weight:800;letter-spacing:-.01em}
+  .hero p.sub{color:#c7d2fe;font-size:16px;max-width:760px;margin:0}
+  .hero .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+    color:#e5e7eb;font-size:12.5px;padding:5px 11px;border-radius:999px}
+
+  /* section */
+  section{margin-top:44px}
+  h2{font-size:23px;font-weight:800;letter-spacing:-.01em;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+  h2 .num{display:inline-flex;width:30px;height:30px;border-radius:9px;background:var(--brand);color:#fff;font-size:15px;
+    align-items:center;justify-content:center;font-weight:700;flex:none}
+  .lead{color:var(--ink2);font-size:15px;margin:6px 0 20px}
+  h3{font-size:17.5px;font-weight:750;margin:30px 0 10px;color:var(--ink)}
+  h4{font-size:15px;font-weight:700;margin:18px 0 8px;color:var(--ink2)}
+  p{margin:9px 0}
+  ul,ol{margin:9px 0;padding-left:22px}
+  li{margin:5px 0}
+
+  /* cards */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);margin:14px 0}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .kpi .v{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:5px}
+  .kpi .d{font-size:12px;margin-top:6px}
+  .v-blue{color:var(--brand)} .v-green{color:var(--green)} .v-amber{color:var(--amber)}
+  .v-red{color:var(--red)} .v-purple{color:var(--purple)} .v-teal{color:var(--teal)}
+
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.6px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#f3f5f9;font-weight:700;color:var(--ink2);font-size:12.6px;letter-spacing:.02em}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafbfd}
+
+  .badge{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:6px;letter-spacing:.02em;white-space:nowrap}
+  .b-p0{background:#fee2e2;color:#b91c1c} .b-p1{background:#fef3c7;color:#b45309}
+  .b-p2{background:#cffafe;color:#0e7490} .b-ok{background:#d1fae5;color:#047857}
+  .b-warn{background:#fef3c7;color:#b45309} .b-bad{background:#fee2e2;color:#b91c1c}
+  .b-neutral{background:#eef2ff;color:#3730a3}
+
+  .bar{height:9px;border-radius:999px;background:#eef1f6;overflow:hidden;margin-top:7px}
+  .bar > i{display:block;height:100%;border-radius:999px}
+
+  .callout{border-left:4px solid var(--brand);background:var(--brand-l);border-radius:0 12px 12px 0;padding:14px 18px;margin:14px 0}
+  .callout.warn{border-color:var(--amber);background:#fffbeb}
+  .callout.bad{border-color:var(--red);background:#fef2f2}
+  .callout.good{border-color:var(--green);background:#ecfdf5}
+  .callout .t{font-weight:750;margin-bottom:3px}
+  .callout p:last-child{margin-bottom:0}
+
+  .quote{font-size:15px;color:var(--ink2);border-left:3px solid var(--line);padding-left:14px;margin:14px 0;font-style:italic}
+
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 22px;box-shadow:var(--shadow);margin-top:-26px;position:relative;z-index:2}
+  .toc ol{columns:2;column-gap:34px;margin:6px 0 0;padding-left:20px}
+  @media(max-width:820px){.toc ol{columns:1}}
+  .toc a{color:var(--ink2);font-size:13.6px}
+  .toc a:hover{color:var(--brand)}
+
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;background:#eef2ff;color:#3730a3;margin-right:6px}
+  hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+  .small{font-size:12.6px;color:var(--muted)}
+  .nowrap{white-space:nowrap}
+  .center{text-align:center}
+  footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:12.6px}
+  .step{display:flex;gap:14px;margin:14px 0}
+  .step .dot{flex:none;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px}
+  .timeline{border-left:2px solid var(--line);margin-left:8px;padding-left:22px}
+  .tl-item{position:relative;margin:0 0 22px}
+  .tl-item::before{content:"";position:absolute;left:-29px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid #fff;box-shadow:0 0 0 2px var(--brand)}
+  .tl-item.p1::before{background:var(--amber);box-shadow:0 0 0 2px var(--amber)}
+  .tl-item.p2::before{background:var(--p2);box-shadow:0 0 0 2px var(--p2)}
+  code{background:#f1f3f8;padding:1.5px 6px;border-radius:5px;font-size:12.6px;font-family:ui-monospace,Menlo,Consolas,monospace}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1 id="6agent-mcp">板块 6：Agent 与 MCP 基础设施 — 提升评估报告</h1>
+<blockquote>
+<p><strong>生成日期</strong>：2026-10-14 ｜ <strong>板块编号</strong>：M6 ｜ <strong>成熟度</strong>：B 档（机制完整但未闭环）
+<strong>证据来源</strong>：<code>functions/mcp.js</code>（1814 行 / 21 工具）、<code>functions/a2a.js</code>（166 行）、<code>functions/api/copilot.js</code>（412 行）、<code>functions/api/discover.js</code>、<code>agent-discovery.json</code>、<code>.well-known/</code>（agent-card.json / agent.json / mcp.json）、<code>server.json</code>、<code>llms.txt</code>、<code>agenticros-skill-roboparts/</code>、页面 <code>copilot.html</code> / <code>agent-architecture.html</code> / <code>mcp-guide.html</code> / <code>geo-dashboard.html</code></p>
+</blockquote>
+<hr />
+<h2 id="_1">一、板块定位与边界</h2>
+<p><strong>一句话</strong>：让 AI Agent 能「发现、接入、调用」RoboParts——把判定能力做成 Agent 可用的基础设施。</p>
+<p><strong>四层协议面</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>面</th>
+<th>资产</th>
+<th>实测状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MCP（hosted）</strong></td>
+<td><code>POST /mcp</code>（Streamable HTTP，协议版本 2025-06-18 / 2025-03-26 / 2024-11-05）</td>
+<td>✅ 线上 200；<strong>21 个工具</strong></td>
+</tr>
+<tr>
+<td><strong>MCP（stdio/npm）</strong></td>
+<td><code>server.json</code>（官方 schema）+ npm 包</td>
+<td>⚠️ 见下</td>
+</tr>
+<tr>
+<td><strong>A2A</strong></td>
+<td><code>POST /a2a</code>（JSON-RPC 2.0，映射 <code>message/send</code> → MCP <code>tools/call</code>）</td>
+<td>✅ 已实现</td>
+</tr>
+<tr>
+<td><strong>发现清单</strong></td>
+<td><code>agent-discovery.json</code> / <code>.well-known/agent-card.json</code> / <code>.well-known/mcp.json</code> / <code>llms.txt</code></td>
+<td>✅ 线上 200</td>
+</tr>
+</tbody>
+</table>
+<p><strong>21 个 MCP 工具</strong>：<code>check_compatibility</code> / <code>check_co_mount</code> / <code>bom_compatibility_check</code> / <code>search_components</code> / <code>semantic_search</code> / <code>get_component_detail</code> / <code>compare_components</code> / <code>recommend_for_application</code> / <code>review_compatibility</code> / <code>lint_urdf</code> / <code>get_research_progress</code> / <code>explain_compose_frontier</code> / <code>explain_evidence_mdv</code> / <code>explain_evidence_cohort</code> / <code>explain_connector_types</code> / <code>get_parameter_semantics</code> / <code>get_standard_audit</code> / <code>get_robot_tool_side</code> / <code>get_body_binding</code> / <code>get_behavior_evidence</code> / <code>keyword</code></p>
+<hr />
+<h2 id="_2">二、流程审计</h2>
+<h3 id="21">2.1 流程是否合理</h3>
+<p><strong>这是全仓「自我诊断最诚实」的一个板块。</strong> <code>mcp.js</code> 文件头完整记录了三次失败实验：</p>
+<blockquote>
+<p>「连续三轮我们都在修『AI 找不到接入入口』……20:00 llms.txt 加指令 → <code>stat:src:agent = 0</code>；21:00 下沉到 18 个页面 → 仍 0；22:00 注入 meta.access 到 25 个 JSON → 仍 0。与此同时 <code>/api/*</code> 抓取占比 16% → 36.6% → 71.1%。」
+结论：「<strong>AI 大量地读我们，从不注册我们。</strong>『位置』这条线已被三次实验证伪……瓶颈在入口本身要求的动作太重：领 key → 存 key → 装包 → 起进程 → 才能问第一个问题。」</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>设计决策</th>
+<th>是否合理</th>
+<th>证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免鉴权只读托管端点</td>
+<td>✅ 极合理</td>
+<td>把用户侧成本从「装包+领 key+起进程」降到「粘贴一个 URL」</td>
+</tr>
+<tr>
+<td>与 MCP 共用同一工具表</td>
+<td>✅ 强</td>
+<td><code>a2a.js</code> 从 <code>mcp.js</code> 导入 <code>TOOLS</code>，「避免两处各写一份工具名」</td>
+</tr>
+<tr>
+<td>A2A 不做自然语言意图解析</td>
+<td>✅ 诚实</td>
+<td>注释明确「那需要 LLM，本层不引入」；未给 tool 时返回能力清单，不猜意图</td>
+</tr>
+<tr>
+<td>遥测与端点同生共死</td>
+<td>✅ 合理</td>
+<td>避免「指标看不见 = 以为没人用」</td>
+</tr>
+<tr>
+<td>copilot 多后端降级</td>
+<td>✅ 合理</td>
+<td>ECS → Agnes → 结构化「维护中」，不再 504 挂死</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>判断</strong>：流程<strong>合理</strong>，且是本项目「用实验否定假设」方法论的典范。</p>
+</blockquote>
+<h3 id="22">2.2 是否全面走通</h3>
+<table>
+<thead>
+<tr>
+<th>子链路</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent → <code>/mcp</code> → 工具 → 结果</td>
+<td>✅ 通（线上 200）</td>
+</tr>
+<tr>
+<td>Agent → <code>/a2a</code> → MCP 工具</td>
+<td>✅ 通</td>
+</tr>
+<tr>
+<td>Agent → 发现清单 → 接入</td>
+<td>✅ 通（清单齐全）</td>
+</tr>
+<tr>
+<td>copilot 页面 → LLM 解释</td>
+<td>✅ 通（依赖外部后端可用性）</td>
+</tr>
+<tr>
+<td><strong>npm stdio 包</strong></td>
+<td>⚠️ 卡在「人工换发 Granular Token」——<strong>别人的日程</strong>（项目自述）</td>
+</tr>
+<tr>
+<td><strong>Agent 真实调用量</strong></td>
+<td>❌ <strong>无证据</strong>：<code>demand-signal</code> 的 <code>cross_brand_compat_engine_users: 0</code></td>
+</tr>
+<tr>
+<td><strong>清单口径一致</strong></td>
+<td>⚠️ <code>agent-discovery.json</code> 已改为新定位（✅），但 tagline 仍写「<strong>43 项 CI 闸门</strong>」（实为 <strong>49</strong>）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>结论</strong>：<strong>接入面全部走通</strong>（这是本项目做得最好的分发工程），但<strong>「接入」不等于「被用」</strong>——没有任何证据显示有 Agent 真实调用了这些工具。</p>
+</blockquote>
+<h3 id="23">2.3 是否符合人类使用习惯</h3>
+<p>本板块的用户是 <strong>Agent</strong>（不是人），所以「人类使用习惯」应读作「<strong>Agent 使用习惯</strong>」：</p>
+<table>
+<thead>
+<tr>
+<th>Agent 的真实行为</th>
+<th>本板块支持</th>
+<th>契合度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「我先抓你的 JSON 自己猜」</td>
+<td>71% 的 <code>/api/*</code> 抓取就是这行为</td>
+<td>⚠️ 说明 Agent 宁可自己猜也不调工具</td>
+</tr>
+<tr>
+<td>「粘贴 URL 就能用」</td>
+<td>✅ 托管 MCP</td>
+<td>✅ 已解决</td>
+</tr>
+<tr>
+<td>「按 A2A 委派」</td>
+<td>✅ <code>/a2a</code></td>
+<td>✅ 已解决</td>
+</tr>
+<tr>
+<td>「从发现清单了解你能干什么」</td>
+<td>✅ 清单齐全</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>「工具返回的东西我要能直接用」</td>
+<td>✅ 三态 + 证据链</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>「我为什么要用你而不是自己猜」</strong></td>
+<td>❌ <strong>未回答</strong></td>
+<td>❌ <strong>核心缺口</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>关键缺口</strong>：<strong>没有回答「Agent 为什么该调用工具而不是自己猜」</strong>。项目自己实测：Agent 大量抓 <code>/api/*</code> 自己猜。原因是「抓 JSON 自己猜」的成本<strong>低于</strong>「调工具」——哪怕工具已经零门槛。<strong>这是本板块最深的战略问题。</strong></p>
+</blockquote>
+<hr />
+<h2 id="_3">三、市场竞品与市场需求比较</h2>
+<h3 id="31">3.1 竞品对照</h3>
+<table>
+<thead>
+<tr>
+<th>竞品</th>
+<th>定位</th>
+<th>强项</th>
+<th>RoboParts 的差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>官方 MCP Registry</strong></td>
+<td>MCP 服务器目录</td>
+<td>官方分发</td>
+<td>RoboParts 已上架，但<strong>目录本身不带来使用</strong></td>
+</tr>
+<tr>
+<td><strong>Nacos 3.0 / Dify A2A 插件</strong></td>
+<td>Agent 互操作基础设施</td>
+<td>双向多智能体协作</td>
+<td>基础设施层；RoboParts 是<strong>垂直能力提供方</strong></td>
+</tr>
+<tr>
+<td><strong>glama / Smithery</strong></td>
+<td>MCP 市场</td>
+<td>分发</td>
+<td>RoboParts 已提交，但<strong>曝光 ≠ 使用</strong></td>
+</tr>
+<tr>
+<td><strong>各机器人公司的 API</strong></td>
+<td>单厂能力</td>
+<td>官方</td>
+<td>不跨品牌</td>
+</tr>
+<tr>
+<td><strong>roboxdb</strong></td>
+<td>有 MCP 吗？</td>
+<td>—</td>
+<td>竞品是否提供 MCP 需核实</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>生态位</strong>：RoboParts 的 MCP 面在「机器人零件判定」这个垂直领域<strong>几乎没有对手</strong>——但「没有对手」不等于「有需求」。</p>
+</blockquote>
+<h3 id="32">3.2 市场需求实测</h3>
+<ul>
+<li><strong>本项目自己记录的三次实验全部为 0</strong>：<code>stat:src:agent = 0</code>（连续三轮）。</li>
+<li><code>demand-signal.json</code>：<code>cross_brand_compat_engine_users: 0</code>。</li>
+<li><code>negative-results.md</code> 的 <strong>NR-03「MCP 端点获客（被点开而非曝光）」状态：未达成</strong>；<strong>NR-04「npm 包发布作为 MCP 分发主渠道」状态：降级</strong>。</li>
+</ul>
+<blockquote>
+<p><strong>判断</strong>：<strong>这是全仓最诚实也最残酷的一个板块</strong>——项目已经把「接入门槛」降到接近零，但仍然没有人/Agent 用。<strong>说明瓶颈不在接入层，在需求层。</strong></p>
+</blockquote>
+<hr />
+<h2 id="_4">四、最新开源技术融合评估</h2>
+<table>
+<thead>
+<tr>
+<th>开源技术</th>
+<th>2026 状态</th>
+<th>接入点</th>
+<th>融合形态</th>
+<th>拒绝条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MCP Registry（官方）</strong></td>
+<td>2026 主流</td>
+<td>已有清单</td>
+<td>保持上架；补 MCP Registry 元数据</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>A2A 协议 v1.0</strong></td>
+<td>2026 主流</td>
+<td><code>a2a.js</code> 已实现</td>
+<td>保持；跟进 A2A 新版本</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Agent Skills（Claude / Codex 生态）</strong></td>
+<td>2026 爆发（text-to-cad 8.3K star 即此形态）</td>
+<td><code>agenticros-skill-roboparts/</code></td>
+<td><strong>把「判定方法论」而非「查询」做成 skill</strong></td>
+<td>skill 输出不得绕过 fail-closed</td>
+</tr>
+<tr>
+<td><strong>RxDB 17 WebMCP</strong></td>
+<td>2026 新增</td>
+<td>数据层</td>
+<td>浏览器内 Agent 直连数据集合</td>
+<td>不得绕过付费墙</td>
+</tr>
+<tr>
+<td><strong>MCP workflow-as-tool</strong></td>
+<td>2026 趋势</td>
+<td>已有 21 工具</td>
+<td>增加「流程型」工具（如 <code>plan_assembly</code>）</td>
+<td>不得另写判定逻辑</td>
+</tr>
+<tr>
+<td><strong>LLM-as-judge</strong></td>
+<td>2026 工程化</td>
+<td><code>evaluation/promptfoo/</code></td>
+<td>把 T1/T2/T3 定理做成 judge 评估面</td>
+<td>不得替代确定性闸门</td>
+</tr>
+<tr>
+<td><strong>OpenAI Apps / ChatGPT Connectors</strong></td>
+<td>2026 新形态</td>
+<td>已有 REST</td>
+<td>评估接入 OpenAI 应用目录</td>
+<td>需评估生态依赖</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>首选融合</strong>：<strong>把「判定方法论」做成 Agent Skill</strong>。当前 <code>agenticros-skill-roboparts/</code> 偏「怎么调工具」；2026 的趋势是 skill 承载<strong>方法论</strong>——本项目最有价值的正是「怎么诚实判定」这套方法论。</p>
+</blockquote>
+<hr />
+<h2 id="_5">五、提升方案</h2>
+<h3 id="p0">P0（不做则板块不成立）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>回答「Agent 为什么该调工具而不是自己猜」</strong>：在 <code>llms.txt</code> / <code>agent-discovery.json</code> 顶部给出「调工具 vs 自己猜」的明确对比（工具能给出<strong>三态 + 证据链 + 可核验</strong>，自己猜只能给「看起来对」）</td>
+<td>清单首屏含该对比；<code>stat:src:agent</code> 从 0 上升</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>修清单陈旧数字</strong>：<code>agent-discovery.json</code> tagline 的「43 项 CI 闸门」改为现算值（49）</td>
+<td>挂闸门断言机器可读面数字与 <code>ci_gate.py --list</code> 一致</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>首次真实 Agent 调用留痕</strong>：至少记录一次外部 Agent 的真实工具调用（非自检）</td>
+<td><code>ops/</code> 内有非自检调用记录</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p1">P1（不做则板块无竞争力）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>增加 workflow-as-tool（<code>plan_assembly</code>）</td>
+<td>工具可调，返回 BOM 判定 + 拓扑 + 缺口</td>
+</tr>
+<tr>
+<td>5</td>
+<td>把判定方法论做成 Agent Skill（不只「怎么调」）</td>
+<td>skill 含方法论章节</td>
+</tr>
+<tr>
+<td>6</td>
+<td>copilot 后端降级链可观测（当前 ECS→Agnes 静默）</td>
+<td>暴露实际使用的后端</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p2">P2</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>评估 OpenAI Apps / ChatGPT Connectors 接入</td>
+</tr>
+<tr>
+<td>8</td>
+<td>MCP Registry 元数据补全</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_6">六、诚实边界</h2>
+<ol>
+<li><strong>本板块的接入工程做得极好，但零真实使用</strong>——这是项目自己记录的三次实验结论（<code>stat:src:agent = 0</code>），本报告予以确认而非美化。</li>
+<li><code>npm stdio</code> 渠道卡在人工换发 token，属外部阻塞。</li>
+<li><code>copilot</code> 依赖外部 LLM 后端（ECS / Agnes），可用性不受本仓控制。</li>
+<li>竞品是否提供对等 MCP 面，未逐一实测。</li>
+</ol>
+</div>
+</body>
+</html>

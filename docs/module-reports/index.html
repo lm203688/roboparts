@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts 分板块提升评估报告 · 索引</title>
+<style>
+:root{--ink:#111827;--ink2:#374151;--muted:#6b7280;--line:#e5e7eb;--bg:#f7f8fa;--card:#ffffff;--acc:#2563eb;--red:#dc2626;--amber:#d97706;--green:#059669}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.7}
+.wrap{max-width:960px;margin:0 auto;padding:48px 24px 80px}
+h1{font-size:30px;margin:0 0 8px;letter-spacing:-.5px}
+.sub{color:var(--muted);margin:0 0 28px}
+.grid{display:grid;grid-template-columns:1fr;gap:12px}
+a.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;text-decoration:none;color:var(--ink);transition:.15s}
+a.card:hover{border-color:var(--acc);box-shadow:0 4px 14px rgba(37,99,235,.10);transform:translateY(-1px)}
+a.card .t{font-weight:700;font-size:16px}
+a.card .d{color:var(--muted);font-size:13px;margin-top:4px}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:8px;vertical-align:middle}
+.A{background:#dcfce7;color:var(--green)}.B{background:#dbeafe;color:var(--acc)}.C{background:#fef3c7;color:var(--amber)}.D{background:#fee2e2;color:var(--red)}
+.note{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:28px 0 20px;font-size:14px;color:var(--ink2)}
+.note b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>RoboParts 分板块提升评估报告</h1>
+  <p class="sub">2026-10-14 · 9 大板块 · 逐板块流程审计 / 竞品需求 / 开源融合 / 提升方案</p>
+
+  <div class="note">
+    <b>评估方法</b>：全仓静态扫描（11,000+ 文件）+ 源码与配置原文阅读 + 产物现算（<code>api/*.json</code>）+ 线上回拨 + 竞品与开源技术联网核实（时点 2026-10-14）。<br>
+    <b>四把尺子</b>：① 流程是否合理 / 是否全面走通 / 是否符合人类使用习惯 ② 市场竞品与需求 ③ 最新开源技术融合 ④ 提升方案（P0/P1/P2 + 验收判据）。<br>
+    <b>口径声明</b>：凡仓内文档与实测不一致处，以实测为准并显式标注。报告性质：提升方案评估，不构成合规声明或投资建议。
+  </div>
+
+  <div class="grid">
+    <a class="card" href="00-总览与评估方法.html">
+      <div class="t">00 · 总览与评估方法</div>
+      <div class="d">板块划分依据 · 四把尺子 · 跨板块核心结论 · 成熟度分档（A/B/C/D）</div>
+    </a>
+    <a class="card" href="01-数据层与实体库.html">
+      <div class="t">01 · 数据层与实体库<span class="tag B">B 档</span></div>
+      <div class="d">868 实体 / 20 品类 · 机械声明率 16.2% · 缺「按孔位筛选」入口</div>
+    </a>
+    <a class="card" href="02-兼容性判定引擎.html">
+      <div class="t">02 · 兼容性判定引擎<span class="tag A">A 档</span></div>
+      <div class="d">三套引擎（产品四维 / 研究三轴 / 共装三段）· 世界级严谨度 · 但无人调用</div>
+    </a>
+    <a class="card" href="03-选型与规划.html">
+      <div class="t">03 · 选型与规划<span class="tag C">C 档</span></div>
+      <div class="d">选型 / 规划 / 组装 / 画布 四岛分立 · 无「下一步」流水线</div>
+    </a>
+    <a class="card" href="04-转接件生成.html">
+      <div class="t">04 · 转接件生成<span class="tag D">D 档</span></div>
+      <div class="d">参数驱动可生成 · cad/ 与 3d/ 全为占位符 · 零实证</div>
+    </a>
+    <a class="card" href="05-BOM全链路.html">
+      <div class="t">05 · BOM 全链路<span class="tag C">C 档</span></div>
+      <div class="d">检查/导入纪律极强 · 存储用 localStorage · 下单链路空</div>
+    </a>
+    <a class="card" href="06-Agent与MCP基础设施.html">
+      <div class="t">06 · Agent 与 MCP 基础设施<span class="tag B">B 档</span></div>
+      <div class="d">21 MCP 工具 + A2A · 接入门槛近零 · 但 stat:src:agent = 0</div>
+    </a>
+    <a class="card" href="07-供应商与数据飞轮.html">
+      <div class="t">07 · 供应商与数据飞轮<span class="tag D">D 档</span></div>
+      <div class="d">飞轮核验纪律世界级（142 条贡献）· 供应商零入驻 · 无贡献激励</div>
+    </a>
+    <a class="card" href="08-标准合规与工程治理.html">
+      <div class="t">08 · 标准合规与工程治理<span class="tag A">A 档</span></div>
+      <div class="d">49 闸门 / 变异评分 1.00 / AP-01~12 / NR-01~10 / 决策留痕</div>
+    </a>
+    <a class="card" href="09-商业化与增长.html">
+      <div class="t">09 · 商业化与增长<span class="tag D">D 档</span></div>
+      <div class="d">不抽佣（正确）· 零真实付费 · 22 篇文章换 0 需求信号</div>
+    </a>
+  </div>
+
+  <p class="sub" style="margin-top:32px;font-size:13px">Markdown 源文件同目录（<code>*.md</code>）。本报告基于 2026-10-14 全仓实测与联网核实撰写，仓内数字均可复现。</p>
+</div>
+</body>
+</html>

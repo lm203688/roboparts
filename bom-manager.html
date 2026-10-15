@@ -340,16 +340,53 @@ window.addEventListener('DOMContentLoaded', () => {
   if (savedKey) {
     const exportKeyInput = document.getElementById('export_api_key');
     if (exportKeyInput) exportKeyInput.value = savedKey;
+    
+    // 如果有 API Key，尝试从云端加载
+    loadFromCloud();
   }
 
   // 监听 API Key 输入
   document.getElementById('export_api_key').addEventListener('change', (e) => {
-    localStorage.setItem('roboparts_api_key', e.target.value.trim());
+    const key = e.target.value.trim();
+    localStorage.setItem('roboparts_api_key', key);
+    updateSyncStatus();
+    // 输入新 Key 后尝试云端加载
+    if (key && bomItems.length === 0) {
+      loadFromCloud();
+    }
   });
+
+  // 初始化同步状态指示器
+  initSyncStatus();
 
   // 渲染
   renderBom();
 });
+
+// ============ 云端同步状态指示器 ============
+function initSyncStatus() {
+  const existing = document.getElementById('syncStatus');
+  if (existing) return;
+  
+  const statusEl = document.createElement('div');
+  statusEl.id = 'syncStatus';
+  statusEl.style.cssText = 'position:fixed;bottom:20px;right:20px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--muted);z-index:1000;box-shadow:0 2px 8px rgba(0,0,0,0.3);';
+  document.body.appendChild(statusEl);
+  
+  updateSyncStatus();
+}
+
+function updateSyncStatus() {
+  const statusEl = document.getElementById('syncStatus');
+  if (!statusEl) return;
+  
+  const apiKey = localStorage.getItem('roboparts_api_key');
+  if (apiKey) {
+    statusEl.innerHTML = '<span style="color:var(--success);">☁️</span> 云端同步已启用';
+  } else {
+    statusEl.innerHTML = '<span style="color:var(--muted);">☁️</span> 本地模式（输入 API Key 启用云端同步）';
+  }
+}
 
 // ============ 处理 URL 参数导入 ============
 function handleUrlImport() {
@@ -379,8 +416,80 @@ function handleUrlImport() {
   }
 }
 
-// ============ 保存 BOM 到 localStorage ============
+// ============ 保存 BOM 到 localStorage + 云端 ============
 function saveBom() {
+  // 本地保存
+  localStorage.setItem(BOM_STORAGE_KEY, JSON.stringify(bomItems));
+  
+  // 云端保存（如果有 API Key）
+  syncToCloud();
+}
+
+// ============ 云端同步 ============
+let cloudSyncTimer = null;
+
+function syncToCloud() {
+  // 防抖：1 秒内多次保存只同步一次
+  if (cloudSyncTimer) {
+    clearTimeout(cloudSyncTimer);
+  }
+  cloudSyncTimer = setTimeout(() => doSyncToCloud(), 1000);
+}
+
+async function doSyncToCloud() {
+  const apiKey = localStorage.getItem('roboparts_api_key');
+  if (!apiKey) return;
+  
+  try {
+    const res = await fetch(`/api/bom/store?key=${encodeURIComponent(apiKey)}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        bom_id: 'default',
+        name: '我的 BOM 清单',
+        items: bomItems,
+        notes: '',
+      }),
+    });
+    if (res.ok) {
+      console.log('BOM 已同步到云端');
+    }
+  } catch (e) {
+    console.warn('云端同步失败（本地保存不受影响）:', e);
+  }
+}
+
+// ============ 从云端加载 BOM ============
+async function loadFromCloud() {
+  const apiKey = localStorage.getItem('roboparts_api_key');
+  if (!apiKey) return false;
+  
+  try {
+    const res = await fetch(`/api/bom/store?key=${encodeURIComponent(apiKey)}`);
+    if (!res.ok) return false;
+    
+    const data = await res.json();
+    if (data.boms && data.boms.length > 0) {
+      const defaultBom = data.boms.find(b => b.bom_id === 'default');
+      if (defaultBom && defaultBom.items && defaultBom.items.length > 0) {
+        // 云端数据优先（除非本地有更新）
+        if (bomItems.length === 0 || (localStorage.getItem(BOM_STORAGE_KEY) === '[]')) {
+          bomItems = defaultBom.items;
+          saveBomLocal();
+          renderBom();
+          showToast('已从云端同步 BOM', 'success');
+          return true;
+        }
+      }
+    }
+    return false;
+  } catch (e) {
+    console.warn('云端加载失败:', e);
+    return false;
+  }
+}
+
+function saveBomLocal() {
   localStorage.setItem(BOM_STORAGE_KEY, JSON.stringify(bomItems));
 }
 

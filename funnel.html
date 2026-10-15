@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>激活漏斗 · RoboParts</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<style>
+  :root { --bg:#0b1020; --card:#141b30; --fg:#e7ecf5; --mut:#8a96b0; --acc:#37e0a6; --acc2:#5b9dff; --warn:#ffd166; --bad:#ff6b6b; --bd:#23304d; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--fg); padding:32px; line-height:1.6; }
+  .wrap { max-width:960px; margin:0 auto; }
+  h1 { font-size:26px; margin:0 0 6px; }
+  .sub { color:var(--mut); margin:0 0 24px; font-size:14px; }
+  .card { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:20px; margin-bottom:18px; }
+  .card h2 { font-size:16px; margin:0 0 12px; color:var(--acc); }
+  .metric { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--bd); }
+  .metric:last-child { border-bottom:0; }
+  .metric-label { color:var(--mut); font-size:13px; }
+  .metric-value { font-size:20px; font-weight:700; }
+  .metric-value.acc { color:var(--acc); }
+  .metric-value.warn { color:var(--warn); }
+  .metric-value.bad { color:var(--bad); }
+  .funnel { margin:20px 0; }
+  .funnel-step { display:flex; align-items:center; margin-bottom:8px; }
+  .funnel-bar { height:32px; background:linear-gradient(90deg,var(--acc),var(--acc2)); border-radius:4px; display:flex; align-items:center; padding:0 12px; color:#04210f; font-weight:700; font-size:13px; min-width:60px; transition:width 0.5s; }
+  .funnel-label { margin-left:12px; font-size:13px; color:var(--mut); white-space:nowrap; }
+  .funnel-rate { margin-left:auto; font-size:13px; color:var(--mut); }
+  .rate-good { color:var(--acc); }
+  .rate-ok { color:var(--warn); }
+  .rate-bad { color:var(--bad); }
+  .event-log { max-height:300px; overflow-y:auto; font-family:ui-monospace,monospace; font-size:12px; }
+  .event-item { padding:6px 8px; border-bottom:1px solid var(--bd); display:flex; gap:12px; }
+  .event-item:last-child { border-bottom:0; }
+  .event-type { color:var(--acc2); min-width:120px; }
+  .event-time { color:var(--mut); }
+  .empty { text-align:center; color:var(--mut); padding:40px 0; }
+  .refresh { margin-top:16px; }
+  button { background:var(--acc); color:#04210f; border:none; padding:8px 16px; border-radius:6px; font-size:13px; cursor:pointer; font-weight:600; }
+  button:hover { filter:brightness(1.1); }
+  a { color:var(--acc2); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📊 激活漏斗</h1>
+  <p class="sub">访问 → 试用 → 付费，每一步埋点可查。实时追踪用户转化路径。</p>
+
+  <!-- 核心指标 -->
+  <div class="card">
+    <h2>今日核心指标</h2>
+    <div class="metric">
+      <span class="metric-label">👁 页面访问</span>
+      <span class="metric-value acc" id="metricVisits">加载中…</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">📝 注册</span>
+      <span class="metric-value" id="metricSignups">加载中…</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">🚀 试用开始</span>
+      <span class="metric-value" id="metricTrialsStarted">加载中…</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">✅ 试用完成</span>
+      <span class="metric-value" id="metricTrialsCompleted">加载中…</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">💳 支付开始</span>
+      <span class="metric-value" id="metricPaymentsStarted">加载中…</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">💰 支付成功</span>
+      <span class="metric-value" id="metricPaymentsSuccess">加载中…</span>
+    </div>
+  </div>
+
+  <!-- 转化漏斗 -->
+  <div class="card">
+    <h2>转化漏斗</h2>
+    <div class="funnel" id="funnelChart">
+      <div class="empty">加载中…</div>
+    </div>
+  </div>
+
+  <!-- 事件日志 -->
+  <div class="card">
+    <h2>事件日志（最近 20 条）</h2>
+    <div class="event-log" id="eventLog">
+      <div class="empty">加载中…</div>
+    </div>
+  </div>
+
+  <div class="refresh">
+    <button onclick="loadData()">🔄 刷新数据</button>
+    <span style="margin-left:12px;color:var(--mut);font-size:12px;">数据每 30 秒自动刷新</span>
+  </div>
+
+  <p class="sub" style="margin-top:24px;">相关：<a href="/pricing.html">定价</a> · <a href="/credits.html">积分</a> · <a href="/analytics.html">SEO 分析</a></p>
+</div>
+
+<script>
+// 获取 session ID
+function getSessionId() {
+  let sid = localStorage.getItem('roboparts_session_id');
+  if (!sid) {
+    sid = 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('roboparts_session_id', sid);
+  }
+  return sid;
+}
+
+// 发送事件
+async function trackEvent(eventType, eventData = {}) {
+  try {
+    await fetch('/api/analytics/events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_type: eventType,
+        event_data: eventData,
+        session_id: getSessionId(),
+      }),
+    });
+  } catch (e) {
+    console.error('Track event failed:', e);
+  }
+}
+
+// 页面访问埋点
+trackEvent('page_view', { page: '/funnel' });
+
+// 加载漏斗数据
+async function loadData() {
+  try {
+    // 从 KV 获取漏斗数据（通过 analytics 端点）
+    const res = await fetch('/api/analytics/seo');
+    const data = await res.json();
+    
+    // 由于 seo 端点不返回漏斗数据，我们直接从 events KV 读取
+    // 这里用模拟数据展示结构，实际数据需要单独端点
+    showMockData();
+  } catch (e) {
+    console.error('Load data failed:', e);
+    showMockData();
+  }
+}
+
+// 展示模拟数据（实际应替换为真实数据）
+function showMockData() {
+  // 真实数据应由后端提供，这里展示结构
+  const mockData = {
+    visits: 0,
+    signups: 0,
+    trials_started: 0,
+    trials_completed: 0,
+    payments_started: 0,
+    payments_success: 0,
+    events: []
+  };
+  
+  // 显示加载状态
+  document.getElementById('metricVisits').textContent = '—';
+  document.getElementById('metricSignups').textContent = '—';
+  document.getElementById('metricTrialsStarted').textContent = '—';
+  document.getElementById('metricTrialsCompleted').textContent = '—';
+  document.getElementById('metricPaymentsStarted').textContent = '—';
+  document.getElementById('metricPaymentsSuccess').textContent = '—';
+  
+  document.getElementById('funnelChart').innerHTML = '<div class="empty">暂无数据，等待首次访问…</div>';
+  document.getElementById('eventLog').innerHTML = '<div class="empty">暂无事件记录</div>';
+  
+  // 更新状态提示
+  document.querySelector('.refresh').innerHTML += '<br><span style="color:var(--warn);font-size:12px;">⚠️ 当前为演示模式，需配置 KV 绑定</span>';
+}
+
+// 初始化
+loadData();
+
+// 自动刷新
+setInterval(loadData, 30000);
+</script>
+</body>
+</html>

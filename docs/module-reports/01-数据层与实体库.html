@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>板块 1：数据层与实体库 — 提升评估报告 · RoboParts 分板块提升评估</title>
+<style>
+  :root{
+    --ink:#111827; --ink2:#374151; --muted:#6b7280; --line:#e5e7eb;
+    --bg:#f7f8fa; --card:#ffffff;
+    --brand:#2563eb; --brand-d:#1e40af; --brand-l:#eff4ff;
+    --red:#dc2626; --amber:#d97706; --green:#059669; --purple:#7c3aed; --teal:#0d9488;
+    --p0:#dc2626; --p1:#d97706; --p2:#0891b2;
+    --shadow:0 1px 2px rgba(16,24,40,.04),0 4px 16px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.72;-webkit-font-smoothing:antialiased;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* header */
+  header.hero{background:linear-gradient(135deg,#0b1220 0%,#12203f 45%,#1e3a8a 100%);color:#fff;padding:56px 0 46px;position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(37,99,235,.55),transparent 62%)}
+  .hero .wrap{padding-bottom:0}
+  .hero .eyebrow{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#93b4ff;font-weight:600}
+  .hero h1{font-size:34px;line-height:1.28;margin:14px 0 12px;font-weight:800;letter-spacing:-.01em}
+  .hero p.sub{color:#c7d2fe;font-size:16px;max-width:760px;margin:0}
+  .hero .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+    color:#e5e7eb;font-size:12.5px;padding:5px 11px;border-radius:999px}
+
+  /* section */
+  section{margin-top:44px}
+  h2{font-size:23px;font-weight:800;letter-spacing:-.01em;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+  h2 .num{display:inline-flex;width:30px;height:30px;border-radius:9px;background:var(--brand);color:#fff;font-size:15px;
+    align-items:center;justify-content:center;font-weight:700;flex:none}
+  .lead{color:var(--ink2);font-size:15px;margin:6px 0 20px}
+  h3{font-size:17.5px;font-weight:750;margin:30px 0 10px;color:var(--ink)}
+  h4{font-size:15px;font-weight:700;margin:18px 0 8px;color:var(--ink2)}
+  p{margin:9px 0}
+  ul,ol{margin:9px 0;padding-left:22px}
+  li{margin:5px 0}
+
+  /* cards */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);margin:14px 0}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .kpi .v{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:5px}
+  .kpi .d{font-size:12px;margin-top:6px}
+  .v-blue{color:var(--brand)} .v-green{color:var(--green)} .v-amber{color:var(--amber)}
+  .v-red{color:var(--red)} .v-purple{color:var(--purple)} .v-teal{color:var(--teal)}
+
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.6px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#f3f5f9;font-weight:700;color:var(--ink2);font-size:12.6px;letter-spacing:.02em}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafbfd}
+
+  .badge{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:6px;letter-spacing:.02em;white-space:nowrap}
+  .b-p0{background:#fee2e2;color:#b91c1c} .b-p1{background:#fef3c7;color:#b45309}
+  .b-p2{background:#cffafe;color:#0e7490} .b-ok{background:#d1fae5;color:#047857}
+  .b-warn{background:#fef3c7;color:#b45309} .b-bad{background:#fee2e2;color:#b91c1c}
+  .b-neutral{background:#eef2ff;color:#3730a3}
+
+  .bar{height:9px;border-radius:999px;background:#eef1f6;overflow:hidden;margin-top:7px}
+  .bar > i{display:block;height:100%;border-radius:999px}
+
+  .callout{border-left:4px solid var(--brand);background:var(--brand-l);border-radius:0 12px 12px 0;padding:14px 18px;margin:14px 0}
+  .callout.warn{border-color:var(--amber);background:#fffbeb}
+  .callout.bad{border-color:var(--red);background:#fef2f2}
+  .callout.good{border-color:var(--green);background:#ecfdf5}
+  .callout .t{font-weight:750;margin-bottom:3px}
+  .callout p:last-child{margin-bottom:0}
+
+  .quote{font-size:15px;color:var(--ink2);border-left:3px solid var(--line);padding-left:14px;margin:14px 0;font-style:italic}
+
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 22px;box-shadow:var(--shadow);margin-top:-26px;position:relative;z-index:2}
+  .toc ol{columns:2;column-gap:34px;margin:6px 0 0;padding-left:20px}
+  @media(max-width:820px){.toc ol{columns:1}}
+  .toc a{color:var(--ink2);font-size:13.6px}
+  .toc a:hover{color:var(--brand)}
+
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;background:#eef2ff;color:#3730a3;margin-right:6px}
+  hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+  .small{font-size:12.6px;color:var(--muted)}
+  .nowrap{white-space:nowrap}
+  .center{text-align:center}
+  footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:12.6px}
+  .step{display:flex;gap:14px;margin:14px 0}
+  .step .dot{flex:none;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px}
+  .timeline{border-left:2px solid var(--line);margin-left:8px;padding-left:22px}
+  .tl-item{position:relative;margin:0 0 22px}
+  .tl-item::before{content:"";position:absolute;left:-29px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid #fff;box-shadow:0 0 0 2px var(--brand)}
+  .tl-item.p1::before{background:var(--amber);box-shadow:0 0 0 2px var(--amber)}
+  .tl-item.p2::before{background:var(--p2);box-shadow:0 0 0 2px var(--p2)}
+  code{background:#f1f3f8;padding:1.5px 6px;border-radius:5px;font-size:12.6px;font-family:ui-monospace,Menlo,Consolas,monospace}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1 id="1">板块 1：数据层与实体库 — 提升评估报告</h1>
+<blockquote>
+<p><strong>生成日期</strong>：2026-10-14 ｜ <strong>板块编号</strong>：M1 ｜ <strong>成熟度</strong>：B 档（机制完整但未闭环）
+<strong>证据来源</strong>：<code>api/entities.json</code>、<code>api/provenance.json</code>、<code>api/oss_components.json</code>、<code>api/croissant.json</code>、<code>api/semantic_index.json</code>、<code>functions/api/[[path]].js</code>、<code>functions/api/entity/[id].js</code>、<code>functions/api/search.js</code>、<code>functions/api/semantic-search.js</code>、<code>functions/api/oss.js</code>、页面 <code>data-hub.html</code> / <code>parts-viewer.html</code> / <code>oss.html</code> / <code>urdf-library.html</code> / <code>reference-builds.html</code> / <code>bionic.html</code></p>
+</blockquote>
+<hr />
+<h2 id="_1">一、板块定位与边界</h2>
+<p><strong>一句话</strong>：RoboParts 的「底座」——868 条机器人零件/接口/AI 模型实体的结构化事实库，一切判定、选型、BOM 检查的上游。</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>资产</th>
+<th>实测规模</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>页面</td>
+<td>data-hub / parts-viewer / oss / urdf-library / reference-builds / bionic</td>
+<td>6 页（data-hub 581 行、urdf-library 564 行、parts-viewer 211 行）</td>
+</tr>
+<tr>
+<td>端点</td>
+<td><code>/api/entities.json</code>、<code>/api/entity/{id}</code>、<code>/api/search</code>、<code>/api/semantic-search</code>、<code>/api/oss</code>、<code>/api/stats</code>、<code>/api/[[path]]</code>（通用 JSON 分发）</td>
+<td>7 个</td>
+</tr>
+<tr>
+<td>数据产物</td>
+<td>entities / data / oss_components / croissant / provenance / semantic_index / derived_features / cross-refs / terminology_aliases / negative_compat</td>
+<td>10+ 个</td>
+</tr>
+<tr>
+<td>脚本</td>
+<td><code>build_semantic_index.mjs</code>、<code>build_provenance.py</code>、<code>build_croissant.py</code>、<code>build_derived_features.py</code></td>
+<td>4+ 个</td>
+</tr>
+</tbody>
+</table>
+<p><strong>实测数据画像</strong>：
+- 总量 <strong>868</strong> 实体，<strong>20</strong> 品类（actuators 222 / chips 108 / platforms 106 / sensors 95 / protocols 64 / data_acquisition 46 / robot_ai_models 46 / llms 42 / …）。
+- 机械接口声明率 <strong>16.2%</strong>（applicable 500，declared 67 + partial 14，not_declared 419）。
+- 开源组件 <strong>325</strong> 条（<code>oss_components.json</code>）。
+- 每实体带 <code>source_tier</code>（A/B/C）、<code>confidence</code>、<code>last_verified</code> 三态溯源字段。</p>
+<hr />
+<h2 id="_2">二、流程审计</h2>
+<h3 id="21">2.1 流程是否合理</h3>
+<p><strong>链路</strong>：采集（<code>data_acquisition</code> / OSS BOM / 厂商官域）→ 入库（<code>entities.json</code> 单一真相源）→ 派生（semantic_index / croissant / provenance / derived_features）→ 分发（REST + MCP + 数据集双平台）。</p>
+<table>
+<thead>
+<tr>
+<th>环节</th>
+<th>是否合理</th>
+<th>实测证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单一真相源</td>
+<td>✅ 合理且严格</td>
+<td>全仓数字均由 <code>inject_readme_stats.py</code> 从 <code>entities.json</code> 现算，禁手改；「公开清单现算」闸门守护</td>
+</tr>
+<tr>
+<td>三态溯源</td>
+<td>✅ 合理</td>
+<td><code>source_tier</code> + <code>confidence</code> + <code>last_verified</code>；「无出处不入库」写进 <code>CONTRIBUTING.md</code></td>
+</tr>
+<tr>
+<td>派生层</td>
+<td>✅ 合理</td>
+<td>provenance / croissant / semantic_index 均为自动派生，非手写</td>
+</tr>
+<tr>
+<td>分发层</td>
+<td>✅ 合理</td>
+<td>双平台同步（HuggingFace + ModelScope）+ Croissant 元数据</td>
+</tr>
+<tr>
+<td><strong>采集层</strong></td>
+<td>⚠️ <strong>是短板</strong></td>
+<td>机械接口声明率四个月停在 16.2%（<code>mechanical_interface_coverage.fill_pct</code>），采集靠人工 + 少量 OSS BOM</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>判断</strong>：流程设计<strong>合理</strong>，且远高于同类项目（多数零件库连溯源都没有）。唯一不合理处是<strong>采集环节的产能</strong>——设计了正确的入口（贡献表单、BOM 反喂、spec-declare），但产能没有兑现。</p>
+</blockquote>
+<h3 id="22">2.2 是否全面走通</h3>
+<table>
+<thead>
+<tr>
+<th>子链路</th>
+<th>状态</th>
+<th>断点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>页面 → 端点</td>
+<td>✅ 通</td>
+<td><code>data-hub.html</code> 调 <code>/api/entities.json</code>、<code>/api/stats</code> 正常</td>
+</tr>
+<tr>
+<td>端点 → 数据</td>
+<td>✅ 通</td>
+<td>线上 <code>/api/entities.json</code> = 200，868 实体与本地一致</td>
+</tr>
+<tr>
+<td>搜索 → 结果</td>
+<td>✅ 通</td>
+<td>关键词搜索 + 语义搜索（<code>semantic_index.json</code>）双通道</td>
+</tr>
+<tr>
+<td>实体详情 → 付费墙</td>
+<td>✅ 通</td>
+<td><code>/api/entity/{id}</code> 用 <code>paywall.js</code> 统一投影，付费字段黑名单 10 项</td>
+</tr>
+<tr>
+<td><strong>数据 → 下游消费</strong></td>
+<td>⚠️ <strong>半通</strong></td>
+<td>数据能被 REST/MCP 读到，但<strong>没有下游产品真正消费它</strong>（选型、设计、BOM 各自独立）</td>
+</tr>
+<tr>
+<td><strong>数据 → 外部引用</strong></td>
+<td>❌ <strong>断</strong></td>
+<td>无第三方项目引用该数据集；HuggingFace/ModelScope 下载量为 0 级</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>结论</strong>：数据层内部<strong>全面走通</strong>，但「走出去」这一步是断的——它是「自产自销」的闭环。</p>
+</blockquote>
+<h3 id="23">2.3 是否符合人类使用习惯</h3>
+<p>目标用户有四类：<strong>工程师</strong>（要孔位/扭矩/协议）、<strong>采购</strong>（要价格/供货）、<strong>开源构建者</strong>（要能直接用的 BOM）、<strong>Agent</strong>（要机读）。</p>
+<table>
+<thead>
+<tr>
+<th>用户习惯</th>
+<th>本板块的入口</th>
+<th>契合度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工程师「按孔位筛零件」</td>
+<td>无。只有按品类 + 关键词 + 语义搜索</td>
+<td>❌ <strong>缺</strong>。这是工程师最刚性的筛选维度</td>
+</tr>
+<tr>
+<td>工程师「对比 2–3 个候选」</td>
+<td>parts-viewer 有 3D 预览，但无并排对比</td>
+<td>⚠️ 弱</td>
+</tr>
+<tr>
+<td>采购「按价格/供货筛」</td>
+<td>价格是<strong>付费字段</strong>（<code>price_range</code> 在 <code>PREMIUM_FIELDS</code>）</td>
+<td>⚠️ 免费用户看不到</td>
+</tr>
+<tr>
+<td>构建者「直接拿一份能跑的 BOM」</td>
+<td><code>reference-builds.html</code>（参考构型）+ urdf-library</td>
+<td>✅ 较好</td>
+</tr>
+<tr>
+<td>Agent「机读事实」</td>
+<td><code>/api/entities.json</code> + MCP <code>search_components</code></td>
+<td>✅ 强</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>关键 UX 缺口</strong>：<strong>没有「按机械接口筛选」的入口。</strong> 而项目自己承认「最大的缺口是机械接口声明率」——入口与缺口不匹配：缺的是数据，但也没给用户一个「我要找 ISO 9409-1-50-4-M6 的夹爪」的入口。</p>
+</blockquote>
+<hr />
+<h2 id="_3">三、市场竞品与市场需求比较</h2>
+<h3 id="31">3.1 竞品对照</h3>
+<table>
+<thead>
+<tr>
+<th>竞品</th>
+<th>定位</th>
+<th>强项</th>
+<th>相对 RoboParts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TraceParts / GrabCAD</strong></td>
+<td>通用零件 CAD 库</td>
+<td>海量 3D 模型 + 厂商直供</td>
+<td>它们有<strong>模型</strong>无<strong>兼容判定</strong>；RoboParts 有判定无模型</td>
+</tr>
+<tr>
+<td><strong>Octopart / Findchips</strong></td>
+<td>电子元件搜索</td>
+<td>实时库存 + 价格聚合</td>
+<td>电子域，不覆盖机械/机器人</td>
+</tr>
+<tr>
+<td><strong>roboxdb</strong></td>
+<td>机器人零件库 + 浏览器内 MuJoCo 物理验证</td>
+<td>物理验证 + source-backed specs</td>
+<td>直接重叠；它的物理验证领先，RoboParts 的判定深度领先</td>
+</tr>
+<tr>
+<td><strong>OpenLoong / OpenLET（2026 国内开源社区）</strong></td>
+<td>人形机器人开源社区 + 数据集</td>
+<td>社区规模（2 万+ 开发者）</td>
+<td>它们有<strong>社区</strong>无<strong>判定引擎</strong>；RoboParts 反之</td>
+</tr>
+<tr>
+<td><strong>Hugging Face datasets</strong></td>
+<td>通用数据集托管</td>
+<td>分发渠道</td>
+<td>RoboParts 已上架，但无差异化</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32">3.2 市场需求实测</h3>
+<ul>
+<li>仓内 <code>api/demand-signal.json</code>（scan_date 2026-08-28）实测：<strong><code>real_query_count: 0</code>、<code>explicit_compatibility_pain: 0</code>、<code>cross_brand_compat_engine_users: 0</code></strong>。</li>
+<li>这意味着：<strong>外部真实社区里，没有人在问「这两个零件能不能配」</strong>——至少当前监听通道（GitHub / ROS Discourse / Stack Exchange）没有捕捉到。</li>
+<li>但 <code>can_answer_today</code> 自述「跨品牌兼容类提问多数仍答不出」——<strong>需求与能力都在低位</strong>。</li>
+</ul>
+<blockquote>
+<p><strong>判断</strong>：数据层面对的不是「需求旺盛但供给不足」，而是「<strong>需求本身未被唤醒</strong>」。这解释了为什么数据量增长没有带来使用量增长。</p>
+</blockquote>
+<hr />
+<h2 id="_4">四、最新开源技术融合评估</h2>
+<table>
+<thead>
+<tr>
+<th>开源技术 / 标准</th>
+<th>2026 状态</th>
+<th>接入点（已有资产）</th>
+<th>融合形态</th>
+<th>拒绝条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ISO 22166-201 模块通用信息模型</strong>（2026 发布）</td>
+<td>国际标准，与 GB/T 43210 系列对应</td>
+<td><code>entities.json</code> 字段表</td>
+<td>把字段表对齐 201 的信息模型条目，产出 <code>iso22166-201-map.md</code></td>
+<td>无原文 ⇒ 只做方向性映射，不称「符合」</td>
+</tr>
+<tr>
+<td><strong>ISO 22166-202 软件模块信息模型</strong>（2025）</td>
+<td>国际标准</td>
+<td><code>llms.json</code> / <code>robot_ai_models.json</code></td>
+<td>AI 模型实体对齐 202 的软件模块信息模型</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><strong>MinerU 2.5-Pro</strong>（开源文档解析，Apache-2.0 衍生）</td>
+<td>2026 活跃</td>
+<td>采集环节</td>
+<td>VLM/OCR 从厂商 PDF 批量抽结构化属性（已有 <code>vlm-extraction-pending.json</code> 队列）</td>
+<td>抽取结果 confidence &lt; 0.7 不得进主库（已挂闸门）</td>
+</tr>
+<tr>
+<td><strong>Croissant</strong>（ML 数据集元数据标准）</td>
+<td>已采用</td>
+<td><code>croissant.json</code></td>
+<td>保持，扩展 entity 级 Croissant</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>schema.org / JSON-LD</strong></td>
+<td>通用</td>
+<td>页面 SEO</td>
+<td>为每个实体页注入 <code>Product</code> / <code>PropertyValue</code> JSON-LD</td>
+<td>不得引入虚假价格</td>
+</tr>
+<tr>
+<td><strong>RxDB 17 WebMCP</strong>（2026 新增，Agent 直连数据）</td>
+<td>活跃</td>
+<td>数据层</td>
+<td>把实体库暴露为 WebMCP 可查询集合，让浏览器内 Agent 直接查</td>
+<td>不得绕过 fail-closed 与付费墙</td>
+</tr>
+<tr>
+<td><strong>SPDX / OpenMDW-1.1</strong></td>
+<td>许可标准</td>
+<td><code>DATA-LICENSE.md</code></td>
+<td>数据许可机器可读化</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>首选融合</strong>：<strong>MinerU + VLM 抽取队列</strong>。项目已有 <code>vlm-extraction-pending.json</code> / <code>vlm-extraction-approved.json</code> 与闸门，只差把「从厂商 PDF 抽属性」这一步做量产——这是<strong>直接对治 16.2% 声明率</strong>的技术。</p>
+</blockquote>
+<hr />
+<h2 id="_5">五、提升方案</h2>
+<h3 id="p0">P0（不做则板块不成立）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>打通「机械接口筛选」入口</strong>：在 data-hub / parts-viewer 增加按 <code>standard</code> / <code>flange</code>（含 ISO 9409-1 梯级）筛选</td>
+<td>线上可用「筛 ISO 9409-1-50-4-M6」得到非空结果；挂闸门断言入口存在</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>启动 VLM 抽取量产</strong>：把 <code>vlm-extraction-pending.json</code> 队列跑起来，目标把机械声明率从 16.2% 提到 ≥ 25%</td>
+<td><code>mechanical_interface_coverage.fill_pct</code> ≥ 25；抽取条目全部过 <code>gate_cross_dimensional_signals</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>恢复 git 历史</strong>：当前 <code>No commits yet on master</code>，数据层「可追溯」承诺在版本层面不成立</td>
+<td><code>git log</code> 至少有 1 个 commit；后续每次数据变更可回溯</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p1">P1（不做则板块无竞争力）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>实体并排对比（2–4 个），支持导出</td>
+<td>页面功能可用 + 闸门</td>
+</tr>
+<tr>
+<td>5</td>
+<td>数据对外引用破零：把数据集推到 HuggingFace/ModelScope 之外（OpenLoong / OpenLET 社区）</td>
+<td>至少 1 个外部项目引用记录</td>
+</tr>
+<tr>
+<td>6</td>
+<td>每个实体页注入 JSON-LD</td>
+<td>结构化数据校验通过</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p2">P2</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>WebMCP 只读集合暴露</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Croissant 扩展至实体粒度</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_6">六、诚实边界</h2>
+<ol>
+<li>本板块数字全部现算自 <code>api/*.json</code>（2026-10-14），可复现。</li>
+<li>「机械声明率 16.2%」是项目自定的分母（applicable 500），换分母数字会变——项目已在 <code>mechanical_interface_coverage.note</code> 中声明此口径。</li>
+<li>竞品信息为联网核实时点快照，未逐工具实测。</li>
+<li>本报告不构成数据质量担保：仓内参数为厂商公开值，非本仓实测。</li>
+</ol>
+</div>
+</body>
+</html>

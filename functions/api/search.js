@@ -179,6 +179,33 @@ export async function onRequestGet(context) {
     scored.push({ e, score, matched: [...matched] });
   }
 
+  // ── 厂商+型号智能匹配（M2 P0-2）─────────────────────────────────────────
+  // 当搜索词看起来像「厂商+型号」时，优先匹配 manufacturer+name 组合
+  const smartMatches = [];
+  for (const e of pool) {
+    const manuf = (e.manufacturer || e.manufacturer_en || '').toLowerCase();
+    const name = (e.name || e.name_en || '').toLowerCase();
+    const id = (e.id || '').toLowerCase();
+    let allInSmartFields = true;
+    let smartScore = 0;
+    for (const t of terms) {
+      const inManuf = manuf.includes(t);
+      const inName = name.includes(t);
+      const inId = id.includes(t);
+      if (!inManuf && !inName && !inId) { allInSmartFields = false; break; }
+      if (inManuf && inName) smartScore += 50;
+      else if (inName) smartScore += 30;
+      else if (inManuf) smartScore += 20;
+      else if (inId) smartScore += 40;
+    }
+    if (allInSmartFields && smartScore > 0) {
+      const existing = scored.find(s => s.e.id === e.id);
+      if (!existing || existing.score < smartScore) {
+        scored.push({ e, score: smartScore, matched: ['smart_manufacturer_model'] });
+      }
+    }
+  }
+
   // 同分时按 id 稳定排序，保证同一查询多次调用结果一致
   scored.sort((a, b) => b.score - a.score || String(a.e.id).localeCompare(String(b.e.id)));
 

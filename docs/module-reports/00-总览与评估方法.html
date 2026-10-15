@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts 分板块提升评估报告 · 总览 · RoboParts 分板块提升评估</title>
+<style>
+  :root{
+    --ink:#111827; --ink2:#374151; --muted:#6b7280; --line:#e5e7eb;
+    --bg:#f7f8fa; --card:#ffffff;
+    --brand:#2563eb; --brand-d:#1e40af; --brand-l:#eff4ff;
+    --red:#dc2626; --amber:#d97706; --green:#059669; --purple:#7c3aed; --teal:#0d9488;
+    --p0:#dc2626; --p1:#d97706; --p2:#0891b2;
+    --shadow:0 1px 2px rgba(16,24,40,.04),0 4px 16px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.72;-webkit-font-smoothing:antialiased;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* header */
+  header.hero{background:linear-gradient(135deg,#0b1220 0%,#12203f 45%,#1e3a8a 100%);color:#fff;padding:56px 0 46px;position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(37,99,235,.55),transparent 62%)}
+  .hero .wrap{padding-bottom:0}
+  .hero .eyebrow{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#93b4ff;font-weight:600}
+  .hero h1{font-size:34px;line-height:1.28;margin:14px 0 12px;font-weight:800;letter-spacing:-.01em}
+  .hero p.sub{color:#c7d2fe;font-size:16px;max-width:760px;margin:0}
+  .hero .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+    color:#e5e7eb;font-size:12.5px;padding:5px 11px;border-radius:999px}
+
+  /* section */
+  section{margin-top:44px}
+  h2{font-size:23px;font-weight:800;letter-spacing:-.01em;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+  h2 .num{display:inline-flex;width:30px;height:30px;border-radius:9px;background:var(--brand);color:#fff;font-size:15px;
+    align-items:center;justify-content:center;font-weight:700;flex:none}
+  .lead{color:var(--ink2);font-size:15px;margin:6px 0 20px}
+  h3{font-size:17.5px;font-weight:750;margin:30px 0 10px;color:var(--ink)}
+  h4{font-size:15px;font-weight:700;margin:18px 0 8px;color:var(--ink2)}
+  p{margin:9px 0}
+  ul,ol{margin:9px 0;padding-left:22px}
+  li{margin:5px 0}
+
+  /* cards */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);margin:14px 0}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .kpi .v{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:5px}
+  .kpi .d{font-size:12px;margin-top:6px}
+  .v-blue{color:var(--brand)} .v-green{color:var(--green)} .v-amber{color:var(--amber)}
+  .v-red{color:var(--red)} .v-purple{color:var(--purple)} .v-teal{color:var(--teal)}
+
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.6px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#f3f5f9;font-weight:700;color:var(--ink2);font-size:12.6px;letter-spacing:.02em}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafbfd}
+
+  .badge{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:6px;letter-spacing:.02em;white-space:nowrap}
+  .b-p0{background:#fee2e2;color:#b91c1c} .b-p1{background:#fef3c7;color:#b45309}
+  .b-p2{background:#cffafe;color:#0e7490} .b-ok{background:#d1fae5;color:#047857}
+  .b-warn{background:#fef3c7;color:#b45309} .b-bad{background:#fee2e2;color:#b91c1c}
+  .b-neutral{background:#eef2ff;color:#3730a3}
+
+  .bar{height:9px;border-radius:999px;background:#eef1f6;overflow:hidden;margin-top:7px}
+  .bar > i{display:block;height:100%;border-radius:999px}
+
+  .callout{border-left:4px solid var(--brand);background:var(--brand-l);border-radius:0 12px 12px 0;padding:14px 18px;margin:14px 0}
+  .callout.warn{border-color:var(--amber);background:#fffbeb}
+  .callout.bad{border-color:var(--red);background:#fef2f2}
+  .callout.good{border-color:var(--green);background:#ecfdf5}
+  .callout .t{font-weight:750;margin-bottom:3px}
+  .callout p:last-child{margin-bottom:0}
+
+  .quote{font-size:15px;color:var(--ink2);border-left:3px solid var(--line);padding-left:14px;margin:14px 0;font-style:italic}
+
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 22px;box-shadow:var(--shadow);margin-top:-26px;position:relative;z-index:2}
+  .toc ol{columns:2;column-gap:34px;margin:6px 0 0;padding-left:20px}
+  @media(max-width:820px){.toc ol{columns:1}}
+  .toc a{color:var(--ink2);font-size:13.6px}
+  .toc a:hover{color:var(--brand)}
+
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;background:#eef2ff;color:#3730a3;margin-right:6px}
+  hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+  .small{font-size:12.6px;color:var(--muted)}
+  .nowrap{white-space:nowrap}
+  .center{text-align:center}
+  footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:12.6px}
+  .step{display:flex;gap:14px;margin:14px 0}
+  .step .dot{flex:none;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px}
+  .timeline{border-left:2px solid var(--line);margin-left:8px;padding-left:22px}
+  .tl-item{position:relative;margin:0 0 22px}
+  .tl-item::before{content:"";position:absolute;left:-29px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid #fff;box-shadow:0 0 0 2px var(--brand)}
+  .tl-item.p1::before{background:var(--amber);box-shadow:0 0 0 2px var(--amber)}
+  .tl-item.p2::before{background:var(--p2);box-shadow:0 0 0 2px var(--p2)}
+  code{background:#f1f3f8;padding:1.5px 6px;border-radius:5px;font-size:12.6px;font-family:ui-monospace,Menlo,Consolas,monospace}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1 id="roboparts">RoboParts 分板块提升评估报告 · 总览</h1>
+<blockquote>
+<p><strong>生成日期</strong>：2026-10-14
+<strong>扫描范围</strong>：全仓 11,000+ 文件（排除 <code>.git</code> / <code>node_modules</code>）· 39 个根 HTML 页面 · 76 个 <code>api/*.json</code> · 52 个 <code>functions/**.js</code>（含 21 个 MCP 工具）· 177 个脚本 · 49 项 CI 闸门 · 868 实体 / 20 品类
+<strong>评估方法</strong>：全仓静态扫描 + 源码与配置原文阅读 + 产物现算（<code>api/*.json</code>）+ 线上 <code>curl roboparts.cc</code> 回探 + 竞品与开源技术联网核实（时点 2026-10-14）
+<strong>报告性质</strong>：提升方案评估，不构成合规声明、标准符合性声明或投资建议
+<strong>口径声明</strong>：凡仓内文档与实测不一致处，以实测为准并显式标注</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、为什么要「分板块」评估</h2>
+<p>此前三轮报告（10-10 全面评估、10-12 国际对标 V1、10-13 国际对标 V2 与四维深化）都是<strong>整体视角</strong>：把项目当成一个对象打分。</p>
+<p>整体视角会掩盖一个事实：<strong>同一个项目里，不同板块的成熟度可能相差三到四个身位。</strong>
+- 有的板块（兼容性判定引擎、工程治理）已经越过「独立开发者项目」的常规水位；
+- 有的板块（转接件生成、设计画布）停在「能跑但没人用」；
+- 有的板块（供应商生态、商业化）本质上是<strong>空壳</strong>——有页面、有端点，但没有真实交易发生。</p>
+<p>把每个板块<strong>单独拿出来</strong>评估，才能回答三个整体报告答不了的问题：
+1. 这个板块自己的<strong>流程</strong>是否合理、是否全面走通、是否符合人类使用习惯？
+2. 这个板块<strong>单独</strong>面对什么竞品、什么真实需求？
+3. 这个板块<strong>单独</strong>能融合哪些最新开源技术？</p>
+<hr />
+<h2 id="9">二、板块划分（9 个）</h2>
+<p>划分依据：<strong>用户可感知的功能边界</strong>（而非代码目录），每个板块对应一组「页面 + 端点 + 数据产物 + 脚本」。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>板块</th>
+<th>对应页面</th>
+<th>核心端点</th>
+<th>规模实测</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>数据层与实体库</strong></td>
+<td>data-hub / parts-viewer / oss / urdf-library / reference-builds / bionic</td>
+<td><code>/api/entities.json</code> <code>/api/entity/{id}</code> <code>/api/search</code> <code>/api/semantic-search</code> <code>/api/oss</code></td>
+<td>868 实体 / 20 品类 / 76 JSON</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>兼容性判定引擎</strong></td>
+<td>bom-checker / compatibility-viewer / compatibility-viz / co-mount / demo-flow</td>
+<td><code>/api/compatibility</code> <code>/api/co-mount</code> <code>/api/compatibility/validate</code> <code>/api/validate</code></td>
+<td>引擎 880+210 行 / 三套口径</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>选型与规划</strong></td>
+<td>selection / build-planner / assembly / designer</td>
+<td><code>/api/selection/engine</code> <code>/api/recommend</code> <code>/api/recommend-feedback</code></td>
+<td>选型引擎 1097 行 / 画布 4065 行</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>转接件生成</strong></td>
+<td>adapter-generator</td>
+<td><code>/api/adapter-feedback</code></td>
+<td>页面 515 行 / CAD 12 文件</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>BOM 全链路</strong></td>
+<td>bom-manager / bom-import / order</td>
+<td><code>/api/bom/check</code> <code>/api/bom/export</code> <code>/api/bom/import</code></td>
+<td>端点 385+399+90 行</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Agent 与 MCP 基础设施</strong></td>
+<td>copilot / agent-architecture / mcp-guide / geo-dashboard</td>
+<td><code>/mcp</code> <code>/a2a</code> <code>/api/copilot</code> <code>/api/discover</code></td>
+<td>mcp.js 1814 行 / 21 工具</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>供应商与数据飞轮</strong></td>
+<td>suppliers / supplier-admin / spec-declare</td>
+<td><code>/api/suppliers/*</code> <code>/api/spec_declare</code> <code>/api/demand-signal</code> <code>/api/marketplace</code></td>
+<td>5 个供应商端点 / 飞轮脚本</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>标准合规与工程治理</strong></td>
+<td>standard-audit / iso-9409-flange / robot-joint-parameter-spec</td>
+<td><code>/api/standard-audit</code>（产物）</td>
+<td>49 闸门 / 177 脚本 / 变异评分</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>商业化与增长</strong></td>
+<td>pricing / api-pricing / credits / credits-history / promotion / promo-poster / waitlist / scoreboard</td>
+<td><code>/api/payment/*</code> <code>/api/credits/*</code> <code>/api/points</code> <code>/api/register</code> <code>/api/waitlist</code></td>
+<td>支付/积分/推广链路</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>说明：<code>articles/</code>（22 篇技术文库）、<code>docs/</code>（56 份文档）作为<strong>横向资产</strong>不单独成板块，但在相关板块中评估其作用。</p>
+</blockquote>
+<hr />
+<h2 id="_2">三、评估维度（每个板块统一用这四把尺子）</h2>
+<h3 id="1">尺子 1：流程审计（三问）</h3>
+<ul>
+<li><strong>是否合理</strong>：链路的每一步是否必要、是否有明确的输入输出、是否有 fail-closed 纪律？</li>
+<li><strong>是否全面走通</strong>：从入口到终点是否存在断点（页面能不能到端点、端点能不能拿到数据、结果能不能被消费）？</li>
+<li><strong>是否符合人类使用习惯</strong>：目标用户（工程师 / 采购 / 开源构建者 / Agent）的实际工作流是什么？本板块的入口是否落在他们的动线上？</li>
+</ul>
+<h3 id="2">尺子 2：市场竞品与需求</h3>
+<ul>
+<li>该板块<strong>单独</strong>对应的国际竞品是谁？它的强项是什么？</li>
+<li>真实需求信号是什么（仓内 <code>demand-signal.json</code> 实测 + 外部检索）？</li>
+</ul>
+<h3 id="3">尺子 3：最新开源技术融合</h3>
+<ul>
+<li>2026 年该领域有哪些可用的开源项目/标准？</li>
+<li>接入点在哪（已有资产）？拒绝条件是什么（避免为新而新）？</li>
+</ul>
+<h3 id="4">尺子 4：提升方案</h3>
+<ul>
+<li>P0（不做则板块不成立）/ P1（不做则板块无竞争力）/ P2（锦上添花）</li>
+<li>每条给出<strong>验收判据</strong>（可复现、可挂闸门）</li>
+</ul>
+<hr />
+<h2 id="_3">四、跨板块核心结论（先给总账）</h2>
+<h3 id="41">4.1 九个板块的成熟度分档</h3>
+<table>
+<thead>
+<tr>
+<th>档位</th>
+<th>板块</th>
+<th>判断依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A 档：已越过独立开发者水位</strong></td>
+<td>2 兼容性判定引擎 · 8 标准合规与工程治理</td>
+<td>有形式化内核、有定理、有 49 项闸门、有变异评分 1.00</td>
+</tr>
+<tr>
+<td><strong>B 档：机制完整但未闭环</strong></td>
+<td>1 数据层 · 6 Agent 与 MCP 基础设施</td>
+<td>数据与协议层做得极扎实，但下游消费与转化未闭环</td>
+</tr>
+<tr>
+<td><strong>C 档：能跑但未验证</strong></td>
+<td>3 选型与规划 · 5 BOM 全链路</td>
+<td>功能齐全，无真实用户使用证据</td>
+</tr>
+<tr>
+<td><strong>D 档：空壳</strong></td>
+<td>4 转接件生成 · 7 供应商生态 · 9 商业化</td>
+<td>有页面有端点，<strong>无真实交易/使用发生</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="42">4.2 三条跨板块判断</h3>
+<ol>
+<li>
+<p><strong>A 档板块的护城河是真的，但它们都在「自证」而不是「被用」。</strong>
+   兼容性判定引擎与工程治理是全仓最硬的两块资产，然而它们的价值目前只体现在「我们自己证明自己对」，没有外部使用者为它们买单或引用。</p>
+</li>
+<li>
+<p><strong>D 档三个板块（转接件 / 供应商 / 商业化）的共同病根是「缺真实数据回流」。</strong>
+   转接件生成器没有安装回填样本（<code>/api/adapter-feedback</code> 是空的）、供应商库没有真实入驻（KV 里的 <code>SUP</code> 前缀）、商业化没有真实付费（积分账本此前从未被写入过）。<strong>三个板块都需要一次「真实的第一笔」来验证链路</strong>。</p>
+</li>
+<li>
+<p><strong>板块之间的耦合比页面导航暗示的更弱。</strong>
+   首页只链出 12 个页面，但仓内有 39 个页面。选型引擎、设计画布、BOM 管理、转接件生成这四个「应该串成一条流水线」的板块，目前各自独立、互不调用——<strong>这是最大的流程断点，也是最大的提升杠杆</strong>。</p>
+</li>
+</ol>
+<h3 id="43">4.3 与前三轮报告的关系（增量）</h3>
+<table>
+<thead>
+<tr>
+<th>报告</th>
+<th>主题</th>
+<th>本报告的增量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10-13 四维深化</td>
+<td>框架/工作流/工程思维/自进化</td>
+<td>本报告把「四维」下沉到<strong>每个板块</strong>，逐板块给出可执行方案</td>
+</tr>
+<tr>
+<td>10-13 国际对标 V2</td>
+<td>增量对账 + ISO 22166-1</td>
+<td>本报告补充 <strong>ISO 22166-201/-202 信息模型</strong>（2025–2026 新发布）作为各板块的国际化锚点</td>
+</tr>
+<tr>
+<td>10-12 国际对标 V1</td>
+<td>完整性/科学性/国际化/竞品</td>
+<td>本报告把「竞品」拆到板块粒度，逐板块给出竞品对照表</td>
+</tr>
+</tbody>
+</table>
+<h3 id="44">4.4 本轮实测的关键新事实</h3>
+<ol>
+<li>✅ <strong>上一轮报告的建议已被落地</strong>：<code>scripts/mutation_score.py</code>（M1~M6，杀死率 <strong>1.00</strong>，锚点直接引用四维报告 §6.3.2）、<code>docs/verification-antipatterns-2026.md</code>（AP-01~AP-12）、<code>docs/negative-results.md</code>（NR-01~NR-10）。CI 闸门从 43 → <strong>49</strong>。</li>
+<li>✅ <strong>新增技术决策留痕机制</strong>：<code>docs/technical-decisions-20261014.md</code>（TDD-2026-01 世界模型排除），并挂第 47 号闸门守护。</li>
+<li>⚠️ <strong>本地 git 已重置</strong>：<code>git status</code> 显示 <code>No commits yet on master</code>，全仓为未跟踪状态。这意味着「版本历史」这一层当前不可用。</li>
+<li>⚠️ <strong>线上与本地已同步</strong>（均为 868 实体 / <code>updated</code> 2026-10-13T09:27:47Z），说明上一轮的部署止血仍然有效。</li>
+<li>⚠️ <strong><code>api/entities.json</code> 机械声明率仍为 16.2%</strong>（declared 67 + partial 14 / applicable 500），与 8 月持平——<strong>四个月没有实质推进</strong>。</li>
+</ol>
+<hr />
+<h2 id="_4">五、分板块报告索引</h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>板块</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>01-数据层与实体库.md</code></td>
+<td>数据层与实体库</td>
+</tr>
+<tr>
+<td><code>02-兼容性判定引擎.md</code></td>
+<td>兼容性判定引擎</td>
+</tr>
+<tr>
+<td><code>03-选型与规划.md</code></td>
+<td>选型与规划</td>
+</tr>
+<tr>
+<td><code>04-转接件生成.md</code></td>
+<td>转接件生成</td>
+</tr>
+<tr>
+<td><code>05-BOM全链路.md</code></td>
+<td>BOM 全链路</td>
+</tr>
+<tr>
+<td><code>06-Agent与MCP基础设施.md</code></td>
+<td>Agent 与 MCP 基础设施</td>
+</tr>
+<tr>
+<td><code>07-供应商与数据飞轮.md</code></td>
+<td>供应商与数据飞轮</td>
+</tr>
+<tr>
+<td><code>08-标准合规与工程治理.md</code></td>
+<td>标准合规与工程治理</td>
+</tr>
+<tr>
+<td><code>09-商业化与增长.md</code></td>
+<td>商业化与增长</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>本总览基于 2026-10-14 全仓实测与联网核实撰写。仓内数字均可复现。</em></p>
+</div>
+</body>
+</html>

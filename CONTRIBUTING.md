@@ -12,6 +12,22 @@ In other words, for the question "can these two parts screw together", we curren
 
 So adding the PCD dimensions from a Robotiq manual is far more useful than refactoring the recommendation algorithm again.
 
+## 为什么贡献？— 你图什么
+
+**对贡献者的回报**：
+- **署名**：每条贡献的 `source` 字段会记录你的 GitHub 用户名或提供的名称，永久留名于数据集
+- **学术引用**：数据集的 `CITATION.cff` 支持自动引用，你的贡献可被论文引用
+- **社区认可**：贡献排行榜（`/contributors`）按贡献数量排序，前 10 名获得「核心贡献者」徽章
+- **实际价值**：你补充的孔位数据直接提升 868 个实体中超过 90% 的「可判定率」——这是重构算法 10 次都做不到的
+
+**对供应商的回报**：
+- **免费曝光**：你的产品出现在 868 个实体的兼容性矩阵中，被开源机器人构建者直接看到
+- **兼容性背书**：经 RoboParts 判定的「compatible」结论可作为采购决策的第三方背书
+- **不抽佣**：RoboParts 不销售、不代理任何零件，因此不会把选型结果导向自家产品——你的竞品同样在库里，判定保持中立
+- **询价通道**：采购商可通过 BOM 导出功能直接联系你（如你选择开放联系方式）
+
+**这不是慈善，是互利**：你提供数据，我们提供曝光与认可。RoboParts 的护城河不是代码，是数据——而数据来自你。
+
 ---
 
 ## I. Three Channels, Ordered by Barrier (Lowest to Highest)

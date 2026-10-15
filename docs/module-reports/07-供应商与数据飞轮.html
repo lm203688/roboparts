@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>板块 7：供应商与数据飞轮 — 提升评估报告 · RoboParts 分板块提升评估</title>
+<style>
+  :root{
+    --ink:#111827; --ink2:#374151; --muted:#6b7280; --line:#e5e7eb;
+    --bg:#f7f8fa; --card:#ffffff;
+    --brand:#2563eb; --brand-d:#1e40af; --brand-l:#eff4ff;
+    --red:#dc2626; --amber:#d97706; --green:#059669; --purple:#7c3aed; --teal:#0d9488;
+    --p0:#dc2626; --p1:#d97706; --p2:#0891b2;
+    --shadow:0 1px 2px rgba(16,24,40,.04),0 4px 16px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.72;-webkit-font-smoothing:antialiased;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* header */
+  header.hero{background:linear-gradient(135deg,#0b1220 0%,#12203f 45%,#1e3a8a 100%);color:#fff;padding:56px 0 46px;position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(37,99,235,.55),transparent 62%)}
+  .hero .wrap{padding-bottom:0}
+  .hero .eyebrow{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#93b4ff;font-weight:600}
+  .hero h1{font-size:34px;line-height:1.28;margin:14px 0 12px;font-weight:800;letter-spacing:-.01em}
+  .hero p.sub{color:#c7d2fe;font-size:16px;max-width:760px;margin:0}
+  .hero .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+    color:#e5e7eb;font-size:12.5px;padding:5px 11px;border-radius:999px}
+
+  /* section */
+  section{margin-top:44px}
+  h2{font-size:23px;font-weight:800;letter-spacing:-.01em;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+  h2 .num{display:inline-flex;width:30px;height:30px;border-radius:9px;background:var(--brand);color:#fff;font-size:15px;
+    align-items:center;justify-content:center;font-weight:700;flex:none}
+  .lead{color:var(--ink2);font-size:15px;margin:6px 0 20px}
+  h3{font-size:17.5px;font-weight:750;margin:30px 0 10px;color:var(--ink)}
+  h4{font-size:15px;font-weight:700;margin:18px 0 8px;color:var(--ink2)}
+  p{margin:9px 0}
+  ul,ol{margin:9px 0;padding-left:22px}
+  li{margin:5px 0}
+
+  /* cards */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);margin:14px 0}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .kpi .v{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:5px}
+  .kpi .d{font-size:12px;margin-top:6px}
+  .v-blue{color:var(--brand)} .v-green{color:var(--green)} .v-amber{color:var(--amber)}
+  .v-red{color:var(--red)} .v-purple{color:var(--purple)} .v-teal{color:var(--teal)}
+
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.6px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#f3f5f9;font-weight:700;color:var(--ink2);font-size:12.6px;letter-spacing:.02em}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafbfd}
+
+  .badge{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:6px;letter-spacing:.02em;white-space:nowrap}
+  .b-p0{background:#fee2e2;color:#b91c1c} .b-p1{background:#fef3c7;color:#b45309}
+  .b-p2{background:#cffafe;color:#0e7490} .b-ok{background:#d1fae5;color:#047857}
+  .b-warn{background:#fef3c7;color:#b45309} .b-bad{background:#fee2e2;color:#b91c1c}
+  .b-neutral{background:#eef2ff;color:#3730a3}
+
+  .bar{height:9px;border-radius:999px;background:#eef1f6;overflow:hidden;margin-top:7px}
+  .bar > i{display:block;height:100%;border-radius:999px}
+
+  .callout{border-left:4px solid var(--brand);background:var(--brand-l);border-radius:0 12px 12px 0;padding:14px 18px;margin:14px 0}
+  .callout.warn{border-color:var(--amber);background:#fffbeb}
+  .callout.bad{border-color:var(--red);background:#fef2f2}
+  .callout.good{border-color:var(--green);background:#ecfdf5}
+  .callout .t{font-weight:750;margin-bottom:3px}
+  .callout p:last-child{margin-bottom:0}
+
+  .quote{font-size:15px;color:var(--ink2);border-left:3px solid var(--line);padding-left:14px;margin:14px 0;font-style:italic}
+
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 22px;box-shadow:var(--shadow);margin-top:-26px;position:relative;z-index:2}
+  .toc ol{columns:2;column-gap:34px;margin:6px 0 0;padding-left:20px}
+  @media(max-width:820px){.toc ol{columns:1}}
+  .toc a{color:var(--ink2);font-size:13.6px}
+  .toc a:hover{color:var(--brand)}
+
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;background:#eef2ff;color:#3730a3;margin-right:6px}
+  hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+  .small{font-size:12.6px;color:var(--muted)}
+  .nowrap{white-space:nowrap}
+  .center{text-align:center}
+  footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:12.6px}
+  .step{display:flex;gap:14px;margin:14px 0}
+  .step .dot{flex:none;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px}
+  .timeline{border-left:2px solid var(--line);margin-left:8px;padding-left:22px}
+  .tl-item{position:relative;margin:0 0 22px}
+  .tl-item::before{content:"";position:absolute;left:-29px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid #fff;box-shadow:0 0 0 2px var(--brand)}
+  .tl-item.p1::before{background:var(--amber);box-shadow:0 0 0 2px var(--amber)}
+  .tl-item.p2::before{background:var(--p2);box-shadow:0 0 0 2px var(--p2)}
+  code{background:#f1f3f8;padding:1.5px 6px;border-radius:5px;font-size:12.6px;font-family:ui-monospace,Menlo,Consolas,monospace}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1 id="7">板块 7：供应商与数据飞轮 — 提升评估报告</h1>
+<blockquote>
+<p><strong>生成日期</strong>：2026-10-14 ｜ <strong>板块编号</strong>：M7 ｜ <strong>成熟度</strong>：D 档（供应商空壳 / 飞轮部分运转）
+<strong>证据来源</strong>：<code>functions/api/suppliers/{list,register,inquiry,quote,approve}.js</code>、<code>functions/api/spec_declare.js</code>（159 行）、<code>functions/api/demand-signal.js</code>、<code>functions/api/marketplace/index.js</code>、<code>scripts/build_flywheel_layer.mjs</code>、<code>scripts/ingest_oss_bom.mjs</code>、<code>scripts/flywheel_state.py</code>、<code>api/entities.contrib.json</code>（142 条）、<code>api/suppliers_seed.json</code>、页面 <code>suppliers.html</code> / <code>supplier-admin.html</code> / <code>spec-declare.html</code></p>
+</blockquote>
+<hr />
+<h2 id="_1">一、板块定位与边界</h2>
+<p><strong>一句话</strong>：让「供应商入驻 + 数据贡献」形成飞轮——外部提交的数据（BOM / 规格书）经机器核验后并入判定流。</p>
+<p><strong>两条子链路</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>子链路</th>
+<th>端点</th>
+<th>实测状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>供应商生态</strong></td>
+<td><code>/api/suppliers/register</code>（入驻）/ <code>list</code>（列表）/ <code>inquiry</code>（询价）/ <code>quote</code>（报价）/ <code>approve</code>（审核）</td>
+<td>⚠️ <strong>链路完整，无真实入驻</strong></td>
+</tr>
+<tr>
+<td><strong>数据飞轮</strong></td>
+<td><code>/api/bom/import</code> + <code>/api/spec_declare</code> + <code>build_flywheel_layer.mjs</code></td>
+<td>✅ <strong>部分运转</strong>：<code>entities.contrib.json</code> 已含 <strong>142 条</strong>贡献实体</td>
+</tr>
+</tbody>
+</table>
+<p><strong>实测关键事实</strong>：
+- <code>entities.contrib.json</code>（2026-08-17 生成）<strong>142 条</strong>贡献实体，来自 OSS BOM（URDF 摄取）。
+- 飞轮诚实纪律：<strong>URDF 不含机械接口事实 → <code>mechanical_interface</code> 一律留空（不编造）</strong>；用户 BOM 的机械声明必须过<strong>机械证据契约</strong>（<code>source_url</code> 必须是厂商官域 https 深链）。
+- 20260915 修复留痕：「此前只判 <code>if (!b.source_url)</code>，于是 <code>'Universal Robots'</code> 这种公司名而非 URL 的字符串也能被采信」——<strong>这是极高质量的自我审计</strong>。
+- <code>suppliers_seed.json</code>：仅 <strong>7</strong> 个品类组 / <strong>6</strong> 个关键词组（种子数据）。</p>
+<hr />
+<h2 id="_2">二、流程审计</h2>
+<h3 id="21">2.1 流程是否合理</h3>
+<table>
+<thead>
+<tr>
+<th>环节</th>
+<th>是否合理</th>
+<th>实测证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>贡献入库的诚实闸门</td>
+<td>✅ <strong>极强</strong></td>
+<td>缺出处一律降级拒收；<code>mech_evidence_contract.json</code> 单一判据来源</td>
+</tr>
+<tr>
+<td>贡献层不污染主库</td>
+<td>✅ 强</td>
+<td><code>entities.contrib.json</code> 与 <code>entities.json</code> 分离，运行时合并</td>
+</tr>
+<tr>
+<td>规格书 → 结构提取</td>
+<td>✅ 合理</td>
+<td><code>spec_declare.js</code> <strong>确定性正则</strong>，不调 LLM（后端挂了也能用）；AI 提取只能产 <code>partial</code>，绝不直接升 <code>declared</code></td>
+</tr>
+<tr>
+<td>供应商审核流</td>
+<td>✅ 合理</td>
+<td><code>pending → approved / rejected</code>，记录审核时间与原因</td>
+</tr>
+<tr>
+<td>询价 → 报价</td>
+<td>✅ 合理</td>
+<td>inquiry → quote 双向</td>
+</tr>
+<tr>
+<td><strong>供应商真实入驻</strong></td>
+<td>❌ <strong>零</strong></td>
+<td>KV 的 <code>SUP</code> 前缀无真实数据；<code>suppliers_seed.json</code> 只有 7 组种子</td>
+</tr>
+<tr>
+<td><strong>贡献者激励</strong></td>
+<td>❌ <strong>无</strong></td>
+<td>无署名、无积分奖励、无排行榜（<code>credits</code> 是消费积分，非贡献积分）</td>
+</tr>
+<tr>
+<td><strong>贡献量级</strong></td>
+<td>⚠️ <strong>偏小</strong></td>
+<td>142 条 vs 主库 868 条（约 16%）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>判断</strong>：<strong>数据飞轮的「核验纪律」是世界级的</strong>（这是全仓最被低估的资产之一），但<strong>「参与动力」是零</strong>——没有入驻、没有激励、没有署名。</p>
+</blockquote>
+<h3 id="22">2.2 是否全面走通</h3>
+<table>
+<thead>
+<tr>
+<th>子链路</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OSS BOM → URDF 摄取 → 贡献层</td>
+<td>✅ 通（142 条）</td>
+</tr>
+<tr>
+<td>用户提交 BOM → 证据契约核验 → 贡献层</td>
+<td>✅ 通（逻辑完整）</td>
+</tr>
+<tr>
+<td>规格书文本 → 法兰结构提取</td>
+<td>✅ 通（确定性）</td>
+</tr>
+<tr>
+<td>供应商注册 → 审核 → 列表</td>
+<td>✅ 通（逻辑完整）</td>
+</tr>
+<tr>
+<td>询价 → 报价</td>
+<td>✅ 通（逻辑完整）</td>
+</tr>
+<tr>
+<td><strong>真实供应商入驻</strong></td>
+<td>❌ 无</td>
+</tr>
+<tr>
+<td><strong>真实询价/报价</strong></td>
+<td>❌ 无</td>
+</tr>
+<tr>
+<td><strong>贡献者身份/激励</strong></td>
+<td>❌ 无</td>
+</tr>
+<tr>
+<td><strong>贡献 → 判定流生效验证</strong></td>
+<td>⚠️ 有合并逻辑，但无「贡献后判定改善」的实测证据</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>结论</strong>：<strong>所有链路「逻辑上走通」，但除 OSS BOM 摄取外，全部零真实数据</strong>。</p>
+</blockquote>
+<h3 id="23">2.3 是否符合人类使用习惯</h3>
+<p>三类用户：<strong>供应商</strong>（想卖货）、<strong>贡献者</strong>（想贡献数据）、<strong>采购</strong>（想询价）。</p>
+<table>
+<thead>
+<tr>
+<th>用户</th>
+<th>真实诉求</th>
+<th>本板块支持</th>
+<th>契合度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>供应商</td>
+<td>「我要接触买家」</td>
+<td>需填 12 字段注册表 → 等审核</td>
+<td>⚠️ 门槛不低，且<strong>没有买家流量</strong>（鸡生蛋问题）</td>
+</tr>
+<tr>
+<td>贡献者</td>
+<td>「我贡献数据图什么？」</td>
+<td>无署名、无激励</td>
+<td>❌ <strong>没回答「图什么」</strong></td>
+</tr>
+<tr>
+<td>采购</td>
+<td>「我要报价」</td>
+<td>需 api_key + 积分</td>
+<td>⚠️ 摩擦</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>关键缺口</strong>：<strong>没有回答「贡献者图什么」和「供应商图什么」</strong>。
+- 贡献者：项目在 <code>CONTRIBUTING.md</code> 说「加一条带出处的孔位数据比重构算法更有用」——但<strong>这是对项目的价值，不是对贡献者的价值</strong>。
+- 供应商：项目明确「不抽佣金」（正确的中立性选择），但因此<strong>没有给供应商任何回报</strong>。</p>
+</blockquote>
+<hr />
+<h2 id="_3">三、市场竞品与市场需求比较</h2>
+<h3 id="31">3.1 竞品对照</h3>
+<table>
+<thead>
+<tr>
+<th>竞品</th>
+<th>定位</th>
+<th>强项</th>
+<th>RoboParts 的差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>阿里巴巴 1688 / 慧聪</strong></td>
+<td>B2B 采购</td>
+<td>海量供应商 + 交易</td>
+<td>有交易无<strong>技术判定</strong></td>
+</tr>
+<tr>
+<td><strong>SourciumX / 全球 B2B 平台</strong></td>
+<td>跨境 B2B</td>
+<td>撮合</td>
+<td>通用工业品，无机器人语义</td>
+</tr>
+<tr>
+<td><strong>OpenBOM / PLMore</strong></td>
+<td>BOM/PLM</td>
+<td>供应链集成</td>
+<td>无供应商入驻体系</td>
+</tr>
+<tr>
+<td><strong>OpenLoong / OpenLET</strong>（2026 国内）</td>
+<td>开源社区 + 数据集</td>
+<td><strong>社区规模 2 万+ 开发者</strong></td>
+<td>它们有<strong>社区</strong>，RoboParts 有<strong>核验引擎</strong>——互补</td>
+</tr>
+<tr>
+<td><strong>Hugging Face datasets</strong></td>
+<td>数据集托管</td>
+<td>分发 + 引用统计</td>
+<td>无领域语义</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>生态位</strong>：RoboParts 的独特价值是「<strong>贡献数据经机器核验才入库</strong>」——这与「人多即可信」的众包模式根本不同。<strong>这是可写进论文的方法论</strong>（已在 <code>contribution-loop-design.md</code> 有设计）。</p>
+</blockquote>
+<h3 id="32">3.2 市场需求实测</h3>
+<ul>
+<li>供应商：<strong>零入驻</strong>。</li>
+<li>贡献：<code>entities.contrib.json</code> 142 条（来自 OSS BOM 自动摄取，非人工贡献）。</li>
+<li>项目自述（<code>README §12</code>）：「最大的缺口是机械接口声明率……加一条带出处的孔位数据比重构算法更有用」——<strong>但没有人工贡献发生</strong>。</li>
+</ul>
+<blockquote>
+<p><strong>判断</strong>：<strong>供应商板块是「先建市场再找供需」的典型失败模式</strong>（没有买家流量，供应商不会来；没有供应商，采购不会来）。<strong>数据飞轮的核验能力很强，但缺「为什么要贡献」的答案。</strong></p>
+</blockquote>
+<hr />
+<h2 id="_4">四、最新开源技术融合评估</h2>
+<table>
+<thead>
+<tr>
+<th>开源技术</th>
+<th>2026 状态</th>
+<th>接入点</th>
+<th>融合形态</th>
+<th>拒绝条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OpenLoong / OpenLET 社区</strong></td>
+<td>2026 活跃（2 万+ 开发者）</td>
+<td>贡献渠道</td>
+<td>与国内开源社区互通贡献（他们缺核验，RoboParts 缺人）</td>
+<td>需评估社区治理与许可</td>
+</tr>
+<tr>
+<td><strong>MinerU</strong></td>
+<td>开源文档解析</td>
+<td><code>spec_declare</code></td>
+<td>把「确定性正则」升级为「正则 + VLM 抽取」双通道（VLM 只产 partial）</td>
+<td>VLM 结果必须过 confidence 门控</td>
+</tr>
+<tr>
+<td><strong>证明携带贡献（Proof-Carrying Contribution）</strong></td>
+<td>2026 方法论</td>
+<td>飞轮契约</td>
+<td>贡献者提交 <code>claim + evidence + verifier</code> 三元组，质量由机器判定</td>
+<td>不得用人数/声望判定质量</td>
+</tr>
+<tr>
+<td><strong>GitHub Sponsors / OpenCollective</strong></td>
+<td>已用</td>
+<td>激励</td>
+<td>把赞助与「贡献排行」挂钩</td>
+<td>不得让赞助影响判定</td>
+</tr>
+<tr>
+<td><strong>W3C Verifiable Credentials</strong></td>
+<td>标准</td>
+<td>贡献溯源</td>
+<td>贡献者身份与贡献记录可验证</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>ROS Index / Awesome 列表</strong></td>
+<td>社区</td>
+<td>供应商发现</td>
+<td>从社区列表自动发现潜在供应商</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>首选融合</strong>：<strong>证明携带贡献（claim + evidence + verifier）</strong>。项目已有 <code>mech_evidence_contract.json</code> 与 <code>build_flywheel_layer.mjs</code> 的基础，<strong>只差把「贡献者提交核验脚本」这一层补上</strong>——这是「可验证的数据众包」，与项目方法论完全同源。</p>
+</blockquote>
+<hr />
+<h2 id="_5">五、提升方案</h2>
+<h3 id="p0">P0（不做则板块不成立）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>回答「贡献者图什么」</strong>：贡献者署名 + 贡献页（<code>/contributors/&lt;handle&gt;</code>）+ 公开贡献计数</td>
+<td>至少 1 个真实外部贡献者留名</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>回答「供应商图什么」</strong>：明确「不抽佣」下的价值主张（如：免费获得兼容性判定背书 / 出现在 BOM 采购建议里）</td>
+<td>供应商页面明确价值主张；至少 1 家真实入驻</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>贡献 → 判定改善的实证</strong>：记录「补了 N 条机械声明 → 可判定对增加 M」</td>
+<td><code>ops/</code> 内有该前后对比记录</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p1">P1（不做则板块无竞争力）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+<th>验收判据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>证明携带贡献三元组（claim + evidence + verifier）</td>
+<td>一次真实外部贡献通过机器定级</td>
+</tr>
+<tr>
+<td>5</td>
+<td>与 OpenLoong / OpenLET 社区互通</td>
+<td>至少 1 次跨社区贡献</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>spec_declare</code> 增加 VLM 通道（保留确定性通道）</td>
+<td>VLM 结果进 pending 队列</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p2">P2</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>贡献排行榜 / 徽章</td>
+</tr>
+<tr>
+<td>8</td>
+<td>供应商认证分级（对齐中立性，认证不收费）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_6">六、诚实边界</h2>
+<ol>
+<li><strong>供应商生态零真实数据</strong>；本报告不把「有端点」等同于「有业务」。</li>
+<li><strong>数据飞轮部分运转</strong>：142 条贡献实体来自 OSS BOM 自动摄取，<strong>非人工贡献</strong>。</li>
+<li>「不抽佣金」是正确的中立性选择，但<strong>同时移除了供应商的天然动力</strong>——这是需要正面回答的矛盾。</li>
+<li>竞品信息为联网核实时点快照。</li>
+</ol>
+</div>
+</body>
+</html>
