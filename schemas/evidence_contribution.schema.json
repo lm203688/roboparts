@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roboparts.dev/schemas/evidence_contribution.schema.json",
+  "title": "RoboParts Evidence Contribution",
+  "description": "携带证明的证据贡献（proof-carrying contribution）。每条贡献必须同时具备：① 出处（source_url）② 一条可证伪的检查（falsifiable_check）③ 可复验路径（verification_path）。缺任一即拒收。",
+  "version": "1.0.0",
+  "type": "object",
+  "required": ["contribution_id", "contributor", "timestamp", "evidence_type", "target", "source_url", "falsifiable_check", "verification_path", "signature"],
+  "additionalProperties": false,
+  "properties": {
+    "contribution_id": {
+      "type": "string",
+      "pattern": "^EC-\\d{8}-\\d{4}$",
+      "description": "贡献唯一 ID（EC-YYYYMMDD-NNNN）"
+    },
+    "contributor": {
+      "type": "object",
+      "required": ["name", "contact"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "contact": {"type": "string", "description": "邮箱或 GitHub handle"},
+        "organization": {"type": "string"}
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC 时间戳"
+    },
+    "evidence_type": {
+      "type": "string",
+      "enum": ["datasheet", "iso_table", "user_report", "upstream_ingestion", "measurement", "simulation"],
+      "description": "证据来源类型"
+    },
+    "target": {
+      "type": "object",
+      "required": ["entity_id", "axis"],
+      "properties": {
+        "entity_id": {"type": "string", "description": "目标实体 rp_id"},
+        "axis": {"type": "string", "enum": ["mechanical", "electrical", "signal"]},
+        "field": {"type": "string", "description": "具体字段（如 pinout, pitch, flange）"}
+      }
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "证据出处 URL（必须是可访问的一手来源）"
+    },
+    "falsifiable_check": {
+      "type": "object",
+      "required": ["type", "description", "expected_outcome"],
+      "description": "一条可证伪的检查——外部观察者可以独立复现并证伪本证据。",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["url_reachability", "checksum_match", "geometry_parse", "measurement_repro", "simulation_step"]
+        },
+        "description": {"type": "string"},
+        "expected_outcome": {"type": "string"}
+      }
+    },
+    "verification_path": {
+      "type": "string",
+      "description": "如何复验本证据的路径（脚本路径或 curl 命令）"
+    },
+    "claimed_value": {
+      "type": "object",
+      "description": "本贡献声称的具体值",
+      "additionalProperties": true
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "贡献者自评置信度（0-1）"
+    },
+    "signature": {
+      "type": "string",
+      "description": "贡献签名（可以是 GitHub SHA、S/N 号、测量批次等）"
+    },
+    "prev_contribution_id": {
+      "type": ["string", "null"],
+      "description": "链式追加：上一条贡献 ID（保证不可篡改）"
+    }
+  }
+}
