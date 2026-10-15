@@ -1095,6 +1095,7 @@ export async function onRequestPost(context) {
         ...responseExtraHeaders,
       },
     });
+  }
 
   } catch (e) {
     return new Response(JSON.stringify({
