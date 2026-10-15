@@ -1,0 +1,390 @@
+{
+  "meta": {
+    "version": "assembly_typecheck/v1",
+    "generated_at": "2026-10-15T14:10:17.437425+00:00",
+    "source": "api/morphology_graph.json + scripts/assembly_typecheck.py",
+    "engine": "compose_core/v1 + assembly_typecheck/v1"
+  },
+  "cases": [
+    {
+      "goal": "general multi-axis assembly",
+      "description": "形态图前 20 节点（含 EOAT/actuator/sensor 混合）",
+      "candidate_count": 20,
+      "result": "ill_typed",
+      "minimal_core": {
+        "bottleneck_axis": "mechanical",
+        "unknown_pairs_on_bottleneck": 187,
+        "incompatible_pairs": 2,
+        "minimal_core": [
+          "ACT-004",
+          "ACT-005",
+          "ACT-017"
+        ],
+        "reason": "瓶颈轴=mechanical；该轴有 187 对因 not_declared 未判；另有 2 对已判 incompatible；minimal core = ['ACT-004', 'ACT-005', 'ACT-017']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
+        "examples": [
+          [
+            "ACT-001",
+            "ACT-004"
+          ],
+          [
+            "ACT-001",
+            "ACT-005"
+          ],
+          [
+            "ACT-001",
+            "ACT-006"
+          ],
+          [
+            "ACT-001",
+            "ACT-007"
+          ],
+          [
+            "ACT-001",
+            "ACT-008"
+          ]
+        ]
+      },
+      "mdv_crosscheck": {
+        "bottleneck_axis": "mechanical",
+        "core_size": 3,
+        "core_total_mdv": 0,
+        "all_positive": false,
+        "details": [
+          {
+            "node": "ACT-004",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "ACT-005",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "ACT-017",
+            "axis": "mechanical",
+            "mdv": 0
+          }
+        ]
+      }
+    },
+    {
+      "goal": "assembly within grippers",
+      "description": "grippers 品类前 10 节点",
+      "candidate_count": 10,
+      "result": "ill_typed",
+      "minimal_core": {
+        "bottleneck_axis": "mechanical",
+        "unknown_pairs_on_bottleneck": 35,
+        "incompatible_pairs": 7,
+        "minimal_core": [
+          "GRIP-004",
+          "GRIP-010",
+          "DEXHAND021PRO-001"
+        ],
+        "reason": "瓶颈轴=mechanical；该轴有 35 对因 not_declared 未判；另有 7 对已判 incompatible；minimal core = ['GRIP-004', 'GRIP-010', 'DEXHAND021PRO-001']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
+        "examples": [
+          [
+            "DEXHAND021PRO-001",
+            "GRIP-001"
+          ],
+          [
+            "DEXHAND021PRO-001",
+            "GRIP-002"
+          ],
+          [
+            "DEXHAND021PRO-001",
+            "GRIP-003"
+          ],
+          [
+            "DEXHAND021PRO-001",
+            "GRIP-004"
+          ],
+          [
+            "DEXHAND021PRO-001",
+            "GRIP-006"
+          ]
+        ]
+      },
+      "mdv_crosscheck": {
+        "bottleneck_axis": "mechanical",
+        "core_size": 3,
+        "core_total_mdv": 0,
+        "all_positive": false,
+        "details": [
+          {
+            "node": "GRIP-004",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "GRIP-010",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "DEXHAND021PRO-001",
+            "axis": "mechanical",
+            "mdv": 0
+          }
+        ]
+      }
+    },
+    {
+      "goal": "assembly within actuators",
+      "description": "actuators 品类前 10 节点",
+      "candidate_count": 10,
+      "result": "ill_typed",
+      "minimal_core": {
+        "bottleneck_axis": "mechanical",
+        "unknown_pairs_on_bottleneck": 42,
+        "incompatible_pairs": 2,
+        "minimal_core": [
+          "ACT-010",
+          "ACT-007",
+          "ACT-004"
+        ],
+        "reason": "瓶颈轴=mechanical；该轴有 42 对因 not_declared 未判；另有 2 对已判 incompatible；minimal core = ['ACT-010', 'ACT-007', 'ACT-004']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
+        "examples": [
+          [
+            "ACT-001",
+            "ACT-004"
+          ],
+          [
+            "ACT-001",
+            "ACT-005"
+          ],
+          [
+            "ACT-001",
+            "ACT-006"
+          ],
+          [
+            "ACT-001",
+            "ACT-007"
+          ],
+          [
+            "ACT-001",
+            "ACT-008"
+          ]
+        ]
+      },
+      "mdv_crosscheck": {
+        "bottleneck_axis": "mechanical",
+        "core_size": 3,
+        "core_total_mdv": 0,
+        "all_positive": false,
+        "details": [
+          {
+            "node": "ACT-010",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "ACT-007",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "ACT-004",
+            "axis": "mechanical",
+            "mdv": 0
+          }
+        ]
+      }
+    },
+    {
+      "goal": "assembly within sensors",
+      "description": "sensors 品类前 10 节点",
+      "candidate_count": 10,
+      "result": "ill_typed",
+      "minimal_core": {
+        "bottleneck_axis": "mechanical",
+        "unknown_pairs_on_bottleneck": 45,
+        "incompatible_pairs": 0,
+        "minimal_core": [
+          "CHIP-67",
+          "CHIP-84",
+          "CHIP-83"
+        ],
+        "reason": "瓶颈轴=mechanical；该轴有 45 对因 not_declared 未判；另有 0 对已判 incompatible；minimal core = ['CHIP-67', 'CHIP-84', 'CHIP-83']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
+        "examples": [
+          [
+            "CHIP-67",
+            "CHIP-71"
+          ],
+          [
+            "CHIP-67",
+            "CHIP-79"
+          ],
+          [
+            "CHIP-67",
+            "CHIP-83"
+          ],
+          [
+            "CHIP-67",
+            "CHIP-84"
+          ],
+          [
+            "CHIP-67",
+            "SENS-001"
+          ]
+        ]
+      },
+      "mdv_crosscheck": {
+        "bottleneck_axis": "mechanical",
+        "core_size": 3,
+        "core_total_mdv": 0,
+        "all_positive": false,
+        "details": [
+          {
+            "node": "CHIP-67",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "CHIP-84",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "CHIP-83",
+            "axis": "mechanical",
+            "mdv": 0
+          }
+        ]
+      }
+    },
+    {
+      "goal": "role-balanced robot arm",
+      "description": "actuator+gripper+sensor+controller 各取 3 个",
+      "candidate_count": 12,
+      "result": "ill_typed",
+      "minimal_core": {
+        "bottleneck_axis": "mechanical",
+        "unknown_pairs_on_bottleneck": 56,
+        "incompatible_pairs": 9,
+        "minimal_core": [
+          "CTRL-003",
+          "CHIP-67",
+          "CTRL-001"
+        ],
+        "reason": "瓶颈轴=mechanical；该轴有 56 对因 not_declared 未判；另有 9 对已判 incompatible；minimal core = ['CTRL-003', 'CHIP-67', 'CTRL-001']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
+        "examples": [
+          [
+            "ACT-001",
+            "DEXHAND021PRO-001"
+          ],
+          [
+            "ACT-001",
+            "CHIP-67"
+          ],
+          [
+            "ACT-001",
+            "CHIP-71"
+          ],
+          [
+            "ACT-001",
+            "CHIP-79"
+          ],
+          [
+            "ACT-001",
+            "CTRL-001"
+          ]
+        ]
+      },
+      "mdv_crosscheck": {
+        "bottleneck_axis": "mechanical",
+        "core_size": 3,
+        "core_total_mdv": 0,
+        "all_positive": false,
+        "details": [
+          {
+            "node": "CTRL-003",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "CHIP-67",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "CTRL-001",
+            "axis": "mechanical",
+            "mdv": 0
+          }
+        ]
+      }
+    },
+    {
+      "goal": "random candidate set",
+      "description": "形态图随机 12 节点（seed=20261015）",
+      "candidate_count": 12,
+      "result": "ill_typed",
+      "minimal_core": {
+        "bottleneck_axis": "electrical",
+        "unknown_pairs_on_bottleneck": 66,
+        "incompatible_pairs": 0,
+        "minimal_core": [
+          "MAT-flexspline-30crmnsia",
+          "XPLT-013",
+          "SENS-855"
+        ],
+        "reason": "瓶颈轴=electrical；该轴有 66 对因 not_declared 未判；另有 0 对已判 incompatible；minimal core = ['MAT-flexspline-30crmnsia', 'XPLT-013', 'SENS-855']——补这些节点的 electrical 声明是解锁装配的最小动作。",
+        "examples": [
+          [
+            "CHIP-008",
+            "BIONIC-SKIN-001"
+          ],
+          [
+            "CHIP-008",
+            "RED-006"
+          ],
+          [
+            "CHIP-008",
+            "SENS-051"
+          ],
+          [
+            "CHIP-008",
+            "ACT-011"
+          ],
+          [
+            "CHIP-008",
+            "ACT-127"
+          ]
+        ]
+      },
+      "mdv_crosscheck": {
+        "bottleneck_axis": "electrical",
+        "core_size": 3,
+        "core_total_mdv": 0,
+        "all_positive": false,
+        "details": [
+          {
+            "node": "MAT-flexspline-30crmnsia",
+            "axis": "electrical",
+            "mdv": 0
+          },
+          {
+            "node": "XPLT-013",
+            "axis": "electrical",
+            "mdv": 0
+          },
+          {
+            "node": "SENS-855",
+            "axis": "electrical",
+            "mdv": 0
+          }
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "total_cases": 6,
+    "well_typed": 0,
+    "ill_typed": 6,
+    "unknown": 0,
+    "mdv_crosscheck_all_positive": false
+  },
+  "note": "装配级类型检查产物。well_typed = 存在良类型子装配；ill_typed = 无良类型子装配，minimal_core 给出最小缺失接口集；unknown = 证据不足。所有 ill_typed 的 core 都与 MDV 对账（B1 出口判据）。"
+}
