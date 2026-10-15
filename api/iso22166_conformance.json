@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "version": "conformance_test/v1",
+    "source": "docs/iso22166-conformance-mapping.md"
+  },
+  "summary": {
+    "total_mappings": 20,
+    "passed": 10,
+    "failed": 10,
+    "no_mapping_clauses": 0,
+    "no_mapping_all_have_reason": true
+  },
+  "failed_mappings": [
+    {
+      "mapping": {
+        "part": "",
+        "clause": "§5 法兰尺寸命名",
+        "requirement": "标号形式 `ISO 9409-1-A{pcd}-{n}-M{thread}`",
+        "file": "api/mechanical_interfaces.json",
+        "field": "flange_iso",
+        "gate": "verify_mech_designation.mjs"
+      },
+      "ok": false,
+      "errors": [
+        "field 'flange_iso' not found anywhere in data"
+      ]
+    },
+    {
+      "mapping": {
+        "part": "",
+        "clause": "§5.2 节圆直径 (PCD)",
+        "requirement": "允许值 {10, 20, 30, 40, 50, 65, 85, 100, 120, 140, 160, 200, 22",
+        "file": "api/mechanical_interfaces.json",
+        "field": "pcd_mm",
+        "gate": "verify_mech_designation.mjs"
+      },
+      "ok": false,
+      "errors": [
+        "field 'pcd_mm' not found anywhere in data"
+      ]
+    },
+    {
+      "mapping": {
+        "part": "",
+        "clause": "§5.3 螺栓规格",
+        "requirement": "M3/M4/M6/M8/M12/M16/M20/M24/M30 系列",
+        "file": "api/mechanical_interfaces.json",
+        "field": "bolt_size",
+        "gate": "verify_mech_designation.mjs"
+      },
+      "ok": false,
+      "errors": [
+        "field 'bolt_size' not found anywhere in data"
+      ]
+    },
+    {
+      "mapping": {
+        "part": "",
+        "clause": "§6 定位销",
+        "requirement": "至少 1 个，直径 d1∈{4,5,6,8,10,12,14,16,20}mm",
+        "file": "api/mechanical_interfaces.json",
+        "field": "positioning_pin_diam_mm",
+        "gate": "新增闸门（Phase B）"
+      },
+      "ok": false,
+      "errors": [
+        "field 'positioning_pin_diam_mm' not found anywhere in data"
+      ]
+    },
+    {
+      "mapping": {
+        "part": "",
+        "clause": "§7 安装面粗糙度",
+        "requirement": "Ra ≤ 1.6 μm（无特殊要求时）",
+        "file": "api/mechanical_interfaces.json",
+        "field": "surface_roughness_ra",
+        "gate": "新增闸门（Phase B）"
+      },
+      "ok": false,
+      "errors": [
+        "field 'surface_roughness_ra' not found anywhere in data"
+      ]
+    },
+    {
+      "mapping": {
+        "part": "",
+        "clause": "§8 载荷能力",
+        "requirement": "承载扭矩、轴向力、径向力、倾覆力矩",
+        "file": "api/mechanical_interfaces.json",
+        "field": "load_capacity",
+        "gate": "新增闸门"
+      },
+      "ok": false,
+      "errors": [
+        "field 'load_capacity' not found anywhere in data"
+      ]
+    },
+    {
+      "mapping": {
+        "part": "",
+        "clause": "§9 精度等级",
+        "requirement": "A/B/C 三级（几何公差）",
+        "file": "api/mechanical_interfaces.json",
+        "field": "accuracy_class",
+        "gate": "新增闸门"
+      },
+      "ok": false,
+      "errors": [
+        "field 'accuracy_class' not found anywhere in data"
+      ]
+    },
+    {
+      "mapping": {
+        "part": "",
+        "clause": "§4.4 电压等级",
+        "requirement": "12V/24V/48V 常见值",
+        "file": "api/electrical_interfaces.json",
+        "field": "voltage_range",
+        "gate": "新增闸门"
+      },
+      "ok": false,
+      "errors": [
+        "field 'voltage_range' not found anywhere in data"
+      ]
+    },
+    {
+      "mapping": {
+        "part": "",
+        "clause": "§4.5 额定电流",
+        "requirement": "1-15A 常见值",
+        "file": "api/electrical_interfaces.json",
+        "field": "rated_current_a",
+        "gate": "新增闸门"
+      },
+      "ok": false,
+      "errors": [
+        "field 'rated_current_a' not found anywhere in data"
+      ]
+    },
+    {
+      "mapping": {
+        "part": "",
+        "clause": "§5 溯源",
+        "requirement": "每实体必带 source_url / source",
+        "file": "api/entities.json",
+        "field": "prov.source_url",
+        "gate": "verify_vendor_sources.py"
+      },
+      "ok": false,
+      "errors": [
+        "field 'prov' not found anywhere in data"
+      ]
+    }
+  ],
+  "mutation_check": {
+    "mutation_kills": true,
+    "mutated_field": "pcd",
+    "correct_field_exists": false,
+    "fake_field_exists": false
+  },
+  "overall": "FAIL"
+}
