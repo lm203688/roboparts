@@ -2828,6 +2828,36 @@ GATES = [
     # 也能跑通（不阻塞主链路）。
     ('VLM 抽取队列（confidence 门控 + 4 维 schema + 自证）',
      gate_vlm_extraction_confidence),
+    # 【2026-10-15 Phase A · A2】组合演算代数律性质测试。Phase A 的 A1 把 compose_engine.py
+    # 的判据抽到 compose_core.py（零 IO 纯函数），A2 用随机属性测试证明三条代数律成立：
+    # Soundness（每轴声称可组合时 best_pair 必须是可组合证据）、Monotonicity（追加 evidence
+    # 不允许翻转已判定）、Undecidability（not_declared 端口永不产生 compatible）。
+    # 含阴性对照：变异 AXIS_VERDICT_OF_PAIR 让 incompatible→compatible，Soundness 必须判红。
+    ('组合演算代数律（性质测试 + 变异自证）', lambda: run_sub(
+        '组合演算代数律（性质测试 + 变异自证）',
+        [sys.executable, os.path.join(ROOT, 'tests', 'property', 'test_compose_lattice.py')],
+        timeout=120)),
+    # 【2026-10-15 Phase A · A3】装配级类型检查。新原语 assemble(goal, candidate_set, constraints)
+    # 输出 well_typed / ill_typed(minimal_core) / unknown。与 MDV 对账：ill_typed 的
+    # minimal_core 里每条声明的边际价值应 ≥ 1，否则 core 混了零价值节点——判红。
+    ('装配级类型检查（minimal core + MDV 对账）', lambda: run_sub(
+        '装配级类型检查（minimal core + MDV 对账）',
+        [sys.executable, os.path.join(ROOT, 'scripts', 'build_assembly_typecheck.py')],
+        timeout=120)),
+    # 【2026-10-15 Phase A · A5】证据账本。追加式、不可改写、可复验的贡献记录。
+    # 每条贡献必须通过 schema 校验 + 有溯源 + falsifiable_check 可复验。
+    # KPI 棘轮：decidable_pairs 单调不降（补证据真的在解锁可判定对）。
+    ('证据账本（schema 校验 + KPI 棘轮）', lambda: run_sub(
+        '证据账本（schema 校验 + KPI 棘轮）',
+        [sys.executable, os.path.join(ROOT, 'scripts', 'build_evidence_ledger.py')],
+        timeout=120)),
+    # 【2026-10-15 Phase A · A6】ISO 22166-201/-202 条款级映射表。
+    # 每条映射挂具体文件 + 字段名 + 闸门 ID。无映射条款都有理由（不是漏做）。
+    # 变异自证：篡改映射字段名必须判红。
+    ('ISO 22166 条款级映射（覆盖率 + 变异自证）', lambda: run_sub(
+        'ISO 22166 条款级映射（覆盖率 + 变异自证）',
+        [sys.executable, os.path.join(ROOT, 'scripts', 'conformance_test.py')],
+        timeout=60)),
 ]
 
 
