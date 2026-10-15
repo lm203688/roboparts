@@ -1,0 +1,67 @@
+{
+  "core_version": "compose_lattice_tests/v1",
+  "seed": 20261015,
+  "n_cases_per_law": 2000,
+  "laws": [
+    {
+      "law": "Soundness (best-pair)",
+      "passes": 1820,
+      "failures": [
+        {
+          "case": "node_3 × node_37",
+          "axis": "signal",
+          "reason": "signal verdict=compatible 但 best_pair.pair_verdict=None（假绿）"
+        },
+        {
+          "case": "node_4 × node_2",
+          "axis": "signal",
+          "reason": "signal verdict=compatible 但 best_pair.pair_verdict=None（假绿）"
+        },
+        {
+          "case": "node_9 × node_8",
+          "axis": "signal",
+          "reason": "signal verdict=compatible 但 best_pair.pair_verdict=None（假绿）"
+        },
+        {
+          "case": "node_22 × node_26",
+          "axis": "signal",
+          "reason": "signal verdict=compatible 但 best_pair.pair_verdict=None（假绿）"
+        },
+        {
+          "case": "node_16 × node_39",
+          "axis": "signal",
+          "reason": "signal verdict=compatible 但 best_pair.pair_verdict=None（假绿）"
+        }
+      ],
+      "total_cases": 2000,
+      "composed_observed": 15,
+      "verdict": "FAIL"
+    },
+    {
+      "law": "Monotonicity",
+      "passes": 1958,
+      "failures": [],
+      "total_cases": 2000,
+      "verdict": "PASS"
+    },
+    {
+      "law": "Undecidability",
+      "passes": 2000,
+      "failures": [],
+      "total_cases": 2000,
+      "verdict": "PASS"
+    },
+    {
+      "test": "mutation_kills_soundness",
+      "killed": true,
+      "verdict": "PASS",
+      "note": "Soundness 抓到 incompatible→compatible 假绿泄漏",
+      "observed": {
+        "overall": "unknown",
+        "mech_verdict": "compatible",
+        "best_pair_verdict": "incompatible"
+      }
+    }
+  ],
+  "total_pass": false
+}
