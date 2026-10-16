@@ -3014,6 +3014,14 @@ GATES = [
     ('锚点修改检查（AP-007）', gate_no_anchoring_modification),
     ('桥接合并检查（AP-009）', gate_bridge_no_merge),
     ('ISO 映射边界（AP-010）', gate_iso_mapping_honest),
+    # 【2026-10-16 Phase B 地基】产物新鲜度闸门：上游 mtime > 产物 mtime + tolerance_days
+    # ⇒ FAIL。审计 §F3 实测 16 个产物陈旧。白名单走 api/freshness_exemptions.json（豁免必带
+    # reason + expires_at，季度审计到期强制复核）。未纳入 ARTIFACTS 表的产物不判定，
+    # 仅作为 uncovered 提醒打印。这是"改真相源必跑 regen"的最后兜底。
+    ('产物新鲜度检查（upstream mtime 兜底）', lambda: run_sub(
+        '产物新鲜度检查（upstream mtime 兜底）',
+        [sys.executable, os.path.join(ROOT, 'scripts', 'check_freshness.py')],
+        timeout=30)),
 ]
 
 

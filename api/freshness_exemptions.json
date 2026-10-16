@@ -1,0 +1,14 @@
+{
+  "policy": "本文件是产物新鲜度闸门的白名单。每个豁免必须写 path + reason + expires_at。季度审计到期强制复核。豁免不进产物文件本身，避免污染。",
+  "reviewed_at": "2026-10-16",
+  "next_review": "2027-01-16",
+  "exemptions": [
+    {
+      "path": "api/compatibility.json",
+      "reason": "唯一 producer scripts/enhance_data_layer.py 是 2026-08 一次性增强脚本，非幂等——重跑会污染 api/entities.json（2026-10-16 实测复现 471 行变更，+manufacturer_ecosystem 重复追加）。P1 TODO：为 compatibility.json 建独立幂等再生器。在此之前不判定新鲜度。",
+      "expires_at": "2027-01-16",
+      "requested_by": "AI（Phase B 地基攻坚）",
+      "follow_up": "TODO-P1: 建 scripts/build_compatibility.py 幂等再生器，然后从豁免表移除"
+    }
+  ]
+}
