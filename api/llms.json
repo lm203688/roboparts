@@ -23,7 +23,7 @@
     }
   },
   "count": 42,
-  "updated": "2026-10-16T09:24:45.117012Z",
+  "updated": "2026-10-16T22:43:39.757610Z",
   "data": [
     {
       "id": "LLM-001",
@@ -77,7 +77,8 @@
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:openai.com/index/hello-gpt-4o/",
       "rp_id": "RP-LLM-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "LLM-002",
@@ -130,7 +131,8 @@
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.anthropic.com/news/claude-3-5-sonnet",
       "rp_id": "RP-LLM-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "LLM-006",
@@ -185,7 +187,8 @@
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:qwenlm.github.io/blog/qwen2.5-vl/",
       "rp_id": "RP-LLM-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "LLM-a1b2c3",
@@ -224,7 +227,8 @@
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0004",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-d4e5f6",
@@ -263,7 +267,8 @@
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0005",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-g7h8i9",
@@ -302,7 +307,8 @@
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0006",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-j0k1l2",
@@ -341,7 +347,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0007",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-m3n4o5",
@@ -380,7 +387,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0008",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-p6q7r8",
@@ -419,7 +427,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0009",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-s9t0u1",
@@ -458,7 +467,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0010",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-v2w3x4",
@@ -497,7 +507,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0011",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-y5z6a7",
@@ -536,7 +547,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0012",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-b8c9d0",
@@ -575,7 +587,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0013",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-a3b7c9",
@@ -613,7 +626,8 @@
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0014",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-d4e8f2",
@@ -651,7 +665,8 @@
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0015",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-g5h1j3",
@@ -689,7 +704,8 @@
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0016",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-k6m4n5",
@@ -727,7 +743,8 @@
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0017",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-p7q8r9",
@@ -765,7 +782,8 @@
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0018",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-s2t3u4",
@@ -803,7 +821,8 @@
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0019",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-v5w6x7",
@@ -841,7 +860,8 @@
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0020",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-y8z9a1",
@@ -879,7 +899,8 @@
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0021",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-b2c3d4",
@@ -917,7 +938,8 @@
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0022",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-e5f6g7",
@@ -955,7 +977,8 @@
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0023",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "XLLM-001",
@@ -1007,7 +1030,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0024",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-002",
@@ -1059,7 +1083,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0025",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-003",
@@ -1110,7 +1135,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0026",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-004",
@@ -1162,7 +1188,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0027",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-005",
@@ -1214,7 +1241,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0028",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-006",
@@ -1266,7 +1294,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0029",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-007",
@@ -1318,7 +1347,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0030",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-008",
@@ -1370,7 +1400,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0031",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-009",
@@ -1422,7 +1453,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0032",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-010",
@@ -1473,7 +1505,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0033",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-011",
@@ -1525,7 +1558,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0034",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-012",
@@ -1578,7 +1612,8 @@
       "source_tier_basis": "entity_homepage",
       "source_tier_prev": "B",
       "rp_id": "RP-LLM-0035",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-014",
@@ -1631,7 +1666,8 @@
       "source_tier_basis": "entity_homepage",
       "source_tier_prev": "B",
       "rp_id": "RP-LLM-0036",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-015",
@@ -1683,7 +1719,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0037",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-016",
@@ -1735,7 +1772,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0038",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-017",
@@ -1786,7 +1824,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0039",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-018",
@@ -1838,7 +1877,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0040",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-019",
@@ -1890,7 +1930,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0041",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-020",
@@ -1943,7 +1984,8 @@
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:github.com/OpenGVLab",
       "rp_id": "RP-LLM-0042",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     }
   ]
 }

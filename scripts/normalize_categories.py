@@ -120,6 +120,51 @@ class UnmappedCategory(Exception):
     """未知类目不得静默兜底 —— 见 normalize() 注释。"""
 
 
+# 【20261016 D5】confidence 五档枚举判据。
+# 详见 schemas/entities.schema.json $defs.ConfidenceTier 与 docs/api-versioning.md §4.1。
+# 判据口径（从最可信到最不确凿）：
+#   verified    = 一手厂商 datasheet / ISO 标准原文（confidence >= 0.9 或 source_tier=='A'）
+#   observed    = 实测/复现（本仓自测、公开拆解、开源固件）（0.7~0.9，或 tier=='A' 且无 verified 关键字）
+#   derived     = 由其他字段或规则推导（confidence_basis 显式标注 derived）（0.5~0.7）
+#   inferred    = 同类族归纳、参数外推（0.3~0.5）
+#   unverified  = 无出处或 quarantine（<=0.3，且 source 缺失必须 quarantine=true）
+# 优先级：source_tier 优先（A 直接 verified）→ data_quality 兜底 → confidence 值域。
+def confidence_tier_rule(entity):
+    """按 entity 字段派生 confidence_tier。返回五档枚举之一。"""
+    tier = entity.get('source_tier')
+    dq = (entity.get('data_quality') or 'ok').lower()
+    conf = entity.get('confidence')
+    src = entity.get('source') or entity.get('sources')
+    q = bool(entity.get('quarantine', False))
+
+    # 无出处 + 未 quarantine：铁律违规，标 unverified 让闸门抓到
+    if not src and not q:
+        return 'unverified'
+    # quarantine=true：诚实标记为 unverified（等补证据）
+    if q:
+        return 'unverified'
+    # source_tier A 且 confidence 高：verified
+    if tier == 'A' and isinstance(conf, (int, float)) and conf >= 0.9:
+        return 'verified'
+    if tier == 'A':
+        return 'observed'
+    # source_tier B：中可信度，落在 derived/observed
+    if tier == 'B':
+        if isinstance(conf, (int, float)) and conf >= 0.65:
+            return 'derived'
+        return 'inferred'
+    # 无 tier（source_tier 缺失）：用 confidence 兜底
+    if isinstance(conf, (int, float)):
+        if conf >= 0.9:
+            return 'verified'
+        if conf >= 0.65:
+            return 'derived'
+        if conf >= 0.4:
+            return 'inferred'
+        return 'unverified'
+    return 'unverified'
+
+
 def normalize(cat, strict=False):
     """把原始 category 归一化到 CANONICAL。
 
@@ -165,6 +210,12 @@ def main():
     doc['meta']['total'] = len(entities)
     doc['meta']['total_entities'] = len(entities)
     doc['meta']['updated'] = updated
+    # 【20261016 D5】契约版本声明：Agent 消费时以此为缓存 key。见 docs/api-versioning.md。
+    doc['meta']['schema_version'] = doc['meta'].get('schema_version', '1.0')
+    # 【20261016 D5】confidence 分层：把无约束浮点映射到五档枚举 tier，让下游可判据使用。
+    # 判据源 confidence_tier_rule()；tier 与 float 值必须落在同一区间（详见 schemas/entities.schema.json）
+    for e in entities:
+        e['confidence_tier'] = confidence_tier_rule(e)
     # 【20261016 D2-a】时间戳收敛：meta.updated 是**唯一真相源**，顶层 updated /
     # last_updated 只是历史脚本遗留的兼容别名——曾各自被不同的生成器写过，导致
     # 顶层 updated=2026-09-25、last_updated=2026-10-06、meta.updated=今日 三份不一致。
@@ -222,6 +273,9 @@ def main():
     pub['meta']['updated'] = updated
     pub['meta']['generated_at'] = updated
     pub['meta']['total_entities'] = len(entities)
+    # 【20261016 阶段 3-lite】契约版本声明（Agent 缓存 key 用）。
+    # 与 entities.json 同版本；契约演进见 docs/api-versioning.md
+    pub['meta']['schema_version'] = doc['meta'].get('schema_version', '1.0')
     # 【20261016 D1 修复】entity_count 此前遗漏同步，2026-08-27 以来一直漂在 767，
     # 而 total_entities=868、data array=868。三个数字不一致就是审计 §F1 的公开矛盾源。
     # 现在把 entity_count / total_entities / len(data) 三者绑死为同一个真相源。

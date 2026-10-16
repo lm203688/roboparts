@@ -56,7 +56,8 @@ temp/
 ops/
 
 # Project-local analysis artifacts & dataset tooling (not served by the site)
-mcp-server/
+# 注意：mcp-server/ 已发布到 npm（roboparts-mcp-server），必须纳入版本控制，
+# 否则 npm 上的包和仓库里的包会 split-brain。仅其 node_modules/ 会被 L2 全局忽略。
 roboparts-dataset-github/
 multi-persona-ux-analysis-v3/
 robot-ai-models-evaluation/

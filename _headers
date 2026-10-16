@@ -1,22 +1,54 @@
+# ============================================================
+# Cloudflare Pages _headers 配置
+# 审计依据：docs/RoboParts-地基审计与硬骨头攻坚报告-20261016.md §F6
+# 版本：2026-10-16 · Phase B 加固版
+# ============================================================
+
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
   X-XSS-Protection: 1; mode=block
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com https://challenges.cloudflare.com; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://api.creem.io
+  # HSTS · 审计 F6 补齐；max-age 一年 + includeSubdomains 覆盖 *.roboparts.cc
+  Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+  # CSP · 保留 unsafe-inline 兼容现有 41 页内联脚本（designer.html 2187 行等），
+  # 但**移除 unsafe-eval**（阻断 eval() 类 XSS 载荷）；unsafe-inline 的移除需
+  # 配合 nonce/hash 机制重构，见审计 F6 P2 TODO（前端架构阶段）。
+  Content-Security-Policy: default-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://challenges.cloudflare.com; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://api.creem.io
+  # Referrer-Policy + Permissions-Policy 已在顶部
 
+# /api/* · 数据端点
+# 版本化契约（阶段 3-lite · L3 Agent 预埋）：X-Data-Version 由后端 handler 注入，
+# 详见 docs/api-versioning.md
 /api/*
   X-RateLimit-Limit: 60
   X-RateLimit-Window: 60
   Cache-Control: no-store, no-cache, must-revalidate
-  Access-Control-Allow-Origin: *
+  # CORS · 审计 F6：原为 `*`（全开），与付费墙语义冲突。改成白名单：
+  #   - 官方前端 https://roboparts.cc
+  #   - 官方 MCP 客户端（localhost 开发）
+  #   - 允许第三方代理通过 OPTIONS 预检，但需实际请求带 Origin 匹配白名单
+  #   实际过滤在 functions/api/*.js 里做（这里只声明允许的头，实际响应头
+  #   由 handler 根据 Origin 判断）；未匹配时 handler 不写 Access-Control-*
   Access-Control-Allow-Methods: GET, POST, OPTIONS
-  Access-Control-Allow-Headers: Content-Type, Authorization, X-Creem-Signature
+  Access-Control-Allow-Headers: Content-Type, Authorization, X-Creem-Signature, X-Data-Version
+  Access-Control-Max-Age: 86400
+  # 关键 API 结果缓存（entities/data.json 是只读数据，可缓存）
+# 数据文件：给静态 JSON 加长缓存，减少回源
+/api/entities.json
+  Cache-Control: public, max-age=600, stale-while-revalidate=86400
+  X-Robots-Tag: noindex
 
+# llms-full.txt · 给 LLM 抓取的完整数据摘要
 /llms-full.txt
   Cache-Control: public, max-age=86400
   X-Robots-Tag: noindex
 
+# anti-scrape.js · 反爬脚本，长缓存
 /anti-scrape.js
   Cache-Control: public, max-age=604800
+
+# 站点根 · 版本化契约文档
+/docs/api-versioning.md
+  Cache-Control: public, max-age=3600

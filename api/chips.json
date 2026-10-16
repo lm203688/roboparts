@@ -23,7 +23,7 @@
     }
   },
   "count": 108,
-  "updated": "2026-10-16T09:24:45.117012Z",
+  "updated": "2026-10-16T22:43:39.757610Z",
   "data": [
     {
       "id": "CHIP-001",
@@ -79,7 +79,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-002",
@@ -135,7 +136,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-003",
@@ -194,7 +196,8 @@
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:www.raspberrypi.com/products/raspberry-pi-5/",
       "rp_id": "RP-CHI-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-004",
@@ -253,7 +256,8 @@
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.st.com/en/microcontrollers-microprocessors/stm32h743-753",
       "rp_id": "RP-CHI-0004",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-005",
@@ -312,7 +316,8 @@
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.espressif.com/en/products/socs/esp32-s3",
       "rp_id": "RP-CHI-0005",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-006",
@@ -371,7 +376,8 @@
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.pjrc.com/store/teensy41.html",
       "rp_id": "RP-CHI-0006",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-007",
@@ -426,7 +432,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0007",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-008",
@@ -482,7 +489,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0008",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-009",
@@ -538,7 +546,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0009",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-010",
@@ -588,7 +597,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0010",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-011",
@@ -642,7 +652,8 @@
       "source_scope": "deep",
       "source_tier_basis": "deep_link:hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/",
       "rp_id": "RP-CHI-0011",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-012",
@@ -697,7 +708,8 @@
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:coral.ai/products/",
       "rp_id": "RP-CHI-0012",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-013",
@@ -757,7 +769,8 @@
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-014",
@@ -813,7 +826,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0014",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-015",
@@ -871,7 +885,8 @@
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-016",
@@ -927,7 +942,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0016",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-017",
@@ -987,7 +1003,8 @@
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-018",
@@ -1047,7 +1064,8 @@
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:www.microchip.com/en-us/products/fpgas-and-plds/system-on-ch",
       "rp_id": "RP-CHI-0018",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-019",
@@ -1103,7 +1121,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0019",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-020",
@@ -1162,7 +1181,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0020",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RP-ct21x-gan-encoder",
@@ -1214,7 +1234,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0021",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RP-intel-core-ultra-s3",
@@ -1264,7 +1285,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0022",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "RP-honpine-hpjm",
@@ -1314,7 +1336,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0023",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-qualcomm-iq10",
@@ -1388,7 +1411,8 @@
       "rp_id": "RP-CHI-0024",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-qualcomm-iq9",
@@ -1457,7 +1481,8 @@
       "rp_id": "RP-CHI-0025",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ9%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-edge",
@@ -1527,7 +1552,8 @@
       "rp_id": "RP-CHI-0026",
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Edge%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-nvidia-thor-v2",
@@ -1599,7 +1625,8 @@
       "rp_id": "RP-CHI-0027",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Jetson%20Thor%20(2026%20BC%20Award)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-amd-ryzen-ai-2026",
@@ -1668,7 +1695,8 @@
       "rp_id": "RP-CHI-0028",
       "source_url": "https://www.google.com/search?q=AMD%20AMD%20Ryzen%20AI%20Processor%202026%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-microsoft-braga",
@@ -1735,7 +1763,8 @@
       "rp_id": "RP-CHI-0029",
       "source_url": "https://www.google.com/search?q=Microsoft%20Microsoft%20Braga%20AI%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-gigadevice-gd32h7",
@@ -1805,7 +1834,8 @@
       "rp_id": "RP-CHI-0030",
       "source_url": "https://www.google.com/search?q=GigaDevice%20GigaDevice%20GD32H7%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-advantech-iq10",
@@ -1875,7 +1905,8 @@
       "rp_id": "RP-CHI-0031",
       "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20Qualcomm%20IQ10%20Platform%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-qualcomm-rb6-v2",
@@ -1945,7 +1976,8 @@
       "rp_id": "RP-CHI-0032",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20RB6%20v2%20(QCS8250)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-horizon-j6",
@@ -2015,7 +2047,8 @@
       "rp_id": "RP-CHI-0033",
       "source_url": "https://www.google.com/search?q=Horizon%20Robotics%20Horizon%20Robotics%20J6%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-renesas-rzv2h-v2",
@@ -2086,7 +2119,8 @@
       "rp_id": "RP-CHI-0034",
       "source_url": "https://www.google.com/search?q=Renesas%20Renesas%20RZ%2FV2H%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-ti-tda4vp",
@@ -2157,7 +2191,8 @@
       "rp_id": "RP-CHI-0035",
       "source_url": "https://www.google.com/search?q=Texas%20Instruments%20TI%20TDA4VP%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-mediatek-genio-700",
@@ -2230,7 +2265,8 @@
       "rp_id": "RP-CHI-0036",
       "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Genio%20700%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-mediatek-edge-ai-7b",
@@ -2301,7 +2337,8 @@
       "rp_id": "RP-CHI-0037",
       "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Edge%20AI%20Chip%20(Dual%207B)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-rockchip-rk3588s-v2",
@@ -2376,7 +2413,8 @@
       "rp_id": "RP-CHI-0038",
       "source_url": "https://www.google.com/search?q=Rockchip%20Rockchip%20RK3588S%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-amlogic-a311d2",
@@ -2451,7 +2489,8 @@
       "rp_id": "RP-CHI-0039",
       "source_url": "https://www.google.com/search?q=Amlogic%20Amlogic%20A311D2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-robotics",
@@ -2561,7 +2600,8 @@
       "rp_id": "RP-CHI-0040",
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Robotics%20Edition%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-qualcomm-iq10-advantech",
@@ -2633,7 +2673,8 @@
       "rp_id": "RP-CHI-0041",
       "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20MIC-710AI%20(IQ10)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-gigadevice-gd32h7-robot",
@@ -2705,7 +2746,8 @@
       "rp_id": "RP-CHI-0042",
       "source_url": "https://www.google.com/search?q=GigaDevice%20GigaDevice%20GD32H7%20Robot%20Edition%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-nvidia-t5000",
@@ -2741,7 +2783,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0043",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-qualcomm-robotics-pc",
@@ -2777,7 +2820,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0044",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-robee",
@@ -2813,7 +2857,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0045",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-ms-braga-v2",
@@ -2850,7 +2895,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0046",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-edge-ai-realtime",
@@ -2886,7 +2932,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0047",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "chip-qualcomm-iq10-pro",
@@ -2937,7 +2984,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0048",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "chip-nvidia-t5000-v2",
@@ -2988,7 +3036,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0049",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "chip-mediatek-genio-700-v2",
@@ -3039,7 +3088,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0050",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "chip-intel-ultra3-robotics-v2",
@@ -3090,7 +3140,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0051",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "chip-amd-ryzen-ai-v2",
@@ -3141,7 +3192,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0052",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "chip-nxp-imx95",
@@ -3192,7 +3244,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0053",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "chip-renesas-rzv2l",
@@ -3243,7 +3296,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0054",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "chip-horizon-j6e",
@@ -3294,7 +3348,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0055",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-snapdragon-x2-plus",
@@ -3364,7 +3419,8 @@
       "rp_id": "RP-CHI-0056",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Snapdragon%20X2%20Plus%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-intel-ces2026-ai",
@@ -3434,7 +3490,8 @@
       "rp_id": "RP-CHI-0057",
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20CES%202026%20AI%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-turbox-irb10",
@@ -3505,7 +3562,8 @@
       "rp_id": "RP-CHI-0058",
       "source_url": "https://www.google.com/search?q=Thundercomm%2FQualcomm%20Thundercomm%20TurboX%20IRB10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-neura-robotics-iq10",
@@ -3575,7 +3633,8 @@
       "rp_id": "RP-CHI-0059",
       "source_url": "https://www.google.com/search?q=NEURA%20Robotics%2FQualcomm%20NEURA%20Robotics%20IQ10%20Platform%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-amd-ryzen-ai-400",
@@ -3619,7 +3678,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0060",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-nvidia-thor-robotics",
@@ -3668,7 +3728,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0061",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-nvidia-gb10-digits",
@@ -3706,7 +3767,8 @@
       "rp_id": "RP-CHI-0062",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20GB10%20Grace%20%2B%20Blackwell%20(DIGITS%20Desktop%20AI)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-a1b2c3",
@@ -3748,7 +3810,8 @@
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "CHIP-66",
@@ -3782,7 +3845,8 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0064",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "CHIP-81"
+      "duplicate_of": "CHIP-81",
+      "confidence_tier": "unverified"
     },
     {
       "id": "CHIP-68",
@@ -3815,7 +3879,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0065",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-69",
@@ -3848,7 +3913,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0066",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-70",
@@ -3881,7 +3947,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0067",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-72",
@@ -3914,7 +3981,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0068",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-73",
@@ -3947,7 +4015,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0069",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-74",
@@ -3980,7 +4049,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0070",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-75",
@@ -4013,7 +4083,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0071",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-76",
@@ -4046,7 +4117,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0072",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-77",
@@ -4079,7 +4151,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0073",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-78",
@@ -4112,7 +4185,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0074",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-80",
@@ -4145,7 +4219,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0075",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-81",
@@ -4178,7 +4253,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0076",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-82",
@@ -4211,7 +4287,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0077",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-85",
@@ -4244,7 +4321,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0078",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-86",
@@ -4277,7 +4355,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0079",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-87",
@@ -4310,7 +4389,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0080",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-88",
@@ -4343,7 +4423,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0081",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-89",
@@ -4376,7 +4457,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0082",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-90",
@@ -4409,7 +4491,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0083",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-91",
@@ -4443,7 +4526,8 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0084",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "CHIP-68"
+      "duplicate_of": "CHIP-68",
+      "confidence_tier": "unverified"
     },
     {
       "id": "CHIP-92",
@@ -4476,7 +4560,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0085",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-93",
@@ -4509,7 +4594,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0086",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-94",
@@ -4542,7 +4628,8 @@
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0087",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-95",
@@ -4576,7 +4663,8 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0088",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "CHIP-80"
+      "duplicate_of": "CHIP-80",
+      "confidence_tier": "unverified"
     },
     {
       "id": "CHIP-096",
@@ -4631,7 +4719,8 @@
       "source_scope": "deep",
       "source_tier_basis": "deep_link:hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/",
       "rp_id": "RP-CHI-0089",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-097",
@@ -4685,7 +4774,8 @@
       "source_scope": "deep",
       "source_tier_basis": "deep_link:hailo.ai/products/ai-accelerators/hailo-10h-ai-accelerator/",
       "rp_id": "RP-CHI-0090",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-098",
@@ -4741,7 +4831,8 @@
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:coral.ai/products/",
       "rp_id": "RP-CHI-0091",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-099",
@@ -4800,7 +4891,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0092",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-100",
@@ -4857,7 +4949,8 @@
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-101",
@@ -4911,7 +5004,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0094",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-102",
@@ -4969,7 +5063,8 @@
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-103",
@@ -5023,7 +5118,8 @@
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-axelera-metis-aipu",
@@ -5080,7 +5176,8 @@
       "rp_id": "RP-CHI-0097",
       "source_url": "https://www.google.com/search?q=Axelera%20AI%EF%BC%88%E8%8D%B7%E5%85%B0%EF%BC%89%20Axelera%20Metis%20AIPU%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-axera-ax650n",
@@ -5141,7 +5238,8 @@
       "rp_id": "RP-CHI-0098",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%E5%8D%8A%E5%AF%BC%E4%BD%93%20(Axera)%20%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%20AX650N%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-axera-ax8850",
@@ -5199,7 +5297,8 @@
       "rp_id": "RP-CHI-0099",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%E5%8D%8A%E5%AF%BC%E4%BD%93%20(Axera)%20%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%20AX8850%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-blacksesame-huashan-a2000",
@@ -5257,7 +5356,8 @@
       "rp_id": "RP-CHI-0100",
       "source_url": "https://www.google.com/search?q=%E9%BB%91%E8%8A%9D%E9%BA%BB%E6%99%BA%E8%83%BD%20(Black%20Sesame%20Technologies%2C%202533.HK)%20%E9%BB%91%E8%8A%9D%E9%BA%BB%E6%99%BA%E8%83%BD%20%E5%8D%8E%E5%B1%B1%20A2000%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-sophgo-bm1684x",
@@ -5316,7 +5416,8 @@
       "rp_id": "RP-CHI-0101",
       "source_url": "https://www.google.com/search?q=%E7%AE%97%E8%83%BD%E7%A7%91%E6%8A%80%20(SOPHGO)%20%E7%AE%97%E8%83%BD%20SOPHON%20BM1684X%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-cambricon-mlu370-s4",
@@ -5373,7 +5474,8 @@
       "rp_id": "RP-CHI-0102",
       "source_url": "https://www.google.com/search?q=%E4%B8%AD%E7%A7%91%E5%AF%92%E6%AD%A6%E7%BA%AA%20(688256.SH)%20%E5%AF%92%E6%AD%A6%E7%BA%AA%20MLU370-S4%20%E6%8E%A8%E7%90%86%E5%8A%A0%E9%80%9F%E5%8D%A1%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-rockchip-rk3576",
@@ -5431,7 +5533,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0103",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-simaai-modalix",
@@ -5488,7 +5591,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0104",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-ambarella-n1-655",
@@ -5548,7 +5652,8 @@
       "rp_id": "RP-CHI-0105",
       "source_url": "https://www.google.com/search?q=Ambarella%EF%BC%88%E7%BE%8E%E5%9B%BD%E5%AE%89%E9%9C%B8%EF%BC%89%20Ambarella%20N1-655%20%E8%BE%B9%E7%BC%98%20GenAI%20SoC%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-ti-am69a",
@@ -5609,7 +5714,8 @@
       "rp_id": "RP-CHI-0106",
       "source_url": "https://www.google.com/search?q=Texas%20Instruments%20TI%20AM69A%20%E8%BE%B9%E7%BC%98%20AI%20%E5%A4%84%E7%90%86%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-deepx-dx-m1",
@@ -5666,7 +5772,8 @@
       "rp_id": "RP-CHI-0107",
       "source_url": "https://www.google.com/search?q=DEEPX%EF%BC%88%E9%9F%A9%E5%9B%BD%EF%BC%89%20DEEPX%20DX-M1%20%E8%BE%B9%E7%BC%98%20NPU%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-houmo-manye-m30",
@@ -5723,7 +5830,8 @@
       "rp_id": "RP-CHI-0108",
       "source_url": "https://www.google.com/search?q=%E5%90%8E%E6%91%A9%E6%99%BA%E8%83%BD%20(Houmo.AI)%20%E5%90%8E%E6%91%A9%E6%99%BA%E8%83%BD%20%E6%BC%AB%E7%95%8C%20M30%20%E5%AD%98%E7%AE%97%E4%B8%80%E4%BD%93%E8%8A%AF%E7%89%87%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     }
   ]
 }

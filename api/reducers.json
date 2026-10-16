@@ -23,7 +23,7 @@
     }
   },
   "count": 14,
-  "updated": "2026-10-16T09:24:45.117012Z",
+  "updated": "2026-10-16T22:43:39.757610Z",
   "data": [
     {
       "verified": true,
@@ -81,7 +81,8 @@
       },
       "source_tier_basis": "deep_link:harmonicdrive.net/products/gear-units",
       "rp_id": "RP-RED-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": true,
@@ -131,7 +132,8 @@
       },
       "source_tier_basis": "deep_link:www.nabtesco-motion.cn/cn/products/introduction/",
       "rp_id": "RP-RED-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": true,
@@ -186,7 +188,8 @@
       },
       "source_tier_basis": "deep_link:www.leaderdrive.com/about.html",
       "rp_id": "RP-RED-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "REDUCER-HD-25",
@@ -234,7 +237,8 @@
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-HD-32",
@@ -282,7 +286,8 @@
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-HD-50",
@@ -330,7 +335,8 @@
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-GH-25",
@@ -379,7 +385,8 @@
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-GH-50",
@@ -428,7 +435,8 @@
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-RV-50",
@@ -476,7 +484,8 @@
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-RV-200",
@@ -524,7 +533,8 @@
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-LIF-60",
@@ -573,7 +583,8 @@
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "category": "reducers",
@@ -624,7 +635,8 @@
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "RED-004",
-      "rp_id": "RP-RED-0009"
+      "rp_id": "RP-RED-0009",
+      "confidence_tier": "observed"
     },
     {
       "category": "reducers",
@@ -673,7 +685,8 @@
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "RED-005",
-      "rp_id": "RP-RED-0010"
+      "rp_id": "RP-RED-0010",
+      "confidence_tier": "observed"
     },
     {
       "category": "reducers",
@@ -722,7 +735,8 @@
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "RED-006",
-      "rp_id": "RP-RED-0011"
+      "rp_id": "RP-RED-0011",
+      "confidence_tier": "derived"
     }
   ]
 }

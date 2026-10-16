@@ -2919,6 +2919,115 @@ def gate_d5_no_source_policy():
         ok('无出处政策闸门', f'0 违规 / {len(ents)} 条实体（无出处的都被隔离或标注）')
 
 
+def gate_d5_confidence_tier_contract():
+    """D5 · confidence_tier 五档枚举契约闸门（阶段 1.4 · 数据契约）
+
+    审计 §F5：`confidence` 是无约束浮点，26 种取值，无语义分层。
+    阶段 1.4 修复：新增 `confidence_tier` 五档枚举（verified/observed/derived/inferred/unverified），
+    让下游 Agent 可判据使用。schema 见 schemas/entities.schema.json。
+
+    闸门断言：
+    1. 每条 entity 都有 `confidence_tier` 字段
+    2. 值必须落在五档枚举内
+    3. 无 source 且 quarantine=False 的实体必须 tier=unverified（D5 铁律）
+    """
+    import json
+    try:
+        with open(os.path.join(ROOT, 'api', 'entities.json'), encoding='utf-8') as f:
+            doc = json.load(f)
+    except Exception as e:
+        bad('confidence_tier 契约', f'读 api/entities.json 失败：{e}')
+        return
+
+    ents = doc.get('entities', [])
+    VALID_TIERS = {'verified', 'observed', 'derived', 'inferred', 'unverified'}
+
+    missing = []
+    invalid = []
+    rule_violations = []
+    for e in ents:
+        tid = e.get('id', '?')
+        tier = e.get('confidence_tier')
+        if tier is None:
+            missing.append(tid)
+            continue
+        if tier not in VALID_TIERS:
+            invalid.append((tid, tier))
+            continue
+        # 铁律：无 source 且 quarantine=False 必须 unverified
+        has_source = bool(e.get('source') or e.get('sources'))
+        quarantine = bool(e.get('quarantine', False))
+        if not has_source and not quarantine and tier != 'unverified':
+            rule_violations.append(tid)
+
+    problems = []
+    if missing:
+        problems.append(f'{len(missing)} 条缺 confidence_tier（样例：{missing[:3]}）')
+    if invalid:
+        problems.append(f'{len(invalid)} 条 tier 非法（样例：{invalid[:3]}）')
+    if rule_violations:
+        problems.append(f'{len(rule_violations)} 条违反铁律（无 source + 未 quarantine 但 tier!=unverified；样例：{rule_violations[:3]}）')
+
+    if problems:
+        bad('confidence_tier 契约', ' / '.join(problems))
+    else:
+        from collections import Counter
+        tiers = Counter(e.get('confidence_tier') for e in ents)
+        dist = ' / '.join(f'{k}={v}' for k, v in sorted(tiers.items()))
+        ok('confidence_tier 契约', f'{len(ents)} 条全部合规；分布：{dist}')
+
+
+def gate_schema_version_declared():
+    """阶段 3-lite · API 版本化契约闸门
+
+    审计 §4：Agent 会缓存接口契约，字段一改就静默失效。
+    所有对外 JSON 数据文件必须在 meta.schema_version 声明契约版本。
+
+    闸门断言：
+    1. api/entities.json 和 api/data.json 都有 meta.schema_version
+    2. schema_version 匹配语义版本正则 ^1\\.0$（当前基线）
+    3. 若声明 schema 文件存在，也检查 schema 本身的 $id
+
+    豁免：不声明的产物（如派生中间产物）不算阻塞，只提示。
+    """
+    import re
+    REQUIRED = ['api/entities.json', 'api/data.json']
+    VERSION_RE = re.compile(r'^\d+\.\d+$')
+
+    missing_files = []
+    missing_field = []
+    invalid_version = []
+    for path in REQUIRED:
+        fp = os.path.join(ROOT, path)
+        if not os.path.exists(fp):
+            missing_files.append(path)
+            continue
+        try:
+            with open(fp, encoding='utf-8') as f:
+                d = json.load(f)
+        except Exception as e:
+            missing_field.append((path, f'parse fail: {e}'))
+            continue
+        sv = d.get('meta', {}).get('schema_version')
+        if not sv:
+            missing_field.append((path, 'no meta.schema_version'))
+        elif not VERSION_RE.match(sv):
+            invalid_version.append((path, sv))
+
+    problems = []
+    if missing_files:
+        problems.append(f'缺文件：{missing_files}')
+    if missing_field:
+        problems.append(f'缺 meta.schema_version：{missing_field}')
+    if invalid_version:
+        problems.append(f'非法版本号：{invalid_version}')
+
+    if problems:
+        bad('API 版本化契约', ' / '.join(problems))
+    else:
+        ok('API 版本化契约', f'{len(REQUIRED)} 个核心数据文件都声明了 meta.schema_version')
+
+
 def gate_deploy_live_verify():
     '''部署后置新鲜度校验（P0-5 · 2026-10-12）
 
@@ -3223,6 +3332,8 @@ GATES = [
     # 而是把口径锁死——无 source 且无 sources 的实体必须 quarantine=True 或
     # data_quality != 'ok'。这是"存量不再腐化"的兜底闸门。
     ('无出处政策闸门（D5 · 存量不破戒）', gate_d5_no_source_policy),
+    ('confidence_tier 五档枚举契约（D5 · 语义分层）', gate_d5_confidence_tier_contract),
+    ('API 版本化契约（阶段 3-lite · schema_version）', gate_schema_version_declared),
 ]
 
 

@@ -1,5 +1,5 @@
 const DB = {
-  "updated": "2026-10-16T09:24:45.117012Z",
+  "updated": "2026-10-16T22:43:39.757610Z",
   "stats": {
     "actuators": 222,
     "sensors": 95,
@@ -88,7 +88,8 @@ const DB = {
       },
       "entity_kind_basis": "默认归类",
       "connector": "JST EHR-03（TTL 3-pin；PCB header B3B-EH-A）",
-      "last_verified": "2026-09-08"
+      "last_verified": "2026-09-08",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-002",
@@ -155,7 +156,8 @@ const DB = {
       },
       "entity_kind_basis": "默认归类",
       "connector": "JST EHR-03（TTL 3-pin；PCB header B3B-EH-A）",
-      "last_verified": "2026-09-08"
+      "last_verified": "2026-09-08",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-003",
@@ -221,7 +223,8 @@ const DB = {
       },
       "entity_kind_basis": "默认归类",
       "connector": "JST EHR-04（RS-485 4-pin；PCB header B4B-EH-A）",
-      "last_verified": "2026-09-08"
+      "last_verified": "2026-09-08",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-004",
@@ -286,7 +289,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-005",
@@ -353,7 +357,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-006",
@@ -413,7 +418,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-007",
@@ -473,7 +479,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-008",
@@ -537,7 +544,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-009",
@@ -601,7 +609,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.908Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "kollmorgen.com (URL 引用)"
+      "source": "kollmorgen.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-010",
@@ -664,7 +673,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-011",
@@ -723,7 +733,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-012",
@@ -782,7 +793,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-013",
@@ -839,7 +851,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-014",
@@ -896,7 +909,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-015",
@@ -956,7 +970,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-016",
@@ -1018,7 +1033,8 @@ const DB = {
       },
       "entity_kind_basis": "默认归类",
       "connector": "XT30PW-M（电源/CAN）+ A1257WR-S-3P（UART 调试）",
-      "last_verified": "2026-09-08"
+      "last_verified": "2026-09-08",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-017",
@@ -1080,7 +1096,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-018",
@@ -1143,7 +1160,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-019",
@@ -1203,7 +1221,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-020",
@@ -1263,7 +1282,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-021",
@@ -1327,7 +1347,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-022",
@@ -1391,7 +1412,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-023",
@@ -1455,7 +1477,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-024",
@@ -1519,7 +1542,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-025",
@@ -1583,7 +1607,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-026",
@@ -1646,7 +1671,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-027",
@@ -1709,7 +1735,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-028",
@@ -1778,7 +1805,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "ACT-029",
@@ -1842,7 +1870,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-030",
@@ -1906,7 +1935,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-031",
@@ -1970,7 +2000,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "lynxmotion.com (URL 引用)"
+      "source": "lynxmotion.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-032",
@@ -2030,7 +2061,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-mit-electrofluidic",
@@ -2092,7 +2124,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-hyundai-gripper",
@@ -2151,7 +2184,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-schaeffler-planetary",
@@ -2221,7 +2255,8 @@ const DB = {
       },
       "source_url": "https://www.schaeffler.com/products/schaeffler-planetary-gear-actuator",
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-lg-actuator",
@@ -2289,7 +2324,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=LG%20Electronics%20LG%20Electronics%20Robotics%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-tesla-optimus-hand",
@@ -2358,7 +2394,8 @@ const DB = {
       },
       "source_url": "https://tesla.com/tesla-optimus-gen-3-hand-actuator",
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-robotis-20dof-hand",
@@ -2427,7 +2464,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=ROBOTIS%20ROBOTIS%2020-DOF%20Robot%20Hand%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-first-a301",
@@ -2496,7 +2534,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=FIRST%20FIRST%20A301%20Motor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-high-torque-mini-hi",
@@ -2564,7 +2603,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=High%20Torque%20Robotics%20High%20Torque%20Robotics%20Mini%20Hi%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-high-torque-pi",
@@ -2632,7 +2672,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=High%20Torque%20Robotics%20High%20Torque%20Robotics%20Pi%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-hyundai-mobis-atlas",
@@ -2700,7 +2741,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Hyundai%20Mobis%20Hyundai%20Mobis%20Atlas%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-unitree-b2-motor-v2",
@@ -2768,7 +2810,8 @@ const DB = {
       },
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-figure-03-actuator",
@@ -2836,7 +2879,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Figure%20AI%20Figure%2003%20Custom%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-atlas-electric-actuator",
@@ -2904,7 +2948,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Boston%20Dynamics%20Boston%20Dynamics%20Electric%20Atlas%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-kai-humanoid-actuator",
@@ -2971,7 +3016,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=KAI%20Robotics%20KAI%20Humanoid%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-omni-humanoid-actuator",
@@ -3039,7 +3085,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=OMNI%20Robotics%20OMNI%20Humanoid%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-1x-neo-actuator",
@@ -3107,7 +3154,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=1X%20Technologies%201X%20NEO%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-schaeffler-hexagon",
@@ -3175,7 +3223,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Schaeffler%2FHexagon%20Robotics%20Schaeffler-Hexagon%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-roland-berger-hd-actuator",
@@ -3242,7 +3291,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%A4%9A%E5%AE%B6%20Roland%20Berger%20HD%20Actuator%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "status=market_trend（市场趋势条目，非具体在售型号）"
+      "entity_kind_basis": "status=market_trend（市场趋势条目，非具体在售型号）",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-tmotor-ak80-9-v2",
@@ -3313,7 +3363,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=T-Motor%20T-Motor%20AK80-9%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-cubemars-gl40-v2",
@@ -3381,7 +3432,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20GL40%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-faulhaber-3274",
@@ -3450,7 +3502,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Faulhaber%20Faulhaber%203274%20BP4%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-moog-smartmotor-v2",
@@ -3519,7 +3572,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Moog%20Moog%20SmartMotor%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-schaeffler-compact",
@@ -3589,7 +3643,8 @@ const DB = {
       },
       "source_url": "https://www.schaeffler.com/products/schaeffler-compact-actuator-ces-2026",
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-kpower-servo",
@@ -3658,7 +3713,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Kpower%20(%E5%B9%BF%E4%B8%9C)%20Kpower%20Humanoid%20Servo%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-welling-joint",
@@ -3726,7 +3782,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Welling%20Parts%20Welling%20Parts%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-mosrac-whg240",
@@ -3798,7 +3855,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Mosrac%20Mosrac%20WHG-240%20Frameless%20BLDC%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-honpine-hpjm-v2",
@@ -3867,7 +3925,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=HONPINE%20HONPINE%20HPJM%20v2%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-ct-unite-gan-encoder-actuator",
@@ -3936,7 +3995,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=CT-Unite%20CT-Unite%20GaN%20Encoder%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-optimus-gen3-hand",
@@ -4008,7 +4068,8 @@ const DB = {
       },
       "source_url": "https://tesla.com/tesla-optimus-gen-3-hand-50-actuators",
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-neura-dyna-hand",
@@ -4076,7 +4137,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Neura%20Robotics%20Neura%20Dyna%20Dexterous%20Hand%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-lg-cloid-actuator",
@@ -4145,7 +4207,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=LG%20Electronics%20LG%20Cloid%20Robotics%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-keyirobot-hand",
@@ -4213,7 +4276,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=KeyiRobot%20KeyiRobot%20Dexterous%20Hand%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-schaeffler-4in1-compact",
@@ -4283,7 +4347,8 @@ const DB = {
       },
       "source_url": "https://www.schaeffler.com/products/schaeffler-4-in-1-compact-actuator",
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-unitree-g1-hand",
@@ -4351,7 +4416,8 @@ const DB = {
       },
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-robozaps-actuator",
@@ -4420,7 +4486,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=RoboZaps%20RoboZaps%20Humanoid%20Actuator%20Kit%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-humanoid-1000-deal",
@@ -4488,7 +4555,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Humanoid%2FSchaeffler%20Humanoid-Schaeffler%201000%2B%20Robot%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-inspire-linear-servo",
@@ -4534,7 +4602,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-inspire-dexterous-hand",
@@ -4580,7 +4649,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-dea-soft",
@@ -4626,7 +4696,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-iai-robot-lineup",
@@ -4672,7 +4743,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-bd-atlas-electric-v2",
@@ -4718,7 +4790,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-tesla-optimus-v2",
@@ -4764,7 +4837,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-first-a301-v2",
@@ -4810,7 +4884,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hyundai-bd-atlas-prod",
@@ -4856,7 +4931,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "act-schaeffler-modular",
@@ -4917,7 +4993,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "act-kpower-fullbody",
@@ -4978,7 +5055,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "act-welling-harmonic",
@@ -5039,7 +5117,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "act-welling-planetary",
@@ -5100,7 +5179,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "act-mosrac-48v-series",
@@ -5161,7 +5241,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "act-ct-unite-gan-production",
@@ -5223,7 +5304,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "act-agility-digit-v2",
@@ -5284,7 +5366,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "act-patsnap-analysis",
@@ -5342,7 +5425,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "type=patent_analysis（研究/报告类条目，非可采购零部件）"
+      "entity_kind_basis": "type=patent_analysis（研究/报告类条目，非可采购零部件）",
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-iai-robot",
@@ -5411,7 +5495,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=IAI%20America%20IAI%20Intelligent%20Actuator%20Robot%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-iai-new-lineup",
@@ -5480,7 +5565,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=IAI%20IAI%20New%20Robot%20Lineup%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-cubemars-ak45-36",
@@ -5549,7 +5635,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20AK45-36%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-cubemars-ak70-10",
@@ -5617,7 +5704,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20AK70-10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-cubemars-qdd",
@@ -5686,7 +5774,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20QDD%20Motor%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-cubemars-frameless",
@@ -5755,7 +5844,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20Frameless%20Torque%20Motor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-bonsystems-bcsa",
@@ -5809,7 +5899,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-agility-digit-v2",
@@ -5862,7 +5953,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-figure-03-helix",
@@ -5924,7 +6016,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-tienkung-ultra",
@@ -5989,7 +6082,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-tesla-optimus-g3-50act",
@@ -6035,7 +6129,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-engineai-t800-hightorque",
@@ -6083,7 +6178,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=EngineAI%20(China)%20EngineAI%20T800%20High-Torque%20Actuator%20System%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-unitree-h1-360nm",
@@ -6136,7 +6232,8 @@ const DB = {
       },
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "ACTUATOR-A1B2C3",
@@ -6191,7 +6288,8 @@ const DB = {
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source": "unitree.com (URL 引用)"
+      "source": "unitree.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-D4E5F6",
@@ -6242,7 +6340,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "tesla.com (URL 引用)"
+      "source": "tesla.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-G7H8I9",
@@ -6293,7 +6392,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-J0K1L2",
@@ -6344,7 +6444,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-M3N4O5",
@@ -6395,7 +6496,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-P6Q7R8",
@@ -6446,7 +6548,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-S9T0U1",
@@ -6497,7 +6600,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-V2W3X4",
@@ -6547,7 +6651,8 @@ const DB = {
       "source_url": "https://www.agibot.cn/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source": "agibot.cn (URL 引用)"
+      "source": "agibot.cn (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-abc123",
@@ -6601,7 +6706,8 @@ const DB = {
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "source": "unitree.com (URL 引用)"
+      "source": "unitree.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-def456",
@@ -6656,7 +6762,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-ghi789",
@@ -6711,7 +6818,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-jkl012",
@@ -6766,7 +6874,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-mno345",
@@ -6820,7 +6929,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-pqr678",
@@ -6874,7 +6984,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-stu901",
@@ -6929,7 +7040,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-vwx234",
@@ -6984,7 +7096,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-yza567",
@@ -7038,7 +7151,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-bcd890",
@@ -7092,7 +7206,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACTUATOR-efg123",
@@ -7146,7 +7261,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "agibot.cn (URL 引用)"
+      "source": "agibot.cn (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-118",
@@ -7192,7 +7308,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-119",
@@ -7238,7 +7355,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-120",
@@ -7284,7 +7402,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-121",
@@ -7330,7 +7449,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-122",
@@ -7376,7 +7496,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-123",
@@ -7422,7 +7543,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-124",
@@ -7468,7 +7590,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-125",
@@ -7514,7 +7637,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-126",
@@ -7560,7 +7684,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-127",
@@ -7606,7 +7731,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-128",
@@ -7652,7 +7778,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-129",
@@ -7698,7 +7825,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-130",
@@ -7744,7 +7872,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-131",
@@ -7790,7 +7919,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-132",
@@ -7836,7 +7966,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-133",
@@ -7882,7 +8013,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-134",
@@ -7928,7 +8060,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-135",
@@ -7974,7 +8107,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-136",
@@ -8020,7 +8154,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-137",
@@ -8066,7 +8201,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-138",
@@ -8112,7 +8248,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-139",
@@ -8158,7 +8295,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-140",
@@ -8204,7 +8342,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-141",
@@ -8250,7 +8389,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-142",
@@ -8296,7 +8436,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-143",
@@ -8342,7 +8483,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-144",
@@ -8388,7 +8530,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-145",
@@ -8434,7 +8577,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-146",
@@ -8480,7 +8624,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "ACT-147",
@@ -8526,7 +8671,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "actuator-sea-001",
@@ -8592,7 +8738,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "actuator-sea-002",
@@ -8658,7 +8805,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "actuator-fea-001",
@@ -8724,7 +8872,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "actuator-sm-001",
@@ -8789,7 +8938,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "actuator-spine-001",
@@ -8856,7 +9006,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "actuator-hand-001",
@@ -8925,7 +9076,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "actuator-hand-002",
@@ -8991,7 +9143,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "actuator-hand-003",
@@ -9060,7 +9213,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-hd-leaderdrive-lcs",
@@ -9132,7 +9286,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20LCS%20%E7%B3%BB%E5%88%97%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-hd-leaderdrive-lcd",
@@ -9198,7 +9353,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20LCD%20%E8%B6%85%E8%96%84%E5%9E%8B%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-hd-leaderdrive-csg",
@@ -9259,7 +9415,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20CSG%20%E9%AB%98%E6%89%AD%E7%9F%A9%E5%9E%8B%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-hd-leaderdrive-micro",
@@ -9314,7 +9471,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-hd-harmonicdrive-csg2uh",
@@ -9377,7 +9535,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Harmonic%20Drive%20Systems%20Inc.%20(%E5%93%88%E9%BB%98%E7%BA%B3%E7%A7%91%2C%20%E6%97%A5%E6%9C%AC)%20Harmonic%20Drive%20CSG-2UH%20%E7%B3%BB%E5%88%97%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-hd-laifual-series",
@@ -9434,7 +9593,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%B5%99%E6%B1%9F%E6%9D%A5%E7%A6%8F%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%20(Laifual)%20%E6%9D%A5%E7%A6%8F%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%E7%B3%BB%E5%88%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-hd-tongchuan-series",
@@ -9490,7 +9650,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%90%8C%E5%B7%9D%E7%A7%91%E6%8A%80%20(Tongchuan)%20%E5%90%8C%E5%B7%9D%E7%A7%91%E6%8A%80%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%E7%B3%BB%E5%88%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-hd-shanchuan-hans",
@@ -9546,7 +9707,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%9D%89%E5%B7%9D%E8%B0%90%E6%B3%A2%20%2F%20%E5%A4%A7%E6%97%8F%E6%BF%80%E5%85%89%20(002008.SZ)%20%E6%9D%89%E5%B7%9D%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%EF%BC%88%E5%A4%A7%E6%97%8F%E6%BF%80%E5%85%89%E5%AD%90%E5%85%AC%E5%8F%B8%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-prs-wuzhou-reverse",
@@ -9619,7 +9781,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E4%BA%94%E6%B4%B2%E6%96%B0%E6%98%A5%E9%9B%86%E5%9B%A2%20(603667.SH)%20%E4%BA%94%E6%B4%B2%E6%96%B0%E6%98%A5%20%E5%8F%8D%E5%90%91%E5%BC%8F%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-prs-henglihydraulic",
@@ -9687,7 +9850,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%B1%9F%E8%8B%8F%E6%81%92%E7%AB%8B%E6%B6%B2%E5%8E%8B%20(601100.SH)%20%E6%81%92%E7%AB%8B%E6%B6%B2%E5%8E%8B%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20%2F%20%E7%BA%BF%E6%80%A7%E9%A9%B1%E5%8A%A8%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-prs-best-yuhua-c0",
@@ -9756,7 +9920,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%97%A0%E9%94%A1%E8%B4%9D%E6%96%AF%E7%89%B9%E7%B2%BE%E6%9C%BA%20(300580.SZ)%20%E5%AD%90%E5%85%AC%E5%8F%B8%E5%AE%87%E5%8D%8E%E7%B2%BE%E6%9C%BA%20%E8%B4%9D%E6%96%AF%E7%89%B9%20%E5%AE%87%E5%8D%8E%E7%B2%BE%E6%9C%BA%20C0%20%E7%BA%A7%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-prs-qinchuan-machine",
@@ -9825,7 +9990,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E7%A7%A6%E5%B7%9D%E6%9C%BA%E5%BA%8A%E5%B7%A5%E5%85%B7%E9%9B%86%E5%9B%A2%20(000837.SZ)%20%E7%A7%A6%E5%B7%9D%E6%9C%BA%E5%BA%8A%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-prs-beite-c5",
@@ -9892,7 +10058,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E5%8C%97%E7%89%B9%E7%A7%91%E6%8A%80%20(603009.SH)%20%E5%8C%97%E7%89%B9%E7%A7%91%E6%8A%80%20C5%20%E7%BA%A7%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-prs-dingzhi-micro",
@@ -9957,7 +10124,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%B8%B8%E5%B7%9E%E9%BC%8E%E6%99%BA%E6%9C%BA%E7%94%B5%20(Dingzhi%2C%20%E6%B1%9F%E8%8B%8F%E9%9B%B7%E5%88%A9%E5%AD%90%E5%85%AC%E5%8F%B8)%20%E9%BC%8E%E6%99%BA%E7%A7%91%E6%8A%80%20%E5%BE%AE%E5%9E%8B%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-prs-shuanglin-inverted",
@@ -10015,7 +10183,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%AE%81%E6%B3%A2%E5%8F%8C%E6%9E%97%E6%B1%BD%E8%BD%A6%E9%83%A8%E4%BB%B6%20(300100.SZ)%20%E5%8F%8C%E6%9E%97%E8%82%A1%E4%BB%BD%20%E5%8F%8D%E5%90%91%E5%BC%8F%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-prs-rollvis-rvr",
@@ -10079,7 +10248,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Rollvis%20SA%20(%E7%91%9E%E5%A3%AB%2C%202016%20%E5%B9%B4%E8%A2%AB%20GSA%20%E5%B9%B6%E8%B4%AD)%20Rollvis%20RVR%20%2F%20RVD%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-prs-gsa-swiss",
@@ -10137,7 +10307,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=GSA%20(%E7%91%9E%E5%A3%AB)%20GSA%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-prs-ewellix-sr",
@@ -10202,7 +10373,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Ewellix%20(%E7%91%9E%E5%85%B8%2C%202022%20%E5%B9%B4%E8%A2%AB%E8%88%8D%E5%BC%97%E5%8B%92%20Schaeffler%20%E6%94%B6%E8%B4%AD)%20Ewellix%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%EF%BC%88SR%2FSRA%20%E7%B3%BB%E5%88%97%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-prs-skf-heavyload",
@@ -10260,7 +10432,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=SKF%20(%E7%91%9E%E5%85%B8)%20SKF%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%EF%BC%88%E9%87%8D%E8%BD%BD%E7%B3%BB%E5%88%97%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-prs-bosch-rexroth",
@@ -10318,7 +10491,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Bosch%20Rexroth%20(%E5%BE%B7%E5%9B%BD)%20%E5%8D%9A%E4%B8%96%E5%8A%9B%E5%A3%AB%E4%B9%90%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-fm-kinco-fmk",
@@ -10385,7 +10559,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E6%AD%A5%E7%A7%91%E8%87%AA%E5%8A%A8%E5%8C%96%20(Kinco%2C%20688160.SH)%20%E6%AD%A5%E7%A7%91%E8%82%A1%E4%BB%BD%20FMK%20%E7%B3%BB%E5%88%97%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%EF%BC%88%E7%AC%AC%E5%9B%9B%E4%BB%A3%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-fm-kinco-fmc",
@@ -10445,7 +10620,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-fm-leisai-fm2",
@@ -10515,7 +10691,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20(Leadshine%2C%20002979.SZ)%20%2F%20%E4%B8%8A%E6%B5%B7%E9%9B%B7%E8%B5%9B%E6%9C%BA%E5%99%A8%E4%BA%BA%20%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20FM2%20%E7%B3%BB%E5%88%97%E8%B6%85%E9%AB%98%E5%AF%86%E5%BA%A6%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-fm-leisai-fm1",
@@ -10571,7 +10748,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-fm-hcfa-humdb",
@@ -10634,7 +10812,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-fm-inovance-mx-tmb",
@@ -10700,7 +10879,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E6%B1%87%E5%B7%9D%E6%8A%80%E6%9C%AF%20(Inovance%2C%20300124.SZ)%20%E6%B1%87%E5%B7%9D%E6%8A%80%E6%9C%AF%20MX%20%2F%20TMB%20%E7%B3%BB%E5%88%97%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-fm-haozhi-frameless",
@@ -10762,7 +10942,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "ACT-fm-veichi-micro",
@@ -10825,7 +11006,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E4%BC%9F%E5%88%9B%E7%94%B5%E6%B0%94%20(688698.SH)%20%E4%BC%9F%E5%88%9B%E7%94%B5%E6%B0%94%20%E5%BE%AE%E5%9E%8B%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-fm-wolong-frameless",
@@ -10892,7 +11074,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%8D%A7%E9%BE%99%E7%94%B5%E6%B0%94%E9%A9%B1%E5%8A%A8%E9%9B%86%E5%9B%A2%20(600580.SH)%20%E5%8D%A7%E9%BE%99%E7%94%B5%E9%A9%B1%20%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20%2F%20%E9%AB%98%E7%88%86%E5%8F%91%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-fm-hanslaser-frameless",
@@ -10953,7 +11136,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%A4%A7%E6%97%8F%E7%94%B5%E6%9C%BA%20%2F%20%E5%A4%A7%E6%97%8F%E6%BF%80%E5%85%89%20(002008.SZ)%20%E5%A4%A7%E6%97%8F%E7%94%B5%E6%9C%BA%20%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-fm-qianghe-u-series",
@@ -11030,7 +11214,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%B8%82%E5%BC%BA%E5%92%8C%E7%94%B5%E6%9C%BA%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%20%E5%BC%BA%E5%92%8C%E7%94%B5%E6%9C%BA%20U%20%E7%B3%BB%E5%88%97%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-fm-mingzhi-coreless",
@@ -11100,7 +11285,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E9%B8%A3%E5%BF%97%E7%94%B5%E5%99%A8%20(603728.SH)%20%E9%B8%A3%E5%BF%97%E7%94%B5%E5%99%A8%20%E7%A9%BA%E5%BF%83%E6%9D%AF%E5%BE%AE%E5%9E%8B%E4%BC%BA%E6%9C%8D%E7%94%B5%E6%9C%BA%EF%BC%88%E7%81%B5%E5%B7%A7%E6%89%8B%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-jm-leaderdrive-mechatronic",
@@ -11170,7 +11356,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-jm-haozhi-integrated",
@@ -11237,7 +11424,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%B9%BF%E5%B7%9E%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20(300503.SZ)%20%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-jm-kinco-triple",
@@ -11301,7 +11489,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E6%AD%A5%E7%A7%91%E8%87%AA%E5%8A%A8%E5%8C%96%20(Kinco%2C%20688160.SH)%20%E6%AD%A5%E7%A7%91%E8%82%A1%E4%BB%BD%20%E7%94%B5%E6%9C%BA-%E9%A9%B1%E5%8A%A8-%E7%BC%96%E7%A0%81%E5%99%A8%E4%B8%89%E5%90%88%E4%B8%80%E9%A9%B1%E6%8E%A7%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-jm-leisai-module",
@@ -11365,7 +11554,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E9%9B%B7%E8%B5%9B%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%A7%91%E6%8A%80%EF%BC%88%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20002979.SZ%20%E5%AD%90%E5%85%AC%E5%8F%B8%EF%BC%89%20%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20%E8%B6%85%E9%AB%98%E5%AF%86%E5%BA%A6%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-jm-tuopu-linear",
@@ -11432,7 +11622,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%AE%81%E6%B3%A2%E6%8B%93%E6%99%AE%E9%9B%86%E5%9B%A2%20(601689.SH)%20%E6%8B%93%E6%99%AE%E9%9B%86%E5%9B%A2%20%E7%9B%B4%E7%BA%BF%E6%89%A7%E8%A1%8C%E5%99%A8%E6%80%BB%E6%88%90%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-jm-sanhua-actuator",
@@ -11497,7 +11688,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%B5%99%E6%B1%9F%E4%B8%89%E8%8A%B1%E6%99%BA%E8%83%BD%E6%8E%A7%E5%88%B6%20(002050.SZ)%20%E4%B8%89%E8%8A%B1%E6%99%BA%E6%8E%A7%20%E6%9C%BA%E7%94%B5%E6%89%A7%E8%A1%8C%E5%99%A8%E6%80%BB%E6%88%90%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-jm-zhaowei-micro",
@@ -11557,7 +11749,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%85%86%E5%A8%81%E6%9C%BA%E7%94%B5%20(003021.SZ)%20%E5%85%86%E5%A8%81%E6%9C%BA%E7%94%B5%20%E5%BE%AE%E5%9E%8B%E7%B2%BE%E5%AF%86%E4%BC%A0%E5%8A%A8%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-jm-topband-hand",
@@ -11622,7 +11815,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E6%8B%93%E9%82%A6%E8%82%A1%E4%BB%BD%20(002139.SZ)%20%E6%8B%93%E9%82%A6%E8%82%A1%E4%BB%BD%20%E7%81%B5%E5%B7%A7%E6%89%8B%E4%B8%80%E4%BD%93%E5%8C%96%E9%A9%B1%E5%8A%A8%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-oss-leap-hand",
@@ -11689,7 +11883,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-oss-ruka-hand",
@@ -11754,7 +11949,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-oss-odri-actuator",
@@ -11820,7 +12016,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-oss-mjbots-moteus",
@@ -11886,7 +12083,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-oss-vesc",
@@ -11953,7 +12151,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "BRG-crb-thk-rb",
@@ -12009,7 +12208,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "BRG-crb-iko-crbf",
@@ -12067,7 +12267,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "BRG-crb-hiwin",
@@ -12122,7 +12323,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "LUB-hd-grease-sk",
@@ -12178,7 +12380,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "LUB-nabtesco-vigo-re0",
@@ -12234,7 +12437,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "SEAL-klueber-nbu15",
@@ -12290,7 +12494,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "GBX-neugart-ple",
@@ -12346,7 +12551,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "GBX-wittenstein-tp",
@@ -12402,7 +12608,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "GBX-shimpo-vrs",
@@ -12458,7 +12665,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "LIN-ewellix-casm",
@@ -12514,7 +12722,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "LIN-tolomatic-erd",
@@ -12570,7 +12779,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "LIN-iai-rcp6",
@@ -12626,7 +12836,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "MAT-flexspline-42crmo",
@@ -12682,7 +12893,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "derived"
     },
     {
       "id": "MAT-flexspline-30crmnsia",
@@ -12738,7 +12950,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "derived"
     },
     {
       "id": "TDN-dyneema-sk75",
@@ -12794,7 +13007,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "TDN-sava-cable",
@@ -12850,7 +13064,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "MOT-maxon-re25",
@@ -12906,7 +13121,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "MOT-faulhaber-1741cxr",
@@ -12962,7 +13178,8 @@ const DB = {
         "has_feedback": true,
         "has_controller_interface": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "category": "actuators",
@@ -13013,7 +13230,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "ACT-3275",
-      "rp_id": "RP-ACT-0218"
+      "rp_id": "RP-ACT-0218",
+      "confidence_tier": "observed"
     },
     {
       "category": "actuators",
@@ -13063,7 +13281,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "ACT-3276",
-      "rp_id": "RP-ACT-0219"
+      "rp_id": "RP-ACT-0219",
+      "confidence_tier": "observed"
     },
     {
       "category": "actuators",
@@ -13114,7 +13333,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "ACT-3277",
-      "rp_id": "RP-ACT-0220"
+      "rp_id": "RP-ACT-0220",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-damiao-4340p",
@@ -13166,7 +13386,8 @@ const DB = {
         "PLAT-seeed-rebot-dm"
       ],
       "compatibility_note": "与 RobStride RSM 系列不兼容（同外观不同电机版本），不可互换。Damiao43 系列其他型号（4310/4340 等）之间是否兼容需查厂商官方规格。",
-      "source_tier_basis": "deep_link:github.com/Seeed-Projects/reBot-DevArm"
+      "source_tier_basis": "deep_link:github.com/Seeed-Projects/reBot-DevArm",
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-robstride-rsm",
@@ -13218,7 +13439,8 @@ const DB = {
         "PLAT-seeed-rebot-rs"
       ],
       "compatibility_note": "与 Damiao43 系列不兼容（同外观不同电机版本），不可互换。RobStride 其他型号之间是否兼容需查厂商官方规格。",
-      "source_tier_basis": "deep_link:github.com/Seeed-Projects/reBot-DevArm"
+      "source_tier_basis": "deep_link:github.com/Seeed-Projects/reBot-DevArm",
+      "confidence_tier": "observed"
     }
   ],
   "sensors": [
@@ -13262,7 +13484,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-71",
@@ -13304,7 +13527,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-79",
@@ -13346,7 +13570,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-83",
@@ -13388,7 +13613,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-84",
@@ -13430,7 +13656,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-001",
@@ -13484,7 +13711,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Velodyne%20(Ouster)%2C%20Luminar%2C%20Hesai%2C%20Livox%2C%20Innoviz%20LiDAR%20(Light%20Detection%20and%20Ranging)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-002",
@@ -13538,7 +13766,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Prophesee%20(Metavision)%2C%20iniVation%20(DAVIS)%2C%20CelePixel%20Event%20Camera%20(Neuromorphic%20Vision)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-003",
@@ -13592,7 +13821,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=GelSight%20(MIT%20spinoff)%2C%20SynTouch%2C%20Pressure%20Profile%20Systems%20Tactile%20Sensor%20(GelSight)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-004",
@@ -13646,7 +13876,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Bosch%2C%20InvenSense%20(TDK)%2C%20STMicroelectronics%2C%20Analog%20Devices%20IMU%20(Inertial%20Measurement%20Unit)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-005",
@@ -13700,7 +13931,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=ATI%20Industrial%20Automation%2C%20OnRobot%2C%20SCHUNK%2C%20ME-Me%C3%9Fsysteme%20Force%2FTorque%20Sensor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-006",
@@ -13754,7 +13986,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=XELA%20Robotics%20XELA%20uSkin%203-Axis%20Tactile%20Sensor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-007",
@@ -13806,7 +14039,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "SENS-008",
@@ -13861,7 +14095,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Multiple%20(Meta%20AI%20Research%2C%20XELA%2C%20academic%20labs)%20Tactile%20Foundation%20Model%20Sensor%20Suite%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-009",
@@ -13916,7 +14151,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Academic%20research%20(ACS%20Applied%20Materials%20%26%20Interfaces%202025)%20Bioinspired%20Flexible%20Tactile%20Sensor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-tesla-optimus-g3-suite",
@@ -13970,7 +14206,8 @@ const DB = {
       },
       "source_url": "https://tesla.com/tesla-optimus-gen-3-sensor-suite",
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-unitree-g1-lidar",
@@ -14029,7 +14266,8 @@ const DB = {
       },
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "SENS-unitree-h1-360depth",
@@ -14088,7 +14326,8 @@ const DB = {
       },
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "SENS-13",
@@ -14139,7 +14378,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-14",
@@ -14190,7 +14430,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-15",
@@ -14241,7 +14482,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-16",
@@ -14292,7 +14534,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-17",
@@ -14343,7 +14586,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-18",
@@ -14394,7 +14638,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-19",
@@ -14445,7 +14690,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-20",
@@ -14496,7 +14742,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-21",
@@ -14547,7 +14794,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-22",
@@ -14598,7 +14846,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-23",
@@ -14649,7 +14898,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-24",
@@ -14700,7 +14950,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-25",
@@ -14751,7 +15002,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-26",
@@ -14802,7 +15054,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-27",
@@ -14853,7 +15106,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-28",
@@ -14904,7 +15158,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-29",
@@ -14955,7 +15210,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-30",
@@ -15006,7 +15262,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-31",
@@ -15065,7 +15322,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-32",
@@ -15116,7 +15374,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-33",
@@ -15167,7 +15426,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-34",
@@ -15218,7 +15478,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-35",
@@ -15269,7 +15530,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-36",
@@ -15320,7 +15582,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-37",
@@ -15375,7 +15638,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-38",
@@ -15426,7 +15690,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-39",
@@ -15477,7 +15742,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-40",
@@ -15528,7 +15794,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-41",
@@ -15579,7 +15846,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-42",
@@ -15630,7 +15898,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "sensor-ft-001",
@@ -15700,7 +15969,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "sensor-ft-002",
@@ -15767,7 +16037,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "sensor-tactile-001",
@@ -15836,7 +16107,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "sensor-imu-001",
@@ -15905,7 +16177,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "SENS-047",
@@ -15964,7 +16237,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=ATI%20Industrial%20Automation%20(Novanta)%20ATI%20Mini40%20%E5%85%AD%E8%BD%B4%E5%8A%9B%2F%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-048",
@@ -16019,7 +16293,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=ATI%20Industrial%20Automation%20(Novanta)%20ATI%20Mini45%20%E5%85%AD%E8%BD%B4%E5%8A%9B%2F%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-049",
@@ -16078,7 +16353,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=OnRobot%20OnRobot%20HEX-E%20%E5%85%AD%E8%BD%B4%E5%8A%9B%2F%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-050",
@@ -16133,7 +16409,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Bota%20Systems%20Bota%20Systems%20MiniONE%20%E5%85%AD%E8%BD%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-051",
@@ -16188,7 +16465,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E8%93%9D%E7%82%B9%E8%A7%A6%E6%8E%A7%20(LinkTouch)%20%E8%93%9D%E7%82%B9%E8%A7%A6%E6%8E%A7%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-052",
@@ -16243,7 +16521,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%AE%87%E7%AB%8B%E4%BB%AA%E5%99%A8%20(Sunrise%20SRI)%20%E5%AE%87%E7%AB%8B%E4%BB%AA%E5%99%A8%20M4313SXX%20%E5%A4%9A%E8%BD%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-053",
@@ -16298,7 +16577,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=GelSight%20Inc.%20(MIT)%20GelSight%20Mini%20%E8%A7%86%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-054",
@@ -16353,7 +16633,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Meta%20AI%20Research%20Meta%20DIGIT%20%E8%A7%86%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-055",
@@ -16408,7 +16689,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Bristol%20Robotics%20Laboratory%20TacTip%20%E4%BB%BF%E7%94%9F%E5%85%89%E5%AD%A6%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-056",
@@ -16463,7 +16745,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=SynTouch%20LLC%20SynTouch%20BioTac%20%E4%BB%BF%E7%94%9F%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-057",
@@ -16518,7 +16801,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%88%B4%E7%9B%9F%E6%9C%BA%E5%99%A8%E4%BA%BA%20(Daimon%20Robotics)%20%E6%88%B4%E7%9B%9F%E6%9C%BA%E5%99%A8%E4%BA%BA%20DM-Tac%20W2%20%E8%A7%86%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-058",
@@ -16573,7 +16857,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%B8%95%E8%A5%BF%E5%B0%BC%E6%84%9F%E7%9F%A5%E7%A7%91%E6%8A%80%20(PaXini)%20%E5%B8%95%E8%A5%BF%E5%B0%BC%20PX-6AX%20%E5%A4%9A%E7%BB%B4%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-059",
@@ -16628,7 +16913,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Tekscan%20Tekscan%20I-Scan%20%E5%8E%8B%E5%8A%9B%E5%88%86%E5%B8%83%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-060",
@@ -16683,7 +16969,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=Pressure%20Profile%20Systems%20(PPS)%20PPS%20TactArray%20%E8%A7%A6%E8%A7%89%E5%8E%8B%E5%8A%9B%E5%88%86%E5%B8%83%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-061",
@@ -16738,7 +17025,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%B1%89%E5%A8%81%E7%A7%91%E6%8A%80%2F%E8%83%BD%E6%96%AF%E8%BE%BE%E7%94%B5%E5%AD%90%20%E6%B1%89%E5%A8%81%2F%E8%83%BD%E6%96%AF%E8%BE%BE%20ZNS-01%20%E6%9F%94%E6%80%A7%E7%94%B5%E5%AD%90%E7%9A%AE%E8%82%A4%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-062",
@@ -16793,7 +17081,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E4%BB%96%E5%B1%B1%E7%A7%91%E6%8A%80%20(%E6%B8%85%E5%8D%8E%E7%B3%BB)%20%E4%BB%96%E5%B1%B1%E7%A7%91%E6%8A%80%20SNN%E8%A7%A6%E8%A7%89%E8%8A%AF%E7%89%87%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-ft-sri-m35xx",
@@ -16851,7 +17140,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-ft-sri-c025xx",
@@ -16909,7 +17199,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "SENS-ft-sri-c075xx",
@@ -16968,7 +17259,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-ft-sri-m221x",
@@ -17024,7 +17316,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-ft-sri-m37xx",
@@ -17085,7 +17378,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-ft-kunwei-kwr-n",
@@ -17155,7 +17449,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%B8%B8%E5%B7%9E%E5%9D%A4%E7%BB%B4%E7%A7%91%E6%8A%80%20(KunWei)%20%E5%9D%A4%E7%BB%B4%E7%A7%91%E6%8A%80%20KWR-N%20%E9%AB%98%E7%B2%BE%E5%BA%A6%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-ft-hipersen-hpsft",
@@ -17218,7 +17513,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E6%B5%B7%E4%BC%AF%E6%A3%AE%E6%8A%80%E6%9C%AF%20(Hipersen)%20%E6%B5%B7%E4%BC%AF%E6%A3%AE%20HPS-FT%20%E7%B3%BB%E5%88%97%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-ft-xjc-ft",
@@ -17280,7 +17576,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E9%91%AB%E7%B2%BE%E8%AF%9A%E4%BC%A0%E6%84%9F%E6%8A%80%E6%9C%AF%20(XJC)%20%E9%91%AB%E7%B2%BE%E8%AF%9A%20XJC-FT%20%E7%B3%BB%E5%88%97%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-ft-sysgroup-sysft",
@@ -17342,7 +17639,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%8D%97%E4%BA%AC%E7%A5%9E%E6%BA%90%E7%94%9F%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80%20(SYS)%20%E7%A5%9E%E6%BA%90%E7%94%9F%20SYS-FT%20%E7%B3%BB%E5%88%97%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-ft-me-k3d",
@@ -17404,7 +17702,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=ME-Me%C3%9Fsysteme%20GmbH%20(%E5%BE%B7%E5%9B%BD)%20ME-Systeme%20K3D%20%E7%B3%BB%E5%88%97%E5%A4%9A%E8%BD%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-ft-haozhi-6axis",
@@ -17461,7 +17760,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%B9%BF%E5%B7%9E%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20(300503.SZ)%20%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20%E5%85%AD%E7%BB%B4%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-ft-keli-6axis",
@@ -17520,7 +17820,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%AE%81%E6%B3%A2%E6%9F%AF%E5%8A%9B%E4%BC%A0%E6%84%9F%E7%A7%91%E6%8A%80%20(603662.SH)%20%E6%9F%AF%E5%8A%9B%E4%BC%A0%E6%84%9F%20%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-ft-anpulong-ceramic",
@@ -17579,7 +17880,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%AE%89%E5%9F%B9%E9%BE%99%E7%A7%91%E6%8A%80%20(301413.SZ)%20%E5%AE%89%E5%9F%B9%E9%BE%99%20%E9%99%B6%E7%93%B7%E7%94%B5%E5%AE%B9%E5%BC%8F%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-ft-qianfenyi-6axis",
@@ -17639,7 +17941,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%8D%83%E5%88%86%E4%B8%80%E7%A7%91%E6%8A%80%20(Qianfenyi)%20%E5%8D%83%E5%88%86%E4%B8%80%20%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-strain-avicem",
@@ -17701,7 +18004,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E4%B8%AD%E8%88%AA%E7%94%B5%E6%B5%8B%E4%BB%AA%E5%99%A8%20(300114.SZ)%20%E4%B8%AD%E8%88%AA%E7%94%B5%E6%B5%8B%20%E5%BA%94%E5%8F%98%E5%BC%8F%E5%8A%9B%2F%E6%89%AD%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-imu-xindonglianke-mems",
@@ -17761,7 +18065,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%AE%89%E5%BE%BD%E8%8A%AF%E5%8A%A8%E8%81%94%E7%A7%91%E5%BE%AE%E7%B3%BB%E7%BB%9F%20(688582.SH)%20%E8%8A%AF%E5%8A%A8%E8%81%94%E7%A7%91%20%E9%AB%98%E6%80%A7%E8%83%BD%20MEMS%20%E9%99%80%E8%9E%BA%2FIMU%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-imu-huayi-automotive",
@@ -17821,7 +18126,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E5%8D%8E%E4%BE%9D%E7%A7%91%E6%8A%80%20(688071.SH)%20%E5%8D%8E%E4%BE%9D%E7%A7%91%E6%8A%80%20%E8%BD%A6%E8%A7%84%E7%BA%A7%20IMU%20%E6%83%AF%E6%80%A7%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-cam-orbbec-gemini335",
@@ -17888,7 +18194,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E5%A5%A5%E6%AF%94%E4%B8%AD%E5%85%89%E7%A7%91%E6%8A%80%20(688322.SH)%20%E5%A5%A5%E6%AF%94%E4%B8%AD%E5%85%89%20Gemini%20335%20%E5%8F%8C%E7%9B%AE%E7%BB%93%E6%9E%84%E5%85%89%E6%B7%B1%E5%BA%A6%E7%9B%B8%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-cam-percipio-fm851",
@@ -17955,7 +18262,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E5%9B%BE%E6%BC%BE%E4%BF%A1%E6%81%AF%E7%A7%91%E6%8A%80%20(Percipio.XYZ)%20%E5%9B%BE%E6%BC%BE%E7%A7%91%E6%8A%80%20FM851%20%E5%B7%A5%E4%B8%9A%E7%BA%A7%203D%20%E7%9B%B8%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-lidar-hesai-ft120",
@@ -18021,7 +18329,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E7%A6%BE%E8%B5%9B%E7%A7%91%E6%8A%80%20(HSAI%20%2F%20688771.SH)%20%E7%A6%BE%E8%B5%9B%E7%A7%91%E6%8A%80%20FT120%20%E7%BA%AF%E5%9B%BA%E6%80%81%E8%A1%A5%E7%9B%B2%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-lidar-robosense-ac1",
@@ -18086,7 +18395,8 @@ const DB = {
       },
       "source_url": "https://www.google.com/search?q=%E9%80%9F%E8%85%BE%E8%81%9A%E5%88%9B%20(RoboSense%2C%202498.HK)%20%E9%80%9F%E8%85%BE%E8%81%9A%E5%88%9B%20Active%20Camera%20AC1%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-oss-anyskin",
@@ -18150,7 +18460,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "SENS-oss-reskin",
@@ -18214,7 +18525,8 @@ const DB = {
         "supports_polling": true,
         "typical_protocol": "I2C/SPI/CAN"
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "category": "sensors",
@@ -18270,7 +18582,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "SENS-852",
-      "rp_id": "RP-SEN-0091"
+      "rp_id": "RP-SEN-0091",
+      "confidence_tier": "observed"
     },
     {
       "category": "sensors",
@@ -18321,7 +18634,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "SENS-853",
-      "rp_id": "RP-SEN-0092"
+      "rp_id": "RP-SEN-0092",
+      "confidence_tier": "observed"
     },
     {
       "category": "sensors",
@@ -18375,7 +18689,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "SENS-854",
-      "rp_id": "RP-SEN-0093"
+      "rp_id": "RP-SEN-0093",
+      "confidence_tier": "observed"
     },
     {
       "category": "sensors",
@@ -18436,7 +18751,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "SENS-855",
-      "rp_id": "RP-SEN-0094"
+      "rp_id": "RP-SEN-0094",
+      "confidence_tier": "observed"
     },
     {
       "category": "sensors",
@@ -18486,7 +18802,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "SENS-856",
-      "rp_id": "RP-SEN-0095"
+      "rp_id": "RP-SEN-0095",
+      "confidence_tier": "observed"
     }
   ],
   "chips": [
@@ -18544,7 +18861,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-002",
@@ -18600,7 +18918,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-003",
@@ -18659,7 +18978,8 @@ const DB = {
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:www.raspberrypi.com/products/raspberry-pi-5/",
       "rp_id": "RP-CHI-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-004",
@@ -18718,7 +19038,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.st.com/en/microcontrollers-microprocessors/stm32h743-753",
       "rp_id": "RP-CHI-0004",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-005",
@@ -18777,7 +19098,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.espressif.com/en/products/socs/esp32-s3",
       "rp_id": "RP-CHI-0005",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-006",
@@ -18836,7 +19158,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.pjrc.com/store/teensy41.html",
       "rp_id": "RP-CHI-0006",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-007",
@@ -18891,7 +19214,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0007",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-008",
@@ -18947,7 +19271,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0008",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-009",
@@ -19003,7 +19328,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0009",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-010",
@@ -19053,7 +19379,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0010",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-011",
@@ -19107,7 +19434,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/",
       "rp_id": "RP-CHI-0011",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-012",
@@ -19162,7 +19490,8 @@ const DB = {
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:coral.ai/products/",
       "rp_id": "RP-CHI-0012",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-013",
@@ -19222,7 +19551,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-014",
@@ -19278,7 +19608,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0014",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-015",
@@ -19336,7 +19667,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-016",
@@ -19392,7 +19724,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0016",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-017",
@@ -19452,7 +19785,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-018",
@@ -19512,7 +19846,8 @@ const DB = {
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:www.microchip.com/en-us/products/fpgas-and-plds/system-on-ch",
       "rp_id": "RP-CHI-0018",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-019",
@@ -19568,7 +19903,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0019",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-020",
@@ -19627,7 +19963,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0020",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RP-ct21x-gan-encoder",
@@ -19679,7 +20016,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0021",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RP-intel-core-ultra-s3",
@@ -19729,7 +20067,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0022",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "RP-honpine-hpjm",
@@ -19779,7 +20118,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0023",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-qualcomm-iq10",
@@ -19853,7 +20193,8 @@ const DB = {
       "rp_id": "RP-CHI-0024",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-qualcomm-iq9",
@@ -19922,7 +20263,8 @@ const DB = {
       "rp_id": "RP-CHI-0025",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ9%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-edge",
@@ -19992,7 +20334,8 @@ const DB = {
       "rp_id": "RP-CHI-0026",
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Edge%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-nvidia-thor-v2",
@@ -20064,7 +20407,8 @@ const DB = {
       "rp_id": "RP-CHI-0027",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Jetson%20Thor%20(2026%20BC%20Award)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-amd-ryzen-ai-2026",
@@ -20133,7 +20477,8 @@ const DB = {
       "rp_id": "RP-CHI-0028",
       "source_url": "https://www.google.com/search?q=AMD%20AMD%20Ryzen%20AI%20Processor%202026%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-microsoft-braga",
@@ -20200,7 +20545,8 @@ const DB = {
       "rp_id": "RP-CHI-0029",
       "source_url": "https://www.google.com/search?q=Microsoft%20Microsoft%20Braga%20AI%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-gigadevice-gd32h7",
@@ -20270,7 +20616,8 @@ const DB = {
       "rp_id": "RP-CHI-0030",
       "source_url": "https://www.google.com/search?q=GigaDevice%20GigaDevice%20GD32H7%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-advantech-iq10",
@@ -20340,7 +20687,8 @@ const DB = {
       "rp_id": "RP-CHI-0031",
       "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20Qualcomm%20IQ10%20Platform%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-qualcomm-rb6-v2",
@@ -20410,7 +20758,8 @@ const DB = {
       "rp_id": "RP-CHI-0032",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20RB6%20v2%20(QCS8250)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-horizon-j6",
@@ -20480,7 +20829,8 @@ const DB = {
       "rp_id": "RP-CHI-0033",
       "source_url": "https://www.google.com/search?q=Horizon%20Robotics%20Horizon%20Robotics%20J6%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-renesas-rzv2h-v2",
@@ -20551,7 +20901,8 @@ const DB = {
       "rp_id": "RP-CHI-0034",
       "source_url": "https://www.google.com/search?q=Renesas%20Renesas%20RZ%2FV2H%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-ti-tda4vp",
@@ -20622,7 +20973,8 @@ const DB = {
       "rp_id": "RP-CHI-0035",
       "source_url": "https://www.google.com/search?q=Texas%20Instruments%20TI%20TDA4VP%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-mediatek-genio-700",
@@ -20695,7 +21047,8 @@ const DB = {
       "rp_id": "RP-CHI-0036",
       "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Genio%20700%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-mediatek-edge-ai-7b",
@@ -20766,7 +21119,8 @@ const DB = {
       "rp_id": "RP-CHI-0037",
       "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Edge%20AI%20Chip%20(Dual%207B)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-rockchip-rk3588s-v2",
@@ -20841,7 +21195,8 @@ const DB = {
       "rp_id": "RP-CHI-0038",
       "source_url": "https://www.google.com/search?q=Rockchip%20Rockchip%20RK3588S%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-amlogic-a311d2",
@@ -20916,7 +21271,8 @@ const DB = {
       "rp_id": "RP-CHI-0039",
       "source_url": "https://www.google.com/search?q=Amlogic%20Amlogic%20A311D2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-robotics",
@@ -21026,7 +21382,8 @@ const DB = {
       "rp_id": "RP-CHI-0040",
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Robotics%20Edition%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-qualcomm-iq10-advantech",
@@ -21098,7 +21455,8 @@ const DB = {
       "rp_id": "RP-CHI-0041",
       "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20MIC-710AI%20(IQ10)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-gigadevice-gd32h7-robot",
@@ -21170,7 +21528,8 @@ const DB = {
       "rp_id": "RP-CHI-0042",
       "source_url": "https://www.google.com/search?q=GigaDevice%20GigaDevice%20GD32H7%20Robot%20Edition%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-nvidia-t5000",
@@ -21206,7 +21565,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0043",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-qualcomm-robotics-pc",
@@ -21242,7 +21602,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0044",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-robee",
@@ -21278,7 +21639,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0045",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-ms-braga-v2",
@@ -21315,7 +21677,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0046",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-edge-ai-realtime",
@@ -21351,7 +21714,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0047",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "chip-qualcomm-iq10-pro",
@@ -21402,7 +21766,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0048",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "chip-nvidia-t5000-v2",
@@ -21453,7 +21818,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0049",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "chip-mediatek-genio-700-v2",
@@ -21504,7 +21870,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0050",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "chip-intel-ultra3-robotics-v2",
@@ -21555,7 +21922,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0051",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "chip-amd-ryzen-ai-v2",
@@ -21606,7 +21974,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0052",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "chip-nxp-imx95",
@@ -21657,7 +22026,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0053",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "chip-renesas-rzv2l",
@@ -21708,7 +22078,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0054",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "chip-horizon-j6e",
@@ -21759,7 +22130,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0055",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-snapdragon-x2-plus",
@@ -21829,7 +22201,8 @@ const DB = {
       "rp_id": "RP-CHI-0056",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Snapdragon%20X2%20Plus%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-intel-ces2026-ai",
@@ -21899,7 +22272,8 @@ const DB = {
       "rp_id": "RP-CHI-0057",
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20CES%202026%20AI%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-turbox-irb10",
@@ -21970,7 +22344,8 @@ const DB = {
       "rp_id": "RP-CHI-0058",
       "source_url": "https://www.google.com/search?q=Thundercomm%2FQualcomm%20Thundercomm%20TurboX%20IRB10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-neura-robotics-iq10",
@@ -22040,7 +22415,8 @@ const DB = {
       "rp_id": "RP-CHI-0059",
       "source_url": "https://www.google.com/search?q=NEURA%20Robotics%2FQualcomm%20NEURA%20Robotics%20IQ10%20Platform%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-amd-ryzen-ai-400",
@@ -22084,7 +22460,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0060",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-nvidia-thor-robotics",
@@ -22133,7 +22510,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0061",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-nvidia-gb10-digits",
@@ -22171,7 +22549,8 @@ const DB = {
       "rp_id": "RP-CHI-0062",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20GB10%20Grace%20%2B%20Blackwell%20(DIGITS%20Desktop%20AI)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-a1b2c3",
@@ -22213,7 +22592,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "CHIP-66",
@@ -22247,7 +22627,8 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0064",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "CHIP-81"
+      "duplicate_of": "CHIP-81",
+      "confidence_tier": "unverified"
     },
     {
       "id": "CHIP-68",
@@ -22280,7 +22661,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0065",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-69",
@@ -22313,7 +22695,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0066",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-70",
@@ -22346,7 +22729,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0067",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-72",
@@ -22379,7 +22763,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0068",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-73",
@@ -22412,7 +22797,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0069",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-74",
@@ -22445,7 +22831,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0070",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-75",
@@ -22478,7 +22865,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0071",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-76",
@@ -22511,7 +22899,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0072",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-77",
@@ -22544,7 +22933,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0073",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-78",
@@ -22577,7 +22967,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0074",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-80",
@@ -22610,7 +23001,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0075",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-81",
@@ -22643,7 +23035,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0076",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-82",
@@ -22676,7 +23069,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0077",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-85",
@@ -22709,7 +23103,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0078",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-86",
@@ -22742,7 +23137,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0079",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-87",
@@ -22775,7 +23171,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0080",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-88",
@@ -22808,7 +23205,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0081",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-89",
@@ -22841,7 +23239,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0082",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-90",
@@ -22874,7 +23273,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0083",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-91",
@@ -22908,7 +23308,8 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0084",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "CHIP-68"
+      "duplicate_of": "CHIP-68",
+      "confidence_tier": "unverified"
     },
     {
       "id": "CHIP-92",
@@ -22941,7 +23342,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0085",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-93",
@@ -22974,7 +23376,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0086",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-94",
@@ -23007,7 +23410,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0087",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-95",
@@ -23041,7 +23445,8 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0088",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "CHIP-80"
+      "duplicate_of": "CHIP-80",
+      "confidence_tier": "unverified"
     },
     {
       "id": "CHIP-096",
@@ -23096,7 +23501,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/",
       "rp_id": "RP-CHI-0089",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-097",
@@ -23150,7 +23556,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:hailo.ai/products/ai-accelerators/hailo-10h-ai-accelerator/",
       "rp_id": "RP-CHI-0090",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-098",
@@ -23206,7 +23613,8 @@ const DB = {
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:coral.ai/products/",
       "rp_id": "RP-CHI-0091",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-099",
@@ -23265,7 +23673,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0092",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-100",
@@ -23322,7 +23731,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-101",
@@ -23376,7 +23786,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0094",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-102",
@@ -23434,7 +23845,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-103",
@@ -23488,7 +23900,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-axelera-metis-aipu",
@@ -23545,7 +23958,8 @@ const DB = {
       "rp_id": "RP-CHI-0097",
       "source_url": "https://www.google.com/search?q=Axelera%20AI%EF%BC%88%E8%8D%B7%E5%85%B0%EF%BC%89%20Axelera%20Metis%20AIPU%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-axera-ax650n",
@@ -23606,7 +24020,8 @@ const DB = {
       "rp_id": "RP-CHI-0098",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%E5%8D%8A%E5%AF%BC%E4%BD%93%20(Axera)%20%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%20AX650N%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-axera-ax8850",
@@ -23664,7 +24079,8 @@ const DB = {
       "rp_id": "RP-CHI-0099",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%E5%8D%8A%E5%AF%BC%E4%BD%93%20(Axera)%20%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%20AX8850%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-blacksesame-huashan-a2000",
@@ -23722,7 +24138,8 @@ const DB = {
       "rp_id": "RP-CHI-0100",
       "source_url": "https://www.google.com/search?q=%E9%BB%91%E8%8A%9D%E9%BA%BB%E6%99%BA%E8%83%BD%20(Black%20Sesame%20Technologies%2C%202533.HK)%20%E9%BB%91%E8%8A%9D%E9%BA%BB%E6%99%BA%E8%83%BD%20%E5%8D%8E%E5%B1%B1%20A2000%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-sophgo-bm1684x",
@@ -23781,7 +24198,8 @@ const DB = {
       "rp_id": "RP-CHI-0101",
       "source_url": "https://www.google.com/search?q=%E7%AE%97%E8%83%BD%E7%A7%91%E6%8A%80%20(SOPHGO)%20%E7%AE%97%E8%83%BD%20SOPHON%20BM1684X%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-cambricon-mlu370-s4",
@@ -23838,7 +24256,8 @@ const DB = {
       "rp_id": "RP-CHI-0102",
       "source_url": "https://www.google.com/search?q=%E4%B8%AD%E7%A7%91%E5%AF%92%E6%AD%A6%E7%BA%AA%20(688256.SH)%20%E5%AF%92%E6%AD%A6%E7%BA%AA%20MLU370-S4%20%E6%8E%A8%E7%90%86%E5%8A%A0%E9%80%9F%E5%8D%A1%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-rockchip-rk3576",
@@ -23896,7 +24315,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0103",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-simaai-modalix",
@@ -23953,7 +24373,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0104",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-ambarella-n1-655",
@@ -24013,7 +24434,8 @@ const DB = {
       "rp_id": "RP-CHI-0105",
       "source_url": "https://www.google.com/search?q=Ambarella%EF%BC%88%E7%BE%8E%E5%9B%BD%E5%AE%89%E9%9C%B8%EF%BC%89%20Ambarella%20N1-655%20%E8%BE%B9%E7%BC%98%20GenAI%20SoC%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-ti-am69a",
@@ -24074,7 +24496,8 @@ const DB = {
       "rp_id": "RP-CHI-0106",
       "source_url": "https://www.google.com/search?q=Texas%20Instruments%20TI%20AM69A%20%E8%BE%B9%E7%BC%98%20AI%20%E5%A4%84%E7%90%86%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-deepx-dx-m1",
@@ -24131,7 +24554,8 @@ const DB = {
       "rp_id": "RP-CHI-0107",
       "source_url": "https://www.google.com/search?q=DEEPX%EF%BC%88%E9%9F%A9%E5%9B%BD%EF%BC%89%20DEEPX%20DX-M1%20%E8%BE%B9%E7%BC%98%20NPU%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-houmo-manye-m30",
@@ -24188,7 +24612,8 @@ const DB = {
       "rp_id": "RP-CHI-0108",
       "source_url": "https://www.google.com/search?q=%E5%90%8E%E6%91%A9%E6%99%BA%E8%83%BD%20(Houmo.AI)%20%E5%90%8E%E6%91%A9%E6%99%BA%E8%83%BD%20%E6%BC%AB%E7%95%8C%20M30%20%E5%AD%98%E7%AE%97%E4%B8%80%E4%BD%93%E8%8A%AF%E7%89%87%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     }
   ],
   "interfaces": [
@@ -24248,7 +24673,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.usb.org/documents",
       "rp_id": "RP-INT-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "IF-002",
@@ -24306,7 +24732,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.mipi.org/specifications/csi-2",
       "rp_id": "RP-INT-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "IF-003",
@@ -24365,7 +24792,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:pcisig.com/specifications",
       "rp_id": "RP-INT-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "IF-004",
@@ -24420,7 +24848,11 @@ const DB = {
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-INT-0004",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "source": "https://www.electronicsforu.com/tutorial/articles/gpio-parallel-serial-interface/",
+      "source_note": "GPIO 无单一组织规范；引用 electronicsforu 技术说明页作为参考描述",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "IF-005",
@@ -24476,7 +24908,11 @@ const DB = {
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-INT-0005",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "source": "https://en.wikipedia.org/wiki/Ethernet",
+      "source_note": "IEEE 802.3；维基百科概述页作为通用描述源",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "IF-006",
@@ -24515,7 +24951,8 @@ const DB = {
       "rp_id": "RP-INT-0006",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Isaac%20GR00T%20Platform%20(GR00T%20N1.5%20%2B%20GR00T-Dreams)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）"
+      "entity_kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
+      "confidence_tier": "observed"
     },
     {
       "id": "INTERFACE-abc123",
@@ -24556,7 +24993,8 @@ const DB = {
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "source": "unitree.com (URL 引用)"
+      "source": "unitree.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "INTERFACE-def456",
@@ -24594,7 +25032,8 @@ const DB = {
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-INT-0008",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "unverified"
     },
     {
       "id": "INTERFACE-ghi789",
@@ -24632,7 +25071,8 @@ const DB = {
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-INT-0009",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "unverified"
     },
     {
       "id": "INTERFACE-jkl012",
@@ -24670,7 +25110,8 @@ const DB = {
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-INT-0010",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "unverified"
     },
     {
       "id": "INTERFACE-mno345",
@@ -24708,7 +25149,8 @@ const DB = {
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-INT-0011",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "unverified"
     },
     {
       "id": "INTERFACE-pqr678",
@@ -24746,7 +25188,8 @@ const DB = {
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-INT-0012",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "unverified"
     },
     {
       "id": "INTERFACE-stu901",
@@ -24784,7 +25227,8 @@ const DB = {
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-INT-0013",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "unverified"
     },
     {
       "id": "INTERFACE-vwx234",
@@ -24822,7 +25266,8 @@ const DB = {
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-INT-0014",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "unverified"
     },
     {
       "id": "XIF-001",
@@ -24878,7 +25323,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0015",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-002",
@@ -24933,7 +25379,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-INT-0016",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-003",
@@ -24989,7 +25436,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0017",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-004",
@@ -25045,7 +25493,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0018",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-005",
@@ -25100,7 +25549,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0019",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-006",
@@ -25155,7 +25605,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0020",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-007",
@@ -25210,7 +25661,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0021",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-010",
@@ -25263,7 +25715,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:en.wikipedia.org/wiki/Universal_asynchronous_receiver-transm",
       "rp_id": "RP-INT-0022",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-011",
@@ -25317,7 +25770,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:en.wikipedia.org/wiki/RS-232",
       "rp_id": "RP-INT-0023",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-012",
@@ -25371,7 +25825,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:en.wikipedia.org/wiki/RS-485",
       "rp_id": "RP-INT-0024",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-014",
@@ -25427,7 +25882,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0025",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-015",
@@ -25482,7 +25938,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0026",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-016",
@@ -25535,7 +25992,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:en.wikipedia.org/wiki/Small_Form-factor_Pluggable",
       "rp_id": "RP-INT-0027",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-017",
@@ -25590,7 +26048,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0028",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-018",
@@ -25643,7 +26102,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:en.wikipedia.org/wiki/LVDS",
       "rp_id": "RP-INT-0029",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-019",
@@ -25699,7 +26159,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0030",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-020",
@@ -25754,7 +26215,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0031",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-021",
@@ -25809,7 +26271,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0032",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-022",
@@ -25864,7 +26327,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0033",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-023",
@@ -25920,7 +26384,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0034",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XIF-024",
@@ -25974,7 +26439,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-INT-0035",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-025",
@@ -26027,7 +26493,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:en.wikipedia.org/wiki/JTAG",
       "rp_id": "RP-INT-0036",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-026",
@@ -26082,7 +26549,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0037",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "STD-ISO-10218",
@@ -26121,7 +26589,8 @@ const DB = {
         "caee060_relevant": true,
         "interop_posture": "unknown",
         "iso22166_relevant": true
-      }
+      },
+      "confidence_tier": "verified"
     },
     {
       "id": "STD-ISO-15066",
@@ -26159,7 +26628,8 @@ const DB = {
         "caee060_relevant": true,
         "interop_posture": "unknown",
         "iso22166_relevant": true
-      }
+      },
+      "confidence_tier": "verified"
     },
     {
       "id": "STD-ISO-13849",
@@ -26197,7 +26667,8 @@ const DB = {
         "caee060_relevant": true,
         "interop_posture": "unknown",
         "iso22166_relevant": true
-      }
+      },
+      "confidence_tier": "verified"
     },
     {
       "id": "STD-ISO-9787",
@@ -26235,7 +26706,8 @@ const DB = {
         "caee060_relevant": true,
         "interop_posture": "unknown",
         "iso22166_relevant": true
-      }
+      },
+      "confidence_tier": "verified"
     },
     {
       "id": "STD-VDI-3844",
@@ -26273,7 +26745,8 @@ const DB = {
         "caee060_relevant": true,
         "interop_posture": "unknown",
         "iso22166_relevant": true
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "STD-GB-T-11291",
@@ -26313,7 +26786,8 @@ const DB = {
         "caee060_relevant": true,
         "interop_posture": "unknown",
         "iso22166_relevant": true
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "STD-GB-T-36008",
@@ -26352,7 +26826,8 @@ const DB = {
         "caee060_relevant": true,
         "interop_posture": "unknown",
         "iso22166_relevant": true
-      }
+      },
+      "confidence_tier": "derived"
     }
   ],
   "protocols": [
@@ -26413,7 +26888,8 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0001",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-002",
@@ -26472,7 +26948,8 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0002",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-003",
@@ -26528,7 +27005,8 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0003",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-004",
@@ -26589,7 +27067,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:emanual.robotis.com/docs/en/dxl/protocol2/",
       "rp_id": "RP-PRO-0004",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-005",
@@ -26650,7 +27129,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:design.ros2.org/articles/ros_on_dds.html",
       "rp_id": "RP-PRO-0005",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-006",
@@ -26707,7 +27187,11 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0006",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.sparkfun.com/tutorials/serial-communication-with-uart",
+      "source_note": "UART 标准由 RS-232 (TIA-232) 定义；此页为通用技术说明",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-007",
@@ -26765,7 +27249,11 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0007",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.nxp.com/webapp/download?colCode=I2C-BUS-SPEC",
+      "source_note": "I2C 由 NXP (原 Philips) 定义，公开 spec 下载页",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-008",
@@ -26823,7 +27311,11 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0008",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.microchip.com/en-us/products/interfaces/synchronous-serial-interface-spi",
+      "source_note": "SPI 由 Motorola (现 NXP) 定义；Microchip 产品页含标准描述",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-009",
@@ -26883,7 +27375,8 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0009",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-010",
@@ -26989,7 +27482,8 @@ const DB = {
         ],
         "source_commit": "5bcd7c7",
         "source_path": "api/protocols.json"
-      }
+      },
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-011",
@@ -27048,7 +27542,8 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0011",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-012",
@@ -27111,7 +27606,8 @@ const DB = {
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:www.modbus.org/specs.php",
       "rp_id": "RP-PRO-0012",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-013",
@@ -27175,7 +27671,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-PRO-0013",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-014",
@@ -27234,7 +27731,11 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0014",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://usb.org/",
+      "source_note": "USB 3.x 由 USB-IF 标准化；官网为权威源",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-015",
@@ -27295,7 +27796,11 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0015",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.mipi.org/specifications/mipi-csi-2",
+      "source_note": "MIPI CSI-2/3 由 MIPI Alliance 定义；官方 spec 目录页",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-016",
@@ -27354,7 +27859,8 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0016",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-017",
@@ -27414,7 +27920,8 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0017",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-018",
@@ -27475,7 +27982,8 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0018",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-019",
@@ -27540,7 +28048,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.bluetooth.com/specifications/",
       "rp_id": "RP-PRO-0019",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-020",
@@ -27599,7 +28108,11 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0020",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://en.wikipedia.org/wiki/SBUS",
+      "source_note": "SBus 由 Futaba 定义（专有）；维基百科技术说明页",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-021",
@@ -27664,7 +28177,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:mavlink.io/en/",
       "rp_id": "RP-PRO-0021",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-023",
@@ -27727,7 +28241,8 @@ const DB = {
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:opcfoundation.org/about/opc-technologies/opc-ua/",
       "rp_id": "RP-PRO-0022",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-024",
@@ -27790,7 +28305,8 @@ const DB = {
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:csa-iot.org/all-solutions/matter/",
       "rp_id": "RP-PRO-0023",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-025",
@@ -27848,7 +28364,8 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0024",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-026",
@@ -27906,7 +28423,11 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0025",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.3gpp.org/specifications-technical-reports",
+      "source_note": "NB-IoT 由 3GPP (3GPP2) 定义；官方规范索引",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-027",
@@ -27965,7 +28486,11 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0026",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.3gpp.org/specifications-technical-reports",
+      "source_note": "5G NR 由 3GPP 定义；官方规范索引",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-028",
@@ -28027,7 +28552,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.profibus.com/technology/profinet/",
       "rp_id": "RP-PRO-0027",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-029",
@@ -28088,7 +28614,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0028",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-030",
@@ -28147,7 +28674,11 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0029",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.omg.org/spec/xrce-dp/",
+      "source_note": "DDS-XRCE 由 OMG 标准化；官方规范页",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-031",
@@ -28205,7 +28736,11 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0030",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://arxiv.org/abs/2305.14749",
+      "source_note": "Adaptive Protocol (AI-driven) 概念来源论文；非正式标准",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-032",
@@ -28262,7 +28797,11 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0031",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://github.com/embodiedai-robotics/network-protocol-survey",
+      "source_note": "Embodied AI 通信网络综述；无正式标准，标注为综述引用",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-033",
@@ -28319,7 +28858,11 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0032",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.flexxbotics.com/",
+      "source_note": "FlexxBotics Protocol 由 FlexxBotics 定义（专有）；公司官网",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-034",
@@ -28389,7 +28932,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0033",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "derived"
     },
     {
       "id": "PROTO-035",
@@ -28461,7 +29005,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0034",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "derived"
     },
     {
       "id": "PROTO-036",
@@ -28534,7 +29079,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0035",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "derived"
     },
     {
       "id": "PROTO-040",
@@ -28603,7 +29149,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0036",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-041",
@@ -28674,7 +29221,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0037",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "derived"
     },
     {
       "id": "PROTO-042",
@@ -28712,7 +29260,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0038",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-043",
@@ -28750,7 +29299,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0039",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-044",
@@ -28788,7 +29338,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0040",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-045",
@@ -28826,7 +29377,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0041",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-046",
@@ -28865,7 +29417,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0042",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-i3c",
@@ -28918,7 +29471,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0043",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-opcua-dds-gateway",
@@ -28970,7 +29524,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0044",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "rproto-5g-nr-urllc",
@@ -29016,7 +29571,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0045",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-can-xl-v2",
@@ -29068,7 +29624,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0046",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-wifi7-mlo",
@@ -29114,7 +29671,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0047",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-ethercat-g",
@@ -29160,7 +29718,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0048",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-thread-14",
@@ -29213,7 +29772,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0049",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-ieee8021-tsn-profile",
@@ -29265,7 +29825,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0050",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "derived"
     },
     {
       "id": "rproto-robot-comm-electronics",
@@ -29317,7 +29878,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0051",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-delft-comm",
@@ -29369,7 +29931,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0052",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-zenoh-flow",
@@ -29421,7 +29984,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0053",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-robotcore",
@@ -29473,7 +30037,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0054",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-cyclonedds",
@@ -29525,7 +30090,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0055",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-thread-1.4",
@@ -29571,7 +30137,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0056",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTOCOL-a1b2c3",
@@ -29609,7 +30176,8 @@ const DB = {
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0057",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-d4e5f6",
@@ -29647,7 +30215,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0058",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-g7h8i9",
@@ -29685,7 +30254,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0059",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-j0k1l2",
@@ -29723,7 +30293,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0060",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-m3n4o5",
@@ -29761,7 +30332,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0061",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-p6q7r8",
@@ -29799,7 +30371,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0062",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-s9t0u1",
@@ -29837,7 +30410,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0063",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-v2w3x4",
@@ -29875,7 +30449,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0064",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     }
   ],
   "llms": [
@@ -29931,7 +30506,8 @@ const DB = {
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:openai.com/index/hello-gpt-4o/",
       "rp_id": "RP-LLM-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "LLM-002",
@@ -29984,7 +30560,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.anthropic.com/news/claude-3-5-sonnet",
       "rp_id": "RP-LLM-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "LLM-006",
@@ -30039,7 +30616,8 @@ const DB = {
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:qwenlm.github.io/blog/qwen2.5-vl/",
       "rp_id": "RP-LLM-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "LLM-a1b2c3",
@@ -30078,7 +30656,8 @@ const DB = {
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0004",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-d4e5f6",
@@ -30117,7 +30696,8 @@ const DB = {
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0005",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-g7h8i9",
@@ -30156,7 +30736,8 @@ const DB = {
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0006",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-j0k1l2",
@@ -30195,7 +30776,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0007",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-m3n4o5",
@@ -30234,7 +30816,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0008",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-p6q7r8",
@@ -30273,7 +30856,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0009",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-s9t0u1",
@@ -30312,7 +30896,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0010",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-v2w3x4",
@@ -30351,7 +30936,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0011",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-y5z6a7",
@@ -30390,7 +30976,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0012",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-b8c9d0",
@@ -30429,7 +31016,8 @@ const DB = {
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0013",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-a3b7c9",
@@ -30467,7 +31055,8 @@ const DB = {
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0014",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-d4e8f2",
@@ -30505,7 +31094,8 @@ const DB = {
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0015",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-g5h1j3",
@@ -30543,7 +31133,8 @@ const DB = {
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0016",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-k6m4n5",
@@ -30581,7 +31172,8 @@ const DB = {
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0017",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-p7q8r9",
@@ -30619,7 +31211,8 @@ const DB = {
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0018",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-s2t3u4",
@@ -30657,7 +31250,8 @@ const DB = {
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0019",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-v5w6x7",
@@ -30695,7 +31289,8 @@ const DB = {
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0020",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-y8z9a1",
@@ -30733,7 +31328,8 @@ const DB = {
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0021",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-b2c3d4",
@@ -30771,7 +31367,8 @@ const DB = {
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0022",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "LLM-e5f6g7",
@@ -30809,7 +31406,8 @@ const DB = {
       "kind_basis": "category=llms（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-LLM-0023",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "unverified"
     },
     {
       "id": "XLLM-001",
@@ -30861,7 +31459,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0024",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-002",
@@ -30913,7 +31512,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0025",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-003",
@@ -30964,7 +31564,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0026",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-004",
@@ -31016,7 +31617,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0027",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-005",
@@ -31068,7 +31670,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0028",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-006",
@@ -31120,7 +31723,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0029",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-007",
@@ -31172,7 +31776,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0030",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-008",
@@ -31224,7 +31829,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0031",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-009",
@@ -31276,7 +31882,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0032",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-010",
@@ -31327,7 +31934,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0033",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-011",
@@ -31379,7 +31987,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0034",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-012",
@@ -31432,7 +32041,8 @@ const DB = {
       "source_tier_basis": "entity_homepage",
       "source_tier_prev": "B",
       "rp_id": "RP-LLM-0035",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-014",
@@ -31485,7 +32095,8 @@ const DB = {
       "source_tier_basis": "entity_homepage",
       "source_tier_prev": "B",
       "rp_id": "RP-LLM-0036",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-015",
@@ -31537,7 +32148,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0037",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-016",
@@ -31589,7 +32201,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0038",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-017",
@@ -31640,7 +32253,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0039",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-018",
@@ -31692,7 +32306,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0040",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-019",
@@ -31744,7 +32359,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0041",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XLLM-020",
@@ -31797,7 +32413,8 @@ const DB = {
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:github.com/OpenGVLab",
       "rp_id": "RP-LLM-0042",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     }
   ],
   "platforms": [
@@ -31860,7 +32477,8 @@ const DB = {
       "rp_id": "RP-PLA-0001",
       "source_url": "https://www.google.com/search?q=%E5%A4%9A%E5%AE%B6%20PatSnap%20Humanoid%20Actuator%20Analysis%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
-      "entity_kind_basis": "type=market_report（研究/报告类条目，非可采购零部件）"
+      "entity_kind_basis": "type=market_report（研究/报告类条目，非可采购零部件）",
+      "confidence_tier": "observed"
     },
     {
       "id": "RPLAT-001",
@@ -31903,7 +32521,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:bostondynamics.com/atlas/",
       "rp_id": "RP-PLA-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "RPLAT-002",
@@ -31942,7 +32561,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RPLAT-003",
@@ -31981,7 +32601,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0004",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RPLAT-004",
@@ -32029,7 +32650,8 @@ const DB = {
         "Unitree SDK",
         "UDP"
       ],
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "RPLAT-005",
@@ -32072,7 +32694,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.anybotics.com/robotics/anymal/",
       "rp_id": "RP-PLA-0006",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "RPLAT-006",
@@ -32115,7 +32738,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:enterprise.dji.com/matrice-350-rtk",
       "rp_id": "RP-PLA-0007",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "RPLAT-007",
@@ -32161,7 +32785,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0008",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RPLAT-008",
@@ -32211,7 +32836,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "RPLAT-009",
@@ -32259,7 +32885,8 @@ const DB = {
       "rp_id": "RP-PLA-0010",
       "entity_kind_basis": "默认归类",
       "quarantine_reason": "Duplicate of RPLAT-010 (Tesla Optimus Gen 3) - same name/manufacturer, deduplication isolation per 2026-10-08 audit",
-      "duplicate_of": "RPLAT-010"
+      "duplicate_of": "RPLAT-010",
+      "confidence_tier": "unverified"
     },
     {
       "id": "RPLAT-010",
@@ -32309,7 +32936,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0011",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RPLAT-011",
@@ -32359,7 +32987,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0012",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RPLAT-012",
@@ -32414,7 +33043,8 @@ const DB = {
         "Unitree SDK",
         "UDP"
       ],
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RPLAT-013",
@@ -32466,7 +33096,8 @@ const DB = {
         "Unitree SDK",
         "UDP"
       ],
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RPLAT-014",
@@ -32519,7 +33150,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:developer.nvidia.com/isaac/gr00t",
       "rp_id": "RP-PLA-0015",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "PLATFORM-abc123",
@@ -32561,7 +33193,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PLATFORM-def456",
@@ -32603,7 +33236,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PLATFORM-ghi789",
@@ -32645,7 +33279,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PLATFORM-jkl012",
@@ -32687,7 +33322,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PLATFORM-mno345",
@@ -32729,7 +33365,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PLATFORM-pqr678",
@@ -32771,7 +33408,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PLATFORM-stu901",
@@ -32817,7 +33455,8 @@ const DB = {
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source": "unitree.com (URL 引用)"
+      "source": "unitree.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PLATFORM-vwx234",
@@ -32859,7 +33498,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
       "source_tier_prev": "B",
-      "source": "agibot.cn (URL 引用)"
+      "source": "agibot.cn (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PLATFORM-yza567",
@@ -32901,7 +33541,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "type=机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "unverified"
     },
     {
       "id": "RPLAT-oss-open-duck-mini",
@@ -32960,7 +33601,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:github.com/apirrone/Open_Duck_Mini",
       "rp_id": "RP-PLA-0025",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "RPLAT-oss-reachy2",
@@ -33022,7 +33664,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:github.com/pollen-robotics/reachy2-sdk",
       "rp_id": "RP-PLA-0026",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-001",
@@ -33079,7 +33722,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0027",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XPLT-002",
@@ -33136,7 +33780,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0028",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XPLT-005",
@@ -33193,7 +33838,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0029",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XPLT-006",
@@ -33250,7 +33896,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0030",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XPLT-007",
@@ -33307,7 +33954,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0031",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XPLT-008",
@@ -33364,7 +34012,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0032",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XPLT-009",
@@ -33421,7 +34070,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0033",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XPLT-010",
@@ -33478,7 +34128,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0034",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XPLT-011",
@@ -33535,7 +34186,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0035",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XPLT-013",
@@ -33592,7 +34244,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0036",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XPLT-015",
@@ -33648,7 +34301,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-PLA-0037",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-016",
@@ -33705,7 +34359,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0038",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XPLT-017",
@@ -33762,7 +34417,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0039",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XPLT-018",
@@ -33819,7 +34475,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0040",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "ORG-matrixrobotics",
@@ -33892,7 +34549,8 @@ const DB = {
       "source_tier_prev": "B",
       "last_verified": "2026-08-18",
       "rp_id": "RP-PLA-0041",
-      "entity_kind_basis": "type=humanoid_robot_company（企业/机构主体，不是实物零部件，无接口可判定）"
+      "entity_kind_basis": "type=humanoid_robot_company（企业/机构主体，不是实物零部件，无接口可判定）",
+      "confidence_tier": "observed"
     },
     {
       "id": "PLAT-seeed-rebot-dm",
@@ -33961,7 +34619,8 @@ const DB = {
         "PLAT-seeed-rebot-rs",
         "ACT-damiao-4340p"
       ],
-      "compatibility_note": "B601-DM 与 B601-RS 是同外观的两种电机版本（Damiao vs RobStride），机械安装面相同但电机接口不兼容，不可互换；详见 B601-RS 条目。"
+      "compatibility_note": "B601-DM 与 B601-RS 是同外观的两种电机版本（Damiao vs RobStride），机械安装面相同但电机接口不兼容，不可互换；详见 B601-RS 条目。",
+      "confidence_tier": "verified"
     },
     {
       "id": "PLAT-seeed-rebot-rs",
@@ -34030,7 +34689,8 @@ const DB = {
         "PLAT-seeed-rebot-dm",
         "ACT-robstride-rsm"
       ],
-      "compatibility_note": "B601-RS 与 B601-DM 是同外观的两种电机版本（RobStride vs Damiao），机械安装面相同但电机接口不兼容，不可互换；详见 B601-DM 条目。"
+      "compatibility_note": "B601-RS 与 B601-DM 是同外观的两种电机版本（RobStride vs Damiao），机械安装面相同但电机接口不兼容，不可互换；详见 B601-DM 条目。",
+      "confidence_tier": "verified"
     },
     {
       "id": "HUB-001",
@@ -34071,7 +34731,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-001"
+      "rp_id": "HUB-001",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-002",
@@ -34112,7 +34773,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-002"
+      "rp_id": "HUB-002",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-003",
@@ -34153,7 +34815,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-003"
+      "rp_id": "HUB-003",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-004",
@@ -34194,7 +34857,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-004"
+      "rp_id": "HUB-004",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-005",
@@ -34235,7 +34899,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-005"
+      "rp_id": "HUB-005",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-006",
@@ -34276,7 +34941,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-006"
+      "rp_id": "HUB-006",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-007",
@@ -34317,7 +34983,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-007"
+      "rp_id": "HUB-007",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-008",
@@ -34358,7 +35025,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-008"
+      "rp_id": "HUB-008",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-009",
@@ -34399,7 +35067,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-009"
+      "rp_id": "HUB-009",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-010",
@@ -34440,7 +35109,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-010"
+      "rp_id": "HUB-010",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-011",
@@ -34481,7 +35151,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-011"
+      "rp_id": "HUB-011",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-012",
@@ -34522,7 +35193,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-012"
+      "rp_id": "HUB-012",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-013",
@@ -34563,7 +35235,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-013"
+      "rp_id": "HUB-013",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-014",
@@ -34604,7 +35277,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-014"
+      "rp_id": "HUB-014",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-015",
@@ -34645,7 +35319,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-015"
+      "rp_id": "HUB-015",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-016",
@@ -34686,7 +35361,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-016"
+      "rp_id": "HUB-016",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-017",
@@ -34727,7 +35403,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-017"
+      "rp_id": "HUB-017",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-018",
@@ -34768,7 +35445,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-018"
+      "rp_id": "HUB-018",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-019",
@@ -34809,7 +35487,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-019"
+      "rp_id": "HUB-019",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-020",
@@ -34850,7 +35529,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-020"
+      "rp_id": "HUB-020",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-021",
@@ -34891,7 +35571,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-021"
+      "rp_id": "HUB-021",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-022",
@@ -34932,7 +35613,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-022"
+      "rp_id": "HUB-022",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-023",
@@ -34973,7 +35655,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-023"
+      "rp_id": "HUB-023",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-024",
@@ -35014,7 +35697,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-024"
+      "rp_id": "HUB-024",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-025",
@@ -35055,7 +35739,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-025"
+      "rp_id": "HUB-025",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-026",
@@ -35096,7 +35781,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-026"
+      "rp_id": "HUB-026",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-027",
@@ -35137,7 +35823,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-027"
+      "rp_id": "HUB-027",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-028",
@@ -35178,7 +35865,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-028"
+      "rp_id": "HUB-028",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-029",
@@ -35219,7 +35907,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-029"
+      "rp_id": "HUB-029",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-030",
@@ -35260,7 +35949,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-030"
+      "rp_id": "HUB-030",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-031",
@@ -35301,7 +35991,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-031"
+      "rp_id": "HUB-031",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-032",
@@ -35342,7 +36033,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-032"
+      "rp_id": "HUB-032",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-033",
@@ -35383,7 +36075,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-033"
+      "rp_id": "HUB-033",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-034",
@@ -35424,7 +36117,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-034"
+      "rp_id": "HUB-034",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-035",
@@ -35465,7 +36159,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-035"
+      "rp_id": "HUB-035",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-036",
@@ -35506,7 +36201,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-036"
+      "rp_id": "HUB-036",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-037",
@@ -35547,7 +36243,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-037"
+      "rp_id": "HUB-037",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-038",
@@ -35588,7 +36285,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-038"
+      "rp_id": "HUB-038",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-039",
@@ -35629,7 +36327,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-039"
+      "rp_id": "HUB-039",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-040",
@@ -35670,7 +36369,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-040"
+      "rp_id": "HUB-040",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-041",
@@ -35711,7 +36411,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-041"
+      "rp_id": "HUB-041",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-042",
@@ -35752,7 +36453,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-042"
+      "rp_id": "HUB-042",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-043",
@@ -35793,7 +36495,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-043"
+      "rp_id": "HUB-043",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-044",
@@ -35832,7 +36535,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-044"
+      "rp_id": "HUB-044",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-045",
@@ -35873,7 +36577,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-045"
+      "rp_id": "HUB-045",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-046",
@@ -35912,7 +36617,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-046"
+      "rp_id": "HUB-046",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-047",
@@ -35951,7 +36657,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-047"
+      "rp_id": "HUB-047",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-048",
@@ -35990,7 +36697,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-048"
+      "rp_id": "HUB-048",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-049",
@@ -36031,7 +36739,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-049"
+      "rp_id": "HUB-049",
+      "confidence_tier": "observed"
     },
     {
       "id": "HUB-050",
@@ -36072,7 +36781,8 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
-      "rp_id": "HUB-050"
+      "rp_id": "HUB-050",
+      "confidence_tier": "observed"
     },
     {
       "id": "SUPERDEX-fr3-v2",
@@ -36183,7 +36893,8 @@ const DB = {
       "needs_provenance": false,
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
-      "rp_id": "SUPERDEX-fr3-v2"
+      "rp_id": "SUPERDEX-fr3-v2",
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-fr3",
@@ -36294,7 +37005,8 @@ const DB = {
       "needs_provenance": false,
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
-      "rp_id": "SUPERDEX-fr3"
+      "rp_id": "SUPERDEX-fr3",
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-openarm-v20-left-arm",
@@ -36403,7 +37115,8 @@ const DB = {
       "needs_provenance": false,
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
-      "rp_id": "SUPERDEX-openarm-v20-left-arm"
+      "rp_id": "SUPERDEX-openarm-v20-left-arm",
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-openarm-v20-right-arm",
@@ -36513,7 +37226,8 @@ const DB = {
       "quarantine": true,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
       "rp_id": "SUPERDEX-openarm-v20-right-arm",
-      "duplicate_of": "SUPERDEX-openarm-v20-left-arm"
+      "duplicate_of": "SUPERDEX-openarm-v20-left-arm",
+      "confidence_tier": "unverified"
     },
     {
       "id": "SUPERDEX-fr3-dg5f-short-seed-right",
@@ -36607,7 +37321,8 @@ const DB = {
       "quarantine": true,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
       "rp_id": "SUPERDEX-fr3-dg5f-short-seed-right",
-      "duplicate_of": "SUPERDEX-fr3-dg5f-short-right"
+      "duplicate_of": "SUPERDEX-fr3-dg5f-short-right",
+      "confidence_tier": "unverified"
     },
     {
       "id": "SUPERDEX-fr3-dg5f-short-right",
@@ -36699,7 +37414,8 @@ const DB = {
       "needs_provenance": false,
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
-      "rp_id": "SUPERDEX-fr3-dg5f-short-right"
+      "rp_id": "SUPERDEX-fr3-dg5f-short-right",
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-example-bot-2dof",
@@ -36792,7 +37508,8 @@ const DB = {
       "needs_provenance": false,
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
-      "rp_id": "SUPERDEX-example-bot-2dof"
+      "rp_id": "SUPERDEX-example-bot-2dof",
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-allegro-v5-right",
@@ -36935,7 +37652,8 @@ const DB = {
       "needs_provenance": false,
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
-      "rp_id": "SUPERDEX-allegro-v5-right"
+      "rp_id": "SUPERDEX-allegro-v5-right",
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-dg5f-short-right",
@@ -37091,7 +37809,8 @@ const DB = {
       "needs_provenance": false,
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
-      "rp_id": "SUPERDEX-dg5f-short-right"
+      "rp_id": "SUPERDEX-dg5f-short-right",
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-wuji-hand2-beta1-right",
@@ -37255,7 +37974,8 @@ const DB = {
       "needs_provenance": false,
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
-      "rp_id": "SUPERDEX-wuji-hand2-beta1-right"
+      "rp_id": "SUPERDEX-wuji-hand2-beta1-right",
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-dg5f-seed",
@@ -37342,7 +38062,8 @@ const DB = {
       "needs_provenance": false,
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
-      "rp_id": "SUPERDEX-dg5f-seed"
+      "rp_id": "SUPERDEX-dg5f-seed",
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-openarm-v20-torso",
@@ -37427,7 +38148,8 @@ const DB = {
       "needs_provenance": false,
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
-      "rp_id": "SUPERDEX-openarm-v20-torso"
+      "rp_id": "SUPERDEX-openarm-v20-torso",
+      "confidence_tier": "verified"
     },
     {
       "id": "SO-ARM100",
@@ -37466,7 +38188,8 @@ const DB = {
         "reason": "上游开源仓未公开工具侧法兰标准与外部电气接口，故机械与电气均不填声明——**不为了完成度而编造**"
       },
       "rp_id": "RP-PLA-0042",
-      "source_tier_basis": "deep_link:github.com/TheRobotStudio/SO-ARM100"
+      "source_tier_basis": "deep_link:github.com/TheRobotStudio/SO-ARM100",
+      "confidence_tier": "verified"
     }
   ],
   "flexible_actuators": [
@@ -37511,7 +38234,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "FA-002",
@@ -37554,7 +38278,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "FA-003",
@@ -37597,7 +38322,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "FA-004",
@@ -37636,7 +38362,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-FLE-0004",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "FA-005",
@@ -37679,7 +38406,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "FA-006",
@@ -37722,7 +38450,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "XFA-001",
@@ -37767,7 +38496,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0007",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-002",
@@ -37812,7 +38542,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0008",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-003",
@@ -37857,7 +38588,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0009",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-004",
@@ -37902,7 +38634,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0010",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-005",
@@ -37947,7 +38680,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0011",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-006",
@@ -37992,7 +38726,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0012",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-007",
@@ -38037,7 +38772,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0013",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-008",
@@ -38082,7 +38818,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0014",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-009",
@@ -38127,7 +38864,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0015",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-010",
@@ -38172,7 +38910,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0016",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-011",
@@ -38217,7 +38956,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0017",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-013",
@@ -38262,7 +39002,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0018",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-014",
@@ -38307,7 +39048,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0019",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-015",
@@ -38352,7 +39094,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0020",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-016",
@@ -38397,7 +39140,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0021",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "XFA-017",
@@ -38452,7 +39196,8 @@ const DB = {
       "rp_id": "RP-FLE-0022",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "tier_cap_reason": "来源为同行评审期刊（Advanced Functional Materials）报道的 UNIST 研究原型，非厂商量产规格页；按 source_tier_basis=peer_reviewed_journal 归 B。研究原型阶段无标准化机械接口，mechanical_interface 保持 not_declared。"
+      "tier_cap_reason": "来源为同行评审期刊（Advanced Functional Materials）报道的 UNIST 研究原型，非厂商量产规格页；按 source_tier_basis=peer_reviewed_journal 归 B。研究原型阶段无标准化机械接口，mechanical_interface 保持 not_declared。",
+      "confidence_tier": "observed"
     }
   ],
   "robot_ai_models": [
@@ -38513,7 +39258,8 @@ const DB = {
       "rp_id": "RP-ROB-0001",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Cosmos%20%2B%20GR00T%20Model%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "CHIP-nvidia-cosmos-gr00t-v2",
@@ -38573,7 +39319,8 @@ const DB = {
       "rp_id": "RP-ROB-0002",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Cosmos%20%2B%20GR00T%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "LLM-003",
@@ -38626,7 +39373,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:deepmind.google/discover/blog/rt-2-new-model-translates-visi",
       "rp_id": "RP-ROB-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "LLM-004",
@@ -38679,7 +39427,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-ROB-0004",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "LLM-005",
@@ -38732,7 +39481,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-ROB-0005",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "LLM-007",
@@ -38781,7 +39531,8 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0006",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "LLM-028",
@@ -38845,7 +39596,8 @@ const DB = {
       "rp_id": "RP-ROB-0007",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Isaac%20GR00T%201.7%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "LLM-029",
@@ -38908,7 +39660,8 @@ const DB = {
       "rp_id": "RP-ROB-0008",
       "source_url": "https://www.google.com/search?q=HuggingFace%20SmolVLA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "LLM-030",
@@ -38971,7 +39724,8 @@ const DB = {
       "rp_id": "RP-ROB-0009",
       "source_url": "https://www.google.com/search?q=Physical%20Intelligence%20%CF%800.5%20(Physical%20Intelligence)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "RAI-001",
@@ -39011,7 +39765,8 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0010",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RAI-002",
@@ -39051,7 +39806,8 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0011",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RAI-003",
@@ -39067,8 +39823,8 @@ const DB = {
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39091,7 +39847,17 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0012",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      },
+      "confidence_tier": "unverified"
     },
     {
       "id": "RAI-004",
@@ -39107,8 +39873,8 @@ const DB = {
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39131,7 +39897,17 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0013",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      },
+      "confidence_tier": "unverified"
     },
     {
       "id": "RAI-005",
@@ -39147,8 +39923,8 @@ const DB = {
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39171,7 +39947,17 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0014",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      },
+      "confidence_tier": "unverified"
     },
     {
       "id": "RAI-006",
@@ -39187,8 +39973,8 @@ const DB = {
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39211,7 +39997,17 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0015",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      },
+      "confidence_tier": "unverified"
     },
     {
       "id": "RAI-007",
@@ -39251,7 +40047,8 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0016",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RAI-008",
@@ -39295,7 +40092,8 @@ const DB = {
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:huggingface.co/blog/smolvla",
       "rp_id": "RP-ROB-0017",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "RAI-009",
@@ -39311,8 +40109,8 @@ const DB = {
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39335,7 +40133,17 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0018",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      },
+      "confidence_tier": "unverified"
     },
     {
       "id": "RAI-010",
@@ -39351,8 +40159,8 @@ const DB = {
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39375,7 +40183,17 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0019",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      },
+      "confidence_tier": "unverified"
     },
     {
       "id": "RAI-011",
@@ -39391,8 +40209,8 @@ const DB = {
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39415,7 +40233,17 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0020",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      },
+      "confidence_tier": "unverified"
     },
     {
       "id": "RAI-012",
@@ -39431,8 +40259,8 @@ const DB = {
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39455,7 +40283,17 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0021",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      },
+      "confidence_tier": "unverified"
     },
     {
       "id": "RAI-013",
@@ -39471,8 +40309,8 @@ const DB = {
       "license": "Apache 2.0",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39495,7 +40333,17 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0022",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      },
+      "confidence_tier": "unverified"
     },
     {
       "id": "RAI-014",
@@ -39535,7 +40383,8 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0023",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RAI-015",
@@ -39575,7 +40424,8 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0024",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RAI-016",
@@ -39619,7 +40469,8 @@ const DB = {
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:huggingface.co/openvla/openvla-7b",
       "rp_id": "RP-ROB-0025",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "RAI-017",
@@ -39660,7 +40511,8 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "source": "厂商目录声明值：Community（无原始链接，未核验）",
       "rp_id": "RP-ROB-0026",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "RAI-018",
@@ -39676,8 +40528,8 @@ const DB = {
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39700,7 +40552,17 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0027",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      },
+      "confidence_tier": "unverified"
     },
     {
       "id": "RAI-019",
@@ -39716,8 +40578,8 @@ const DB = {
       "license": "CC BY-NC-SA 4.0",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39740,7 +40602,17 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0028",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      },
+      "confidence_tier": "unverified"
     },
     {
       "id": "RAI-020",
@@ -39756,8 +40628,8 @@ const DB = {
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39780,7 +40652,17 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0029",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      },
+      "confidence_tier": "unverified"
     },
     {
       "id": "RAI-021",
@@ -39820,7 +40702,8 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0030",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "XRAM-002",
@@ -39876,7 +40759,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0031",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XRAM-005",
@@ -39932,7 +40816,8 @@ const DB = {
       "source_tier_basis": "entity_homepage",
       "source_tier_prev": "B",
       "rp_id": "RP-ROB-0032",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XRAM-006",
@@ -39988,7 +40873,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0033",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XRAM-007",
@@ -40045,7 +40931,8 @@ const DB = {
       "source_tier_basis": "entity_homepage",
       "source_tier_prev": "B",
       "rp_id": "RP-ROB-0034",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XRAM-008",
@@ -40101,7 +40988,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0035",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XRAM-010",
@@ -40157,7 +41045,8 @@ const DB = {
       "source_tier_basis": "entity_homepage",
       "source_tier_prev": "B",
       "rp_id": "RP-ROB-0036",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XRAM-011",
@@ -40213,7 +41102,8 @@ const DB = {
       "source_tier_basis": "entity_homepage",
       "source_tier_prev": "B",
       "rp_id": "RP-ROB-0037",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XRAM-012",
@@ -40268,7 +41158,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0038",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XRAM-013",
@@ -40323,7 +41214,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0039",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XRAM-014",
@@ -40379,7 +41271,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0040",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XRAM-015",
@@ -40434,7 +41327,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0041",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XRAM-016",
@@ -40489,7 +41383,8 @@ const DB = {
       "source_tier_basis": "entity_homepage",
       "source_tier_prev": "B",
       "rp_id": "RP-ROB-0042",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XRAM-017",
@@ -40544,7 +41439,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0043",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XRAM-018",
@@ -40600,7 +41496,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0044",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "ACE-VIDIHAND-001",
@@ -40653,7 +41550,8 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "deep_link:www.linkedin.com/posts/acerobotics_embodiedai-robotics-world",
       "rp_id": "RP-ROB-0045",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "ZEST-FRAMEWORK-001",
@@ -40709,7 +41607,8 @@ const DB = {
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "deep_link:arxiv.org/abs/2602.00401",
       "rp_id": "RP-ROB-0046",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     }
   ],
   "data_acquisition": [
@@ -40767,7 +41666,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:tonyzhaozh.github.io/aloha/",
       "rp_id": "RP-DAT-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-002",
@@ -40822,7 +41722,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-DAT-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-003",
@@ -40876,7 +41777,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:wuphilipp.github.io/gello_site/",
       "rp_id": "RP-DAT-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-004",
@@ -40933,7 +41835,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-DAT-0004",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-005",
@@ -40989,7 +41892,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-006",
@@ -41047,7 +41951,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-DAT-0006",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-007",
@@ -41106,7 +42011,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-DAT-0007",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-008",
@@ -41162,7 +42068,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-DAT-0008",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-009",
@@ -41213,7 +42120,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-DAT-0009",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-010",
@@ -41261,7 +42169,8 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-DAT-0010",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-011",
@@ -41315,7 +42224,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-012",
@@ -41369,7 +42279,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-013",
@@ -41426,7 +42337,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-014",
@@ -41480,7 +42392,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-015",
@@ -41535,7 +42448,8 @@ const DB = {
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "source": "google.com (URL 引用)"
+      "source": "google.com (URL 引用)",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-tele-mobile-aloha",
@@ -41595,7 +42509,8 @@ const DB = {
       "rp_id": "RP-DAT-0016",
       "source_url": "https://www.google.com/search?q=Stanford%20University%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%8C%E7%A4%BE%E5%8C%BA%E5%8F%AF%E8%87%AA%E5%BB%BA%EF%BC%89%20Mobile%20ALOHA%20%E7%A7%BB%E5%8A%A8%E5%8F%8C%E8%87%82%E9%81%A5%E6%93%8D%E4%BD%9C%E9%87%87%E9%9B%86%E5%B9%B3%E5%8F%B0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-tele-open-television",
@@ -41657,7 +42572,8 @@ const DB = {
       "rp_id": "RP-DAT-0017",
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%20%2F%20MIT%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20Open-TeleVision%20%E6%B2%89%E6%B5%B8%E5%BC%8F%20VR%20%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-exo-airexo2",
@@ -41717,7 +42633,8 @@ const DB = {
       "rp_id": "RP-DAT-0018",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20AirExo-2%20%E4%BD%8E%E6%88%90%E6%9C%AC%E5%8F%AF%E7%A9%BF%E6%88%B4%E5%A4%96%E9%AA%A8%E9%AA%BC%E9%87%87%E9%9B%86%E8%A3%85%E7%BD%AE%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-tele-bunny-visionpro",
@@ -41777,7 +42694,8 @@ const DB = {
       "rp_id": "RP-DAT-0019",
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20Bunny-VisionPro%20%E5%8F%8C%E6%89%8B%E5%AE%9E%E6%97%B6%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-exo-ace-teleop",
@@ -41836,7 +42754,8 @@ const DB = {
       "rp_id": "RP-DAT-0020",
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20ACE%20%E8%B7%A8%E5%B9%B3%E5%8F%B0%E8%A7%86%E8%A7%89-%E5%A4%96%E9%AA%A8%E9%AA%BC%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-glove-doglove",
@@ -41896,7 +42815,8 @@ const DB = {
       "rp_id": "RP-DAT-0021",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20DOGlove%20%E5%8A%9B%E5%8F%8D%E9%A6%88%E6%95%B0%E6%8D%AE%E6%89%8B%E5%A5%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-glove-manus-quantum",
@@ -41956,7 +42876,8 @@ const DB = {
       "rp_id": "RP-DAT-0022",
       "source_url": "https://www.google.com/search?q=Manus%EF%BC%88%E8%8D%B7%E5%85%B0%EF%BC%89%20Manus%20Quantum%20Metagloves%20%E5%8A%A8%E6%8D%95%E6%89%8B%E5%A5%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-mocap-rokoko-smartsuit2",
@@ -42016,7 +42937,8 @@ const DB = {
       "rp_id": "RP-DAT-0023",
       "source_url": "https://www.google.com/search?q=Rokoko%EF%BC%88%E4%B8%B9%E9%BA%A6%EF%BC%89%20Rokoko%20Smartsuit%20Pro%20II%20%E6%83%AF%E6%80%A7%E5%8A%A8%E6%8D%95%E6%9C%8D%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-mocap-noitom-pn-studio",
@@ -42077,7 +42999,8 @@ const DB = {
       "rp_id": "RP-DAT-0024",
       "source_url": "https://www.google.com/search?q=%E5%8C%97%E4%BA%AC%E8%AF%BA%E4%BA%A6%E8%85%BE%E7%A7%91%E6%8A%80%20(Noitom)%20%E8%AF%BA%E4%BA%A6%E8%85%BE%20Perception%20Neuron%20Studio%20%E6%83%AF%E6%80%A7%E5%8A%A8%E6%8D%95%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-umi-fastumi",
@@ -42137,7 +43060,8 @@ const DB = {
       "rp_id": "RP-DAT-0025",
       "source_url": "https://www.google.com/search?q=%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA%20%2F%20%E5%AD%A6%E6%9C%AF%E5%9B%A2%E9%98%9F%20FastUMI%20%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E5%9E%8B%20UMI%20%E9%87%87%E9%9B%86%E8%A3%85%E7%BD%AE%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-humanoid-humanplus",
@@ -42197,7 +43121,8 @@ const DB = {
       "rp_id": "RP-DAT-0026",
       "source_url": "https://www.google.com/search?q=Stanford%20University%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20HumanPlus%20%E4%BA%BA%E5%BD%A2%E5%BD%B1%E5%AD%90%E5%AD%A6%E4%B9%A0%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-neuro-originflow-kit",
@@ -42259,7 +43184,8 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "source_tier_prev": "C",
       "rp_id": "RP-DAT-0027",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "DATA-neuro-snoworigin-band",
@@ -42320,7 +43246,8 @@ const DB = {
       "source_tier_basis": "unattributable_text",
       "rp_id": "RP-DAT-0028",
       "entity_kind_basis": "默认归类",
-      "source_tier_prev": "B"
+      "source_tier_prev": "B",
+      "confidence_tier": "derived"
     },
     {
       "id": "DATA-neuro-aemg-ref",
@@ -42382,7 +43309,8 @@ const DB = {
       "rp_id": "RP-DAT-0029",
       "source_url": "https://www.google.com/search?q=AEMG-series%EF%BC%88CVPR%202026%20%E5%BC%80%E6%BA%90%EF%BC%89%20AEMG%20%E9%80%9A%E7%94%A8%E8%82%8C%E7%94%B5%E9%87%87%E9%9B%86%E5%8F%82%E8%80%83%E5%B9%B3%E5%8F%B0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-oss-agibot-world",
@@ -42437,7 +43365,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:github.com/OpenDriveLab/AgiBot-World",
       "rp_id": "RP-DAT-0030",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-002",
@@ -42491,7 +43420,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-DAT-0031",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-003",
@@ -42546,7 +43476,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0032",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XDA-004",
@@ -42601,7 +43532,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0033",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XDA-005",
@@ -42655,7 +43587,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:github.com/huggingface/lerobot",
       "rp_id": "RP-DAT-0034",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-006",
@@ -42710,7 +43643,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0035",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XDA-007",
@@ -42766,7 +43700,8 @@ const DB = {
       "source_tier_prev": "C",
       "source_tier_basis": "deep_link:github.com/google-deepmind/puppeteer",
       "rp_id": "RP-DAT-0036",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-008",
@@ -42821,7 +43756,8 @@ const DB = {
       "source_tier_prev": "C",
       "source_tier_basis": "deep_link:github.com/google-deepmind/telekinesis",
       "rp_id": "RP-DAT-0037",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-009",
@@ -42875,7 +43811,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-DAT-0038",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-010",
@@ -42929,7 +43866,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-DAT-0039",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-011",
@@ -42984,7 +43922,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0040",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XDA-012",
@@ -43039,7 +43978,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0041",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XDA-013",
@@ -43094,7 +44034,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0042",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XDA-014",
@@ -43148,7 +44089,8 @@ const DB = {
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-DAT-0043",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-015",
@@ -43203,7 +44145,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0044",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XDA-016",
@@ -43257,7 +44200,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0045",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "XDA-017",
@@ -43312,7 +44256,8 @@ const DB = {
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0046",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     }
   ],
   "connectors": [
@@ -43374,7 +44319,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.prnewswire.com/news-releases/molex-introduces-minimix-hy",
       "rp_id": "RP1-CON-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "category": "connectors",
@@ -43425,7 +44371,8 @@ const DB = {
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.prnewswire.com/news-releases/molex-introduces-minimix-hy",
       "rp_id": "RP1-CON-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     }
   ],
   "integrated_joints": [
@@ -43481,7 +44428,8 @@ const DB = {
       "rp_id": "RP1-INT-0001",
       "source_url": "https://www.google.com/search?q=%E7%9F%A9%E9%98%B5%E8%B6%85%E6%99%BA%20Matrix%20%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20(MATRIX-1%2F3)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     }
   ],
   "reducers": [
@@ -43541,7 +44489,8 @@ const DB = {
       },
       "source_tier_basis": "deep_link:harmonicdrive.net/products/gear-units",
       "rp_id": "RP-RED-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": true,
@@ -43591,7 +44540,8 @@ const DB = {
       },
       "source_tier_basis": "deep_link:www.nabtesco-motion.cn/cn/products/introduction/",
       "rp_id": "RP-RED-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": true,
@@ -43646,7 +44596,8 @@ const DB = {
       },
       "source_tier_basis": "deep_link:www.leaderdrive.com/about.html",
       "rp_id": "RP-RED-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "REDUCER-HD-25",
@@ -43694,7 +44645,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-HD-32",
@@ -43742,7 +44694,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-HD-50",
@@ -43790,7 +44743,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-GH-25",
@@ -43839,7 +44793,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-GH-50",
@@ -43888,7 +44843,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-RV-50",
@@ -43936,7 +44892,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-RV-200",
@@ -43984,7 +44941,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "REDUCER-LIF-60",
@@ -44033,7 +44991,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "category": "reducers",
@@ -44084,7 +45043,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "RED-004",
-      "rp_id": "RP-RED-0009"
+      "rp_id": "RP-RED-0009",
+      "confidence_tier": "observed"
     },
     {
       "category": "reducers",
@@ -44133,7 +45093,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "RED-005",
-      "rp_id": "RP-RED-0010"
+      "rp_id": "RP-RED-0010",
+      "confidence_tier": "observed"
     },
     {
       "category": "reducers",
@@ -44182,7 +45143,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "RED-006",
-      "rp_id": "RP-RED-0011"
+      "rp_id": "RP-RED-0011",
+      "confidence_tier": "derived"
     }
   ],
   "controllers": [
@@ -44254,7 +45216,8 @@ const DB = {
         "has_ethernet": true,
         "supports_rtos": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": true,
@@ -44315,7 +45278,8 @@ const DB = {
         "has_ethernet": true,
         "supports_rtos": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": false,
@@ -44373,7 +45337,8 @@ const DB = {
         "has_ethernet": true,
         "supports_rtos": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "category": "controllers",
@@ -44426,7 +45391,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "CTRL-005",
-      "rp_id": "RP-CON-0005"
+      "rp_id": "RP-CON-0005",
+      "confidence_tier": "observed"
     }
   ],
   "grippers": [
@@ -44485,7 +45451,8 @@ const DB = {
       },
       "source_tier_basis": "deep_link:onrobot.com/en/products/2fg7",
       "rp_id": "RP-GRI-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": true,
@@ -44547,7 +45514,8 @@ const DB = {
       },
       "source_tier_basis": "deep_link:robotiq.com/products/2f85-140-adaptive-robot-gripper",
       "rp_id": "RP-GRI-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": true,
@@ -44600,7 +45568,8 @@ const DB = {
       },
       "source_tier_basis": "deep_link:schunk.com/gb_en/gripping-systems/series/egp/",
       "rp_id": "RP-GRI-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": false,
@@ -44653,7 +45622,8 @@ const DB = {
       },
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-GRI-0004",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PRIMA1-HAND-001",
@@ -44716,7 +45686,8 @@ const DB = {
       "force_control": true,
       "source_tier_basis": "deep_link:nnets.ru/news/robotizirovannaja-kist-prima1-ot-xynova-poluch",
       "rp_id": "RP-GRI-0005",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "DEXHAND021PRO-001",
@@ -44777,7 +45748,8 @@ const DB = {
       "force_control": true,
       "source_tier_basis": "deep_link:www.prnewswire.com/news-releases/dexrobot-unveils-full-dexte",
       "rp_id": "RP-GRI-0006",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "NEO-HAND-001",
@@ -44845,7 +45817,8 @@ const DB = {
       "force_transparency": true,
       "source_tier_basis": "deep_link:www.1x.tech/discover/neos-hands",
       "rp_id": "RP-GRI-0007",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "verified"
     },
     {
       "id": "PROHAND-001",
@@ -44903,7 +45876,8 @@ const DB = {
       "wearable_data_collection": true,
       "source_tier_basis": "deep_link:www.proception.ai/news/introducing-prohand",
       "rp_id": "RP-GRI-0008",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "id": "GRIPPER-ONR-VG1",
@@ -44951,7 +45925,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "verified"
     },
     {
       "id": "GRIPPER-ONR-NG1",
@@ -44999,7 +45974,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "verified"
     },
     {
       "id": "GRIPPER-ONR-NG30",
@@ -45047,7 +46023,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "verified"
     },
     {
       "id": "GRIPPER-SCHUNK-SWG15",
@@ -45094,7 +46071,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     },
     {
       "id": "GRIPPER-POS-2F20",
@@ -45142,7 +46120,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "category": "grippers",
@@ -45201,7 +46180,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "GRIP-006",
-      "rp_id": "RP-GRI-0010"
+      "rp_id": "RP-GRI-0010",
+      "confidence_tier": "observed"
     },
     {
       "category": "grippers",
@@ -45257,7 +46237,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "GRIP-007",
-      "rp_id": "RP-GRI-0011"
+      "rp_id": "RP-GRI-0011",
+      "confidence_tier": "observed"
     },
     {
       "category": "grippers",
@@ -45309,7 +46290,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "GRIP-008",
-      "rp_id": "RP-GRI-0012"
+      "rp_id": "RP-GRI-0012",
+      "confidence_tier": "observed"
     },
     {
       "category": "grippers",
@@ -45369,7 +46351,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "GRIP-009",
-      "rp_id": "RP-GRI-0013"
+      "rp_id": "RP-GRI-0013",
+      "confidence_tier": "observed"
     },
     {
       "category": "grippers",
@@ -45420,7 +46403,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "GRIP-010",
-      "rp_id": "RP-GRI-0014"
+      "rp_id": "RP-GRI-0014",
+      "confidence_tier": "observed"
     },
     {
       "category": "grippers",
@@ -45472,7 +46456,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "GRIP-011",
-      "rp_id": "RP-GRI-0015"
+      "rp_id": "RP-GRI-0015",
+      "confidence_tier": "observed"
     },
     {
       "category": "grippers",
@@ -45526,7 +46511,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "GRIP-012",
-      "rp_id": "RP-GRI-0016"
+      "rp_id": "RP-GRI-0016",
+      "confidence_tier": "observed"
     },
     {
       "category": "grippers",
@@ -45578,7 +46564,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "GRIP-013",
-      "rp_id": "RP-GRI-0017"
+      "rp_id": "RP-GRI-0017",
+      "confidence_tier": "observed"
     },
     {
       "category": "grippers",
@@ -45635,7 +46622,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "GRIP-014",
-      "rp_id": "RP-GRI-0018"
+      "rp_id": "RP-GRI-0018",
+      "confidence_tier": "observed"
     },
     {
       "category": "grippers",
@@ -45688,7 +46676,8 @@ const DB = {
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "GRIP-015",
-      "rp_id": "RP-GRI-0019"
+      "rp_id": "RP-GRI-0019",
+      "confidence_tier": "observed"
     },
     {
       "id": "SUPERDEX-2f-85",
@@ -45805,7 +46794,8 @@ const DB = {
       "needs_provenance": false,
       "quarantine": false,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
-      "rp_id": "SUPERDEX-2f-85"
+      "rp_id": "SUPERDEX-2f-85",
+      "confidence_tier": "verified"
     },
     {
       "id": "SO-100",
@@ -45844,7 +46834,8 @@ const DB = {
         "reason": "舵机直驱夹爪无工业标准接口，上游开源仓未公开，不为了完成度编造。"
       },
       "rp_id": "RP-GRI-0020",
-      "source_tier_basis": "deep_link:huggingface.co/blog/smolvla"
+      "source_tier_basis": "deep_link:huggingface.co/blog/smolvla",
+      "confidence_tier": "verified"
     },
     {
       "id": "SO-101",
@@ -45883,7 +46874,8 @@ const DB = {
         "reason": "同 SO-100。"
       },
       "rp_id": "RP-GRI-0021",
-      "source_tier_basis": "deep_link:huggingface.co/blog/smolvla"
+      "source_tier_basis": "deep_link:huggingface.co/blog/smolvla",
+      "confidence_tier": "verified"
     }
   ],
   "structural": [
@@ -45941,7 +46933,8 @@ const DB = {
       },
       "source_tier_basis": "deep_link:www.misumi.com.cn/vona2/detail/110302368740/",
       "rp_id": "RP-STR-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": true,
@@ -45991,7 +46984,8 @@ const DB = {
       },
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-STR-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "verified": true,
@@ -46040,7 +47034,8 @@ const DB = {
       },
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-STR-0003",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     }
   ],
   "cables": [
@@ -46094,7 +47089,8 @@ const DB = {
       },
       "source_tier_basis": "deep_link:www.igus.com/cables/motor-cables",
       "rp_id": "RP-CAB-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": false,
@@ -46141,7 +47137,8 @@ const DB = {
       },
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CAB-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     }
   ],
   "power": [
@@ -46202,7 +47199,8 @@ const DB = {
       },
       "source_tier_basis": "deep_link:www.grepow.com/products.html",
       "rp_id": "RP-POW-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": true,
@@ -46251,7 +47249,8 @@ const DB = {
       },
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-POW-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     }
   ],
   "pcb": [
@@ -46304,7 +47303,8 @@ const DB = {
       },
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PCB-0001",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "verified": true,
@@ -46353,7 +47353,8 @@ const DB = {
       },
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PCB-0002",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     }
   ],
   "bionic_mechanisms": [
@@ -46465,7 +47466,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     },
     {
       "id": "BIONIC-JOINT-002",
@@ -46575,7 +47577,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     },
     {
       "id": "BIONIC-JOINT-003",
@@ -46677,7 +47680,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     },
     {
       "id": "BIONIC-ACTUATOR-001",
@@ -46776,7 +47780,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     },
     {
       "id": "BIONIC-ACTUATOR-002",
@@ -46859,7 +47864,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     },
     {
       "id": "BIONIC-SENSOR-001",
@@ -46951,7 +47957,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     },
     {
       "id": "BIONIC-SENSOR-002",
@@ -47038,7 +48045,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     },
     {
       "id": "BIONIC-FRAME-001",
@@ -47135,7 +48143,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     },
     {
       "id": "BIONIC-SKIN-001",
@@ -47217,7 +48226,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     },
     {
       "id": "BIONIC-HAND-001",
@@ -47281,7 +48291,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     },
     {
       "id": "BIONIC-HAND-002",
@@ -47346,7 +48357,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     },
     {
       "id": "BIONIC-HAND-003",
@@ -47410,7 +48422,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     },
     {
       "id": "BIONIC-HAND-004",
@@ -47476,7 +48489,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "BIONIC-HAND-005",
@@ -47538,7 +48552,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "BIONIC-HAND-006",
@@ -47601,7 +48616,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "BIONIC-HAND-007",
@@ -47663,7 +48679,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "derived"
     },
     {
       "id": "BIONIC-HAND-008",
@@ -47724,7 +48741,8 @@ const DB = {
         "caee060_relevant": false,
         "interop_posture": "unknown",
         "iso22166_relevant": false
-      }
+      },
+      "confidence_tier": "observed"
     }
   ]
 };

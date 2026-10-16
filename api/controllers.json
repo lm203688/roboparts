@@ -23,7 +23,7 @@
     }
   },
   "count": 4,
-  "updated": "2026-10-16T09:24:45.117012Z",
+  "updated": "2026-10-16T22:43:39.757610Z",
   "data": [
     {
       "verified": true,
@@ -93,7 +93,8 @@
         "has_ethernet": true,
         "supports_rtos": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": true,
@@ -154,7 +155,8 @@
         "has_ethernet": true,
         "supports_rtos": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "observed"
     },
     {
       "verified": false,
@@ -212,7 +214,8 @@
         "has_ethernet": true,
         "supports_rtos": true
       },
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "category": "controllers",
@@ -265,7 +268,8 @@
       "entity_kind": "component",
       "entity_kind_basis": "默认归类",
       "id": "CTRL-005",
-      "rp_id": "RP-CON-0005"
+      "rp_id": "RP-CON-0005",
+      "confidence_tier": "observed"
     }
   ]
 }

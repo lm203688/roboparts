@@ -23,7 +23,7 @@
     }
   },
   "count": 64,
-  "updated": "2026-10-16T09:24:45.117012Z",
+  "updated": "2026-10-16T22:43:39.757610Z",
   "data": [
     {
       "id": "PROTO-001",
@@ -82,7 +82,8 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0001",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-002",
@@ -141,7 +142,8 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0002",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-003",
@@ -197,7 +199,8 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0003",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-004",
@@ -258,7 +261,8 @@
       "source_scope": "deep",
       "source_tier_basis": "deep_link:emanual.robotis.com/docs/en/dxl/protocol2/",
       "rp_id": "RP-PRO-0004",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-005",
@@ -319,7 +323,8 @@
       "source_scope": "deep",
       "source_tier_basis": "deep_link:design.ros2.org/articles/ros_on_dds.html",
       "rp_id": "RP-PRO-0005",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-006",
@@ -376,7 +381,11 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0006",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.sparkfun.com/tutorials/serial-communication-with-uart",
+      "source_note": "UART 标准由 RS-232 (TIA-232) 定义；此页为通用技术说明",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-007",
@@ -434,7 +443,11 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0007",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.nxp.com/webapp/download?colCode=I2C-BUS-SPEC",
+      "source_note": "I2C 由 NXP (原 Philips) 定义，公开 spec 下载页",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-008",
@@ -492,7 +505,11 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0008",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.microchip.com/en-us/products/interfaces/synchronous-serial-interface-spi",
+      "source_note": "SPI 由 Motorola (现 NXP) 定义；Microchip 产品页含标准描述",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-009",
@@ -552,7 +569,8 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0009",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-010",
@@ -658,7 +676,8 @@
         ],
         "source_commit": "5bcd7c7",
         "source_path": "api/protocols.json"
-      }
+      },
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-011",
@@ -717,7 +736,8 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0011",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-012",
@@ -780,7 +800,8 @@
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:www.modbus.org/specs.php",
       "rp_id": "RP-PRO-0012",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-013",
@@ -844,7 +865,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "entity_homepage",
       "rp_id": "RP-PRO-0013",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-014",
@@ -903,7 +925,11 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0014",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://usb.org/",
+      "source_note": "USB 3.x 由 USB-IF 标准化；官网为权威源",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-015",
@@ -964,7 +990,11 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0015",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.mipi.org/specifications/mipi-csi-2",
+      "source_note": "MIPI CSI-2/3 由 MIPI Alliance 定义；官方 spec 目录页",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-016",
@@ -1023,7 +1053,8 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0016",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-017",
@@ -1083,7 +1114,8 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0017",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-018",
@@ -1144,7 +1176,8 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0018",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-019",
@@ -1209,7 +1242,8 @@
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.bluetooth.com/specifications/",
       "rp_id": "RP-PRO-0019",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-020",
@@ -1268,7 +1302,11 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0020",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://en.wikipedia.org/wiki/SBUS",
+      "source_note": "SBus 由 Futaba 定义（专有）；维基百科技术说明页",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-021",
@@ -1333,7 +1371,8 @@
       "source_scope": "deep",
       "source_tier_basis": "deep_link:mavlink.io/en/",
       "rp_id": "RP-PRO-0021",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-023",
@@ -1396,7 +1435,8 @@
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:opcfoundation.org/about/opc-technologies/opc-ua/",
       "rp_id": "RP-PRO-0022",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-024",
@@ -1459,7 +1499,8 @@
       "source_tier_prev": "B",
       "source_tier_basis": "deep_link:csa-iot.org/all-solutions/matter/",
       "rp_id": "RP-PRO-0023",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-025",
@@ -1517,7 +1558,8 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0024",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-026",
@@ -1575,7 +1617,11 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0025",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.3gpp.org/specifications-technical-reports",
+      "source_note": "NB-IoT 由 3GPP (3GPP2) 定义；官方规范索引",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-027",
@@ -1634,7 +1680,11 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0026",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.3gpp.org/specifications-technical-reports",
+      "source_note": "5G NR 由 3GPP 定义；官方规范索引",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-028",
@@ -1696,7 +1746,8 @@
       "source_scope": "deep",
       "source_tier_basis": "deep_link:www.profibus.com/technology/profinet/",
       "rp_id": "RP-PRO-0027",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-029",
@@ -1757,7 +1808,8 @@
       "source_scope": "vendor",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0028",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-030",
@@ -1816,7 +1868,11 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0029",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.omg.org/spec/xrce-dp/",
+      "source_note": "DDS-XRCE 由 OMG 标准化；官方规范页",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-031",
@@ -1874,7 +1930,11 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0030",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://arxiv.org/abs/2305.14749",
+      "source_note": "Adaptive Protocol (AI-driven) 概念来源论文；非正式标准",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-032",
@@ -1931,7 +1991,11 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0031",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://github.com/embodiedai-robotics/network-protocol-survey",
+      "source_note": "Embodied AI 通信网络综述；无正式标准，标注为综述引用",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-033",
@@ -1988,7 +2052,11 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0032",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.flexxbotics.com/",
+      "source_note": "FlexxBotics Protocol 由 FlexxBotics 定义（专有）；公司官网",
+      "source_type": "spec",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTO-034",
@@ -2058,7 +2126,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0033",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "derived"
     },
     {
       "id": "PROTO-035",
@@ -2130,7 +2199,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0034",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "derived"
     },
     {
       "id": "PROTO-036",
@@ -2203,7 +2273,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0035",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "derived"
     },
     {
       "id": "PROTO-040",
@@ -2272,7 +2343,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0036",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-041",
@@ -2343,7 +2415,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0037",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "derived"
     },
     {
       "id": "PROTO-042",
@@ -2381,7 +2454,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0038",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-043",
@@ -2419,7 +2493,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0039",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-044",
@@ -2457,7 +2532,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0040",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-045",
@@ -2495,7 +2571,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0041",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-046",
@@ -2534,7 +2611,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0042",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-i3c",
@@ -2587,7 +2665,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0043",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-opcua-dds-gateway",
@@ -2639,7 +2718,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0044",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "derived"
     },
     {
       "id": "rproto-5g-nr-urllc",
@@ -2685,7 +2765,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0045",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-can-xl-v2",
@@ -2737,7 +2818,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0046",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-wifi7-mlo",
@@ -2783,7 +2865,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0047",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-ethercat-g",
@@ -2829,7 +2912,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0048",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-thread-14",
@@ -2882,7 +2966,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0049",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-ieee8021-tsn-profile",
@@ -2934,7 +3019,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0050",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "derived"
     },
     {
       "id": "rproto-robot-comm-electronics",
@@ -2986,7 +3072,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0051",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-delft-comm",
@@ -3038,7 +3125,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0052",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-zenoh-flow",
@@ -3090,7 +3178,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0053",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-robotcore",
@@ -3142,7 +3231,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0054",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-cyclonedds",
@@ -3194,7 +3284,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0055",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-thread-1.4",
@@ -3240,7 +3331,8 @@
       "source_tier_prev": "A",
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0056",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTOCOL-a1b2c3",
@@ -3278,7 +3370,8 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0057",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-d4e5f6",
@@ -3316,7 +3409,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0058",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-g7h8i9",
@@ -3354,7 +3448,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0059",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-j0k1l2",
@@ -3392,7 +3487,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0060",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-m3n4o5",
@@ -3430,7 +3526,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0061",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-p6q7r8",
@@ -3468,7 +3565,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0062",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-s9t0u1",
@@ -3506,7 +3604,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0063",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     },
     {
       "id": "PROTOCOL-v2w3x4",
@@ -3544,7 +3643,8 @@
       "kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0064",
-      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）"
+      "entity_kind_basis": "data_quality=non_entity（行业热词/趋势片段，条目自陈非实体）",
+      "confidence_tier": "unverified"
     }
   ]
 }

@@ -23,7 +23,7 @@
   }
  },
  "count": 46,
- "updated": "2026-10-16T09:24:45.117012Z",
+ "updated": "2026-10-16T22:43:39.757610Z",
  "data": [
   {
    "id": "CHIP-nvidia-cosmos-groot",
@@ -83,6 +83,7 @@
    "source_url": "https://research.nvidia.com/labs/gear/cosmos/",
    "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
    "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed",
    "source_url_prev": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Cosmos%20%2B%20GR00T%20Model%20Chip%20datasheet",
    "source_scope": "first_party"
   },
@@ -145,6 +146,7 @@
    "source_url": "https://research.nvidia.com/labs/gear/cosmos/",
    "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
    "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed",
    "source_url_prev": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Cosmos%20%2B%20GR00T%20v2%20datasheet",
    "source_scope": "first_party"
   },
@@ -199,7 +201,8 @@
    "source_scope": "deep",
    "source_tier_basis": "deep_link:deepmind.google/discover/blog/rt-2-new-model-translates-visi",
    "rp_id": "RP-ROB-0003",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed"
   },
   {
    "id": "LLM-004",
@@ -252,7 +255,8 @@
    "source_tier_prev": "A",
    "source_tier_basis": "entity_homepage",
    "rp_id": "RP-ROB-0004",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed"
   },
   {
    "id": "LLM-005",
@@ -305,7 +309,8 @@
    "source_tier_prev": "A",
    "source_tier_basis": "entity_homepage",
    "rp_id": "RP-ROB-0005",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed"
   },
   {
    "id": "LLM-007",
@@ -354,7 +359,8 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "named_vendor_catalog",
    "rp_id": "RP-ROB-0006",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "inferred"
   },
   {
    "id": "LLM-028",
@@ -419,6 +425,7 @@
    "source_url": "https://research.nvidia.com/labs/gear/gr00t-n1_5/",
    "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
    "entity_kind_basis": "默认归类",
+   "confidence_tier": "verified",
    "body_robot": [
     "XPLT-007"
    ],
@@ -499,6 +506,7 @@
    "source_url": "https://huggingface.co/blog/smolvla",
    "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
    "entity_kind_basis": "默认归类",
+   "confidence_tier": "verified",
    "body_robot": [
     "SO-100",
     "SO-101"
@@ -580,6 +588,7 @@
    "source_url": "https://www.physicalintelligence.company/blog/pi05",
    "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
    "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed",
    "body_robot": [],
    "body_binding": {
     "strength": "category_only",
@@ -629,7 +638,8 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "named_vendor_catalog",
    "rp_id": "RP-ROB-0010",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "inferred"
   },
   {
    "id": "RAI-002",
@@ -669,7 +679,8 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "named_vendor_catalog",
    "rp_id": "RP-ROB-0011",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "inferred"
   },
   {
    "id": "RAI-003",
@@ -685,8 +696,8 @@
    "license": "Open Source",
    "category": "robot_ai_models",
    "verified": false,
-   "data_quality": "ok",
-   "quarantine": false,
+   "data_quality": "quarantined_no_source",
+   "quarantine": true,
    "source_tier": "C",
    "confidence": 0.3,
    "confidence_basis": "unsourced_legacy_import",
@@ -709,7 +720,17 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "no_source",
    "rp_id": "RP-ROB-0012",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "evidence_gap": {
+    "axis": "source_url",
+    "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+    "proposed_channels": [
+     "上游开源仓 ingestion",
+     "官方 arxiv 发布后人工补充",
+     "厂商 datasheet 补充"
+    ]
+   },
+   "confidence_tier": "unverified"
   },
   {
    "id": "RAI-004",
@@ -725,8 +746,8 @@
    "license": "Open Source",
    "category": "robot_ai_models",
    "verified": false,
-   "data_quality": "ok",
-   "quarantine": false,
+   "data_quality": "quarantined_no_source",
+   "quarantine": true,
    "source_tier": "C",
    "confidence": 0.3,
    "confidence_basis": "unsourced_legacy_import",
@@ -749,7 +770,17 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "no_source",
    "rp_id": "RP-ROB-0013",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "evidence_gap": {
+    "axis": "source_url",
+    "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+    "proposed_channels": [
+     "上游开源仓 ingestion",
+     "官方 arxiv 发布后人工补充",
+     "厂商 datasheet 补充"
+    ]
+   },
+   "confidence_tier": "unverified"
   },
   {
    "id": "RAI-005",
@@ -765,8 +796,8 @@
    "license": "Proprietary",
    "category": "robot_ai_models",
    "verified": false,
-   "data_quality": "ok",
-   "quarantine": false,
+   "data_quality": "quarantined_no_source",
+   "quarantine": true,
    "source_tier": "C",
    "confidence": 0.3,
    "confidence_basis": "unsourced_legacy_import",
@@ -789,7 +820,17 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "no_source",
    "rp_id": "RP-ROB-0014",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "evidence_gap": {
+    "axis": "source_url",
+    "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+    "proposed_channels": [
+     "上游开源仓 ingestion",
+     "官方 arxiv 发布后人工补充",
+     "厂商 datasheet 补充"
+    ]
+   },
+   "confidence_tier": "unverified"
   },
   {
    "id": "RAI-006",
@@ -805,8 +846,8 @@
    "license": "Proprietary",
    "category": "robot_ai_models",
    "verified": false,
-   "data_quality": "ok",
-   "quarantine": false,
+   "data_quality": "quarantined_no_source",
+   "quarantine": true,
    "source_tier": "C",
    "confidence": 0.3,
    "confidence_basis": "unsourced_legacy_import",
@@ -829,7 +870,17 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "no_source",
    "rp_id": "RP-ROB-0015",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "evidence_gap": {
+    "axis": "source_url",
+    "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+    "proposed_channels": [
+     "上游开源仓 ingestion",
+     "官方 arxiv 发布后人工补充",
+     "厂商 datasheet 补充"
+    ]
+   },
+   "confidence_tier": "unverified"
   },
   {
    "id": "RAI-007",
@@ -869,7 +920,8 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "named_vendor_catalog",
    "rp_id": "RP-ROB-0016",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "inferred"
   },
   {
    "id": "RAI-008",
@@ -913,7 +965,8 @@
    "source_tier_prev": "B",
    "source_tier_basis": "deep_link:huggingface.co/blog/smolvla",
    "rp_id": "RP-ROB-0017",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed"
   },
   {
    "id": "RAI-009",
@@ -929,8 +982,8 @@
    "license": "Open Source",
    "category": "robot_ai_models",
    "verified": false,
-   "data_quality": "ok",
-   "quarantine": false,
+   "data_quality": "quarantined_no_source",
+   "quarantine": true,
    "source_tier": "C",
    "confidence": 0.3,
    "confidence_basis": "unsourced_legacy_import",
@@ -953,7 +1006,17 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "no_source",
    "rp_id": "RP-ROB-0018",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "evidence_gap": {
+    "axis": "source_url",
+    "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+    "proposed_channels": [
+     "上游开源仓 ingestion",
+     "官方 arxiv 发布后人工补充",
+     "厂商 datasheet 补充"
+    ]
+   },
+   "confidence_tier": "unverified"
   },
   {
    "id": "RAI-010",
@@ -969,8 +1032,8 @@
    "license": "Open Source",
    "category": "robot_ai_models",
    "verified": false,
-   "data_quality": "ok",
-   "quarantine": false,
+   "data_quality": "quarantined_no_source",
+   "quarantine": true,
    "source_tier": "C",
    "confidence": 0.3,
    "confidence_basis": "unsourced_legacy_import",
@@ -993,7 +1056,17 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "no_source",
    "rp_id": "RP-ROB-0019",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "evidence_gap": {
+    "axis": "source_url",
+    "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+    "proposed_channels": [
+     "上游开源仓 ingestion",
+     "官方 arxiv 发布后人工补充",
+     "厂商 datasheet 补充"
+    ]
+   },
+   "confidence_tier": "unverified"
   },
   {
    "id": "RAI-011",
@@ -1009,8 +1082,8 @@
    "license": "Proprietary",
    "category": "robot_ai_models",
    "verified": false,
-   "data_quality": "ok",
-   "quarantine": false,
+   "data_quality": "quarantined_no_source",
+   "quarantine": true,
    "source_tier": "C",
    "confidence": 0.3,
    "confidence_basis": "unsourced_legacy_import",
@@ -1033,7 +1106,17 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "no_source",
    "rp_id": "RP-ROB-0020",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "evidence_gap": {
+    "axis": "source_url",
+    "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+    "proposed_channels": [
+     "上游开源仓 ingestion",
+     "官方 arxiv 发布后人工补充",
+     "厂商 datasheet 补充"
+    ]
+   },
+   "confidence_tier": "unverified"
   },
   {
    "id": "RAI-012",
@@ -1049,8 +1132,8 @@
    "license": "Proprietary",
    "category": "robot_ai_models",
    "verified": false,
-   "data_quality": "ok",
-   "quarantine": false,
+   "data_quality": "quarantined_no_source",
+   "quarantine": true,
    "source_tier": "C",
    "confidence": 0.3,
    "confidence_basis": "unsourced_legacy_import",
@@ -1073,7 +1156,17 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "no_source",
    "rp_id": "RP-ROB-0021",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "evidence_gap": {
+    "axis": "source_url",
+    "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+    "proposed_channels": [
+     "上游开源仓 ingestion",
+     "官方 arxiv 发布后人工补充",
+     "厂商 datasheet 补充"
+    ]
+   },
+   "confidence_tier": "unverified"
   },
   {
    "id": "RAI-013",
@@ -1089,8 +1182,8 @@
    "license": "Apache 2.0",
    "category": "robot_ai_models",
    "verified": false,
-   "data_quality": "ok",
-   "quarantine": false,
+   "data_quality": "quarantined_no_source",
+   "quarantine": true,
    "source_tier": "C",
    "confidence": 0.3,
    "confidence_basis": "unsourced_legacy_import",
@@ -1113,7 +1206,17 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "no_source",
    "rp_id": "RP-ROB-0022",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "evidence_gap": {
+    "axis": "source_url",
+    "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+    "proposed_channels": [
+     "上游开源仓 ingestion",
+     "官方 arxiv 发布后人工补充",
+     "厂商 datasheet 补充"
+    ]
+   },
+   "confidence_tier": "unverified"
   },
   {
    "id": "RAI-014",
@@ -1153,7 +1256,8 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "named_vendor_catalog",
    "rp_id": "RP-ROB-0023",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "inferred"
   },
   {
    "id": "RAI-015",
@@ -1193,7 +1297,8 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "named_vendor_catalog",
    "rp_id": "RP-ROB-0024",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "inferred"
   },
   {
    "id": "RAI-016",
@@ -1237,7 +1342,8 @@
    "source_tier_prev": "B",
    "source_tier_basis": "deep_link:huggingface.co/openvla/openvla-7b",
    "rp_id": "RP-ROB-0025",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed"
   },
   {
    "id": "RAI-017",
@@ -1278,7 +1384,8 @@
    "source_tier_basis": "named_vendor_catalog",
    "source": "厂商目录声明值：Community（无原始链接，未核验）",
    "rp_id": "RP-ROB-0026",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "inferred"
   },
   {
    "id": "RAI-018",
@@ -1294,8 +1401,8 @@
    "license": "Proprietary",
    "category": "robot_ai_models",
    "verified": false,
-   "data_quality": "ok",
-   "quarantine": false,
+   "data_quality": "quarantined_no_source",
+   "quarantine": true,
    "source_tier": "C",
    "confidence": 0.3,
    "confidence_basis": "unsourced_legacy_import",
@@ -1318,7 +1425,17 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "no_source",
    "rp_id": "RP-ROB-0027",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "evidence_gap": {
+    "axis": "source_url",
+    "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+    "proposed_channels": [
+     "上游开源仓 ingestion",
+     "官方 arxiv 发布后人工补充",
+     "厂商 datasheet 补充"
+    ]
+   },
+   "confidence_tier": "unverified"
   },
   {
    "id": "RAI-019",
@@ -1334,8 +1451,8 @@
    "license": "CC BY-NC-SA 4.0",
    "category": "robot_ai_models",
    "verified": false,
-   "data_quality": "ok",
-   "quarantine": false,
+   "data_quality": "quarantined_no_source",
+   "quarantine": true,
    "source_tier": "C",
    "confidence": 0.3,
    "confidence_basis": "unsourced_legacy_import",
@@ -1358,7 +1475,17 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "no_source",
    "rp_id": "RP-ROB-0028",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "evidence_gap": {
+    "axis": "source_url",
+    "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+    "proposed_channels": [
+     "上游开源仓 ingestion",
+     "官方 arxiv 发布后人工补充",
+     "厂商 datasheet 补充"
+    ]
+   },
+   "confidence_tier": "unverified"
   },
   {
    "id": "RAI-020",
@@ -1374,8 +1501,8 @@
    "license": "Open Source",
    "category": "robot_ai_models",
    "verified": false,
-   "data_quality": "ok",
-   "quarantine": false,
+   "data_quality": "quarantined_no_source",
+   "quarantine": true,
    "source_tier": "C",
    "confidence": 0.3,
    "confidence_basis": "unsourced_legacy_import",
@@ -1398,7 +1525,17 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "no_source",
    "rp_id": "RP-ROB-0029",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "evidence_gap": {
+    "axis": "source_url",
+    "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+    "proposed_channels": [
+     "上游开源仓 ingestion",
+     "官方 arxiv 发布后人工补充",
+     "厂商 datasheet 补充"
+    ]
+   },
+   "confidence_tier": "unverified"
   },
   {
    "id": "RAI-021",
@@ -1438,7 +1575,8 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "named_vendor_catalog",
    "rp_id": "RP-ROB-0030",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "inferred"
   },
   {
    "id": "XRAM-002",
@@ -1494,7 +1632,8 @@
    "source_scope": "vendor",
    "source_tier_basis": "root_url_only",
    "rp_id": "RP-ROB-0031",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "derived"
   },
   {
    "id": "XRAM-005",
@@ -1550,7 +1689,8 @@
    "source_tier_basis": "entity_homepage",
    "source_tier_prev": "B",
    "rp_id": "RP-ROB-0032",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed"
   },
   {
    "id": "XRAM-006",
@@ -1606,7 +1746,8 @@
    "source_scope": "vendor",
    "source_tier_basis": "root_url_only",
    "rp_id": "RP-ROB-0033",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "derived"
   },
   {
    "id": "XRAM-007",
@@ -1663,7 +1804,8 @@
    "source_tier_basis": "entity_homepage",
    "source_tier_prev": "B",
    "rp_id": "RP-ROB-0034",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed"
   },
   {
    "id": "XRAM-008",
@@ -1719,7 +1861,8 @@
    "source_scope": "vendor",
    "source_tier_basis": "root_url_only",
    "rp_id": "RP-ROB-0035",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "derived"
   },
   {
    "id": "XRAM-010",
@@ -1775,7 +1918,8 @@
    "source_tier_basis": "entity_homepage",
    "source_tier_prev": "B",
    "rp_id": "RP-ROB-0036",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed"
   },
   {
    "id": "XRAM-011",
@@ -1831,7 +1975,8 @@
    "source_tier_basis": "entity_homepage",
    "source_tier_prev": "B",
    "rp_id": "RP-ROB-0037",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed"
   },
   {
    "id": "XRAM-012",
@@ -1886,7 +2031,8 @@
    "source_scope": "vendor",
    "source_tier_basis": "root_url_only",
    "rp_id": "RP-ROB-0038",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "derived"
   },
   {
    "id": "XRAM-013",
@@ -1941,7 +2087,8 @@
    "source_scope": "vendor",
    "source_tier_basis": "root_url_only",
    "rp_id": "RP-ROB-0039",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "derived"
   },
   {
    "id": "XRAM-014",
@@ -1997,7 +2144,8 @@
    "source_scope": "vendor",
    "source_tier_basis": "root_url_only",
    "rp_id": "RP-ROB-0040",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "derived"
   },
   {
    "id": "XRAM-015",
@@ -2052,7 +2200,8 @@
    "source_scope": "vendor",
    "source_tier_basis": "root_url_only",
    "rp_id": "RP-ROB-0041",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "derived"
   },
   {
    "id": "XRAM-016",
@@ -2107,7 +2256,8 @@
    "source_tier_basis": "entity_homepage",
    "source_tier_prev": "B",
    "rp_id": "RP-ROB-0042",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed"
   },
   {
    "id": "XRAM-017",
@@ -2162,7 +2312,8 @@
    "source_scope": "vendor",
    "source_tier_basis": "root_url_only",
    "rp_id": "RP-ROB-0043",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "derived"
   },
   {
    "id": "XRAM-018",
@@ -2218,7 +2369,8 @@
    "source_scope": "vendor",
    "source_tier_basis": "root_url_only",
    "rp_id": "RP-ROB-0044",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "derived"
   },
   {
    "id": "ACE-VIDIHAND-001",
@@ -2271,7 +2423,8 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "deep_link:www.linkedin.com/posts/acerobotics_embodiedai-robotics-world",
    "rp_id": "RP-ROB-0045",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "observed"
   },
   {
    "id": "ZEST-FRAMEWORK-001",
@@ -2327,7 +2480,8 @@
    "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
    "source_tier_basis": "deep_link:arxiv.org/abs/2602.00401",
    "rp_id": "RP-ROB-0046",
-   "entity_kind_basis": "默认归类"
+   "entity_kind_basis": "默认归类",
+   "confidence_tier": "verified"
   }
  ],
  "category": "robot_ai_models"

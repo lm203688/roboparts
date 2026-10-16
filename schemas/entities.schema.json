@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roboparts.cc/schemas/entities.schema.json",
+  "title": "RoboParts Entities Contract",
+  "description": "api/entities.json 的结构契约（阶段 1.4 · 数据契约）。核心：把 confidence 从无约束浮点收敛为五档枚举 tier + 兼容浮点；把 source / source_url / source_tier 三字段钉成\"无出处不收\"的可校验铁律。schema_version 显式声明，见 docs/api-versioning.md。",
+  "type": "object",
+  "required": ["meta", "entities", "count", "updated", "last_updated"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["updated", "schema_version", "total_entities"],
+      "properties": {
+        "updated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "唯一真相源时间戳。顶层 updated / last_updated 必须等于此值（由 normalize_categories.py 镜像注入）"
+        },
+        "schema_version": {
+          "type": "string",
+          "pattern": "^1\\.",
+          "description": "契约版本，遵循 docs/api-versioning.md 语义版本"
+        },
+        "total_entities": { "type": "integer", "minimum": 0 },
+        "generated_at": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "count": { "type": "integer", "minimum": 0, "description": "entities[] 数组长度，必须与数组实际长度相等" },
+    "updated": { "type": "string", "format": "date-time", "description": "meta.updated 的向后兼容别名" },
+    "last_updated": { "type": "string", "format": "date-time", "description": "meta.updated 的向后兼容别名" },
+    "entities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Entity" }
+    }
+  },
+  "$defs": {
+    "ConfidenceTier": {
+      "type": "string",
+      "enum": ["verified", "observed", "derived", "inferred", "unverified"],
+      "description": "五档置信度分层（阶段 1.4 · D5 confidence 语义化）：\n- verified: 一手厂商 datasheet / ISO 标准原文；confidence=1.0\n- observed: 实测/复现（本仓自测数据、公开拆解）；0.7~0.9\n- derived: 由其他字段或规则推导（confidence_basis 记录）；0.5~0.7\n- inferred: 同类族归纳（未直接观察）；0.3~0.5\n- unverified: 声明但无出处；≤0.3，且 source 缺失必须 quarantine=true"
+    },
+    "Entity": {
+      "type": "object",
+      "required": ["id", "name", "category", "type", "confidence", "confidence_tier", "data_quality", "quarantine"],
+      "properties": {
+        "id": { "type": "string", "description": "本地 id（rp_id 更通用）" },
+        "rp_id": { "type": ["string", "null"], "description": "跨文件通用 id，schema_contract 唯一性校验" },
+        "name": { "type": "string" },
+        "name_en": { "type": ["string", "null"] },
+        "category": { "type": "string", "description": "canonical 分类，见 normalize_categories.py CANONICAL" },
+        "type": { "type": "string" },
+        "manufacturer": { "type": ["string", "null"] },
+        "source": {
+          "type": ["string", "null"],
+          "description": "出处 URL 或描述。'无出处不收' 铁律：source 与 sources 都空 ⇒ quarantine 必须为 true 且 data_quality ∈ {quarantined_no_source, quarantined_*}"
+        },
+        "sources": {
+          "type": ["array", "null"],
+          "items": { "type": "string" },
+          "description": "多出处场景用数组"
+        },
+        "source_url": { "type": ["string", "null"] },
+        "source_tier": {
+          "type": ["string", "null"],
+          "enum": ["A", "B", "C", null],
+          "description": "A=可点开复核；B=弱归因；C=无溯源（govern_source_tier.py 判据）"
+        },
+        "source_tier_basis": { "type": ["string", "null"] },
+        "source_note": { "type": ["string", "null"], "description": "源出处说明（如'标准协议 spec 页'）" },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "兼容旧消费者的浮点值。数值必须落在 confidence_tier 对应的区间内（见 ConfidenceTier）"
+        },
+        "confidence_tier": {
+          "$ref": "#/$defs/ConfidenceTier"
+        },
+        "confidence_basis": { "type": ["string", "null"], "description": "为何给这个 tier，机器可读的推导依据" },
+        "data_quality": {
+          "type": "string",
+          "enum": ["ok", "partial", "quarantined_no_source", "quarantined_unverified_spec", "quarantined_inferred_only", "quarantined_stale"],
+          "description": "quarantine=true 时 data_quality 必须以 quarantined_ 开头（D5 铁律：诚实标记而非静默污染）"
+        },
+        "quarantine": {
+          "type": "boolean",
+          "description": "true 表示本条不参与默认判定（compose / compatibility 计算自动剔除）。铁律：无 source 且无 sources ⇒ 必须 true"
+        },
+        "evidence_gap": {
+          "type": ["string", "null"],
+          "description": "诚实缺口说明：为何 quarantine，如何补（如'等官方 datasheet 发布后补'）"
+        },
+        "verified": { "type": ["boolean", "null"] },
+        "torque": { "type": ["number", "null"] },
+        "speed": { "type": ["number", "null"] },
+        "weight": { "type": ["number", "null"] },
+        "voltage": { "type": ["number", "null"] },
+        "protocol": { "type": ["string", "array", "null"], "items": { "type": "string" } },
+        "interface": { "type": ["string", "null"] },
+        "mechanical_interface": { "type": ["object", "null"], "additionalProperties": true },
+        "electrical_interface": { "type": ["object", "null"], "additionalProperties": true },
+        "applications": { "type": "array", "items": { "type": "string" } },
+        "price_range": { "type": ["object", "null"], "additionalProperties": true },
+        "compatibility": { "type": ["array", "object", "null"], "additionalProperties": true, "items": { "type": "string" } },
+        "ros_support": { "type": ["string", "null"] },
+        "position_resolution": { "type": ["number", "null"] },
+        "standard_conformance": { "type": ["object", "array", "null"], "additionalProperties": true },
+        "entity_kind": { "type": ["string", "null"], "description": "part / protocol / model / tool / ..." },
+        "derived_properties": { "type": ["object", "null"], "additionalProperties": true }
+      },
+      "additionalProperties": true
+    }
+  }
+}
