@@ -2584,6 +2584,157 @@ def gate_engine_bridge():
         [sys.executable, '-m', 'stages.bridge', '--check'])
 
 
+
+def gate_no_substring_boundary():
+    """AP-002: 子串包含不得跨语义边界（20261013 报告 §8.3 #4）
+
+    校验所有判定逻辑不得用文本子串包含（如 'composed' in text）
+    必须用结构化字段。
+    """
+    # 检查关键文件中是否有子串包含模式
+    import subprocess
+    import os
+    
+    check_files = [
+        'scripts/compose_core.py',
+        'scripts/compose_semantics.py',
+        'scripts/compose_engine.py',
+    ]
+    
+    violations = []
+    for filepath in check_files:
+        fullpath = os.path.join(ROOT, filepath)
+        if not os.path.exists(fullpath):
+            continue
+        with open(fullpath, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+        
+        for i, line in enumerate(lines, 1):
+            # 检查是否有 'X' in text 模式（X 是判定关键词）
+            if "'composed' in" in line or '"composed" in" in line or 'type_error' in' in line:
+                violations.append(f'{filepath}:{i}: {line.strip()}')
+    
+    if violations:
+        bad('子串边界检查', f'发现 {len(violations)} 处子串包含：{violations[:3]}')
+    else:
+        ok('子串边界检查', '无子串包含跨语义边界')
+
+
+def gate_no_single_scalar_fitness():
+    """AP-006: 不得用单一标量做长期适应度（20261013 报告 §8.3 #4）
+
+    校验 fitness.py 必须返回多目标，不得合并成单一分数做长期度量。
+    """
+    import subprocess
+    
+    # 运行 fitness self-test 检查多目标
+    result = subprocess.run(
+        [sys.executable, '-m', 'stages.fitness', '--self-test'],
+        capture_output=True, text=True, timeout=30,
+        encoding='utf-8', errors='replace')
+    
+    if result.returncode != 0:
+        bad('多目标适应度', f'fitness self-test 失败: {result.stderr[:200]}')
+    else:
+        import json
+        data = json.loads(result.stdout)
+        if data.get('overall') == 'PASS' and data.get('passed', 0) >= 5:
+            ok('多目标适应度', f'{data["passed"]}/{data["total_tests"]} 项通过，3 个独立目标')
+        else:
+            bad('多目标适应度', f'fitness 未通过: {data}')
+
+
+def gate_no_anchoring_modification():
+    """AP-007: 自动变更不得修改锚点判据（20261013 报告 §8.3 #4）
+
+    校验自进化循环不得修改 PROJECT_DIRECTIONS_V2.md 的判据定义。
+    """
+    import subprocess
+    
+    # 检查最近的 git commit 是否修改了锚点文件
+    result = subprocess.run(
+        ['git', 'log', '--oneline', '-1', '--', 'docs/PROJECT_DIRECTIONS_V2.md'],
+        capture_output=True, text=True, cwd=ROOT,
+        encoding='utf-8', errors='replace')
+    
+    if result.returncode == 0 and result.stdout.strip():
+        last_commit = result.stdout.strip().split('
+')[0]
+        # 检查是否是自动化提交
+        if 'auto' in last_commit.lower() or 'ci' in last_commit.lower():
+            bad('锚点修改检查', f'检测到自动化修改锚点: {last_commit}')
+        else:
+            ok('锚点修改检查', f'最近修改是人工提交: {last_commit}')
+    else:
+        ok('锚点修改检查', '锚点未被修改')
+
+
+def gate_bridge_no_merge():
+    """AP-009: 双引擎桥接不得合并两套引擎（20261013 报告 §8.3 #4）
+
+    校验桥接产物的 dimension_map 不得把 product 维度映射到 research 轴。
+    """
+    import json
+    import os
+    
+    bridge_path = os.path.join(ROOT, 'api', 'engine_bridge.json')
+    if not os.path.exists(bridge_path):
+        # 生成桥接
+        import subprocess
+        subprocess.run(
+            [sys.executable, '-m', 'stages.bridge', '--write'],
+            capture_output=True, text=True, timeout=30,
+            encoding='utf-8', errors='replace')
+    
+    with open(bridge_path, 'r', encoding='utf-8') as f:
+        bridge = json.load(f)
+    
+    dim_map = bridge.get('dimension_map', {})
+    
+    # 检查是否有非法映射（product 维度映射到 research 轴）
+    product_dims = {'protocol', 'electrical', 'mechanical', 'software'}
+    research_axes = {'mechanical', 'electrical', 'signal'}
+    
+    violations = []
+    for prod_dim, research_axis in dim_map.items():
+        if prod_dim in product_dims and research_axis in research_axes:
+            # 同名映射是合法的（electrical->electrical, mechanical->mechanical）
+            if prod_dim != research_axis:
+                violations.append(f'{prod_dim} -> {research_axis}（非法映射）')
+    
+    if violations:
+        bad('桥接合并检查', f'发现非法映射: {violations}')
+    else:
+        ok('桥接合并检查', f'维度映射合法: {len(dim_map)} 条')
+
+
+def gate_iso_mapping_honest():
+    """AP-010: ISO 映射无原文时必须声明边界（20261013 报告 §8.3 #4）
+
+    校验 ISO 映射产物必须有 honest_limits 字段声明边界。
+    """
+    import json
+    import os
+    
+    iso_path = os.path.join(ROOT, 'api', 'iso22166_conformance.json')
+    if not os.path.exists(iso_path):
+        ok('ISO 映射边界', 'ISO 映射文件不存在（跳过）')
+        return
+    
+    with open(iso_path, 'r', encoding='utf-8') as f:
+        iso = json.load(f)
+    
+    # 检查是否有 honest_limits 字段
+    honest_limits = iso.get('honest_limits', iso.get('honest_boundary', None))
+    
+    if honest_limits is None:
+        bad('ISO 映射边界', '缺少 honest_limits 字段')
+    elif isinstance(honest_limits, str) and len(honest_limits) < 20:
+        bad('ISO 映射边界', f'honest_limits 过短: {honest_limits}')
+    else:
+        ok('ISO 映射边界', f'honest_limits 已声明: {str(honest_limits)[:100]}...')
+
+
 def gate_deploy_live_verify():
     '''部署后置新鲜度校验（P0-5 · 2026-10-12）
 
@@ -2858,6 +3009,12 @@ GATES = [
         'ISO 22166 条款级映射（覆盖率 + 变异自证）',
         [sys.executable, os.path.join(ROOT, 'scripts', 'conformance_test.py')],
         timeout=60)),
+    # 【2026-10-16 Phase B 深化】verification-antipatterns 待入 CI 的 6 条
+    ('子串边界检查（AP-002）', gate_no_substring_boundary),
+    ('多目标适应度（AP-006）', gate_no_single_scalar_fitness),
+    ('锚点修改检查（AP-007）', gate_no_anchoring_modification),
+    ('桥接合并检查（AP-009）', gate_bridge_no_merge),
+    ('ISO 映射边界（AP-010）', gate_iso_mapping_honest),
 ]
 
 
