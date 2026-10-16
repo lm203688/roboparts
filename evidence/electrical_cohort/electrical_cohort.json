@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "version": "electrical_cohort/v1",
+    "generated_at": "2026-10-16T04:04:35.056329+00:00",
+    "status": "scaffold",
+    "instructions": "填写每个节点的电气参数，然后运行 --validate 校验"
+  },
+  "nodes": {
+    "ACT-004": {
+      "label": "Odrive D6374",
+      "category": "actuators",
+      "manufacturer": "ODrive",
+      "evidence": {}
+    },
+    "ACT-005": {
+      "label": "SimpleFOC Shield",
+      "category": "actuators",
+      "manufacturer": "RobotDyn",
+      "evidence": {}
+    },
+    "ACT-006": {
+      "label": "T-Motor AK80-64",
+      "category": "actuators",
+      "manufacturer": "T-Motor",
+      "evidence": {}
+    },
+    "ACT-007": {
+      "label": "T-Motor AK10-9",
+      "category": "actuators",
+      "manufacturer": "T-Motor",
+      "evidence": {}
+    },
+    "ACT-008": {
+      "label": "Maxon EC Flat 60",
+      "category": "actuators",
+      "manufacturer": "Maxon",
+      "evidence": {}
+    },
+    "ACT-009": {
+      "label": "Kollmorgen TBM2G",
+      "category": "actuators",
+      "manufacturer": "Kollmorgen",
+      "evidence": {}
+    },
+    "ACT-010": {
+      "label": "Focbox Unity",
+      "category": "actuators",
+      "manufacturer": "FocBox",
+      "evidence": {}
+    },
+    "ACT-011": {
+      "label": "Unitree B2 Motor",
+      "category": "actuators",
+      "manufacturer": "Unitree",
+      "evidence": {}
+    },
+    "SEN-001": {
+      "label": "ROS Kinect",
+      "category": "sensors",
+      "manufacturer": "Intel",
+      "evidence": {}
+    },
+    "SEN-002": {
+      "label": "Orbbec Gemini 335",
+      "category": "sensors",
+      "manufacturer": "Orbbec",
+      "evidence": {}
+    },
+    "SEN-003": {
+      "label": "Intel RealSense D435i",
+      "category": "sensors",
+      "manufacturer": "Intel",
+      "evidence": {}
+    },
+    "SEN-004": {
+      "label": "Lepton 3.5 Thermal",
+      "category": "sensors",
+      "manufacturer": "FLIR",
+      "evidence": {}
+    },
+    "GRP-001": {
+      "label": "Robotiq 2F-85",
+      "category": "grippers",
+      "manufacturer": "Robotiq",
+      "evidence": {}
+    },
+    "GRP-002": {
+      "label": "Schunk EGP Gripper",
+      "category": "grippers",
+      "manufacturer": "Schunk",
+      "evidence": {}
+    },
+    "GRP-003": {
+      "label": "Robotiq 2F-140",
+      "category": "grippers",
+      "manufacturer": "Robotiq",
+      "evidence": {}
+    },
+    "GRP-004": {
+      "label": "Robotiq 2F-85E",
+      "category": "grippers",
+      "manufacturer": "Robotiq",
+      "evidence": {}
+    }
+  }
+}
