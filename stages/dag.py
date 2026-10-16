@@ -355,3 +355,103 @@ def _cli() -> int:
 
 if __name__ == "__main__":
     sys.exit(_cli())
+
+
+# ── 全链路重放（Phase B · 90 天 #1）───────────────────────────────────
+
+def replay_from_checkpoint(checkpoint_path: str, dag: Optional[DAG] = None) -> Dict[str, Any]:
+    """从 checkpoint 重放 DAG，比对哈希验证确定性。
+    
+    返回 {ok: bool, matches: [...], mismatches: [...]}
+    如果所有哈希匹配，说明 DAG 是确定性的（同输入必同输出）。
+    """
+    import hashlib
+    import os
+    
+    if not os.path.exists(checkpoint_path):
+        return {"ok": False, "error": f"checkpoint 不存在：{checkpoint_path}"}
+    
+    with open(checkpoint_path, 'r', encoding='utf-8') as f:
+        checkpoint = json.load(f)
+    
+    if dag is None:
+        dag = build_default_dag()
+    
+    report = dag.execute(dry_run=True)  # dry-run 不真正执行，只验证结构
+    
+    # 比对 checkpoint 中的哈希
+    checkpoint_hashes = {r['name']: r.get('stdout_hash', '') for r in checkpoint.get('results', [])}
+    current_hashes = {r.name: r.stdout_hash for r in report.results}
+    
+    matches = []
+    mismatches = []
+    
+    for name in checkpoint_hashes:
+        if name in current_hashes:
+            if checkpoint_hashes[name] == current_hashes[name]:
+                matches.append(name)
+            else:
+                mismatches.append({
+                    "stage": name,
+                    "checkpoint_hash": checkpoint_hashes[name],
+                    "current_hash": current_hashes[name],
+                })
+        else:
+            mismatches.append({"stage": name, "error": "stage 不存在"})
+    
+    return {
+        "ok": len(mismatches) == 0,
+        "total_stages": len(checkpoint_hashes),
+        "matches": len(matches),
+        "mismatches": mismatches,
+        "checkpoint_timestamp": checkpoint.get('timestamp', ''),
+        "replay_timestamp": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def save_checkpoint(report: DAGReport, path: Optional[str] = None) -> str:
+    """保存 DAG 执行报告为 checkpoint（用于全链路重放）。"""
+    if path is None:
+        timestamp = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
+        path = str(RESULTS / f"dag_checkpoint_{timestamp}.json")
+    
+    RESULTS.mkdir(parents=True, exist_ok=True)
+    data = {
+        "timestamp": report.timestamp,
+        "stages_total": report.stages_total,
+        "stages_ok": report.stages_ok,
+        "stages_fail": report.stages_fail,
+        "stages_skip": report.stages_skip,
+        "total_duration_ms": report.total_duration_ms,
+        "critical_failures": report.critical_failures,
+        "results": [asdict(r) for r in report.results],
+    }
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    return path
+
+
+def check_determinism(report1: DAGReport, report2: DAGReport) -> Dict[str, Any]:
+    """检查两次执行的确定性（哈希是否一致）。"""
+    results = []
+    for r1 in report1.results:
+        matching = [r2 for r2 in report2.results if r2.name == r1.name]
+        if not matching:
+            results.append({"stage": r1.name, "status": "missing_in_report2"})
+            continue
+        r2 = matching[0]
+        hash_match = r1.stdout_hash == r2.stdout_hash
+        results.append({
+            "stage": r1.name,
+            "status": "match" if hash_match else "mismatch",
+            "report1_hash": r1.stdout_hash,
+            "report2_hash": r2.stdout_hash,
+        })
+    
+    mismatches = [r for r in results if r["status"] == "mismatch"]
+    return {
+        "ok": len(mismatches) == 0,
+        "total": len(results),
+        "matches": sum(1 for r in results if r["status"] == "match"),
+        "mismatches": mismatches,
+    }

@@ -194,3 +194,90 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
+# ── Phase B: DAG-based pipeline (stages/dag.py migration) ────────────
+
+def run_dag_pipeline(dry_run=False):
+    """Run pipeline using stages.dag (Phase B migration).
+    
+    This is the new DAG-based orchestrator that replaces the legacy PIPELINE.
+    It provides:
+      - Topological sorting (Kahn's algorithm)
+      - Parallel batch execution
+      - Cycle detection
+      - Checkpoint saving for replay
+    
+    Args:
+        dry_run: If True, validate structure without executing scripts.
+    
+    Returns:
+        DAGReport with execution results, or None if stages.dag unavailable.
+    """
+    try:
+        from stages.dag import build_default_dag, check_dag, save_checkpoint
+    except ImportError:
+        print('[ORCHESTRATOR] stages.dag not available, skipping DAG pipeline')
+        return None
+    
+    dag = build_default_dag()
+    
+    # Validate DAG before executing
+    check_result = check_dag(dag)
+    if not check_result['ok']:
+        print('[ORCHESTRATOR] DAG validation failed:')
+        for err in check_result['errors']:
+            print(f'  - {err}')
+        return None
+    
+    print(f'[ORCHESTRATOR] DAG validated: {check_result["stage_count"]} stages')
+    
+    # Execute DAG
+    report = dag.execute(dry_run=dry_run)
+    
+    # Save checkpoint for replay
+    RESULTS_DIR = os.path.join(ROOT, "ops", "results")
+    os.makedirs(RESULTS_DIR, exist_ok=True)
+    checkpoint_path = save_checkpoint(report, path=os.path.join(RESULTS_DIR, 'dag_checkpoint_latest.json'))
+    print(f'[ORCHESTRATOR] Checkpoint saved: {checkpoint_path}')
+    
+    # Print summary
+    print(f'[ORCHESTRATOR] Pipeline complete: {report.stages_ok} ok, {report.stages_fail} fail, {report.stages_skip} skip')
+    if report.critical_failures:
+        print(f'[ORCHESTRATOR] Critical failures: {report.critical_failures}')
+    
+    return report
+
+
+def convert_pipeline_to_stages(pipeline=None):
+    """Convert legacy PIPELINE dict list to stages.dag Stage objects.
+    
+    Args:
+        pipeline: Legacy PIPELINE list (defaults to module-level PIPELINE).
+    
+    Returns:
+        List of Stage objects.
+    """
+    try:
+        from stages.dag import Stage
+    except ImportError:
+        print('[ORCHESTRATOR] stages.dag not available')
+        return []
+    
+    if pipeline is None:
+        pipeline = PIPELINE
+    
+    stages = []
+    for item in pipeline:
+        stage = Stage(
+            name=item['name'],
+            script=item['script'],
+            critical=item.get('critical', False),
+            phase=item.get('phase', 'default'),
+            depends_on=item.get('depends_on', []),
+            timeout=item.get('timeout', 120),
+            priority=item.get('priority', 0),
+        )
+        stages.append(stage)
+    
+    return stages
