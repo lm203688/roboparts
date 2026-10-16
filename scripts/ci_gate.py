@@ -2581,7 +2581,7 @@ def gate_engine_bridge():
     '''
     return run_sub(
         '双引擎口径桥接一致',
-        [sys.executable, os.path.join(ROOT, 'scripts', 'bridge_engine.py'), '--check'])
+        [sys.executable, '-m', 'stages.bridge', '--check'])
 
 
 def gate_deploy_live_verify():
