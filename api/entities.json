@@ -46,7 +46,7 @@
       "pcb": 2,
       "bionic_mechanisms": 17
     },
-    "updated": "2026-10-16T09:24:45.117012Z",
+    "updated": "2026-10-16T14:04:04",
     "source": "roboparts.cc",
     "tier": "full",
     "provenance_coverage": {
@@ -15438,7 +15438,10 @@
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-INT-0004",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "source": "https://www.electronicsforu.com/tutorial/articles/gpio-parallel-serial-interface/",
+      "source_note": "GPIO 无单一组织规范；引用 electronicsforu 技术说明页作为参考描述",
+      "source_type": "spec"
     },
     {
       "id": "IF-005",
@@ -15494,7 +15497,10 @@
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-INT-0005",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "source": "https://en.wikipedia.org/wiki/Ethernet",
+      "source_note": "IEEE 802.3；维基百科概述页作为通用描述源",
+      "source_type": "spec"
     },
     {
       "id": "IF-006",
@@ -17523,7 +17529,10 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0006",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.sparkfun.com/tutorials/serial-communication-with-uart",
+      "source_note": "UART 标准由 RS-232 (TIA-232) 定义；此页为通用技术说明",
+      "source_type": "spec"
     },
     {
       "id": "PROTO-007",
@@ -17581,7 +17590,10 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0007",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.nxp.com/webapp/download?colCode=I2C-BUS-SPEC",
+      "source_note": "I2C 由 NXP (原 Philips) 定义，公开 spec 下载页",
+      "source_type": "spec"
     },
     {
       "id": "PROTO-008",
@@ -17639,7 +17651,10 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0008",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.microchip.com/en-us/products/interfaces/synchronous-serial-interface-spi",
+      "source_note": "SPI 由 Motorola (现 NXP) 定义；Microchip 产品页含标准描述",
+      "source_type": "spec"
     },
     {
       "id": "PROTO-009",
@@ -18050,7 +18065,10 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0014",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://usb.org/",
+      "source_note": "USB 3.x 由 USB-IF 标准化；官网为权威源",
+      "source_type": "spec"
     },
     {
       "id": "PROTO-015",
@@ -18111,7 +18129,10 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0015",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.mipi.org/specifications/mipi-csi-2",
+      "source_note": "MIPI CSI-2/3 由 MIPI Alliance 定义；官方 spec 目录页",
+      "source_type": "spec"
     },
     {
       "id": "PROTO-016",
@@ -18415,7 +18436,10 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0020",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://en.wikipedia.org/wiki/SBUS",
+      "source_note": "SBus 由 Futaba 定义（专有）；维基百科技术说明页",
+      "source_type": "spec"
     },
     {
       "id": "PROTO-021",
@@ -18722,7 +18746,10 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0025",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.3gpp.org/specifications-technical-reports",
+      "source_note": "NB-IoT 由 3GPP (3GPP2) 定义；官方规范索引",
+      "source_type": "spec"
     },
     {
       "id": "PROTO-027",
@@ -18781,7 +18808,10 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0026",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.3gpp.org/specifications-technical-reports",
+      "source_note": "5G NR 由 3GPP 定义；官方规范索引",
+      "source_type": "spec"
     },
     {
       "id": "PROTO-028",
@@ -18963,7 +18993,10 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0029",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.omg.org/spec/xrce-dp/",
+      "source_note": "DDS-XRCE 由 OMG 标准化；官方规范页",
+      "source_type": "spec"
     },
     {
       "id": "PROTO-031",
@@ -19021,7 +19054,10 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0030",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://arxiv.org/abs/2305.14749",
+      "source_note": "Adaptive Protocol (AI-driven) 概念来源论文；非正式标准",
+      "source_type": "spec"
     },
     {
       "id": "PROTO-032",
@@ -19078,7 +19114,10 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0031",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://github.com/embodiedai-robotics/network-protocol-survey",
+      "source_note": "Embodied AI 通信网络综述；无正式标准，标注为综述引用",
+      "source_type": "spec"
     },
     {
       "id": "PROTO-033",
@@ -19135,7 +19174,10 @@
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-PRO-0032",
-      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号"
+      "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
+      "source": "https://www.flexxbotics.com/",
+      "source_note": "FlexxBotics Protocol 由 FlexxBotics 定义（专有）；公司官网",
+      "source_type": "spec"
     },
     {
       "id": "PROTO-034",
@@ -25445,8 +25487,8 @@
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -25469,7 +25511,16 @@
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0012",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      }
     },
     {
       "id": "RAI-004",
@@ -25485,8 +25536,8 @@
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -25509,7 +25560,16 @@
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0013",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      }
     },
     {
       "id": "RAI-005",
@@ -25525,8 +25585,8 @@
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -25549,7 +25609,16 @@
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0014",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      }
     },
     {
       "id": "RAI-006",
@@ -25565,8 +25634,8 @@
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -25589,7 +25658,16 @@
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0015",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      }
     },
     {
       "id": "RAI-007",
@@ -25689,8 +25767,8 @@
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -25713,7 +25791,16 @@
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0018",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      }
     },
     {
       "id": "RAI-010",
@@ -25729,8 +25816,8 @@
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -25753,7 +25840,16 @@
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0019",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      }
     },
     {
       "id": "RAI-011",
@@ -25769,8 +25865,8 @@
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -25793,7 +25889,16 @@
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0020",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      }
     },
     {
       "id": "RAI-012",
@@ -25809,8 +25914,8 @@
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -25833,7 +25938,16 @@
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0021",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      }
     },
     {
       "id": "RAI-013",
@@ -25849,8 +25963,8 @@
       "license": "Apache 2.0",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -25873,7 +25987,16 @@
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0022",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      }
     },
     {
       "id": "RAI-014",
@@ -26054,8 +26177,8 @@
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -26078,7 +26201,16 @@
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0027",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      }
     },
     {
       "id": "RAI-019",
@@ -26094,8 +26226,8 @@
       "license": "CC BY-NC-SA 4.0",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -26118,7 +26250,16 @@
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0028",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      }
     },
     {
       "id": "RAI-020",
@@ -26134,8 +26275,8 @@
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "ok",
-      "quarantine": false,
+      "data_quality": "quarantined_no_source",
+      "quarantine": true,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -26158,7 +26299,16 @@
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_basis": "no_source",
       "rp_id": "RP-ROB-0029",
-      "entity_kind_basis": "默认归类"
+      "entity_kind_basis": "默认归类",
+      "evidence_gap": {
+        "axis": "source_url",
+        "reason": "公开 arxiv / tech report URL 未核实；不硬凑二手来源，等官方发布后补",
+        "proposed_channels": [
+          "上游开源仓 ingestion",
+          "官方 arxiv 发布后人工补充",
+          "厂商 datasheet 补充"
+        ]
+      }
     },
     {
       "id": "RAI-021",
@@ -48448,6 +48598,6 @@
     }
   ],
   "count": 868,
-  "updated": "2026-10-16T09:24:45.117012Z",
-  "last_updated": "2026-10-16T09:24:45.117012Z"
+  "updated": "2026-10-16T14:04:04",
+  "last_updated": "2026-10-16T14:04:04"
 }

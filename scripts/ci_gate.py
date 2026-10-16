@@ -2862,6 +2862,63 @@ def gate_d2a_timestamp_consistency():
        f'三源相等 {trio["meta.updated"][:19]}')
 
 
+def gate_d5_no_source_policy():
+    """D5 · "无出处不收"铁律存量闸门（2026-10-16 审计 §F5）
+
+    审计实测：61 条实体（7%）无 `source` 字段，违反项目第一铁律。
+    进一步分析：其中 35 条已 quarantine=True（诚实标记），26 条 quarantine=False
+    且 data_quality='ok'——即"看着干净、实则无出处"，这才是真正的违规。
+
+    闸门策略：不直接改数据（那需要人来决定补 source 还是 quarantine），
+    而是把**口径**锁死——
+      无 source 且无 sources 的实体，必须至少满足：
+        1) quarantine == True（承认它不可信，前端过滤），或
+        2) data_quality != 'ok'（显式标注是 placeholder/non_entity 等）
+
+    任一不满足即判红。这是"存量不再腐化"的兜底闸门。
+    修复存量 26 条走独立报告（不在闸门里强制改），因为要人来判"该补还是该隔离"。
+    """
+    import json
+    import os
+
+    ent_path = os.path.join(ROOT, 'api', 'entities.json')
+    if not os.path.exists(ent_path):
+        bad('无出处政策闸门', 'api/entities.json 不存在')
+        return
+
+    with open(ent_path, encoding='utf-8') as f:
+        ent = json.load(f)
+    ents = ent.get('entities', [])
+
+    violations = []
+    for e in ents:
+        has_source = bool(e.get('source')) or bool(e.get('sources'))
+        if has_source:
+            continue
+        # 无出处：必须被隔离或明确标注为非 clean
+        if e.get('quarantine') is True:
+            continue
+        if e.get('data_quality') not in (None, 'ok'):
+            continue
+        violations.append({
+            'id': e.get('id'),
+            'name': e.get('name', ''),
+            'category': e.get('category', ''),
+        })
+
+    if violations:
+        head = '; '.join(
+            f'{v["id"]}({v["category"]})' for v in violations[:5]
+        )
+        more = f' + {len(violations)-5} 更多' if len(violations) > 5 else ''
+        bad('无出处政策闸门',
+            f'{len(violations)} 条实体无 source 且 data_quality=ok + quarantine=False '
+            f'—— 违反"无出处不收"铁律。样例：{head}{more}。'
+            f'走 audit 报告（scripts/audit_no_source.py）逐条决定补 source 或 quarantine。')
+    else:
+        ok('无出处政策闸门', f'0 违规 / {len(ents)} 条实体（无出处的都被隔离或标注）')
+
+
 def gate_deploy_live_verify():
     '''部署后置新鲜度校验（P0-5 · 2026-10-12）
 
@@ -3159,6 +3216,13 @@ GATES = [
     # =2026-09-25、顶层 last_updated=2026-10-06、meta.updated=当日 三个不一致。
     # 契约：meta.updated 是唯一真相源，顶层两个是兼容别名，脚本必须同步为镜像。
     ('entities.json 时间戳一致（D2-a · 三源镜像）', gate_d2a_timestamp_consistency),
+    # 【2026-10-16 D5】"无出处不收"铁律存量闸门。审计 §F5 实测 61 条实体无 source
+    # 字段，其中 35 条已 quarantine=True（诚实标记），26 条 quarantine=False 且
+    # data_quality='ok'——即"看着干净、实则无出处"，这才是真正的违规。
+    # 闸门策略：不直接改数据（那需要人来决定补 source 还是 quarantine），
+    # 而是把口径锁死——无 source 且无 sources 的实体必须 quarantine=True 或
+    # data_quality != 'ok'。这是"存量不再腐化"的兜底闸门。
+    ('无出处政策闸门（D5 · 存量不破戒）', gate_d5_no_source_policy),
 ]
 
 
