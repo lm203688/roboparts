@@ -165,6 +165,14 @@ def main():
     doc['meta']['total'] = len(entities)
     doc['meta']['total_entities'] = len(entities)
     doc['meta']['updated'] = updated
+    # 【20261016 D2-a】时间戳收敛：meta.updated 是**唯一真相源**，顶层 updated /
+    # last_updated 只是历史脚本遗留的兼容别名——曾各自被不同的生成器写过，导致
+    # 顶层 updated=2026-09-25、last_updated=2026-10-06、meta.updated=今日 三份不一致。
+    # 现在由本归一化器统一把三者钉死到同一个 updated 值；顶层字段保留是向后兼容
+    # （有下游消费者读它），但语义等价于 meta.updated。闸门 gate_d2a_timestamp_consistency
+    # 断言三者相等。
+    doc['updated'] = updated
+    doc['last_updated'] = updated
     # 顶层 count 与 entities[] 长度同源。
     # 【20261008】此前无任何生成器维护它 —— 数据增长后停在 865 而 entities[] 已是 868，
     # 对外 /api/entities.json 的 count 与列表长度静默不一致（无闸门盯）。
@@ -212,7 +220,12 @@ def main():
         pub = {'meta': {}, 'data': []}
     pub.setdefault('meta', {})
     pub['meta']['updated'] = updated
+    pub['meta']['generated_at'] = updated
     pub['meta']['total_entities'] = len(entities)
+    # 【20261016 D1 修复】entity_count 此前遗漏同步，2026-08-27 以来一直漂在 767，
+    # 而 total_entities=868、data array=868。三个数字不一致就是审计 §F1 的公开矛盾源。
+    # 现在把 entity_count / total_entities / len(data) 三者绑死为同一个真相源。
+    pub['meta']['entity_count'] = len(entities)
     pub['meta']['categories'] = CANONICAL
     pub['meta']['category_counts'] = stats
     # 【N10 20260805】把溯源覆盖率摘要一并透出到对外主接口，

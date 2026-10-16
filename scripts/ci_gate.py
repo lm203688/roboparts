@@ -2734,6 +2734,134 @@ def gate_iso_mapping_honest():
         ok('ISO 映射边界', f'honest_limits 已声明: {str(honest_limits)[:100]}...')
 
 
+def gate_d1_datajson_consistency():
+    """D1 · 对外数据集端点 /api/data.json 一致性闸门（2026-10-16 审计 §F1）
+
+    审计实测：/api/data.json 的 meta.entity_count=767 但 data array 有 868 条，
+    站点到处写"868 条完整数据集"——一次 curl 就能被公开证伪的矛盾。
+
+    此闸门判定三条硬约束：
+      1. meta.entity_count == meta.total_entities == len(data)
+      2. len(data) == entities.json.count == len(entities.json.entities)
+      3. meta.generated_at 必须落在容忍窗口内（<= D1_STALE_MAX_DAYS）
+
+    任何一条不满足即判红。这是"对外端点实体数一致"的唯一闸门。
+    """
+    import json
+    import os
+    from datetime import datetime, timezone
+
+    D1_STALE_MAX_DAYS = 3  # data.json 落后 entities.json 超 3 天即判红
+
+    data_path = os.path.join(ROOT, 'api', 'data.json')
+    ent_path = os.path.join(ROOT, 'api', 'entities.json')
+
+    if not os.path.exists(data_path):
+        bad('对外数据集端点一致性', 'api/data.json 不存在')
+        return
+    if not os.path.exists(ent_path):
+        bad('对外数据集端点一致性', 'api/entities.json 不存在')
+        return
+
+    with open(data_path, encoding='utf-8') as f:
+        data = json.load(f)
+    with open(ent_path, encoding='utf-8') as f:
+        ent = json.load(f)
+
+    d_meta = data.get('meta', {})
+    d_len = len(data.get('data', []))
+    e_count = ent.get('count', 0)
+    e_len = len(ent.get('entities', []))
+
+    # 断言 1：data.json 内部三方一致
+    triple = {
+        'meta.entity_count': d_meta.get('entity_count'),
+        'meta.total_entities': d_meta.get('total_entities'),
+        'len(data)': d_len,
+    }
+    unique_vals = set(v for v in triple.values() if v is not None)
+    if len(unique_vals) > 1:
+        bad('对外数据集端点一致性',
+            f'data.json 内部数字不一致：{triple}（应全部相等）')
+        return
+
+    # 断言 2：data.json ↔ entities.json 对齐
+    if d_len != e_count or d_len != e_len:
+        bad('对外数据集端点一致性',
+            f'data.json={d_len} 与 entities.json count={e_count}/len={e_len} 不一致')
+        return
+
+    # 断言 3：data.json.meta.generated_at 新鲜度
+    gen_at = d_meta.get('generated_at')
+    if gen_at:
+        try:
+            gen_dt = datetime.fromisoformat(gen_at.replace('Z', '+00:00'))
+            now = datetime.now(timezone.utc)
+            lag = (now - gen_dt).days
+            if lag > D1_STALE_MAX_DAYS:
+                bad('对外数据集端点一致性',
+                    f'data.json.meta.generated_at={gen_at} 已陈旧 {lag} 天 '
+                    f'(> {D1_STALE_MAX_DAYS} 天上限)，跑 scripts/normalize_categories.py 重生')
+                return
+        except Exception as e:
+            bad('对外数据集端点一致性', f'无法解析 generated_at={gen_at}: {e}')
+            return
+    else:
+        bad('对外数据集端点一致性', 'data.json.meta 缺少 generated_at 字段')
+        return
+
+    ok('对外数据集端点一致性',
+       f'三源一致 868 条 · data.json/total/entities 全部对齐 · '
+       f'generated_at 新鲜（{gen_at[:19]}）')
+
+
+def gate_d2a_timestamp_consistency():
+    """D2-a · entities.json 时间戳收敛闸门（2026-10-16 审计 §F2）
+
+    审计实测：entities.json 里 4 个时间戳各说各话——
+      顶层 updated=2026-09-25、顶层 last_updated=2026-10-06、
+      meta.updated=2026-10-16、meta.projection_generated_at=2026-08-27。
+    "单一真相源自身不自洽"是 F2 的核心指控。
+
+    约定：meta.updated 是唯一真相源；顶层 updated / last_updated 是历史遗留的
+    兼容别名，脚本层必须把它们同步为 meta.updated 的镜像。
+
+    闸门断言：三者在字符串层面完全相等（不做时间解析，避免时区/Z 后缀差异
+    被吞掉；同步源必须是同一写入点的同一变量赋值）。
+    """
+    import json
+    import os
+
+    ent_path = os.path.join(ROOT, 'api', 'entities.json')
+    if not os.path.exists(ent_path):
+        bad('entities.json 时间戳一致', 'api/entities.json 不存在')
+        return
+
+    with open(ent_path, encoding='utf-8') as f:
+        ent = json.load(f)
+
+    meta = ent.get('meta') or {}
+    trio = {
+        'meta.updated': meta.get('updated'),
+        'updated (顶层)': ent.get('updated'),
+        'last_updated (顶层)': ent.get('last_updated'),
+    }
+    missing = [k for k, v in trio.items() if v is None]
+    if missing:
+        bad('entities.json 时间戳一致',
+            f'缺字段：{missing}（应至少三者都有值）')
+        return
+
+    vals = set(trio.values())
+    if len(vals) > 1:
+        bad('entities.json 时间戳一致',
+            f'三处时间戳不一致：{trio} —— 跑 scripts/normalize_categories.py 重生')
+        return
+
+    ok('entities.json 时间戳一致',
+       f'三源相等 {trio["meta.updated"][:19]}')
+
+
 def gate_deploy_live_verify():
     '''部署后置新鲜度校验（P0-5 · 2026-10-12）
 
@@ -3022,6 +3150,15 @@ GATES = [
         '产物新鲜度检查（upstream mtime 兜底）',
         [sys.executable, os.path.join(ROOT, 'scripts', 'check_freshness.py')],
         timeout=30)),
+    # 【2026-10-16 D1】对外数据集端点 /api/data.json 一致性闸门。
+    # 审计 §F1 实测线上 data.json 的 meta.entity_count=767 但 data array 有 868 条，
+    # 一次 curl 就能证伪"868 条完整数据集"。闸门断言三源（entity_count / total_entities
+    # / len(data) / entities.json.count）必须四方一致，且 generated_at 不超 3 天。
+    ('对外数据集端点一致性（D1 · 四方数字对齐）', gate_d1_datajson_consistency),
+    # 【2026-10-16 D2-a】entities.json 时间戳收敛闸门。审计 §F2 实测顶层 updated
+    # =2026-09-25、顶层 last_updated=2026-10-06、meta.updated=当日 三个不一致。
+    # 契约：meta.updated 是唯一真相源，顶层两个是兼容别名，脚本必须同步为镜像。
+    ('entities.json 时间戳一致（D2-a · 三源镜像）', gate_d2a_timestamp_consistency),
 ]
 
 
