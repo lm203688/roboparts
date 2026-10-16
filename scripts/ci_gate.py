@@ -2611,7 +2611,7 @@ def gate_no_substring_boundary():
         
         for i, line in enumerate(lines, 1):
             # 检查是否有 'X' in text 模式（X 是判定关键词）
-            if "'composed' in" in line or '"composed" in" in line or 'type_error' in' in line:
+            if "'composed' in" in line or "'type_error' in" in line:
                 violations.append(f'{filepath}:{i}: {line.strip()}')
     
     if violations:
@@ -2658,8 +2658,7 @@ def gate_no_anchoring_modification():
         encoding='utf-8', errors='replace')
     
     if result.returncode == 0 and result.stdout.strip():
-        last_commit = result.stdout.strip().split('
-')[0]
+        last_commit = result.stdout.strip().splitlines()[0]
         # 检查是否是自动化提交
         if 'auto' in last_commit.lower() or 'ci' in last_commit.lower():
             bad('锚点修改检查', f'检测到自动化修改锚点: {last_commit}')
