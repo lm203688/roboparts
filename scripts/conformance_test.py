@@ -181,6 +181,16 @@ def main() -> int:
         },
         "failed_mappings": [r for r in results if not r["ok"]],
         "mutation_check": mutation,
+        "honest_limits": (
+            "本测试基于 docs/iso22166-conformance-mapping.md 的静态映射表，"
+            "校验字段在产物中是否存在且非空。但以下边界必须声明："
+            "① 映射表由人工维护，ISO 22166 原文条款的解释存在主观性，"
+            "本测试只能验证「映射的完整性」而非「映射的正确性」；"
+            "② 字段存在≠语义等价——如 `interface` 字段存在不等于满足 ISO 对「机械接口」的全部要求；"
+            "③ 20 条映射中有 {failed} 条 FAIL 是已知诚实边界：这些条款需要"
+            "产品数据层尚未采集的字段（如 rated_current_a / prov.source_url），"
+            "属于 Phase C 电气取证扩展范围，不是代码缺陷。"
+        ).format(failed=failed),
         "overall": "PASS" if (failed == 0 and no_mapping_ok and mutation.get("mutation_kills")) else "FAIL",
     }
 

@@ -90,6 +90,32 @@ NAMED_ATTRIB = ('厂商目录声明值', '具名标准', '官方目录', '规格
 NO_ANCHOR = ('web aggregation', 'web_aggregation', '网络聚合', 'aggregation',
              'web search', 'web_search', '网络检索', '公开资料整理', '推测', '估算')
 
+# 【2026-10-17 补丁 · G-01】搜索引擎/聚合站黑名单
+#
+# 239 条 Tier A 的 source_url 实际是 `https://www.google.com/search?q=...+datasheet`
+# 之类 —— "我没找到，我搜了一下"，不是数据手册。旧实现 _is_deep() 见 query 就判深链，
+# 于是搜索查询页被白送 Tier A，把「A 级可点开复核」的语义稀释到 49.4%。
+#
+# 判据不区分 query 内容：**任何搜索引擎域名带 /search / /s / ?q= 一律视为
+# "尚未定位到具体页面"**，与"我没有 URL"等价。命中即按 NO_ANCHOR 判 C。
+#
+# 白名单原则：只列已知搜索引擎 + 通用聚合/聚合搜索站。避免误伤真深链。
+SEARCH_ENGINE_HOSTS = (
+    'google.com', 'google.', 'bing.com', 'baidu.com', 'duckduckgo.com',
+    'duckduckgo.', 'yandex.com', 'yandex.ru', 'yandex.net',
+    'so.com', 'hao.360.com', 'sogou.com', 'aol.com', 'aol.co.uk',
+    'qwant.com', 'ecosia.org', 'mojeek.com', 'searx.org', 'brave.com',
+    'startpage.com', 'metager.org', 'yahoo.com', 'yahoo.co.jp',
+    'ask.com', 'alexa.com',
+    # 通用聚合/搜索门户
+    'wikipedia.org', 'wiki.ubuntu.com',
+)
+
+# URL path 前缀命中即视为搜索查询页（更精准，只用于兜底匹配）
+SEARCH_PATH_PREFIXES = ('/search', '/s?', '/s?q=', '/results', '/web/search',
+                        '/search-result', '/cgi-bin/q', '/html/results',
+                        '/web?q=', '/html?s=')
+
 # 自造来源：不是外部证据，是我方自己写的条目名。绝不能因为「source 非空」而得分。
 SELF_AUTHORED = ('roboparts',)
 
@@ -133,18 +159,94 @@ def _is_deep(u):
     return bool(path) or bool(p.query)
 
 
+def _is_search_engine(u):
+    """命中搜索引擎/聚合站黑名单？
+    命中即视为"未定位到具体页面"，等同于无锚点。
+    """
+    try:
+        p = urlparse(u)
+    except ValueError:
+        return False
+    host = (p.netloc or '').lower().lstrip('www.')
+    if not host:
+        return False
+    # 主机名命中：任何搜索引擎域名带 query 参数就算搜索查询
+    for h in SEARCH_ENGINE_HOSTS:
+        if h.endswith('.'):
+            # 泛化匹配（如 google. 匹配 google.co.jp / google.de 等）
+            if host.startswith(h) and len(host) > len(h):
+                if p.query or p.path:
+                    return True
+        else:
+            if host == h or host.startswith(h + '.'):
+                if p.query or p.path.startswith('/search') or p.path.startswith('/s?'):
+                    return True
+                # 部分站点整个域名就是搜索引擎（如 duckduckgo.com / so.com）
+                if h in ('duckduckgo.com', 'so.com', 'hao.360.com', 'qwant.com',
+                         'ecosia.org', 'mojeek.com', 'brave.com', 'startpage.com',
+                         'metager.org', 'ask.com', 'alexa.com'):
+                    return True
+    # 兜底：path 前缀命中即算搜索查询页
+    path_l = (p.path or '').lower()
+    for pre in SEARCH_PATH_PREFIXES:
+        if path_l.startswith(pre):
+            return True
+    return False
+
+
+def _is_search_engine_root(u):
+    """根 URL（无 path 无 query）是否命中搜索引擎域名？
+
+    用于阻止 source_scope 的 'entity' 例外 —— 例：`https://google.com`
+    作为 Tesla 执行器的 source_url 时，不能因为「google 主体就是该实体」而
+    被判 A（google.com 不是 Tesla 的主页）。搜索引擎根域名即使无查询参数，
+    也不能算「厂商实体主页」。
+    """
+    try:
+        p = urlparse(u)
+    except ValueError:
+        return False
+    host = (p.netloc or '').lower().lstrip('www.')
+    if not host:
+        return False
+    # 有 path 或 query 就不是根 URL，交给 _is_search_engine 处理
+    if (p.path or '').strip('/') or p.query:
+        return False
+    for h in SEARCH_ENGINE_HOSTS:
+        if h.endswith('.'):
+            if host.startswith(h) and len(host) > len(h):
+                return True
+        else:
+            if host == h or host.startswith(h + '.'):
+                return True
+    return False
+
+
+def _partition_urls(urls):
+    """把 URL 分成 (真实证据 URL, 搜索引擎 URL) 两组"""
+    real, se = [], []
+    for u in urls:
+        if _is_search_engine(u):
+            se.append(u)
+        else:
+            real.append(u)
+    return real, se
+
+
 def derive_tier(e):
     """唯一判据：只看证据形态，不看已有的 source_tier 字段。
 
     返回 (tier, basis)。basis 是可读的判定依据，写回实体便于审计。
     """
     urls = collect_urls(e)
-    deep = [u for u in urls if _is_deep(u)]
+    # 【G-01】搜索引擎/聚合站 URL 不计入证据：先过滤，剩余的才是"真链接"
+    real_urls, search_urls = _partition_urls(urls)
+    deep = [u for u in real_urls if _is_deep(u)]
     if deep:
         p = urlparse(deep[0])
         anchor = (p.netloc + p.path)[:60]
         return 'A', f'deep_link:{anchor}'
-    if urls:
+    if urls and real_urls:
         # 根 URL 默认封顶 B（首页证明得了这家厂商存在，证明不了这个型号的任何参数）。
         # 唯一例外沿用 L1.70 的 source_scope：站点主体**就是该实体本身**时
         # （项目主页 / 标准组织自身），首页即其一手发布地，仍可 A。
@@ -155,14 +257,23 @@ def derive_tier(e):
         # 白送 Tier A。判据不能因为「什么都没有」而放行，必须要求主体同一是被
         # 证明出来的，不是因缺失而默认成立。
         name = str(e.get('name') or '').strip()
-        if name:
+        # 【G-01 补丁】根 URL 本身是搜索引擎域名时，即使 source_scope 判为
+        # 'entity' 也不能豁免 —— 否则 https://google.com 会被当成 Tesla 的
+        # "实体主页"，绕过黑名单。搜索引擎根域名不算实体一手发布地。
+        root_host = (urlparse(real_urls[0]).netloc or '').lower()
+        is_search_root = _is_search_engine_root(real_urls[0])
+        if name and not is_search_root:
             try:
                 import source_scope as _ss
-                if _ss.scope_of({'name': name, 'source_url': urls[0]}) == 'entity':
+                if _ss.scope_of({'name': name, 'source_url': real_urls[0]}) == 'entity':
                     return 'A', 'entity_homepage'
             except Exception:
                 pass
         return 'B', 'root_url_only'
+
+    # 【G-01】URL 全是搜索引擎链接 —— 等同于"我没找到，我搜了一下"，按无锚点判
+    if search_urls:
+        return 'C', 'search_engine_query'
 
     src = str(e.get('source') or '').strip()
     if not src:

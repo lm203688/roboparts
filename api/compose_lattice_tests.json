@@ -5,37 +5,11 @@
   "laws": [
     {
       "law": "Soundness (best-pair)",
-      "passes": 1820,
-      "failures": [
-        {
-          "case": "node_3 × node_37",
-          "axis": "signal",
-          "reason": "signal verdict=compatible 但 best_pair.pair_verdict=None（假绿）"
-        },
-        {
-          "case": "node_4 × node_2",
-          "axis": "signal",
-          "reason": "signal verdict=compatible 但 best_pair.pair_verdict=None（假绿）"
-        },
-        {
-          "case": "node_9 × node_8",
-          "axis": "signal",
-          "reason": "signal verdict=compatible 但 best_pair.pair_verdict=None（假绿）"
-        },
-        {
-          "case": "node_22 × node_26",
-          "axis": "signal",
-          "reason": "signal verdict=compatible 但 best_pair.pair_verdict=None（假绿）"
-        },
-        {
-          "case": "node_16 × node_39",
-          "axis": "signal",
-          "reason": "signal verdict=compatible 但 best_pair.pair_verdict=None（假绿）"
-        }
-      ],
+      "passes": 2000,
+      "failures": [],
       "total_cases": 2000,
       "composed_observed": 15,
-      "verdict": "FAIL"
+      "verdict": "PASS"
     },
     {
       "law": "Monotonicity",
@@ -63,5 +37,5 @@
       }
     }
   ],
-  "total_pass": false
+  "total_pass": true
 }

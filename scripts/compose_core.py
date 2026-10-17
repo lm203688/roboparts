@@ -232,6 +232,7 @@ def _signal_axis(
         )
     best_rank = -1
     best_pv = "unknown"
+    best_rec: Optional[Dict[str, Any]] = None
     reason: Optional[str] = None
     for ta in a_ids:
         for tb in b_ids:
@@ -239,8 +240,13 @@ def _signal_axis(
             if PAIR_RANK[pv] > best_rank:
                 best_rank = PAIR_RANK[pv]
                 best_pv = pv
+                best_rec = {"a_type": ta, "b_type": tb, "pair_verdict": pv}
+                if entry:
+                    best_rec["reason"] = entry.get("reason")
                 reason = entry.get("reason") if entry else None
     out = dict(base, verdict=AXIS_VERDICT_OF_PAIR[best_pv])
+    if best_rec is not None:
+        out["best_pair"] = best_rec
     if reason:
         out["reason"] = reason
     return out

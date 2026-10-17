@@ -373,7 +373,7 @@ export function evalDimension(name, a, b) {
       const ea = mechanicalEvidence(a), eb = mechanicalEvidence(b);
       // 同 protocol：库内绝大多数实体 status=not_declared / n_a（占比现算，见
       // meta.mechanical_interface_coverage —— 此处刻意不写死数字，旧注释里的
-      // 「688 条中 348 条」在库涨到 706 后就成了假话）。
+      // 「N 条中 M 条」在库涨到 706 后就成了假话）。
       // 若把它们判成 false，等于把"厂商未公开"渲染成"装不上"。
       if (!ea.matched.length || !eb.matched.length) {
         return { compatible: null, score: 0, notes: inconclusiveNote(a, b, ea, eb, '机械接口') };
@@ -455,7 +455,7 @@ export function evalDimension(name, a, b) {
       // 【20260806-12】布尔维度的三态整体缺失：旧写法 `x.ros_support === true`
       // 把「未声明」与「声明为 false」压成同一个 false，于是任一未声明组件
       // 与 ROS2 组件配对即判「不兼容」，并附带一句事实错误的告警
-      // 「双方均有声明且不匹配」。数据集 688 个实体中有 614 个（89%）未声明该字段，
+      // 「双方均有声明且不匹配」。数据集 N 个实体中有 M 个未声明未声明该字段，
       // 全部落入此路径 —— 这正是 20260806-08 修 protocol/mechanical 时漏掉的同一个 bug：
       // 字符串维度靠「空串 = 未声明」天然区分，布尔维度没有这层保护。
       // 判 false 的唯一合法前提仍是：双方都有声明，且确实冲突。

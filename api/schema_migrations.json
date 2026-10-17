@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "schema_version": "1.0.0",
+    "description": "Schema migration registry for RoboParts data files. Phase 3 承重结构 6（审计 §4 'Schema 演进'）.",
+    "description_zh": "数据文件 schema 演进登记表。当前为骨架，实际版本演进通过 append-only 追加；每次改字段必须在此登记 diff + 兼容窗口。",
+    "owner": "scripts/schema_contract.py (source of truth for current schema)",
+    "policy": {
+      "deprecation_policy_days": 90,
+      "breaking_change_window_days": 30,
+      "backwards_compatible_rule": "新增字段只能 optional；改类型/删字段需要 migration 记录 + 90 天弃用窗口"
+    },
+    "current_files": [
+      "api/entities.json",
+      "api/oss_components.json",
+      "api/evidence_ledger.json",
+      "api/compatibility_pairs.json",
+      "api/co_mount_pairs.json",
+      "api/morphology_graph.json",
+      "api/embodiment_provenance.json"
+    ]
+  },
+  "migrations": [],
+  "pending_deprecations": [],
+  "notes": [
+    "本文件是骨架；当前所有实体的 schema 由 scripts/schema_contract.py 现算。",
+    "当有实际的字段增删改时，往 migrations 数组追加一条：{ts, target_file, from_version, to_version, diff_summary, deprecated_fields[], replacement_map{}}",
+    "90 天弃用窗口结束后，删除 pending_deprecations 里的对应条目。",
+    "CI 校验点：migrations 数组必须严格时间递增；pending_deprecations 里 expires_at 超期的必须清除或延期登记理由。"
+  ]
+}

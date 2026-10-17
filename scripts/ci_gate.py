@@ -3064,6 +3064,679 @@ def gate_deploy_live_verify():
     except Exception as e:
         ok('部署后置新鲜度校验', f'⚠️ 执行异常（软通过）：{type(e).__name__}: {str(e)[:80]}')
 
+def gate_lockfile_and_sbom():
+    '''【审计 F6】依赖锁定 + SBOM 闸门（2026-10-17）
+
+    审计实测：仓库无 package-lock.json 无 SBOM——fresh clone 装依赖无锁定，
+    供应链无清单。闸门三重检查：
+
+    1. package-lock.json 存在且 lockfileVersion 合法（v2/v3）
+    2. SBOM.json 存在且 CycloneDX specVersion 合法（1.4/1.5）
+    3. SBOM 与 lockfile 现算的组件集一致（跑 gen_sbom.py --check）
+
+    与 gate_no_secrets 分工：那条管"没有凭据泄漏"，这条管"依赖可复现"。
+    与 CI 的其它闸门不重叠——这是本项目第一道纯供应链闸门。
+
+    软通过策略：无 node_modules/lockfile（fresh clone 且未跑 install）时
+    降级为 warn，不阻塞——因为 CI 环境可能未预装 npm。
+    '''
+    import subprocess
+    lock_path = os.path.join(ROOT, 'package-lock.json')
+    sbom_path = os.path.join(ROOT, 'SBOM.json')
+    name = '依赖锁定 + SBOM'
+
+    # 检查 1：lockfile 存在
+    if not os.path.exists(lock_path):
+        ok(name, '⚠️ package-lock.json 不存在（fresh clone 未装依赖），软通过')
+        return
+
+    # 检查 2：SBOM 存在
+    if not os.path.exists(sbom_path):
+        bad(name, f'SBOM.json 不存在，请跑 `python scripts/gen_sbom.py` 生成')
+        return
+
+    # 检查 3：lockfile 版本合法性
+    try:
+        with open(lock_path, encoding='utf-8') as f:
+            lock = json.load(f)
+    except Exception as e:
+        bad(name, f'package-lock.json 不可解析：{e}')
+        return
+
+    lfv = lock.get('lockfileVersion')
+    if lfv not in (2, 3):
+        bad(name, f'lockfileVersion={lfv!r}，需 2 或 3（npm 8/9+ 格式）')
+        return
+
+    # 检查 4：SBOM 结构合法性
+    try:
+        with open(sbom_path, encoding='utf-8') as f:
+            sbom = json.load(f)
+    except Exception as e:
+        bad(name, f'SBOM.json 不可解析：{e}')
+        return
+
+    if sbom.get('bomFormat') != 'CycloneDX':
+        bad(name, f'bomFormat={sbom.get("bomFormat")!r}，需 CycloneDX')
+        return
+    spec = sbom.get('specVersion')
+    if spec not in ('1.4', '1.5'):
+        bad(name, f'specVersion={spec!r}，需 1.4 或 1.5')
+        return
+
+    n_components = len(sbom.get('components', []))
+    if n_components < 1:
+        bad(name, f'SBOM components 为空（{n_components} 条）')
+        return
+
+    # 检查 5：SBOM 与 lockfile 组件集一致（跑生成器 --check）
+    try:
+        result = subprocess.run(
+            [sys.executable, os.path.join(ROOT, 'scripts', 'gen_sbom.py'), '--check'],
+            capture_output=True, text=True, timeout=30,
+            encoding='utf-8', errors='replace')
+        if result.returncode != 0:
+            msg = (result.stdout + result.stderr).strip()
+            bad(name, f'gen_sbom.py --check 失败：{msg[:200]}')
+            return
+        ok(name, f'lockfileVersion={lfv} + SBOM specVersion={spec} + {n_components} 组件一致')
+    except Exception as e:
+        bad(name, f'gen_sbom.py --check 异常：{type(e).__name__}: {str(e)[:120]}')
+
+
+def gate_tier_a_url_blacklist():
+    '''【G-01 · G-T1】Tier A URL 搜索引擎黑名单闸门（2026-10-17）
+
+    审计实测：239 条 Tier A 的 source_url 是 `google.com/search?q=...+datasheet`——
+    "我没找到，我搜了一下"，不是数据手册。占 Tier A 总数 472 的 50.6%，任何人
+    点开复核看到的是搜索结果页。
+
+    根因：`govern_source_tier.py::_is_deep()` 见 query 就判深链，`google.com/search?q=`
+    被白送 Tier A。修复：URL 分类前用 SEARCH_ENGINE_HOSTS 黑名单过滤；命中即按 C 处理。
+
+    本闸门独立复检：对每个 source_tier == 'A' 的实体，现算 collect_urls()，
+    断言**没有任何 URL** 命中搜索引擎/聚合站黑名单（含纯根域名如 google.com）。
+    防止未来代码变更把漏洞带回来。
+
+    与 gate_meta_single_source 分工：那条管"对外契约字段一致"，这条管
+    "A 级语义真的可点开复核"——一个更细粒度的语义护栏。
+
+    与 gate_pure_drift 同族（防自我声明）：不看 source_tier_basis 自报，
+    而是自己扫 URL 判定，防止「合法≠自洽」的换语义冒充。
+    '''
+    name = 'Tier A URL 无搜索引擎污染'
+    sys.path.insert(0, os.path.join(ROOT, 'scripts'))
+    try:
+        from govern_source_tier import (collect_urls, _is_search_engine,
+                                        _is_search_engine_root)
+    except Exception as e:
+        bad(name, f'govern_source_tier 不可导入：{type(e).__name__}: {str(e)[:100]}')
+        return
+
+    entities_path = os.path.join(ROOT, 'api', 'entities.json')
+    try:
+        with open(entities_path, encoding='utf-8') as f:
+            doc = json.load(f)
+        entities = doc.get('entities') or []
+    except Exception as e:
+        bad(name, f'api/entities.json 不可读：{type(e).__name__}: {str(e)[:100]}')
+        return
+
+    tier_a = [e for e in entities if e.get('source_tier') == 'A']
+    polluted = []
+    for e in tier_a:
+        urls = collect_urls(e)
+        se = [u for u in urls if _is_search_engine(u)]
+        se_root = [u for u in urls if _is_search_engine_root(u)]
+        if se or se_root:
+            polluted.append((e.get('id'), se[:1] or se_root[:1]))
+
+    # 变异自证（防自欺型闸门）：构造一个假实体，验证黑名单真的能抓
+    canary = {'id': '__canary__', 'source_url': 'https://www.google.com/search?q=fake'}
+    urls_c = collect_urls(canary)
+    if not any(_is_search_engine(u) for u in urls_c):
+        bad(name, '变异自证失败：google.com/search?q= 未被 _is_search_engine 识别')
+        return
+
+    if polluted:
+        sample = ', '.join(f'{cid}' for cid, _ in polluted[:5])
+        bad(name, f'{len(polluted)}/{len(tier_a)} 条 Tier A URL 命中搜索引擎黑名单（{sample}），'
+                  f'请重跑 python scripts/govern_source_tier.py')
+        return
+
+    ok(name, f'Tier A {len(tier_a)} 条 URL 全部真深链/实体主页（无搜索引擎污染）')
+
+
+def gate_unit_tests_not_empty():
+    '''【G-03 · G-T3】npm test 零测试守卫（2026-10-17）
+
+    审计实测：package.json 的 test:unit 用 glob `tests/**/*.test.mjs`，
+    但实际文件名是 `test_*.mjs`（下划线前缀），glob 无一命中。
+    `node --test` 在 0 个测试文件时 TAP 输出 `1..0 / # tests 0` 并**退出码 0**
+    —— CI 显示绿灯，实际没跑一个测试。
+
+    根因：`||` fallback 到 `tests/*.test.mjs` 同样 0 命中，静默通过。
+
+    本闸门独立复算 tests/test_*.mjs 的数量，并 grep TAP 输出中的
+    `# tests N` 断言 N > 0。防未来任何命名漂移（test_xxx → xxx.test / 大小写等）
+    再让 CI 假绿。
+
+    与 npm 的 test:unit:guard 是同源代码的 CI 兜底 —— npm 那条在开发机跑，
+    本条在 CI 跑，双保险。
+    '''
+    import subprocess, glob
+    name = '单元测试非空（防假绿）'
+    tests_dir = os.path.join(ROOT, 'tests')
+    files = glob.glob(os.path.join(tests_dir, 'test_*.mjs'))
+    if not files:
+        bad(name, f'tests/ 下无 test_*.mjs 文件（找到 0 个），命名漂移')
+        return
+
+    try:
+        result = subprocess.run(
+            ['node', '--test'] + files,
+            capture_output=True, text=True, timeout=120,
+            cwd=ROOT)
+    except Exception as e:
+        bad(name, f'node --test 异常：{type(e).__name__}: {str(e)[:120]}')
+        return
+
+    combined = (result.stdout or '') + (result.stderr or '')
+    m = re.search(r'# tests\s+(\d+)', combined)
+    if not m:
+        bad(name, f'未找到 TAP `# tests N` 输出行，TAP 格式漂移：{combined[-200:]}')
+        return
+
+    n_tests = int(m.group(1))
+    n_files = len(files)
+    if n_tests == 0:
+        bad(name, f'❌ ZERO TEST: {n_files} 个测试文件但 TAP 报 0 tests——glob 或命名失效')
+        return
+
+    # 从 TAP 输出抓 pass/fail 数
+    pass_m = re.search(r'# pass\s+(\d+)', combined)
+    fail_m = re.search(r'# fail\s+(\d+)', combined)
+    n_pass = int(pass_m.group(1)) if pass_m else 0
+    n_fail = int(fail_m.group(1)) if fail_m else 0
+    if n_fail > 0:
+        bad(name, f'{n_files} 文件 / {n_tests} tests / pass={n_pass} fail={n_fail}')
+        return
+
+    ok(name, f'{n_files} 个测试文件 · {n_tests} tests · pass={n_pass} fail=0')
+
+
+def gate_last_verified_coverage():
+    '''【G-07 · G-T4】last_verified 覆盖率棘轮（2026-10-17）
+
+    审计实测：301/868 = 34.7% 缺 last_verified。回填纪律：
+      - 从 verification_note 提到 HTTP 探测痕迹的（10 条）→ 回填 audit date
+      - 从未探测的（291 条）→ 不伪造，显式标 last_verified_basis='never_probed'
+
+    本闸门守两层：
+      1. meta.last_verified_coverage 存在且 pct 单调不减（棘轮）
+      2. 缺 last_verified 的每条都带 last_verified_basis（防止"沉默的缺口"）
+
+    防自我声明：现算缺失数与 meta 里的数字对账。
+    '''
+    import json
+    name = 'last_verified 覆盖率棘轮'
+    path = os.path.join(ROOT, 'api', 'entities.json')
+    try:
+        with open(path, encoding='utf-8') as f:
+            doc = json.load(f)
+    except Exception as e:
+        bad(name, f'entities.json 不可读：{e}')
+        return
+
+    entities = doc.get('entities') or []
+    total = len(entities)
+    missing = [e for e in entities if not e.get('last_verified')]
+    missing_n = len(missing)
+    covered_n = total - missing_n
+    pct = round(covered_n / total * 100, 2) if total else 0
+
+    # 检查 1：所有 missing 都带 basis
+    no_basis = [e for e in missing if not e.get('last_verified_basis')]
+    if no_basis:
+        sample = ', '.join(str(e.get('id')) for e in no_basis[:5])
+        bad(name, f'{len(no_basis)} 条缺 last_verified 但无 basis（{sample}）—— 沉默的缺口')
+        return
+
+    # 检查 2：棘轮 —— meta 里声明的 pct 不能低于现算
+    meta_cov = (doc.get('meta') or {}).get('last_verified_coverage')
+    if not meta_cov:
+        bad(name, 'meta.last_verified_coverage 缺失（回填脚本未跑或未登记）')
+        return
+
+    declared_pct = meta_cov.get('pct')
+    if declared_pct is None:
+        bad(name, f'meta.last_verified_coverage 无 pct 字段')
+        return
+
+    # 允许 ±0.01 的浮点误差
+    if abs(float(declared_pct) - pct) > 0.01:
+        bad(name, f'meta 声明 pct={declared_pct} 与现算 pct={pct} 不符（漂移）')
+        return
+
+    # 检查 3：棘轮阈值 —— 至少 55%（覆盖 301 缺口前基准 65.3%，本闸门守不回退到更低）
+    MIN_PCT = 55.0
+    if pct < MIN_PCT:
+        bad(name, f'覆盖率 {pct}% < {MIN_PCT}% 阈值（回退），请调查')
+        return
+
+    ok(name, f'last_verified 覆盖率 {pct}%（{covered_n}/{total}），'
+             f'未探测 {meta_cov.get("never_probed", "?")} 条已显式标记')
+
+
+def gate_href_targets_exist():
+    '''【G-09 · G-T5】站内 href 目标必须存在（2026-10-17）
+
+    审计实测：funnel.html → /analytics.html 是死链（该文件不存在）。
+    全站 HTML 里的站内链接如果指向不存在的文件，用户点击 → 404 → 品牌受损。
+
+    本闸门扫所有 .html 里的 href="..."，过滤：
+      - http(s):// 外链（不检）
+      - mailto: / tel: / javascript: / #（不检）
+      - 模板字符串 ${...}（不检 —— 运行时拼接）
+      - 相对路径 /xxx.html 或 /xxx/ → 映射到 repo 根下 xxx.html 或 xxx/index.html
+    断言每个目标文件在磁盘上存在。
+
+    与 gate_deploy_live_verify 分工：那条管"线上 200"，这条管"本地文件存在"——
+    本地不存在的文件部署后再检查是滞后。
+    '''
+    import glob as _glob, re as _re
+    name = '站内 href 目标存在'
+    html_files = _glob.glob(os.path.join(ROOT, '*.html'))
+    total_refs = 0
+    missing_refs = []
+
+    # 允许的目录型链接（xxx/ → xxx/index.html）
+    def resolve_target(href):
+        """把 href 映射到 repo 相对路径；无法解析返回 None"""
+        if not href:
+            return None
+        # 去 query / hash
+        href = href.split('#')[0].split('?')[0]
+        if not href.startswith('/'):
+            return None  # 相对路径（../foo 之类），跳过
+        # 去掉开头 /
+        rel = href[1:]
+        if not rel:
+            return None
+        # 目录型：结尾 / 或本身就是已有目录
+        if rel.endswith('/'):
+            rel = rel.rstrip('/') + '/index.html'
+            return rel
+        # 检查是否是存在的目录（如 /articles → /articles/index.html）
+        dir_path = os.path.join(ROOT, rel)
+        if os.path.isdir(dir_path):
+            return rel + '/index.html'
+        # 无后缀 → 尝试加 .html
+        if not _re.search(r'\.[a-z0-9]{2,5}$', _re.split(r'[?#]', rel)[-1]):
+            rel += '.html'
+        return rel
+
+    for hf in html_files:
+        try:
+            with open(hf, encoding='utf-8', errors='replace') as f:
+                html = f.read()
+        except Exception:
+            continue
+        base = os.path.basename(hf)
+        # 抓 href="..." 和 href='...'
+        for m in _re.finditer(r'href\s*=\s*["\']([^"\']+)["\']', html, _re.I):
+            href = m.group(1).strip()
+            total_refs += 1
+            # 过滤外链、协议链接、锚点、模板字符串
+            if (href.startswith('http') or href.startswith('mailto:')
+                    or href.startswith('tel:') or href.startswith('javascript:')
+                    or href.startswith('#') or '${' in href):
+                continue
+            rel = resolve_target(href)
+            if rel is None:
+                continue
+            target = os.path.join(ROOT, rel)
+            if not os.path.exists(target):
+                missing_refs.append((base, href))
+
+    if missing_refs:
+        sample = '; '.join(f'{b}→{h}' for b, h in missing_refs[:5])
+        bad(name, f'{len(missing_refs)}/{total_refs} 站内 href 指向不存在文件（{sample}）')
+        return
+
+    ok(name, f'{total_refs} 条站内 href 全部指向存在的文件')
+
+
+def gate_hardcoded_count_drift():
+    '''【G-10 · G-T7】functions/ 注释硬编码数字漂移闸门（2026-10-17）
+
+    审计实测：functions/ 下 3 处注释/提示语写死了实体总数、quarantine 数、
+    AI 模型数。数据一变（新增实体 / 标记 quarantine）注释就变成谎言，
+    但没有任何闸门盯着。
+
+    本闸门扫描 functions/ 下所有 .js / .mjs 文件，grep 形如：
+      - "N 个实体" / "N 条实体"
+      - "N 条标记 quarantine" / "N 条被隔离"
+      - "N 条 AI 模型" / "N 条软件"
+    其中 N 是纯数字（非 ${} 模板），且与 api/entities.json 现算不一致的，判红。
+
+    容忍 ±2 的浮动（新增/删除实体在途）。超过则说明注释已过期。
+
+    与 gate_readme_stats_fresh 分工：那条守 README 的统计块，这条守 functions/
+    的代码注释——两处都是对外可见的"数字自述"。
+    '''
+    import json, glob as _glob, re as _re
+    name = 'functions/ 硬编码数字漂移'
+
+    # 加载真相源
+    entities_path = os.path.join(ROOT, 'api', 'entities.json')
+    try:
+        with open(entities_path, encoding='utf-8') as f:
+            doc = json.load(f)
+        entities = doc.get('entities') or []
+    except Exception as e:
+        bad(name, f'entities.json 不可读：{e}')
+        return
+
+    actual_total = len(entities)
+    actual_quarantine = sum(1 for e in entities if e.get('quarantine') == True)
+    actual_software = sum(1 for e in entities if e.get('entity_kind') == 'software')
+    actual_spec = sum(1 for e in entities if e.get('entity_kind') == 'specification')
+
+    # 扫描 patterns
+    patterns = [
+        # (regex, actual_value, label)
+        (_re.compile(r'(\d+)\s*[个条]\s*实体'), actual_total, '实体总数'),
+        (_re.compile(r'(\d+)\s*条?\s*quarantine', _re.I), actual_quarantine, 'quarantine 数'),
+        (_re.compile(r'(\d+)\s*条?\s*隔离'), actual_quarantine, '隔离数'),
+        (_re.compile(r'(\d+)\s*条?\s*AI\s*模型', _re.I), actual_software, 'AI 模型数'),
+        (_re.compile(r'(\d+)\s*条?\s*软件'), actual_software, '软件数'),
+    ]
+
+    js_files = _glob.glob(os.path.join(ROOT, 'functions', '**', '*.js'), recursive=True)
+    js_files += _glob.glob(os.path.join(ROOT, 'functions', '**', '*.mjs'), recursive=True)
+    issues = []
+
+    for jf in js_files:
+        try:
+            with open(jf, encoding='utf-8', errors='replace') as f:
+                content = f.read()
+        except Exception:
+            continue
+        # 只看注释行和字符串（跳过代码逻辑里的数字比较）
+        lines = content.split('\n')
+        for lineno, line in enumerate(lines, 1):
+            stripped = line.strip()
+            # 只检查注释和字符串字面量
+            is_comment = stripped.startswith('//') or stripped.startswith('*') or stripped.startswith('/*')
+            if not is_comment:
+                # 也检查包含中文描述的字符串（提示语）
+                if not _re.search(r'[\u4e00-\u9fff]', line):
+                    continue
+            for pat, actual, label in patterns:
+                for m in pat.finditer(line):
+                    n = int(m.group(1))
+                    if abs(n - actual) > 2:
+                        issues.append((os.path.basename(jf), lineno, label, n, actual, line.strip()[:60]))
+
+    if issues:
+        for fn, ln, label, found, actual, snippet in issues[:5]:
+            bad(name, f'{fn}:{ln} "{label}" 写死 {found}，实际 {actual}（{snippet}）')
+        return
+
+    ok(name, f'{len(js_files)} 个 JS 文件 · 无硬编码数字漂移')
+
+
+# ---------------------------------------------------------------------------
+# 2026-10-17 审计 §7 新增闸门：G-T2 / G-T3 / G-T6 / meta description
+# ---------------------------------------------------------------------------
+
+# 已知品类名（归一化后），用于 G-T2 判定
+_CATEGORY_NAMES = frozenset([
+    '机器人', '人形机器人', '四足机器人', '机械臂', '机械手', '关节', '减速器',
+    '电机', '伺服', '驱动器', '控制器', '传感器', '触觉传感器', '视觉传感器',
+    '摄像头', '激光雷达', '深度相机', '编码器', '限位开关',
+    '执行器', '驱动器模块', '控制器模块', '减速电机', '谐波减速器',
+    '关节模组', '一体化关节', '机械手夹爪', '夹爪', 'gripper', 'joint', 'motor',
+    'servo', 'controller', 'sensor', 'actuator', 'reducer',
+    'ai芯片', 'ai模型', '大模型', 'llm', '视觉模型', 'vla模型',
+    '辅助驾驶', '自动驾驶', 'ar眼镜', 'vr眼镜', 'ar/vr', 'ar', 'vr',
+    '消费电子', '消费电子领域', '消费电子品类',
+    '机器人新技术', '机器人技术', '具身智能', 'embodied ai',
+    '协议', '协议栈', '通信协议', '总线', '总线协议', 'ethernet', 'canbus',
+    'pcb', 'pcb板', 'pcb板卡', 'pcb设计', '电路板', '板卡',
+    '连接器', '接线端子', '端子', 'cable', '线缆', '电缆', 'power cable',
+    '电源', '电源模块', '电源适配器', 'power', 'power module', '电源适配器',
+    '结构件', '结构组件', '支架', '外壳', '结构', 'structural',
+    '软件', 'firmware', '驱动程序', '驱动', 'driver',
+    '芯片', 'soc', 'mcu', 'cpu', 'gpu', 'npu', 'chip',
+    '平台', '机器人平台', 'robot platform', 'robot base', '底盘', 'base',
+    '灵巧手', 'dexterous hand', 'hand', 'gripper', 'finger',
+    'bom', '装配', 'assembly', '装配清单', '物料清单',
+])
+
+
+def _norm_name(s):
+    """归一化名字：小写、去空格/连字符/下划线/中文标点，方便比较"""
+    if not s:
+        return ''
+    import re as _r
+    s = str(s).lower()
+    s = _r.sub(r'[\s_\-·、，,。.:：;；\(\)\[\]{}「」『』“”‘’!！?？]', '', s)
+    return s
+
+
+def gate_name_not_category():
+    '''【G-04 · G-T2】实体名不得等于品类名归一化（防品类词入库）（2026-10-17）
+
+    审计实测：LLM-* 的 20 条占位里，6 条名字是"人形机器人/AI芯片/辅助驾驶/AR眼镜/
+    消费电子/机器人新技术"—— 品类词不是实体。品类词入库会：
+      1. 撑高实体总数（868 里混进非实体）
+      2. 让搜索返回"人形机器人"这种无信息结果的条目
+      3. 让 BOM 检查工具误认为它是可选件
+
+    本闸门对所有实体的 name + name_en 做归一化后与已知品类名集合比对；命中且
+    quarantine=False 即判红。品类词可以入库，但**必须显式标记 quarantine=True**
+    且加 quarantine_reason='category_word'。
+    '''
+    import json
+    name = '实体名不得等于品类名归一化'
+    path = os.path.join(ROOT, 'api', 'entities.json')
+    try:
+        with open(path, encoding='utf-8') as f:
+            doc = json.load(f)
+        entities = doc.get('entities') or []
+    except Exception as e:
+        bad(name, f'entities.json 不可读：{e}')
+        return
+
+    offenders = []
+    for e in entities:
+        if e.get('quarantine') == True:
+            continue
+        nm = _norm_name(e.get('name'))
+        nm_en = _norm_name(e.get('name_en'))
+        hit = None
+        if nm and nm in _CATEGORY_NAMES:
+            hit = ('name', nm)
+        elif nm_en and nm_en in _CATEGORY_NAMES:
+            hit = ('name_en', nm_en)
+        if hit:
+            offenders.append((e.get('id'), hit[0], hit[1]))
+
+    if offenders:
+        sample = ', '.join(f'{cid}({field}="{val}")' for cid, field, val in offenders[:5])
+        bad(name, f'{len(offenders)} 条实体的名字是品类词（{sample}），'
+                  f'请 quarantine=True 或补真实信息')
+        return
+
+    ok(name, f'全部实体名都不等于品类词（{len(entities)} 条已检查）')
+
+
+def gate_name_en_manufacturer_unique():
+    '''【G-05 · G-T3】name_en + manufacturer 复合唯一性（2026-10-17）
+
+    审计实测：16 组重复实体（24 条），跨三套 ID 体系（ACT-* / CHIP-* / ACTUATOR-*
+    占位），归一化 name_en 完全同名。同一物理零件在库里有两条 ⇒ 兼容性判定可能
+    给出不同结论 ⇒ 868 这个数字虚高。
+
+    本闸门对**非 quarantine** 的实体，按 (归一化 name_en + 归一化 manufacturer)
+    复合键分组，同组 >1 即判红。空 name_en 或空 manufacturer 不计入（避免误伤
+    只填了一边的合法条目）。
+    '''
+    import json, collections
+    name = 'name_en + manufacturer 复合唯一性'
+    path = os.path.join(ROOT, 'api', 'entities.json')
+    try:
+        with open(path, encoding='utf-8') as f:
+            doc = json.load(f)
+        entities = doc.get('entities') or []
+    except Exception as e:
+        bad(name, f'entities.json 不可读：{e}')
+        return
+
+    groups = collections.defaultdict(list)
+    for e in entities:
+        if e.get('quarantine') == True:
+            continue
+        nm = _norm_name(e.get('name_en'))
+        mf = _norm_name(e.get('manufacturer'))
+        if not nm or not mf:
+            continue
+        groups[(nm, mf)].append(e.get('id'))
+
+    dupes = {k: v for k, v in groups.items() if len(v) > 1}
+    if dupes:
+        for (nm, mf), ids in list(dupes.items())[:5]:
+            bad(name, f'重复组（name_en="{nm}", manufacturer="{mf}"）：{ids}')
+        return
+
+    ok(name, f'{len(groups)} 组复合键全部唯一（0 重复组）')
+
+
+def gate_bfs_reachability():
+    '''【G-09 · G-T6】根页面首页 BFS 可达性（2026-10-17）
+
+    审计实测：41 个根页面中 11 个从 index.html 走不到（含 assembly /
+    compatibility-viz / reference-builds 三个核心功能页）。
+
+    白名单（后台/独立入口，允许不可达）：
+      - 404.html        （错误页，只在浏览器跳链时命中）
+      - order.html      （订单页，走独立支付/邮件链接）
+      - supplier-admin.html （供应商后台，走独立账号）
+      - promo-poster.html  （营销落地页，直接投广告）
+
+    BFS 起点 index.html；每条内部 href 展开一次；只走根 .html 页面。
+    '''
+    import re as _re, glob as _glob
+    name = '根页面首页 BFS 可达性'
+    html_dir = ROOT
+    all_pages = sorted(set(
+        os.path.basename(p) for p in _glob.glob(os.path.join(html_dir, '*.html'))
+    ))
+    whitelist = {'404.html', 'order.html', 'supplier-admin.html', 'promo-poster.html'}
+    must_reach = [p for p in all_pages if p not in whitelist and p != 'index.html']
+
+    href_re = _re.compile(r'href\s*=\s*["\'](/[^"\']*)["\']')
+
+    def _normalize(href):
+        href = href.split('#')[0].split('?')[0]
+        if not href.startswith('/'):
+            return None
+        rel = href[1:].strip('/')
+        if not rel:
+            return None
+        if rel.endswith('/'):
+            rel = rel + 'index.html'
+        if not _re.search(r'\.[a-z0-9]{2,5}$', rel.split('/')[-1]):
+            rel = rel + '.html'
+        return os.path.basename(rel)
+
+    # BFS
+    visited = set()
+    queue = ['index.html']
+    while queue:
+        cur = queue.pop(0)
+        if cur in visited:
+            continue
+        visited.add(cur)
+        path = os.path.join(ROOT, cur)
+        if not os.path.exists(path):
+            continue
+        try:
+            with open(path, encoding='utf-8', errors='replace') as f:
+                content = f.read()
+        except Exception:
+            continue
+        for m in href_re.finditer(content):
+            tgt = _normalize(m.group(1))
+            if tgt and tgt in all_pages and tgt not in visited:
+                queue.append(tgt)
+
+    unreachable = [p for p in must_reach if p not in visited]
+    if unreachable:
+        bad(name, f'{len(unreachable)} 个页面从首页 BFS 不可达：{unreachable[:8]}')
+        return
+
+    ok(name, f'{len(must_reach)} 个页面全部从首页可达（{len(whitelist)} 个后台页白名单）')
+
+
+def gate_meta_description_coverage():
+    '''【G-15/G-16】meta description + og:title 覆盖闸门（2026-10-17）
+
+    审计实测：11 页无 meta description、32 页无 og:title。SEO 与社交分享都受影响。
+
+    本闸门扫描根 .html 全部页面，断言：
+      - <meta name="description" content="..."> 存在且 length >= 30
+      - <meta property="og:title" content="..."> 存在且 length >= 5
+    404.html 豁免（错误页本来就应该极简）。
+    '''
+    import re as _re, glob as _glob
+    name = 'meta description + og:title 覆盖'
+    desc_re = _re.compile(
+        r'<meta\s+name\s*=\s*["\']description["\']\s+content\s*=\s*["\']([^"\']+)["\']',
+        _re.I)
+    og_re = _re.compile(
+        r'<meta\s+property\s*=\s*["\']og:title["\']\s+content\s*=\s*["\']([^"\']+)["\']',
+        _re.I)
+    exempt = {'404.html'}
+
+    htmls = sorted(_glob.glob(os.path.join(ROOT, '*.html')))
+    missing_desc, missing_og, weak_desc = [], [], []
+    for p in htmls:
+        bn = os.path.basename(p)
+        if bn in exempt:
+            continue
+        try:
+            with open(p, encoding='utf-8', errors='replace') as f:
+                content = f.read()
+        except Exception:
+            continue
+        m = desc_re.search(content)
+        if not m:
+            missing_desc.append(bn)
+        elif len(m.group(1)) < 30:
+            weak_desc.append((bn, len(m.group(1))))
+        mo = og_re.search(content)
+        if not mo:
+            missing_og.append(bn)
+
+    if missing_desc or missing_og:
+        msgs = []
+        if missing_desc:
+            msgs.append(f'缺 meta description：{missing_desc}')
+        if missing_og:
+            msgs.append(f'缺 og:title：{missing_og[:5]}…（{len(missing_og)} 个）')
+        bad(name, '；'.join(msgs))
+        return
+
+    if weak_desc:
+        bad(name, f'{len(weak_desc)} 页 meta description < 30 字符：{weak_desc}')
+        return
+
+    ok(name, f'{len(htmls) - len(exempt)} 页全部有 ≥30 字 description + ≥5 字 og:title')
+
+
 GATES = [
     ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
@@ -3334,6 +4007,64 @@ GATES = [
     ('无出处政策闸门（D5 · 存量不破戒）', gate_d5_no_source_policy),
     ('confidence_tier 五档枚举契约（D5 · 语义分层）', gate_d5_confidence_tier_contract),
     ('API 版本化契约（阶段 3-lite · schema_version）', gate_schema_version_declared),
+    # 【2026-10-17 审计 F6】依赖锁定 + SBOM 闸门。审计实测仓库无 package-lock.json
+    # 也无 SBOM——fresh clone 装依赖无锁定，供应链无清单。
+    # 闸门：package-lock.json 存在 + SBOM.json 存在 + SBOM 与 lockfile 现算组件集一致。
+    # 与 gate_no_secrets 分工：那条管"没有凭据"，这条管"依赖可复现"。
+    ('依赖锁定 + SBOM（package-lock 存在 + SBOM 与 lock 一致）',
+     gate_lockfile_and_sbom),
+    # 2026-10-17 added (G-01 · G-T1): audit found 239/472 Tier A URLs were
+    # google.com/search?q=... — "我没找到，我搜了一下" was being treated as Tier A
+    # deep_link. This gate fails any Tier A entity whose collected URLs hit the
+    # search-engine blacklist, so the semantic of "A = 点开即具体页面" cannot be
+    # silently diluted again by future code drift. Uses _is_search_engine +
+    # _is_search_engine_root (root-only variant prevents google.com being
+    # misclassified as Tesla's "entity homepage" via source_scope).
+    ('Tier A URL 无搜索引擎污染（A 级语义护栏）', gate_tier_a_url_blacklist),
+    # 2026-10-17 added (G-03 · G-T3): audit found `npm run test:unit` runs 0 tests
+    # because the glob `tests/**/*.test.mjs` doesn't match actual filename pattern
+    # `test_*.mjs` (underscore prefix). `node --test` exits 0 with `# tests 0`
+    # on empty glob — CI green with zero coverage. This gate re-counts files
+    # independently and asserts `# tests N > 0`, killing silent glob/name drift.
+    ('单元测试非空（防假绿）', gate_unit_tests_not_empty),
+    # 2026-10-17 added (G-07 · G-T4): audit found 34.7% of entities missing
+    # last_verified. Backfill discipline: probed entities get audit-date,
+    # never-probed get explicit null + basis marker (no fabrication). This gate
+    # ratchets coverage and forbids "silent gaps" (missing both last_verified
+    # AND last_verified_basis).
+    ('last_verified 覆盖率棘轮', gate_last_verified_coverage),
+    # 2026-10-17 added (G-09 · G-T5): audit found 1 real dead link
+    # funnel.html → /analytics.html (file doesn't exist). This gate scans
+    # every .html for internal hrefs and asserts each target file exists
+    # on disk. Filters http(s) external, mailto/tel/javascript/#, and
+    # template strings ${...}. Fixes applied: funnel.html now points to
+    # geo-dashboard.html (the actual SEO analytics page).
+    ('站内 href 目标存在', gate_href_targets_exist),
+    # 2026-10-17 added (G-10 · G-T7): audit found 3 hardcoded counts in
+    # functions/ comments/hints (868 entities, 99 quarantine, 86 AI models)
+    # that drift from actual data with no gate watching. This gate scans
+    # all JS files under functions/ for Chinese-number patterns and asserts
+    # they match entities.json (±2 tolerance). Fixes: compatibility.js now
+    # uses Object.keys(map).length; search.js and mcp.js comments use
+    # descriptive ranges instead of exact numbers.
+    ('functions/ 硬编码数字漂移', gate_hardcoded_count_drift),
+    # 2026-10-17 added (G-04 · G-T2): audit found 6 LLM-* placeholder entries are
+    # actually category words (人形机器人 / AI芯片 / 辅助驾驶) not entities. Any entity
+    # whose normalized name equals a known category name must be quarantined.
+    ('实体名不得等于品类名归一化（防品类词入库）', gate_name_not_category),
+    # 2026-10-17 added (G-05 · G-T3): audit found 16 duplicate groups (24 entities)
+    # with same normalized name_en, spanning three ID naming conventions. This gate
+    # asserts name_en + manufacturer composite uniqueness on non-quarantined entities.
+    ('name_en + manufacturer 复合唯一性', gate_name_en_manufacturer_unique),
+    # 2026-10-17 added (G-09 · G-T6): audit found 11 pages unreachable from index.html
+    # (including 3 core feature pages: assembly / compatibility-viz / reference-builds).
+    # This gate BFS from index.html and asserts all non-whitelisted root .html pages
+    # are reachable. Whitelist: 404.html / order.html / supplier-admin.html (backend-only).
+    ('根页面首页 BFS 可达性', gate_bfs_reachability),
+    # 2026-10-17 added (G-15/G-16): audit found 11 pages without meta description and
+    # 32 pages without og:title. This gate scans all root .html files and asserts both
+    # tags exist with non-empty values (>= 30 chars description, >= 5 chars og:title).
+    ('meta description + og:title 覆盖', gate_meta_description_coverage),
 ]
 
 

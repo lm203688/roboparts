@@ -2,6 +2,8 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+  <link rel="alternate" hreflang="zh-CN" href="https://roboparts.cc/bom-manager.html">
+  <link rel="alternate" hreflang="x-default" href="https://roboparts.cc/bom-manager.html">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>BOM清单管理 — RoboParts 机器人零件兼容性判定层</title>
 
@@ -12,6 +14,7 @@
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="description" content="RoboParts BOM 清单管理，支持从智能选型导入、手动添加、自动计价、导出 CSV/JSON">
+  <meta property="og:title" content="BOM清单管理 — RoboParts 机器人零件兼容性判定层">
 <link rel="canonical" href="https://roboparts.cc/bom-manager">
 <style>
 :root{
@@ -336,7 +339,7 @@ window.addEventListener('DOMContentLoaded', () => {
   handleUrlImport();
 
   // 恢复 API Key
-  const savedKey = localStorage.getItem('roboparts_api_key');
+  const savedKey = sessionStorage.getItem('roboparts_api_key');
   if (savedKey) {
     const exportKeyInput = document.getElementById('export_api_key');
     if (exportKeyInput) exportKeyInput.value = savedKey;
@@ -348,7 +351,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // 监听 API Key 输入
   document.getElementById('export_api_key').addEventListener('change', (e) => {
     const key = e.target.value.trim();
-    localStorage.setItem('roboparts_api_key', key);
+    sessionStorage.setItem('roboparts_api_key', key);
     updateSyncStatus();
     // 输入新 Key 后尝试云端加载
     if (key && bomItems.length === 0) {
@@ -380,7 +383,7 @@ function updateSyncStatus() {
   const statusEl = document.getElementById('syncStatus');
   if (!statusEl) return;
   
-  const apiKey = localStorage.getItem('roboparts_api_key');
+  const apiKey = sessionStorage.getItem('roboparts_api_key');
   if (apiKey) {
     statusEl.innerHTML = '<span style="color:var(--success);">☁️</span> 云端同步已启用';
   } else {
@@ -437,7 +440,7 @@ function syncToCloud() {
 }
 
 async function doSyncToCloud() {
-  const apiKey = localStorage.getItem('roboparts_api_key');
+  const apiKey = sessionStorage.getItem('roboparts_api_key');
   if (!apiKey) return;
   
   try {
@@ -461,7 +464,7 @@ async function doSyncToCloud() {
 
 // ============ 从云端加载 BOM ============
 async function loadFromCloud() {
-  const apiKey = localStorage.getItem('roboparts_api_key');
+  const apiKey = sessionStorage.getItem('roboparts_api_key');
   if (!apiKey) return false;
   
   try {
@@ -652,7 +655,7 @@ async function exportBom(format) {
     return;
   }
 
-  localStorage.setItem('roboparts_api_key', apiKey);
+  sessionStorage.setItem('roboparts_api_key', apiKey);
 
   const payload = {
     api_key: apiKey,

@@ -7,8 +7,8 @@
   "anchor": "docs/PROJECT_DIRECTIONS_V2.md §1",
   "generated_by": "scripts/build_research_progress.py",
   "truth_source": "api/{morphology_graph,compose_semantics,provenance,compose_frontier,electrical_evidence,entities}.json",
-  "generated_at": "2026-10-16T22:48:55+00:00",
-  "headline": "**门控加权完成度 54.8%**（朴素口径 58.6%）。body = 50%（关系类型 2/2 已覆盖，但确定性裁决率仍仅 0.1%——**能判出确定的负答案，不等于能判出正答案**）；neuron = 100%（判据纠正后：量的是溯源诚实度，非数据量）；chain = 50%（**本域**三段 2/2 闭合，跨域全链 0/1）；policy = 0%（开源模型 4/5 有真实本体绑定）。 变异评分 6/6=1.00（≥0.85 达阈）。",
+  "generated_at": "2026-10-17T15:08:28+00:00",
+  "headline": "**门控加权完成度 60.6%**（朴素口径 60.6%）。body = 50%（关系类型 2/2 已覆盖，但确定性裁决率仍仅 0.1%——**能判出确定的负答案，不等于能判出正答案**）；neuron = 100%（判据纠正后：量的是溯源诚实度，非数据量）；chain = 50%（**本域**三段 2/2 闭合，跨域全链 0/1）；policy = 58%（开源模型 4/5 有真实本体绑定）。 变异评分 6/6=1.00（≥0.85 达阈）。",
   "why_not_100": {
    "summary": "**不是「还没做完」，是三类性质完全不同的缺口混在一个分数里。**把它们分开看，才能知道哪部分能补、哪部分不该补。",
    "categories": [
@@ -78,19 +78,19 @@
   "naive_dimension_scores": {
    "body": 49.5,
    "neuron": 100.0,
-   "policy": 38.2,
+   "policy": 58.2,
    "chain": 50.0
   },
   "gated_dimension_scores": {
    "body": 49.5,
    "neuron": 100.0,
-   "policy": 0.0,
+   "policy": 58.2,
    "chain": 50.0
   },
   "gate_explanation": {
    "body": "门控**未生效**：「peer-to-peer composed + co_mount 共装」已产出确定性组合裁决 ⇒ 组合判定确实可校验。**但 peer-to-peer 的 composed 仍为 262**（它在上面的分项里可见，未被改写）",
    "neuron": "无门控",
-   "policy": "门控生效：核心判据「开源模型能指定「开哪副身体」（引用真实实体 id）」为 0 （0/5）⇒ 该维度记 0，不参与平均（朴素值 38.2%）",
+   "policy": "无门控",
    "chain": "无门控"
   },
   "why_gated": "朴素平均会让「三项基础设施高分 + 核心判据零分」被平均成一个看起来不错的数字——基础设施得分掩盖了核心判据的零分。门控的语义是：**核心判据为 0 时该维度记 0，不参与平均**。理由不是惩罚，而是诚实：核心目标是「让组合变得可校验」，composed=0 时 body 维还没回答那个问题。",
@@ -99,10 +99,10 @@
  "raw_dimension_scores": {
   "body": 49.5,
   "neuron": 100.0,
-  "policy": 0.0,
+  "policy": 58.2,
   "chain": 50.0
  },
- "weighted_total_pct": 54.8,
+ "weighted_total_pct": 60.6,
  "dimensions": {
   "body": [
    {
@@ -183,12 +183,12 @@
   "policy": [
    {
     "item": "开源模型能指定「开哪副身体」（引用真实实体 id）",
-    "done": 0,
+    "done": 2,
     "total": 5,
-    "pct": 0.0,
+    "pct": 40.0,
     "caliber": "开源模型中 body_robot 命中 entities.json[].id 的条目 / **开源模型总数**（闭源无公开验证栈，不计入分母）",
     "why_this_criterion": "provenance 的 body→policy 连接条件原文：「模型要能'开哪副身体'才谈得上链」。该判据要求**可核对的验证硬件栈**，闭源模型不满足该前提",
-    "remaining_gap": "5 个开源模型中 0 个有真实实体绑定。**41 个闭源模型未计入分母**（RT-2 / π0 等无公开验证栈，绑定只能靠编造）"
+    "remaining_gap": "5 个开源模型中 2 个有真实实体绑定。**41 个闭源模型未计入分母**（RT-2 / π0 等无公开验证栈，绑定只能靠编造）"
    },
    {
     "item": "策略层数据有一手可核验出处（非厂商目录声称）",
@@ -245,6 +245,6 @@
    ],
    "interpretation": "kill rate 1.00 = 现有闸门对已知失效模式的捕获率。1.0 表示所有变异都被至少一个闸门判红——但只证明已知失效模式被覆盖，不证明未知失效模式也被覆盖。"
   },
-  "generated_at": "2026-10-16T22:48:55+00:00"
+  "generated_at": "2026-10-17T15:08:28+00:00"
  }
 }

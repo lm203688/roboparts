@@ -893,8 +893,8 @@ async function getJsonAsset(env, request, path) {
  * 数据集实况（运行时现算）
  *
  * 【20260808-10】为什么必须现算，而不是把常量里的数字改对一次：
- * 本次巡检实测，线上 MCP 对每一个接入的 agent 宣称「收录 688 条实体，其中 685 条
- * 可选型」——真值是 706 / 703，`GET /mcp` 的 `dataset.total_entities: 688` 更是**机读**
+ * 本次巡检实测，线上 MCP 对每一个接入的 agent 宣称「收录 N 条实体，其中 N 条
+ * 可选型」——真值随数据演化，`GET /mcp` 的 `dataset.total_entities` 更是**机读**
  * 错值，直接喂给目录站与调用方。而 `ID 前缀与 category 不一致 38 条` 的真值只有 15，
  * 虚高 2.5 倍。三个数字都不是一开始就错，是**入库涨了、文案没跟**。
  *
@@ -919,8 +919,9 @@ const ID_PREFIX_CATEGORY = {
  * （缺字段的老数据按 component 放行，与 compat_engine.nonJudgeableKind 同一口径）。
  * 此前这里写的是黑名单（`!== 'market_intelligence' && !== 'organization'`）。
  * 黑名单的毛病不在当时算错，而在**新增种类时静默失效**：本轮新增 specification /
- * software 两档后，黑名单会继续把 101 条协议规范与 86 条 AI 模型算作"可选型零部件"，
- * 且不报任何错。种类是开放集合，过滤必须用白名单。
+ * software 两档后，黑名单会继续把协议规范（100+ 条）与 AI 模型（80+ 条）算作"可选型零部件"，
+ * 且不报任何错。种类是开放集合，过滤必须用白名单。具体条数随数据演化，
+ * 从本文件下方的实时统计里读，不在此写死。
  */
 function isSelectableComponent(e) {
   return !e.entity_kind || e.entity_kind === 'component';
@@ -1730,7 +1731,7 @@ export async function onRequestGet(context) {
   }
 
   recordMcp(context, 'discovery_get');
-  // dataset 是**机读**字段，目录站与 agent 会直接采信。此前写死 total_entities: 688
+  // dataset 是**机读**字段，目录站与 agent 会直接采信。此前写死 total_entities: 现算
   // （真值 706）—— 一个错值被官方 Registry / Glama 等抓走后还会被二次分发。
   // 现改为实时统计；取数失败时给 null + 说明，绝不回落到某个"上次记得的数字"。
   const facts = await tryFacts(context.env, context.request);

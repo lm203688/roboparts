@@ -52,6 +52,7 @@ if os.path.join(ROOT, "scripts") not in sys.path:
 FUNCTIONS_DIR = os.path.join(ROOT, "functions")
 COMPAT_ENGINE_JS = os.path.join(FUNCTIONS_DIR, "_lib", "compat_engine.js")
 COMPOSE_ENGINE_PY = os.path.join(ROOT, "scripts", "compose_engine.py")
+COMPOSE_CORE_PY = os.path.join(ROOT, "scripts", "compose_core.py")
 
 OUT_PATH = os.path.join("api", "reachability_gap.json")
 SCHEMA = "roboparts/reachability_gap/v1"
@@ -134,12 +135,20 @@ def _engine_fingerprints():
     else:
         js_src_reads_entities = None
 
-    py_axes, py_src = [], ""
-    if os.path.exists(COMPOSE_ENGINE_PY):
-        py_src = open(COMPOSE_ENGINE_PY, encoding="utf-8", errors="replace").read()
-        m = re.search(r"AXES\s*:\s*Tuple\[str\,\s*\.\.\.\]\s*=\s*\(([^)]*)\)", py_src)
+    # AXES 定义位置：Phase A · A1 起从 compose_engine.py 迁到 compose_core.py
+    # （纯函数内核），compose_engine.py 只做 re-export + IO 层。
+    # 判据单一真相源 = compose_core，故此处现读 core 的 AXES 定义。
+    py_axes, core_src = [], ""
+    if os.path.exists(COMPOSE_CORE_PY):
+        core_src = open(COMPOSE_CORE_PY, encoding="utf-8", errors="replace").read()
+        m = re.search(r"AXES\s*:\s*Tuple\[str\,\s*\.\.\.\]\s*=\s*\(([^)]*)\)", core_src)
         if m:
             py_axes = [x.strip().strip("'\"") for x in m.group(1).split(",") if x.strip()]
+    # morphology_graph 读取者仍是 compose_engine.py 的 IO 层（load_graph）。
+    reads_mg = False
+    if os.path.exists(COMPOSE_ENGINE_PY):
+        reads_mg = "morphology_graph" in open(
+            COMPOSE_ENGINE_PY, encoding="utf-8", errors="replace").read()
     return {
         "product_js": {
             "engine": "functions/_lib/compat_engine.js",
@@ -148,9 +157,9 @@ def _engine_fingerprints():
             "reads_entities_json": js_src_reads_entities,
         },
         "research_py": {
-            "engine": "scripts/compose_engine.py",
+            "engine": "scripts/compose_core.py（判据）+ scripts/compose_engine.py（IO）",
             "axes": py_axes,
-            "reads_morphology_graph": "morphology_graph" in py_src,
+            "reads_morphology_graph": reads_mg,
         },
     }
 

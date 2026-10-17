@@ -162,7 +162,7 @@ export async function onRequestGet(context) {
       not_found: true,
       query: idA,
       candidates: resA.candidates || [],
-      hint: `未在 868 个实体中匹配到「${idA}」。试试精确 ID（如 ACT-028）或更具体的名称（如 Robotiq 2F-85）。`,
+      hint: `未在 ${Object.keys(map).length} 个实体中匹配到「${idA}」。试试精确 ID（如 ACT-028）或更具体的名称（如 Robotiq 2F-85）。`,
     }), { status: 404, headers: corsHeaders });
   }
   if (resB.not_found) {
@@ -171,7 +171,7 @@ export async function onRequestGet(context) {
       not_found: true,
       query: idB,
       candidates: resB.candidates || [],
-      hint: `未在 868 个实体中匹配到「${idB}」。试试精确 ID 或更具体的名称。`,
+      hint: `未在 ${Object.keys(map).length} 个实体中匹配到「${idB}」。试试精确 ID 或更具体的名称。`,
     }), { status: 404, headers: corsHeaders });
   }
 
