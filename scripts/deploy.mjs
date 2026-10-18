@@ -617,3 +617,35 @@ try {
   if (pr.stdout) process.stdout.write(pr.stdout);
   if (pr.status !== 0) console.log('   ⚠️ 推广脉冲非零退出（不影响部署）');
 } catch (e) { console.log('   ⚠️ 推广脉冲异常（不影响部署）: ' + e.message); }
+
+// 5) 清理派生文件时间戳漂移（2026-10-18 修复无限循环）
+// 根因：preflight 后的 regen_derived.py / inject_*.py / export_training_dataset.mjs
+// 会刷新 api/*.json 的 updated/generated_at 时间戳。部署完成后，这些时间戳变更
+// 留在工作树里，导致每次部署后 git status 都不干净。若不处理，就会陷入
+// 「部署→CI 重新生成→时间戳漂移→需提交→再部署」的无限循环。
+//
+// 修复：部署成功后，用 git checkout 重置派生文件的时间戳变更。
+// 这些变更是 deploy.mjs 自身产生的（preflight 已放行），不属于用户改动，
+// 安全丢弃。
+{
+  console.log('[5/5] 清理派生文件时间戳漂移...');
+  try {
+    // 只 reset 已知的派生文件模式（api/*.json + data.js），不动其他文件
+    const tsReset = execSync('git status --porcelain', { cwd: ROOT, encoding: 'utf8' })
+      .replace(/\r/g, '').trim().split('\n')
+      .filter(l => l && l.startsWith(' M ') || l.startsWith('M  '))
+      .map(l => l.slice(3))
+      .filter(p => DERIVED_RE.test(p));
+
+    if (tsReset.length) {
+      const resetCmd = `git checkout -- ${tsReset.map(p => `"${p}"`).join(' ')}`;
+      execSync(resetCmd, { cwd: ROOT, stdio: 'ignore' });
+      console.log(`   ✅ 已重置 ${tsReset.length} 个派生文件的时间戳漂移`);
+    } else {
+      console.log('   ✅ 工作树已干净（无时间戳漂移需清理）');
+    }
+  } catch (e) {
+    console.log('   ⚠️ 时间戳清理失败（非阻塞）:', e.message.slice(0, 200));
+  }
+}
+
