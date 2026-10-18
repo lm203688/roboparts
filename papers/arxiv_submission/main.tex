@@ -109,7 +109,7 @@ influence the work reported in this paper.
 \section*{Data availability}
 All data, code and intermediate artefacts used to produce the results
 reported in this paper are released under MIT (code) and CC BY 4.0
-(data) at \url{https://github.com/lm203688/roboparts}. The dataset
+(data) at \url{https://github.com/lm203688/roboparts}~\cite{roboparts-repo}. The dataset
 snapshot referenced by this manuscript is anchored by the
 \texttt{generated\_at} timestamp in each of the four API outputs
 (\texttt{entities.json}, \texttt{gap\_classification.json},
@@ -249,9 +249,12 @@ addresses terminology (three-axis type system), data exchange
 \subsection{Assembly graphs and interface geometry}
 
 The closest geometric neighbours to our work are assembly-graph
-learners. \textsc{Linkify}~\cite{R1} re-computes high-fidelity
-contact points for Fusion-360-Gallery assemblies and trains a GATv2
-on top of point-cloud encoded interfaces, achieving strong masked-part
+learners. Assembly graphs have emerged as a foundational
+representation for learning-based assembly~\cite{AssemblyKG2022} and
+continue to drive recent work on geometric interface reasoning.
+\textsc{Linkify}~\cite{R1} re-computes high-fidelity contact points
+for Fusion-360-Gallery assemblies and trains a GATv2 on top of
+point-cloud encoded interfaces, achieving strong masked-part
 prediction. Harlacher \& Friedrich~\cite{R2} learn geometric relation
 labels from point clouds and then convert them into symbolic assembly
 graphs, achieving $85.8\%$ success on \textsc{ASAP} with human-in-the-loop
@@ -283,18 +286,30 @@ motivating background for RoboParts.
 
 \subsection{Uncertainty-aware robot learning}
 
-On the decision side, \textsc{ReconVLA}~\cite{R10} uses conformal
-prediction intervals to give vision-language-action policies explicit
-coverage guarantees, letting the planner refuse when the interval
-is too wide. The VLA uncertainty survey~\cite{R11} makes the same
-argument at a higher level: a policy that returns \emph{I don't know}
-is strictly better than one that guesses when guessing is more
-costly than deferring. RoboParts brings the same three-valued
-philosophy to the \emph{data} layer rather than the \emph{decision}
-layer. The stack reads bottom-up as: \emph{data layer three-state
-(compatibility)} $\rightarrow$ \emph{reasoning layer KG (assembly
-planning)} $\rightarrow$ \emph{decision layer UQ (policy refusal)}.
-Each layer's unknown feeds the previous one's priority queue.
+On the decision side, conformal prediction has become the dominant
+distribution-free framework for uncertainty quantification in
+robotics: adaptive conformal prediction has been integrated with
+probabilistic control barrier functions for high-probability safety
+guarantees~\cite{ACP2024}, learnable nonconformity scores tighten
+prediction intervals in perception and planning tasks
+\cite{LCP2025}, and local conformal calibration addresses the joint
+aleatoric/epistemic gap under dynamics shift~\cite{LUCCa2024}.
+\textsc{ReconVLA}~\cite{R10} uses conformal prediction intervals to
+give vision-language-action policies explicit coverage guarantees,
+letting the planner refuse when the interval is too wide. The VLA
+uncertainty survey~\cite{R11} makes the same argument at a higher
+level: a policy that returns \emph{I don't know} is strictly better
+than one that guesses when guessing is more costly than deferring.
+Resource-bounded type theory offers a dual formalisation of
+compositional cost guarantees via abstract resource lattices
+\cite{RBT2025}, which is the same ``unknown beats wrong'' discipline
+applied to complexity rather than safety. RoboParts brings the same
+three-valued philosophy to the \emph{data} layer rather than the
+\emph{decision} layer. The stack reads bottom-up as: \emph{data layer
+three-state (compatibility)} $\rightarrow$ \emph{reasoning layer KG
+(assembly planning)} $\rightarrow$ \emph{decision layer UQ (policy
+refusal)}. Each layer's unknown feeds the previous one's priority
+queue.
 
 \subsection{Open-source hardware and BOM semantics}
 
@@ -310,14 +325,77 @@ feeding, but even after ingestion, $0\%$ of their parts have a full
 three-axis declaration. This is the empirical reason we frame RoboParts
 as a \emph{coverage map} rather than a benchmark.
 
+The BOM-as-graph paradigm for manufacturing supply chains
+\cite{BOMGraph2024} shows how hierarchical parts graphs can support
+where-used queries and impact analysis, but the ``graph'' in that
+literature is a directed acyclic hierarchy of parts and suppliers,
+not a typed-compatibility graph. Ontology-driven knowledge-graph
+frameworks for industrial systems \cite{Ontology2024} make the
+distinction between the ontology (the blueprint) and the knowledge
+graph (the populated instance) explicit; RoboParts' \texttt{type}
+table plays the role of a domain-specific ontology, while
+\texttt{entities.json} is the instance graph. The W3C PROV Ontology
+\cite{PROVO2013} is the canonical reference for encoding data provenance
+with Entity/Activity/Agent triples; RoboParts' \texttt{prov} field
+on each entity follows the same three-class pattern, though we
+encode it as JSON rather than the RDF 1.1 triple format
+\cite{RDF2014} that PROV-O itself is defined over. PROV-O is one of
+the OWL 2~\cite{OWL2012} ontologies; RoboParts' \texttt{type} table
+is a lightweight, non-OWL re-encoding of the same idea, at the cost
+of formal reasoning support and at the gain of JSON-native
+interoperability.
+
 \subsection{Hardware abstraction layers and modular robotics}
 
 Recent work on hardware abstraction layers for modular robotic
 synthesis~\cite{R16} and on modular robot assembly in general both
 assume that the underlying parts are known and interoperable. Their
 concern is composition-time behaviour, not selection-time
-compatibility. RoboParts is upstream of these layers: it is what
-tells them which parts to compose.
+compatibility. A systematic survey of modular reconfigurable robots
+\cite{MRR2023} organises the entire hardware landscape via a trilateral
+framework (connectors, actuators, homogeneity) that spans 1985--2023
+and confirms that connector typing is the single most consequential
+design choice in modular robotics — exactly the axis RoboParts makes
+machine-checkable. Plug-and-produce frameworks for industrial
+collaborative robots~\cite{SchouMadsen2017} pioneered the use of
+OWL2 knowledge bases to encode device identification, spatial, driver,
+and functionality information for runtime registration, and our
+\texttt{type} field is a direct descendant of that tradition. Model-driven
+engineering of ROS industrial robots~\cite{MDEROS2022} shows how
+URDF/SRDF/SDF descriptions can be formally profiled via stereotypes —
+the same insight that a robot description format is only as good as
+its \emph{type discipline}. The Unified Robot Description Format
+itself~\cite{URDF2023} and its macro preprocessor \texttt{xacro}
+\cite{Xacro2023} are the closest existing standards to a
+machine-readable hardware description, but their scope is
+kinematic tree structure, not the cross-vendor selection problem
+RoboParts addresses. RoboParts is upstream of these layers: it is what tells
+them which parts to compose.
+
+On the dataset side, the field has moved decisively toward
+large-scale, cross-embodiment robot learning: Open X-Embodiment
+pooled data from 22 robots and 34 institutions into a unified
+RLDS format and demonstrated positive transfer via RT-X models
+\cite{OXE2024}, DROID collected 76k in-the-wild manipulation
+demonstrations across 564 scenes \cite{DROID2024}, BridgeData V2
+contributed 60k trajectories on a single low-cost platform
+\cite{BridgeV2}, RH20T gathered 110k contact-rich manipulation
+sequences~\cite{RH20T2024} with a primitive-level extension
+\cite{RH20TP2024}, and MimicGen synthesised over 50k demonstrations
+from just 200 human demos~\cite{MimicGen2023}, with successor systems
+such as DexMimicGen~\cite{DexMimicGen2024}, EgoMimic~\cite{EgoMimic2024}
+and RoboGen~\cite{RoboGen2023} pushing the same "generate-more-from-
+few" recipe to dexterous hands, egocentric video, and generative
+simulation respectively. Vision-language-action
+models such as RT-2~\cite{RT2_2023} unify semantic and motor
+reasoning by expressing actions as text tokens, and RoboCasa provides
+a simulation suite with 1000+ assets and 3700+ skills
+\cite{RoboCasa2024}. Every one of these efforts operates on
+\emph{already-known} hardware: the parts are already chosen, the
+embodiments are already fixed, the datasets are collected on
+already-built arms. RoboParts addresses the layer \emph{before}
+embodiment selection — it is what an integrator needs when they
+have to \emph{choose} the parts, not after they have been chosen.
 
 \subsection{Positioning}
 
@@ -370,6 +448,29 @@ are the strongest correctness claims we are willing to make on
 the current corpus. Each theorem is machine-checkable via property
 testing and mutation testing in the source release; the property
 tests live in \texttt{tests/property/test\_compose\_lattice.py}.
+
+The partial order underlying the theorems is a
+four-element chain, which is a special case of the abstract
+interpretation lattice framework of Cousot & Cousot~\cite{Cousot2004}
+and Ferrante et al.\cite{Ferrante1979}. Galois connections between
+a concrete and an abstract domain~\cite{GaloiConnection2006}
+generalise this structure to arbitrary type systems, and the
+lattice-theoretic foundations of component-based typing
+\cite{LatticeTypes2001} provide the closest direct precedent for
+the polymorphic type lattices that RoboParts' \texttt{type} table
+encodes. More recent work on orthologic type systems
+\cite{Orthologic2025} and session-type state-space lattices
+\cite{SessionLattice2024} shows that partial-order reasoning about
+types is a rich enough formal foundation to support
+machine-checked verification. Certified-programming
+approaches~\cite{CoqArt2004,CoqRef2020} and dependent-effects
+systems~\cite{FStar2016} formalise the same intuition that
+``the specification is the ground truth, not the implementation'':
+\textsc{CompCert}'s certified compiler~\cite{CompCert2007} and the
+Verified Software Toolchain's Verifiable C
+\cite{VST2014} both reduce the certification problem to lattice
+reasoning over a well-chosen abstract domain, and RoboParts'
+property-based tests follow the same structural pattern.
 
 \paragraph{Internal Consistency.}
 \begin{definition}[Internal Consistency]
@@ -1257,7 +1358,11 @@ possible verdicts rather than a single verdict. We rejected this
 because the axis aggregation in Eq.~\eqref{eq:agg} relies on the
 three values being linearly ordered; the moment you allow sets,
 you need a partial order, and the aggregation becomes a lattice
-operation with combinatorial complexity.
+operation with combinatorial complexity. The Cousot--Cousot
+abstract-interpretation framework~\cite{Cousot2004,Cousot2018}
+makes exactly this trade-off explicit: any lattice-enriched
+analysis gains expressive power at the cost of a strictly higher
+worst-case complexity, and there is no free lunch.
 \end{itemize}
 
 The three-valued choice is the \emph{smallest} consistent formalism
