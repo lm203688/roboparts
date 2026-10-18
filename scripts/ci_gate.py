@@ -4039,12 +4039,13 @@ def gate_positioning_gate_count_consistency():
         'index.html',
     ]
 
-    # 匹配模式：抓 N 项 CI 闸门 / N 项反向注入闸门 / Total N gates / N gates
+    # 匹配模式：抓 N 项 CI 闸门 / N 项反向注入闸门 / Total N gates / N CI gates
     # 排除 <!-- RP-GATES:START ... --> 注入块（那条由 gate_readme_stats_fresh 守）
     patterns = [
         (_re.compile(r'(\d+)\s*项\s*CI\s*闸门'), 'N 项 CI 闸门'),
         (_re.compile(r'(\d+)\s*项\s*反向注入闸门'), 'N 项反向注入闸门'),
         (_re.compile(r'Total\s+(\d+)\s+gates'), 'Total N gates'),
+        (_re.compile(r'(\d+)\s+CI\s+gates', _re.I), 'N CI gates'),
     ]
 
     issues = []
