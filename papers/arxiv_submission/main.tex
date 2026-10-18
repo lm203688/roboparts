@@ -576,8 +576,8 @@ than merely descriptive.
 We deliberately do not claim \emph{soundness} in the physical
 sense. That claim would require ground-truth assembly records,
 which are not available. The strongest external validity claim in
-this paper is the human-annotated evaluation set of
-Section~\ref{sec:groundtruth}; before that section lands, the
+this paper is the human-annotated evaluation set
+(planned, not yet published); before that section lands, the
 paper's claims are bounded by the internal-consistency theorem
 and the two axis-theorems above.
 
@@ -1081,7 +1081,7 @@ re-run at the same \texttt{generated\_at} timestamp.
 % ============================================================
 \subsection{Engineering verifiability: turning the CI harness into a contribution}\label{sec:eng-verif}
 
-The four algebraic laws and the three hypotheses of Section~\ref{sec:method-formal}
+The four algebraic laws and the three hypotheses of Section~\ref{sec:theorems}
 are not just asserted; they are \emph{enforced} at build time by a
 continuous-integration harness that runs on every commit. The harness has
 three components that are individually reusable in any evidence-driven
@@ -1285,7 +1285,7 @@ if the pinout is a bidirectional bus rather than a point-to-point
 connector. We leave a systematic study of reflexivity boundaries
 to future work.
 
-\subsection{Threats to validity}
+\subsection{Threats to validity}\label{sec:threats}
 
 \begin{itemize}[nosep,leftmargin=*]
 \item \textbf{Corpus size.} $868$ entities is small by any robotics

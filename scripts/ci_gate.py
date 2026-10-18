@@ -3579,13 +3579,33 @@ def gate_paper_numbers_fresh():
     d1_mech = agg.get('d1_bottleneck', {}).get('mechanical', 0)
     total_entities = len(entities.get('entities', []))
 
-    # 计算 vendor 数（有 manufacturer 的实体）
+    # 计算 vendor 数（论文口径：manufacturer 非空去重，排除 '(none)'）
     vc = {}
     for e in entities.get('entities', []):
-        v = e.get('manufacturer') or e.get('brand') or '(none)'
-        vc[v] = vc.get(v, 0) + 1
+        v = e.get('manufacturer')
+        if v and v not in ('(none)', '', None):
+            vc[v] = vc.get(v, 0) + 1
     vendors_total = len(vc)
     top10_sum = sum(c for _, c in sorted(vc.items(), key=lambda x: -x[1])[:10])
+    total_with_mfr = sum(vc.values())
+
+    # 论文口径：机械接口声明率（mechanical_interface.status 口径）
+    # applicable = status != 'n_a'；declared = status in ('declared', 'partial')
+    # decidable = standard AND flange 同时非空
+    mech_applicable = 0
+    mech_declared = 0
+    mech_decidable = 0
+    for e in entities.get('entities', []):
+        mi = e.get('mechanical_interface')
+        if not isinstance(mi, dict):
+            continue
+        st = mi.get('status')
+        if st and st != 'n_a':
+            mech_applicable += 1
+            if st in ('declared', 'partial'):
+                mech_declared += 1
+        if mi.get('standard') and mi.get('flange'):
+            mech_decidable += 1
 
     # 百分比：分母 = pairs（若为 0 则跳过）
     if pairs:
@@ -3594,10 +3614,13 @@ def gate_paper_numbers_fresh():
         frac_unknown = round(unknown / pairs * 100, 4)
         frac_d1_elec = round(d1_elec / d1_total * 100, 2) if d1_total else 0.0
         frac_d1_sig = round(d1_sig / d1_total * 100, 2) if d1_total else 0.0
-        frac_top10 = round(top10_sum / total_entities * 100, 2) if total_entities else 0.0
+        frac_top10 = round(top10_sum / total_with_mfr * 100, 2) if total_with_mfr else 0.0
+        frac_mech_declared = round(mech_declared / mech_applicable * 100, 2) if mech_applicable else 0.0
+        frac_mech_decidable = round(mech_decidable / total_entities * 100, 2) if total_entities else 0.0
     else:
         frac_composed = frac_type_err = frac_unknown = 0.0
         frac_d1_elec = frac_d1_sig = frac_top10 = 0.0
+        frac_mech_declared = frac_mech_decidable = 0.0
 
     # ── 2. 定义必须出现的「现算值」（防论文未同步更新） ──────────────────
     # 每个现算值：(LaTeX 格式字符串, 语义描述)
@@ -3625,17 +3648,30 @@ def gate_paper_numbers_fresh():
     # 关键百分比
     required_values.append((f'{frac_d1_elec:g}', 'd1 电气占比 %'))
     required_values.append((f'{frac_d1_sig:g}', 'd1 信号占比 %'))
+    # 论文核心口径：机械声明率与可判定率（2026-10-19 深化）
+    required_values.append((str(mech_applicable), 'mech_applicable（status!=n_a）'))
+    required_values.append((str(mech_declared), 'mech_declared（declared+partial）'))
+    required_values.append((f'{frac_mech_declared:g}', 'mech 声明率 %'))
+    if mech_decidable >= 10:
+        required_values.append((str(mech_decidable), 'mech_decidable（standard+flange）'))
+        required_values.append((f'{frac_mech_decidable:g}', 'mech 可判定率 %'))
+    # vendor 集中度
+    if vendors_total >= 100:
+        required_values.append((str(vendors_total), 'vendor 总数'))
+        required_values.append((f'{frac_top10:g}', 'top-10 集中度 %'))
 
     # ── 3. 定义禁止出现的「过期值」（防"新加数字，旧的忘删"） ──────────
     # 2026-09-23 快照 → 2026-10-17+ 现算值的漂移表
     stale_values = {
         '802': '旧实体数（2026-09-23 快照），现为 868',
-        '242': '旧 vendor 数（2026-09-23 快照），现应重算',
-        '439': '旧 mech_applicable（已改为 entity_kind 口径），现为 500',
+        '242': '旧 vendor 数（2026-09-23 快照），现为 348',
+        '358': '投稿时快照 vendor 数（2026-10-15 Mechatronics），现为 348',
+        '439': '旧 mech_applicable（已改为 mechanical_interface.status 口径），现为 500',
         '351{,}649': '旧 pairs_evaluated（2026-09-23 快照）',
         '351{,}645': '旧 unknown count（2026-09-23 快照）',
         '295{,}096': '旧 d3 count（2026-09-23 快照）',
         '28.5': '旧 top-10 集中度（2026-09-23 快照）',
+        '37.33': '投稿时快照 top-10 集中度（2026-10-15 Mechatronics），现为 18.72',
         '5.69': '旧 mech 声明率（旧口径 25/439）',
         '100.0%\\textbf{': '旧 d1=100% electrical 表述（当前 32+29）',
         '112': '旧 d1 总数（2026-09-23 快照，现为 61）',
