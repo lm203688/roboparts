@@ -4085,6 +4085,76 @@ def gate_positioning_gate_count_consistency():
     ok(name, f'{scanned} 个定位面 · 闸门数与 GATES={actual_gates} 一致')
 
 
+def gate_positioning_terminology_consistency():
+    '''【G-S3】定位面术语一致性（2026-10-18 深夜）
+
+    背景：G-S2 守数字漂移，但不管术语漂移。agent-discovery.json 的
+    ai_agent_instructions 里长期写"T1/T2/T3 theorems"（定理），而其他三个
+    定位面（README/llms/index.html）都用"三条代数律"（algebraic laws）——
+    术语不一致上线后回探才发现。
+
+    本闸门扫描 4 个定位面里的**禁用术语**，命中即判红：
+      - "三条定理" / "T1/T2/T3 定理" / "theorem"（定位面里不应出现）
+      - "49 项 CI 闸门" / "49 CI gates"（已过期的闸门数，G-S2 已守，本条冗余兜底）
+
+    正确术语：
+      - 中文："三条代数律"（可靠性 / 证据单调性 / 不可判定边界）
+      - 英文："three algebraic laws (T1/T2/T3)"
+
+    与 G-S2 分工：G-S2 守数字（N 项闸门），本条守术语（定理 vs 代数律）。
+    两条配合才能防"定位面文案漂移"。
+
+    注意：论文 main.tex 里用"theorem"是学术惯例，不在本闸门范围内。
+    本闸门只守对外定位面。
+    '''
+    import re as _re
+    name = '定位面术语一致（G-S3）'
+
+    targets = [
+        'README.md',
+        'agent-discovery.json',
+        'llms.txt',
+        'index.html',
+    ]
+
+    # 禁用术语模式：(正则, 标签, 正确替代)
+    banned = [
+        (_re.compile(r'三条定理', _re.I), '三条定理', '三条代数律'),
+        (_re.compile(r'T1/T2/T3\s+定理', _re.I), 'T1/T2/T3 定理', 'T1/T2/T3 代数律'),
+        (_re.compile(r'T1/T2/T3\s+theorems?', _re.I), 'T1/T2/T3 theorem', 'three algebraic laws (T1/T2/T3)'),
+        (_re.compile(r'\btheorem\b', _re.I), 'theorem', 'algebraic law'),
+    ]
+
+    issues = []
+    scanned = 0
+    for rel in targets:
+        path = os.path.join(ROOT, rel)
+        if not os.path.exists(path):
+            issues.append((rel, 0, 'MISSING', '', '', ''))
+            continue
+        try:
+            with open(path, encoding='utf-8', errors='replace') as f:
+                content = f.read()
+        except Exception:
+            continue
+        scanned += 1
+
+        lines = content.split('\n')
+        for lineno, line in enumerate(lines, 1):
+            for pat, label, correct in banned:
+                if pat.search(line):
+                    issues.append((rel, lineno, label, correct, '',
+                                   line.strip()[:70]))
+
+    if issues:
+        for fn, ln, label, correct, _, snippet in issues[:5]:
+            bad(name,
+                f'{fn}:{ln} 禁用术语"{label}"（应为"{correct}"）（{snippet}）')
+        return
+
+    ok(name, f'{scanned} 个定位面 · 无禁用术语（定理→代数律）')
+
+
 GATES = [
     ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
@@ -4431,6 +4501,11 @@ GATES = [
     # 与 gate_readme_stats_fresh 分工：那条守 README 注入块（RP-GATES 锚点），
     # 本条守定位面裸文本；两者配合才不漏。
     ('定位面闸门数一致（G-S2）', gate_positioning_gate_count_consistency),
+    # 【2026-10-18 深夜 G-S3】定位面术语一致性。G-S2 守数字，本条守术语。
+    # agent-discovery.json 的 ai_agent_instructions 曾长期写"T1/T2/T3 theorems"
+    # （定理），而其他三个定位面用"三条代数律"——术语不一致上线后回探才发现。
+    # 禁用"定理/theorem"，正确术语是"代数律/algebraic law"。
+    ('定位面术语一致（G-S3）', gate_positioning_terminology_consistency),
 ]
 
 
