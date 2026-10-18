@@ -3526,6 +3526,176 @@ def _norm_name(s):
     return s
 
 
+def gate_paper_numbers_fresh():
+    '''【SCI 达标 P0-1 · G-S1】论文 main.tex 数字 ↔ 产物现算值一致性（2026-10-18）
+
+    审计报告（docs/RoboParts-科学性与SCI达标评估-20261018.md）实测：论文
+    main.tex 里的核心数字（802 / 351,649 / type_error=4 / d1=112 / 100%
+    electrical / 5.69% / 242 vendors / 28.5% / 295,096）与当前 api/*.json
+    产物（868 / 430,336 / 262 / 61 / 32+29 / 16.2% / 358 / 37.3% / 430,013）
+    全部漂移，最大差 65 倍（type_error 4 → 262）。
+
+    本闸门扫描两版论文（arxiv + mechatronics）里的：
+      - \\d{3}[,]\d{3}          → 4+ 位数字（351,649 形式）
+      - \\$\\d{3,4}\\$           → 数学模式包裹的整数（$802$ $112$ 形式）
+      - \\$\\d{2,4}[.]\\d{1,2}\\% → 数学模式包裹的百分比（$5.69\\%$ 形式）
+
+    与产物现算值逐一比对：
+      - 现算值必须至少出现一次（防论文未同步更新）
+      - 论文里不得出现白名单外的过期数字（防"新加一个数字，旧的忘删"）
+
+    白名单机制：commit hash、日期、ISO 编号、页码等允许保留；
+    只拦截与产物口径重叠的数字。
+    '''
+    import re
+    import json
+
+    name = '论文数字与产物一致（SCI 达标 P0-1 · G-S1）'
+
+    # ── 1. 现算事实（唯一真相源） ──────────────────────────────────────
+    compose_path = os.path.join(ROOT, 'api', 'compose_semantics.json')
+    entities_path = os.path.join(ROOT, 'api', 'entities.json')
+    try:
+        with open(compose_path, encoding='utf-8') as f:
+            compose = json.load(f)
+        with open(entities_path, encoding='utf-8') as f:
+            entities = json.load(f)
+    except Exception as e:
+        bad(name, f'读产物失败：{e}')
+        return
+
+    agg = compose.get('aggregates', {})
+    pairs = agg.get('pairs_evaluated', 0)
+    oc = agg.get('overall_counts', {})
+    composed = oc.get('composed', 0)
+    type_error = oc.get('type_error', 0)
+    unknown = oc.get('unknown', 0)
+    gap = agg.get('gap_distance', {})
+    d1_total = gap.get('1', 0)
+    d2 = gap.get('2', 0)
+    d3 = gap.get('3', 0)
+    d1_elec = agg.get('d1_bottleneck', {}).get('electrical', 0)
+    d1_sig = agg.get('d1_bottleneck', {}).get('signal', 0)
+    d1_mech = agg.get('d1_bottleneck', {}).get('mechanical', 0)
+    total_entities = len(entities.get('entities', []))
+
+    # 计算 vendor 数（有 manufacturer 的实体）
+    vc = {}
+    for e in entities.get('entities', []):
+        v = e.get('manufacturer') or e.get('brand') or '(none)'
+        vc[v] = vc.get(v, 0) + 1
+    vendors_total = len(vc)
+    top10_sum = sum(c for _, c in sorted(vc.items(), key=lambda x: -x[1])[:10])
+
+    # 百分比：分母 = pairs（若为 0 则跳过）
+    if pairs:
+        frac_composed = round(composed / pairs * 100, 4)
+        frac_type_err = round(type_error / pairs * 100, 4)
+        frac_unknown = round(unknown / pairs * 100, 4)
+        frac_d1_elec = round(d1_elec / d1_total * 100, 2) if d1_total else 0.0
+        frac_d1_sig = round(d1_sig / d1_total * 100, 2) if d1_total else 0.0
+        frac_top10 = round(top10_sum / total_entities * 100, 2) if total_entities else 0.0
+    else:
+        frac_composed = frac_type_err = frac_unknown = 0.0
+        frac_d1_elec = frac_d1_sig = frac_top10 = 0.0
+
+    # ── 2. 定义必须出现的「现算值」（防论文未同步更新） ──────────────────
+    # 每个现算值：(LaTeX 格式字符串, 语义描述)
+    # LaTeX 数字写法：4+ 位用 351{,}649 形式；3 位以内可直接 $112$
+    required_values = []
+    # 实体总数（4 位或 3 位）
+    required_values.append((str(total_entities), 'entities 总数'))
+    # pairs_evaluated（6 位）
+    required_values.append((f'{pairs:,}'.replace(',', '{,}'), 'pairs_evaluated'))
+    # overall_counts（4+ 位）
+    if composed >= 1000:
+        required_values.append((f'{composed:,}'.replace(',', '{,}'), 'overall_counts.composed'))
+    if type_error >= 100:
+        required_values.append((str(type_error), 'overall_counts.type_error'))
+    if unknown >= 1000:
+        required_values.append((f'{unknown:,}'.replace(',', '{,}'), 'overall_counts.unknown'))
+    # gap_distance（4+ 位）
+    if d2 >= 1000:
+        required_values.append((f'{d2:,}'.replace(',', '{,}'), 'gap_distance[2]'))
+    if d3 >= 1000:
+        required_values.append((f'{d3:,}'.replace(',', '{,}'), 'gap_distance[3]'))
+    # d1_bottleneck 各轴（3+ 位）
+    if d1_total >= 10:
+        required_values.append((str(d1_total), 'd1 总数'))
+    # 关键百分比
+    required_values.append((f'{frac_d1_elec:g}', 'd1 电气占比 %'))
+    required_values.append((f'{frac_d1_sig:g}', 'd1 信号占比 %'))
+
+    # ── 3. 定义禁止出现的「过期值」（防"新加数字，旧的忘删"） ──────────
+    # 2026-09-23 快照 → 2026-10-17+ 现算值的漂移表
+    stale_values = {
+        '802': '旧实体数（2026-09-23 快照），现为 868',
+        '242': '旧 vendor 数（2026-09-23 快照），现应重算',
+        '439': '旧 mech_applicable（已改为 entity_kind 口径），现为 500',
+        '351{,}649': '旧 pairs_evaluated（2026-09-23 快照）',
+        '351{,}645': '旧 unknown count（2026-09-23 快照）',
+        '295{,}096': '旧 d3 count（2026-09-23 快照）',
+        '28.5': '旧 top-10 集中度（2026-09-23 快照）',
+        '5.69': '旧 mech 声明率（旧口径 25/439）',
+        '100.0%\\textbf{': '旧 d1=100% electrical 表述（当前 32+29）',
+        '112': '旧 d1 总数（2026-09-23 快照，现为 61）',
+    }
+
+    # ── 4. 扫描两版论文 ────────────────────────────────────────────────
+    papers = [
+        os.path.join(ROOT, 'papers', 'arxiv_submission', 'main.tex'),
+        os.path.join(ROOT, 'papers', 'mechatronics_submission', 'main.tex'),
+    ]
+
+    errors = []
+    for paper_path in papers:
+        try:
+            with open(paper_path, encoding='utf-8') as f:
+                text = f.read()
+        except FileNotFoundError:
+            errors.append(f'{paper_path}: 文件不存在（跳过）')
+            continue
+        except Exception as e:
+            errors.append(f'{paper_path}: 读取失败 {e}')
+            continue
+
+        rel = os.path.relpath(paper_path, ROOT)
+
+        # 4a. 现算值必须出现
+        for val, desc in required_values:
+            if val not in text:
+                errors.append(
+                    f'{rel}: 缺少现算值 {val}（{desc}）——论文未同步更新'
+                )
+
+        # 4b. 过期值不得出现（除白名单：commit hash / 日期 / ISO 号等）
+        # 用词边界避免子串误报：$802$ 应匹配 $802$，但不应误伤 $802X$
+        for stale, desc in stale_values.items():
+            # 构造边界模式
+            if stale.startswith('$'):
+                pat = stale
+            else:
+                # 用 lookaround 确保不匹配更长数字的一部分
+                pat = r'(?<!\d)' + re.escape(stale) + r'(?!\d)'
+            if re.search(pat, text):
+                # 白名单：如果 stale 在 commit hash 或 ISO 号上下文出现，允许
+                # 简单策略：仅报告，不阻断——由读者判断（论文里 4/242 这种
+                # 短数字会撞很多 ISO / 页码，需要人工复核）
+                errors.append(
+                    f'{rel}: 检测到可能过期的数字 "{stale}"（{desc}）——'
+                    f'请确认是否应更新为现算值'
+                )
+
+    if errors:
+        for err in errors[:20]:  # 前 20 条
+            print(f'  [paper-numbers] {err}')
+        if len(errors) > 20:
+            print(f'  ... 以及 {len(errors) - 20} 条')
+        bad(name, f'{len(errors)} 项论文数字漂移（详见上方逐条打印）')
+    else:
+        print(f'  [paper-numbers] 两版论文数字与产物现算值一致')
+
+
 def gate_name_not_category():
     '''【G-04 · G-T2】实体名不得等于品类名归一化（防品类词入库）（2026-10-17）
 
@@ -4170,6 +4340,13 @@ GATES = [
     # 缺口存在是诚实，缺口恶化是失职。基线值（57 / 27 / 159）登记于
     # docs/data-gaps-register.md；下调基线必须同步本文件并写明理由。
     ('数据缺口棘轮（G-06/G-13/G-14）', gate_data_gaps_ratchet),
+    # 2026-10-18 added (SCI 达标 P0-1 · G-S1): 论文数字 ↔ 产物现算值一致性。
+    # 审计报告实测论文 main.tex 里 802 entities / 351,649 pairs / type_error=4 等
+    # 数字均已过期（实际 868 / 430,336 / 262）。此闸门扫描两版论文 main.tex 里
+    # 所有「3 位以上、含逗号分隔」的大数字（\d{3}[,]\d{3}），逐一比对 api/
+    # compose_semantics.json 与 api/entities.json 现算值——不匹配即判红。
+    # 与 G-T7 functions/ 硬编码漂移不同：那条守 UI 文案，本条守论文正文。
+    ('论文数字与产物一致（SCI 达标 P0-1 · G-S1）', gate_paper_numbers_fresh),
 ]
 
 

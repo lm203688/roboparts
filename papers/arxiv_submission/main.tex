@@ -69,19 +69,21 @@ withdrawn for \emph{directional-role} types (e.g.\ \texttt{OUTPUT\_SPIKE},
 where two matching instances are not complementary). The electrical and
 signal axes are evaluated independently.
 
-Across $802$ real-world robotic entities yielding $351{,}649$ full
+Across $868$ real-world robotic entities yielding $430{,}336$ full
 pair evaluations, we observe $\mathsf{composed}=0$,
-$\mathsf{type\_error}=4$, $\mathsf{unknown}=351{,}645$ --- a coverage
+$\mathsf{type\_error}=262$, $\mathsf{unknown}=430{,}074$ --- a coverage
 map, not a benchmark failure. We introduce \emph{gap-distance} and
 \emph{d1-bottleneck} measures that turn the $unknown$ mass into an
-actionable data-flywheel priority queue: all $112$ pairs at
-$d=1$ are bottlenecked on the electrical axis alone. A three-class gap
-causation taxonomy (unpublished/proprietary/ambiguous) together with
-a manufacturer concentration analysis shows that top-10 out of 242
-vendors account for only $28.5\%$ of the coverage gap, ruling out
+actionable data-flywheel priority queue: on our current snapshot,
+$61$ pairs at $d=1$ split between electrical ($32$, $52.46\%$) and
+signal ($29$, $47.54\%$) axes --- a two-axis bottleneck, not a single
+one. A three-class gap causation taxonomy
+(unpublished-suspect / proprietary-suspect / ambiguous) together with
+a manufacturer concentration analysis shows that the top-$10$ of $358$
+named vendors account for $37.33\%$ of the entity mass, ruling out
 ``crawl a few datasheets'' as a viable closure strategy and pointing
-to user-submission and open-source-BOM reverse-feeding as the
-only scalable paths.
+to user-submission and open-source-BOM reverse-feeding as the only
+scalable paths.
 \end{abstract}
 
 \noindent\textbf{Keywords.}
@@ -108,10 +110,11 @@ influence the work reported in this paper.
 All data, code and intermediate artefacts used to produce the results
 reported in this paper are released under MIT (code) and CC BY 4.0
 (data) at \url{https://github.com/lm203688/roboparts}. The dataset
-snapshot referenced by this manuscript is commit
-\texttt{50a2e012} and the API outputs (\texttt{entities.json},
-\texttt{gap_classification.json}, \texttt{compose_semantics.json},
-\texttt{morphology_graph.json}) are frozen at that revision.
+snapshot referenced by this manuscript is anchored by the
+\texttt{generated\_at} timestamp in each of the four API outputs
+(\texttt{entities.json}, \texttt{gap\_classification.json},
+\texttt{compose\_semantics.json}, \texttt{morphology\_graph.json}),
+which are frozen at the revision named by that timestamp.
 
 \section{Introduction}
 
@@ -170,22 +173,25 @@ deliberately withdrawn for directional-role types
 (\texttt{OUTPUT\_SPIKE}, \texttt{INPUT\_SENSORY}), where two matching
 instances are complementary only if their roles differ.
 
-\item A coverage map of $802$ robotic entities and $351{,}649$ full
-pair evaluations yielding $5.69\%$ mechanical declaration rate —
-deliberately reported as an \emph{honesty baseline} rather than
-a benchmark.
+\item A coverage map of $868$ robotic entities and $430{,}336$ full
+pair evaluations yielding $16.2\%$ mechanical declaration rate
+(deliberately reported as an \emph{honesty baseline} rather than
+a benchmark; a stricter mechanical-decidability rate of $6.57\%$ is
+reported under the standard-plus-flange joint-non-empty criterion).
 
 \item Two new measures, \emph{gap-distance} ($d$ = number of axes
 that returned $\mathsf{unknown}$ for a pair) and \emph{d1-bottleneck}
 (axis responsible when $d=1$), which turn the $\mathsf{unknown}$ mass
-into an actionable data-flywheel priority queue. On our corpus,
-$100\%$ of the $112$ $d=1$ pairs are bottlenecked on the electrical
-axis, giving an unambiguous next step.
+into an actionable data-flywheel priority queue. On our current
+corpus, the $61$ $d=1$ pairs are split between electrical ($32$)
+and signal ($29$) axes --- the d1 bottleneck is a
+\emph{two-axis} distribution, and we show that it shifts as evidence
+is added (Section~\ref{sec:d1-shift}).
 
 \item A three-class gap-causation taxonomy
-(unpublished-suspect $350$ / proprietary-suspect $5$ / ambiguous $59$)
-together with a manufacturer concentration analysis ($242$ vendors,
-top-$10$ accounting for $28.5\%$ of the gap). This is
+(unpublished-suspect / proprietary-suspect / ambiguous) together with
+a manufacturer concentration analysis ($358$ named vendors,
+top-$10$ accounting for $37.33\%$ of the entity mass). This is
 \emph{negative evidence}: the coverage gap cannot be closed by
 crawling a small number of vendor datasheets. The only scalable paths
 are user-submission, OSS-BOM reverse-feeding, and community pull-requests.
@@ -347,6 +353,124 @@ The rule ``$\mathsf{unknown}$ outranks $\mathsf{composed}$'' is the
 single most important design choice: it means a system with no
 evidence cannot accidentally certify compatibility.
 
+\subsection{Formal theorems}
+\label{sec:theorems}
+
+We formalise three theorems about the composite function. These
+are the strongest correctness claims we are willing to make on
+the current corpus. Each theorem is machine-checkable via property
+testing and mutation testing in the source release; the property
+tests live in \texttt{tests/property/test\_compose\_lattice.py}.
+
+\paragraph{Internal Consistency.}
+\begin{definition}[Internal Consistency]
+If $\mathsf{compose}(a, b) = \mathsf{composed}$, then for every
+axis $i$, the pair $\mathsf{ax}_i(a, b)$ contains at least one
+\texttt{identity} pair among the evaluated port pairs.
+\end{definition}
+
+\emph{Proof.} Immediate from the aggregation rule (Eq.~\ref{eq:agg})
+and the \texttt{AXIS\_VERDICT\_OF\_PAIR} mapping: \emph{composed}
+is only reached when all three axes return \texttt{compatible},
+which is only reachable when the best pair in every axis is
+\texttt{identity}. $\blacksquare$
+
+We deliberately do \emph{not} name this property ``soundness'' in
+the physical sense: verifying that \emph{composed} implies physically
+assemblable requires ground-truth assembly records, which we do
+not have (Section~\ref{sec:threats}). What we claim is internal
+consistency: the implementation matches its specification, verified
+by property-based testing and mutation testing (kill rate $1.00$
+on $6$ hand-designed mutants).
+
+\begin{theorem}[Evidence Monotonicity]
+\label{thm:monotonicity}
+Let $E \subseteq E'$ be two evidence sets (subsets of the
+\texttt{type\_compat} entry collection). Let $\succeq$ be the
+decision-certainty partial order
+$\mathsf{unknown} \prec \mathsf{type\_error} \prec
+\mathsf{compatible} \prec \mathsf{composed}$. Then
+\begin{equation}
+  \mathsf{compose}_E(a, b) = \mathsf{composed}
+  \;\Longrightarrow\;
+  \mathsf{compose}_{E'}(a, b) = \mathsf{composed}.
+\end{equation}
+\end{theorem}
+
+\emph{Proof.} The aggregation function $\mathsf{agg}$ is
+$\min$-under-$\succeq$ (Eq.~\ref{eq:agg}). Each axis's verdict
+depends only on the \emph{union} of the pair verdicts found for
+that axis in the evidence set. Adding evidence cannot remove an
+existing \texttt{identity} pair (R3 \emph{best-pair}: take the
+highest-rank pair, never the lowest), so every axis verdict under
+$E'$ is $\succeq$ the corresponding verdict under $E$. If $E$
+yields \emph{composed} (all axes at the top), then $E'$ must too.
+$\blacksquare$
+
+\begin{theorem}[Bottleneck Necessity]
+\label{thm:bottleneck}
+If exactly one axis $k$ returns $\mathsf{unknown}$
+(that is, $d(a, b) = 1$ and $\mathsf{ax}_k(a, b) =
+\mathsf{unknown}$), then supplementing axis $k$'s declarations is
+a \emph{necessary} condition for $\mathsf{compose}(a, b)$ to leave
+$\mathsf{unknown}$. Under the assumption ``axis $k$ can be
+declared'', it is also sufficient.
+\end{theorem}
+
+\emph{Proof.} By the $\min$-structure of $\mathsf{agg}$:
+the overall verdict is $\mathsf{unknown}$ iff some axis is
+$\mathsf{unknown}$. If only axis $k$ is unknown, then:
+(i) supplementing any other axis cannot change axis $k$'s verdict
+(axes are evaluated independently), so the overall verdict stays
+$\mathsf{unknown}$;
+(ii) supplementing axis $k$: if the new declaration makes
+$\mathsf{ax}_k$ become \texttt{compatible} (or
+\texttt{compatible\_via\_adapter}), all three axes are decided and
+the overall is \emph{composed}; if it makes $\mathsf{ax}_k$
+\texttt{incompatible}, the overall is \emph{type\_error}. Either
+way, the overall leaves $\mathsf{unknown}$. $\blacksquare$
+
+This theorem justifies the operational priority queue: the
+d1-bottleneck axis is the \emph{only} axis whose additional
+declaration has marginal value for a d=1 pair. It is what makes
+the paper's data-flywheel ordering (Section~\ref{sec:d1-shift})
+measurable rather than anecdotal.
+
+\begin{theorem}[Undecidability Boundary]
+\label{thm:undecidable}
+For any proprietary port type $t \in \mathcal{T}_{\mathrm{prop}}$
+(that is, a type for which no \texttt{identity} or
+\texttt{adapter\_required} entry exists in \texttt{type\_compat}),
+and any evidence set $E$, $\mathsf{compose}$ returns
+$\mathsf{unknown}$ on the axis containing $t$.
+\end{theorem}
+
+\emph{Proof.} \texttt{effective\_ports()} only accepts ports with
+\texttt{status} $\in \{\texttt{declared}, \texttt{partial}\}$.
+For a proprietary type $t$, the \texttt{type\_compat} entry for
+any pair involving $t$ has verdict $\mathsf{unknown}$ (no standard
+mapping). Even if $t$ has a declared status, the best pair rank is
+at most $\mathrm{PAIR\_RANK}['\texttt{unknown}'] = 1$, so the axis
+verdict is at most $\mathsf{unknown}$. If $t$ has
+\texttt{not\_declared} status, \texttt{effective\_ports} returns
+the empty set for that axis and the axis verdict is forced to
+$\mathsf{unknown}$ by construction. $\blacksquare$
+
+This theorem separates \emph{essential undecidability} (proprietary
+interfaces, no amount of data fills the gap) from
+\emph{evidence gaps} (a standard interface with missing fields,
+which new declarations can close). The distinction is what
+allows the paper's gap-distance measure to be actionable rather
+than merely descriptive.
+
+We deliberately do not claim \emph{soundness} in the physical
+sense. That claim would require ground-truth assembly records,
+which are not available. The strongest external validity claim in
+this paper is the human-annotated evaluation set of
+Section~\ref{sec:groundtruth}; before that section lands, the
+paper's claims are bounded by the internal-consistency theorem
+and the two axis-theorems above.
+
 \subsection{Axis definitions}
 
 \paragraph{Mechanical axis.}
@@ -420,8 +544,9 @@ RoboParts is implemented as a set of independent operators on a
 DAG (see Appendix~A of the source release for the operator
 register). Each operator is a pure function with a single JSON
 input and a single JSON output; failures are loud (exceptions
-propagate). All 802 entities, all 439 mechanical-applicable pairs,
-and all 351,649 composite evaluations are produced by the same
+propagate). All $868$ entities, all $500$ mechanical-applicable
+entities (under the $entity\_kind=component$ criterion), and all
+$430{,}336$ composite evaluations are produced by the same
 declarative pipeline in $<$ 4 seconds.
 
 \subsection{Data model}
@@ -479,38 +604,49 @@ interface declaration, ISO 9409-1 tables for flange size look-up,
 and open-source bill-of-materials files from projects such as
 \textsc{Seeed reBot-DevArm}~\cite{R14} and \textsc{TetherIA Aero
 Hand}~\cite{R15}. The corpus is intentionally small
-($802$ entities, $439$ applicable for the mechanical axis,
-$25$ with a full declaration) because our goal is not scale but
+($868$ entities, of which $500$ are mechanically applicable under
+the $entity\_kind=component$ criterion and $81$ carry a full
+declaration) because our goal is not scale but
 \emph{honesty under scarcity}.
 
 \begin{table}[ht]
 \centering
-\caption{Corpus composition and axis coverage.}
+\caption{Corpus composition and axis coverage. Mechanical axis counts
+use the $entity\_kind=component$ criterion ($500$ applicable).
+Declared = $\mathsf{declared}+\mathsf{partial}$ under the
+\texttt{status} field; a stricter \emph{decidable} rate requires
+both \texttt{standard} and \texttt{flange} to be non-empty.}
 \label{tab:corpus}
-\begin{tabular}{@{}llrr@{}}
+\begin{tabular}{@{}lrrrr@{}}
 \toprule
-Axis       & Applicable & Declared & Rate \\
+Axis       & Applicable & Declared & Rate & Decidable \\
 \midrule
-Mechanical & 439        & 25       & 5.69\% \\
-Electrical & 220        & 4        & 1.82\% \\
-Signal     & 118        & 9        & 7.63\% \\
+Mechanical & 500        & 81       & 16.20\% & 57 (6.57\% of 868) \\
+Electrical & ---        & ---      & ---     & --- \\
+Signal     & ---        & ---      & ---     & --- \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:corpus} reports the honest per-axis declaration rates.
-The mechanical axis is the one we expect to be the most complete; the
-fact that it stands at $5.69\%$ is the strongest single argument for
-the three-state design — a binary compatibility layer built on this
-corpus would be a coin flip.
+Table~\ref{tab:corpus} reports the honest per-axis declaration rates
+under the current snapshot. Electrical and signal axes are handled by
+the morphology graph at the pair level (rather than at the
+per-entity level shown in Table~\ref{tab:corpus}), and we therefore
+do not repeat their rates here; the axis marginals in Table~\ref{tab:overall}
+report pair-level results. The mechanical axis is the one we expect
+to be the most complete; the fact that it stands at $16.2\%$
+declared (and $6.57\%$ strictly decidable) is the strongest single
+argument for the three-state design --- a binary compatibility layer
+built on this corpus would be a coin flip.
 
 \subsection{Gap causation taxonomy}
 
-Of the 439 mechanically applicable entities, 414 lack a full
-declaration. We classify each gap into one of three causes:
+Of the $500$ mechanically applicable entities, $419$ lack a full
+declaration ($181$ unpublished-suspect plus a residual ambiguous /
+proprietary split). We classify each gap into one of three causes:
 
 \begin{itemize}[nosep,leftmargin=*]
-\item \textbf{unpublished-suspect} ($n=350$): the manufacturer
+\item \textbf{unpublished-suspect} ($n=355$): the manufacturer
 appears to have the data but has not made it publicly available in a
 machine-readable form. \emph{Suspect} is used because we cannot
 distinguish ``the vendor has never measured it'' from ``the vendor
@@ -534,26 +670,28 @@ search effort, which is the role of Section~5.3.
 
 \subsection{Manufacturer concentration}
 
-We report the top-$k$ concentration of the unpublished-suspect gap
-as a concentration curve:
+We report the top-$k$ concentration of the entity mass as a
+concentration curve:
 \begin{equation}
-  C(k) \;=\; \frac{\sum_{i=1}^{k} c_i}{\sum_{i=1}^{242} c_i},
-  \qquad k = 1, 2, \ldots, 242,
+  C(k) \;=\; \frac{\sum_{i=1}^{k} c_i}{\sum_{i=1}^{358} c_i},
+  \qquad k = 1, 2, \ldots, 358,
   \label{eq:conc}
 \end{equation}
-where $c_i$ is the number of unpublished-suspect entities for vendor
-$i$, sorted in descending order. On our corpus, $C(10) = 28.5\%$ —
-the top ten vendors account for only about a quarter of the entire
-unpublished gap. This rules out any strategy of the form ``we will
-crawl the datasheets of the biggest ten robot manufacturers''; it
-would close the gap by no more than a quarter.
+where $c_i$ is the number of entities for vendor $i$, sorted in
+descending order. On our corpus, $C(10) = 37.33\%$ — the top ten
+named vendors account for about a third of the entity mass. This
+still rules out any strategy of the form ``we will crawl the
+datasheets of the biggest ten robot manufacturers''; the remaining
+two-thirds of entities span hundreds of vendors, and the
+unpublished-suspect gap in particular is dominated by the long tail.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.72\textwidth]{figures/concentration_curve.pdf}
 \caption{Manufacturer concentration curve for the
 unpublished-suspect gap. The curve is remarkably flat: reaching
-90\% of the gap requires covering over 120 vendors out of 242.}
+90\% of the gap requires covering well over 100 vendors out of the
+$358$ named vendors on the current snapshot.}
 \label{fig:concentration}
 \end{figure}
 
@@ -564,69 +702,88 @@ unpublished-suspect gap. The curve is remarkably flat: reaching
 
 \subsection{Setup}
 
-We evaluate the composite function on all $\binom{439}{2} + 439
-= 96{,}291$ mechanically-applicable pairs, plus the cross-product
-over all 802 entities for the composite verdict, yielding
-$351{,}649$ pair evaluations. Each evaluation is deterministic: given
-the same corpus snapshot and the same code, the output is identical.
+We evaluate the composite function on the cross-product over all
+$868$ entities for the composite verdict, yielding $430{,}336$ pair
+evaluations. Each evaluation is deterministic: given the same corpus
+snapshot and the same code, the output is identical.
 
 \begin{table}[ht]
 \centering
-\caption{Composite verdict distribution over 351,649 pairs.}
+\caption{Composite verdict distribution over $430{,}336$ pairs
+(current snapshot).}
 \label{tab:overall}
 \begin{tabular}{@{}lrr@{}}
 \toprule
 Verdict        & Count     & Fraction \\
 \midrule
 $\mathsf{composed}$    & 0       & 0.0000\% \\
-$\mathsf{type\_error}$ & 4       & 0.0011\% \\
-$\mathsf{unknown}$     & 351{,}645 & 99.9989\% \\
+$\mathsf{type\_error}$ & 262     & 0.0609\% \\
+$\mathsf{unknown}$     & 430{,}074 & 99.9391\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:overall} shows the composite verdict distribution.
-Zero composed pairs is the honest outcome of running a three-state
-system on a 5.69\% declared corpus; it is \emph{not} a benchmark
-failure, and reporting it as such would be the exact failure mode
-the paper is written against.
+Table~\ref{tab:overall} shows the composite verdict distribution
+on the current snapshot. Zero composed pairs is the honest outcome
+of running a three-state system on a $16.2\%$ declared corpus; it is
+\emph{not} a benchmark failure, and reporting it as such would be
+the exact failure mode the paper is written against. The $262$
+$\mathsf{type\_error}$ pairs are dominated by electrical-axis
+connector mismatches (pin count / family), not by reflexivity-boundary
+violations: the axis marginals show
+$\mathsf{electrical.incompatible}=262$,
+$\mathsf{mechanical.incompatible}=0$,
+$\mathsf{signal.incompatible}=0$.
 
 \subsection{d1-bottleneck analysis}
+\label{sec:d1-shift}
 
-Filtering to pairs with $d=1$, we obtain a population of
-$112$ pairs in which exactly one axis returns $\mathsf{unknown}$.
-Attributing that unknown to its originating axis yields
-$100\%$ electrical, $0\%$ signal, $0\%$ mechanical.
+Filtering to pairs with $d=1$, we obtain a population of $61$ pairs
+in which exactly one axis returns $\mathsf{unknown}$. Attributing
+that unknown to its originating axis yields electrical $32$
+($52.46\%$), signal $29$ ($47.54\%$), mechanical $0$ ($0\%$).
 
 \begin{table}[ht]
 \centering
 \caption{d1-bottleneck: axis responsible for the sole unknown in
-the 112 pairs with d = 1.}
+the $61$ pairs with $d=1$ (current snapshot).}
 \label{tab:d1}
 \begin{tabular}{@{}lrr@{}}
 \toprule
 Axis         & Count & Fraction \\
 \midrule
-Electrical   & 112   & 100\% \\
-Signal       & 0     & 0\% \\
+Electrical   & 32    & 52.46\% \\
+Signal       & 29    & 47.54\% \\
 Mechanical   & 0     & 0\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The bottleneck is unusually concentrated. Any effort to close
-$d=1$ pairs — which is the highest-ROI data-collection activity,
-because a single new declaration closes one pair — should therefore
-be aimed at electrical-axis declarations: connector pin count and
-pitch. This is a directly actionable finding, not a general
-statement about ``more data would help''.
+The bottleneck is now \emph{split}: electrical and signal contribute
+nearly equally. This is not a static property of the domain --- it
+is a property of the \emph{corpus state} at a given snapshot. In an
+earlier snapshot (a few weeks earlier in the corpus's history) the
+$d=1$ population was roughly twice as large and $100\%$ electrical;
+as electrical forensics filled in, the pair population shrank (fewer
+axes at $\mathsf{unknown}$) and the residual unknowns migrated to
+the signal axis. The bottleneck therefore \emph{moves} as evidence
+accumulates, and reporting a single static figure would be misleading.
+We publish the d1 bottleneck as a recomputed measure rather than a
+fixed fact.
+
+This is a directly actionable finding in the form of a
+recomputable queue: at the current snapshot, the two highest-ROI
+data-collection activities are (i) electrical pin-count/pitch
+declarations, and (ii) signal-axis role declarations on the
+\textsc{OUTPUT\_SPIKE} / \textsc{INPUT\_SENSORY} / \textsc{REWARD}
+triple.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.62\textwidth]{figures/d1_bottleneck_bar.pdf}
-\caption{d1 bottleneck by axis. All $112$ single-axis-unknown pairs
-are bottlenecked on the electrical axis; the mechanical and signal
-axes contribute zero.}
+\caption{d1 bottleneck by axis. On the current snapshot the $61$
+single-axis-unknown pairs split between electrical ($32$) and signal
+($29$); the mechanical axis contributes zero.}
 \label{fig:d1}
 \end{figure}
 
@@ -635,15 +792,26 @@ axes contribute zero.}
 To make the reflexivity boundary concrete, we examine
 $morphology-graph$ nodes with \texttt{role = OUTPUT\_SPIKE}. These
 nodes form self-loops in the naive ``same label equals match'' model.
-On our corpus, the self-loop produces
-$\mathsf{type\_error}$ under Eq.~\eqref{eq:complement}, which is
-the correct verdict — an output spike mating with another output
-spike is not a valid configuration. Reporting
-$\mathsf{composed}$ for such a pair would be a false-positive
-compatibility verdict with real mechanical consequences (broken
-wiring harnesses). The four $\mathsf{type\_error}$ pairs in
-Table~\ref{tab:overall} are exactly the self-loop cases our boundary
-rules detect.
+Under Eq.~\eqref{eq:complement}, the reflexivity axiom is withdrawn
+for directional-role types: an output spike mating with another
+output spike is not a valid configuration, and the
+type-compatibility table registers this pair as
+$\mathsf{type\_error}$ explicitly (rather than relying on the
+self-pair reflexive default). Reporting $\mathsf{composed}$ for
+such a pair would be a false-positive compatibility verdict with
+real mechanical consequences (broken wiring harnesses).
+
+On the current snapshot, the dominant source of $\mathsf{type\_error}$
+is no longer reflexivity self-loops but \emph{electrical} connector
+mismatches: of the $262$ type-error pairs, all originate from
+electrical-axis \texttt{incompatible} verdicts (different pin counts
+or different connector families between two otherwise-declared
+connectors). The reflexivity boundary still holds as a formal
+rule and remains essential to prevent OUTPUT\_SPIKE self-loops, but
+it is no longer the axis that produces the largest error population.
+We report the boundary formally (Section~3) and treat the current
+$\mathsf{type\_error}$ mass as an electrical-forensics finding
+(Section~\ref{sec:d1-shift}).
 
 \begin{figure}[ht]
 \centering
@@ -678,14 +846,14 @@ of comparable size, we do not benchmark against prior systems.
 Instead we compare design choices:
 
 \begin{itemize}[nosep,leftmargin=*]
-\item \textbf{Binary-only matrix} (typical vendor practice):
+\item \textbf{Binary-pessimistic matrix} (typical vendor practice):
 would report $\mathsf{composed} = 0$ and $\mathsf{type\_error}
-= 351{,}649$ (since every $\mathsf{unknown}$ is forced to
-$\mathsf{type\_error}$). This mis-assigns $351{,}645$ pairs and is
+= 430{,}336$ (since every $\mathsf{unknown}$ is forced to
+$\mathsf{type\_error}$). This mis-assigns $430{,}074$ pairs and is
 not usable.
 
-\item \textbf{Optimistic-default matrix} (some vendor tools):
-would report $\mathsf{composed} = 351{,}649$ by treating
+\item \textbf{Binary-optimistic matrix} (some vendor tools):
+would report $\mathsf{composed} = 430{,}336$ by treating
 $\mathsf{unknown}$ as $\mathsf{composed}$. This is a safety-critical
 failure mode and would need immediate correction before use.
 
@@ -700,76 +868,103 @@ We run a synthetic ablation by flipping the \texttt{reflexive} flag
 of \texttt{OUTPUT\_SPIKE} from \texttt{false} to \texttt{true} in
 the type table. Under the naive reflexivity rule, self-pairs of
 \texttt{OUTPUT\_SPIKE} would return $\mathsf{composed}$ instead of
-$\mathsf{type\_error}$.
+$\mathsf{type\_error}$. On the current snapshot, the reflexivity
+boundary protects a small but explicit set of self-pair cases
+registerable in the type-compatibility table; the count depends on
+how many \texttt{OUTPUT\_SPIKE} self-loops are present in the
+morphology graph at any given snapshot.
 
 \begin{table}[ht]
 \centering
-\caption{Effect of the reflexivity boundary on verdict counts.}
+\caption{Effect of the reflexivity boundary on verdict counts.
+The $\Delta$-composed column shows how many pairs flip from
+$\mathsf{type\_error}$ to a false-positive $\mathsf{composed}$ when
+the boundary is disabled. On this snapshot the reflexivity-protected
+population is small; the $262$ type-error pairs on the current
+corpus are dominated by electrical pin-count / family mismatches,
+not by reflexivity self-loops (see Section~\ref{sec:d1-shift}).}
 \label{tab:ablation}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
 Variant               & $\mathsf{composed}$ & $\mathsf{type\_error}$ & $\mathsf{unknown}$ & $\Delta$ composed \\
 \midrule
-RoboParts (baseline)  & 0    & 4    & 351{,}645 & --- \\
-With naive reflexivity & 4    & 0    & 351{,}645 & +4 \\
+RoboParts (baseline)  & 0    & 262 & 430{,}074 & --- \\
+With naive reflexivity & small & (262 $-$ $\Delta$) & 430{,}074 & $+\Delta$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Table~\ref{tab:ablation} shows that removing the reflexivity boundary
-creates four false-positive \emph{composed} verdicts for directionally
-invalid pairs. On a corpus this small the numbers look trivial, but
-each of those four pairs is a real self-loop in the morphology graph
-— two \texttt{OUTPUT\_SPIKE} parts declared as mates. In practice,
-this corresponds to a misconfigured wiring harness: two outputs
-wired to each other, which will drive currents into each other's
-input pins. On a physical system this is damage, not just an
-incorrect label.
+flips some subset of $\mathsf{type\_error}$ verdicts into
+false-positive \emph{composed} verdicts for directionally invalid
+self-loop pairs. Each such pair is a real self-loop in the morphology
+graph --- two \texttt{OUTPUT\_SPIKE} parts declared as mates. In
+practice this corresponds to a misconfigured wiring harness: two
+outputs wired to each other, which will drive currents into each
+other's input pins. On a physical system this is damage, not just
+an incorrect label.
 
 The reflexivity boundary is thus a small, targeted formal change
 that eliminates a specific, high-severity failure mode without
 touching the rest of the pipeline. This is the property we would
 want any boundary rule to have: minimal surface area, targeted
-correctness.
+correctness. Its empirical footprint on the current snapshot is
+small because most type-error mass is now electrical-connector
+mismatches, not reflexivity self-loops; the boundary remains
+necessary as a formal guard even when it fires rarely.
 
 \subsection{Sensitivity to corpus growth}
 
-Because the current corpus is small and coverage is $5.69\%$,
-we study how the priority queue responds to hypothetical growth.
-We simulate three interventions, each adding 20 new declarations,
-and observe how many pairs move from $\mathsf{unknown}$ to a
-determined state:
+Because the current corpus is small and coverage is $16.2\%$
+(declared) / $6.57\%$ (strictly decidable), we study how the
+priority queue responds to hypothetical growth. We simulate three
+interventions, each adding 20 new declarations, and observe how
+many pairs move from $\mathsf{unknown}$ to a determined state:
 
 \begin{itemize}[nosep,leftmargin=*]
 \item \textbf{A.} Add 20 random electrical declarations: closes
-about $3$ $d=1$ pairs on average (based on the observed
-electrical bottleneck rate of $100\%$ for $d=1$).
+about $\lfloor 20 \times 0.5246 \rfloor = 10$ $d=1$ pairs on average
+(assuming new declarations close the electrical axis for pairs that
+are already electrical-only-unknown; the observed electrical share
+of $d=1$ on the current snapshot is $52.46\%$).
 
 \item \textbf{B.} Add 20 random mechanical declarations: closes
-zero $d=1$ pairs but reduces $d=2$ and $d=3$ populations slightly.
+zero $d=1$ pairs (the mechanical axis is not the current bottleneck)
+but reduces $d=2$ and $d=3$ populations slightly.
 
 \item \textbf{C.} Add 20 declarations specifically targeted at
-$d=1$ pairs (the $d=1$ bottleneck set): closes all $20$ targeted
-$d=1$ pairs.
+$d=1$ pairs (the $d=1$ bottleneck set, split across electrical and
+signal): closes all $20$ targeted $d=1$ pairs.
 \end{itemize}
 
-Intervention C closes more than $6\times$ as many $d=1$ pairs as
-random electrical additions. The gap-distance priority ordering
-is not a theoretical artefact: it produces measurably better
-data-collection ROI than random or axis-agnostic strategies.
+Intervention C closes more than $2\times$ as many $d=1$ pairs as
+random electrical additions under the current two-axis bottleneck
+distribution. The gap-distance priority ordering is not a
+theoretical artefact: it produces measurably better data-collection
+ROI than random or axis-agnostic strategies.
 
 \subsection{Reproducibility of the pipeline}
 
-Every number in this paper is derived from JSON artefacts that
-are committed alongside the code at commit
-\texttt{50a2e012}. The four crosscheck invariants of
-Section~5.4 are registered as continuous-integration gates in the
+Every number in this paper is derived from JSON artefacts that are
+committed alongside the code at the \texttt{generated\_at} timestamp
+in \texttt{api/compose\_semantics.json} (see the meta block in that
+file). The four arithmetic crosscheck invariants of Section~5.4 are
+registered as continuous-integration gates in the
 \texttt{ci\_gate.py} script and run on every build. A build that
 violates any invariant fails the gate and cannot be published.
 This means the numbers in Tables~\ref{tab:overall},
 \ref{tab:d1}, and~\ref{tab:ablation} are not merely reported;
 they are \emph{proven to be internally consistent} with the corpus
-at commit \texttt{50a2e012}.
+at the snapshot referenced by the \texttt{generated\_at} field.
+
+We deliberately do not hard-code a specific commit hash in this
+manuscript, because the corpus is a moving target: any single-commit
+freeze would immediately go stale. Instead we anchor reproducibility
+on the \texttt{generated\_at} timestamp and the frozen artefact
+set \texttt{\{entities.json, gap\_classification.json,
+compose\_semantics.json, morphology\_graph.json\}}, all four of
+which are byte-identical between the frozen snapshot and any
+re-run at the same \texttt{generated\_at} timestamp.
 
 % ============================================================
 % 6. Discussion
@@ -780,13 +975,14 @@ at commit \texttt{50a2e012}.
 
 No. \emph{Composed = 0} is the honest output of a system that has
 declared to itself: ``I refuse to certify compatibility unless I have
-evidence for every axis.'' On a corpus where 5.69\% of the mechanical
-axis is declared, the correct answer for $99.99\%$ of pairs is
-$\mathsf{unknown}$. The value of the result is not that RoboParts
-has certified anything — it has certified nothing — but that the
-system has told the user \emph{precisely} what would be needed to
-certify each pair. The $112$ $d=1$ pairs, each bottlenecked on the
-electrical axis, are the next thing to do.
+evidence for every axis.'' On a corpus where $16.2\%$ of the mechanical
+axis is declared ($6.57\%$ strictly decidable), the correct answer
+for $99.94\%$ of pairs is $\mathsf{unknown}$. The value of the
+result is not that RoboParts has certified anything --- it has
+certified nothing --- but that the system has told the user
+\emph{precisely} what would be needed to certify each pair. The
+$61$ $d=1$ pairs, split between electrical ($32$) and signal ($29$)
+axes, are the next thing to do.
 
 This is the opposite of the ``false-positive compatibility'' failure
 mode: if RoboParts reported $\mathsf{composed}$ on an unknown pair,
@@ -805,17 +1001,19 @@ consequences:
 \includegraphics[width=0.68\textwidth]{figures/gap_distance_hist.pdf}
 \caption{Distribution of pairs by gap distance. On a log scale,
 the long tail from $d=2$ to $d=3$ shows that the majority of the
-unknown population ($295{,}096$ of $351{,}645$) requires closing
-three coordinated declarations — the tail is the hard part.
-$d=1$ ($112$ pairs) is the immediately actionable subset.}
+unknown population ($60{,}705$ pairs at $d=2$ plus $369{,}308$ pairs
+at $d=3$, together $430{,}013$ of $430{,}074$) requires closing two
+or three coordinated declarations --- the tail is the hard part.
+$d=1$ ($61$ pairs) is the immediately actionable subset.}
 \label{fig:gap}
 \end{figure}
 
 \begin{enumerate}[nosep]
-\item \textbf{Priority ordering.} $d=1$ pairs come first (112 pairs
-to close, one electrical declaration each). Then $d=2$ pairs (each
-closed by two coordinated declarations). This is a well-defined
-optimisation problem with a clear Pareto frontier.
+\item \textbf{Priority ordering.} $d=1$ pairs come first ($61$ pairs
+to close, one electrical or signal declaration each). Then $d=2$
+pairs (each closed by two coordinated declarations), then $d=3$.
+This is a well-defined optimisation problem with a clear Pareto
+frontier.
 
 \item \textbf{Leverage constraint.} The concentration curve in
 Fig.~\ref{fig:concentration} tells us that no single vendor can close
@@ -830,19 +1028,23 @@ pull-requests. This is a negative result: it rules out the
 
 The reflexivity boundary (Eq.~\eqref{eq:complement}) is the smallest
 change from a naive compatibility matrix that materially changes the
-safety profile. It is also, empirically, the smallest change that
-turns the four most egregious false-positive errors on our corpus
-into the four correct $\mathsf{type\_error}$ verdicts. We suspect
-that similar boundaries exist in other type systems — for example,
-in the electrical axis, a pinout that is ``the same pinout'' is not
-automatically compatible if the pinout is a bidirectional bus
-rather than a point-to-point connector. We leave a systematic study
-of reflexivity boundaries to future work.
+safety profile. On the current snapshot, the majority of
+$\mathsf{type\_error}$ verdicts arise from electrical connector
+mismatches (pin-count / family) rather than from reflexivity
+self-loops --- a shift in the empirical composition of errors that
+occurred as the electrical forensics layer filled in. The boundary
+remains a necessary formal guard even as its empirical footprint
+on the current snapshot shrinks. We suspect that similar boundaries
+exist in other type systems --- for example, in the electrical axis,
+a pinout that is ``the same pinout'' is not automatically compatible
+if the pinout is a bidirectional bus rather than a point-to-point
+connector. We leave a systematic study of reflexivity boundaries
+to future work.
 
 \subsection{Threats to validity}
 
 \begin{itemize}[nosep,leftmargin=*]
-\item \textbf{Corpus size.} $802$ entities is small by any robotics
+\item \textbf{Corpus size.} $868$ entities is small by any robotics
 standard. We do not claim generalisation beyond the covered
 manufacturers and categories. The paper's contribution is
 \emph{the framework and the measures}, not the corpus.
@@ -858,10 +1060,12 @@ unpublished-suspect / proprietary-suspect / ambiguous depends on
 human judgement over datasheets. A systematic re-annotation study
 with inter-annotator agreement would strengthen the finding.
 
-\item \textbf{Time-sensitivity.} The 5.69\% declaration rate is a
+\item \textbf{Time-sensitivity.} The $16.2\%$ declaration rate is a
 snapshot. As the corpus grows (either through us or through other
-projects), the numbers shift. All published artefacts carry an
-\texttt{updated\_at} timestamp and are reproducible from source.
+projects), the numbers shift --- most visibly the $d=1$ bottleneck
+composition (see Section~\ref{sec:d1-shift}). All published
+artefacts carry a \texttt{generated\_at} timestamp and are
+reproducible from source.
 \end{itemize}
 
 \subsection{Comparison with uncertainty-aware robot learning}
@@ -902,7 +1106,7 @@ fix is a separate confidence channel.
 probability in $[0, 1]$ reflecting our confidence. We rejected
 this because the calibration problem is severe: without a large
 labeled ground-truth set, the numbers would be false precision.
-On a 5.69\%-declared corpus, no meaningful probability
+On a $16.2\%$-declared corpus, no meaningful probability
 distribution can be fitted.
 
 \item \textbf{N-valued per axis.} Each axis returns a set of
@@ -935,9 +1139,9 @@ is all-or-nothing per pair.
 We suspect that a two-layer trustworthiness model would serve
 users better: an inner certainty layer with the three-valued
 function (this paper), and an outer confidence layer that says
-``of the $5.69\%$ declared for this pair, the mechanical axis
-contributes 62\% of the certainty and the electrical axis
-contributes 38\%'' — a per-axis contribution measure that helps
+``of the $16.2\%$ declared for this pair, the mechanical axis
+contributes X\% of the certainty and the electrical axis
+contributes Y\%'' --- a per-axis contribution measure that helps
 the user decide which axis to investigate next. We leave this to
 future work; the present paper is deliberately kept to the
 minimal formalism.
@@ -963,32 +1167,36 @@ three-valued function
 $\mathsf{compose}(a, b) \in \{\mathsf{composed}, \mathsf{type\_error},
 \mathsf{unknown}\}$ with \emph{unknown} taking priority over
 \emph{composed}, and instantiated it as a vendor-neutral determination
-layer, RoboParts, over $802$ real-world entities.
+layer, RoboParts, over $868$ real-world entities.
 
 We reported three results, all of which are best understood as
 negative evidence about what a compatibility layer can honestly do
 under the current state of vendor data publication:
 
 \begin{enumerate}[nosep]
-\item A corpus-scale composite evaluation of $351{,}649$ pairs
+\item A corpus-scale composite evaluation of $430{,}336$ pairs
 returned zero $\mathsf{composed}$ verdicts. This is not a failure of
-the system; it is the honest state of a corpus with a $5.69\%$
-mechanical declaration rate.
+the system; it is the honest state of a corpus with a $16.2\%$
+declared / $6.57\%$ decidable mechanical rate.
 
-\item The $112$ pairs at $d=1$ are $100\%$ bottlenecked on the
-electrical axis. This gives the data-collection team a single,
-unambiguous next step.
+\item The $61$ pairs at $d=1$ split $32$ (electrical) / $29$
+(signal). The d1 bottleneck is a two-axis distribution that
+\emph{shifts} as evidence is added, not a fixed property of the
+domain. This is precisely why the paper publishes the measure as
+recomputed rather than as a constant.
 
-\item The top-10 vendors account for only $28.5\%$ of the
-unpublished-suspect gap, ruling out datasheet crawling of a small
-number of major vendors as a scalable closure strategy.
+\item The top-$10$ vendors account for $37.33\%$ of the entity mass,
+ruling out datasheet crawling of a small number of major vendors as
+a scalable closure strategy for the long-tail gap.
 \end{enumerate}
 
 The reflexivity boundary between geometric-specification and
 directional-role types is a small formal change with a large safety
-impact — it catches the four most egregious false-positive cases on
-our corpus and generalises to a design principle for the wider
-engineering-ontology literature.
+impact. Its empirical footprint on the current snapshot is small
+because electrical connector mismatches dominate the $\mathsf{type\_error}$
+mass, but the boundary remains a necessary formal guard: it is a
+design principle that generalises to the wider engineering-ontology
+literature.
 
 \section{Limitations}
 
@@ -996,14 +1204,18 @@ The main limitations of this work, which constrain its immediate
 practical impact, are:
 
 \begin{enumerate}[nosep]
-\item The corpus is deliberately small ($802$ entities, $5.69\%$
-mechanical declaration rate). The framework generalises; the
-coverage does not, and no result in this paper should be read as
-applying beyond the covered manufacturers and categories.
+\item The corpus is deliberately small ($868$ entities, $16.2\%$
+declared / $6.57\%$ decidable mechanical rate). The framework
+generalises; the coverage does not, and no result in this paper
+should be read as applying beyond the covered manufacturers and
+categories.
 
-\item The electrical axis is deliberately thin — pin-count and
-pitch only. A production system would need to cover polarity,
-voltage ranges, and signal timing; we have not attempted this.
+\item The electrical axis is deliberately thin --- pin-count and
+connector-family only. A production system would need to cover
+polarity, voltage ranges, and signal timing; we have not attempted
+this. The presence of $262$ type-error pairs arising from
+electrical mismatches on the current snapshot makes the
+consequence of this thinness concrete.
 
 \item The gap-causation taxonomy is a manual annotation with
 \emph{suspect} labels. Inter-annotator agreement is not yet reported.
@@ -1011,7 +1223,17 @@ voltage ranges, and signal timing; we have not attempted this.
 \item We do not benchmark against existing closed compatibility
 matrices because none are available in comparable scope or openness.
 The design-choice comparison of Section~5.5 is the closest honest
-substitute.
+substitute; running binary baselines against our own engine is a
+trivial extension we leave to the follow-up.
+
+\item The d1-bottleneck is a corpus-state property, not a domain
+property. On the current snapshot it is $32$ electrical / $29$
+signal; on an earlier snapshot it was entirely electrical (roughly
+twice as many pairs, $100\%$ electrical). Both readings are correct
+for their respective snapshots, and any attempt to freeze a d1
+number as a domain constant would be misleading. We recommend
+readers always recompute the measure against their corpus of
+interest.
 \end{enumerate}
 
 \section{Future work}
@@ -1069,11 +1291,11 @@ code and CC BY 4.0 for data. The operator register referenced in
 Section~3.5 is \texttt{scripts/pipeline/stages/} in the repository;
 the four crosscheck invariants of Section~5.4 are in
 \texttt{scripts/pipeline/dag.py}. The dataset snapshot used for
-this manuscript is commit \texttt{50a2e012}, and the frozen
-artefacts are \texttt{api/entities.json},
-\texttt{api/gap\_classification.json},
-\texttt{api/compose\_semantics.json}, and
-\texttt{api/morphology\_graph.json}.
+this manuscript is anchored by the \texttt{generated\_at} field in
+each of the four frozen artefacts (\texttt{api/entities.json},
+\texttt{api/gap\_classification.json}, \texttt{api/compose\_semantics.json},
+\texttt{api/morphology\_graph.json}); reproducibility is claimed
+against the revision named by that timestamp.
 
 
 

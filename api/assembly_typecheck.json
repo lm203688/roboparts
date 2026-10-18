@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "assembly_typecheck/v1",
-    "generated_at": "2026-10-17T15:09:11.191603+00:00",
+    "generated_at": "2026-10-18T05:06:13.451360+00:00",
     "source": "api/morphology_graph.json + scripts/assembly_typecheck.py",
     "engine": "compose_core/v1 + assembly_typecheck/v1"
   },
@@ -16,11 +16,135 @@
         "unknown_pairs_on_bottleneck": 187,
         "incompatible_pairs": 2,
         "minimal_core": [
+          "ACT-011",
+          "ACT-020",
+          "ACT-010"
+        ],
+        "reason": "瓶颈轴=mechanical；该轴有 187 对因 not_declared 未判；另有 2 对已判 incompatible；minimal core = ['ACT-011', 'ACT-020', 'ACT-010']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
+        "examples": [
+          [
+            "ACT-001",
+            "ACT-004"
+          ],
+          [
+            "ACT-001",
+            "ACT-005"
+          ],
+          [
+            "ACT-001",
+            "ACT-006"
+          ],
+          [
+            "ACT-001",
+            "ACT-007"
+          ],
+          [
+            "ACT-001",
+            "ACT-008"
+          ]
+        ]
+      },
+      "mdv_crosscheck": {
+        "bottleneck_axis": "mechanical",
+        "core_size": 3,
+        "core_total_mdv": 0,
+        "all_positive": false,
+        "details": [
+          {
+            "node": "ACT-011",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "ACT-020",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "ACT-010",
+            "axis": "mechanical",
+            "mdv": 0
+          }
+        ]
+      }
+    },
+    {
+      "goal": "assembly within grippers",
+      "description": "grippers 品类前 10 节点",
+      "candidate_count": 10,
+      "result": "ill_typed",
+      "minimal_core": {
+        "bottleneck_axis": "mechanical",
+        "unknown_pairs_on_bottleneck": 35,
+        "incompatible_pairs": 7,
+        "minimal_core": [
+          "DEXHAND021PRO-001",
+          "GRIP-010",
+          "GRIP-008"
+        ],
+        "reason": "瓶颈轴=mechanical；该轴有 35 对因 not_declared 未判；另有 7 对已判 incompatible；minimal core = ['DEXHAND021PRO-001', 'GRIP-010', 'GRIP-008']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
+        "examples": [
+          [
+            "DEXHAND021PRO-001",
+            "GRIP-001"
+          ],
+          [
+            "DEXHAND021PRO-001",
+            "GRIP-002"
+          ],
+          [
+            "DEXHAND021PRO-001",
+            "GRIP-003"
+          ],
+          [
+            "DEXHAND021PRO-001",
+            "GRIP-004"
+          ],
+          [
+            "DEXHAND021PRO-001",
+            "GRIP-006"
+          ]
+        ]
+      },
+      "mdv_crosscheck": {
+        "bottleneck_axis": "mechanical",
+        "core_size": 3,
+        "core_total_mdv": 0,
+        "all_positive": false,
+        "details": [
+          {
+            "node": "DEXHAND021PRO-001",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "GRIP-010",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
+            "node": "GRIP-008",
+            "axis": "mechanical",
+            "mdv": 0
+          }
+        ]
+      }
+    },
+    {
+      "goal": "assembly within actuators",
+      "description": "actuators 品类前 10 节点",
+      "candidate_count": 10,
+      "result": "ill_typed",
+      "minimal_core": {
+        "bottleneck_axis": "mechanical",
+        "unknown_pairs_on_bottleneck": 42,
+        "incompatible_pairs": 2,
+        "minimal_core": [
           "ACT-010",
           "ACT-008",
-          "ACT-020"
+          "ACT-005"
         ],
-        "reason": "瓶颈轴=mechanical；该轴有 187 对因 not_declared 未判；另有 2 对已判 incompatible；minimal core = ['ACT-010', 'ACT-008', 'ACT-020']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
+        "reason": "瓶颈轴=mechanical；该轴有 42 对因 not_declared 未判；另有 2 对已判 incompatible；minimal core = ['ACT-010', 'ACT-008', 'ACT-005']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
         "examples": [
           [
             "ACT-001",
@@ -61,131 +185,7 @@
             "mdv": 0
           },
           {
-            "node": "ACT-020",
-            "axis": "mechanical",
-            "mdv": 0
-          }
-        ]
-      }
-    },
-    {
-      "goal": "assembly within grippers",
-      "description": "grippers 品类前 10 节点",
-      "candidate_count": 10,
-      "result": "ill_typed",
-      "minimal_core": {
-        "bottleneck_axis": "mechanical",
-        "unknown_pairs_on_bottleneck": 35,
-        "incompatible_pairs": 7,
-        "minimal_core": [
-          "DEXHAND021PRO-001",
-          "GRIP-004",
-          "GRIP-008"
-        ],
-        "reason": "瓶颈轴=mechanical；该轴有 35 对因 not_declared 未判；另有 7 对已判 incompatible；minimal core = ['DEXHAND021PRO-001', 'GRIP-004', 'GRIP-008']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
-        "examples": [
-          [
-            "DEXHAND021PRO-001",
-            "GRIP-001"
-          ],
-          [
-            "DEXHAND021PRO-001",
-            "GRIP-002"
-          ],
-          [
-            "DEXHAND021PRO-001",
-            "GRIP-003"
-          ],
-          [
-            "DEXHAND021PRO-001",
-            "GRIP-004"
-          ],
-          [
-            "DEXHAND021PRO-001",
-            "GRIP-006"
-          ]
-        ]
-      },
-      "mdv_crosscheck": {
-        "bottleneck_axis": "mechanical",
-        "core_size": 3,
-        "core_total_mdv": 0,
-        "all_positive": false,
-        "details": [
-          {
-            "node": "DEXHAND021PRO-001",
-            "axis": "mechanical",
-            "mdv": 0
-          },
-          {
-            "node": "GRIP-004",
-            "axis": "mechanical",
-            "mdv": 0
-          },
-          {
-            "node": "GRIP-008",
-            "axis": "mechanical",
-            "mdv": 0
-          }
-        ]
-      }
-    },
-    {
-      "goal": "assembly within actuators",
-      "description": "actuators 品类前 10 节点",
-      "candidate_count": 10,
-      "result": "ill_typed",
-      "minimal_core": {
-        "bottleneck_axis": "mechanical",
-        "unknown_pairs_on_bottleneck": 42,
-        "incompatible_pairs": 2,
-        "minimal_core": [
-          "ACT-007",
-          "ACT-006",
-          "ACT-004"
-        ],
-        "reason": "瓶颈轴=mechanical；该轴有 42 对因 not_declared 未判；另有 2 对已判 incompatible；minimal core = ['ACT-007', 'ACT-006', 'ACT-004']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
-        "examples": [
-          [
-            "ACT-001",
-            "ACT-004"
-          ],
-          [
-            "ACT-001",
-            "ACT-005"
-          ],
-          [
-            "ACT-001",
-            "ACT-006"
-          ],
-          [
-            "ACT-001",
-            "ACT-007"
-          ],
-          [
-            "ACT-001",
-            "ACT-008"
-          ]
-        ]
-      },
-      "mdv_crosscheck": {
-        "bottleneck_axis": "mechanical",
-        "core_size": 3,
-        "core_total_mdv": 0,
-        "all_positive": false,
-        "details": [
-          {
-            "node": "ACT-007",
-            "axis": "mechanical",
-            "mdv": 0
-          },
-          {
-            "node": "ACT-006",
-            "axis": "mechanical",
-            "mdv": 0
-          },
-          {
-            "node": "ACT-004",
+            "node": "ACT-005",
             "axis": "mechanical",
             "mdv": 0
           }
@@ -202,11 +202,11 @@
         "unknown_pairs_on_bottleneck": 45,
         "incompatible_pairs": 0,
         "minimal_core": [
-          "SENS-005",
-          "SENS-001",
-          "CHIP-79"
+          "CHIP-71",
+          "SENS-003",
+          "SENS-004"
         ],
-        "reason": "瓶颈轴=mechanical；该轴有 45 对因 not_declared 未判；另有 0 对已判 incompatible；minimal core = ['SENS-005', 'SENS-001', 'CHIP-79']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
+        "reason": "瓶颈轴=mechanical；该轴有 45 对因 not_declared 未判；另有 0 对已判 incompatible；minimal core = ['CHIP-71', 'SENS-003', 'SENS-004']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
         "examples": [
           [
             "CHIP-67",
@@ -237,17 +237,17 @@
         "all_positive": false,
         "details": [
           {
-            "node": "SENS-005",
+            "node": "CHIP-71",
             "axis": "mechanical",
             "mdv": 0
           },
           {
-            "node": "SENS-001",
+            "node": "SENS-003",
             "axis": "mechanical",
             "mdv": 0
           },
           {
-            "node": "CHIP-79",
+            "node": "SENS-004",
             "axis": "mechanical",
             "mdv": 0
           }
@@ -264,11 +264,11 @@
         "unknown_pairs_on_bottleneck": 56,
         "incompatible_pairs": 9,
         "minimal_core": [
+          "CHIP-71",
           "DEXHAND021PRO-001",
-          "CTRL-001",
-          "CTRL-003"
+          "CHIP-67"
         ],
-        "reason": "瓶颈轴=mechanical；该轴有 56 对因 not_declared 未判；另有 9 对已判 incompatible；minimal core = ['DEXHAND021PRO-001', 'CTRL-001', 'CTRL-003']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
+        "reason": "瓶颈轴=mechanical；该轴有 56 对因 not_declared 未判；另有 9 对已判 incompatible；minimal core = ['CHIP-71', 'DEXHAND021PRO-001', 'CHIP-67']——补这些节点的 mechanical 声明是解锁装配的最小动作。",
         "examples": [
           [
             "ACT-001",
@@ -299,17 +299,17 @@
         "all_positive": false,
         "details": [
           {
+            "node": "CHIP-71",
+            "axis": "mechanical",
+            "mdv": 0
+          },
+          {
             "node": "DEXHAND021PRO-001",
             "axis": "mechanical",
             "mdv": 0
           },
           {
-            "node": "CTRL-001",
-            "axis": "mechanical",
-            "mdv": 0
-          },
-          {
-            "node": "CTRL-003",
+            "node": "CHIP-67",
             "axis": "mechanical",
             "mdv": 0
           }
@@ -326,11 +326,11 @@
         "unknown_pairs_on_bottleneck": 66,
         "incompatible_pairs": 0,
         "minimal_core": [
-          "RED-006",
-          "HUB-030",
-          "XPLT-013"
+          "ACT-011",
+          "SENS-855",
+          "RED-006"
         ],
-        "reason": "瓶颈轴=electrical；该轴有 66 对因 not_declared 未判；另有 0 对已判 incompatible；minimal core = ['RED-006', 'HUB-030', 'XPLT-013']——补这些节点的 electrical 声明是解锁装配的最小动作。",
+        "reason": "瓶颈轴=electrical；该轴有 66 对因 not_declared 未判；另有 0 对已判 incompatible；minimal core = ['ACT-011', 'SENS-855', 'RED-006']——补这些节点的 electrical 声明是解锁装配的最小动作。",
         "examples": [
           [
             "CHIP-008",
@@ -361,17 +361,17 @@
         "all_positive": false,
         "details": [
           {
+            "node": "ACT-011",
+            "axis": "electrical",
+            "mdv": 0
+          },
+          {
+            "node": "SENS-855",
+            "axis": "electrical",
+            "mdv": 0
+          },
+          {
             "node": "RED-006",
-            "axis": "electrical",
-            "mdv": 0
-          },
-          {
-            "node": "HUB-030",
-            "axis": "electrical",
-            "mdv": 0
-          },
-          {
-            "node": "XPLT-013",
             "axis": "electrical",
             "mdv": 0
           }

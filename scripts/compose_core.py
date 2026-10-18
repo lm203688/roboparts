@@ -465,46 +465,122 @@ ROLES: Dict[str, Dict[str, Any]] = {
 }
 
 
-# ── 三条代数律的形式化描述（A2 测试的对照文本）───────────────────────────
+# ── 三条定理的形式化描述（2026-10-18 SCI 达标 P0-2 起）──────────────────
+#
+# 命名修正（对照 2026-10-18 评估报告）：
+# 旧 "Soundness" 实为 "Internal Consistency"——只证明实现与规范自洽，
+# 不证明物理装配真的可行（后者需要 ground truth，本仓库无）。
+# 保留原语义但改名为 Internal Consistency，避免术语误用被审稿人抓住。
+#
+# 三条定理的可证性分级：
+#   Theorem 1 (Evidence Monotonicity)    —— 可证明（结构依赖）
+#   Theorem 2 (Bottleneck Necessity)     —— 可证明（min 结构直接得出）
+#   Theorem 3 (Undecidability Boundary)  —— 可证明（effective_ports 定义）
+#   Internal Consistency                 —— 可机器验证（性质测试 + 变异），
+#                                          非重言式但仍是内部一致性声明。
+#
+# 每条定理都带：statement（正式陈述）、proof_sketch（结构论证）、
+# test_strategy（在本仓库内如何机器验证）、counterexample_source（失效模式）。
 ALGEBRAIC_LAWS: List[Dict[str, str]] = [
     {
-        "name": "Soundness（可靠性）",
+        "name": "Internal Consistency（内部一致性；原称 Soundness）",
         "statement": (
-            "compose(a,b) = composed ⇒ 每一轴都至少存在一个 pair verdict = identity。"
-            "等价于：在已声明公理下，每个可组合的轴都有物理装配的可能（同型或显式判定可配）。"
+            "compose(a, b) = composed ⇒ 每一轴 ax_i 都至少存在一个 pair verdict = identity。"
+            "等价地：任一轴无 identity pair ⇒ 整体不为 composed。"
+            "该定理是**内部一致性**声明：它只证明实现与其规格一致，"
+            "不证明物理装配真的可行——后者需要 ground-truth assembly records，"
+            "本仓库无此类数据（论文 §8.3 已诚实标注）。"
         ),
-        "test_strategy": "遍历所有 verdict=composed 的对，验证每轴 pairs_evaluated 中存在 identity。",
-        "counterexample_source": "若某轴 verdict=compatible_via_adapter 也算 compatible，"
-                                 "则该对不算 composed；若 identity 存在但 verdict 未反映，测试应判红。",
-    },
-    {
-        "name": "Monotonicity under evidence（证据单调性）",
-        "statement": (
-            "给定同一对节点 (a,b)，向 type_compat 追加任何一条 evidence：\n"
-            "  - 允许：unknown → compatible / compatible_via_adapter / type_error（从『不知道』变『知道』）\n"
-            "  - 禁止：compatible → incompatible / unknown（已判定的翻转）\n"
-            "  - 禁止：composed → type_error / unknown（一旦能装，新证据不允许证明不能装）"
+        "proof_sketch": (
+            "由 R5 precedence 与 AXIS_VERDICT_OF_PAIR 映射直接得出："
+            "整体 verdict = composed 当且仅当所有轴的 best_pair 为 identity，"
+            "因此 composed 蕴含每轴存在 identity pair。"
+            "**注意**：这是一个关于实现的规格一致性声明，不是关于物理世界的可靠性声明。"
         ),
         "test_strategy": (
-            "对每个随机 (a,b) 生成初始 verdict，然后对每个未知类型对注入一条 identity evidence，"
-            "重新计算 verdict；断言整体 verdict 只能从 {unknown, type_error} → {composed, type_error} "
-            "或保持不动，绝不允许 composed → unknown/type_error。"
+            "遍历所有 verdict=composed 的对，验证每轴 pairs_evaluated 中存在 identity；"
+            "阴性对照：变异 PAIR_RANK['identity']=2（把 identity 降为 adapter_required）"
+            "→ 存在 composed 但对无 identity 的样本必须判红。"
         ),
-        "counterexample_source": "变体引擎里让 adapter_required 也算 identity 的降级路径 → 必须判红。",
+        "counterexample_source": (
+            "若某轴 verdict=compatible_via_adapter 也算 compatible，"
+            "则该对不算 composed；若 identity 存在但 verdict 未反映，测试应判红。"
+        ),
     },
     {
-        "name": "Undecidability boundary（不可判定边界）",
+        "name": "Theorem 1 — Evidence Monotonicity（证据单调性）",
         "statement": (
-            "not_declared 端口不参与判定，因此：\n"
-            "  - 「可判但缺字段」（evidence gap）：某轴全为 not_declared，可补一条 → 从 unknown 变 decided\n"
-            "  - 「本质不可判」（proprietary）：接口未标准化，即使补全也无法从标号查表 → 仍 unknown\n"
-            "本内核通过 undeclared_count() 与 effective_ports() 把两者显式区分开。"
+            "设 E ⊆ E' 为两个证据集（type_compat 条目集），"
+            "⊑ 为判定确定性偏序（unknown ⊑ type_error ⊑ compatible ⊑ composed）。"
+            "若 compose_E(a, b) = composed，则 compose_{E'}(a, b) = composed。"
+            "等价地：追加证据不允许把已判定的对翻转为未判定。"
+        ),
+        "proof_sketch": (
+            "聚合函数 agg = min（R5 precedence）。每轴 verdict 只依赖 E 中条目的**并**："
+            "E' ⊇ E ⇒ 每轴的 best_pair_rank 在 E' 下 ≥ E 下（R3 best-pair 取最优证据，"
+            "增加候选不会移除已有 identity）。若 E 下 composed（所有轴 = identity = rank 3），"
+            "则 E' 下每轴仍 ≥ identity = identity，agg 仍为 composed。∎"
+        ),
+        "test_strategy": (
+            "对每个随机 (a, b) 生成初始 verdict；然后对每个未知类型对注入一条 identity evidence，"
+            "重新计算 verdict。断言整体 verdict 只能从 {unknown, type_error} → {composed, type_error} "
+            "或保持不动，绝不允许 composed → unknown/type_error。"
+        ),
+        "counterexample_source": (
+            "变体引擎里让 adapter_required 也算 identity 的降级路径 → 必须判红；"
+            "或让 CompatIndex 后写覆盖前写（当前实现就是后写覆盖），若改为前写覆盖 → 单调性失效。"
+        ),
+    },
+    {
+        "name": "Theorem 2 — Bottleneck Necessity（瓶颈必要性）",
+        "statement": (
+            "若恰有一轴 k 返回 unknown（即 d(a, b) = 1 且 ax_k = unknown），"
+            "则补充轴 k 的声明是使 compose(a, b) 变为 decided 的**必要条件**；"
+            "在『轴 k 可声明』假设下亦为充分条件。"
+            "等价地：d1-bottleneck 指向的轴是唯一有边际价值的取证方向。"
+        ),
+        "proof_sketch": (
+            "由 R5 聚合的 min 结构：整体为 unknown 当且仅当存在某轴 unknown。"
+            "若只有轴 k unknown（d=1），则：\n"
+            "  - 补其他轴的声明不能改变轴 k 的 unknown（每轴独立判定）→ 整体仍 unknown。\n"
+            "  - 补轴 k 的声明：若该声明使 ax_k 变为 compatible（或其变体），"
+            "则所有轴都决定，agg = composed；若声明使其变为 incompatible，agg = type_error。"
+            "无论哪种，整体都离开 unknown。∎"
+        ),
+        "test_strategy": (
+            "对每个 d=1 的对，检查其 d1_bottleneck 指向的轴；"
+            "对该轴补声明 → 断言整体 verdict 离开 unknown；"
+            "对其余两轴各补声明 → 断言整体 verdict 仍为 unknown。"
+        ),
+        "counterexample_source": (
+            "若实现让『未知声明也计入证据』（即 not_declared 参与 best_pair 计算），"
+            "则 d1 判据失效——任何轴都可能通过『假声明』翻转 → 测试应判红。"
+        ),
+    },
+    {
+        "name": "Theorem 3 — Undecidability Boundary（不可判定边界）",
+        "statement": (
+            "对专有端口类型 t ∈ T_prop（其 type_compat 中无 identity 或 adapter_required 条目），"
+            "任意证据集 E 下，compose 在含 t 的轴上恒为 unknown。"
+            "等价地：专有接口无法通过追加证据变为可判定——这是本质不可判定，"
+            "不是『还差一条数据』。"
+        ),
+        "proof_sketch": (
+            "effective_ports() 只接受 status ∈ {declared, partial} 的端口。"
+            "对专有类型 t，其 type_compat 记录 verdict 只能是 unknown（因无标准映射）。"
+            "即使 t 有 declared 状态，best_pair_rank 也 ≤ PAIR_RANK['unknown'] = 1，"
+            "故 ax 至少为 unknown。若 t 处于 not_declared 状态，effective_ports 直接返回空，"
+            "ax 恒为 unknown。∎"
         ),
         "test_strategy": (
             "构造一个专有接口（PROPRIETARY:XX），无论 type_compat 里怎么加条目，"
             "只要端口类型不匹配就仍 unknown。"
+            "变体：若实现给 not_declared 端口偷偷补 default 端口 → 测试应判红。"
         ),
-        "counterexample_source": "若实现里给所有 not_declared 端口偷偷补 default 端口 → 测试应判红。",
+        "counterexample_source": (
+            "若 effective_ports() 允许 not_declared 端口参与判定 → 测试应判红；"
+            "若 CompatIndex 对未登记类型返回 identity 而非 unknown → 测试应判红。"
+        ),
     },
 ]
 
