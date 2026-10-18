@@ -1,5 +1,5 @@
 const DB = {
-  "updated": "2026-10-16T22:43:39.757610Z",
+  "updated": "2026-10-18T05:46:45.825363Z",
   "stats": {
     "actuators": 222,
     "sensors": 95,
@@ -290,7 +290,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "ACT-005",
@@ -358,7 +360,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "ACT-006",
@@ -419,7 +423,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-007",
@@ -480,7 +486,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-008",
@@ -545,7 +553,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "ACT-009",
@@ -610,7 +620,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "kollmorgen.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-010",
@@ -639,7 +651,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -662,7 +674,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0010",
       "derived_properties": {
         "has_power_input": true,
@@ -674,7 +686,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-011",
@@ -734,7 +748,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-012",
@@ -794,7 +810,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-013",
@@ -852,7 +870,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-014",
@@ -910,7 +930,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-015",
@@ -971,7 +993,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-016",
@@ -1097,7 +1121,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "ACT-018",
@@ -1126,7 +1152,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -1149,7 +1175,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0018",
       "derived_properties": {
         "has_power_input": true,
@@ -1161,7 +1187,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-019",
@@ -1222,7 +1250,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-020",
@@ -1283,7 +1313,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-021",
@@ -1508,7 +1540,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -1531,7 +1563,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0024",
       "derived_properties": {
         "has_power_input": true,
@@ -1543,7 +1575,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-025",
@@ -1573,7 +1607,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -1596,7 +1630,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0025",
       "derived_properties": {
         "has_power_input": true,
@@ -1608,7 +1642,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-026",
@@ -1672,7 +1708,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-027",
@@ -1736,7 +1774,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "ACT-028",
@@ -1806,7 +1846,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-029",
@@ -1836,7 +1878,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -1859,7 +1901,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0029",
       "derived_properties": {
         "has_power_input": true,
@@ -1871,7 +1913,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-030",
@@ -2001,7 +2045,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "lynxmotion.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-032",
@@ -2062,7 +2108,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "ACT-mit-electrofluidic",
@@ -2294,7 +2342,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2315,7 +2363,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0036",
       "derived_properties": {
         "has_power_input": true,
@@ -2325,7 +2373,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=LG%20Electronics%20LG%20Electronics%20Robotics%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-tesla-optimus-hand",
@@ -2434,7 +2482,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2455,7 +2503,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0038",
       "derived_properties": {
         "has_power_input": true,
@@ -2465,7 +2513,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=ROBOTIS%20ROBOTIS%2020-DOF%20Robot%20Hand%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-first-a301",
@@ -2504,7 +2552,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2525,7 +2573,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0039",
       "derived_properties": {
         "has_power_input": true,
@@ -2535,7 +2583,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=FIRST%20FIRST%20A301%20Motor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-high-torque-mini-hi",
@@ -2573,7 +2621,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2594,7 +2642,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0040",
       "derived_properties": {
         "has_power_input": true,
@@ -2604,7 +2652,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=High%20Torque%20Robotics%20High%20Torque%20Robotics%20Mini%20Hi%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-high-torque-pi",
@@ -2642,7 +2690,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2663,7 +2711,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0041",
       "derived_properties": {
         "has_power_input": true,
@@ -2673,7 +2721,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=High%20Torque%20Robotics%20High%20Torque%20Robotics%20Pi%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hyundai-mobis-atlas",
@@ -2711,7 +2759,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2732,7 +2780,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0042",
       "derived_properties": {
         "has_power_input": true,
@@ -2742,7 +2790,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Hyundai%20Mobis%20Hyundai%20Mobis%20Atlas%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-unitree-b2-motor-v2",
@@ -2849,7 +2897,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2870,7 +2918,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0044",
       "derived_properties": {
         "has_power_input": true,
@@ -2880,7 +2928,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Figure%20AI%20Figure%2003%20Custom%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-atlas-electric-actuator",
@@ -2918,7 +2966,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2939,7 +2987,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0045",
       "derived_properties": {
         "has_power_input": true,
@@ -2949,7 +2997,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Boston%20Dynamics%20Boston%20Dynamics%20Electric%20Atlas%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-kai-humanoid-actuator",
@@ -2986,7 +3034,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3007,7 +3055,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0046",
       "derived_properties": {
         "has_power_input": true,
@@ -3017,7 +3065,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=KAI%20Robotics%20KAI%20Humanoid%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-omni-humanoid-actuator",
@@ -3055,7 +3103,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3076,7 +3124,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0047",
       "derived_properties": {
         "has_power_input": true,
@@ -3086,7 +3134,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=OMNI%20Robotics%20OMNI%20Humanoid%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-1x-neo-actuator",
@@ -3124,7 +3172,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3145,7 +3193,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0048",
       "derived_properties": {
         "has_power_input": true,
@@ -3155,7 +3203,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=1X%20Technologies%201X%20NEO%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-schaeffler-hexagon",
@@ -3193,7 +3241,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3214,7 +3262,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0049",
       "derived_properties": {
         "has_power_input": true,
@@ -3224,7 +3272,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Schaeffler%2FHexagon%20Robotics%20Schaeffler-Hexagon%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-roland-berger-hd-actuator",
@@ -3264,7 +3312,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3282,7 +3330,7 @@ const DB = {
       "entity_kind": "market_intelligence",
       "kind_basis": "status=market_trend（市场趋势条目，非具体在售型号）",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0050",
       "derived_properties": {
         "has_power_input": true,
@@ -3292,7 +3340,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%A4%9A%E5%AE%B6%20Roland%20Berger%20HD%20Actuator%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "status=market_trend（市场趋势条目，非具体在售型号）",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-tmotor-ak80-9-v2",
@@ -3333,7 +3381,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3354,7 +3402,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0051",
       "derived_properties": {
         "has_power_input": true,
@@ -3364,7 +3412,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=T-Motor%20T-Motor%20AK80-9%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-gl40-v2",
@@ -3402,7 +3450,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3423,7 +3471,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0052",
       "derived_properties": {
         "has_power_input": true,
@@ -3433,7 +3481,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20GL40%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-faulhaber-3274",
@@ -3472,7 +3520,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3493,7 +3541,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0053",
       "derived_properties": {
         "has_power_input": true,
@@ -3503,7 +3551,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Faulhaber%20Faulhaber%203274%20BP4%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-moog-smartmotor-v2",
@@ -3542,7 +3590,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3563,7 +3611,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0054",
       "derived_properties": {
         "has_power_input": true,
@@ -3573,7 +3621,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Moog%20Moog%20SmartMotor%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-schaeffler-compact",
@@ -3683,7 +3731,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3704,7 +3752,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0056",
       "derived_properties": {
         "has_power_input": true,
@@ -3714,7 +3762,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Kpower%20(%E5%B9%BF%E4%B8%9C)%20Kpower%20Humanoid%20Servo%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-welling-joint",
@@ -3752,7 +3800,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3773,7 +3821,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0057",
       "derived_properties": {
         "has_power_input": true,
@@ -3783,7 +3831,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Welling%20Parts%20Welling%20Parts%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-mosrac-whg240",
@@ -3825,7 +3873,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3846,7 +3894,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0058",
       "derived_properties": {
         "has_power_input": true,
@@ -3856,7 +3904,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Mosrac%20Mosrac%20WHG-240%20Frameless%20BLDC%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-honpine-hpjm-v2",
@@ -3895,7 +3943,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3916,7 +3964,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0059",
       "derived_properties": {
         "has_power_input": true,
@@ -3926,7 +3974,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=HONPINE%20HONPINE%20HPJM%20v2%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-ct-unite-gan-encoder-actuator",
@@ -3965,7 +4013,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3986,7 +4034,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0060",
       "derived_properties": {
         "has_power_input": true,
@@ -3996,7 +4044,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=CT-Unite%20CT-Unite%20GaN%20Encoder%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-optimus-gen3-hand",
@@ -4107,7 +4155,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4128,7 +4176,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0062",
       "derived_properties": {
         "has_power_input": true,
@@ -4138,7 +4186,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Neura%20Robotics%20Neura%20Dyna%20Dexterous%20Hand%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-lg-cloid-actuator",
@@ -4177,7 +4225,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4198,7 +4246,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0063",
       "derived_properties": {
         "has_power_input": true,
@@ -4208,7 +4256,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=LG%20Electronics%20LG%20Cloid%20Robotics%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-keyirobot-hand",
@@ -4246,7 +4294,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4267,7 +4315,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0064",
       "derived_properties": {
         "has_power_input": true,
@@ -4277,7 +4325,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=KeyiRobot%20KeyiRobot%20Dexterous%20Hand%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-schaeffler-4in1-compact",
@@ -4456,7 +4504,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4477,7 +4525,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0067",
       "derived_properties": {
         "has_power_input": true,
@@ -4487,7 +4535,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=RoboZaps%20RoboZaps%20Humanoid%20Actuator%20Kit%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-humanoid-1000-deal",
@@ -4525,7 +4573,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4546,7 +4594,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0068",
       "derived_properties": {
         "has_power_input": true,
@@ -4556,7 +4604,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Humanoid%2FSchaeffler%20Humanoid-Schaeffler%201000%2B%20Robot%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-inspire-linear-servo",
@@ -4603,7 +4651,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-inspire-dexterous-hand",
@@ -4650,7 +4700,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-dea-soft",
@@ -4697,7 +4749,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-iai-robot-lineup",
@@ -4744,7 +4798,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-bd-atlas-electric-v2",
@@ -4791,7 +4847,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-tesla-optimus-v2",
@@ -4838,7 +4896,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-first-a301-v2",
@@ -4885,7 +4945,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-hyundai-bd-atlas-prod",
@@ -4932,7 +4994,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "act-schaeffler-modular",
@@ -5465,7 +5529,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -5486,7 +5550,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0085",
       "derived_properties": {
         "has_power_input": true,
@@ -5496,7 +5560,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=IAI%20America%20IAI%20Intelligent%20Actuator%20Robot%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-iai-new-lineup",
@@ -5535,7 +5599,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -5556,7 +5620,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0086",
       "derived_properties": {
         "has_power_input": true,
@@ -5566,7 +5630,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=IAI%20IAI%20New%20Robot%20Lineup%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-ak45-36",
@@ -5605,7 +5669,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -5626,7 +5690,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0087",
       "derived_properties": {
         "has_power_input": true,
@@ -5636,7 +5700,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20AK45-36%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-ak70-10",
@@ -5674,7 +5738,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -5695,7 +5759,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0088",
       "derived_properties": {
         "has_power_input": true,
@@ -5705,7 +5769,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20AK70-10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-qdd",
@@ -5744,7 +5808,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -5765,7 +5829,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0089",
       "derived_properties": {
         "has_power_input": true,
@@ -5775,7 +5839,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20QDD%20Motor%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-frameless",
@@ -5814,7 +5878,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -5835,7 +5899,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0090",
       "derived_properties": {
         "has_power_input": true,
@@ -5845,7 +5909,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20Frameless%20Torque%20Motor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-bonsystems-bcsa",
@@ -5900,7 +5964,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-agility-digit-v2",
@@ -5954,7 +6020,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-figure-03-helix",
@@ -6017,7 +6085,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-tienkung-ultra",
@@ -6048,7 +6118,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6071,7 +6141,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0094",
       "derived_properties": {
         "has_power_input": true,
@@ -6083,7 +6153,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-tesla-optimus-g3-50act",
@@ -6130,7 +6202,9 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-engineai-t800-hightorque",
@@ -6148,7 +6222,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -6169,7 +6243,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0096",
       "derived_properties": {
         "has_power_input": true,
@@ -6179,7 +6253,9 @@ const DB = {
       "source_url": "https://www.google.com/search?q=EngineAI%20(China)%20EngineAI%20T800%20High-Torque%20Actuator%20System%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-unitree-h1-360nm",
@@ -6233,7 +6309,9 @@ const DB = {
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACTUATOR-A1B2C3",
@@ -6358,7 +6436,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6381,7 +6459,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0100",
       "derived_properties": {
         "has_power_input": true,
@@ -6410,7 +6488,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6433,7 +6511,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0101",
       "derived_properties": {
         "has_power_input": true,
@@ -6462,7 +6540,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6485,7 +6563,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0102",
       "derived_properties": {
         "has_power_input": true,
@@ -6514,7 +6592,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6537,7 +6615,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0103",
       "derived_properties": {
         "has_power_input": true,
@@ -6566,7 +6644,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6589,7 +6667,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0104",
       "derived_properties": {
         "has_power_input": true,
@@ -6728,7 +6806,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6751,7 +6829,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0107",
       "derived_properties": {
         "has_power_input": true,
@@ -6784,7 +6862,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6807,7 +6885,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0108",
       "derived_properties": {
         "has_power_input": true,
@@ -6840,7 +6918,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6863,7 +6941,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0109",
       "derived_properties": {
         "has_power_input": true,
@@ -6895,7 +6973,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6918,7 +6996,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0110",
       "derived_properties": {
         "has_power_input": true,
@@ -6950,7 +7028,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6973,7 +7051,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0111",
       "derived_properties": {
         "has_power_input": true,
@@ -7006,7 +7084,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7029,7 +7107,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0112",
       "derived_properties": {
         "has_power_input": true,
@@ -7062,7 +7140,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7085,7 +7163,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0113",
       "derived_properties": {
         "has_power_input": true,
@@ -7117,7 +7195,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7140,7 +7218,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0114",
       "derived_properties": {
         "has_power_input": true,
@@ -7172,7 +7250,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7195,7 +7273,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0115",
       "derived_properties": {
         "has_power_input": true,
@@ -7274,7 +7352,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7297,7 +7375,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0117",
       "derived_properties": {
         "has_power_input": true,
@@ -7309,7 +7387,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-119",
@@ -7321,7 +7401,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7344,7 +7424,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0118",
       "derived_properties": {
         "has_power_input": true,
@@ -7356,7 +7436,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-120",
@@ -7368,7 +7450,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7391,7 +7473,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0119",
       "derived_properties": {
         "has_power_input": true,
@@ -7403,7 +7485,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-121",
@@ -7415,7 +7499,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7438,7 +7522,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0120",
       "derived_properties": {
         "has_power_input": true,
@@ -7450,7 +7534,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-122",
@@ -7462,7 +7548,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7485,7 +7571,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0121",
       "derived_properties": {
         "has_power_input": true,
@@ -7497,7 +7583,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-123",
@@ -7509,7 +7597,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7532,7 +7620,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0122",
       "derived_properties": {
         "has_power_input": true,
@@ -7544,7 +7632,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-124",
@@ -7556,7 +7646,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7579,7 +7669,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0123",
       "derived_properties": {
         "has_power_input": true,
@@ -7591,7 +7681,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-125",
@@ -7603,7 +7695,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7626,7 +7718,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0124",
       "derived_properties": {
         "has_power_input": true,
@@ -7638,7 +7730,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-126",
@@ -7650,7 +7744,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7673,7 +7767,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0125",
       "derived_properties": {
         "has_power_input": true,
@@ -7685,7 +7779,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-127",
@@ -7697,7 +7793,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7720,7 +7816,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0126",
       "derived_properties": {
         "has_power_input": true,
@@ -7732,7 +7828,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-128",
@@ -7744,7 +7842,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7767,7 +7865,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0127",
       "derived_properties": {
         "has_power_input": true,
@@ -7779,7 +7877,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-129",
@@ -7791,7 +7891,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7814,7 +7914,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0128",
       "derived_properties": {
         "has_power_input": true,
@@ -7826,7 +7926,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-130",
@@ -7838,7 +7940,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7861,7 +7963,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0129",
       "derived_properties": {
         "has_power_input": true,
@@ -7873,7 +7975,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-131",
@@ -7885,7 +7989,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7908,7 +8012,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0130",
       "derived_properties": {
         "has_power_input": true,
@@ -7920,7 +8024,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-132",
@@ -7932,7 +8038,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7955,7 +8061,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0131",
       "derived_properties": {
         "has_power_input": true,
@@ -7967,7 +8073,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-133",
@@ -7979,7 +8087,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8002,7 +8110,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0132",
       "derived_properties": {
         "has_power_input": true,
@@ -8014,7 +8122,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-134",
@@ -8026,7 +8136,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8049,7 +8159,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0133",
       "derived_properties": {
         "has_power_input": true,
@@ -8061,7 +8171,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-135",
@@ -8073,7 +8185,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8096,7 +8208,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0134",
       "derived_properties": {
         "has_power_input": true,
@@ -8108,7 +8220,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-136",
@@ -8120,7 +8234,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8143,7 +8257,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0135",
       "derived_properties": {
         "has_power_input": true,
@@ -8155,7 +8269,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-137",
@@ -8167,7 +8283,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8190,7 +8306,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0136",
       "derived_properties": {
         "has_power_input": true,
@@ -8202,7 +8318,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-138",
@@ -8214,7 +8332,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8237,7 +8355,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0137",
       "derived_properties": {
         "has_power_input": true,
@@ -8249,7 +8367,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-139",
@@ -8261,7 +8381,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8284,7 +8404,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0138",
       "derived_properties": {
         "has_power_input": true,
@@ -8296,7 +8416,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-140",
@@ -8308,7 +8430,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8331,7 +8453,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0139",
       "derived_properties": {
         "has_power_input": true,
@@ -8343,7 +8465,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-141",
@@ -8355,7 +8479,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8378,7 +8502,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0140",
       "derived_properties": {
         "has_power_input": true,
@@ -8390,7 +8514,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-142",
@@ -8402,7 +8528,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8425,7 +8551,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0141",
       "derived_properties": {
         "has_power_input": true,
@@ -8437,7 +8563,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-143",
@@ -8449,7 +8577,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8472,7 +8600,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0142",
       "derived_properties": {
         "has_power_input": true,
@@ -8484,7 +8612,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-144",
@@ -8496,7 +8626,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8519,7 +8649,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0143",
       "derived_properties": {
         "has_power_input": true,
@@ -8531,7 +8661,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-145",
@@ -8543,7 +8675,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8566,7 +8698,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0144",
       "derived_properties": {
         "has_power_input": true,
@@ -8578,7 +8710,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-146",
@@ -8590,7 +8724,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8613,7 +8747,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0145",
       "derived_properties": {
         "has_power_input": true,
@@ -8625,7 +8759,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-147",
@@ -8637,7 +8773,7 @@ const DB = {
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8660,7 +8796,7 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0146",
       "derived_properties": {
         "has_power_input": true,
@@ -8672,7 +8808,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "actuator-sea-001",
@@ -9256,7 +9394,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9277,7 +9415,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0155",
       "derived_properties": {
         "has_power_input": true,
@@ -9287,7 +9425,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20LCS%20%E7%B3%BB%E5%88%97%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-leaderdrive-lcd",
@@ -9323,7 +9461,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9344,7 +9482,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0156",
       "derived_properties": {
         "has_power_input": true,
@@ -9354,7 +9492,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20LCD%20%E8%B6%85%E8%96%84%E5%9E%8B%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-leaderdrive-csg",
@@ -9385,7 +9523,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9406,7 +9544,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0157",
       "derived_properties": {
         "has_power_input": true,
@@ -9416,7 +9554,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20CSG%20%E9%AB%98%E6%89%AD%E7%9F%A9%E5%9E%8B%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-leaderdrive-micro",
@@ -9505,7 +9643,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9526,7 +9664,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0159",
       "derived_properties": {
         "has_power_input": true,
@@ -9536,7 +9674,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Harmonic%20Drive%20Systems%20Inc.%20(%E5%93%88%E9%BB%98%E7%BA%B3%E7%A7%91%2C%20%E6%97%A5%E6%9C%AC)%20Harmonic%20Drive%20CSG-2UH%20%E7%B3%BB%E5%88%97%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-laifual-series",
@@ -9563,7 +9701,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9584,7 +9722,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0160",
       "derived_properties": {
         "has_power_input": true,
@@ -9594,7 +9732,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%B5%99%E6%B1%9F%E6%9D%A5%E7%A6%8F%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%20(Laifual)%20%E6%9D%A5%E7%A6%8F%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%E7%B3%BB%E5%88%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-tongchuan-series",
@@ -9620,7 +9758,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9641,7 +9779,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0161",
       "derived_properties": {
         "has_power_input": true,
@@ -9651,7 +9789,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%90%8C%E5%B7%9D%E7%A7%91%E6%8A%80%20(Tongchuan)%20%E5%90%8C%E5%B7%9D%E7%A7%91%E6%8A%80%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%E7%B3%BB%E5%88%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-shanchuan-hans",
@@ -9677,7 +9815,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9698,7 +9836,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0162",
       "derived_properties": {
         "has_power_input": true,
@@ -9708,7 +9846,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%9D%89%E5%B7%9D%E8%B0%90%E6%B3%A2%20%2F%20%E5%A4%A7%E6%97%8F%E6%BF%80%E5%85%89%20(002008.SZ)%20%E6%9D%89%E5%B7%9D%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%EF%BC%88%E5%A4%A7%E6%97%8F%E6%BF%80%E5%85%89%E5%AD%90%E5%85%AC%E5%8F%B8%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-wuzhou-reverse",
@@ -9751,7 +9889,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9772,7 +9910,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0163",
       "derived_properties": {
         "has_power_input": true,
@@ -9782,7 +9920,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E4%BA%94%E6%B4%B2%E6%96%B0%E6%98%A5%E9%9B%86%E5%9B%A2%20(603667.SH)%20%E4%BA%94%E6%B4%B2%E6%96%B0%E6%98%A5%20%E5%8F%8D%E5%90%91%E5%BC%8F%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-henglihydraulic",
@@ -9820,7 +9958,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9841,7 +9979,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0164",
       "derived_properties": {
         "has_power_input": true,
@@ -9851,7 +9989,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%B1%9F%E8%8B%8F%E6%81%92%E7%AB%8B%E6%B6%B2%E5%8E%8B%20(601100.SH)%20%E6%81%92%E7%AB%8B%E6%B6%B2%E5%8E%8B%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20%2F%20%E7%BA%BF%E6%80%A7%E9%A9%B1%E5%8A%A8%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-best-yuhua-c0",
@@ -9890,7 +10028,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9911,7 +10049,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0165",
       "derived_properties": {
         "has_power_input": true,
@@ -9921,7 +10059,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%97%A0%E9%94%A1%E8%B4%9D%E6%96%AF%E7%89%B9%E7%B2%BE%E6%9C%BA%20(300580.SZ)%20%E5%AD%90%E5%85%AC%E5%8F%B8%E5%AE%87%E5%8D%8E%E7%B2%BE%E6%9C%BA%20%E8%B4%9D%E6%96%AF%E7%89%B9%20%E5%AE%87%E5%8D%8E%E7%B2%BE%E6%9C%BA%20C0%20%E7%BA%A7%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-qinchuan-machine",
@@ -9960,7 +10098,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9981,7 +10119,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0166",
       "derived_properties": {
         "has_power_input": true,
@@ -9991,7 +10129,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E7%A7%A6%E5%B7%9D%E6%9C%BA%E5%BA%8A%E5%B7%A5%E5%85%B7%E9%9B%86%E5%9B%A2%20(000837.SZ)%20%E7%A7%A6%E5%B7%9D%E6%9C%BA%E5%BA%8A%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-beite-c5",
@@ -10028,7 +10166,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10049,7 +10187,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0167",
       "derived_properties": {
         "has_power_input": true,
@@ -10059,7 +10197,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E5%8C%97%E7%89%B9%E7%A7%91%E6%8A%80%20(603009.SH)%20%E5%8C%97%E7%89%B9%E7%A7%91%E6%8A%80%20C5%20%E7%BA%A7%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-dingzhi-micro",
@@ -10094,7 +10232,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10115,7 +10253,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0168",
       "derived_properties": {
         "has_power_input": true,
@@ -10125,7 +10263,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%B8%B8%E5%B7%9E%E9%BC%8E%E6%99%BA%E6%9C%BA%E7%94%B5%20(Dingzhi%2C%20%E6%B1%9F%E8%8B%8F%E9%9B%B7%E5%88%A9%E5%AD%90%E5%85%AC%E5%8F%B8)%20%E9%BC%8E%E6%99%BA%E7%A7%91%E6%8A%80%20%E5%BE%AE%E5%9E%8B%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-shuanglin-inverted",
@@ -10153,7 +10291,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10174,7 +10312,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0169",
       "derived_properties": {
         "has_power_input": true,
@@ -10184,7 +10322,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%AE%81%E6%B3%A2%E5%8F%8C%E6%9E%97%E6%B1%BD%E8%BD%A6%E9%83%A8%E4%BB%B6%20(300100.SZ)%20%E5%8F%8C%E6%9E%97%E8%82%A1%E4%BB%BD%20%E5%8F%8D%E5%90%91%E5%BC%8F%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-rollvis-rvr",
@@ -10218,7 +10356,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10239,7 +10377,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0170",
       "derived_properties": {
         "has_power_input": true,
@@ -10249,7 +10387,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Rollvis%20SA%20(%E7%91%9E%E5%A3%AB%2C%202016%20%E5%B9%B4%E8%A2%AB%20GSA%20%E5%B9%B6%E8%B4%AD)%20Rollvis%20RVR%20%2F%20RVD%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-gsa-swiss",
@@ -10277,7 +10415,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10298,7 +10436,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0171",
       "derived_properties": {
         "has_power_input": true,
@@ -10308,7 +10446,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=GSA%20(%E7%91%9E%E5%A3%AB)%20GSA%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-ewellix-sr",
@@ -10343,7 +10481,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10364,7 +10502,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0172",
       "derived_properties": {
         "has_power_input": true,
@@ -10374,7 +10512,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Ewellix%20(%E7%91%9E%E5%85%B8%2C%202022%20%E5%B9%B4%E8%A2%AB%E8%88%8D%E5%BC%97%E5%8B%92%20Schaeffler%20%E6%94%B6%E8%B4%AD)%20Ewellix%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%EF%BC%88SR%2FSRA%20%E7%B3%BB%E5%88%97%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-skf-heavyload",
@@ -10402,7 +10540,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10423,7 +10561,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0173",
       "derived_properties": {
         "has_power_input": true,
@@ -10433,7 +10571,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=SKF%20(%E7%91%9E%E5%85%B8)%20SKF%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%EF%BC%88%E9%87%8D%E8%BD%BD%E7%B3%BB%E5%88%97%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-bosch-rexroth",
@@ -10461,7 +10599,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10482,7 +10620,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0174",
       "derived_properties": {
         "has_power_input": true,
@@ -10492,7 +10630,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Bosch%20Rexroth%20(%E5%BE%B7%E5%9B%BD)%20%E5%8D%9A%E4%B8%96%E5%8A%9B%E5%A3%AB%E4%B9%90%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-kinco-fmk",
@@ -10529,7 +10667,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10550,7 +10688,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0175",
       "derived_properties": {
         "has_power_input": true,
@@ -10560,7 +10698,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E6%AD%A5%E7%A7%91%E8%87%AA%E5%8A%A8%E5%8C%96%20(Kinco%2C%20688160.SH)%20%E6%AD%A5%E7%A7%91%E8%82%A1%E4%BB%BD%20FMK%20%E7%B3%BB%E5%88%97%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%EF%BC%88%E7%AC%AC%E5%9B%9B%E4%BB%A3%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-kinco-fmc",
@@ -10661,7 +10799,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10682,7 +10820,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0177",
       "derived_properties": {
         "has_power_input": true,
@@ -10692,7 +10830,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20(Leadshine%2C%20002979.SZ)%20%2F%20%E4%B8%8A%E6%B5%B7%E9%9B%B7%E8%B5%9B%E6%9C%BA%E5%99%A8%E4%BA%BA%20%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20FM2%20%E7%B3%BB%E5%88%97%E8%B6%85%E9%AB%98%E5%AF%86%E5%BA%A6%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-leisai-fm1",
@@ -10849,7 +10987,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10870,7 +11008,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0180",
       "derived_properties": {
         "has_power_input": true,
@@ -10880,7 +11018,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E6%B1%87%E5%B7%9D%E6%8A%80%E6%9C%AF%20(Inovance%2C%20300124.SZ)%20%E6%B1%87%E5%B7%9D%E6%8A%80%E6%9C%AF%20MX%20%2F%20TMB%20%E7%B3%BB%E5%88%97%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-haozhi-frameless",
@@ -10976,7 +11114,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10997,7 +11135,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0182",
       "derived_properties": {
         "has_power_input": true,
@@ -11007,7 +11145,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E4%BC%9F%E5%88%9B%E7%94%B5%E6%B0%94%20(688698.SH)%20%E4%BC%9F%E5%88%9B%E7%94%B5%E6%B0%94%20%E5%BE%AE%E5%9E%8B%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-wolong-frameless",
@@ -11044,7 +11182,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11065,7 +11203,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0183",
       "derived_properties": {
         "has_power_input": true,
@@ -11075,7 +11213,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%8D%A7%E9%BE%99%E7%94%B5%E6%B0%94%E9%A9%B1%E5%8A%A8%E9%9B%86%E5%9B%A2%20(600580.SH)%20%E5%8D%A7%E9%BE%99%E7%94%B5%E9%A9%B1%20%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20%2F%20%E9%AB%98%E7%88%86%E5%8F%91%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-hanslaser-frameless",
@@ -11106,7 +11244,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11127,7 +11265,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0184",
       "derived_properties": {
         "has_power_input": true,
@@ -11137,7 +11275,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%A4%A7%E6%97%8F%E7%94%B5%E6%9C%BA%20%2F%20%E5%A4%A7%E6%97%8F%E6%BF%80%E5%85%89%20(002008.SZ)%20%E5%A4%A7%E6%97%8F%E7%94%B5%E6%9C%BA%20%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-qianghe-u-series",
@@ -11184,7 +11322,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11205,7 +11343,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0185",
       "derived_properties": {
         "has_power_input": true,
@@ -11215,7 +11353,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%B8%82%E5%BC%BA%E5%92%8C%E7%94%B5%E6%9C%BA%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%20%E5%BC%BA%E5%92%8C%E7%94%B5%E6%9C%BA%20U%20%E7%B3%BB%E5%88%97%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-mingzhi-coreless",
@@ -11255,7 +11393,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11276,7 +11414,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0186",
       "derived_properties": {
         "has_power_input": true,
@@ -11286,7 +11424,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E9%B8%A3%E5%BF%97%E7%94%B5%E5%99%A8%20(603728.SH)%20%E9%B8%A3%E5%BF%97%E7%94%B5%E5%99%A8%20%E7%A9%BA%E5%BF%83%E6%9D%AF%E5%BE%AE%E5%9E%8B%E4%BC%BA%E6%9C%8D%E7%94%B5%E6%9C%BA%EF%BC%88%E7%81%B5%E5%B7%A7%E6%89%8B%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-leaderdrive-mechatronic",
@@ -11326,7 +11464,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11347,7 +11485,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0187",
       "derived_properties": {
         "has_power_input": true,
@@ -11357,7 +11495,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-haozhi-integrated",
@@ -11394,7 +11532,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11415,7 +11553,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0188",
       "derived_properties": {
         "has_power_input": true,
@@ -11425,7 +11563,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%B9%BF%E5%B7%9E%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20(300503.SZ)%20%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-kinco-triple",
@@ -11459,7 +11597,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11480,7 +11618,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0189",
       "derived_properties": {
         "has_power_input": true,
@@ -11490,7 +11628,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E6%AD%A5%E7%A7%91%E8%87%AA%E5%8A%A8%E5%8C%96%20(Kinco%2C%20688160.SH)%20%E6%AD%A5%E7%A7%91%E8%82%A1%E4%BB%BD%20%E7%94%B5%E6%9C%BA-%E9%A9%B1%E5%8A%A8-%E7%BC%96%E7%A0%81%E5%99%A8%E4%B8%89%E5%90%88%E4%B8%80%E9%A9%B1%E6%8E%A7%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-leisai-module",
@@ -11524,7 +11662,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11545,7 +11683,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0190",
       "derived_properties": {
         "has_power_input": true,
@@ -11555,7 +11693,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E9%9B%B7%E8%B5%9B%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%A7%91%E6%8A%80%EF%BC%88%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20002979.SZ%20%E5%AD%90%E5%85%AC%E5%8F%B8%EF%BC%89%20%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20%E8%B6%85%E9%AB%98%E5%AF%86%E5%BA%A6%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-tuopu-linear",
@@ -11592,7 +11730,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11613,7 +11751,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0191",
       "derived_properties": {
         "has_power_input": true,
@@ -11623,7 +11761,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%AE%81%E6%B3%A2%E6%8B%93%E6%99%AE%E9%9B%86%E5%9B%A2%20(601689.SH)%20%E6%8B%93%E6%99%AE%E9%9B%86%E5%9B%A2%20%E7%9B%B4%E7%BA%BF%E6%89%A7%E8%A1%8C%E5%99%A8%E6%80%BB%E6%88%90%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-sanhua-actuator",
@@ -11658,7 +11796,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11679,7 +11817,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0192",
       "derived_properties": {
         "has_power_input": true,
@@ -11689,7 +11827,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%B5%99%E6%B1%9F%E4%B8%89%E8%8A%B1%E6%99%BA%E8%83%BD%E6%8E%A7%E5%88%B6%20(002050.SZ)%20%E4%B8%89%E8%8A%B1%E6%99%BA%E6%8E%A7%20%E6%9C%BA%E7%94%B5%E6%89%A7%E8%A1%8C%E5%99%A8%E6%80%BB%E6%88%90%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-zhaowei-micro",
@@ -11719,7 +11857,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11740,7 +11878,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0193",
       "derived_properties": {
         "has_power_input": true,
@@ -11750,7 +11888,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%85%86%E5%A8%81%E6%9C%BA%E7%94%B5%20(003021.SZ)%20%E5%85%86%E5%A8%81%E6%9C%BA%E7%94%B5%20%E5%BE%AE%E5%9E%8B%E7%B2%BE%E5%AF%86%E4%BC%A0%E5%8A%A8%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-topband-hand",
@@ -11785,7 +11923,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11806,7 +11944,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0194",
       "derived_properties": {
         "has_power_input": true,
@@ -11816,7 +11954,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E6%8B%93%E9%82%A6%E8%82%A1%E4%BB%BD%20(002139.SZ)%20%E6%8B%93%E9%82%A6%E8%82%A1%E4%BB%BD%20%E7%81%B5%E5%B7%A7%E6%89%8B%E4%B8%80%E4%BD%93%E5%8C%96%E9%A9%B1%E5%8A%A8%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-oss-leap-hand",
@@ -13231,7 +13369,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "ACT-3275",
       "rp_id": "RP-ACT-0218",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "actuators",
@@ -13282,7 +13422,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "ACT-3276",
       "rp_id": "RP-ACT-0219",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "actuators",
@@ -13334,7 +13476,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "ACT-3277",
       "rp_id": "RP-ACT-0220",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-damiao-4340p",
@@ -13387,7 +13531,9 @@ const DB = {
       ],
       "compatibility_note": "与 RobStride RSM 系列不兼容（同外观不同电机版本），不可互换。Damiao43 系列其他型号（4310/4340 等）之间是否兼容需查厂商官方规格。",
       "source_tier_basis": "deep_link:github.com/Seeed-Projects/reBot-DevArm",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-robstride-rsm",
@@ -13440,7 +13586,9 @@ const DB = {
       ],
       "compatibility_note": "与 Damiao43 系列不兼容（同外观不同电机版本），不可互换。RobStride 其他型号之间是否兼容需查厂商官方规格。",
       "source_tier_basis": "deep_link:github.com/Seeed-Projects/reBot-DevArm",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ],
   "sensors": [
@@ -13485,7 +13633,9 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-71",
@@ -13528,7 +13678,9 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-79",
@@ -13571,7 +13723,9 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-83",
@@ -13614,7 +13768,9 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-84",
@@ -13657,7 +13813,9 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "SENS-001",
@@ -13681,7 +13839,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -13702,7 +13860,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0006",
       "derived_properties": {
         "has_data_output": true,
@@ -13736,7 +13894,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -13757,7 +13915,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0007",
       "derived_properties": {
         "has_data_output": true,
@@ -13767,7 +13925,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Prophesee%20(Metavision)%2C%20iniVation%20(DAVIS)%2C%20CelePixel%20Event%20Camera%20(Neuromorphic%20Vision)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-003",
@@ -13791,7 +13949,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -13812,7 +13970,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0008",
       "derived_properties": {
         "has_data_output": true,
@@ -13846,7 +14004,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -13867,7 +14025,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0009",
       "derived_properties": {
         "has_data_output": true,
@@ -13901,7 +14059,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -13922,7 +14080,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0010",
       "derived_properties": {
         "has_data_output": true,
@@ -13932,7 +14090,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=ATI%20Industrial%20Automation%2C%20OnRobot%2C%20SCHUNK%2C%20ME-Me%C3%9Fsysteme%20Force%2FTorque%20Sensor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-006",
@@ -13956,7 +14114,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -13977,7 +14135,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0011",
       "derived_properties": {
         "has_data_output": true,
@@ -14065,7 +14223,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -14086,7 +14244,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0013",
       "derived_properties": {
         "has_data_output": true,
@@ -14121,7 +14279,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -14142,7 +14300,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0014",
       "derived_properties": {
         "has_data_output": true,
@@ -14152,7 +14310,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Academic%20research%20(ACS%20Applied%20Materials%20%26%20Interfaces%202025)%20Bioinspired%20Flexible%20Tactile%20Sensor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-tesla-optimus-g3-suite",
@@ -16203,7 +16361,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16228,7 +16386,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0052",
       "derived_properties": {
         "has_data_output": true,
@@ -16263,7 +16421,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16284,7 +16442,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0053",
       "derived_properties": {
         "has_data_output": true,
@@ -16319,7 +16477,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16344,7 +16502,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0054",
       "derived_properties": {
         "has_data_output": true,
@@ -16379,7 +16537,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16400,7 +16558,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0055",
       "derived_properties": {
         "has_data_output": true,
@@ -16435,7 +16593,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16456,7 +16614,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0056",
       "derived_properties": {
         "has_data_output": true,
@@ -16466,7 +16624,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E8%93%9D%E7%82%B9%E8%A7%A6%E6%8E%A7%20(LinkTouch)%20%E8%93%9D%E7%82%B9%E8%A7%A6%E6%8E%A7%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-052",
@@ -16491,7 +16649,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16512,7 +16670,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0057",
       "derived_properties": {
         "has_data_output": true,
@@ -16547,7 +16705,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16568,7 +16726,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0058",
       "derived_properties": {
         "has_data_output": true,
@@ -16603,7 +16761,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16624,7 +16782,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0059",
       "derived_properties": {
         "has_data_output": true,
@@ -16659,7 +16817,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16680,7 +16838,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0060",
       "derived_properties": {
         "has_data_output": true,
@@ -16690,7 +16848,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Bristol%20Robotics%20Laboratory%20TacTip%20%E4%BB%BF%E7%94%9F%E5%85%89%E5%AD%A6%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-056",
@@ -16715,7 +16873,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16736,7 +16894,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0061",
       "derived_properties": {
         "has_data_output": true,
@@ -16771,7 +16929,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16792,7 +16950,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0062",
       "derived_properties": {
         "has_data_output": true,
@@ -16827,7 +16985,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16848,7 +17006,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0063",
       "derived_properties": {
         "has_data_output": true,
@@ -16858,7 +17016,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%B8%95%E8%A5%BF%E5%B0%BC%E6%84%9F%E7%9F%A5%E7%A7%91%E6%8A%80%20(PaXini)%20%E5%B8%95%E8%A5%BF%E5%B0%BC%20PX-6AX%20%E5%A4%9A%E7%BB%B4%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-059",
@@ -16883,7 +17041,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16904,7 +17062,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0064",
       "derived_properties": {
         "has_data_output": true,
@@ -16939,7 +17097,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -16960,7 +17118,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0065",
       "derived_properties": {
         "has_data_output": true,
@@ -16995,7 +17153,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -17016,7 +17174,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0066",
       "derived_properties": {
         "has_data_output": true,
@@ -17051,7 +17209,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -17072,7 +17230,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0067",
       "derived_properties": {
         "has_data_output": true,
@@ -17082,7 +17240,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E4%BB%96%E5%B1%B1%E7%A7%91%E6%8A%80%20(%E6%B8%85%E5%8D%8E%E7%B3%BB)%20%E4%BB%96%E5%B1%B1%E7%A7%91%E6%8A%80%20SNN%E8%A7%A6%E8%A7%89%E8%8A%AF%E7%89%87%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-sri-m35xx",
@@ -17419,7 +17577,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -17440,7 +17598,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0073",
       "derived_properties": {
         "has_data_output": true,
@@ -17450,7 +17608,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%B8%B8%E5%B7%9E%E5%9D%A4%E7%BB%B4%E7%A7%91%E6%8A%80%20(KunWei)%20%E5%9D%A4%E7%BB%B4%E7%A7%91%E6%8A%80%20KWR-N%20%E9%AB%98%E7%B2%BE%E5%BA%A6%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-hipersen-hpsft",
@@ -17483,7 +17641,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -17504,7 +17662,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0074",
       "derived_properties": {
         "has_data_output": true,
@@ -17514,7 +17672,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E6%B5%B7%E4%BC%AF%E6%A3%AE%E6%8A%80%E6%9C%AF%20(Hipersen)%20%E6%B5%B7%E4%BC%AF%E6%A3%AE%20HPS-FT%20%E7%B3%BB%E5%88%97%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-xjc-ft",
@@ -17546,7 +17704,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -17567,7 +17725,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0075",
       "derived_properties": {
         "has_data_output": true,
@@ -17577,7 +17735,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E9%91%AB%E7%B2%BE%E8%AF%9A%E4%BC%A0%E6%84%9F%E6%8A%80%E6%9C%AF%20(XJC)%20%E9%91%AB%E7%B2%BE%E8%AF%9A%20XJC-FT%20%E7%B3%BB%E5%88%97%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-sysgroup-sysft",
@@ -17609,7 +17767,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -17630,7 +17788,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0076",
       "derived_properties": {
         "has_data_output": true,
@@ -17640,7 +17798,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%8D%97%E4%BA%AC%E7%A5%9E%E6%BA%90%E7%94%9F%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80%20(SYS)%20%E7%A5%9E%E6%BA%90%E7%94%9F%20SYS-FT%20%E7%B3%BB%E5%88%97%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-me-k3d",
@@ -17672,7 +17830,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -17693,7 +17851,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0077",
       "derived_properties": {
         "has_data_output": true,
@@ -17703,7 +17861,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=ME-Me%C3%9Fsysteme%20GmbH%20(%E5%BE%B7%E5%9B%BD)%20ME-Systeme%20K3D%20%E7%B3%BB%E5%88%97%E5%A4%9A%E8%BD%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-haozhi-6axis",
@@ -17730,7 +17888,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -17751,7 +17909,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0078",
       "derived_properties": {
         "has_data_output": true,
@@ -17761,7 +17919,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%B9%BF%E5%B7%9E%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20(300503.SZ)%20%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20%E5%85%AD%E7%BB%B4%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-keli-6axis",
@@ -17790,7 +17948,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -17811,7 +17969,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0079",
       "derived_properties": {
         "has_data_output": true,
@@ -17821,7 +17979,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%AE%81%E6%B3%A2%E6%9F%AF%E5%8A%9B%E4%BC%A0%E6%84%9F%E7%A7%91%E6%8A%80%20(603662.SH)%20%E6%9F%AF%E5%8A%9B%E4%BC%A0%E6%84%9F%20%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-anpulong-ceramic",
@@ -17850,7 +18008,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -17871,7 +18029,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0080",
       "derived_properties": {
         "has_data_output": true,
@@ -17881,7 +18039,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%AE%89%E5%9F%B9%E9%BE%99%E7%A7%91%E6%8A%80%20(301413.SZ)%20%E5%AE%89%E5%9F%B9%E9%BE%99%20%E9%99%B6%E7%93%B7%E7%94%B5%E5%AE%B9%E5%BC%8F%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-qianfenyi-6axis",
@@ -17911,7 +18069,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -17932,7 +18090,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0081",
       "derived_properties": {
         "has_data_output": true,
@@ -17942,7 +18100,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%8D%83%E5%88%86%E4%B8%80%E7%A7%91%E6%8A%80%20(Qianfenyi)%20%E5%8D%83%E5%88%86%E4%B8%80%20%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-strain-avicem",
@@ -17974,7 +18132,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -17995,7 +18153,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0082",
       "derived_properties": {
         "has_data_output": true,
@@ -18005,7 +18163,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E4%B8%AD%E8%88%AA%E7%94%B5%E6%B5%8B%E4%BB%AA%E5%99%A8%20(300114.SZ)%20%E4%B8%AD%E8%88%AA%E7%94%B5%E6%B5%8B%20%E5%BA%94%E5%8F%98%E5%BC%8F%E5%8A%9B%2F%E6%89%AD%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-imu-xindonglianke-mems",
@@ -18035,7 +18193,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -18056,7 +18214,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0083",
       "derived_properties": {
         "has_data_output": true,
@@ -18066,7 +18224,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%AE%89%E5%BE%BD%E8%8A%AF%E5%8A%A8%E8%81%94%E7%A7%91%E5%BE%AE%E7%B3%BB%E7%BB%9F%20(688582.SH)%20%E8%8A%AF%E5%8A%A8%E8%81%94%E7%A7%91%20%E9%AB%98%E6%80%A7%E8%83%BD%20MEMS%20%E9%99%80%E8%9E%BA%2FIMU%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-imu-huayi-automotive",
@@ -18096,7 +18254,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -18117,7 +18275,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0084",
       "derived_properties": {
         "has_data_output": true,
@@ -18127,7 +18285,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E5%8D%8E%E4%BE%9D%E7%A7%91%E6%8A%80%20(688071.SH)%20%E5%8D%8E%E4%BE%9D%E7%A7%91%E6%8A%80%20%E8%BD%A6%E8%A7%84%E7%BA%A7%20IMU%20%E6%83%AF%E6%80%A7%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-cam-orbbec-gemini335",
@@ -18164,7 +18322,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -18185,7 +18343,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0085",
       "derived_properties": {
         "has_data_output": true,
@@ -18195,7 +18353,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%A5%A5%E6%AF%94%E4%B8%AD%E5%85%89%E7%A7%91%E6%8A%80%20(688322.SH)%20%E5%A5%A5%E6%AF%94%E4%B8%AD%E5%85%89%20Gemini%20335%20%E5%8F%8C%E7%9B%AE%E7%BB%93%E6%9E%84%E5%85%89%E6%B7%B1%E5%BA%A6%E7%9B%B8%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-cam-percipio-fm851",
@@ -18232,7 +18390,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -18253,7 +18411,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0086",
       "derived_properties": {
         "has_data_output": true,
@@ -18263,7 +18421,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E5%9B%BE%E6%BC%BE%E4%BF%A1%E6%81%AF%E7%A7%91%E6%8A%80%20(Percipio.XYZ)%20%E5%9B%BE%E6%BC%BE%E7%A7%91%E6%8A%80%20FM851%20%E5%B7%A5%E4%B8%9A%E7%BA%A7%203D%20%E7%9B%B8%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-lidar-hesai-ft120",
@@ -18299,7 +18457,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -18320,7 +18478,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0087",
       "derived_properties": {
         "has_data_output": true,
@@ -18330,7 +18488,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E7%A6%BE%E8%B5%9B%E7%A7%91%E6%8A%80%20(HSAI%20%2F%20688771.SH)%20%E7%A6%BE%E8%B5%9B%E7%A7%91%E6%8A%80%20FT120%20%E7%BA%AF%E5%9B%BA%E6%80%81%E8%A1%A5%E7%9B%B2%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-lidar-robosense-ac1",
@@ -18365,7 +18523,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -18386,7 +18544,7 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-SEN-0088",
       "derived_properties": {
         "has_data_output": true,
@@ -18396,7 +18554,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E9%80%9F%E8%85%BE%E8%81%9A%E5%88%9B%20(RoboSense%2C%202498.HK)%20%E9%80%9F%E8%85%BE%E8%81%9A%E5%88%9B%20Active%20Camera%20AC1%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-oss-anyskin",
@@ -18583,7 +18741,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "SENS-852",
       "rp_id": "RP-SEN-0091",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "sensors",
@@ -18635,7 +18795,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "SENS-853",
       "rp_id": "RP-SEN-0092",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "sensors",
@@ -18690,7 +18852,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "SENS-854",
       "rp_id": "RP-SEN-0093",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "sensors",
@@ -18752,7 +18916,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "SENS-855",
       "rp_id": "RP-SEN-0094",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "sensors",
@@ -18803,7 +18969,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "SENS-856",
       "rp_id": "RP-SEN-0095",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ],
   "chips": [
@@ -18862,7 +19030,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0001",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-002",
@@ -18919,7 +19089,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-003",
@@ -18979,7 +19151,9 @@ const DB = {
       "source_tier_basis": "deep_link:www.raspberrypi.com/products/raspberry-pi-5/",
       "rp_id": "RP-CHI-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-004",
@@ -19215,7 +19389,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0007",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-008",
@@ -19272,7 +19448,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0008",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-009",
@@ -19329,7 +19507,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0009",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-010",
@@ -19380,7 +19560,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0010",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-011",
@@ -19491,7 +19673,9 @@ const DB = {
       "source_tier_basis": "deep_link:coral.ai/products/",
       "rp_id": "RP-CHI-0012",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-013",
@@ -19526,7 +19710,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -19545,14 +19729,16 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0013",
       "source_url": "https://www.google.com/search?q=NXP%20NXP%20i.MX%208M%20Plus%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-014",
@@ -19609,7 +19795,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0014",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-015",
@@ -19642,7 +19830,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -19661,14 +19849,16 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0015",
       "source_url": "https://www.google.com/search?q=Infineon%20Infineon%20AURIX%20TC397%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-016",
@@ -19725,7 +19915,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0016",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-017",
@@ -19760,7 +19952,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -19779,14 +19971,16 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0017",
       "source_url": "https://www.google.com/search?q=AMD%2FXilinx%20AMD%20Xilinx%20Kria%20K26%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-018",
@@ -19847,7 +20041,9 @@ const DB = {
       "source_tier_basis": "deep_link:www.microchip.com/en-us/products/fpgas-and-plds/system-on-ch",
       "rp_id": "RP-CHI-0018",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-019",
@@ -19904,7 +20100,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0019",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-020",
@@ -19964,7 +20162,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0020",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "RP-ct21x-gan-encoder",
@@ -20172,7 +20372,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -20189,12 +20389,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0024",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-qualcomm-iq9",
@@ -20242,7 +20442,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -20259,12 +20459,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0025",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ9%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-edge",
@@ -20313,7 +20513,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -20330,12 +20530,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0026",
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Edge%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-nvidia-thor-v2",
@@ -20386,7 +20586,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -20403,12 +20603,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0027",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Jetson%20Thor%20(2026%20BC%20Award)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-amd-ryzen-ai-2026",
@@ -20456,7 +20656,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -20473,12 +20673,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0028",
       "source_url": "https://www.google.com/search?q=AMD%20AMD%20Ryzen%20AI%20Processor%202026%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-microsoft-braga",
@@ -20524,7 +20724,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -20541,12 +20741,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0029",
       "source_url": "https://www.google.com/search?q=Microsoft%20Microsoft%20Braga%20AI%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-gigadevice-gd32h7",
@@ -20595,7 +20795,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -20612,12 +20812,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0030",
       "source_url": "https://www.google.com/search?q=GigaDevice%20GigaDevice%20GD32H7%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-advantech-iq10",
@@ -20666,7 +20866,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -20683,12 +20883,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0031",
       "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20Qualcomm%20IQ10%20Platform%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-qualcomm-rb6-v2",
@@ -20737,7 +20937,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -20754,12 +20954,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0032",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20RB6%20v2%20(QCS8250)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-horizon-j6",
@@ -20808,7 +21008,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -20825,12 +21025,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0033",
       "source_url": "https://www.google.com/search?q=Horizon%20Robotics%20Horizon%20Robotics%20J6%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-renesas-rzv2h-v2",
@@ -20880,7 +21080,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -20897,12 +21097,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0034",
       "source_url": "https://www.google.com/search?q=Renesas%20Renesas%20RZ%2FV2H%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-ti-tda4vp",
@@ -20952,7 +21152,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -20969,12 +21169,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0035",
       "source_url": "https://www.google.com/search?q=Texas%20Instruments%20TI%20TDA4VP%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-mediatek-genio-700",
@@ -21026,7 +21226,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -21043,12 +21243,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0036",
       "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Genio%20700%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-mediatek-edge-ai-7b",
@@ -21098,7 +21298,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -21115,12 +21315,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0037",
       "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Edge%20AI%20Chip%20(Dual%207B)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-rockchip-rk3588s-v2",
@@ -21174,7 +21374,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -21191,12 +21391,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0038",
       "source_url": "https://www.google.com/search?q=Rockchip%20Rockchip%20RK3588S%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-amlogic-a311d2",
@@ -21250,7 +21450,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -21267,12 +21467,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0039",
       "source_url": "https://www.google.com/search?q=Amlogic%20Amlogic%20A311D2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-robotics",
@@ -21361,7 +21561,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -21378,12 +21578,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0040",
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Robotics%20Edition%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-qualcomm-iq10-advantech",
@@ -21434,7 +21634,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -21451,12 +21651,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0041",
       "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20MIC-710AI%20(IQ10)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-gigadevice-gd32h7-robot",
@@ -21507,7 +21707,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -21524,12 +21724,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0042",
       "source_url": "https://www.google.com/search?q=GigaDevice%20GigaDevice%20GD32H7%20Robot%20Edition%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-nvidia-t5000",
@@ -21566,7 +21766,9 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0043",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-qualcomm-robotics-pc",
@@ -21603,7 +21805,9 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0044",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-robee",
@@ -21640,7 +21844,9 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0045",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-ms-braga-v2",
@@ -21678,7 +21884,9 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0046",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-edge-ai-realtime",
@@ -21715,7 +21923,9 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0047",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "chip-qualcomm-iq10-pro",
@@ -22180,7 +22390,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -22197,12 +22407,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0056",
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Snapdragon%20X2%20Plus%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-intel-ces2026-ai",
@@ -22251,7 +22461,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -22268,12 +22478,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0057",
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20CES%202026%20AI%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-turbox-irb10",
@@ -22323,7 +22533,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -22340,12 +22550,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0058",
       "source_url": "https://www.google.com/search?q=Thundercomm%2FQualcomm%20Thundercomm%20TurboX%20IRB10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-neura-robotics-iq10",
@@ -22394,7 +22604,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -22411,12 +22621,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0059",
       "source_url": "https://www.google.com/search?q=NEURA%20Robotics%2FQualcomm%20NEURA%20Robotics%20IQ10%20Platform%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-amd-ryzen-ai-400",
@@ -22461,7 +22671,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0060",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-nvidia-thor-robotics",
@@ -22511,7 +22723,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0061",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-nvidia-gb10-digits",
@@ -22528,7 +22742,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -22545,12 +22759,14 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0062",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20GB10%20Grace%20%2B%20Blackwell%20(DIGITS%20Desktop%20AI)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-a1b2c3",
@@ -22567,7 +22783,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -22586,7 +22802,7 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0063",
       "source_url": "https://www.google.com/search?q=%E4%BB%96%E5%B1%B1%E7%A7%91%E6%8A%80%20%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E8%8A%AF%E7%89%87%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -22627,8 +22843,10 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0064",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "CHIP-81",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed",
+      "duplicate_of": "CHIP-81"
     },
     {
       "id": "CHIP-68",
@@ -22662,7 +22880,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0065",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-69",
@@ -22696,7 +22916,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0066",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-70",
@@ -22730,7 +22952,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0067",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-72",
@@ -22764,7 +22988,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0068",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-73",
@@ -22798,7 +23024,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0069",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-74",
@@ -22832,7 +23060,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0070",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-75",
@@ -22866,7 +23096,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0071",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-76",
@@ -22900,7 +23132,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0072",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-77",
@@ -22934,7 +23168,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0073",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-78",
@@ -22968,7 +23204,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0074",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-80",
@@ -23002,7 +23240,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0075",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-81",
@@ -23036,7 +23276,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0076",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-82",
@@ -23070,7 +23312,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0077",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-85",
@@ -23104,7 +23348,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0078",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-86",
@@ -23138,7 +23384,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0079",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-87",
@@ -23172,7 +23420,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0080",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-88",
@@ -23206,7 +23456,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0081",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-89",
@@ -23240,7 +23492,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0082",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-90",
@@ -23274,7 +23528,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0083",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-91",
@@ -23308,8 +23564,10 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0084",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "CHIP-68",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed",
+      "duplicate_of": "CHIP-68"
     },
     {
       "id": "CHIP-92",
@@ -23343,7 +23601,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0085",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-93",
@@ -23377,7 +23637,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0086",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-94",
@@ -23411,7 +23673,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0087",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-95",
@@ -23445,8 +23709,10 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0088",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "CHIP-80",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed",
+      "duplicate_of": "CHIP-80"
     },
     {
       "id": "CHIP-096",
@@ -23614,7 +23880,9 @@ const DB = {
       "source_tier_basis": "deep_link:coral.ai/products/",
       "rp_id": "RP-CHI-0091",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-099",
@@ -23674,7 +23942,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0092",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "CHIP-100",
@@ -23706,7 +23976,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -23725,14 +23995,16 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0093",
       "source_url": "https://www.google.com/search?q=Horizon%20Robotics%20(%E5%9C%B0%E5%B9%B3%E7%BA%BF)%20Horizon%20Robotics%20Journey%20J6M%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-101",
@@ -23787,7 +24059,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0094",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "CHIP-102",
@@ -23820,7 +24094,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -23839,14 +24113,16 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0095",
       "source_url": "https://www.google.com/search?q=Huawei%20(%E5%8D%8E%E4%B8%BA)%20Huawei%20Ascend%20310B%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-103",
@@ -23875,7 +24151,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -23894,14 +24170,16 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0096",
       "source_url": "https://www.google.com/search?q=Kinara%20(acquired%20by%20NXP)%20Kinara%20Ara-2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "CHIP-axelera-metis-aipu",
@@ -23937,7 +24215,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -23954,12 +24232,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0097",
       "source_url": "https://www.google.com/search?q=Axelera%20AI%EF%BC%88%E8%8D%B7%E5%85%B0%EF%BC%89%20Axelera%20Metis%20AIPU%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-axera-ax650n",
@@ -23999,7 +24277,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -24016,12 +24294,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0098",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%E5%8D%8A%E5%AF%BC%E4%BD%93%20(Axera)%20%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%20AX650N%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-axera-ax8850",
@@ -24058,7 +24336,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -24075,12 +24353,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0099",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%E5%8D%8A%E5%AF%BC%E4%BD%93%20(Axera)%20%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%20AX8850%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-blacksesame-huashan-a2000",
@@ -24117,7 +24395,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -24134,12 +24412,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0100",
       "source_url": "https://www.google.com/search?q=%E9%BB%91%E8%8A%9D%E9%BA%BB%E6%99%BA%E8%83%BD%20(Black%20Sesame%20Technologies%2C%202533.HK)%20%E9%BB%91%E8%8A%9D%E9%BA%BB%E6%99%BA%E8%83%BD%20%E5%8D%8E%E5%B1%B1%20A2000%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-sophgo-bm1684x",
@@ -24177,7 +24455,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -24194,12 +24472,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0101",
       "source_url": "https://www.google.com/search?q=%E7%AE%97%E8%83%BD%E7%A7%91%E6%8A%80%20(SOPHGO)%20%E7%AE%97%E8%83%BD%20SOPHON%20BM1684X%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-cambricon-mlu370-s4",
@@ -24235,7 +24513,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -24252,12 +24530,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0102",
       "source_url": "https://www.google.com/search?q=%E4%B8%AD%E7%A7%91%E5%AF%92%E6%AD%A6%E7%BA%AA%20(688256.SH)%20%E5%AF%92%E6%AD%A6%E7%BA%AA%20MLU370-S4%20%E6%8E%A8%E7%90%86%E5%8A%A0%E9%80%9F%E5%8D%A1%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-rockchip-rk3576",
@@ -24413,7 +24691,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -24430,12 +24708,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0105",
       "source_url": "https://www.google.com/search?q=Ambarella%EF%BC%88%E7%BE%8E%E5%9B%BD%E5%AE%89%E9%9C%B8%EF%BC%89%20Ambarella%20N1-655%20%E8%BE%B9%E7%BC%98%20GenAI%20SoC%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-ti-am69a",
@@ -24475,7 +24753,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -24492,12 +24770,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0106",
       "source_url": "https://www.google.com/search?q=Texas%20Instruments%20TI%20AM69A%20%E8%BE%B9%E7%BC%98%20AI%20%E5%A4%84%E7%90%86%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-deepx-dx-m1",
@@ -24533,7 +24811,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -24550,12 +24828,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0107",
       "source_url": "https://www.google.com/search?q=DEEPX%EF%BC%88%E9%9F%A9%E5%9B%BD%EF%BC%89%20DEEPX%20DX-M1%20%E8%BE%B9%E7%BC%98%20NPU%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-houmo-manye-m30",
@@ -24591,7 +24869,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": true,
         "bus_class": "unknown",
@@ -24608,12 +24886,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-CHI-0108",
       "source_url": "https://www.google.com/search?q=%E5%90%8E%E6%91%A9%E6%99%BA%E8%83%BD%20(Houmo.AI)%20%E5%90%8E%E6%91%A9%E6%99%BA%E8%83%BD%20%E6%BC%AB%E7%95%8C%20M30%20%E5%AD%98%E7%AE%97%E4%B8%80%E4%BD%93%E8%8A%AF%E7%89%87%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     }
   ],
   "interfaces": [
@@ -24826,7 +25104,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -24846,13 +25124,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "deep_link:www.electronicsforu.com/tutorial/articles/gpio-parallel-seri",
       "rp_id": "RP-INT-0004",
       "entity_kind_basis": "默认归类",
       "source": "https://www.electronicsforu.com/tutorial/articles/gpio-parallel-serial-interface/",
       "source_note": "GPIO 无单一组织规范；引用 electronicsforu 技术说明页作为参考描述",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "observed",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "IF-005",
@@ -24886,7 +25167,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -24906,13 +25187,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "deep_link:en.wikipedia.org/wiki/Ethernet",
       "rp_id": "RP-INT-0005",
       "entity_kind_basis": "默认归类",
       "source": "https://en.wikipedia.org/wiki/Ethernet",
       "source_note": "IEEE 802.3；维基百科概述页作为通用描述源",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "observed",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "IF-006",
@@ -24929,7 +25213,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -24947,12 +25231,14 @@ const DB = {
       "entity_kind": "specification",
       "kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-INT-0006",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Isaac%20GR00T%20Platform%20(GR00T%20N1.5%20%2B%20GR00T-Dreams)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "INTERFACE-abc123",
@@ -26590,7 +26876,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": true
       },
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "STD-ISO-15066",
@@ -26629,7 +26917,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": true
       },
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "STD-ISO-13849",
@@ -26668,7 +26958,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": true
       },
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "STD-ISO-9787",
@@ -26707,7 +26999,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": true
       },
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "STD-VDI-3844",
@@ -26746,7 +27040,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": true
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "STD-GB-T-11291",
@@ -26787,7 +27083,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": true
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "STD-GB-T-36008",
@@ -26827,7 +27125,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": true
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ],
   "protocols": [
@@ -26889,7 +27189,9 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0001",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-002",
@@ -26949,7 +27251,9 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0002",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-003",
@@ -27006,7 +27310,9 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0003",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-004",
@@ -27165,7 +27471,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -27185,13 +27491,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "deep_link:www.sparkfun.com/tutorials/serial-communication-with-uart",
       "rp_id": "RP-PRO-0006",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source": "https://www.sparkfun.com/tutorials/serial-communication-with-uart",
       "source_note": "UART 标准由 RS-232 (TIA-232) 定义；此页为通用技术说明",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "observed",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-007",
@@ -27227,7 +27536,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -27247,13 +27556,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "deep_link:www.nxp.com/webapp/download",
       "rp_id": "RP-PRO-0007",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source": "https://www.nxp.com/webapp/download?colCode=I2C-BUS-SPEC",
       "source_note": "I2C 由 NXP (原 Philips) 定义，公开 spec 下载页",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "observed",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-008",
@@ -27289,7 +27601,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -27309,13 +27621,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "deep_link:www.microchip.com/en-us/products/interfaces/synchronous-seri",
       "rp_id": "RP-PRO-0008",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source": "https://www.microchip.com/en-us/products/interfaces/synchronous-serial-interface-spi",
       "source_note": "SPI 由 Motorola (现 NXP) 定义；Microchip 产品页含标准描述",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "observed",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-009",
@@ -27376,7 +27691,9 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0009",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-010",
@@ -27483,7 +27800,9 @@ const DB = {
         "source_commit": "5bcd7c7",
         "source_path": "api/protocols.json"
       },
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-011",
@@ -27543,7 +27862,9 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0011",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-012",
@@ -27607,7 +27928,9 @@ const DB = {
       "source_tier_basis": "deep_link:www.modbus.org/specs.php",
       "rp_id": "RP-PRO-0012",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-013",
@@ -27709,7 +28032,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -27729,13 +28052,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0014",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source": "https://usb.org/",
       "source_note": "USB 3.x 由 USB-IF 标准化；官网为权威源",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "inferred",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-015",
@@ -27774,7 +28100,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -27794,13 +28120,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "deep_link:www.mipi.org/specifications/mipi-csi-2",
       "rp_id": "RP-PRO-0015",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source": "https://www.mipi.org/specifications/mipi-csi-2",
       "source_note": "MIPI CSI-2/3 由 MIPI Alliance 定义；官方 spec 目录页",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "observed",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-016",
@@ -27860,7 +28189,9 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0016",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-017",
@@ -27921,7 +28252,9 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0017",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-018",
@@ -27983,7 +28316,9 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0018",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-019",
@@ -28086,7 +28421,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -28106,13 +28441,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "deep_link:en.wikipedia.org/wiki/SBUS",
       "rp_id": "RP-PRO-0020",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source": "https://en.wikipedia.org/wiki/SBUS",
       "source_note": "SBus 由 Futaba 定义（专有）；维基百科技术说明页",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "observed",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-021",
@@ -28242,7 +28580,9 @@ const DB = {
       "source_tier_basis": "deep_link:opcfoundation.org/about/opc-technologies/opc-ua/",
       "rp_id": "RP-PRO-0022",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-024",
@@ -28306,7 +28646,9 @@ const DB = {
       "source_tier_basis": "deep_link:csa-iot.org/all-solutions/matter/",
       "rp_id": "RP-PRO-0023",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-025",
@@ -28365,7 +28707,9 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0024",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-026",
@@ -28401,7 +28745,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -28421,13 +28765,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "deep_link:www.3gpp.org/specifications-technical-reports",
       "rp_id": "RP-PRO-0025",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source": "https://www.3gpp.org/specifications-technical-reports",
       "source_note": "NB-IoT 由 3GPP (3GPP2) 定义；官方规范索引",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "observed",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-027",
@@ -28464,7 +28811,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -28484,13 +28831,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "deep_link:www.3gpp.org/specifications-technical-reports",
       "rp_id": "RP-PRO-0026",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source": "https://www.3gpp.org/specifications-technical-reports",
       "source_note": "5G NR 由 3GPP 定义；官方规范索引",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "observed",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-028",
@@ -28615,7 +28965,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0028",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "PROTO-030",
@@ -28652,7 +29004,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -28672,13 +29024,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "deep_link:www.omg.org/spec/xrce-dp/",
       "rp_id": "RP-PRO-0029",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source": "https://www.omg.org/spec/xrce-dp/",
       "source_note": "DDS-XRCE 由 OMG 标准化；官方规范页",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "observed",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-031",
@@ -28714,7 +29069,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -28734,13 +29089,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "deep_link:arxiv.org/abs/2305.14749",
       "rp_id": "RP-PRO-0030",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source": "https://arxiv.org/abs/2305.14749",
       "source_note": "Adaptive Protocol (AI-driven) 概念来源论文；非正式标准",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "observed",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-032",
@@ -28775,7 +29133,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "A",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -28795,13 +29153,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "deep_link:github.com/embodiedai-robotics/network-protocol-survey",
       "rp_id": "RP-PRO-0031",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source": "https://github.com/embodiedai-robotics/network-protocol-survey",
       "source_note": "Embodied AI 通信网络综述；无正式标准，标注为综述引用",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "observed",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-033",
@@ -28836,7 +29197,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "C",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -28856,13 +29217,16 @@ const DB = {
       },
       "entity_kind": "specification",
       "kind_basis": "category=protocols（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "source_tier_basis": "no_source",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0032",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
       "source": "https://www.flexxbotics.com/",
       "source_note": "FlexxBotics Protocol 由 FlexxBotics 定义（专有）；公司官网",
       "source_type": "spec",
-      "confidence_tier": "unverified"
+      "confidence_tier": "inferred",
+      "source_tier_prev": "C",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-034",
@@ -29261,7 +29625,9 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0038",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-043",
@@ -29300,7 +29666,9 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0039",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-044",
@@ -29339,7 +29707,9 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0040",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-045",
@@ -29378,7 +29748,9 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0041",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTO-046",
@@ -29418,7 +29790,9 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0042",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "rproto-i3c",
@@ -29572,7 +29946,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0045",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "rproto-can-xl-v2",
@@ -29672,7 +30048,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0047",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "rproto-ethercat-g",
@@ -29719,7 +30097,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0048",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "rproto-thread-14",
@@ -30138,7 +30518,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0056",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROTOCOL-a1b2c3",
@@ -30507,7 +30889,9 @@ const DB = {
       "source_tier_basis": "deep_link:openai.com/index/hello-gpt-4o/",
       "rp_id": "RP-LLM-0001",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "LLM-002",
@@ -30617,7 +31001,9 @@ const DB = {
       "source_tier_basis": "deep_link:qwenlm.github.io/blog/qwen2.5-vl/",
       "rp_id": "RP-LLM-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "LLM-a1b2c3",
@@ -32455,7 +32841,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -32473,12 +32859,12 @@ const DB = {
       "entity_kind": "market_intelligence",
       "kind_basis": "type=market_report（研究/报告类条目，非可采购零部件）",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-PLA-0001",
       "source_url": "https://www.google.com/search?q=%E5%A4%9A%E5%AE%B6%20PatSnap%20Humanoid%20Actuator%20Analysis%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "type=market_report（研究/报告类条目，非可采购零部件）",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "RPLAT-001",
@@ -32562,7 +32948,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-003",
@@ -32602,7 +32990,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0004",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-004",
@@ -32786,7 +33176,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0008",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-008",
@@ -32807,7 +33199,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -32830,14 +33222,16 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0009",
       "source_url": "https://www.google.com/search?q=X-Humanoid%20Embodied%20Tien%20Kung%203.0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-009",
@@ -32885,8 +33279,10 @@ const DB = {
       "rp_id": "RP-PLA-0010",
       "entity_kind_basis": "默认归类",
       "quarantine_reason": "Duplicate of RPLAT-010 (Tesla Optimus Gen 3) - same name/manufacturer, deduplication isolation per 2026-10-08 audit",
-      "duplicate_of": "RPLAT-010",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed",
+      "duplicate_of": "RPLAT-010"
     },
     {
       "id": "RPLAT-010",
@@ -32937,7 +33333,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0011",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-011",
@@ -32988,7 +33386,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0012",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-012",
@@ -33044,7 +33444,9 @@ const DB = {
         "UDP"
       ],
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-013",
@@ -33097,7 +33499,9 @@ const DB = {
         "UDP"
       ],
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-014",
@@ -33167,7 +33571,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -33187,7 +33591,7 @@ const DB = {
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0016",
       "source_url": "https://www.google.com/search?q=Figure%20AI%20Figure%20AI%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -33210,7 +33614,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -33230,7 +33634,7 @@ const DB = {
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0017",
       "source_url": "https://www.google.com/search?q=Agility%20Robotics%20Agility%20Robotics%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -33253,7 +33657,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -33273,7 +33677,7 @@ const DB = {
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0018",
       "source_url": "https://www.google.com/search?q=%E7%89%B9%E6%96%AF%E6%8B%89%20%E7%89%B9%E6%96%AF%E6%8B%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -33296,7 +33700,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -33316,7 +33720,7 @@ const DB = {
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0019",
       "source_url": "https://www.google.com/search?q=%E6%B3%A2%E5%A3%AB%E9%A1%BF%E5%8A%A8%E5%8A%9B%20%E6%B3%A2%E5%A3%AB%E9%A1%BF%E5%8A%A8%E5%8A%9B%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -33339,7 +33743,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -33359,7 +33763,7 @@ const DB = {
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0020",
       "source_url": "https://www.google.com/search?q=Apptronik%20Apptronik%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -33382,7 +33786,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -33402,7 +33806,7 @@ const DB = {
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0021",
       "source_url": "https://www.google.com/search?q=1X%20Technologies%201X%20Technologies%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -33515,7 +33919,7 @@ const DB = {
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -33535,7 +33939,7 @@ const DB = {
       },
       "entity_kind": "organization",
       "kind_basis": "type=机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0024",
       "source_url": "https://www.google.com/search?q=%E4%BC%98%E5%82%B2%E6%9C%BA%E5%99%A8%E4%BA%BA%20%E4%BC%98%E5%82%B2%E6%9C%BA%E5%99%A8%E4%BA%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -37226,8 +37630,8 @@ const DB = {
       "quarantine": true,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
       "rp_id": "SUPERDEX-openarm-v20-right-arm",
-      "duplicate_of": "SUPERDEX-openarm-v20-left-arm",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "duplicate_of": "SUPERDEX-openarm-v20-left-arm"
     },
     {
       "id": "SUPERDEX-fr3-dg5f-short-seed-right",
@@ -37321,8 +37725,8 @@ const DB = {
       "quarantine": true,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
       "rp_id": "SUPERDEX-fr3-dg5f-short-seed-right",
-      "duplicate_of": "SUPERDEX-fr3-dg5f-short-right",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "duplicate_of": "SUPERDEX-fr3-dg5f-short-right"
     },
     {
       "id": "SUPERDEX-fr3-dg5f-short-right",
@@ -38205,7 +38609,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -38228,14 +38632,16 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0001",
       "source_url": "https://www.google.com/search?q=DEKA%20DEKA%20Luke%20Arm%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "FA-002",
@@ -38249,7 +38655,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -38272,14 +38678,16 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0002",
       "source_url": "https://www.google.com/search?q=Festo%20%20Festo%20DHEF%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "FA-003",
@@ -38293,7 +38701,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -38316,14 +38724,16 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0003",
       "source_url": "https://www.google.com/search?q=QMC%20QMC%20Soft%20Gripper%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "FA-004",
@@ -38363,7 +38773,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-FLE-0004",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "FA-005",
@@ -38377,7 +38789,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -38400,14 +38812,16 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0005",
       "source_url": "https://www.google.com/search?q=Various%20Shape%20Memory%20Alloy%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "FA-006",
@@ -38421,7 +38835,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -38444,14 +38858,16 @@ const DB = {
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0006",
       "source_url": "https://www.google.com/search?q=CU%20Boulder%20HASEL%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "XFA-001",
@@ -39236,7 +39652,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -39254,12 +39670,12 @@ const DB = {
       "entity_kind": "software",
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ROB-0001",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Cosmos%20%2B%20GR00T%20Model%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-nvidia-cosmos-gr00t-v2",
@@ -39297,7 +39713,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -39315,12 +39731,12 @@ const DB = {
       "entity_kind": "software",
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ROB-0002",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Cosmos%20%2B%20GR00T%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "LLM-003",
@@ -39532,7 +39948,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0006",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "LLM-028",
@@ -39574,7 +39992,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -39592,7 +40010,7 @@ const DB = {
       "entity_kind": "software",
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ROB-0007",
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Isaac%20GR00T%201.7%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -39638,7 +40056,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -39656,7 +40074,7 @@ const DB = {
       "entity_kind": "software",
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ROB-0008",
       "source_url": "https://www.google.com/search?q=HuggingFace%20SmolVLA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
@@ -39702,7 +40120,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -39720,12 +40138,12 @@ const DB = {
       "entity_kind": "software",
       "kind_basis": "category=robot_ai_models（AI 模型/软件条目，无机械与电气接口）",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ROB-0009",
       "source_url": "https://www.google.com/search?q=Physical%20Intelligence%20%CF%800.5%20(Physical%20Intelligence)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "RAI-001",
@@ -39766,7 +40184,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0010",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-002",
@@ -39807,7 +40227,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0011",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-003",
@@ -39823,8 +40245,8 @@ const DB = {
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39857,7 +40279,9 @@ const DB = {
           "厂商 datasheet 补充"
         ]
       },
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-004",
@@ -39873,8 +40297,8 @@ const DB = {
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39907,7 +40331,9 @@ const DB = {
           "厂商 datasheet 补充"
         ]
       },
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-005",
@@ -39923,8 +40349,8 @@ const DB = {
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -39957,7 +40383,9 @@ const DB = {
           "厂商 datasheet 补充"
         ]
       },
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-006",
@@ -39973,8 +40401,8 @@ const DB = {
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -40007,7 +40435,9 @@ const DB = {
           "厂商 datasheet 补充"
         ]
       },
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-007",
@@ -40048,7 +40478,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0016",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-008",
@@ -40093,7 +40525,9 @@ const DB = {
       "source_tier_basis": "deep_link:huggingface.co/blog/smolvla",
       "rp_id": "RP-ROB-0017",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-009",
@@ -40109,8 +40543,8 @@ const DB = {
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -40143,7 +40577,9 @@ const DB = {
           "厂商 datasheet 补充"
         ]
       },
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-010",
@@ -40159,8 +40595,8 @@ const DB = {
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -40193,7 +40629,9 @@ const DB = {
           "厂商 datasheet 补充"
         ]
       },
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-011",
@@ -40209,8 +40647,8 @@ const DB = {
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -40243,7 +40681,9 @@ const DB = {
           "厂商 datasheet 补充"
         ]
       },
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-012",
@@ -40259,8 +40699,8 @@ const DB = {
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -40293,7 +40733,9 @@ const DB = {
           "厂商 datasheet 补充"
         ]
       },
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-013",
@@ -40309,8 +40751,8 @@ const DB = {
       "license": "Apache 2.0",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -40343,7 +40785,9 @@ const DB = {
           "厂商 datasheet 补充"
         ]
       },
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-014",
@@ -40384,7 +40828,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0023",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-015",
@@ -40425,7 +40871,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0024",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-016",
@@ -40470,7 +40918,9 @@ const DB = {
       "source_tier_basis": "deep_link:huggingface.co/openvla/openvla-7b",
       "rp_id": "RP-ROB-0025",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-017",
@@ -40512,7 +40962,9 @@ const DB = {
       "source": "厂商目录声明值：Community（无原始链接，未核验）",
       "rp_id": "RP-ROB-0026",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-018",
@@ -40528,8 +40980,8 @@ const DB = {
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -40562,7 +41014,9 @@ const DB = {
           "厂商 datasheet 补充"
         ]
       },
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-019",
@@ -40578,8 +41032,8 @@ const DB = {
       "license": "CC BY-NC-SA 4.0",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -40612,7 +41066,9 @@ const DB = {
           "厂商 datasheet 补充"
         ]
       },
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-020",
@@ -40628,8 +41084,8 @@ const DB = {
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -40662,7 +41118,9 @@ const DB = {
           "厂商 datasheet 补充"
         ]
       },
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RAI-021",
@@ -40703,7 +41161,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0030",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "XRAM-002",
@@ -41551,7 +42011,9 @@ const DB = {
       "source_tier_basis": "deep_link:www.linkedin.com/posts/acerobotics_embodiedai-robotics-world",
       "rp_id": "RP-ROB-0045",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ZEST-FRAMEWORK-001",
@@ -41608,7 +42070,9 @@ const DB = {
       "source_tier_basis": "deep_link:arxiv.org/abs/2602.00401",
       "rp_id": "RP-ROB-0046",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ],
   "data_acquisition": [
@@ -41867,7 +42331,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -41886,14 +42350,16 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0005",
       "source_url": "https://www.google.com/search?q=DexRobot%20DexTele%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "DATA-006",
@@ -42121,7 +42587,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-DAT-0009",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "DATA-010",
@@ -42170,7 +42638,9 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-DAT-0010",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "DATA-011",
@@ -42199,7 +42669,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -42218,14 +42688,16 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0011",
       "source_url": "https://www.google.com/search?q=Daimon%20Robotics%20(%E6%88%B4%E7%9B%9F%E6%9C%BA%E5%99%A8%E4%BA%BA)%20DM-Tac%20W%E7%B3%BB%E5%88%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "DATA-012",
@@ -42254,7 +42726,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -42273,14 +42745,16 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0012",
       "source_url": "https://www.google.com/search?q=TachinTech%20(%E9%80%94%E8%A7%81%E7%A7%91%E6%8A%80)%20TachinGlove%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "DATA-013",
@@ -42312,7 +42786,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -42331,14 +42805,16 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0013",
       "source_url": "https://www.google.com/search?q=TUM%20%2B%20Agile%20Robots%20%2B%20NJU%20%2B%20SHU%20TacUMI%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "DATA-014",
@@ -42367,7 +42843,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -42386,14 +42862,16 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0014",
       "source_url": "https://www.google.com/search?q=Academic%20Research%20(ICRA%202026)%20PolyUMI%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "DATA-015",
@@ -42423,7 +42901,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -42442,14 +42920,16 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0015",
       "source_url": "https://www.google.com/search?q=%E7%BA%AC%E9%92%9B%E6%9C%BA%E5%99%A8%E4%BA%BA%20(MIT%20Adelson%20lab)%20GelFinger%20GF225%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "DATA-tele-mobile-aloha",
@@ -42488,7 +42968,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -42505,12 +42985,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-DAT-0016",
       "source_url": "https://www.google.com/search?q=Stanford%20University%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%8C%E7%A4%BE%E5%8C%BA%E5%8F%AF%E8%87%AA%E5%BB%BA%EF%BC%89%20Mobile%20ALOHA%20%E7%A7%BB%E5%8A%A8%E5%8F%8C%E8%87%82%E9%81%A5%E6%93%8D%E4%BD%9C%E9%87%87%E9%9B%86%E5%B9%B3%E5%8F%B0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-tele-open-television",
@@ -42551,7 +43031,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -42568,12 +43048,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-DAT-0017",
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%20%2F%20MIT%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20Open-TeleVision%20%E6%B2%89%E6%B5%B8%E5%BC%8F%20VR%20%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-exo-airexo2",
@@ -42612,7 +43092,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -42629,12 +43109,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-DAT-0018",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20AirExo-2%20%E4%BD%8E%E6%88%90%E6%9C%AC%E5%8F%AF%E7%A9%BF%E6%88%B4%E5%A4%96%E9%AA%A8%E9%AA%BC%E9%87%87%E9%9B%86%E8%A3%85%E7%BD%AE%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-tele-bunny-visionpro",
@@ -42673,7 +43153,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -42690,12 +43170,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-DAT-0019",
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20Bunny-VisionPro%20%E5%8F%8C%E6%89%8B%E5%AE%9E%E6%97%B6%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-exo-ace-teleop",
@@ -42733,7 +43213,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -42750,12 +43230,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-DAT-0020",
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20ACE%20%E8%B7%A8%E5%B9%B3%E5%8F%B0%E8%A7%86%E8%A7%89-%E5%A4%96%E9%AA%A8%E9%AA%BC%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-glove-doglove",
@@ -42794,7 +43274,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -42811,12 +43291,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-DAT-0021",
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20DOGlove%20%E5%8A%9B%E5%8F%8D%E9%A6%88%E6%95%B0%E6%8D%AE%E6%89%8B%E5%A5%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-glove-manus-quantum",
@@ -42855,7 +43335,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -42872,12 +43352,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-DAT-0022",
       "source_url": "https://www.google.com/search?q=Manus%EF%BC%88%E8%8D%B7%E5%85%B0%EF%BC%89%20Manus%20Quantum%20Metagloves%20%E5%8A%A8%E6%8D%95%E6%89%8B%E5%A5%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-mocap-rokoko-smartsuit2",
@@ -42916,7 +43396,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -42933,12 +43413,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-DAT-0023",
       "source_url": "https://www.google.com/search?q=Rokoko%EF%BC%88%E4%B8%B9%E9%BA%A6%EF%BC%89%20Rokoko%20Smartsuit%20Pro%20II%20%E6%83%AF%E6%80%A7%E5%8A%A8%E6%8D%95%E6%9C%8D%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-mocap-noitom-pn-studio",
@@ -42978,7 +43458,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -42995,12 +43475,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-DAT-0024",
       "source_url": "https://www.google.com/search?q=%E5%8C%97%E4%BA%AC%E8%AF%BA%E4%BA%A6%E8%85%BE%E7%A7%91%E6%8A%80%20(Noitom)%20%E8%AF%BA%E4%BA%A6%E8%85%BE%20Perception%20Neuron%20Studio%20%E6%83%AF%E6%80%A7%E5%8A%A8%E6%8D%95%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-umi-fastumi",
@@ -43039,7 +43519,7 @@ const DB = {
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -43056,12 +43536,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-DAT-0025",
       "source_url": "https://www.google.com/search?q=%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA%20%2F%20%E5%AD%A6%E6%9C%AF%E5%9B%A2%E9%98%9F%20FastUMI%20%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E5%9E%8B%20UMI%20%E9%87%87%E9%9B%86%E8%A3%85%E7%BD%AE%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-humanoid-humanplus",
@@ -43100,7 +43580,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -43117,12 +43597,12 @@ const DB = {
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-DAT-0026",
       "source_url": "https://www.google.com/search?q=Stanford%20University%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20HumanPlus%20%E4%BA%BA%E5%BD%A2%E5%BD%B1%E5%AD%90%E5%AD%A6%E4%B9%A0%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-neuro-originflow-kit",
@@ -43288,7 +43768,7 @@ const DB = {
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -43304,13 +43784,13 @@ const DB = {
         "registry_ref": "/api/mechanical_interfaces.json"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "source_tier_prev": "B",
       "rp_id": "RP-DAT-0029",
       "source_url": "https://www.google.com/search?q=AEMG-series%EF%BC%88CVPR%202026%20%E5%BC%80%E6%BA%90%EF%BC%89%20AEMG%20%E9%80%9A%E7%94%A8%E8%82%8C%E7%94%B5%E9%87%87%E9%9B%86%E5%8F%82%E8%80%83%E5%B9%B3%E5%8F%B0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "DATA-oss-agibot-world",
@@ -44401,7 +44881,7 @@ const DB = {
       "data_quality": "ok",
       "quarantine": false,
       "source": "公开报道（MATRIX-1 集成 33 个一体化关节执行器，集成丝杠+电机+驱动+减速器+编码器+传感器；36氪/IT之家/百度百科）",
-      "source_tier": "A",
+      "source_tier": "C",
       "confidence": 0.5,
       "confidence_basis": "press_reported_module_composition",
       "standard_conformance": {
@@ -44423,13 +44903,15 @@ const DB = {
         "gap": "未归类类目 integrated_joints"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "source_tier_prev": "B",
       "rp_id": "RP1-INT-0001",
       "source_url": "https://www.google.com/search?q=%E7%9F%A9%E9%98%B5%E8%B6%85%E6%99%BA%20Matrix%20%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20(MATRIX-1%2F3)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ],
   "reducers": [
@@ -44490,7 +44972,9 @@ const DB = {
       "source_tier_basis": "deep_link:harmonicdrive.net/products/gear-units",
       "rp_id": "RP-RED-0001",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -44541,7 +45025,9 @@ const DB = {
       "source_tier_basis": "deep_link:www.nabtesco-motion.cn/cn/products/introduction/",
       "rp_id": "RP-RED-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -44597,7 +45083,9 @@ const DB = {
       "source_tier_basis": "deep_link:www.leaderdrive.com/about.html",
       "rp_id": "RP-RED-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "REDUCER-HD-25",
@@ -44646,7 +45134,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "REDUCER-HD-32",
@@ -44695,7 +45185,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "REDUCER-HD-50",
@@ -44744,7 +45236,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "REDUCER-GH-25",
@@ -44794,7 +45288,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "REDUCER-GH-50",
@@ -44844,7 +45340,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "REDUCER-RV-50",
@@ -44893,7 +45391,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "REDUCER-RV-200",
@@ -44942,7 +45442,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "REDUCER-LIF-60",
@@ -44992,7 +45494,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "reducers",
@@ -45044,7 +45548,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "RED-004",
       "rp_id": "RP-RED-0009",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "reducers",
@@ -45094,7 +45600,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "RED-005",
       "rp_id": "RP-RED-0010",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "reducers",
@@ -45144,7 +45652,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "RED-006",
       "rp_id": "RP-RED-0011",
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ],
   "controllers": [
@@ -45217,7 +45727,9 @@ const DB = {
         "supports_rtos": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -45279,7 +45791,9 @@ const DB = {
         "supports_rtos": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": false,
@@ -45338,7 +45852,9 @@ const DB = {
         "supports_rtos": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "controllers",
@@ -45392,7 +45908,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "CTRL-005",
       "rp_id": "RP-CON-0005",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ],
   "grippers": [
@@ -45452,7 +45970,9 @@ const DB = {
       "source_tier_basis": "deep_link:onrobot.com/en/products/2fg7",
       "rp_id": "RP-GRI-0001",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -45515,7 +46035,9 @@ const DB = {
       "source_tier_basis": "deep_link:robotiq.com/products/2f85-140-adaptive-robot-gripper",
       "rp_id": "RP-GRI-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -45569,7 +46091,9 @@ const DB = {
       "source_tier_basis": "deep_link:schunk.com/gb_en/gripping-systems/series/egp/",
       "rp_id": "RP-GRI-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": false,
@@ -45623,7 +46147,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-GRI-0004",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PRIMA1-HAND-001",
@@ -45687,7 +46213,9 @@ const DB = {
       "source_tier_basis": "deep_link:nnets.ru/news/robotizirovannaja-kist-prima1-ot-xynova-poluch",
       "rp_id": "RP-GRI-0005",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "DEXHAND021PRO-001",
@@ -45749,7 +46277,9 @@ const DB = {
       "source_tier_basis": "deep_link:www.prnewswire.com/news-releases/dexrobot-unveils-full-dexte",
       "rp_id": "RP-GRI-0006",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "NEO-HAND-001",
@@ -45818,7 +46348,9 @@ const DB = {
       "source_tier_basis": "deep_link:www.1x.tech/discover/neos-hands",
       "rp_id": "RP-GRI-0007",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROHAND-001",
@@ -45877,7 +46409,9 @@ const DB = {
       "source_tier_basis": "deep_link:www.proception.ai/news/introducing-prohand",
       "rp_id": "RP-GRI-0008",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "GRIPPER-ONR-VG1",
@@ -45926,7 +46460,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "GRIPPER-ONR-NG1",
@@ -45975,7 +46511,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "GRIPPER-ONR-NG30",
@@ -46024,7 +46562,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "GRIPPER-SCHUNK-SWG15",
@@ -46072,7 +46612,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "GRIPPER-POS-2F20",
@@ -46121,7 +46663,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -46181,7 +46725,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "GRIP-006",
       "rp_id": "RP-GRI-0010",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -46238,7 +46784,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "GRIP-007",
       "rp_id": "RP-GRI-0011",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -46291,7 +46839,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "GRIP-008",
       "rp_id": "RP-GRI-0012",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -46352,7 +46902,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "GRIP-009",
       "rp_id": "RP-GRI-0013",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -46404,7 +46956,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "GRIP-010",
       "rp_id": "RP-GRI-0014",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -46457,7 +47011,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "GRIP-011",
       "rp_id": "RP-GRI-0015",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -46512,7 +47068,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "GRIP-012",
       "rp_id": "RP-GRI-0016",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -46565,7 +47123,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "GRIP-013",
       "rp_id": "RP-GRI-0017",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -46623,7 +47183,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "GRIP-014",
       "rp_id": "RP-GRI-0018",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -46677,7 +47239,9 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "GRIP-015",
       "rp_id": "RP-GRI-0019",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "SUPERDEX-2f-85",
@@ -46934,7 +47498,9 @@ const DB = {
       "source_tier_basis": "deep_link:www.misumi.com.cn/vona2/detail/110302368740/",
       "rp_id": "RP-STR-0001",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -46985,7 +47551,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-STR-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -47035,7 +47603,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-STR-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ],
   "cables": [
@@ -47090,7 +47660,9 @@ const DB = {
       "source_tier_basis": "deep_link:www.igus.com/cables/motor-cables",
       "rp_id": "RP-CAB-0001",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": false,
@@ -47138,7 +47710,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CAB-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ],
   "power": [
@@ -47200,7 +47774,9 @@ const DB = {
       "source_tier_basis": "deep_link:www.grepow.com/products.html",
       "rp_id": "RP-POW-0001",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -47250,7 +47826,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-POW-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ],
   "pcb": [
@@ -47304,7 +47882,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PCB-0001",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -47354,7 +47934,9 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PCB-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ],
   "bionic_mechanisms": [
@@ -47467,7 +48049,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-JOINT-002",
@@ -47578,7 +48162,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-JOINT-003",
@@ -47681,7 +48267,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-ACTUATOR-001",
@@ -47781,7 +48369,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-ACTUATOR-002",
@@ -47865,7 +48455,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-SENSOR-001",
@@ -47958,7 +48550,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-SENSOR-002",
@@ -48046,7 +48640,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-FRAME-001",
@@ -48144,7 +48740,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-SKIN-001",
@@ -48227,7 +48825,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-HAND-001",
@@ -48292,7 +48892,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-HAND-002",
@@ -48358,7 +48960,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-HAND-003",
@@ -48423,7 +49027,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-HAND-004",
@@ -48490,7 +49096,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-HAND-005",
@@ -48553,7 +49161,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-HAND-006",
@@ -48617,7 +49227,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-HAND-007",
@@ -48680,7 +49292,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "BIONIC-HAND-008",
@@ -48742,7 +49356,9 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ]
 };

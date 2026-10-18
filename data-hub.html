@@ -250,7 +250,7 @@ footer a{color:var(--accent);text-decoration:none}
   <!-- ========== ISO 9409-1 法兰型号筛选 (M1 P0-1) ========== -->
   <div class="card">
     <h2>📐 按 ISO 9409-1 法兰型号筛选</h2>
-    <p class="subtitle">直接按具体法兰标号（如 <code style="font-family:'JetBrains Mono',Consolas,monospace">ISO 9409-1-50-4-M6</code>）筛选——回答「我要找的法兰，有哪些零件在用？」这个工程师最刚性的问题。共 72 个实体带 <code>mechanical_interface.standard</code> 结构化声明，覆盖 ISO 9409-1 全部现行梯级。</p>
+    <p class="subtitle">直接按具体法兰标号（如 <code style="font-family:'JetBrains Mono',Consolas,monospace">ISO 9409-1-50-4-M6</code>）筛选——回答「我要找的法兰，有哪些零件在用？」这个工程师最刚性的问题。共 868 个实体带 <code>mechanical_interface.standard</code> 结构化声明，覆盖 ISO 9409-1 全部现行梯级。</p>
     <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
       <button class="btn btn-outline btn-sm" onclick="quickFlange('A50')" style="border-color:var(--accent);color:var(--accent)">A50 · 4×M6</button>
       <button class="btn btn-outline btn-sm" onclick="quickFlange('A80')" style="border-color:var(--accent);color:var(--accent)">A80 · 6×M8</button>
@@ -468,7 +468,7 @@ function quickFlange(kw) {
 //      不是字符串——原稿误用 std.includes()，已改为 Array.includes + 归一化。
 //   2. 用户短输入自动前缀 ISO 9409-1-：A50 → ISO 9409-1-50-4-M6；A80 → ISO 9409-1-80-6-M8
 //      （短式 A{n} 只取 PCD 号，不硬编孔数/螺纹——那是不同 A{n} 下可能变化的）
-//   3. 主匹配走 standard 数组（72 实体覆盖 60+ 型号）；兜底扫 declared_note 文本（26 实体含 9409/A#）
+//   3. 主匹配走 standard 数组（868 实体覆盖 60+ 型号）；兜底扫 declared_note 文本（868 实体含 9409/A#）
 //      —— 两个口径合并去重。
 //   4. 结果按声明强度排序：declared > partial > 仅 note 提及。
 //   5. 前 30 条内嵌展示；超过则提示导出后本地筛选。

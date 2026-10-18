@@ -23,7 +23,7 @@
     }
   },
   "count": 26,
-  "updated": "2026-10-16T22:43:39.757610Z",
+  "updated": "2026-10-18T05:46:45.825363Z",
   "data": [
     {
       "verified": true,
@@ -81,7 +81,9 @@
       "source_tier_basis": "deep_link:onrobot.com/en/products/2fg7",
       "rp_id": "RP-GRI-0001",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -144,7 +146,9 @@
       "source_tier_basis": "deep_link:robotiq.com/products/2f85-140-adaptive-robot-gripper",
       "rp_id": "RP-GRI-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -198,7 +202,9 @@
       "source_tier_basis": "deep_link:schunk.com/gb_en/gripping-systems/series/egp/",
       "rp_id": "RP-GRI-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": false,
@@ -252,7 +258,9 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-GRI-0004",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PRIMA1-HAND-001",
@@ -316,7 +324,9 @@
       "source_tier_basis": "deep_link:nnets.ru/news/robotizirovannaja-kist-prima1-ot-xynova-poluch",
       "rp_id": "RP-GRI-0005",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "DEXHAND021PRO-001",
@@ -378,7 +388,9 @@
       "source_tier_basis": "deep_link:www.prnewswire.com/news-releases/dexrobot-unveils-full-dexte",
       "rp_id": "RP-GRI-0006",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "NEO-HAND-001",
@@ -447,7 +459,9 @@
       "source_tier_basis": "deep_link:www.1x.tech/discover/neos-hands",
       "rp_id": "RP-GRI-0007",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "PROHAND-001",
@@ -506,7 +520,9 @@
       "source_tier_basis": "deep_link:www.proception.ai/news/introducing-prohand",
       "rp_id": "RP-GRI-0008",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "GRIPPER-ONR-VG1",
@@ -555,7 +571,9 @@
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "GRIPPER-ONR-NG1",
@@ -604,7 +622,9 @@
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "GRIPPER-ONR-NG30",
@@ -653,7 +673,9 @@
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "GRIPPER-SCHUNK-SWG15",
@@ -701,7 +723,9 @@
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "GRIPPER-POS-2F20",
@@ -750,7 +774,9 @@
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -810,7 +836,9 @@
       "entity_kind_basis": "默认归类",
       "id": "GRIP-006",
       "rp_id": "RP-GRI-0010",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -867,7 +895,9 @@
       "entity_kind_basis": "默认归类",
       "id": "GRIP-007",
       "rp_id": "RP-GRI-0011",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -920,7 +950,9 @@
       "entity_kind_basis": "默认归类",
       "id": "GRIP-008",
       "rp_id": "RP-GRI-0012",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -981,7 +1013,9 @@
       "entity_kind_basis": "默认归类",
       "id": "GRIP-009",
       "rp_id": "RP-GRI-0013",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -1033,7 +1067,9 @@
       "entity_kind_basis": "默认归类",
       "id": "GRIP-010",
       "rp_id": "RP-GRI-0014",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -1086,7 +1122,9 @@
       "entity_kind_basis": "默认归类",
       "id": "GRIP-011",
       "rp_id": "RP-GRI-0015",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -1141,7 +1179,9 @@
       "entity_kind_basis": "默认归类",
       "id": "GRIP-012",
       "rp_id": "RP-GRI-0016",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -1194,7 +1234,9 @@
       "entity_kind_basis": "默认归类",
       "id": "GRIP-013",
       "rp_id": "RP-GRI-0017",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -1252,7 +1294,9 @@
       "entity_kind_basis": "默认归类",
       "id": "GRIP-014",
       "rp_id": "RP-GRI-0018",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "grippers",
@@ -1306,7 +1350,9 @@
       "entity_kind_basis": "默认归类",
       "id": "GRIP-015",
       "rp_id": "RP-GRI-0019",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "SUPERDEX-2f-85",

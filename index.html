@@ -11,13 +11,13 @@
 <meta name="theme-color" content="#0b1020">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="description" content="面向开源机器人构建者的组合校验层：判定零件能否装配/共装/互换，输出可核验的三态结论（能/不能/不知道），生成可 3D 打印转接件。ISO 9409-1 法兰判定 + BOM 可装性筛查 + 49 项 CI 闸门。我们公开登记答不出来的部分——因为不卖零件，所以没理由骗你选一个。">
+<meta name="description" content="面向开源机器人构建者的组合校验层：判定零件能否装配/共装/互换，输出可核验的三态结论（能/不能/不知道），生成可 3D 打印转接件。ISO 9409-1 法兰判定 + BOM 可装性筛查 + 76 项 CI 闸门。我们公开登记答不出来的部分——因为不卖零件，所以没理由骗你选一个。">
 <meta name="keywords" content="开源机器人,人形机器人,组合校验,兼容性,BOM检查,URDF,机器人选型,ROS2,模块化,humanoid,open-source robotics,composition checker">
 <link rel="canonical" href="https://roboparts.cc/">
 <meta property="og:title" content="RoboParts — 具身系统的组合校验层（开源）">
   <link rel="alternate" hreflang="zh-CN" href="https://roboparts.cc/index.html">
   <link rel="alternate" hreflang="x-default" href="https://roboparts.cc/index.html">
-<meta property="og:description" content="面向开源机器人构建者的组合校验层：三态 fail-closed 判定 + BOM 可装性筛查 + 转接件生成 + 49 项 CI 闸门。我们不卖零件，所以没有理由骗你选一个；公开登记答不出来的部分，用闸门守住「宁可判未知，不判假绿」。">
+<meta property="og:description" content="面向开源机器人构建者的组合校验层：三态 fail-closed 判定 + BOM 可装性筛查 + 转接件生成 + 76 项 CI 闸门。我们不卖零件，所以没有理由骗你选一个；公开登记答不出来的部分，用闸门守住「宁可判未知，不判假绿」。">
 <meta property="og:type" content="website">
 <text y='.9em' font-size='90'>🤖</text></svg>">
 <script type="application/ld+json">
@@ -115,13 +115,13 @@
 <div class="wrap">
   <section class="hero">
     <h1>具身系统的组合校验层</h1>
-    <p>判定零件能否装配 / 共装 / 互换，输出可核验的<strong>三态结论</strong>（能 / 不能 / 不知道）。天工、LeRobot、Unitree、OpenArm 等开源项目的电机、关节、传感器、控制器——能不能装到一起、能不能同时挂在同一台机器人上、能不能互相替换。ISO 9409-1 法兰判定 + 机械 / 电气 / 协议 / ROS 四维兼容检查 + 49 项 CI 闸门守住「宁可判未知，不判假绿」；不兼容时直接给出可 3D 打印的转接件。</p>
+    <p>判定零件能否装配 / 共装 / 互换，输出可核验的<strong>三态结论</strong>（能 / 不能 / 不知道）。天工、LeRobot、Unitree、OpenArm 等开源项目的电机、关节、传感器、控制器——能不能装到一起、能不能同时挂在同一台机器人上、能不能互相替换。ISO 9409-1 法兰判定 + 机械 / 电气 / 协议 / ROS 四维兼容检查 + 76 项 CI 闸门守住「宁可判未知，不判假绿」；不兼容时直接给出可 3D 打印的转接件。</p>
     <p style="max-width:680px;margin:0 auto 24px;padding:14px 18px;border:1px solid rgba(128,128,128,.32);border-radius:10px;font-size:14px;line-height:1.75;color:var(--mut);text-align:left">
       <strong style="color:var(--txt)">我们公开登记「答不出来」的那部分。</strong>
       机械接口声明率仅 <span data-rp="mech_declared">81</span>/<span data-rp="mech_applicable">500</span>，其余如实标注 <code>not_declared</code>，不填 0 假装有数据。
       RoboParts 不生产、不销售、不代理任何零部件 —— 所以没有把选型结果导向自家产品的动机。
       <strong style="color:var(--txt)">卖家不适合同时当裁判</strong>，这是关节厂商自建选型器无法复制的一条差异。
-      <span style="display:block;margin-top:6px;font-size:13px;opacity:.7">设计原则：类比 NVIDIA+OSRA 贡献给 ROS 的 <code>rosidl::buffer</code>——保持标准 URDF / ISO 9409-1 不动，让任何厂商的兼容性数据以插件形式接入。真正的护城河不是零件数量，而是<strong>三态 fail-closed compose 引擎 + 三条定理（T1/T2/T3）+ 49 项反向注入闸门</strong>。供应商中立，不是口号，是架构约束。</span>
+      <span style="display:block;margin-top:6px;font-size:13px;opacity:.7">设计原则：类比 NVIDIA+OSRA 贡献给 ROS 的 <code>rosidl::buffer</code>——保持标准 URDF / ISO 9409-1 不动，让任何厂商的兼容性数据以插件形式接入。真正的护城河不是零件数量，而是<strong>三态 fail-closed compose 引擎 + 三条代数律（可靠性 / 证据单调性 / 不可判定边界）+ 三条研究假说（T2 已被证伪，见 NR-001）+ 76 项反向注入闸门</strong>。供应商中立，不是口号，是架构约束。</span>
     </p>
     <div class="cta">
       <a class="btn" href="/demo-flow.html">▶ 5 分钟上手 · 全流程引导</a>

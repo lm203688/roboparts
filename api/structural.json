@@ -23,7 +23,7 @@
     }
   },
   "count": 3,
-  "updated": "2026-10-16T22:43:39.757610Z",
+  "updated": "2026-10-18T05:46:45.825363Z",
   "data": [
     {
       "verified": true,
@@ -80,7 +80,9 @@
       "source_tier_basis": "deep_link:www.misumi.com.cn/vona2/detail/110302368740/",
       "rp_id": "RP-STR-0001",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -131,7 +133,9 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-STR-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -181,7 +185,9 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-STR-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ]
 }

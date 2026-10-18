@@ -23,7 +23,7 @@
     }
   },
   "count": 4,
-  "updated": "2026-10-16T22:43:39.757610Z",
+  "updated": "2026-10-18T05:46:45.825363Z",
   "data": [
     {
       "verified": true,
@@ -94,7 +94,9 @@
         "supports_rtos": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": true,
@@ -156,7 +158,9 @@
         "supports_rtos": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "verified": false,
@@ -215,7 +219,9 @@
         "supports_rtos": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "controllers",
@@ -269,7 +275,9 @@
       "entity_kind_basis": "默认归类",
       "id": "CTRL-005",
       "rp_id": "RP-CON-0005",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ]
 }

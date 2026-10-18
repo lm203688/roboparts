@@ -23,7 +23,7 @@
     }
   },
   "count": 222,
-  "updated": "2026-10-16T22:43:39.757610Z",
+  "updated": "2026-10-18T05:46:45.825363Z",
   "data": [
     {
       "id": "ACT-001",
@@ -292,7 +292,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "ACT-005",
@@ -360,7 +362,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "ACT-006",
@@ -421,7 +425,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-007",
@@ -482,7 +488,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-008",
@@ -547,7 +555,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "ACT-009",
@@ -612,7 +622,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "kollmorgen.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-010",
@@ -641,7 +653,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -664,7 +676,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0010",
       "derived_properties": {
         "has_power_input": true,
@@ -676,7 +688,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-011",
@@ -736,7 +750,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-012",
@@ -796,7 +812,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-013",
@@ -854,7 +872,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-014",
@@ -912,7 +932,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-015",
@@ -973,7 +995,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-016",
@@ -1099,7 +1123,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "ACT-018",
@@ -1128,7 +1154,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -1151,7 +1177,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0018",
       "derived_properties": {
         "has_power_input": true,
@@ -1163,7 +1189,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-019",
@@ -1224,7 +1252,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-020",
@@ -1285,7 +1315,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-021",
@@ -1510,7 +1542,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -1533,7 +1565,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0024",
       "derived_properties": {
         "has_power_input": true,
@@ -1545,7 +1577,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-025",
@@ -1575,7 +1609,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -1598,7 +1632,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0025",
       "derived_properties": {
         "has_power_input": true,
@@ -1610,7 +1644,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-026",
@@ -1674,7 +1710,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-027",
@@ -1738,7 +1776,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "ACT-028",
@@ -1808,7 +1848,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "verified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-029",
@@ -1838,7 +1880,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -1861,7 +1903,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0029",
       "derived_properties": {
         "has_power_input": true,
@@ -1873,7 +1915,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-030",
@@ -2003,7 +2047,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "lynxmotion.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-032",
@@ -2064,7 +2110,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": "2026-10-17",
+      "last_verified_basis": "audit_backfill:probed"
     },
     {
       "id": "ACT-mit-electrofluidic",
@@ -2296,7 +2344,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2317,7 +2365,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0036",
       "derived_properties": {
         "has_power_input": true,
@@ -2327,7 +2375,7 @@
       "source_url": "https://www.google.com/search?q=LG%20Electronics%20LG%20Electronics%20Robotics%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-tesla-optimus-hand",
@@ -2436,7 +2484,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2457,7 +2505,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0038",
       "derived_properties": {
         "has_power_input": true,
@@ -2467,7 +2515,7 @@
       "source_url": "https://www.google.com/search?q=ROBOTIS%20ROBOTIS%2020-DOF%20Robot%20Hand%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-first-a301",
@@ -2506,7 +2554,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2527,7 +2575,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0039",
       "derived_properties": {
         "has_power_input": true,
@@ -2537,7 +2585,7 @@
       "source_url": "https://www.google.com/search?q=FIRST%20FIRST%20A301%20Motor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-high-torque-mini-hi",
@@ -2575,7 +2623,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2596,7 +2644,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0040",
       "derived_properties": {
         "has_power_input": true,
@@ -2606,7 +2654,7 @@
       "source_url": "https://www.google.com/search?q=High%20Torque%20Robotics%20High%20Torque%20Robotics%20Mini%20Hi%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-high-torque-pi",
@@ -2644,7 +2692,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2665,7 +2713,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0041",
       "derived_properties": {
         "has_power_input": true,
@@ -2675,7 +2723,7 @@
       "source_url": "https://www.google.com/search?q=High%20Torque%20Robotics%20High%20Torque%20Robotics%20Pi%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hyundai-mobis-atlas",
@@ -2713,7 +2761,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2734,7 +2782,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0042",
       "derived_properties": {
         "has_power_input": true,
@@ -2744,7 +2792,7 @@
       "source_url": "https://www.google.com/search?q=Hyundai%20Mobis%20Hyundai%20Mobis%20Atlas%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-unitree-b2-motor-v2",
@@ -2851,7 +2899,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2872,7 +2920,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0044",
       "derived_properties": {
         "has_power_input": true,
@@ -2882,7 +2930,7 @@
       "source_url": "https://www.google.com/search?q=Figure%20AI%20Figure%2003%20Custom%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-atlas-electric-actuator",
@@ -2920,7 +2968,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -2941,7 +2989,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0045",
       "derived_properties": {
         "has_power_input": true,
@@ -2951,7 +2999,7 @@
       "source_url": "https://www.google.com/search?q=Boston%20Dynamics%20Boston%20Dynamics%20Electric%20Atlas%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-kai-humanoid-actuator",
@@ -2988,7 +3036,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3009,7 +3057,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0046",
       "derived_properties": {
         "has_power_input": true,
@@ -3019,7 +3067,7 @@
       "source_url": "https://www.google.com/search?q=KAI%20Robotics%20KAI%20Humanoid%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-omni-humanoid-actuator",
@@ -3057,7 +3105,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3078,7 +3126,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0047",
       "derived_properties": {
         "has_power_input": true,
@@ -3088,7 +3136,7 @@
       "source_url": "https://www.google.com/search?q=OMNI%20Robotics%20OMNI%20Humanoid%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-1x-neo-actuator",
@@ -3126,7 +3174,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3147,7 +3195,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0048",
       "derived_properties": {
         "has_power_input": true,
@@ -3157,7 +3205,7 @@
       "source_url": "https://www.google.com/search?q=1X%20Technologies%201X%20NEO%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-schaeffler-hexagon",
@@ -3195,7 +3243,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3216,7 +3264,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0049",
       "derived_properties": {
         "has_power_input": true,
@@ -3226,7 +3274,7 @@
       "source_url": "https://www.google.com/search?q=Schaeffler%2FHexagon%20Robotics%20Schaeffler-Hexagon%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-roland-berger-hd-actuator",
@@ -3266,7 +3314,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3284,7 +3332,7 @@
       "entity_kind": "market_intelligence",
       "kind_basis": "status=market_trend（市场趋势条目，非具体在售型号）",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0050",
       "derived_properties": {
         "has_power_input": true,
@@ -3294,7 +3342,7 @@
       "source_url": "https://www.google.com/search?q=%E5%A4%9A%E5%AE%B6%20Roland%20Berger%20HD%20Actuator%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "status=market_trend（市场趋势条目，非具体在售型号）",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-tmotor-ak80-9-v2",
@@ -3335,7 +3383,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3356,7 +3404,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0051",
       "derived_properties": {
         "has_power_input": true,
@@ -3366,7 +3414,7 @@
       "source_url": "https://www.google.com/search?q=T-Motor%20T-Motor%20AK80-9%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-gl40-v2",
@@ -3404,7 +3452,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3425,7 +3473,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0052",
       "derived_properties": {
         "has_power_input": true,
@@ -3435,7 +3483,7 @@
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20GL40%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-faulhaber-3274",
@@ -3474,7 +3522,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3495,7 +3543,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0053",
       "derived_properties": {
         "has_power_input": true,
@@ -3505,7 +3553,7 @@
       "source_url": "https://www.google.com/search?q=Faulhaber%20Faulhaber%203274%20BP4%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-moog-smartmotor-v2",
@@ -3544,7 +3592,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3565,7 +3613,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0054",
       "derived_properties": {
         "has_power_input": true,
@@ -3575,7 +3623,7 @@
       "source_url": "https://www.google.com/search?q=Moog%20Moog%20SmartMotor%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-schaeffler-compact",
@@ -3685,7 +3733,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3706,7 +3754,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0056",
       "derived_properties": {
         "has_power_input": true,
@@ -3716,7 +3764,7 @@
       "source_url": "https://www.google.com/search?q=Kpower%20(%E5%B9%BF%E4%B8%9C)%20Kpower%20Humanoid%20Servo%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-welling-joint",
@@ -3754,7 +3802,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3775,7 +3823,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0057",
       "derived_properties": {
         "has_power_input": true,
@@ -3785,7 +3833,7 @@
       "source_url": "https://www.google.com/search?q=Welling%20Parts%20Welling%20Parts%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-mosrac-whg240",
@@ -3827,7 +3875,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3848,7 +3896,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0058",
       "derived_properties": {
         "has_power_input": true,
@@ -3858,7 +3906,7 @@
       "source_url": "https://www.google.com/search?q=Mosrac%20Mosrac%20WHG-240%20Frameless%20BLDC%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-honpine-hpjm-v2",
@@ -3897,7 +3945,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3918,7 +3966,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0059",
       "derived_properties": {
         "has_power_input": true,
@@ -3928,7 +3976,7 @@
       "source_url": "https://www.google.com/search?q=HONPINE%20HONPINE%20HPJM%20v2%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-ct-unite-gan-encoder-actuator",
@@ -3967,7 +4015,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -3988,7 +4036,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0060",
       "derived_properties": {
         "has_power_input": true,
@@ -3998,7 +4046,7 @@
       "source_url": "https://www.google.com/search?q=CT-Unite%20CT-Unite%20GaN%20Encoder%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-optimus-gen3-hand",
@@ -4109,7 +4157,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4130,7 +4178,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0062",
       "derived_properties": {
         "has_power_input": true,
@@ -4140,7 +4188,7 @@
       "source_url": "https://www.google.com/search?q=Neura%20Robotics%20Neura%20Dyna%20Dexterous%20Hand%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-lg-cloid-actuator",
@@ -4179,7 +4227,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4200,7 +4248,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0063",
       "derived_properties": {
         "has_power_input": true,
@@ -4210,7 +4258,7 @@
       "source_url": "https://www.google.com/search?q=LG%20Electronics%20LG%20Cloid%20Robotics%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-keyirobot-hand",
@@ -4248,7 +4296,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4269,7 +4317,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0064",
       "derived_properties": {
         "has_power_input": true,
@@ -4279,7 +4327,7 @@
       "source_url": "https://www.google.com/search?q=KeyiRobot%20KeyiRobot%20Dexterous%20Hand%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-schaeffler-4in1-compact",
@@ -4458,7 +4506,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4479,7 +4527,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0067",
       "derived_properties": {
         "has_power_input": true,
@@ -4489,7 +4537,7 @@
       "source_url": "https://www.google.com/search?q=RoboZaps%20RoboZaps%20Humanoid%20Actuator%20Kit%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-humanoid-1000-deal",
@@ -4527,7 +4575,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -4548,7 +4596,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0068",
       "derived_properties": {
         "has_power_input": true,
@@ -4558,7 +4606,7 @@
       "source_url": "https://www.google.com/search?q=Humanoid%2FSchaeffler%20Humanoid-Schaeffler%201000%2B%20Robot%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-inspire-linear-servo",
@@ -4605,7 +4653,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-inspire-dexterous-hand",
@@ -4652,7 +4702,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-dea-soft",
@@ -4699,7 +4751,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-iai-robot-lineup",
@@ -4746,7 +4800,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-bd-atlas-electric-v2",
@@ -4793,7 +4849,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-tesla-optimus-v2",
@@ -4840,7 +4898,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-first-a301-v2",
@@ -4887,7 +4947,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-hyundai-bd-atlas-prod",
@@ -4934,7 +4996,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "act-schaeffler-modular",
@@ -5467,7 +5531,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -5488,7 +5552,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0085",
       "derived_properties": {
         "has_power_input": true,
@@ -5498,7 +5562,7 @@
       "source_url": "https://www.google.com/search?q=IAI%20America%20IAI%20Intelligent%20Actuator%20Robot%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-iai-new-lineup",
@@ -5537,7 +5601,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -5558,7 +5622,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0086",
       "derived_properties": {
         "has_power_input": true,
@@ -5568,7 +5632,7 @@
       "source_url": "https://www.google.com/search?q=IAI%20IAI%20New%20Robot%20Lineup%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-ak45-36",
@@ -5607,7 +5671,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -5628,7 +5692,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0087",
       "derived_properties": {
         "has_power_input": true,
@@ -5638,7 +5702,7 @@
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20AK45-36%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-ak70-10",
@@ -5676,7 +5740,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -5697,7 +5761,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0088",
       "derived_properties": {
         "has_power_input": true,
@@ -5707,7 +5771,7 @@
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20AK70-10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-qdd",
@@ -5746,7 +5810,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -5767,7 +5831,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0089",
       "derived_properties": {
         "has_power_input": true,
@@ -5777,7 +5841,7 @@
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20QDD%20Motor%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-frameless",
@@ -5816,7 +5880,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -5837,7 +5901,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0090",
       "derived_properties": {
         "has_power_input": true,
@@ -5847,7 +5911,7 @@
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20Frameless%20Torque%20Motor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-bonsystems-bcsa",
@@ -5902,7 +5966,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-agility-digit-v2",
@@ -5956,7 +6022,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-figure-03-helix",
@@ -6019,7 +6087,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-tienkung-ultra",
@@ -6050,7 +6120,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6073,7 +6143,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0094",
       "derived_properties": {
         "has_power_input": true,
@@ -6085,7 +6155,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-tesla-optimus-g3-50act",
@@ -6132,7 +6204,9 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-engineai-t800-hightorque",
@@ -6150,7 +6224,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -6171,7 +6245,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0096",
       "derived_properties": {
         "has_power_input": true,
@@ -6181,7 +6255,9 @@
       "source_url": "https://www.google.com/search?q=EngineAI%20(China)%20EngineAI%20T800%20High-Torque%20Actuator%20System%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-unitree-h1-360nm",
@@ -6235,7 +6311,9 @@
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "derived",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACTUATOR-A1B2C3",
@@ -6360,7 +6438,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6383,7 +6461,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0100",
       "derived_properties": {
         "has_power_input": true,
@@ -6412,7 +6490,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6435,7 +6513,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0101",
       "derived_properties": {
         "has_power_input": true,
@@ -6464,7 +6542,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6487,7 +6565,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0102",
       "derived_properties": {
         "has_power_input": true,
@@ -6516,7 +6594,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6539,7 +6617,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0103",
       "derived_properties": {
         "has_power_input": true,
@@ -6568,7 +6646,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6591,7 +6669,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0104",
       "derived_properties": {
         "has_power_input": true,
@@ -6730,7 +6808,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6753,7 +6831,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0107",
       "derived_properties": {
         "has_power_input": true,
@@ -6786,7 +6864,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6809,7 +6887,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0108",
       "derived_properties": {
         "has_power_input": true,
@@ -6842,7 +6920,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6865,7 +6943,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0109",
       "derived_properties": {
         "has_power_input": true,
@@ -6897,7 +6975,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6920,7 +6998,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0110",
       "derived_properties": {
         "has_power_input": true,
@@ -6952,7 +7030,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -6975,7 +7053,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0111",
       "derived_properties": {
         "has_power_input": true,
@@ -7008,7 +7086,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7031,7 +7109,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0112",
       "derived_properties": {
         "has_power_input": true,
@@ -7064,7 +7142,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7087,7 +7165,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0113",
       "derived_properties": {
         "has_power_input": true,
@@ -7119,7 +7197,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7142,7 +7220,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0114",
       "derived_properties": {
         "has_power_input": true,
@@ -7174,7 +7252,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7197,7 +7275,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0115",
       "derived_properties": {
         "has_power_input": true,
@@ -7276,7 +7354,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7299,7 +7377,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0117",
       "derived_properties": {
         "has_power_input": true,
@@ -7311,7 +7389,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-119",
@@ -7323,7 +7403,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7346,7 +7426,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0118",
       "derived_properties": {
         "has_power_input": true,
@@ -7358,7 +7438,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-120",
@@ -7370,7 +7452,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7393,7 +7475,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0119",
       "derived_properties": {
         "has_power_input": true,
@@ -7405,7 +7487,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-121",
@@ -7417,7 +7501,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7440,7 +7524,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0120",
       "derived_properties": {
         "has_power_input": true,
@@ -7452,7 +7536,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-122",
@@ -7464,7 +7550,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7487,7 +7573,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0121",
       "derived_properties": {
         "has_power_input": true,
@@ -7499,7 +7585,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-123",
@@ -7511,7 +7599,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7534,7 +7622,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0122",
       "derived_properties": {
         "has_power_input": true,
@@ -7546,7 +7634,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-124",
@@ -7558,7 +7648,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7581,7 +7671,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0123",
       "derived_properties": {
         "has_power_input": true,
@@ -7593,7 +7683,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-125",
@@ -7605,7 +7697,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7628,7 +7720,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0124",
       "derived_properties": {
         "has_power_input": true,
@@ -7640,7 +7732,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-126",
@@ -7652,7 +7746,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7675,7 +7769,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0125",
       "derived_properties": {
         "has_power_input": true,
@@ -7687,7 +7781,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-127",
@@ -7699,7 +7795,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7722,7 +7818,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0126",
       "derived_properties": {
         "has_power_input": true,
@@ -7734,7 +7830,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-128",
@@ -7746,7 +7844,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7769,7 +7867,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0127",
       "derived_properties": {
         "has_power_input": true,
@@ -7781,7 +7879,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-129",
@@ -7793,7 +7893,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7816,7 +7916,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0128",
       "derived_properties": {
         "has_power_input": true,
@@ -7828,7 +7928,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-130",
@@ -7840,7 +7942,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7863,7 +7965,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0129",
       "derived_properties": {
         "has_power_input": true,
@@ -7875,7 +7977,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-131",
@@ -7887,7 +7991,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7910,7 +8014,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0130",
       "derived_properties": {
         "has_power_input": true,
@@ -7922,7 +8026,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-132",
@@ -7934,7 +8040,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -7957,7 +8063,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0131",
       "derived_properties": {
         "has_power_input": true,
@@ -7969,7 +8075,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-133",
@@ -7981,7 +8089,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8004,7 +8112,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0132",
       "derived_properties": {
         "has_power_input": true,
@@ -8016,7 +8124,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-134",
@@ -8028,7 +8138,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8051,7 +8161,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0133",
       "derived_properties": {
         "has_power_input": true,
@@ -8063,7 +8173,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-135",
@@ -8075,7 +8187,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8098,7 +8210,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0134",
       "derived_properties": {
         "has_power_input": true,
@@ -8110,7 +8222,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-136",
@@ -8122,7 +8236,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8145,7 +8259,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0135",
       "derived_properties": {
         "has_power_input": true,
@@ -8157,7 +8271,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-137",
@@ -8169,7 +8285,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8192,7 +8308,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0136",
       "derived_properties": {
         "has_power_input": true,
@@ -8204,7 +8320,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-138",
@@ -8216,7 +8334,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8239,7 +8357,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0137",
       "derived_properties": {
         "has_power_input": true,
@@ -8251,7 +8369,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-139",
@@ -8263,7 +8383,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8286,7 +8406,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0138",
       "derived_properties": {
         "has_power_input": true,
@@ -8298,7 +8418,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-140",
@@ -8310,7 +8432,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8333,7 +8455,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0139",
       "derived_properties": {
         "has_power_input": true,
@@ -8345,7 +8467,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-141",
@@ -8357,7 +8481,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8380,7 +8504,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0140",
       "derived_properties": {
         "has_power_input": true,
@@ -8392,7 +8516,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-142",
@@ -8404,7 +8530,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8427,7 +8553,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0141",
       "derived_properties": {
         "has_power_input": true,
@@ -8439,7 +8565,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-143",
@@ -8451,7 +8579,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8474,7 +8602,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0142",
       "derived_properties": {
         "has_power_input": true,
@@ -8486,7 +8614,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-144",
@@ -8498,7 +8628,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8521,7 +8651,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0143",
       "derived_properties": {
         "has_power_input": true,
@@ -8533,7 +8663,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-145",
@@ -8545,7 +8677,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8568,7 +8700,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0144",
       "derived_properties": {
         "has_power_input": true,
@@ -8580,7 +8712,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-146",
@@ -8592,7 +8726,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8615,7 +8749,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0145",
       "derived_properties": {
         "has_power_input": true,
@@ -8627,7 +8761,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-147",
@@ -8639,7 +8775,7 @@
       "verified": false,
       "data_quality": "unverifiable_vendor",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -8662,7 +8798,7 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-ACT-0146",
       "derived_properties": {
         "has_power_input": true,
@@ -8674,7 +8810,9 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "actuator-sea-001",
@@ -9258,7 +9396,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9279,7 +9417,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0155",
       "derived_properties": {
         "has_power_input": true,
@@ -9289,7 +9427,7 @@
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20LCS%20%E7%B3%BB%E5%88%97%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-leaderdrive-lcd",
@@ -9325,7 +9463,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9346,7 +9484,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0156",
       "derived_properties": {
         "has_power_input": true,
@@ -9356,7 +9494,7 @@
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20LCD%20%E8%B6%85%E8%96%84%E5%9E%8B%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-leaderdrive-csg",
@@ -9387,7 +9525,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9408,7 +9546,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0157",
       "derived_properties": {
         "has_power_input": true,
@@ -9418,7 +9556,7 @@
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20CSG%20%E9%AB%98%E6%89%AD%E7%9F%A9%E5%9E%8B%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-leaderdrive-micro",
@@ -9507,7 +9645,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9528,7 +9666,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0159",
       "derived_properties": {
         "has_power_input": true,
@@ -9538,7 +9676,7 @@
       "source_url": "https://www.google.com/search?q=Harmonic%20Drive%20Systems%20Inc.%20(%E5%93%88%E9%BB%98%E7%BA%B3%E7%A7%91%2C%20%E6%97%A5%E6%9C%AC)%20Harmonic%20Drive%20CSG-2UH%20%E7%B3%BB%E5%88%97%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-laifual-series",
@@ -9565,7 +9703,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9586,7 +9724,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0160",
       "derived_properties": {
         "has_power_input": true,
@@ -9596,7 +9734,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B5%99%E6%B1%9F%E6%9D%A5%E7%A6%8F%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%20(Laifual)%20%E6%9D%A5%E7%A6%8F%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%E7%B3%BB%E5%88%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-tongchuan-series",
@@ -9622,7 +9760,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9643,7 +9781,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0161",
       "derived_properties": {
         "has_power_input": true,
@@ -9653,7 +9791,7 @@
       "source_url": "https://www.google.com/search?q=%E5%90%8C%E5%B7%9D%E7%A7%91%E6%8A%80%20(Tongchuan)%20%E5%90%8C%E5%B7%9D%E7%A7%91%E6%8A%80%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%E7%B3%BB%E5%88%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-shanchuan-hans",
@@ -9679,7 +9817,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9700,7 +9838,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0162",
       "derived_properties": {
         "has_power_input": true,
@@ -9710,7 +9848,7 @@
       "source_url": "https://www.google.com/search?q=%E6%9D%89%E5%B7%9D%E8%B0%90%E6%B3%A2%20%2F%20%E5%A4%A7%E6%97%8F%E6%BF%80%E5%85%89%20(002008.SZ)%20%E6%9D%89%E5%B7%9D%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%EF%BC%88%E5%A4%A7%E6%97%8F%E6%BF%80%E5%85%89%E5%AD%90%E5%85%AC%E5%8F%B8%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-wuzhou-reverse",
@@ -9753,7 +9891,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9774,7 +9912,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0163",
       "derived_properties": {
         "has_power_input": true,
@@ -9784,7 +9922,7 @@
       "source_url": "https://www.google.com/search?q=%E4%BA%94%E6%B4%B2%E6%96%B0%E6%98%A5%E9%9B%86%E5%9B%A2%20(603667.SH)%20%E4%BA%94%E6%B4%B2%E6%96%B0%E6%98%A5%20%E5%8F%8D%E5%90%91%E5%BC%8F%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-henglihydraulic",
@@ -9822,7 +9960,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9843,7 +9981,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0164",
       "derived_properties": {
         "has_power_input": true,
@@ -9853,7 +9991,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B1%9F%E8%8B%8F%E6%81%92%E7%AB%8B%E6%B6%B2%E5%8E%8B%20(601100.SH)%20%E6%81%92%E7%AB%8B%E6%B6%B2%E5%8E%8B%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20%2F%20%E7%BA%BF%E6%80%A7%E9%A9%B1%E5%8A%A8%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-best-yuhua-c0",
@@ -9892,7 +10030,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9913,7 +10051,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0165",
       "derived_properties": {
         "has_power_input": true,
@@ -9923,7 +10061,7 @@
       "source_url": "https://www.google.com/search?q=%E6%97%A0%E9%94%A1%E8%B4%9D%E6%96%AF%E7%89%B9%E7%B2%BE%E6%9C%BA%20(300580.SZ)%20%E5%AD%90%E5%85%AC%E5%8F%B8%E5%AE%87%E5%8D%8E%E7%B2%BE%E6%9C%BA%20%E8%B4%9D%E6%96%AF%E7%89%B9%20%E5%AE%87%E5%8D%8E%E7%B2%BE%E6%9C%BA%20C0%20%E7%BA%A7%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-qinchuan-machine",
@@ -9962,7 +10100,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -9983,7 +10121,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0166",
       "derived_properties": {
         "has_power_input": true,
@@ -9993,7 +10131,7 @@
       "source_url": "https://www.google.com/search?q=%E7%A7%A6%E5%B7%9D%E6%9C%BA%E5%BA%8A%E5%B7%A5%E5%85%B7%E9%9B%86%E5%9B%A2%20(000837.SZ)%20%E7%A7%A6%E5%B7%9D%E6%9C%BA%E5%BA%8A%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-beite-c5",
@@ -10030,7 +10168,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10051,7 +10189,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0167",
       "derived_properties": {
         "has_power_input": true,
@@ -10061,7 +10199,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E5%8C%97%E7%89%B9%E7%A7%91%E6%8A%80%20(603009.SH)%20%E5%8C%97%E7%89%B9%E7%A7%91%E6%8A%80%20C5%20%E7%BA%A7%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-dingzhi-micro",
@@ -10096,7 +10234,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10117,7 +10255,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0168",
       "derived_properties": {
         "has_power_input": true,
@@ -10127,7 +10265,7 @@
       "source_url": "https://www.google.com/search?q=%E5%B8%B8%E5%B7%9E%E9%BC%8E%E6%99%BA%E6%9C%BA%E7%94%B5%20(Dingzhi%2C%20%E6%B1%9F%E8%8B%8F%E9%9B%B7%E5%88%A9%E5%AD%90%E5%85%AC%E5%8F%B8)%20%E9%BC%8E%E6%99%BA%E7%A7%91%E6%8A%80%20%E5%BE%AE%E5%9E%8B%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-shuanglin-inverted",
@@ -10155,7 +10293,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10176,7 +10314,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0169",
       "derived_properties": {
         "has_power_input": true,
@@ -10186,7 +10324,7 @@
       "source_url": "https://www.google.com/search?q=%E5%AE%81%E6%B3%A2%E5%8F%8C%E6%9E%97%E6%B1%BD%E8%BD%A6%E9%83%A8%E4%BB%B6%20(300100.SZ)%20%E5%8F%8C%E6%9E%97%E8%82%A1%E4%BB%BD%20%E5%8F%8D%E5%90%91%E5%BC%8F%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-rollvis-rvr",
@@ -10220,7 +10358,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10241,7 +10379,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0170",
       "derived_properties": {
         "has_power_input": true,
@@ -10251,7 +10389,7 @@
       "source_url": "https://www.google.com/search?q=Rollvis%20SA%20(%E7%91%9E%E5%A3%AB%2C%202016%20%E5%B9%B4%E8%A2%AB%20GSA%20%E5%B9%B6%E8%B4%AD)%20Rollvis%20RVR%20%2F%20RVD%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-gsa-swiss",
@@ -10279,7 +10417,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10300,7 +10438,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0171",
       "derived_properties": {
         "has_power_input": true,
@@ -10310,7 +10448,7 @@
       "source_url": "https://www.google.com/search?q=GSA%20(%E7%91%9E%E5%A3%AB)%20GSA%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-ewellix-sr",
@@ -10345,7 +10483,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10366,7 +10504,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0172",
       "derived_properties": {
         "has_power_input": true,
@@ -10376,7 +10514,7 @@
       "source_url": "https://www.google.com/search?q=Ewellix%20(%E7%91%9E%E5%85%B8%2C%202022%20%E5%B9%B4%E8%A2%AB%E8%88%8D%E5%BC%97%E5%8B%92%20Schaeffler%20%E6%94%B6%E8%B4%AD)%20Ewellix%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%EF%BC%88SR%2FSRA%20%E7%B3%BB%E5%88%97%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-skf-heavyload",
@@ -10404,7 +10542,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10425,7 +10563,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0173",
       "derived_properties": {
         "has_power_input": true,
@@ -10435,7 +10573,7 @@
       "source_url": "https://www.google.com/search?q=SKF%20(%E7%91%9E%E5%85%B8)%20SKF%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%EF%BC%88%E9%87%8D%E8%BD%BD%E7%B3%BB%E5%88%97%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-bosch-rexroth",
@@ -10463,7 +10601,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10484,7 +10622,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0174",
       "derived_properties": {
         "has_power_input": true,
@@ -10494,7 +10632,7 @@
       "source_url": "https://www.google.com/search?q=Bosch%20Rexroth%20(%E5%BE%B7%E5%9B%BD)%20%E5%8D%9A%E4%B8%96%E5%8A%9B%E5%A3%AB%E4%B9%90%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-kinco-fmk",
@@ -10531,7 +10669,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10552,7 +10690,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0175",
       "derived_properties": {
         "has_power_input": true,
@@ -10562,7 +10700,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E6%AD%A5%E7%A7%91%E8%87%AA%E5%8A%A8%E5%8C%96%20(Kinco%2C%20688160.SH)%20%E6%AD%A5%E7%A7%91%E8%82%A1%E4%BB%BD%20FMK%20%E7%B3%BB%E5%88%97%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%EF%BC%88%E7%AC%AC%E5%9B%9B%E4%BB%A3%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-kinco-fmc",
@@ -10663,7 +10801,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10684,7 +10822,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0177",
       "derived_properties": {
         "has_power_input": true,
@@ -10694,7 +10832,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20(Leadshine%2C%20002979.SZ)%20%2F%20%E4%B8%8A%E6%B5%B7%E9%9B%B7%E8%B5%9B%E6%9C%BA%E5%99%A8%E4%BA%BA%20%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20FM2%20%E7%B3%BB%E5%88%97%E8%B6%85%E9%AB%98%E5%AF%86%E5%BA%A6%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-leisai-fm1",
@@ -10851,7 +10989,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10872,7 +11010,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0180",
       "derived_properties": {
         "has_power_input": true,
@@ -10882,7 +11020,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E6%B1%87%E5%B7%9D%E6%8A%80%E6%9C%AF%20(Inovance%2C%20300124.SZ)%20%E6%B1%87%E5%B7%9D%E6%8A%80%E6%9C%AF%20MX%20%2F%20TMB%20%E7%B3%BB%E5%88%97%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-haozhi-frameless",
@@ -10978,7 +11116,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -10999,7 +11137,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0182",
       "derived_properties": {
         "has_power_input": true,
@@ -11009,7 +11147,7 @@
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E4%BC%9F%E5%88%9B%E7%94%B5%E6%B0%94%20(688698.SH)%20%E4%BC%9F%E5%88%9B%E7%94%B5%E6%B0%94%20%E5%BE%AE%E5%9E%8B%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-wolong-frameless",
@@ -11046,7 +11184,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11067,7 +11205,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0183",
       "derived_properties": {
         "has_power_input": true,
@@ -11077,7 +11215,7 @@
       "source_url": "https://www.google.com/search?q=%E5%8D%A7%E9%BE%99%E7%94%B5%E6%B0%94%E9%A9%B1%E5%8A%A8%E9%9B%86%E5%9B%A2%20(600580.SH)%20%E5%8D%A7%E9%BE%99%E7%94%B5%E9%A9%B1%20%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20%2F%20%E9%AB%98%E7%88%86%E5%8F%91%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-hanslaser-frameless",
@@ -11108,7 +11246,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11129,7 +11267,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0184",
       "derived_properties": {
         "has_power_input": true,
@@ -11139,7 +11277,7 @@
       "source_url": "https://www.google.com/search?q=%E5%A4%A7%E6%97%8F%E7%94%B5%E6%9C%BA%20%2F%20%E5%A4%A7%E6%97%8F%E6%BF%80%E5%85%89%20(002008.SZ)%20%E5%A4%A7%E6%97%8F%E7%94%B5%E6%9C%BA%20%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-qianghe-u-series",
@@ -11186,7 +11324,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11207,7 +11345,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0185",
       "derived_properties": {
         "has_power_input": true,
@@ -11217,7 +11355,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%B8%82%E5%BC%BA%E5%92%8C%E7%94%B5%E6%9C%BA%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%20%E5%BC%BA%E5%92%8C%E7%94%B5%E6%9C%BA%20U%20%E7%B3%BB%E5%88%97%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-mingzhi-coreless",
@@ -11257,7 +11395,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11278,7 +11416,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0186",
       "derived_properties": {
         "has_power_input": true,
@@ -11288,7 +11426,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E9%B8%A3%E5%BF%97%E7%94%B5%E5%99%A8%20(603728.SH)%20%E9%B8%A3%E5%BF%97%E7%94%B5%E5%99%A8%20%E7%A9%BA%E5%BF%83%E6%9D%AF%E5%BE%AE%E5%9E%8B%E4%BC%BA%E6%9C%8D%E7%94%B5%E6%9C%BA%EF%BC%88%E7%81%B5%E5%B7%A7%E6%89%8B%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-leaderdrive-mechatronic",
@@ -11328,7 +11466,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11349,7 +11487,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0187",
       "derived_properties": {
         "has_power_input": true,
@@ -11359,7 +11497,7 @@
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-haozhi-integrated",
@@ -11396,7 +11534,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11417,7 +11555,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0188",
       "derived_properties": {
         "has_power_input": true,
@@ -11427,7 +11565,7 @@
       "source_url": "https://www.google.com/search?q=%E5%B9%BF%E5%B7%9E%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20(300503.SZ)%20%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-kinco-triple",
@@ -11461,7 +11599,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11482,7 +11620,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0189",
       "derived_properties": {
         "has_power_input": true,
@@ -11492,7 +11630,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E6%AD%A5%E7%A7%91%E8%87%AA%E5%8A%A8%E5%8C%96%20(Kinco%2C%20688160.SH)%20%E6%AD%A5%E7%A7%91%E8%82%A1%E4%BB%BD%20%E7%94%B5%E6%9C%BA-%E9%A9%B1%E5%8A%A8-%E7%BC%96%E7%A0%81%E5%99%A8%E4%B8%89%E5%90%88%E4%B8%80%E9%A9%B1%E6%8E%A7%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-leisai-module",
@@ -11526,7 +11664,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11547,7 +11685,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0190",
       "derived_properties": {
         "has_power_input": true,
@@ -11557,7 +11695,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E9%9B%B7%E8%B5%9B%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%A7%91%E6%8A%80%EF%BC%88%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20002979.SZ%20%E5%AD%90%E5%85%AC%E5%8F%B8%EF%BC%89%20%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20%E8%B6%85%E9%AB%98%E5%AF%86%E5%BA%A6%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-tuopu-linear",
@@ -11594,7 +11732,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11615,7 +11753,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0191",
       "derived_properties": {
         "has_power_input": true,
@@ -11625,7 +11763,7 @@
       "source_url": "https://www.google.com/search?q=%E5%AE%81%E6%B3%A2%E6%8B%93%E6%99%AE%E9%9B%86%E5%9B%A2%20(601689.SH)%20%E6%8B%93%E6%99%AE%E9%9B%86%E5%9B%A2%20%E7%9B%B4%E7%BA%BF%E6%89%A7%E8%A1%8C%E5%99%A8%E6%80%BB%E6%88%90%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-sanhua-actuator",
@@ -11660,7 +11798,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11681,7 +11819,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0192",
       "derived_properties": {
         "has_power_input": true,
@@ -11691,7 +11829,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B5%99%E6%B1%9F%E4%B8%89%E8%8A%B1%E6%99%BA%E8%83%BD%E6%8E%A7%E5%88%B6%20(002050.SZ)%20%E4%B8%89%E8%8A%B1%E6%99%BA%E6%8E%A7%20%E6%9C%BA%E7%94%B5%E6%89%A7%E8%A1%8C%E5%99%A8%E6%80%BB%E6%88%90%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-zhaowei-micro",
@@ -11721,7 +11859,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11742,7 +11880,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0193",
       "derived_properties": {
         "has_power_input": true,
@@ -11752,7 +11890,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%85%86%E5%A8%81%E6%9C%BA%E7%94%B5%20(003021.SZ)%20%E5%85%86%E5%A8%81%E6%9C%BA%E7%94%B5%20%E5%BE%AE%E5%9E%8B%E7%B2%BE%E5%AF%86%E4%BC%A0%E5%8A%A8%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-topband-hand",
@@ -11787,7 +11925,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -11808,7 +11946,7 @@
       },
       "entity_kind": "component",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-ACT-0194",
       "derived_properties": {
         "has_power_input": true,
@@ -11818,7 +11956,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E6%8B%93%E9%82%A6%E8%82%A1%E4%BB%BD%20(002139.SZ)%20%E6%8B%93%E9%82%A6%E8%82%A1%E4%BB%BD%20%E7%81%B5%E5%B7%A7%E6%89%8B%E4%B8%80%E4%BD%93%E5%8C%96%E9%A9%B1%E5%8A%A8%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-oss-leap-hand",
@@ -13233,7 +13371,9 @@
       "entity_kind_basis": "默认归类",
       "id": "ACT-3275",
       "rp_id": "RP-ACT-0218",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "actuators",
@@ -13284,7 +13424,9 @@
       "entity_kind_basis": "默认归类",
       "id": "ACT-3276",
       "rp_id": "RP-ACT-0219",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "category": "actuators",
@@ -13336,7 +13478,9 @@
       "entity_kind_basis": "默认归类",
       "id": "ACT-3277",
       "rp_id": "RP-ACT-0220",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-damiao-4340p",
@@ -13389,7 +13533,9 @@
       ],
       "compatibility_note": "与 RobStride RSM 系列不兼容（同外观不同电机版本），不可互换。Damiao43 系列其他型号（4310/4340 等）之间是否兼容需查厂商官方规格。",
       "source_tier_basis": "deep_link:github.com/Seeed-Projects/reBot-DevArm",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "ACT-robstride-rsm",
@@ -13442,7 +13588,9 @@
       ],
       "compatibility_note": "与 Damiao43 系列不兼容（同外观不同电机版本），不可互换。RobStride 其他型号之间是否兼容需查厂商官方规格。",
       "source_tier_basis": "deep_link:github.com/Seeed-Projects/reBot-DevArm",
-      "confidence_tier": "observed"
+      "confidence_tier": "observed",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ]
 }

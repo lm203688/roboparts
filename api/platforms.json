@@ -23,7 +23,7 @@
     }
   },
   "count": 106,
-  "updated": "2026-10-16T22:43:39.757610Z",
+  "updated": "2026-10-18T05:46:45.825363Z",
   "data": [
     {
       "id": "ACT-patsnap-actuator",
@@ -62,7 +62,7 @@
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "C",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -80,12 +80,12 @@
       "entity_kind": "market_intelligence",
       "kind_basis": "type=market_report（研究/报告类条目，非可采购零部件）",
       "source_tier_prev": "B",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "rp_id": "RP-PLA-0001",
       "source_url": "https://www.google.com/search?q=%E5%A4%9A%E5%AE%B6%20PatSnap%20Humanoid%20Actuator%20Analysis%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "type=market_report（研究/报告类条目，非可采购零部件）",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "RPLAT-001",
@@ -169,7 +169,9 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-003",
@@ -209,7 +211,9 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0004",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-004",
@@ -393,7 +397,9 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0008",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-008",
@@ -414,7 +420,7 @@
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -437,14 +443,16 @@
         "gap": "厂商未公开或尚未采集机械安装接口规格"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0009",
       "source_url": "https://www.google.com/search?q=X-Humanoid%20Embodied%20Tien%20Kung%203.0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-009",
@@ -492,8 +500,10 @@
       "rp_id": "RP-PLA-0010",
       "entity_kind_basis": "默认归类",
       "quarantine_reason": "Duplicate of RPLAT-010 (Tesla Optimus Gen 3) - same name/manufacturer, deduplication isolation per 2026-10-08 audit",
-      "duplicate_of": "RPLAT-010",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "last_verified": null,
+      "last_verified_basis": "never_probed",
+      "duplicate_of": "RPLAT-010"
     },
     {
       "id": "RPLAT-010",
@@ -544,7 +554,9 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0011",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-011",
@@ -595,7 +607,9 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0012",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-012",
@@ -651,7 +665,9 @@
         "UDP"
       ],
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-013",
@@ -704,7 +720,9 @@
         "UDP"
       ],
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     },
     {
       "id": "RPLAT-014",
@@ -774,7 +792,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -794,7 +812,7 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0016",
       "source_url": "https://www.google.com/search?q=Figure%20AI%20Figure%20AI%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -817,7 +835,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -837,7 +855,7 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0017",
       "source_url": "https://www.google.com/search?q=Agility%20Robotics%20Agility%20Robotics%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -860,7 +878,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -880,7 +898,7 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0018",
       "source_url": "https://www.google.com/search?q=%E7%89%B9%E6%96%AF%E6%8B%89%20%E7%89%B9%E6%96%AF%E6%8B%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -903,7 +921,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -923,7 +941,7 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0019",
       "source_url": "https://www.google.com/search?q=%E6%B3%A2%E5%A3%AB%E9%A1%BF%E5%8A%A8%E5%8A%9B%20%E6%B3%A2%E5%A3%AB%E9%A1%BF%E5%8A%A8%E5%8A%9B%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -946,7 +964,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -966,7 +984,7 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0020",
       "source_url": "https://www.google.com/search?q=Apptronik%20Apptronik%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -989,7 +1007,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -1009,7 +1027,7 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=人形机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0021",
       "source_url": "https://www.google.com/search?q=1X%20Technologies%201X%20Technologies%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -1122,7 +1140,7 @@
       "verified": false,
       "data_quality": "placeholder_id",
       "quarantine": true,
-      "source_tier": "A",
+      "source_tier": "B",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
       "needs_provenance": true,
@@ -1142,7 +1160,7 @@
       },
       "entity_kind": "organization",
       "kind_basis": "type=机器人公司（企业/机构主体，不是实物零部件，无接口可判定）",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0024",
       "source_url": "https://www.google.com/search?q=%E4%BC%98%E5%82%B2%E6%9C%BA%E5%99%A8%E4%BA%BA%20%E4%BC%98%E5%82%B2%E6%9C%BA%E5%99%A8%E4%BA%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
@@ -4833,8 +4851,8 @@
       "quarantine": true,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
       "rp_id": "SUPERDEX-openarm-v20-right-arm",
-      "duplicate_of": "SUPERDEX-openarm-v20-left-arm",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "duplicate_of": "SUPERDEX-openarm-v20-left-arm"
     },
     {
       "id": "SUPERDEX-fr3-dg5f-short-seed-right",
@@ -4928,8 +4946,8 @@
       "quarantine": true,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
       "rp_id": "SUPERDEX-fr3-dg5f-short-seed-right",
-      "duplicate_of": "SUPERDEX-fr3-dg5f-short-right",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "duplicate_of": "SUPERDEX-fr3-dg5f-short-right"
     },
     {
       "id": "SUPERDEX-fr3-dg5f-short-right",

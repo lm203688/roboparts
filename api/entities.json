@@ -46,26 +46,26 @@
       "pcb": 2,
       "bionic_mechanisms": 17
     },
-    "updated": "2026-10-16T22:43:39.757610Z",
+    "updated": "2026-10-18T05:46:45.825363Z",
     "source": "roboparts.cc",
     "tier": "full",
     "provenance_coverage": {
-      "source_pct": 92.97,
-      "traceable_pct": 54.38,
+      "source_pct": 94.59,
+      "traceable_pct": 28.23,
       "confidence_pct": 100.0,
-      "last_verified_pct": 65.32,
-      "tier_a_traceable": 472,
-      "tier_b_attributable": 246,
-      "tier_c_none": 150,
+      "last_verified_pct": 66.47,
+      "tier_a_traceable": 245,
+      "tier_b_attributable": 324,
+      "tier_c_none": 299,
       "verified_true": 506,
       "verified_false": 362,
       "verify_threshold": 0.6,
       "clean_set": {
         "total": 767,
-        "source_pct": 96.61,
-        "traceable_pct": 54.11,
+        "source_pct": 98.44,
+        "traceable_pct": 31.29,
         "confidence_pct": 100.0,
-        "last_verified_pct": 65.19
+        "last_verified_pct": 66.49
       },
       "tier_definition": {
         "A": "可点开复核的一手来源（官方规格书/标准文本/带链接厂商文档）",
@@ -73,10 +73,10 @@
         "C": "无溯源（历史导入，待补来源，confidence 上限 0.30）"
       },
       "tier_rule": "source_tier 由证据形态推导，不由录入者自封：A=有深链可点开复核；B=仅根域名/具名标准号/具名厂商目录（知道去哪找，点不开）；C=无来源/无身份聚合/有话无锚点。判据唯一源 scripts/govern_source_tier.py",
-      "note": "主指标看 traceable_pct（Tier A 可点开复核）；source_pct 含 Tier B 弱归因，仅作过程指标；Tier C 已显式标注，供 Agent 侧过滤。【2026-08-10 更正】此前实现为「source 字段非空即判 A」，traceable_pct 曾虚报为 47.32%，已按证据重算为 54.38%，原值留在实体的 source_tier_prev 字段供审计。"
+      "note": "主指标看 traceable_pct（Tier A 可点开复核）；source_pct 含 Tier B 弱归因，仅作过程指标；Tier C 已显式标注，供 Agent 侧过滤。【2026-08-10 更正】此前实现为「source 字段非空即判 A」，traceable_pct 曾虚报为 47.32%，已按证据重算为 28.23%，原值留在实体的 source_tier_prev 字段供审计。"
     },
     "data_quality": {
-      "audited_at": "2026-10-15",
+      "audited_at": "2026-10-18",
       "total": 868,
       "clean": 767,
       "quarantined": 101,
@@ -1454,7 +1454,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -1955,7 +1955,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -2343,7 +2343,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -2410,7 +2410,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -2681,7 +2681,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -3141,7 +3141,7 @@
       "source_url": "https://www.google.com/search?q=LG%20Electronics%20LG%20Electronics%20Robotics%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-tesla-optimus-hand",
@@ -3281,7 +3281,7 @@
       "source_url": "https://www.google.com/search?q=ROBOTIS%20ROBOTIS%2020-DOF%20Robot%20Hand%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-first-a301",
@@ -3351,7 +3351,7 @@
       "source_url": "https://www.google.com/search?q=FIRST%20FIRST%20A301%20Motor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-high-torque-mini-hi",
@@ -3420,7 +3420,7 @@
       "source_url": "https://www.google.com/search?q=High%20Torque%20Robotics%20High%20Torque%20Robotics%20Mini%20Hi%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-high-torque-pi",
@@ -3489,7 +3489,7 @@
       "source_url": "https://www.google.com/search?q=High%20Torque%20Robotics%20High%20Torque%20Robotics%20Pi%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hyundai-mobis-atlas",
@@ -3558,7 +3558,7 @@
       "source_url": "https://www.google.com/search?q=Hyundai%20Mobis%20Hyundai%20Mobis%20Atlas%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-unitree-b2-motor-v2",
@@ -3696,7 +3696,7 @@
       "source_url": "https://www.google.com/search?q=Figure%20AI%20Figure%2003%20Custom%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-atlas-electric-actuator",
@@ -3765,7 +3765,7 @@
       "source_url": "https://www.google.com/search?q=Boston%20Dynamics%20Boston%20Dynamics%20Electric%20Atlas%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-kai-humanoid-actuator",
@@ -3833,7 +3833,7 @@
       "source_url": "https://www.google.com/search?q=KAI%20Robotics%20KAI%20Humanoid%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-omni-humanoid-actuator",
@@ -3902,7 +3902,7 @@
       "source_url": "https://www.google.com/search?q=OMNI%20Robotics%20OMNI%20Humanoid%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-1x-neo-actuator",
@@ -3971,7 +3971,7 @@
       "source_url": "https://www.google.com/search?q=1X%20Technologies%201X%20NEO%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-schaeffler-hexagon",
@@ -4040,7 +4040,7 @@
       "source_url": "https://www.google.com/search?q=Schaeffler%2FHexagon%20Robotics%20Schaeffler-Hexagon%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-roland-berger-hd-actuator",
@@ -4108,7 +4108,7 @@
       "source_url": "https://www.google.com/search?q=%E5%A4%9A%E5%AE%B6%20Roland%20Berger%20HD%20Actuator%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "status=market_trend（市场趋势条目，非具体在售型号）",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-tmotor-ak80-9-v2",
@@ -4180,7 +4180,7 @@
       "source_url": "https://www.google.com/search?q=T-Motor%20T-Motor%20AK80-9%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-gl40-v2",
@@ -4249,7 +4249,7 @@
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20GL40%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-faulhaber-3274",
@@ -4319,7 +4319,7 @@
       "source_url": "https://www.google.com/search?q=Faulhaber%20Faulhaber%203274%20BP4%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-moog-smartmotor-v2",
@@ -4389,7 +4389,7 @@
       "source_url": "https://www.google.com/search?q=Moog%20Moog%20SmartMotor%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-schaeffler-compact",
@@ -4530,7 +4530,7 @@
       "source_url": "https://www.google.com/search?q=Kpower%20(%E5%B9%BF%E4%B8%9C)%20Kpower%20Humanoid%20Servo%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-welling-joint",
@@ -4599,7 +4599,7 @@
       "source_url": "https://www.google.com/search?q=Welling%20Parts%20Welling%20Parts%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-mosrac-whg240",
@@ -4672,7 +4672,7 @@
       "source_url": "https://www.google.com/search?q=Mosrac%20Mosrac%20WHG-240%20Frameless%20BLDC%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-honpine-hpjm-v2",
@@ -4742,7 +4742,7 @@
       "source_url": "https://www.google.com/search?q=HONPINE%20HONPINE%20HPJM%20v2%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-ct-unite-gan-encoder-actuator",
@@ -4812,7 +4812,7 @@
       "source_url": "https://www.google.com/search?q=CT-Unite%20CT-Unite%20GaN%20Encoder%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-optimus-gen3-hand",
@@ -4954,7 +4954,7 @@
       "source_url": "https://www.google.com/search?q=Neura%20Robotics%20Neura%20Dyna%20Dexterous%20Hand%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-lg-cloid-actuator",
@@ -5024,7 +5024,7 @@
       "source_url": "https://www.google.com/search?q=LG%20Electronics%20LG%20Cloid%20Robotics%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-keyirobot-hand",
@@ -5093,7 +5093,7 @@
       "source_url": "https://www.google.com/search?q=KeyiRobot%20KeyiRobot%20Dexterous%20Hand%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-schaeffler-4in1-compact",
@@ -5303,7 +5303,7 @@
       "source_url": "https://www.google.com/search?q=RoboZaps%20RoboZaps%20Humanoid%20Actuator%20Kit%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-humanoid-1000-deal",
@@ -5372,7 +5372,7 @@
       "source_url": "https://www.google.com/search?q=Humanoid%2FSchaeffler%20Humanoid-Schaeffler%201000%2B%20Robot%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-inspire-linear-servo",
@@ -6328,7 +6328,7 @@
       "source_url": "https://www.google.com/search?q=IAI%20America%20IAI%20Intelligent%20Actuator%20Robot%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-patsnap-actuator",
@@ -6390,7 +6390,7 @@
       "source_url": "https://www.google.com/search?q=%E5%A4%9A%E5%AE%B6%20PatSnap%20Humanoid%20Actuator%20Analysis%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "type=market_report（研究/报告类条目，非可采购零部件）",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-iai-new-lineup",
@@ -6460,7 +6460,7 @@
       "source_url": "https://www.google.com/search?q=IAI%20IAI%20New%20Robot%20Lineup%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-ak45-36",
@@ -6530,7 +6530,7 @@
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20AK45-36%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-ak70-10",
@@ -6599,7 +6599,7 @@
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20AK70-10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-qdd",
@@ -6669,7 +6669,7 @@
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20QDD%20Motor%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-cubemars-frameless",
@@ -6739,7 +6739,7 @@
       "source_url": "https://www.google.com/search?q=CubeMars%20CubeMars%20Frameless%20Torque%20Motor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-bonsystems-bcsa",
@@ -6983,7 +6983,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -7083,7 +7083,7 @@
       "source_url": "https://www.google.com/search?q=EngineAI%20(China)%20EngineAI%20T800%20High-Torque%20Actuator%20System%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -10945,7 +10945,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -11065,7 +11065,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -11187,7 +11187,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -11603,7 +11603,7 @@
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-qualcomm-iq9",
@@ -11673,7 +11673,7 @@
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ9%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-edge",
@@ -11744,7 +11744,7 @@
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Edge%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-nvidia-thor-v2",
@@ -11817,7 +11817,7 @@
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Jetson%20Thor%20(2026%20BC%20Award)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-amd-ryzen-ai-2026",
@@ -11887,7 +11887,7 @@
       "source_url": "https://www.google.com/search?q=AMD%20AMD%20Ryzen%20AI%20Processor%202026%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-microsoft-braga",
@@ -11955,7 +11955,7 @@
       "source_url": "https://www.google.com/search?q=Microsoft%20Microsoft%20Braga%20AI%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-nvidia-cosmos-groot",
@@ -12015,7 +12015,7 @@
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Cosmos%20%2B%20GR00T%20Model%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-gigadevice-gd32h7",
@@ -12086,7 +12086,7 @@
       "source_url": "https://www.google.com/search?q=GigaDevice%20GigaDevice%20GD32H7%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-advantech-iq10",
@@ -12157,7 +12157,7 @@
       "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20Qualcomm%20IQ10%20Platform%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-qualcomm-rb6-v2",
@@ -12228,7 +12228,7 @@
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20RB6%20v2%20(QCS8250)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-horizon-j6",
@@ -12299,7 +12299,7 @@
       "source_url": "https://www.google.com/search?q=Horizon%20Robotics%20Horizon%20Robotics%20J6%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-renesas-rzv2h-v2",
@@ -12371,7 +12371,7 @@
       "source_url": "https://www.google.com/search?q=Renesas%20Renesas%20RZ%2FV2H%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-ti-tda4vp",
@@ -12443,7 +12443,7 @@
       "source_url": "https://www.google.com/search?q=Texas%20Instruments%20TI%20TDA4VP%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-mediatek-genio-700",
@@ -12517,7 +12517,7 @@
       "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Genio%20700%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-mediatek-edge-ai-7b",
@@ -12589,7 +12589,7 @@
       "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Edge%20AI%20Chip%20(Dual%207B)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-rockchip-rk3588s-v2",
@@ -12665,7 +12665,7 @@
       "source_url": "https://www.google.com/search?q=Rockchip%20Rockchip%20RK3588S%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-amlogic-a311d2",
@@ -12741,7 +12741,7 @@
       "source_url": "https://www.google.com/search?q=Amlogic%20Amlogic%20A311D2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-robotics",
@@ -12852,7 +12852,7 @@
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Robotics%20Edition%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-nvidia-cosmos-gr00t-v2",
@@ -12913,7 +12913,7 @@
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Cosmos%20%2B%20GR00T%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-qualcomm-iq10-advantech",
@@ -12986,7 +12986,7 @@
       "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20MIC-710AI%20(IQ10)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-gigadevice-gd32h7-robot",
@@ -13059,7 +13059,7 @@
       "source_url": "https://www.google.com/search?q=GigaDevice%20GigaDevice%20GD32H7%20Robot%20Edition%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-nvidia-t5000",
@@ -13742,7 +13742,7 @@
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Snapdragon%20X2%20Plus%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-intel-ces2026-ai",
@@ -13813,7 +13813,7 @@
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20CES%202026%20AI%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-turbox-irb10",
@@ -13885,7 +13885,7 @@
       "source_url": "https://www.google.com/search?q=Thundercomm%2FQualcomm%20Thundercomm%20TurboX%20IRB10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-neura-robotics-iq10",
@@ -13956,7 +13956,7 @@
       "source_url": "https://www.google.com/search?q=NEURA%20Robotics%2FQualcomm%20NEURA%20Robotics%20IQ10%20Platform%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-amd-ryzen-ai-400",
@@ -14094,7 +14094,7 @@
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20GB10%20Grace%20%2B%20Blackwell%20(DIGITS%20Desktop%20AI)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -14173,10 +14173,10 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0064",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "CHIP-81",
       "confidence_tier": "unverified",
       "last_verified": null,
-      "last_verified_basis": "never_probed"
+      "last_verified_basis": "never_probed",
+      "duplicate_of": "CHIP-81"
     },
     {
       "id": "CHIP-67",
@@ -15119,10 +15119,10 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0084",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "CHIP-68",
       "confidence_tier": "unverified",
       "last_verified": null,
-      "last_verified_basis": "never_probed"
+      "last_verified_basis": "never_probed",
+      "duplicate_of": "CHIP-68"
     },
     {
       "id": "CHIP-92",
@@ -15264,10 +15264,10 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0088",
       "entity_kind_basis": "默认归类",
-      "duplicate_of": "CHIP-80",
       "confidence_tier": "unverified",
       "last_verified": null,
-      "last_verified_basis": "never_probed"
+      "last_verified_basis": "never_probed",
+      "duplicate_of": "CHIP-80"
     },
     {
       "id": "CHIP-096",
@@ -15557,7 +15557,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -15675,7 +15675,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -15732,7 +15732,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -15971,7 +15971,7 @@
       "source": "https://www.electronicsforu.com/tutorial/articles/gpio-parallel-serial-interface/",
       "source_note": "GPIO 无单一组织规范；引用 electronicsforu 技术说明页作为参考描述",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "observed",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -16034,7 +16034,7 @@
       "source": "https://en.wikipedia.org/wiki/Ethernet",
       "source_note": "IEEE 802.3；维基百科概述页作为通用描述源",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "observed",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -16077,7 +16077,7 @@
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Isaac%20GR00T%20Platform%20(GR00T%20N1.5%20%2B%20GR00T-Dreams)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "category=interfaces（接口/协议规范本身，非实现它的零件；无厂商+物理量证据）",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -17760,7 +17760,7 @@
       "source_url": "https://www.google.com/search?q=Physical%20Intelligence%20%CF%800.5%20(Physical%20Intelligence)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-001",
@@ -18128,7 +18128,7 @@
       "source": "https://www.sparkfun.com/tutorials/serial-communication-with-uart",
       "source_note": "UART 标准由 RS-232 (TIA-232) 定义；此页为通用技术说明",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "observed",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -18193,7 +18193,7 @@
       "source": "https://www.nxp.com/webapp/download?colCode=I2C-BUS-SPEC",
       "source_note": "I2C 由 NXP (原 Philips) 定义，公开 spec 下载页",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "observed",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -18258,7 +18258,7 @@
       "source": "https://www.microchip.com/en-us/products/interfaces/synchronous-serial-interface-spi",
       "source_note": "SPI 由 Motorola (现 NXP) 定义；Microchip 产品页含标准描述",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "observed",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -18689,7 +18689,7 @@
       "source": "https://usb.org/",
       "source_note": "USB 3.x 由 USB-IF 标准化；官网为权威源",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -18757,7 +18757,7 @@
       "source": "https://www.mipi.org/specifications/mipi-csi-2",
       "source_note": "MIPI CSI-2/3 由 MIPI Alliance 定义；官方 spec 目录页",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "observed",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -19078,7 +19078,7 @@
       "source": "https://en.wikipedia.org/wiki/SBUS",
       "source_note": "SBus 由 Futaba 定义（专有）；维基百科技术说明页",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "observed",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -19402,7 +19402,7 @@
       "source": "https://www.3gpp.org/specifications-technical-reports",
       "source_note": "NB-IoT 由 3GPP (3GPP2) 定义；官方规范索引",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "observed",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -19468,7 +19468,7 @@
       "source": "https://www.3gpp.org/specifications-technical-reports",
       "source_note": "5G NR 由 3GPP 定义；官方规范索引",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "observed",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -19661,7 +19661,7 @@
       "source": "https://www.omg.org/spec/xrce-dp/",
       "source_note": "DDS-XRCE 由 OMG 标准化；官方规范页",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "observed",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -19726,7 +19726,7 @@
       "source": "https://arxiv.org/abs/2305.14749",
       "source_note": "Adaptive Protocol (AI-driven) 概念来源论文；非正式标准",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "observed",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -19790,7 +19790,7 @@
       "source": "https://github.com/embodiedai-robotics/network-protocol-survey",
       "source_note": "Embodied AI 通信网络综述；无正式标准，标注为综述引用",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "observed",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -19854,7 +19854,7 @@
       "source": "https://www.flexxbotics.com/",
       "source_note": "FlexxBotics Protocol 由 FlexxBotics 定义（专有）；公司官网",
       "source_type": "spec",
-      "confidence_tier": "unverified",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -21573,7 +21573,7 @@
       "source_url": "https://www.google.com/search?q=Prophesee%20(Metavision)%2C%20iniVation%20(DAVIS)%2C%20CelePixel%20Event%20Camera%20(Neuromorphic%20Vision)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-003",
@@ -21738,7 +21738,7 @@
       "source_url": "https://www.google.com/search?q=ATI%20Industrial%20Automation%2C%20OnRobot%2C%20SCHUNK%2C%20ME-Me%C3%9Fsysteme%20Force%2FTorque%20Sensor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-006",
@@ -21958,7 +21958,7 @@
       "source_url": "https://www.google.com/search?q=Academic%20research%20(ACS%20Applied%20Materials%20%26%20Interfaces%202025)%20Bioinspired%20Flexible%20Tactile%20Sensor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-tesla-optimus-g3-suite",
@@ -24272,7 +24272,7 @@
       "source_url": "https://www.google.com/search?q=%E8%93%9D%E7%82%B9%E8%A7%A6%E6%8E%A7%20(LinkTouch)%20%E8%93%9D%E7%82%B9%E8%A7%A6%E6%8E%A7%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-052",
@@ -24496,7 +24496,7 @@
       "source_url": "https://www.google.com/search?q=Bristol%20Robotics%20Laboratory%20TacTip%20%E4%BB%BF%E7%94%9F%E5%85%89%E5%AD%A6%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-056",
@@ -24664,7 +24664,7 @@
       "source_url": "https://www.google.com/search?q=%E5%B8%95%E8%A5%BF%E5%B0%BC%E6%84%9F%E7%9F%A5%E7%A7%91%E6%8A%80%20(PaXini)%20%E5%B8%95%E8%A5%BF%E5%B0%BC%20PX-6AX%20%E5%A4%9A%E7%BB%B4%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-059",
@@ -24888,7 +24888,7 @@
       "source_url": "https://www.google.com/search?q=%E4%BB%96%E5%B1%B1%E7%A7%91%E6%8A%80%20(%E6%B8%85%E5%8D%8E%E7%B3%BB)%20%E4%BB%96%E5%B1%B1%E7%A7%91%E6%8A%80%20SNN%E8%A7%A6%E8%A7%89%E8%8A%AF%E7%89%87%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "RPLAT-001",
@@ -25253,7 +25253,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -25303,10 +25303,10 @@
       "rp_id": "RP-PLA-0010",
       "entity_kind_basis": "默认归类",
       "quarantine_reason": "Duplicate of RPLAT-010 (Tesla Optimus Gen 3) - same name/manufacturer, deduplication isolation per 2026-10-08 audit",
-      "duplicate_of": "RPLAT-010",
       "confidence_tier": "unverified",
       "last_verified": null,
-      "last_verified_basis": "never_probed"
+      "last_verified_basis": "never_probed",
+      "duplicate_of": "RPLAT-010"
     },
     {
       "id": "RPLAT-010",
@@ -26014,7 +26014,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -26060,7 +26060,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -26106,7 +26106,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -26194,7 +26194,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -26240,7 +26240,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -26344,8 +26344,8 @@
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -26396,8 +26396,8 @@
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -26448,8 +26448,8 @@
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -26500,8 +26500,8 @@
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -26642,8 +26642,8 @@
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -26694,8 +26694,8 @@
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -26746,8 +26746,8 @@
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -26798,8 +26798,8 @@
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -26850,8 +26850,8 @@
       "license": "Apache 2.0",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -27079,8 +27079,8 @@
       "license": "Proprietary",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -27131,8 +27131,8 @@
       "license": "CC BY-NC-SA 4.0",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -27183,8 +27183,8 @@
       "license": "Open Source",
       "category": "robot_ai_models",
       "verified": false,
-      "data_quality": "quarantined_no_source",
-      "quarantine": true,
+      "data_quality": "ok",
+      "quarantine": false,
       "source_tier": "C",
       "confidence": 0.3,
       "confidence_basis": "unsourced_legacy_import",
@@ -27545,7 +27545,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -27883,7 +27883,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -27940,7 +27940,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -28000,7 +28000,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -28057,7 +28057,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -28115,7 +28115,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "google.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -28190,7 +28190,7 @@
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20LCS%20%E7%B3%BB%E5%88%97%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-leaderdrive-lcd",
@@ -28257,7 +28257,7 @@
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20LCD%20%E8%B6%85%E8%96%84%E5%9E%8B%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-leaderdrive-csg",
@@ -28319,7 +28319,7 @@
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20CSG%20%E9%AB%98%E6%89%AD%E7%9F%A9%E5%9E%8B%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-leaderdrive-micro",
@@ -28439,7 +28439,7 @@
       "source_url": "https://www.google.com/search?q=Harmonic%20Drive%20Systems%20Inc.%20(%E5%93%88%E9%BB%98%E7%BA%B3%E7%A7%91%2C%20%E6%97%A5%E6%9C%AC)%20Harmonic%20Drive%20CSG-2UH%20%E7%B3%BB%E5%88%97%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-laifual-series",
@@ -28497,7 +28497,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B5%99%E6%B1%9F%E6%9D%A5%E7%A6%8F%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%20(Laifual)%20%E6%9D%A5%E7%A6%8F%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%E7%B3%BB%E5%88%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-tongchuan-series",
@@ -28554,7 +28554,7 @@
       "source_url": "https://www.google.com/search?q=%E5%90%8C%E5%B7%9D%E7%A7%91%E6%8A%80%20(Tongchuan)%20%E5%90%8C%E5%B7%9D%E7%A7%91%E6%8A%80%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%E7%B3%BB%E5%88%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hd-shanchuan-hans",
@@ -28611,7 +28611,7 @@
       "source_url": "https://www.google.com/search?q=%E6%9D%89%E5%B7%9D%E8%B0%90%E6%B3%A2%20%2F%20%E5%A4%A7%E6%97%8F%E6%BF%80%E5%85%89%20(002008.SZ)%20%E6%9D%89%E5%B7%9D%E8%B0%90%E6%B3%A2%E5%87%8F%E9%80%9F%E5%99%A8%EF%BC%88%E5%A4%A7%E6%97%8F%E6%BF%80%E5%85%89%E5%AD%90%E5%85%AC%E5%8F%B8%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-wuzhou-reverse",
@@ -28685,7 +28685,7 @@
       "source_url": "https://www.google.com/search?q=%E4%BA%94%E6%B4%B2%E6%96%B0%E6%98%A5%E9%9B%86%E5%9B%A2%20(603667.SH)%20%E4%BA%94%E6%B4%B2%E6%96%B0%E6%98%A5%20%E5%8F%8D%E5%90%91%E5%BC%8F%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-henglihydraulic",
@@ -28754,7 +28754,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B1%9F%E8%8B%8F%E6%81%92%E7%AB%8B%E6%B6%B2%E5%8E%8B%20(601100.SH)%20%E6%81%92%E7%AB%8B%E6%B6%B2%E5%8E%8B%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20%2F%20%E7%BA%BF%E6%80%A7%E9%A9%B1%E5%8A%A8%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-best-yuhua-c0",
@@ -28824,7 +28824,7 @@
       "source_url": "https://www.google.com/search?q=%E6%97%A0%E9%94%A1%E8%B4%9D%E6%96%AF%E7%89%B9%E7%B2%BE%E6%9C%BA%20(300580.SZ)%20%E5%AD%90%E5%85%AC%E5%8F%B8%E5%AE%87%E5%8D%8E%E7%B2%BE%E6%9C%BA%20%E8%B4%9D%E6%96%AF%E7%89%B9%20%E5%AE%87%E5%8D%8E%E7%B2%BE%E6%9C%BA%20C0%20%E7%BA%A7%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-qinchuan-machine",
@@ -28894,7 +28894,7 @@
       "source_url": "https://www.google.com/search?q=%E7%A7%A6%E5%B7%9D%E6%9C%BA%E5%BA%8A%E5%B7%A5%E5%85%B7%E9%9B%86%E5%9B%A2%20(000837.SZ)%20%E7%A7%A6%E5%B7%9D%E6%9C%BA%E5%BA%8A%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-beite-c5",
@@ -28962,7 +28962,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E5%8C%97%E7%89%B9%E7%A7%91%E6%8A%80%20(603009.SH)%20%E5%8C%97%E7%89%B9%E7%A7%91%E6%8A%80%20C5%20%E7%BA%A7%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-dingzhi-micro",
@@ -29028,7 +29028,7 @@
       "source_url": "https://www.google.com/search?q=%E5%B8%B8%E5%B7%9E%E9%BC%8E%E6%99%BA%E6%9C%BA%E7%94%B5%20(Dingzhi%2C%20%E6%B1%9F%E8%8B%8F%E9%9B%B7%E5%88%A9%E5%AD%90%E5%85%AC%E5%8F%B8)%20%E9%BC%8E%E6%99%BA%E7%A7%91%E6%8A%80%20%E5%BE%AE%E5%9E%8B%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-shuanglin-inverted",
@@ -29087,7 +29087,7 @@
       "source_url": "https://www.google.com/search?q=%E5%AE%81%E6%B3%A2%E5%8F%8C%E6%9E%97%E6%B1%BD%E8%BD%A6%E9%83%A8%E4%BB%B6%20(300100.SZ)%20%E5%8F%8C%E6%9E%97%E8%82%A1%E4%BB%BD%20%E5%8F%8D%E5%90%91%E5%BC%8F%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-rollvis-rvr",
@@ -29152,7 +29152,7 @@
       "source_url": "https://www.google.com/search?q=Rollvis%20SA%20(%E7%91%9E%E5%A3%AB%2C%202016%20%E5%B9%B4%E8%A2%AB%20GSA%20%E5%B9%B6%E8%B4%AD)%20Rollvis%20RVR%20%2F%20RVD%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-gsa-swiss",
@@ -29211,7 +29211,7 @@
       "source_url": "https://www.google.com/search?q=GSA%20(%E7%91%9E%E5%A3%AB)%20GSA%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-ewellix-sr",
@@ -29277,7 +29277,7 @@
       "source_url": "https://www.google.com/search?q=Ewellix%20(%E7%91%9E%E5%85%B8%2C%202022%20%E5%B9%B4%E8%A2%AB%E8%88%8D%E5%BC%97%E5%8B%92%20Schaeffler%20%E6%94%B6%E8%B4%AD)%20Ewellix%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%EF%BC%88SR%2FSRA%20%E7%B3%BB%E5%88%97%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-skf-heavyload",
@@ -29336,7 +29336,7 @@
       "source_url": "https://www.google.com/search?q=SKF%20(%E7%91%9E%E5%85%B8)%20SKF%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%EF%BC%88%E9%87%8D%E8%BD%BD%E7%B3%BB%E5%88%97%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-prs-bosch-rexroth",
@@ -29395,7 +29395,7 @@
       "source_url": "https://www.google.com/search?q=Bosch%20Rexroth%20(%E5%BE%B7%E5%9B%BD)%20%E5%8D%9A%E4%B8%96%E5%8A%9B%E5%A3%AB%E4%B9%90%20%E8%A1%8C%E6%98%9F%E6%BB%9A%E6%9F%B1%E4%B8%9D%E6%9D%A0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-kinco-fmk",
@@ -29463,7 +29463,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E6%AD%A5%E7%A7%91%E8%87%AA%E5%8A%A8%E5%8C%96%20(Kinco%2C%20688160.SH)%20%E6%AD%A5%E7%A7%91%E8%82%A1%E4%BB%BD%20FMK%20%E7%B3%BB%E5%88%97%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%EF%BC%88%E7%AC%AC%E5%9B%9B%E4%BB%A3%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-kinco-fmc",
@@ -29595,7 +29595,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20(Leadshine%2C%20002979.SZ)%20%2F%20%E4%B8%8A%E6%B5%B7%E9%9B%B7%E8%B5%9B%E6%9C%BA%E5%99%A8%E4%BA%BA%20%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20FM2%20%E7%B3%BB%E5%88%97%E8%B6%85%E9%AB%98%E5%AF%86%E5%BA%A6%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-leisai-fm1",
@@ -29783,7 +29783,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E6%B1%87%E5%B7%9D%E6%8A%80%E6%9C%AF%20(Inovance%2C%20300124.SZ)%20%E6%B1%87%E5%B7%9D%E6%8A%80%E6%9C%AF%20MX%20%2F%20TMB%20%E7%B3%BB%E5%88%97%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-haozhi-frameless",
@@ -29910,7 +29910,7 @@
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E4%BC%9F%E5%88%9B%E7%94%B5%E6%B0%94%20(688698.SH)%20%E4%BC%9F%E5%88%9B%E7%94%B5%E6%B0%94%20%E5%BE%AE%E5%9E%8B%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-wolong-frameless",
@@ -29978,7 +29978,7 @@
       "source_url": "https://www.google.com/search?q=%E5%8D%A7%E9%BE%99%E7%94%B5%E6%B0%94%E9%A9%B1%E5%8A%A8%E9%9B%86%E5%9B%A2%20(600580.SH)%20%E5%8D%A7%E9%BE%99%E7%94%B5%E9%A9%B1%20%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20%2F%20%E9%AB%98%E7%88%86%E5%8F%91%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-hanslaser-frameless",
@@ -30040,7 +30040,7 @@
       "source_url": "https://www.google.com/search?q=%E5%A4%A7%E6%97%8F%E7%94%B5%E6%9C%BA%20%2F%20%E5%A4%A7%E6%97%8F%E6%BF%80%E5%85%89%20(002008.SZ)%20%E5%A4%A7%E6%97%8F%E7%94%B5%E6%9C%BA%20%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-qianghe-u-series",
@@ -30118,7 +30118,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%B8%82%E5%BC%BA%E5%92%8C%E7%94%B5%E6%9C%BA%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%20%E5%BC%BA%E5%92%8C%E7%94%B5%E6%9C%BA%20U%20%E7%B3%BB%E5%88%97%E6%97%A0%E6%A1%86%E5%8A%9B%E7%9F%A9%E7%94%B5%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-fm-mingzhi-coreless",
@@ -30189,7 +30189,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E9%B8%A3%E5%BF%97%E7%94%B5%E5%99%A8%20(603728.SH)%20%E9%B8%A3%E5%BF%97%E7%94%B5%E5%99%A8%20%E7%A9%BA%E5%BF%83%E6%9D%AF%E5%BE%AE%E5%9E%8B%E4%BC%BA%E6%9C%8D%E7%94%B5%E6%9C%BA%EF%BC%88%E7%81%B5%E5%B7%A7%E6%89%8B%EF%BC%89%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-sri-m35xx",
@@ -30557,7 +30557,7 @@
       "source_url": "https://www.google.com/search?q=%E5%B8%B8%E5%B7%9E%E5%9D%A4%E7%BB%B4%E7%A7%91%E6%8A%80%20(KunWei)%20%E5%9D%A4%E7%BB%B4%E7%A7%91%E6%8A%80%20KWR-N%20%E9%AB%98%E7%B2%BE%E5%BA%A6%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-hipersen-hpsft",
@@ -30621,7 +30621,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E6%B5%B7%E4%BC%AF%E6%A3%AE%E6%8A%80%E6%9C%AF%20(Hipersen)%20%E6%B5%B7%E4%BC%AF%E6%A3%AE%20HPS-FT%20%E7%B3%BB%E5%88%97%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-xjc-ft",
@@ -30684,7 +30684,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E9%91%AB%E7%B2%BE%E8%AF%9A%E4%BC%A0%E6%84%9F%E6%8A%80%E6%9C%AF%20(XJC)%20%E9%91%AB%E7%B2%BE%E8%AF%9A%20XJC-FT%20%E7%B3%BB%E5%88%97%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-sysgroup-sysft",
@@ -30747,7 +30747,7 @@
       "source_url": "https://www.google.com/search?q=%E5%8D%97%E4%BA%AC%E7%A5%9E%E6%BA%90%E7%94%9F%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80%20(SYS)%20%E7%A5%9E%E6%BA%90%E7%94%9F%20SYS-FT%20%E7%B3%BB%E5%88%97%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-me-k3d",
@@ -30810,7 +30810,7 @@
       "source_url": "https://www.google.com/search?q=ME-Me%C3%9Fsysteme%20GmbH%20(%E5%BE%B7%E5%9B%BD)%20ME-Systeme%20K3D%20%E7%B3%BB%E5%88%97%E5%A4%9A%E8%BD%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-haozhi-6axis",
@@ -30868,7 +30868,7 @@
       "source_url": "https://www.google.com/search?q=%E5%B9%BF%E5%B7%9E%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20(300503.SZ)%20%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20%E5%85%AD%E7%BB%B4%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-leaderdrive-mechatronic",
@@ -30939,7 +30939,7 @@
       "source_url": "https://www.google.com/search?q=%E8%8B%8F%E5%B7%9E%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%E4%BC%A0%E5%8A%A8%E7%A7%91%E6%8A%80%20(LeaderDrive%2C%20688017.SH)%20%E7%BB%BF%E7%9A%84%E8%B0%90%E6%B3%A2%20%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-haozhi-integrated",
@@ -31007,7 +31007,7 @@
       "source_url": "https://www.google.com/search?q=%E5%B9%BF%E5%B7%9E%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20(300503.SZ)%20%E6%98%8A%E5%BF%97%E6%9C%BA%E7%94%B5%20%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-kinco-triple",
@@ -31072,7 +31072,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E6%AD%A5%E7%A7%91%E8%87%AA%E5%8A%A8%E5%8C%96%20(Kinco%2C%20688160.SH)%20%E6%AD%A5%E7%A7%91%E8%82%A1%E4%BB%BD%20%E7%94%B5%E6%9C%BA-%E9%A9%B1%E5%8A%A8-%E7%BC%96%E7%A0%81%E5%99%A8%E4%B8%89%E5%90%88%E4%B8%80%E9%A9%B1%E6%8E%A7%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-leisai-module",
@@ -31137,7 +31137,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E9%9B%B7%E8%B5%9B%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%A7%91%E6%8A%80%EF%BC%88%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20002979.SZ%20%E5%AD%90%E5%85%AC%E5%8F%B8%EF%BC%89%20%E9%9B%B7%E8%B5%9B%E6%99%BA%E8%83%BD%20%E8%B6%85%E9%AB%98%E5%AF%86%E5%BA%A6%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-tuopu-linear",
@@ -31205,7 +31205,7 @@
       "source_url": "https://www.google.com/search?q=%E5%AE%81%E6%B3%A2%E6%8B%93%E6%99%AE%E9%9B%86%E5%9B%A2%20(601689.SH)%20%E6%8B%93%E6%99%AE%E9%9B%86%E5%9B%A2%20%E7%9B%B4%E7%BA%BF%E6%89%A7%E8%A1%8C%E5%99%A8%E6%80%BB%E6%88%90%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-sanhua-actuator",
@@ -31271,7 +31271,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B5%99%E6%B1%9F%E4%B8%89%E8%8A%B1%E6%99%BA%E8%83%BD%E6%8E%A7%E5%88%B6%20(002050.SZ)%20%E4%B8%89%E8%8A%B1%E6%99%BA%E6%8E%A7%20%E6%9C%BA%E7%94%B5%E6%89%A7%E8%A1%8C%E5%99%A8%E6%80%BB%E6%88%90%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-zhaowei-micro",
@@ -31332,7 +31332,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%85%86%E5%A8%81%E6%9C%BA%E7%94%B5%20(003021.SZ)%20%E5%85%86%E5%A8%81%E6%9C%BA%E7%94%B5%20%E5%BE%AE%E5%9E%8B%E7%B2%BE%E5%AF%86%E4%BC%A0%E5%8A%A8%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-jm-topband-hand",
@@ -31398,7 +31398,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E6%8B%93%E9%82%A6%E8%82%A1%E4%BB%BD%20(002139.SZ)%20%E6%8B%93%E9%82%A6%E8%82%A1%E4%BB%BD%20%E7%81%B5%E5%B7%A7%E6%89%8B%E4%B8%80%E4%BD%93%E5%8C%96%E9%A9%B1%E5%8A%A8%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-tele-mobile-aloha",
@@ -31459,7 +31459,7 @@
       "source_url": "https://www.google.com/search?q=Stanford%20University%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%8C%E7%A4%BE%E5%8C%BA%E5%8F%AF%E8%87%AA%E5%BB%BA%EF%BC%89%20Mobile%20ALOHA%20%E7%A7%BB%E5%8A%A8%E5%8F%8C%E8%87%82%E9%81%A5%E6%93%8D%E4%BD%9C%E9%87%87%E9%9B%86%E5%B9%B3%E5%8F%B0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-tele-open-television",
@@ -31522,7 +31522,7 @@
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%20%2F%20MIT%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20Open-TeleVision%20%E6%B2%89%E6%B5%B8%E5%BC%8F%20VR%20%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-exo-airexo2",
@@ -31583,7 +31583,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20AirExo-2%20%E4%BD%8E%E6%88%90%E6%9C%AC%E5%8F%AF%E7%A9%BF%E6%88%B4%E5%A4%96%E9%AA%A8%E9%AA%BC%E9%87%87%E9%9B%86%E8%A3%85%E7%BD%AE%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-tele-bunny-visionpro",
@@ -31644,7 +31644,7 @@
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20Bunny-VisionPro%20%E5%8F%8C%E6%89%8B%E5%AE%9E%E6%97%B6%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-exo-ace-teleop",
@@ -31704,7 +31704,7 @@
       "source_url": "https://www.google.com/search?q=UC%20San%20Diego%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20ACE%20%E8%B7%A8%E5%B9%B3%E5%8F%B0%E8%A7%86%E8%A7%89-%E5%A4%96%E9%AA%A8%E9%AA%BC%E9%81%A5%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-glove-doglove",
@@ -31765,7 +31765,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6%EF%BC%88%E5%BC%80%E6%BA%90%E7%A1%AC%E4%BB%B6%EF%BC%89%20DOGlove%20%E5%8A%9B%E5%8F%8D%E9%A6%88%E6%95%B0%E6%8D%AE%E6%89%8B%E5%A5%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-glove-manus-quantum",
@@ -31826,7 +31826,7 @@
       "source_url": "https://www.google.com/search?q=Manus%EF%BC%88%E8%8D%B7%E5%85%B0%EF%BC%89%20Manus%20Quantum%20Metagloves%20%E5%8A%A8%E6%8D%95%E6%89%8B%E5%A5%97%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-mocap-rokoko-smartsuit2",
@@ -31887,7 +31887,7 @@
       "source_url": "https://www.google.com/search?q=Rokoko%EF%BC%88%E4%B8%B9%E9%BA%A6%EF%BC%89%20Rokoko%20Smartsuit%20Pro%20II%20%E6%83%AF%E6%80%A7%E5%8A%A8%E6%8D%95%E6%9C%8D%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-mocap-noitom-pn-studio",
@@ -31949,7 +31949,7 @@
       "source_url": "https://www.google.com/search?q=%E5%8C%97%E4%BA%AC%E8%AF%BA%E4%BA%A6%E8%85%BE%E7%A7%91%E6%8A%80%20(Noitom)%20%E8%AF%BA%E4%BA%A6%E8%85%BE%20Perception%20Neuron%20Studio%20%E6%83%AF%E6%80%A7%E5%8A%A8%E6%8D%95%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-umi-fastumi",
@@ -32010,7 +32010,7 @@
       "source_url": "https://www.google.com/search?q=%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA%20%2F%20%E5%AD%A6%E6%9C%AF%E5%9B%A2%E9%98%9F%20FastUMI%20%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2%E5%9E%8B%20UMI%20%E9%87%87%E9%9B%86%E8%A3%85%E7%BD%AE%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-humanoid-humanplus",
@@ -32071,7 +32071,7 @@
       "source_url": "https://www.google.com/search?q=Stanford%20University%EF%BC%88%E5%BC%80%E6%BA%90%EF%BC%89%20HumanPlus%20%E4%BA%BA%E5%BD%A2%E5%BD%B1%E5%AD%90%E5%AD%A6%E4%B9%A0%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9F%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-neuro-originflow-kit",
@@ -32259,7 +32259,7 @@
       "source_url": "https://www.google.com/search?q=AEMG-series%EF%BC%88CVPR%202026%20%E5%BC%80%E6%BA%90%EF%BC%89%20AEMG%20%E9%80%9A%E7%94%A8%E8%82%8C%E7%94%B5%E9%87%87%E9%9B%86%E5%8F%82%E8%80%83%E5%B9%B3%E5%8F%B0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-axelera-metis-aipu",
@@ -32317,7 +32317,7 @@
       "source_url": "https://www.google.com/search?q=Axelera%20AI%EF%BC%88%E8%8D%B7%E5%85%B0%EF%BC%89%20Axelera%20Metis%20AIPU%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-axera-ax650n",
@@ -32379,7 +32379,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%E5%8D%8A%E5%AF%BC%E4%BD%93%20(Axera)%20%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%20AX650N%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-axera-ax8850",
@@ -32438,7 +32438,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%E5%8D%8A%E5%AF%BC%E4%BD%93%20(Axera)%20%E7%88%B1%E8%8A%AF%E5%85%83%E6%99%BA%20AX8850%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-blacksesame-huashan-a2000",
@@ -32497,7 +32497,7 @@
       "source_url": "https://www.google.com/search?q=%E9%BB%91%E8%8A%9D%E9%BA%BB%E6%99%BA%E8%83%BD%20(Black%20Sesame%20Technologies%2C%202533.HK)%20%E9%BB%91%E8%8A%9D%E9%BA%BB%E6%99%BA%E8%83%BD%20%E5%8D%8E%E5%B1%B1%20A2000%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-sophgo-bm1684x",
@@ -32557,7 +32557,7 @@
       "source_url": "https://www.google.com/search?q=%E7%AE%97%E8%83%BD%E7%A7%91%E6%8A%80%20(SOPHGO)%20%E7%AE%97%E8%83%BD%20SOPHON%20BM1684X%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-cambricon-mlu370-s4",
@@ -32615,7 +32615,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%AD%E7%A7%91%E5%AF%92%E6%AD%A6%E7%BA%AA%20(688256.SH)%20%E5%AF%92%E6%AD%A6%E7%BA%AA%20MLU370-S4%20%E6%8E%A8%E7%90%86%E5%8A%A0%E9%80%9F%E5%8D%A1%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-rockchip-rk3576",
@@ -32793,7 +32793,7 @@
       "source_url": "https://www.google.com/search?q=Ambarella%EF%BC%88%E7%BE%8E%E5%9B%BD%E5%AE%89%E9%9C%B8%EF%BC%89%20Ambarella%20N1-655%20%E8%BE%B9%E7%BC%98%20GenAI%20SoC%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-ti-am69a",
@@ -32855,7 +32855,7 @@
       "source_url": "https://www.google.com/search?q=Texas%20Instruments%20TI%20AM69A%20%E8%BE%B9%E7%BC%98%20AI%20%E5%A4%84%E7%90%86%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-deepx-dx-m1",
@@ -32913,7 +32913,7 @@
       "source_url": "https://www.google.com/search?q=DEEPX%EF%BC%88%E9%9F%A9%E5%9B%BD%EF%BC%89%20DEEPX%20DX-M1%20%E8%BE%B9%E7%BC%98%20NPU%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-houmo-manye-m30",
@@ -32971,7 +32971,7 @@
       "source_url": "https://www.google.com/search?q=%E5%90%8E%E6%91%A9%E6%99%BA%E8%83%BD%20(Houmo.AI)%20%E5%90%8E%E6%91%A9%E6%99%BA%E8%83%BD%20%E6%BC%AB%E7%95%8C%20M30%20%E5%AD%98%E7%AE%97%E4%B8%80%E4%BD%93%E8%8A%AF%E7%89%87%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-keli-6axis",
@@ -33031,7 +33031,7 @@
       "source_url": "https://www.google.com/search?q=%E5%AE%81%E6%B3%A2%E6%9F%AF%E5%8A%9B%E4%BC%A0%E6%84%9F%E7%A7%91%E6%8A%80%20(603662.SH)%20%E6%9F%AF%E5%8A%9B%E4%BC%A0%E6%84%9F%20%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-anpulong-ceramic",
@@ -33091,7 +33091,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%AE%89%E5%9F%B9%E9%BE%99%E7%A7%91%E6%8A%80%20(301413.SZ)%20%E5%AE%89%E5%9F%B9%E9%BE%99%20%E9%99%B6%E7%93%B7%E7%94%B5%E5%AE%B9%E5%BC%8F%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-ft-qianfenyi-6axis",
@@ -33152,7 +33152,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B7%B1%E5%9C%B3%E5%8D%83%E5%88%86%E4%B8%80%E7%A7%91%E6%8A%80%20(Qianfenyi)%20%E5%8D%83%E5%88%86%E4%B8%80%20%E5%85%AD%E7%BB%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-strain-avicem",
@@ -33215,7 +33215,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%AD%E8%88%AA%E7%94%B5%E6%B5%8B%E4%BB%AA%E5%99%A8%20(300114.SZ)%20%E4%B8%AD%E8%88%AA%E7%94%B5%E6%B5%8B%20%E5%BA%94%E5%8F%98%E5%BC%8F%E5%8A%9B%2F%E6%89%AD%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-imu-xindonglianke-mems",
@@ -33276,7 +33276,7 @@
       "source_url": "https://www.google.com/search?q=%E5%AE%89%E5%BE%BD%E8%8A%AF%E5%8A%A8%E8%81%94%E7%A7%91%E5%BE%AE%E7%B3%BB%E7%BB%9F%20(688582.SH)%20%E8%8A%AF%E5%8A%A8%E8%81%94%E7%A7%91%20%E9%AB%98%E6%80%A7%E8%83%BD%20MEMS%20%E9%99%80%E8%9E%BA%2FIMU%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-imu-huayi-automotive",
@@ -33337,7 +33337,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E5%8D%8E%E4%BE%9D%E7%A7%91%E6%8A%80%20(688071.SH)%20%E5%8D%8E%E4%BE%9D%E7%A7%91%E6%8A%80%20%E8%BD%A6%E8%A7%84%E7%BA%A7%20IMU%20%E6%83%AF%E6%80%A7%E6%A8%A1%E7%BB%84%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-cam-orbbec-gemini335",
@@ -33405,7 +33405,7 @@
       "source_url": "https://www.google.com/search?q=%E5%A5%A5%E6%AF%94%E4%B8%AD%E5%85%89%E7%A7%91%E6%8A%80%20(688322.SH)%20%E5%A5%A5%E6%AF%94%E4%B8%AD%E5%85%89%20Gemini%20335%20%E5%8F%8C%E7%9B%AE%E7%BB%93%E6%9E%84%E5%85%89%E6%B7%B1%E5%BA%A6%E7%9B%B8%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-cam-percipio-fm851",
@@ -33473,7 +33473,7 @@
       "source_url": "https://www.google.com/search?q=%E4%B8%8A%E6%B5%B7%E5%9B%BE%E6%BC%BE%E4%BF%A1%E6%81%AF%E7%A7%91%E6%8A%80%20(Percipio.XYZ)%20%E5%9B%BE%E6%BC%BE%E7%A7%91%E6%8A%80%20FM851%20%E5%B7%A5%E4%B8%9A%E7%BA%A7%203D%20%E7%9B%B8%E6%9C%BA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-lidar-hesai-ft120",
@@ -33540,7 +33540,7 @@
       "source_url": "https://www.google.com/search?q=%E7%A6%BE%E8%B5%9B%E7%A7%91%E6%8A%80%20(HSAI%20%2F%20688771.SH)%20%E7%A6%BE%E8%B5%9B%E7%A7%91%E6%8A%80%20FT120%20%E7%BA%AF%E5%9B%BA%E6%80%81%E8%A1%A5%E7%9B%B2%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-lidar-robosense-ac1",
@@ -33606,7 +33606,7 @@
       "source_url": "https://www.google.com/search?q=%E9%80%9F%E8%85%BE%E8%81%9A%E5%88%9B%20(RoboSense%2C%202498.HK)%20%E9%80%9F%E8%85%BE%E8%81%9A%E5%88%9B%20Active%20Camera%20AC1%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-oss-leap-hand",
@@ -40996,7 +40996,7 @@
       "source_url": "https://www.google.com/search?q=%E7%9F%A9%E9%98%B5%E8%B6%85%E6%99%BA%20Matrix%20%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20(MATRIX-1%2F3)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -48927,8 +48927,8 @@
       "quarantine": true,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
       "rp_id": "SUPERDEX-openarm-v20-right-arm",
-      "duplicate_of": "SUPERDEX-openarm-v20-left-arm",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "duplicate_of": "SUPERDEX-openarm-v20-left-arm"
     },
     {
       "id": "SUPERDEX-fr3-dg5f-short-seed-right",
@@ -49022,8 +49022,8 @@
       "quarantine": true,
       "source_tier_basis": "deep_link:github.com/facebookresearch/project_superdex/blob/main/asset",
       "rp_id": "SUPERDEX-fr3-dg5f-short-seed-right",
-      "duplicate_of": "SUPERDEX-fr3-dg5f-short-right",
-      "confidence_tier": "unverified"
+      "confidence_tier": "unverified",
+      "duplicate_of": "SUPERDEX-fr3-dg5f-short-right"
     },
     {
       "id": "SUPERDEX-fr3-dg5f-short-right",
@@ -50092,6 +50092,6 @@
     }
   ],
   "count": 868,
-  "updated": "2026-10-16T22:43:39.757610Z",
-  "last_updated": "2026-10-16T22:43:39.757610Z"
+  "updated": "2026-10-18T05:46:45.825363Z",
+  "last_updated": "2026-10-18T05:46:45.825363Z"
 }

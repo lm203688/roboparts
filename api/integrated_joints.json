@@ -23,7 +23,7 @@
     }
   },
   "count": 1,
-  "updated": "2026-10-16T22:43:39.757610Z",
+  "updated": "2026-10-18T05:46:45.825363Z",
   "data": [
     {
       "id": "IJ-MATRIX-1",
@@ -50,7 +50,7 @@
       "data_quality": "ok",
       "quarantine": false,
       "source": "公开报道（MATRIX-1 集成 33 个一体化关节执行器，集成丝杠+电机+驱动+减速器+编码器+传感器；36氪/IT之家/百度百科）",
-      "source_tier": "A",
+      "source_tier": "C",
       "confidence": 0.5,
       "confidence_basis": "press_reported_module_composition",
       "standard_conformance": {
@@ -72,13 +72,15 @@
         "gap": "未归类类目 integrated_joints"
       },
       "entity_kind": "component",
-      "source_tier_basis": "deep_link:www.google.com/search",
+      "source_tier_basis": "search_engine_query",
       "source_tier_prev": "B",
       "rp_id": "RP1-INT-0001",
       "source_url": "https://www.google.com/search?q=%E7%9F%A9%E9%98%B5%E8%B6%85%E6%99%BA%20Matrix%20%E4%B8%80%E4%BD%93%E5%8C%96%E5%85%B3%E8%8A%82%E6%A8%A1%E7%BB%84%20(MATRIX-1%2F3)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred",
+      "last_verified": null,
+      "last_verified_basis": "never_probed"
     }
   ]
 }
