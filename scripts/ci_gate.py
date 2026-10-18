@@ -4008,6 +4008,83 @@ def gate_data_gaps_ratchet():
              f'na_review={na_review}/≤{BASELINE["na_review_max"]}）')
 
 
+def gate_positioning_gate_count_consistency():
+    '''【G-S2】定位面 CI 闸门数一致性（2026-10-18 傍晚）
+
+    背景：G-S1 守论文正文，G-T7 守 functions/ JS 硬编码，两条都不管
+    定位面（README / agent-discovery / llms.txt / index.html）的"N 项 CI 闸门"
+    漂移。上一轮 GATES 从 49 涨到 76，4 处定位面仍写"49 项"——上线后回探才发现。
+
+    本闸门扫描 4 个定位面里的形如：
+      - "N 项 CI 闸门"
+      - "N 项反向注入闸门"
+      - "N gates" / "Total N gates"（README 注入块除外——那条有独立 data-rp 锚点）
+    中 N 与 len(GATES) 不一致即判红。
+
+    容忍 ±1 浮动（闸门刚加、inject_readme_stats 未跑是常见中间态）；超过判红。
+    本闸门不防定位面的**文案漂移**（如"三条定理" vs "三条代数律"），只防数字漂移。
+    文案漂移由人工 grep 或未来的正则扫全词闸门负责。
+    '''
+    import re as _re
+    name = '定位面闸门数一致（G-S2）'
+
+    # 真相源：GATES 表本身的长度
+    actual_gates = len(GATES)
+
+    # 定位面文件（相对 ROOT）
+    targets = [
+        'README.md',
+        'agent-discovery.json',
+        'llms.txt',
+        'index.html',
+    ]
+
+    # 匹配模式：抓 N 项 CI 闸门 / N 项反向注入闸门 / Total N gates / N gates
+    # 排除 <!-- RP-GATES:START ... --> 注入块（那条由 gate_readme_stats_fresh 守）
+    patterns = [
+        (_re.compile(r'(\d+)\s*项\s*CI\s*闸门'), 'N 项 CI 闸门'),
+        (_re.compile(r'(\d+)\s*项\s*反向注入闸门'), 'N 项反向注入闸门'),
+        (_re.compile(r'Total\s+(\d+)\s+gates'), 'Total N gates'),
+    ]
+
+    issues = []
+    scanned = 0
+    for rel in targets:
+        path = os.path.join(ROOT, rel)
+        if not os.path.exists(path):
+            issues.append((rel, 0, 'MISSING', 0, actual_gates, ''))
+            continue
+        try:
+            with open(path, encoding='utf-8', errors='replace') as f:
+                content = f.read()
+        except Exception:
+            continue
+        scanned += 1
+
+        # 先剥掉 data-rp 注入块（<!-- RP-GATES:START ... END --> 之间），
+        # 避免 gate_readme_stats_fresh 的锚点值重复计入
+        content_stripped = _re.sub(
+            r'<!--\s*RP-GATES:START.*?-->.*?<!--\s*RP-GATES:END\s*-->',
+            ' ', content, flags=_re.DOTALL,
+        )
+        lines = content_stripped.split('\n')
+        for lineno, line in enumerate(lines, 1):
+            for pat, label in patterns:
+                for m in pat.finditer(line):
+                    n = int(m.group(1))
+                    if abs(n - actual_gates) > 1:
+                        issues.append((rel, lineno, label, n, actual_gates,
+                                       line.strip()[:70]))
+
+    if issues:
+        for fn, ln, label, found, actual, snippet in issues[:5]:
+            bad(name,
+                f'{fn}:{ln} "{label}" 写 {found}，实际 {actual}（{snippet}）')
+        return
+
+    ok(name, f'{scanned} 个定位面 · 闸门数与 GATES={actual_gates} 一致')
+
+
 GATES = [
     ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
@@ -4347,6 +4424,13 @@ GATES = [
     # compose_semantics.json 与 api/entities.json 现算值——不匹配即判红。
     # 与 G-T7 functions/ 硬编码漂移不同：那条守 UI 文案，本条守论文正文。
     ('论文数字与产物一致（SCI 达标 P0-1 · G-S1）', gate_paper_numbers_fresh),
+    # 2026-10-18 傍晚 added (G-S2): 定位面 CI 闸门数一致性。上一轮 GATES 49→76
+    # 时，README/agent-discovery/llms.txt/index.html 4 处仍写"49 项 CI 闸门"，
+    # 上线后回探才发现——G-S1 守论文、G-T7 守 functions/ JS，两条都不管定位面。
+    # 本闸门扫 4 个定位面的"N 项 CI 闸门"模式，与 len(GATES) 现算比对。
+    # 与 gate_readme_stats_fresh 分工：那条守 README 注入块（RP-GATES 锚点），
+    # 本条守定位面裸文本；两者配合才不漏。
+    ('定位面闸门数一致（G-S2）', gate_positioning_gate_count_consistency),
 ]
 
 

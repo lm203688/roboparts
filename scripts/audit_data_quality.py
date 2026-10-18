@@ -87,9 +87,19 @@ VAGUE_VENDORS = {'未指定', '未明确', 'N/A', 'Unknown', ''}
 
 
 def audit(e):
-    """返回 (data_quality 标签, 是否隔离, 判定理由)"""
+    """返回 (data_quality 标签, 是否隔离, 判定理由)
+
+    幂等约定：若实体已被 audit_no_source.py 标记为 quarantined_no_source
+    且仍无 source/sources，本函数保留该标签（不被降级为 ok）。
+    一旦实体补上 source，quarantined_no_source 自然不再命中。
+    """
     name = str(e.get('name', '')).strip()
     vendor = str(e.get('manufacturer') or e.get('developer') or '').strip()
+
+    # 保留 audit_no_source.py 写下的 quarantined_no_source（幂等）
+    has_source = bool(e.get('source') or e.get('sources'))
+    if not has_source and e.get('data_quality') == 'quarantined_no_source':
+        return 'quarantined_no_source', True, '无公开出处，诚实隔离（由 audit_no_source.py 管理）'
 
     if name in NON_ENTITY_NAMES or NON_ENTITY_PATTERN.match(name):
         return 'non_entity', True, '名称为规格值/认证名/话题标签，非零部件实体'
@@ -108,6 +118,7 @@ QUARANTINE_REASON = {
     'unverifiable_vendor': '厂商公开渠道无法溯源，疑似批量合成',
     'placeholder_id': '键盘序列占位 ID，未经正规入库流程',
     'duplicate': '与库内另一条目为同一实物（同名同厂商），保留规范条目',
+    'quarantined_no_source': '无公开出处，诚实隔离（由 audit_no_source.py 管理）',
 }
 
 
