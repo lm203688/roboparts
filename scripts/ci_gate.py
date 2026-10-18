@@ -3737,6 +3737,107 @@ def gate_meta_description_coverage():
     ok(name, f'{len(htmls) - len(exempt)} 页全部有 ≥30 字 description + ≥5 字 og:title')
 
 
+def gate_data_gaps_ratchet():
+    '''【G-T8 · 审计报告 G-06/G-13/G-14】数据缺口棘轮（2026-10-18）
+
+    审计报告最后 3 项缺口（G-06 机械可判定率 / G-13 协议性能基准 /
+    G-14 组件 n_a 复核）本质是数据侧的真实缺口，需要人肉查一手 datasheet
+    或跑真机测量，不能靠脚本伪造。
+
+    本闸门策略：**不阻止缺口存在（那是诚实），但阻止缺口恶化（那是失职）**。
+
+    三个基线（当前实测值）：
+      - G-06 mech_decidable: 57/868 = 6.57%
+      - G-13 protocol_perf_missing: 27/64
+      - G-14 component_na_review: 159（含 14 条 platforms 明确错误）
+
+    棘轮口径：只允许下降（缺口收窄），不允许上升。例外是"新增实体带入"
+    ——那必须同步更新基线并写明理由，闸门随之放宽到新的基线值。
+
+    反例（本闸门能抓到的假绿）：
+      - 有人把 3 条 n_a 的 platforms 改成 not_declared 来"提升可判定率"→ 实际是
+        换合法值冒充语义，本闸门通过但审计会抓；配合 gate_d5_no_source_policy 与
+        gate_three_state_conservation 交叉验证。
+      - 有人把 30 条 protocol 的 spec 字段清空 → G-13 缺数 27→57，本闸门立刻红。
+
+    本闸门与 gate_d5_no_source_policy 分工：那条管"存量不破戒"，本条管"缺口不恶化"。
+    '''
+    name = '数据缺口棘轮（G-06/G-13/G-14）'
+    import json as _json
+
+    try:
+        with open(os.path.join(ROOT, 'api', 'entities.json'), encoding='utf-8') as f:
+            ents = _json.load(f).get('entities', [])
+    except Exception as ex:
+        bad(name, f'entities.json 读失败：{ex}')
+        return
+
+    total = len(ents)
+
+    # ---- G-06 机械可判定率：standard + flange 同时非空 ----
+    def _decidable(e):
+        mi = e.get('mechanical_interface')
+        if not isinstance(mi, dict):
+            return False
+        return bool(mi.get('standard')) and bool(mi.get('flange'))
+    dec_now = sum(1 for e in ents if _decidable(e))
+
+    # ---- G-13 协议性能基准缺失数 ----
+    def _has_perf(e):
+        for k in ('latency', 'jitter', 'bandwidth', 'real_time_perf', 'performance'):
+            if e.get(k):
+                return True
+        spec = e.get('spec')
+        if isinstance(spec, dict):
+            for k in ('latency', 'jitter', 'bandwidth'):
+                if spec.get(k):
+                    return True
+        return False
+    protos = [e for e in ents if e.get('category') == 'protocols']
+    proto_perf_missing = sum(1 for e in protos if not _has_perf(e))
+
+    # ---- G-14 component n_a 复核：entity_kind=='component' 且 status=='n_a' 的条目数 ----
+    # 审计报告口径：component(659) 里有 159 条标 n_a，实物零件标"不适用机械接口"需要解释。
+    # 非物理品类（software 81 / specification 101 / market_intelligence 17 / organization 10）
+    # 共 209 条标 n_a 是**正确**的（本就不该有机械接口），不计入缺口。
+    def _is_n_a_review(e):
+        if e.get('entity_kind', 'component') != 'component':
+            return False
+        mi = e.get('mechanical_interface')
+        if not isinstance(mi, dict):
+            return False
+        return mi.get('status') == 'n_a'
+    na_review = sum(1 for e in ents if _is_n_a_review(e))
+
+    # ---- 基线（棘轮）----
+    # 首次登记日 2026-10-18，实测值：57 / 27 / 159
+    # 若基线被下调，必须在本文件与 docs/data-gaps-register.md 同步登记理由
+    BASELINE = {
+        'mech_decidable_max': 57,      # 可判定数不得超过基线（防止伪造）
+        'mech_decidable_min': 57,      # 可判定数不得降低（防止倒退）
+        'proto_perf_missing_max': 27,  # 协议性能缺失数不得超过基线
+        'na_review_max': 159,          # n_a 复核数不得超过基线
+    }
+
+    failures = []
+    if dec_now > BASELINE['mech_decidable_max']:
+        failures.append(f'G-06 mech_decidable={dec_now} 超过基线 {BASELINE["mech_decidable_max"]}，疑似伪造')
+    if dec_now < BASELINE['mech_decidable_min']:
+        failures.append(f'G-06 mech_decidable={dec_now} 低于基线 {BASELINE["mech_decidable_min"]}，缺口倒退')
+    if proto_perf_missing > BASELINE['proto_perf_missing_max']:
+        failures.append(f'G-13 协议性能缺失={proto_perf_missing} 超过基线 {BASELINE["proto_perf_missing_max"]}，缺口倒退')
+    if na_review > BASELINE['na_review_max']:
+        failures.append(f'G-14 n_a 复核数={na_review} 超过基线 {BASELINE["na_review_max"]}，缺口倒退')
+
+    if failures:
+        bad(name, '；'.join(failures))
+        return
+
+    ok(name, f'三缺口均在基线内（decidable={dec_now}/≤{BASELINE["mech_decidable_max"]}, '
+             f'proto_missing={proto_perf_missing}/≤{BASELINE["proto_perf_missing_max"]}, '
+             f'na_review={na_review}/≤{BASELINE["na_review_max"]}）')
+
+
 GATES = [
     ('语义索引覆盖全部实体', gate_semantic_index_covers_entities),
     ('实体 schema 契约', lambda: run_sub(
@@ -4065,6 +4166,10 @@ GATES = [
     # 32 pages without og:title. This gate scans all root .html files and asserts both
     # tags exist with non-empty values (>= 30 chars description, >= 5 chars og:title).
     ('meta description + og:title 覆盖', gate_meta_description_coverage),
+    # 2026-10-18 added (审计报告 G-06/G-13/G-14 · G-T8): 三个数据侧缺口的棘轮闸门。
+    # 缺口存在是诚实，缺口恶化是失职。基线值（57 / 27 / 159）登记于
+    # docs/data-gaps-register.md；下调基线必须同步本文件并写明理由。
+    ('数据缺口棘轮（G-06/G-13/G-14）', gate_data_gaps_ratchet),
 ]
 
 

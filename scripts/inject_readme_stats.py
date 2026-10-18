@@ -92,6 +92,7 @@ def stats_block(f, day):
         f'{f["software_entities"]} AI model software / {f["organization_entities"]} organizations / '
         f'{f["market_intelligence_entities"]} market intelligence);'
         f'Mechanical interface declaration rate {f["mech_pct"]}% ({f["mech_declared"]}/{f["mech_applicable"]});'
+        f'Mechanical interface decidable rate {f["mech_decidable_pct"]}% ({f["mech_decidable"]}/{f["total_entities"]}, standard+flange both non-empty);'
         f'Open-source components {f["oss_total"]}\n'
         f'- **Last updated / 最后更新**: {day}'
     )

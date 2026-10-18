@@ -85,6 +85,18 @@ def facts():
     declared = declared_any
     pct = round(declared / applicable * 100, 2) if applicable else 0.0
 
+    # 【20261017-G-06】可判定率（strict decidable）：standard + flange 同时非空。
+    # 与 declared_any 是两把不同尺子：declared_any 算"有线索"，decidable 算"能真的判法兰"。
+    # 现算结果 57/868 = 6.6%，其中 55 条是 platforms，actuators（222 条）可判定为 0。
+    # 审计报告 G-06 指出双口径必须都对外播报——单报 declared 会掩盖 actuators 全空的事实。
+    def _decidable(e):
+        mi = e.get('mechanical_interface')
+        if not isinstance(mi, dict):
+            return False
+        return bool(mi.get('standard')) and bool(mi.get('flange'))
+    mech_decidable = sum(1 for e in items if _decidable(e))
+    mech_decidable_pct = round(mech_decidable / total * 100, 2) if total else 0.0
+
     oss = json.loads(_read('api/oss_components.json'))
     oss_total = oss.get('meta', {}).get('total_entities', 0)
 
@@ -155,6 +167,8 @@ def facts():
         'mech_n_a': na_n,
         'mech_applicable': applicable,
         'mech_pct': pct,
+        'mech_decidable': mech_decidable,
+        'mech_decidable_pct': mech_decidable_pct,
         'comparable_grade_a': 0,   # 见 KD-01：全库无一条达到跨厂商可比 A 级
     }
 
