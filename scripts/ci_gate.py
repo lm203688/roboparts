@@ -40,6 +40,14 @@ def ok(name, detail=''):
     print(f'  ✅ {name}' + (f' — {detail}' if detail else ''))
 
 
+def warn(name, detail=''):
+    """Non-fatal warning: gate raised but chose to skip/soft-fail. Logged
+    with ⚠️ but does NOT block the CI. 2026-10-19: added to replace
+    bare `warn()` calls in gate_deployment_freshness that were raising
+    NameError and falsely blocking the whole pipeline."""
+    print(f'  ⚠️  {name}' + (f' — {detail}' if detail else ''))
+
+
 def bad(name, detail=''):
     FAILED.append(name)
     print(f'  ❌ {name}' + (f' — {detail}' if detail else ''))

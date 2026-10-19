@@ -79,8 +79,8 @@ $61$ pairs at $d=1$ split between electrical ($32$, $52.46\%$) and
 signal ($29$, $47.54\%$) axes --- a two-axis bottleneck, not a single
 one. A three-class gap causation taxonomy
 (unpublished-suspect / proprietary-suspect / ambiguous) together with
-a manufacturer concentration analysis shows that the top-$10$ of $358$
-named vendors account for $37.33\%$ of the entity mass, ruling out
+a manufacturer concentration analysis shows that the top-$10$ of $348$
+named vendors account for $18.72\%$ of the entity mass, ruling out
 ``crawl a few datasheets'' as a viable closure strategy and pointing
 to user-submission and open-source-BOM reverse-feeding as the only
 scalable paths.
@@ -190,8 +190,8 @@ is added (Section~\ref{sec:d1-shift}).
 
 \item A three-class gap-causation taxonomy
 (unpublished-suspect / proprietary-suspect / ambiguous) together with
-a manufacturer concentration analysis ($358$ named vendors,
-top-$10$ accounting for $37.33\%$ of the entity mass). This is
+a manufacturer concentration analysis ($348$ named vendors,
+top-$10$ accounting for $18.72\%$ of the entity mass). This is
 \emph{negative evidence}: the coverage gap cannot be closed by
 crawling a small number of vendor datasheets. The only scalable paths
 are user-submission, OSS-BOM reverse-feeding, and community pull-requests.
@@ -783,17 +783,19 @@ search effort, which is the role of Section~5.3.
 We report the top-$k$ concentration of the entity mass as a
 concentration curve:
 \begin{equation}
-  C(k) \;=\; \frac{\sum_{i=1}^{k} c_i}{\sum_{i=1}^{358} c_i},
-  \qquad k = 1, 2, \ldots, 358,
+  C(k) \;=\; \frac{\sum_{i=1}^{k} c_i}{\sum_{i=1}^{348} c_i},
+  \qquad k = 1, 2, \ldots, 348,
   \label{eq:conc}
 \end{equation}
 where $c_i$ is the number of entities for vendor $i$, sorted in
-descending order. On our corpus, $C(10) = 37.33\%$ — the top ten
-named vendors account for about a third of the entity mass. This
-still rules out any strategy of the form ``we will crawl the
-datasheets of the biggest ten robot manufacturers''; the remaining
-two-thirds of entities span hundreds of vendors, and the
-unpublished-suspect gap in particular is dominated by the long tail.
+descending order. On our corpus, $C(10) = 18.72\%$ — the top ten
+named vendors account for under one-fifth of the entity mass. This
+strengthens the negative evidence: with the concentration curve this
+flat, no bounded number of datasheets can cover a majority of the
+entity mass, and any strategy of the form ``we will crawl the
+datasheets of the biggest ten robot manufacturers'' is arithmetically
+excluded. The long tail is the actual problem, and it is where the
+unpublished-suspect gap concentrates.
 
 \begin{figure}[ht]
 \centering
@@ -801,7 +803,7 @@ unpublished-suspect gap in particular is dominated by the long tail.
 \caption{Manufacturer concentration curve for the
 unpublished-suspect gap. The curve is remarkably flat: reaching
 90\% of the gap requires covering well over 100 vendors out of the
-$358$ named vendors on the current snapshot.}
+$348$ named vendors on the current snapshot.}
 \label{fig:concentration}
 \end{figure}
 
@@ -1210,6 +1212,125 @@ produced them --- positive/negative/mutation triads, anti-pattern
 ledgers, gap registers with monotone ratchets, and honest-limit
 fields --- is the thing that generalises.
 
+\subsection{External validity: from frozen regression to independent ground truth}\label{sec:external-validity}
+
+The four theorems of Section~\ref{sec:theorems} are internal
+properties of the composition function. Whether the engine's verdict
+on a real pair of parts matches what a competent human engineer would
+say about the same pair is an \emph{external} question that the
+theorems cannot answer. The strongest available empirical anchor for
+such a question is an evaluation set whose expected values are derived
+\emph{independently of the engine under test}. RoboParts maintains
+such a set, called the Golden set, and we describe its structure,
+its independent-anchor layer, and the honest gaps that remain.
+
+\paragraph{(a) The Golden set: two layers of evidence, not one.}
+The Golden set (\texttt{api/eval/compatibility-golden.json})
+currently holds $48$ evaluation cases in two distinct categories:
+
+\begin{itemize}[nosep,leftmargin=*]
+\item \textbf{Frozen regression anchors} (28 cases, Layers L1--L3).
+These are the outputs of the engine itself, frozen at
+\texttt{2026-10-11} and expected not to change under regression
+testing. They protect the engine against \emph{self-inconsistency}:
+if a future refactor causes \texttt{ACT-001 vs ACT-003} to flip from
+\texttt{incompatible} to \texttt{compatible}, the case catches it.
+They cannot, however, verify that \emph{incompatible} was the right
+answer the first time; they only verify that the engine has not
+\emph{changed its mind} since.
+\item \textbf{Hand-crafted ground truth} (20 cases, Layer L4).
+These cases are derived \emph{without reference to the engine}. Each
+expected value is obtained by a human annotator who reads the ISO
+9409-1 flange table (flange diameter, bolt count, bolt thread) for
+both parts and decides by inspection whether the two flanges can
+physically mate. The ISO 9409-1 rule is unambiguous: two parts with
+the same flange designation (e.g.\ \texttt{ISO 9409-1-50-4-M6})
+mate; two parts with different flange designations (e.g.\
+\texttt{50-4-M6} vs \texttt{250-4-M16}) cannot. No engine output is
+consulted when writing the expected value.
+\end{itemize}
+
+All $48$ cases currently pass. That is not a benchmark result --- it
+is a \emph{self-consistency plus independent-anchor} statement: the
+engine agrees with itself and agrees with an independent reading of
+ISO 9409-1 on the $20$ pairs we have anchored.
+
+\paragraph{(b) What the L4 anchor caught, and why that matters.}
+The first run of the $20$ L4 cases against the production engine
+yielded $9$ failures, all of the form:
+```
+GT-04: HUB-013 (ISO 9409-1-100-4-M8) vs HUB-017 (ISO 9409-1-250-4-M16)
+     - mechanical: expected false, actual true
+```
+The engine was returning \texttt{mechanical=true} for pairs of parts
+with \emph{different} ISO 9409-1 designations, which is a
+false-positive compatibility verdict with direct physical
+consequences (a $\emptyphi$250 flange being reported as mountable on a
+$\emptyphi$100 interface). Root cause: the \texttt{flange} field of
+the \texttt{mechanical\_interface} object is stored on some entities
+as a \emph{structured object} (\texttt{\{pcd\_mm, bolt\_count,
+thread\}}), and the tokenization step was calling \texttt{String()}
+on that object, collapsing every structured flange record into the
+string literal \texttt{"[object Object]"}. Any two entities with a
+structured flange record then trivially intersected on that shared
+token, and the engine concluded ``interchangeable'' without actually
+comparing sizes.
+
+This is the specific defect that only an \emph{independent} ground
+truth can catch. The engine's own frozen anchors (L1--L3) contained
+no pair in which both entities used a structured flange object, so
+the L1--L3 suite would have stayed green while the engine was
+reporting $\emptyphi$100 and $\emptyphi$250 flanges as compatible. The
+fix (structural flattening in \texttt{idValues}) is registered as
+change \texttt{20261019-01}; the failure mode is registered in the
+data-gap register as an evidence-quality defect in the L4 anchor
+lineage.
+
+We report this because it is the single strongest available
+argument for what external validity actually is: \emph{the property
+that lets an evaluator catch bugs in the evaluated system, not
+merely bugs in its own regression suite}.
+
+\paragraph{(c) The remaining gap: dual-annotator $\kappa$.}
+The L4 set is currently the work of a single annotator. Its
+inter-annotator agreement is therefore undefined --- we cannot claim
+Cohen's $\kappa$ on a single-annotator set, and would not if we
+could. The planned protocol is:
+
+\begin{enumerate}[nosep]
+\item Recruit a second annotator with robotics engineering training
+and no prior exposure to the RoboParts engine or its outputs.
+\item Re-annotate the $20$ L4 cases blind (same ISO 9409-1 table,
+no access to engine output).
+\item Report Cohen's $\kappa$; interpret using the Landis--Koch
+guideline ($\kappa \geq 0.8$ = strong agreement, sufficient for our
+purpose).
+\item Extend the L4 set to $50$ cases before reporting final
+$\kappa$, to reduce annotation-noise variance on the point estimate.
+\end{enumerate}
+
+We do not claim this protocol is complete. We do not claim the L4
+set alone provides external validity. What we claim is narrower and
+true: \emph{we have identified a specific false-positive failure mode
+that only an independent ground-truth anchor could have surfaced,
+we have fixed it, and we have made the anchor and the fix
+reproducible}. The planned $\kappa$ study is what would let us
+promote the claim from ``this engine agrees with an independent
+reading of ISO 9409-1 on $20$ pairs'' to ``this engine agrees with a
+reasonable engineer on a larger sample, at a quantified agreement
+rate''.
+
+\paragraph{(d) Why the anchor is worth the modest sample size.}
+Twenty cases sounds small for a claim of external validity, and it
+is. But it is not zero, and it already did something that the
+frozen-regression set of $28$ cases, run through several versions of
+the engine, did not do. Small independent anchors earn their keep in
+proportions that do not match the naive ``sample size to CI width''
+rule: their value is bounded by their \emph{independence}, not by
+their cardinality. A $20$-case anchor that has caught one real bug is
+worth more than a $2000$-case regression suite that has caught only
+regressions of previously caught bugs.
+
 % ============================================================
 % 6. Discussion
 % ============================================================
@@ -1303,6 +1424,17 @@ external ground truth.
 unpublished-suspect / proprietary-suspect / ambiguous depends on
 human judgement over datasheets. A systematic re-annotation study
 with inter-annotator agreement would strengthen the finding.
+
+\item \textbf{External validity.} The Golden set now contains a
+$20$-case independent-anchor layer (L4, hand-crafted ground truth
+from ISO 9409-1) that has already caught one real false-positive
+defect in the mechanical axis (Section~\ref{sec:external-validity}),
+but it is still a single-annotator set. A planned dual-annotator
+study with Cohen's $\kappa$ reporting would quantify agreement with
+a reasonable engineer; until that study is complete, external
+validity is anchored to independent derivation on $20$ pairs, not to
+a large-sample inter-annotator study. We are explicit about this
+bound rather than reporting a $\kappa$ we have not measured.
 
 \item \textbf{Time-sensitivity.} The $16.2\%$ declaration rate is a
 snapshot. As the corpus grows (either through us or through other
@@ -1433,7 +1565,7 @@ declared / $6.57\%$ decidable mechanical rate.
 domain. This is precisely why the paper publishes the measure as
 recomputed rather than as a constant.
 
-\item The top-$10$ vendors account for $37.33\%$ of the entity mass,
+\item The top-$10$ vendors account for $18.72\%$ of the entity mass,
 ruling out datasheet crawling of a small number of major vendors as
 a scalable closure strategy for the long-tail gap.
 \end{enumerate}

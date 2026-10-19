@@ -247,9 +247,27 @@ function geomKey(p) {
 }
 
 function idValues(v) {
+  // 【20261019-01】结构化 flange 对象展开：`flange` 字段在部分实体里存的是
+  // `{pcd_mm, bolt_count, thread}` 对象而非字符串。旧实现把它 `String()` 成
+  // `"[object Object]"`，于是**两个不同法兰的对象**归一化成同一个字符串 →
+  // 交集恒非空 → 恒判 mechanical=true（假绿，比不判更有害）。
+  // 这里直接把结构化对象按 ISO 9409-1 编码形态展成 "ISO9409-1-<pcd>-<bolts>-<thread>"，
+  // 与字符串形态走同一比较空间。信息不丢、语义对齐。
   return (Array.isArray(v) ? v : [v])
     .filter(x => x !== null && x !== undefined)
-    .map(x => normalizeMechToken(x))
+    .map(x => {
+      if (x && typeof x === 'object' && !Array.isArray(x)) {
+        // 只认能还原成 ISO 9409-1 编码的结构化对象；其余对象一律丢弃（不猜）。
+        const pcd = x.pcd_mm ?? x.pcd ?? x.diam_mm;
+        const bolts = x.bolt_count ?? x.bolts;
+        const thread = x.thread;
+        if (pcd != null && bolts != null && thread) {
+          return normalizeMechToken(`ISO9409-1-${pcd}-${bolts}-${String(thread).toUpperCase()}`);
+        }
+        return null;
+      }
+      return normalizeMechToken(x);
+    })
     .filter(x => x && x !== 'UNKNOWN');
 }
 
