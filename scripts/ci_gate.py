@@ -297,6 +297,45 @@ def gate_asset_class_consistency():
             timeout=30)
 
 
+def gate_ros_runtime_profile():
+    """ROSRuntimeProfile 契约校验（P2-3 落地，2026-10-27）。
+
+    背景：审计 § 9.3 P2-3 要求"ROSRuntimeProfile 与启动测试：参考构建在目标
+    ROS 2 环境实际启动，驱动/消息/QoS 可追"。当前 library.js 只有 ros2
+    字符串标签（'full'/'partial'/'community'/'unknown'），缺少结构化的运行时契约
+    —— 调用方无法程序化判断"驱动包是什么 / 消息类型有哪些 / QoS 建议值"。
+
+    本闸门守四条（三态诚实边界内）：
+    1. schema_integrity：端点源文件里 5 个常量表完整
+       （SUPPORTED_DISTROS_BY_LEVEL / CONTROLLERS_BY_ROBOT_TYPE /
+        MESSAGE_TYPES_BY_ROBOT_TYPE / QOS_PROFILES / driver_packages）
+    2. mapping_consistency：controllers 与 message_types 的 robot_type 键一致
+       （防止加了 robot_type 忘配消息类型）；driver_packages 覆盖 ≥3 家知名厂商
+    3. honest_boundary：default validated=false + validation_status 三态枚举
+       （inferred_from_metadata / community_verified / tested）+ evidence_gaps 非空
+    4. live_endpoint_contract：线上 /api/urdf/runtime-profile 响应结构
+       与 schema 对齐（含 X-RoboParts-ProfileSchema / X-Data-Version 头）
+
+    诚实边界：**本闸门不越界声称"参考构建在真环境启动成功"**——真启动测试需
+    Docker + ROS 2 镜像，超出本会话范围。当前唯一路径
+    `validation_status='inferred_from_metadata'`，`validated=false`，
+    `evidence_gaps` 显式登记 `no_runtime_test_performed`。
+
+    --self-test 提供 6 条自证（基线 / 缺 unknown distro / 非法 status /
+    假绿 validated=true / 空 evidence_gaps / 映射漂移）。
+    """
+    script = os.path.join(ROOT, 'scripts', 'verify_ros_runtime_profile.py')
+    run_sub('ROSRuntimeProfile 线上契约（含响应头 + 结构完整性）',
+            [sys.executable, script],
+            timeout=90)
+    run_sub('ROSRuntimeProfile 自证（schema/status/假绿/映射漂移五类破坏）',
+            [sys.executable, script, '--self-test'],
+            timeout=30)
+    run_sub('ROSRuntimeProfile 离线模式（无网环境兜底）',
+            [sys.executable, script, '--offline'],
+            timeout=30)
+
+
 def gate_meta_single_source():
     """The meta top level of entities.json must no longer contain derived duplicates.
 
@@ -4486,6 +4525,11 @@ GATES = [
     # X-RoboParts-AssetClass 头契约对齐；抓"文档写对、代码写错"的经典漂移
     # （预置模型曾标 L0 但 download 头打 L1）。含 2 个子闸门：线上对齐 / 自证。
     ('资产分级 L0-L4 一致性', gate_asset_class_consistency),
+    # 【2026-10-27 P2-3】ROSRuntimeProfile 契约校验。ROS 2 运行时契约（distro/控制器/
+    # 消息类型/QoS/驱动包）结构化落库，防"validated=true 但没真跑过"的假绿。
+    # 三态诚实边界：当前唯一路径 inferred_from_metadata，validated=false，
+    # evidence_gaps 显式登记 no_runtime_test_performed。3 个子闸门：线上/自证/离线。
+    ('ROSRuntimeProfile 契约校验', gate_ros_runtime_profile),
     # 【20261008】Golden evaluation set. Guards "rule engine silently drifts from frozen anchors"
     # — previously this set existed but nobody ran it (4/6 false red); this gate wires it into CI.
     ('兼容性裁决 Golden 评估集（冻结锚点 + badcase）', gate_eval_compat),
