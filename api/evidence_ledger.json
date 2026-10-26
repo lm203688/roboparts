@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "evidence_ledger/v1",
-    "generated_at": "2026-10-26T15:11:05.285258+00:00",
+    "generated_at": "2026-10-26T15:23:43.175088+00:00",
     "source_schema": "schemas/evidence_contribution.schema.json",
     "total_contributions": 2
   },
@@ -92,8 +92,8 @@
     ]
   },
   "kpi": {
-    "decidable_pairs": 108,
-    "prev_decidable_pairs": 106,
+    "decidable_pairs": 110,
+    "prev_decidable_pairs": 108,
     "monotonic_non_decreasing": true
   },
   "note": "证据账本——追加式、不可改写、可复验。每条贡献必须通过 schema 校验 + 有溯源 + falsifiable_check 可复验。KPI 棘轮：decidable_pairs 单调不降。"
