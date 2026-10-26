@@ -1,0 +1,2438 @@
+{
+  "meta": {
+    "total": 60,
+    "total_all": 60,
+    "source": "kv",
+    "filter": null,
+    "compatibility_filter": null,
+    "sim_filter": null,
+    "available_robot_types": [
+      "humanoid",
+      "quadruped",
+      "arm",
+      "hand",
+      "gripper",
+      "amr"
+    ],
+    "type_counts": {
+      "humanoid": 23,
+      "quadruped": 6,
+      "arm": 24,
+      "hand": 3,
+      "gripper": 1,
+      "amr": 3
+    }
+  },
+  "models": [
+    {
+      "id": "URDF-001",
+      "name": "6-DOF机械臂基础模型",
+      "robot_type": "arm",
+      "description": "6自由度工业机械臂URDF，适配大多数控制器",
+      "joints_count": 6,
+      "joints": 6,
+      "links": 7,
+      "payload": "2kg",
+      "reach": "600mm",
+      "file_size": "15KB",
+      "license": "MIT",
+      "author": "RoboParts",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-001",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-002",
+      "name": "人形机器人上半身",
+      "robot_type": "humanoid",
+      "description": "7-DOF双臂人形机器人上半身，含头部关节",
+      "joints_count": 14,
+      "joints": 14,
+      "links": 15,
+      "payload": "N/A",
+      "reach": "500mm",
+      "file_size": "45KB",
+      "license": "MIT",
+      "author": "RoboParts",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-002",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-003",
+      "name": "四足机器人基础模型",
+      "robot_type": "quadruped",
+      "description": "12-DOF四足机器人，每条腿3个关节",
+      "joints_count": 12,
+      "joints": 12,
+      "links": 13,
+      "payload": "5kg",
+      "reach": "400mm",
+      "file_size": "38KB",
+      "license": "MIT",
+      "author": "RoboParts",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-003",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "MPC (模型预测控制)",
+          "RL-based Controller"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-004",
+      "name": "机器人夹爪",
+      "robot_type": "hand",
+      "description": "2指电动夹爪，含力控接口",
+      "joints_count": 2,
+      "joints": 2,
+      "links": 3,
+      "payload": "0.5kg",
+      "reach": "80mm",
+      "file_size": "8KB",
+      "license": "MIT",
+      "author": "RoboParts",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-004",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Grasp Controller",
+          "Force-based Control"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-005",
+      "name": "人形机器人全身模型",
+      "robot_type": "humanoid",
+      "description": "28-DOF全身人形机器人，含双腿、双臂、头部和腰部",
+      "joints_count": 28,
+      "joints": 28,
+      "links": 29,
+      "payload": "N/A",
+      "reach": "1.8m",
+      "file_size": "120KB",
+      "license": "Apache-2.0",
+      "author": "RoboParts",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-005",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-Apache2",
+          "Mid-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-006",
+      "name": "Unitree G1",
+      "robot_type": "humanoid",
+      "description": "23-DOF全身人形机器人",
+      "joints_count": 23,
+      "joints": 23,
+      "links": 24,
+      "payload": "3kg",
+      "reach": "550mm",
+      "file_size": "52KB",
+      "license": "Apache-2.0",
+      "author": "Unitree Robotics",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-006",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Isaac Sim",
+          "Gazebo",
+          "MuJoCo",
+          "PyBullet",
+          "Webots"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Isaac-Sim",
+          "Gazebo",
+          "MuJoCo",
+          "PyBullet",
+          "Webots",
+          "Open-Source-Apache2",
+          "Mid-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-007",
+      "name": "Unitree H1",
+      "robot_type": "humanoid",
+      "description": "20-DOF全身人形机器人",
+      "joints_count": 20,
+      "joints": 20,
+      "links": 21,
+      "payload": "5kg",
+      "reach": "600mm",
+      "file_size": "48KB",
+      "license": "Apache-2.0",
+      "author": "Unitree Robotics",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-007",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Isaac Sim",
+          "Gazebo",
+          "MuJoCo",
+          "PyBullet",
+          "Webots"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Isaac-Sim",
+          "Gazebo",
+          "MuJoCo",
+          "PyBullet",
+          "Webots",
+          "Open-Source-Apache2",
+          "Mid-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-008",
+      "name": "Unitree Go2",
+      "robot_type": "quadruped",
+      "description": "12-DOF四足机器人",
+      "joints_count": 12,
+      "joints": 12,
+      "links": 13,
+      "payload": "8kg",
+      "reach": "400mm",
+      "file_size": "35KB",
+      "license": "Apache-2.0",
+      "author": "Unitree Robotics",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-008",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Isaac Sim",
+          "Gazebo",
+          "MuJoCo",
+          "PyBullet",
+          "Webots"
+        ],
+        "controllers": [
+          "ros2_control",
+          "MPC (模型预测控制)",
+          "RL-based Controller"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Isaac-Sim",
+          "Gazebo",
+          "MuJoCo",
+          "PyBullet",
+          "Webots",
+          "Open-Source-Apache2",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-009",
+      "name": "Unitree B2",
+      "robot_type": "quadruped",
+      "description": "15-DOF四足机器人",
+      "joints_count": 15,
+      "joints": 15,
+      "links": 16,
+      "payload": "12kg",
+      "reach": "450mm",
+      "file_size": "42KB",
+      "license": "Apache-2.0",
+      "author": "Unitree Robotics",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-009",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Isaac Sim",
+          "Gazebo",
+          "MuJoCo",
+          "PyBullet",
+          "Webots"
+        ],
+        "controllers": [
+          "ros2_control",
+          "MPC (模型预测控制)",
+          "RL-based Controller"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Isaac-Sim",
+          "Gazebo",
+          "MuJoCo",
+          "PyBullet",
+          "Webots",
+          "Open-Source-Apache2",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-010",
+      "name": "AgiBot/FlexiPick",
+      "robot_type": "arm",
+      "description": "7-DOF柔性抓取机械臂",
+      "joints_count": 7,
+      "joints": 7,
+      "links": 8,
+      "payload": "5kg",
+      "reach": "850mm",
+      "file_size": "22KB",
+      "license": "MIT",
+      "author": "Agibot",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-010",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2",
+          "Cartesian Controller"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-011",
+      "name": "智元 灵犀X1",
+      "robot_type": "humanoid",
+      "description": "41-DOF全身人形机器人",
+      "joints_count": 41,
+      "joints": 41,
+      "links": 42,
+      "payload": "5kg",
+      "reach": "650mm",
+      "file_size": "68KB",
+      "license": "Apache-2.0",
+      "author": "Zhiyuan Robotics",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-011",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)",
+          "Whole-Body Control (WBC)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-Apache2",
+          "High-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-012",
+      "name": "优必选 Walker S",
+      "robot_type": "humanoid",
+      "description": "41-DOF全身人形机器人",
+      "joints_count": 41,
+      "joints": 41,
+      "links": 42,
+      "payload": "3kg",
+      "reach": "600mm",
+      "file_size": "65KB",
+      "license": "Apache-2.0",
+      "author": "UBTECH",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-012",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)",
+          "Whole-Body Control (WBC)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-Apache2",
+          "High-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-013",
+      "name": "Tesla Optimus Gen3",
+      "robot_type": "humanoid",
+      "description": "28-DOF人形机器人",
+      "joints_count": 28,
+      "joints": 28,
+      "links": 29,
+      "payload": "20kg",
+      "reach": "700mm",
+      "file_size": "55KB",
+      "license": "Custom",
+      "author": "Tesla",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-013",
+      "compatibility": {
+        "ros2": "unknown",
+        "ros2_details": "兼容性未知，需自行验证",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "Gazebo",
+          "PyBullet",
+          "Proprietary",
+          "Mid-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-014",
+      "name": "Franka Emika Panda",
+      "robot_type": "arm",
+      "description": "7-DOF协作机械臂",
+      "joints_count": 7,
+      "joints": 7,
+      "links": 8,
+      "payload": "3kg",
+      "reach": "855mm",
+      "file_size": "18KB",
+      "license": "BSD",
+      "author": "Franka Emika",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-014",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "Isaac Sim",
+          "MuJoCo",
+          "ROS 2"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2",
+          "Cartesian Controller"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "Isaac-Sim",
+          "MuJoCo",
+          "ROS-2",
+          "Open-Source-BSD",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-015",
+      "name": "UR5e Robot Arm",
+      "robot_type": "arm",
+      "description": "6-DOF工业机械臂",
+      "joints_count": 6,
+      "joints": 6,
+      "links": 7,
+      "payload": "5kg",
+      "reach": "850mm",
+      "file_size": "15KB",
+      "license": "Apache-2.0",
+      "author": "Universal Robots",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-015",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "ROS 2",
+          "MuJoCo"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "ROS-2",
+          "MuJoCo",
+          "Open-Source-Apache2",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-016",
+      "name": "Kinova Gen3 Lite",
+      "robot_type": "arm",
+      "description": "6-DOF轻量机械臂",
+      "joints_count": 6,
+      "joints": 6,
+      "links": 7,
+      "payload": "4.5kg",
+      "reach": "900mm",
+      "file_size": "16KB",
+      "license": "BSD",
+      "author": "Kinova",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-016",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-BSD",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-017",
+      "name": "宇树 H1-3",
+      "robot_type": "humanoid",
+      "description": "19-DOF全身人形",
+      "joints_count": 19,
+      "joints": 19,
+      "links": 20,
+      "payload": "3.5kg",
+      "reach": "500mm",
+      "file_size": "45KB",
+      "license": "Apache-2.0",
+      "author": "Unitree Robotics",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-017",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Isaac Sim",
+          "Gazebo",
+          "MuJoCo",
+          "PyBullet",
+          "Webots"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Isaac-Sim",
+          "Gazebo",
+          "MuJoCo",
+          "PyBullet",
+          "Webots",
+          "Open-Source-Apache2",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-018",
+      "name": "戴盟 DEX-001",
+      "robot_type": "hand",
+      "description": "12-DOF仿人灵巧手",
+      "joints_count": 12,
+      "joints": 12,
+      "links": 13,
+      "payload": "0.5kg",
+      "reach": "120mm",
+      "file_size": "25KB",
+      "license": "MIT",
+      "author": "Daimon Robotics",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-018",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Grasp Controller",
+          "Force-based Control"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-019",
+      "name": "Shadow Dexterous Hand",
+      "robot_type": "hand",
+      "description": "20-DOF五指灵巧手",
+      "joints_count": 20,
+      "joints": 20,
+      "links": 24,
+      "payload": "2kg",
+      "reach": "150mm",
+      "file_size": "38KB",
+      "license": "GPL",
+      "author": "Shadow Robot",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-019",
+      "compatibility": {
+        "ros2": "partial",
+        "ros2_details": "部分支持，需社区适配",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Grasp Controller",
+          "Force-based Control"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-GPL",
+          "Mid-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-020",
+      "name": "Unitree Z1",
+      "robot_type": "gripper",
+      "description": "2-DOF平行夹爪",
+      "joints_count": 2,
+      "joints": 2,
+      "links": 3,
+      "payload": "1kg",
+      "reach": "80mm",
+      "file_size": "8KB",
+      "license": "Apache-2.0",
+      "author": "Unitree Robotics",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-020",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Isaac Sim",
+          "Gazebo",
+          "MuJoCo",
+          "PyBullet",
+          "Webots"
+        ],
+        "controllers": [
+          "ros2_control (gripper_controller)"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Isaac-Sim",
+          "Gazebo",
+          "MuJoCo",
+          "PyBullet",
+          "Webots",
+          "Open-Source-Apache2",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-021",
+      "name": "AGILEX/Amr Base",
+      "robot_type": "amr",
+      "description": "4轮差速底盘",
+      "joints_count": 4,
+      "joints": 4,
+      "links": 5,
+      "payload": "20kg",
+      "reach": "N/A",
+      "file_size": "12KB",
+      "license": "MIT",
+      "author": "AgileX",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-021",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "Nav2",
+          "ros2_control (diff_drive / ackermann)"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-022",
+      "name": "Mobile Manipulator",
+      "robot_type": "arm",
+      "description": "6-DOF移动操作臂",
+      "joints_count": 6,
+      "joints": 6,
+      "links": 7,
+      "payload": "5kg",
+      "reach": "800mm",
+      "file_size": "20KB",
+      "license": "Apache-2.0",
+      "author": "RoboParts",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-022",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-Apache2",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-023",
+      "name": "Open Manipulator X",
+      "robot_type": "arm",
+      "description": "4-DOF桌面机械臂",
+      "joints_count": 4,
+      "joints": 4,
+      "links": 5,
+      "payload": "1kg",
+      "reach": "400mm",
+      "file_size": "10KB",
+      "license": "MIT",
+      "author": "ROBOTIS",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-023",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "Webots",
+          "PyBullet",
+          "ROS 2"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "Webots",
+          "PyBullet",
+          "ROS-2",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-024",
+      "name": "TALOS II",
+      "robot_type": "humanoid",
+      "description": "32-DOF全身人形",
+      "joints_count": 32,
+      "joints": 32,
+      "links": 33,
+      "payload": "6kg",
+      "reach": "750mm",
+      "file_size": "72KB",
+      "license": "GPL",
+      "author": "PAL Robotics",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-024",
+      "compatibility": {
+        "ros2": "partial",
+        "ros2_details": "部分支持，需社区适配",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-GPL",
+          "Mid-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-025",
+      "name": "ANYmal C",
+      "robot_type": "quadruped",
+      "description": "12-DOF四足机器人",
+      "joints_count": 12,
+      "joints": 12,
+      "links": 13,
+      "payload": "10kg",
+      "reach": "380mm",
+      "file_size": "40KB",
+      "license": "BSD",
+      "author": "ANYbotics",
+      "updated": "2026-07-27",
+      "download_url": "/api/urdf/download?id=URDF-025",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "Webots",
+          "MuJoCo"
+        ],
+        "controllers": [
+          "ros2_control",
+          "MPC (模型预测控制)",
+          "RL-based Controller"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "Webots",
+          "MuJoCo",
+          "Open-Source-BSD",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-026",
+      "name": "天工 TienKung",
+      "robot_type": "humanoid",
+      "description": "42-DOF全身人形机器人，国家地方共建人形机器人创新中心开源",
+      "joints_count": 42,
+      "joints": 42,
+      "links": 45,
+      "payload": "5kg",
+      "reach": "650mm",
+      "file_size": "78KB",
+      "license": "Apache-2.0",
+      "author": "National Humanoid Robotics Innovation Center",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-026",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)",
+          "Whole-Body Control (WBC)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-Apache2",
+          "High-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-027",
+      "name": "OpenArm 7-DOF",
+      "robot_type": "arm",
+      "description": "开源7自由度人形臂，适用于人形机器人上身集成",
+      "joints_count": 7,
+      "joints": 7,
+      "links": 9,
+      "payload": "3kg",
+      "reach": "600mm",
+      "file_size": "20KB",
+      "license": "MIT",
+      "author": "OpenArm Community",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-027",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2",
+          "Cartesian Controller"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-028",
+      "name": "UR5e + Robotiq 2F-85",
+      "robot_type": "arm",
+      "description": "UR5e六轴机械臂搭载Robotiq 2F-85夹爪，完整末端执行器模型",
+      "joints_count": 8,
+      "joints": 8,
+      "links": 10,
+      "payload": "5kg",
+      "reach": "850mm",
+      "file_size": "28KB",
+      "license": "Apache-2.0",
+      "author": "Universal Robots / Robotiq",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-028",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "ROS 2",
+          "MuJoCo"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "ROS-2",
+          "MuJoCo",
+          "Open-Source-Apache2",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-029",
+      "name": "六轴工业机械臂 (Generic 6-Axis)",
+      "robot_type": "arm",
+      "description": "通用6轴工业机械臂URDF，含碰撞几何与惯性参数",
+      "joints_count": 6,
+      "joints": 6,
+      "links": 7,
+      "payload": "10kg",
+      "reach": "900mm",
+      "file_size": "18KB",
+      "license": "MIT",
+      "author": "Open Robotics Community",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-029",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-030",
+      "name": "SO-100 (LeRobot)",
+      "robot_type": "arm",
+      "description": "LeRobot开源低成本6-DOF机械臂，3D打印友好设计",
+      "joints_count": 6,
+      "joints": 6,
+      "links": 7,
+      "payload": "0.5kg",
+      "reach": "350mm",
+      "file_size": "14KB",
+      "license": "MIT",
+      "author": "The K Rene/Fanny Reber (LeRobot)",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-030",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "MuJoCo",
+          "PyBullet",
+          "Gazebo"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "MuJoCo",
+          "PyBullet",
+          "Gazebo",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-031",
+      "name": "SO-101 (LeRobot)",
+      "robot_type": "arm",
+      "description": "SO-100改进版6-DOF机械臂，增强刚性与负载",
+      "joints_count": 6,
+      "joints": 6,
+      "links": 7,
+      "payload": "1kg",
+      "reach": "380mm",
+      "file_size": "15KB",
+      "license": "MIT",
+      "author": "The K Rene (LeRobot)",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-031",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "MuJoCo",
+          "PyBullet",
+          "Gazebo"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "MuJoCo",
+          "PyBullet",
+          "Gazebo",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-032",
+      "name": "ALOHA (LeRobot)",
+      "robot_type": "arm",
+      "description": "双臂遥操作数据采集平台，每臂6-DOF + 2指夹爪",
+      "joints_count": 14,
+      "joints": 14,
+      "links": 18,
+      "payload": "2kg",
+      "reach": "450mm",
+      "file_size": "32KB",
+      "license": "MIT",
+      "author": "Tony Zhao / Stanford (LeRobot)",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-032",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "MuJoCo",
+          "PyBullet",
+          "Gazebo"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "MuJoCo",
+          "PyBullet",
+          "Gazebo",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-033",
+      "name": "ALOHA-2 (LeRobot)",
+      "robot_type": "arm",
+      "description": "ALOHA第二代双臂遥操作平台，改进静音与轻量化",
+      "joints_count": 14,
+      "joints": 14,
+      "links": 18,
+      "payload": "2kg",
+      "reach": "450mm",
+      "file_size": "34KB",
+      "license": "MIT",
+      "author": "Tony Zhao / Stanford (LeRobot)",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-033",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "MuJoCo",
+          "PyBullet",
+          "Gazebo"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "MuJoCo",
+          "PyBullet",
+          "Gazebo",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-034",
+      "name": "Reachy 2",
+      "robot_type": "humanoid",
+      "description": "41-DOF上半身人形机器人，双臂7-DOF + 表情头部",
+      "joints_count": 41,
+      "joints": 41,
+      "links": 44,
+      "payload": "1.5kg",
+      "reach": "550mm",
+      "file_size": "62KB",
+      "license": "GPL-3.0",
+      "author": "Pollen Robotics",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-034",
+      "compatibility": {
+        "ros2": "partial",
+        "ros2_details": "部分支持，需社区适配",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)",
+          "Whole-Body Control (WBC)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-GPL",
+          "High-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-035",
+      "name": "Fanuc CRX-10iA",
+      "robot_type": "arm",
+      "description": "FANUC CRX系列协作机器人，6-DOF轻量化设计",
+      "joints_count": 6,
+      "joints": 6,
+      "links": 7,
+      "payload": "10kg",
+      "reach": "991mm",
+      "file_size": "17KB",
+      "license": "BSD",
+      "author": "FANUC",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-035",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-BSD",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-036",
+      "name": "KUKA LBR iiwa 14 R820",
+      "robot_type": "arm",
+      "description": "KUKA 7-DOF灵敏型协作机器人，高精度力矩传感器",
+      "joints_count": 7,
+      "joints": 7,
+      "links": 8,
+      "payload": "14kg",
+      "reach": "820mm",
+      "file_size": "19KB",
+      "license": "BSD",
+      "author": "KUKA Robotics",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-036",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2",
+          "Cartesian Controller"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-BSD",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-037",
+      "name": "ABB GoFa CRB 15000",
+      "robot_type": "arm",
+      "description": "ABB新一代协作机器人，4自由度高负载",
+      "joints_count": 4,
+      "joints": 4,
+      "links": 5,
+      "payload": "15kg",
+      "reach": "950mm",
+      "file_size": "16KB",
+      "license": "BSD",
+      "author": "ABB Robotics",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-037",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-BSD",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-038",
+      "name": "Doosan H2515",
+      "robot_type": "arm",
+      "description": "斗山6-DOF协作机器人，25kg大负载",
+      "joints_count": 6,
+      "joints": 6,
+      "links": 7,
+      "payload": "25kg",
+      "reach": "1700mm",
+      "file_size": "18KB",
+      "license": "Apache-2.0",
+      "author": "Doosan Robotics",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-038",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-Apache2",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-039",
+      "name": "Mujin PickArm",
+      "robot_type": "arm",
+      "description": "Mujin物流抓取专用机械臂，高速码垛",
+      "joints_count": 6,
+      "joints": 6,
+      "links": 7,
+      "payload": "20kg",
+      "reach": "1200mm",
+      "file_size": "22KB",
+      "license": "Proprietary",
+      "author": "Mujin",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-039",
+      "compatibility": {
+        "ros2": "unknown",
+        "ros2_details": "兼容性未知，需自行验证",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "Gazebo",
+          "PyBullet",
+          "Proprietary",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-040",
+      "name": "Boston Dynamics Spot",
+      "robot_type": "quadruped",
+      "description": "12-DOF四足机器狗，全地形移动平台",
+      "joints_count": 12,
+      "joints": 12,
+      "links": 15,
+      "payload": "14kg",
+      "reach": "450mm",
+      "file_size": "55KB",
+      "license": "Proprietary",
+      "author": "Boston Dynamics",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-040",
+      "compatibility": {
+        "ros2": "community",
+        "ros2_details": "社区维护 ROS 2 适配包",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "MPC (模型预测控制)",
+          "RL-based Controller"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "ROS2-Community",
+          "Gazebo",
+          "PyBullet",
+          "Proprietary",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-041",
+      "name": "ANYmal D",
+      "robot_type": "quadruped",
+      "description": "ANYmal D系列四足机器人，工业级全地形",
+      "joints_count": 12,
+      "joints": 12,
+      "links": 14,
+      "payload": "20kg",
+      "reach": "420mm",
+      "file_size": "48KB",
+      "license": "BSD",
+      "author": "ANYbotics",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-041",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "Webots",
+          "MuJoCo"
+        ],
+        "controllers": [
+          "ros2_control",
+          "MPC (模型预测控制)",
+          "RL-based Controller"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "Webots",
+          "MuJoCo",
+          "Open-Source-BSD",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-042",
+      "name": "PAL Robotics TIAGo",
+      "robot_type": "humanoid",
+      "description": "28-DOF半身人形服务机器人，含7-DOF双臂与移动底座",
+      "joints_count": 28,
+      "joints": 28,
+      "links": 32,
+      "payload": "3kg",
+      "reach": "650mm",
+      "file_size": "58KB",
+      "license": "GPL-3.0",
+      "author": "PAL Robotics",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-042",
+      "compatibility": {
+        "ros2": "partial",
+        "ros2_details": "部分支持，需社区适配",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-GPL",
+          "Mid-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-043",
+      "name": "Figure 01",
+      "robot_type": "humanoid",
+      "description": "Figure 01全身人形机器人，41-DOF商用双足人形",
+      "joints_count": 41,
+      "joints": 41,
+      "links": 44,
+      "payload": "20kg",
+      "reach": "700mm",
+      "file_size": "75KB",
+      "license": "Proprietary",
+      "author": "Figure AI",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-043",
+      "compatibility": {
+        "ros2": "community",
+        "ros2_details": "社区维护 ROS 2 适配包",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)",
+          "Whole-Body Control (WBC)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "ROS2-Community",
+          "Gazebo",
+          "PyBullet",
+          "Proprietary",
+          "High-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-044",
+      "name": "Figure 02",
+      "robot_type": "humanoid",
+      "description": "Figure 02第二代全身人形，增强灵巧操作与环境感知",
+      "joints_count": 42,
+      "joints": 42,
+      "links": 46,
+      "payload": "25kg",
+      "reach": "750mm",
+      "file_size": "82KB",
+      "license": "Proprietary",
+      "author": "Figure AI",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-044",
+      "compatibility": {
+        "ros2": "community",
+        "ros2_details": "社区维护 ROS 2 适配包",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)",
+          "Whole-Body Control (WBC)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "ROS2-Community",
+          "Gazebo",
+          "PyBullet",
+          "Proprietary",
+          "High-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-045",
+      "name": "Sanctuary AI Phoenix",
+      "robot_type": "humanoid",
+      "description": "Phoenix全身通用人形机器人，集成灵巧手与触觉",
+      "joints_count": 44,
+      "joints": 44,
+      "links": 50,
+      "payload": "15kg",
+      "reach": "680mm",
+      "file_size": "88KB",
+      "license": "Proprietary",
+      "author": "Sanctuary AI",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-045",
+      "compatibility": {
+        "ros2": "unknown",
+        "ros2_details": "兼容性未知，需自行验证",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)",
+          "Whole-Body Control (WBC)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "Gazebo",
+          "PyBullet",
+          "Proprietary",
+          "High-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-046",
+      "name": "1X NEO",
+      "robot_type": "humanoid",
+      "description": "1X NEO全身人形机器人，家用服务场景",
+      "joints_count": 36,
+      "joints": 36,
+      "links": 40,
+      "payload": "8kg",
+      "reach": "620mm",
+      "file_size": "70KB",
+      "license": "Proprietary",
+      "author": "1X Technologies",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-046",
+      "compatibility": {
+        "ros2": "unknown",
+        "ros2_details": "兼容性未知，需自行验证",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "Gazebo",
+          "PyBullet",
+          "Proprietary",
+          "Mid-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-047",
+      "name": "Agility Digit",
+      "robot_type": "humanoid",
+      "description": "Digit双足人形机器人，物流搬运专用",
+      "joints_count": 20,
+      "joints": 20,
+      "links": 24,
+      "payload": "16kg",
+      "reach": "800mm",
+      "file_size": "65KB",
+      "license": "Proprietary",
+      "author": "Agility Robotics",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-047",
+      "compatibility": {
+        "ros2": "unknown",
+        "ros2_details": "兼容性未知，需自行验证",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "Gazebo",
+          "PyBullet",
+          "Proprietary",
+          "Mid-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-048",
+      "name": "小鹏 Iron",
+      "robot_type": "humanoid",
+      "description": "小鹏汽车人形机器人Iron，60-DOF全身多模态",
+      "joints_count": 60,
+      "joints": 60,
+      "links": 65,
+      "payload": "10kg",
+      "reach": "700mm",
+      "file_size": "95KB",
+      "license": "Proprietary",
+      "author": "Xiaomi / XPeng Robotics",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-048",
+      "compatibility": {
+        "ros2": "unknown",
+        "ros2_details": "兼容性未知，需自行验证",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)",
+          "Whole-Body Control (WBC)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "Gazebo",
+          "PyBullet",
+          "Proprietary",
+          "High-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-049",
+      "name": "傅利叶 GR-1",
+      "robot_type": "humanoid",
+      "description": "GR-1全身通用人形机器人，40-DOF自由度",
+      "joints_count": 40,
+      "joints": 40,
+      "links": 43,
+      "payload": "5kg",
+      "reach": "620mm",
+      "file_size": "72KB",
+      "license": "Apache-2.0",
+      "author": "Fourier Intelligence",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-049",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Isaac Sim",
+          "Gazebo",
+          "MuJoCo"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)",
+          "Whole-Body Control (WBC)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Isaac-Sim",
+          "Gazebo",
+          "MuJoCo",
+          "Open-Source-Apache2",
+          "High-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-050",
+      "name": "傅利叶 GR-2",
+      "robot_type": "humanoid",
+      "description": "GR-2第二代全身人形，增强手眼协调与行走能力",
+      "joints_count": 42,
+      "joints": 42,
+      "links": 46,
+      "payload": "6kg",
+      "reach": "650mm",
+      "file_size": "78KB",
+      "license": "Apache-2.0",
+      "author": "Fourier Intelligence",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-050",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Isaac Sim",
+          "Gazebo",
+          "MuJoCo"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)",
+          "Whole-Body Control (WBC)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Isaac-Sim",
+          "Gazebo",
+          "MuJoCo",
+          "Open-Source-Apache2",
+          "High-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-051",
+      "name": "星动纪元 XBot-L",
+      "robot_type": "humanoid",
+      "description": "XBot-L全身人形机器人，可重构模块化设计",
+      "joints_count": 41,
+      "joints": 41,
+      "links": 44,
+      "payload": "5kg",
+      "reach": "600mm",
+      "file_size": "68KB",
+      "license": "Apache-2.0",
+      "author": "RobotEra (星动纪元)",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-051",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)",
+          "Whole-Body Control (WBC)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-Apache2",
+          "High-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-052",
+      "name": "逐际动力 CL-1",
+      "robot_type": "humanoid",
+      "description": "CL-1双足人形机器人，动态平衡与地形适应",
+      "joints_count": 36,
+      "joints": 36,
+      "links": 40,
+      "payload": "10kg",
+      "reach": "680mm",
+      "file_size": "65KB",
+      "license": "Proprietary",
+      "author": "LimX Dynamics (逐际动力)",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-052",
+      "compatibility": {
+        "ros2": "unknown",
+        "ros2_details": "兼容性未知，需自行验证",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "Gazebo",
+          "PyBullet",
+          "Proprietary",
+          "Mid-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-053",
+      "name": "银河通用 Galbot G1",
+      "robot_type": "humanoid",
+      "description": "银河通用具身智能机器人，双臂操作+轮式移动底座",
+      "joints_count": 22,
+      "joints": 22,
+      "links": 26,
+      "payload": "8kg",
+      "reach": "750mm",
+      "file_size": "55KB",
+      "license": "Proprietary",
+      "author": "Galbot (银河通用机器人)",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-053",
+      "compatibility": {
+        "ros2": "unknown",
+        "ros2_details": "兼容性未知，需自行验证",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control",
+          "Custom (全身平衡控制器)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": false,
+        "compatibility_tags": [
+          "Gazebo",
+          "PyBullet",
+          "Proprietary",
+          "Mid-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-054",
+      "name": "有鹿机器人 Master",
+      "robot_type": "amr",
+      "description": "有鹿机器人通用移动平台，激光SLAM导航",
+      "joints_count": 4,
+      "joints": 4,
+      "links": 5,
+      "payload": "30kg",
+      "reach": "N/A",
+      "file_size": "15KB",
+      "license": "MIT",
+      "author": "LU Robotics (有鹿机器人)",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-054",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "Nav2",
+          "ros2_control (diff_drive / ackermann)"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-055",
+      "name": "大象机器人 myCobot 280",
+      "robot_type": "arm",
+      "description": "myCobot 280桌面6-DOF协作机械臂，教育科研",
+      "joints_count": 6,
+      "joints": 6,
+      "links": 7,
+      "payload": "0.25kg",
+      "reach": "280mm",
+      "file_size": "12KB",
+      "license": "MIT",
+      "author": "Elephant Robotics (大象机器人)",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-055",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet",
+          "ROS 2"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "ROS-2",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-056",
+      "name": "大象机器人 myBuddy 280",
+      "robot_type": "arm",
+      "description": "myBuddy双臂桌面机器人，每臂5-DOF+夹爪",
+      "joints_count": 12,
+      "joints": 12,
+      "links": 14,
+      "payload": "0.5kg",
+      "reach": "280mm",
+      "file_size": "22KB",
+      "license": "MIT",
+      "author": "Elephant Robotics (大象机器人)",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-056",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet",
+          "ROS 2"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "ROS-2",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-057",
+      "name": "睿尔曼 RM65-B",
+      "robot_type": "arm",
+      "description": "睿尔曼RM65-B六轴协作机械臂，5kg负载",
+      "joints_count": 6,
+      "joints": 6,
+      "links": 7,
+      "payload": "5kg",
+      "reach": "850mm",
+      "file_size": "16KB",
+      "license": "MIT",
+      "author": "Realman (睿尔曼智能)",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-057",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-058",
+      "name": "大然机器人 DR-07",
+      "robot_type": "arm",
+      "description": "大然DR-07七自由度协作机械臂，高性价比",
+      "joints_count": 7,
+      "joints": 7,
+      "links": 8,
+      "payload": "7kg",
+      "reach": "900mm",
+      "file_size": "17KB",
+      "license": "MIT",
+      "author": "DARAN (大然机器人)",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-058",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)",
+          "MoveIt 2",
+          "Cartesian Controller"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "PyBullet",
+          "Open-Source-MIT",
+          "Low-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-059",
+      "name": "PR2",
+      "robot_type": "arm",
+      "description": "Willow Garage PR2双臂移动操作平台，经典ROS研究机器人",
+      "joints_count": 38,
+      "joints": 38,
+      "links": 42,
+      "payload": "2kg",
+      "reach": "800mm",
+      "file_size": "120KB",
+      "license": "BSD",
+      "author": "Willow Garage / Open Robotics",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-059",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "ROS 2",
+          "PyBullet"
+        ],
+        "controllers": [
+          "ros2_control (joint_trajectory_controller)"
+        ],
+        "mesh_format": "DAE (Collada)",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "ROS-2",
+          "PyBullet",
+          "Open-Source-BSD",
+          "Mid-DOF"
+        ]
+      }
+    },
+    {
+      "id": "URDF-060",
+      "name": "TurtleBot3 Burger",
+      "robot_type": "amr",
+      "description": "TurtleBot3 Burger差速移动平台，ROS教育标准",
+      "joints_count": 2,
+      "joints": 2,
+      "links": 4,
+      "payload": "1kg",
+      "reach": "N/A",
+      "file_size": "10KB",
+      "license": "Apache-2.0",
+      "author": "ROBOTIS / Open Robotics",
+      "updated": "2026-07-28",
+      "download_url": "/api/urdf/download?id=URDF-060",
+      "compatibility": {
+        "ros2": "full",
+        "ros2_details": "原生支持 ROS 2 Humble/Jazzy",
+        "simulation_platforms": [
+          "Gazebo",
+          "Webots",
+          "PyBullet",
+          "ROS 2"
+        ],
+        "controllers": [
+          "Nav2",
+          "ros2_control (diff_drive / ackermann)"
+        ],
+        "mesh_format": "STL",
+        "urdf_version": "1.0",
+        "validated": true,
+        "compatibility_tags": [
+          "ROS2-Humble",
+          "ROS2-Jazzy",
+          "Gazebo",
+          "Webots",
+          "PyBullet",
+          "ROS-2",
+          "Open-Source-Apache2",
+          "Low-DOF"
+        ]
+      }
+    }
+  ]
+}

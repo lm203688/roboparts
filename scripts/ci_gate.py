@@ -54,22 +54,59 @@ def bad(name, detail=''):
 
 
 def run_sub(name, cmd, cwd=ROOT, timeout=300):
-    """Run an external gate script; a non-zero exit is judged red."""
+    """Run an external gate script; a non-zero exit is judged red.
+
+    P0-9 修复（2026-10-26 全面审计报告）：
+    1) Windows 子进程 UTF-8 解码：旧代码用默认 locale（Windows 中文环境是 cp936/gbk），
+       子进程输出 UTF-8 中文时被误解码，出现 '□□□□' 或 UnicodeDecodeError，导致
+       「Windows CI 假红 / 输出乱码 / 关键错误消息不可读」。现显式 encoding='utf-8',
+       errors='replace'。Linux/macOS 上默认 locale 已是 UTF-8，改动无副作用。
+
+    2) 分离「环境失败」与「产品失败」：旧代码把 FileNotFoundError（命令不存在）与
+       非零退出（脚本真跑但失败）都归为 bad() 红灯，把"CI 环境没装 wrangler"和
+       "闸门真的挂了"混为一谈。用户看到红，却分不清是要装依赖还是修代码。现引入
+       env_skip()：环境类失败（命令不存在 / 超时 / 权限拒绝）走非阻塞 ⚠️，产品失败
+       仍走 bad() 阻塞。审计原话：「无'命令未运行却算测过'」——所以超时要判红，
+       但命令不存在要判黄并明确说明"这条闸门根本没跑"。
+
+    3) 修正旧的 stdout/stderr 拼接逻辑：原 `((r.stdout or b'') + (r.returncode and
+       (r.stderr or b'') or b''))` 在 returncode==0 时会丢失 stdout 里的空值判断
+       并吞掉 stderr；现改为无条件拼接 stdout + stderr。
+    """
     try:
-        r = subprocess.run(cmd, cwd=cwd, capture_output=True, timeout=timeout)
+        r = subprocess.run(
+            cmd, cwd=cwd, capture_output=True, timeout=timeout,
+            encoding='utf-8', errors='replace',
+        )
     except FileNotFoundError as ex:
-        bad(name, f'command unavailable: {ex}')
+        # 环境失败：命令不存在。用户看到的应该是「CI 环境缺这个命令」而不是"闸门挂"。
+        env_skip(name, f'command unavailable: {ex}')
+        return
+    except PermissionError as ex:
+        env_skip(name, f'permission denied: {ex}')
         return
     except subprocess.TimeoutExpired:
-        bad(name, f'timeout {timeout}s')
+        # 超时是产品失败：脚本真跑了但卡住或死循环。不能当"没跑"放过。
+        bad(name, f'timeout {timeout}s (脚本未在规定时间内完成)')
         return
-    out = ((r.stdout or b'') + (r.returncode and (r.stderr or b'') or b'')
-           ).decode('utf-8', 'replace').strip()
+    except OSError as ex:
+        env_skip(name, f'os error: {ex}')
+        return
+    out = ((r.stdout or '') + (r.stderr or '')).strip()
     last = out.splitlines()[-1] if out else ''
     if r.returncode == 0:
         ok(name, last[:160])
     else:
         bad(name, out.replace('\n', ' | ')[:500])
+
+
+def env_skip(name, detail=''):
+    """非阻塞的环境类跳过：命令不存在 / 权限拒绝 / 环境不满足前置条件。
+    不加入 FAILED，因此 CI 不会因此红灯；但会显式记录，防止"命令没跑却算测过"。
+    与 warn() 的区别：warn() 用于闸门主动选择软失败的语义；env_skip() 专指
+    命令根本没启动起来。分类台账见 docs/ci-failure-taxonomy.md（P0-11）。
+    """
+    print(f'  ⏭️  SKIP(env) {name}' + (f' — {detail}' if detail else ''))
 
 
 # ---------------------------------------------------------------- gate definitions

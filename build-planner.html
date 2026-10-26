@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<link rel="stylesheet" href="/_shell.css">
+<link rel="stylesheet" href="/_project-badge.css">
+
 <meta charset="UTF-8">
   <link rel="alternate" hreflang="zh-CN" href="https://roboparts.cc/build-planner.html">
   <link rel="alternate" hreflang="x-default" href="https://roboparts.cc/build-planner.html">
@@ -126,6 +129,21 @@ const TYPES = {
 function adapterUrl(a,b){ return `https://roboparts.cc/adapter-generator?a=${a}&b=${b}&t=10&bore=20`; }
 function flangeTag(f){ return f? `<span class="tag">${f}</span>` : '<span style="color:var(--mut)">—</span>'; }
 
+// ===== RpProject 保存 (P1-1) =====
+var _rpSaveTimer = null;
+function scheduleRpSave(){
+  clearTimeout(_rpSaveTimer);
+  _rpSaveTimer = setTimeout(function(){
+    try {
+      if (typeof RpProject !== 'object') return;
+      RpProject.setForStep(1, {
+        current: current,
+        savedAt: new Date().toISOString()
+      });
+    } catch(e) {}
+  }, 500);
+}
+
 let current=null;
 function renderTypes(){
   const el=document.getElementById('types');
@@ -139,6 +157,7 @@ function renderTypes(){
 }
 function select(k){
   current=k;
+  scheduleRpSave();
   document.querySelectorAll('.type').forEach(t=>t.classList.toggle('active', t.dataset.k===k));
   const t=TYPES[k];
   document.getElementById('resTitle').textContent='BOM 模板 · '+t.title;
@@ -199,6 +218,27 @@ function downloadBom(){
 }
 
 renderTypes();
+</script>
+
+<script src="/rp-project.js"></script>
+<script src="/_shell.js"></script>
+<script>
+// ===== RpProject 恢复 (P1-1) =====
+// P0-1 修复：原代码把恢复逻辑写在 <script src="/_shell.js"> 里——浏览器遇到 src 属性
+// 会忽略 <script> 标签内的所有内联内容，导致保存的选型永远不恢复。现改为独立无 src 的
+// <script> 块，且加载顺序 rp-project.js → _shell.js → 恢复脚本，确保 RpProject 与
+// _shell.js 注入的 select() 都已可用。同时把误用的 selectType() 改回真实函数名 select()。
+window.addEventListener('DOMContentLoaded', function(){
+  try {
+    if (typeof RpProject === 'object') {
+      var saved = RpProject.getForStep(1);
+      if (saved && saved.current) {
+        current = saved.current;
+        if (typeof select === 'function') select(saved.current);
+      }
+    }
+  } catch(e) {}
+});
 </script>
 </body>
 </html>

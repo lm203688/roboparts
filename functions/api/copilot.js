@@ -114,9 +114,20 @@ async function buildSystemPrompt(request) {
     }
     const mech = meta.mechanical_interface_coverage;
     if (mech && typeof mech === 'object') {
+      // P0-8a 修复：旧代码硬编码"声明率约 1.52%"，是某次快照的过期数字。
+      // 机械声明数会随数据管线增长漂移（2026-10 已达 81 declared，1.52% 严重低估），
+      // 硬编码让 AI 用过期口径给用户算账。现按 declared+partial 占 applicable 实体的百分比
+      // 现算。分母优先用 meta.mech_applicable_total（若有），退化到 total_entities。
+      const declared = mech.declared || 0;
+      const partial = mech.partial || 0;
+      const notDeclared = mech.not_declared || 0;
+      const na = mech.not_applicable || 0;
+      const applicable = notDeclared + declared + partial; // NA 不算分母
+      const denom = mech.mech_applicable_total || applicable || total || 0;
+      const pct = denom > 0 ? ((declared + partial) / denom * 100).toFixed(2) : '0.00';
       parts.push(
-        `机械接口声明：declared ${mech.declared}/partial ${mech.partial}/not_declared ${mech.not_declared}/` +
-        `not_applicable ${mech.not_applicable}（声明率约 1.52%，真实 BOM 数据缺口，非代码缺陷）。`
+        `机械接口声明：declared ${declared}/partial ${partial}/not_declared ${notDeclared}/` +
+        `not_applicable ${na}（声明率现算 ${pct}%，适用实体分母 ${denom}；数据随管线实时增长）。`
       );
     }
     return parts.join('\n');
@@ -188,7 +199,9 @@ function buildReferences(ctx, entities) {
         if (seen.has(e.id)) continue;
         const hay = [e.id, e.name, e.brand || ''].filter(Boolean).join(' ').toLowerCase();
         if (hay.includes(token)) {
-          refs.push({ kind: 'entity', label: `${e.name || e.id}（${e.id}）`, url: '/bionic' });
+          // P0-8b 修复：旧代码把所有命中的实体 url 都写死为 '/bionic'（仿生页），
+          // 用户点了引用跳到错误页面。正确路径是 /entity/<id>，与全站实体详情页一致。
+          refs.push({ kind: 'entity', label: `${e.name || e.id}（${e.id}）`, url: `/entity/${encodeURIComponent(e.id)}` });
           seen.add(e.id);
           if (refs.filter((r) => r.kind === 'entity').length >= 3) break;
         }

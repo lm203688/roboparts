@@ -1,0 +1,629 @@
+{
+  "snapshot_date": "2026-10-26",
+  "file_count_excluding_heavy_dirs": 1937,
+  "root_html_pages": 41,
+  "api_json_files": 82,
+  "function_js_files": 57,
+  "script_files_top_level": 205,
+  "docs_markdown_files": 79,
+  "entities": 868,
+  "categories": {
+    "actuators": 222,
+    "chips": 108,
+    "platforms": 106,
+    "sensors": 95,
+    "protocols": 64,
+    "robot_ai_models": 46,
+    "data_acquisition": 46,
+    "interfaces": 44,
+    "llms": 42,
+    "grippers": 26,
+    "flexible_actuators": 22,
+    "bionic_mechanisms": 17,
+    "reducers": 14,
+    "controllers": 4,
+    "structural": 3,
+    "connectors": 2,
+    "cables": 2,
+    "power": 2,
+    "pcb": 2,
+    "integrated_joints": 1
+  },
+  "quarantined_entities": 113,
+  "source_tiers": {
+    "B": 324,
+    "A": 245,
+    "C": 299
+  },
+  "confidence_tiers": {
+    "inferred": 310,
+    "observed": 199,
+    "verified": 80,
+    "derived": 166,
+    "unverified": 113
+  },
+  "mechanical_interface_status": {
+    "partial": 14,
+    "not_declared": 419,
+    "declared": 67,
+    "n_a": 368
+  },
+  "assets": [
+    "adapters\\example_adapter.scad",
+    "scripts\\sample.urdf"
+  ],
+  "html": [
+    {
+      "file": "404.html",
+      "bytes": 6746,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 0,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "adapter-generator.html",
+      "bytes": 37055,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": true,
+      "legacy_nav": false,
+      "inline_script_bytes": 23714,
+      "external_cdn": [
+        "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      ],
+      "sri": false
+    },
+    {
+      "file": "agent-architecture.html",
+      "bytes": 13428,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 4536,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "api-pricing.html",
+      "bytes": 14412,
+      "lang": "en",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 558,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "assembly.html",
+      "bytes": 33104,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": true,
+      "inline_script_bytes": 22208,
+      "external_cdn": [
+        "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      ],
+      "sri": false
+    },
+    {
+      "file": "bionic.html",
+      "bytes": 23537,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 3630,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "bom-checker.html",
+      "bytes": 23174,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": true,
+      "legacy_nav": false,
+      "inline_script_bytes": 14918,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "bom-import.html",
+      "bytes": 13191,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": true,
+      "legacy_nav": false,
+      "inline_script_bytes": 6910,
+      "external_cdn": [
+        "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"
+      ],
+      "sri": false
+    },
+    {
+      "file": "bom-manager.html",
+      "bytes": 32506,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": true,
+      "inline_script_bytes": 15439,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "build-planner.html",
+      "bytes": 12490,
+      "lang": "zh-CN",
+      "shell_js": 2,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 6773,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "co-mount.html",
+      "bytes": 10528,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 4493,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "compatibility-viewer.html",
+      "bytes": 10917,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 6350,
+      "external_cdn": [
+        "https://cdn.jsdelivr.net/npm/three@0.164.0/build/three.module.js",
+        "https://cdn.jsdelivr.net/npm/three@0.164.0/examples/jsm/"
+      ],
+      "sri": false
+    },
+    {
+      "file": "compatibility-viz.html",
+      "bytes": 18597,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 12708,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "contributors.html",
+      "bytes": 11298,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": true,
+      "inline_script_bytes": 4327,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "copilot.html",
+      "bytes": 22687,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 14706,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "credits-history.html",
+      "bytes": 23653,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": true,
+      "inline_script_bytes": 10041,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "credits.html",
+      "bytes": 35516,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": true,
+      "legacy_nav": true,
+      "inline_script_bytes": 14542,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "data-hub.html",
+      "bytes": 47676,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": true,
+      "inline_script_bytes": 23833,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "demo-flow.html",
+      "bytes": 12819,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": true,
+      "inline_script_bytes": 2833,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "designer.html",
+      "bytes": 121377,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": true,
+      "inline_script_bytes": 74596,
+      "external_cdn": [
+        "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js",
+        "https://cdn.jsdelivr.net/npm/three@0.158.0/examples/",
+        "https://cdn.jsdelivr.net/npm/urdf-loader@0.13.1/dist/urdf-loader.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+      ],
+      "sri": false
+    },
+    {
+      "file": "funnel.html",
+      "bytes": 7892,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": true,
+      "legacy_nav": false,
+      "inline_script_bytes": 2463,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "geo-dashboard.html",
+      "bytes": 14624,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 8516,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "index.html",
+      "bytes": 21509,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": true,
+      "legacy_nav": true,
+      "inline_script_bytes": 2505,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "iso-9409-flange.html",
+      "bytes": 39071,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 6985,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "mcp-guide.html",
+      "bytes": 37505,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": true,
+      "inline_script_bytes": 5455,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "order.html",
+      "bytes": 1013,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 0,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "oss.html",
+      "bytes": 7078,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 3262,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "parts-viewer.html",
+      "bytes": 12810,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 7341,
+      "external_cdn": [
+        "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      ],
+      "sri": false
+    },
+    {
+      "file": "pricing.html",
+      "bytes": 27148,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": true,
+      "legacy_nav": true,
+      "inline_script_bytes": 8732,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "promo-poster.html",
+      "bytes": 10712,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 0,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "promotion.html",
+      "bytes": 8526,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 284,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "reference-builds.html",
+      "bytes": 9597,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": true,
+      "inline_script_bytes": 5182,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "robot-joint-parameter-spec.html",
+      "bytes": 34478,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": true,
+      "inline_script_bytes": 6082,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "scoreboard.html",
+      "bytes": 12456,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 2934,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "selection.html",
+      "bytes": 37598,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": true,
+      "legacy_nav": true,
+      "inline_script_bytes": 17231,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "spec-declare.html",
+      "bytes": 10608,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 3990,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "standard-audit.html",
+      "bytes": 7492,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 2587,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "supplier-admin.html",
+      "bytes": 32882,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": true,
+      "inline_script_bytes": 12743,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "suppliers.html",
+      "bytes": 12053,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 2450,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "urdf-library.html",
+      "bytes": 29236,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": true,
+      "inline_script_bytes": 11077,
+      "external_cdn": [],
+      "sri": false
+    },
+    {
+      "file": "waitlist.html",
+      "bytes": 8221,
+      "lang": "zh-CN",
+      "shell_js": 1,
+      "project_js": 1,
+      "analytics": false,
+      "legacy_nav": false,
+      "inline_script_bytes": 2720,
+      "external_cdn": [],
+      "sri": false
+    }
+  ],
+  "html_summary": {
+    "shell_all_pages": true,
+    "project_all_pages": true,
+    "pages_with_analytics": 8,
+    "pages_zh_cn": 40,
+    "pages_with_legacy_nav": 16,
+    "pages_with_cdn": 6,
+    "pages_with_sri": 0,
+    "largest_pages": [
+      {
+        "file": "designer.html",
+        "bytes": 121377,
+        "inline_script_bytes": 74596
+      },
+      {
+        "file": "data-hub.html",
+        "bytes": 47676,
+        "inline_script_bytes": 23833
+      },
+      {
+        "file": "iso-9409-flange.html",
+        "bytes": 39071,
+        "inline_script_bytes": 6985
+      },
+      {
+        "file": "selection.html",
+        "bytes": 37598,
+        "inline_script_bytes": 17231
+      },
+      {
+        "file": "mcp-guide.html",
+        "bytes": 37505,
+        "inline_script_bytes": 5455
+      },
+      {
+        "file": "adapter-generator.html",
+        "bytes": 37055,
+        "inline_script_bytes": 23714
+      },
+      {
+        "file": "credits.html",
+        "bytes": 35516,
+        "inline_script_bytes": 14542
+      },
+      {
+        "file": "robot-joint-parameter-spec.html",
+        "bytes": 34478,
+        "inline_script_bytes": 6082
+      }
+    ],
+    "duplicate_shell_tags": [
+      "build-planner.html"
+    ],
+    "duplicate_project_tags": []
+  },
+  "size_bytes": {
+    "index_html": 21509,
+    "entities_json": 1872356,
+    "data_js": 1832038,
+    "shell_js_css": 36663
+  }
+}

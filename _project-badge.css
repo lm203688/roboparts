@@ -1,0 +1,96 @@
+/* RoboParts 项目徽章（P1-1）
+ * 显示在 shell 顶部 nav 右侧，让用户始终知道当前在哪个 project 里 */
+
+.rp-shell-project{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 10px;
+  border-radius:6px;
+  background:rgba(91,157,255,0.1);
+  border:1px solid rgba(91,157,255,0.3);
+  color:#e7ecf5;
+  font-size:12px;
+  max-width:200px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.rp-shell-project-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:#37e0a6;
+  flex-shrink:0;
+  animation:rp-pulse 2s ease-in-out infinite;
+}
+@keyframes rp-pulse{
+  0%,100%{opacity:1}
+  50%{opacity:.5}
+}
+.rp-shell-project-name{
+  color:#e7ecf5;
+  font-weight:600;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.rp-shell-project-menu{
+  position:relative;
+}
+.rp-shell-project-btn{
+  background:transparent;border:0;color:inherit;
+  cursor:pointer;padding:0;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.rp-shell-project-btn::after{
+  content:'▾';font-size:10px;color:#8a96b0;
+}
+.rp-shell-project-dropdown{
+  position:absolute;right:0;top:calc(100% + 6px);
+  background:#141b30;border:1px solid #2a3556;
+  border-radius:10px;
+  padding:6px;
+  min-width:240px;
+  z-index:1100;
+  box-shadow:0 8px 24px rgba(0,0,0,.5);
+  display:none;
+}
+.rp-shell-project-dropdown.open{display:block}
+.rp-shell-project-dropdown-header{
+  padding:8px 10px;
+  font-size:11px;color:#8a96b0;
+  text-transform:uppercase;letter-spacing:.5px;
+  font-weight:600;
+  border-bottom:1px solid #2a3556;
+  margin-bottom:4px;
+}
+.rp-shell-project-item{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 10px;
+  border-radius:6px;
+  font-size:13px;
+  color:#e7ecf5;
+  cursor:pointer;
+  text-decoration:none;
+}
+.rp-shell-project-item:hover{background:rgba(91,157,255,0.1)}
+.rp-shell-project-item.active{color:#37e0a6;font-weight:600}
+.rp-shell-project-item .step-badge{
+  background:rgba(91,157,255,0.15);color:#5b9dff;
+  padding:1px 6px;border-radius:999px;font-size:10px;font-weight:700;
+}
+.rp-shell-project-item .item-time{
+  margin-left:auto;color:#8a96b0;font-size:11px;
+}
+.rp-shell-project-actions{
+  padding:6px;border-top:1px solid #2a3556;margin-top:4px;
+  display:flex;gap:6px;flex-wrap:wrap;
+}
+.rp-shell-project-actions button{
+  background:transparent;color:#e7ecf5;
+  border:1px solid #2a3556;border-radius:6px;
+  padding:4px 10px;font-size:11px;font-weight:600;
+  cursor:pointer;
+}
+.rp-shell-project-actions button:hover{border-color:#5b9dff;color:#5b9dff}
+.rp-shell-project-actions button.danger:hover{border-color:#ff6b6b;color:#ff6b6b}
+.rp-shell-project-actions button.primary{
+  background:linear-gradient(135deg,#37e0a6,#5b9dff);
+  color:#04210f;border:0;font-weight:700;
+}

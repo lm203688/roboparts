@@ -1,0 +1,207 @@
+/* RoboParts 统一 Shell — 顶部导航 + 底部页脚 + 面包屑 + 下一步 CTA
+ * 由 _shell.js 在运行时注入。样式优先使用 CSS 变量以便与各页配色融合。
+ * 冲突解决：所有选择器以 .rp-shell-* 前缀，避免与页内样式打架。
+ */
+
+/* ===== 顶部导航 ===== */
+.rp-shell-header{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(11,16,32,0.94);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(60,80,120,0.35);
+}
+.rp-shell-header-inner{
+  max-width:1200px;margin:0 auto;
+  padding:10px 20px;
+  display:flex;align-items:center;gap:20px;
+  font-size:14px;
+}
+.rp-shell-logo{
+  font-weight:800;font-size:17px;color:#fff;
+  text-decoration:none;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+}
+.rp-shell-logo span{color:#37e0a6}
+.rp-shell-nav{
+  display:flex;gap:4px;flex-wrap:wrap;align-items:center;
+  margin-left:8px;
+}
+.rp-shell-nav-item{
+  color:#8a96b0;text-decoration:none;
+  padding:6px 10px;border-radius:8px;
+  font-size:13px;font-weight:500;
+  transition:all .15s;
+  white-space:nowrap;
+}
+.rp-shell-nav-item:hover{color:#e7ecf5;background:rgba(91,157,255,0.1)}
+.rp-shell-nav-item.active{color:#37e0a6;background:rgba(55,224,166,0.12);font-weight:600}
+.rp-shell-nav-divider{width:1px;height:14px;background:rgba(255,255,255,0.15);margin:0 4px}
+.rp-shell-search{
+  margin-left:auto;display:flex;align-items:center;gap:6px;
+}
+.rp-shell-search input{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(91,157,255,0.25);
+  border-radius:8px;padding:6px 10px;
+  color:#e7ecf5;font-size:13px;
+  width:180px;outline:none;
+  transition:all .15s;
+}
+.rp-shell-search input:focus{border-color:#5b9dff;background:rgba(255,255,255,0.1);width:220px}
+.rp-shell-search button{
+  background:linear-gradient(135deg,#37e0a6,#5b9dff);
+  color:#04210f;border:0;border-radius:8px;
+  padding:6px 12px;font-size:13px;font-weight:700;
+  cursor:pointer;
+}
+.rp-shell-menu-toggle{
+  display:none;background:transparent;border:1px solid rgba(91,157,255,0.3);
+  border-radius:8px;padding:4px 10px;color:#e7ecf5;font-size:14px;
+  cursor:pointer;margin-left:auto;
+}
+
+/* ===== 面包屑 ===== */
+.rp-shell-breadcrumb{
+  max-width:1200px;margin:0 auto;
+  padding:10px 20px;
+  font-size:12px;color:#8a96b0;
+  display:flex;align-items:center;gap:6px;
+  flex-wrap:wrap;
+}
+.rp-shell-breadcrumb a{color:#8a96b0;text-decoration:none}
+.rp-shell-breadcrumb a:hover{color:#5b9dff}
+.rp-shell-breadcrumb .sep{color:rgba(255,255,255,0.2)}
+.rp-shell-breadcrumb .current{color:#e7ecf5;font-weight:500}
+
+/* ===== 下一步 CTA ===== */
+.rp-shell-next{
+  max-width:1200px;margin:32px auto;padding:14px 20px;
+  border:1px dashed rgba(91,157,255,0.35);
+  border-radius:12px;
+  background:rgba(91,157,255,0.04);
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  font-size:14px;
+}
+.rp-shell-next-label{
+  color:#8a96b0;font-size:12px;
+  text-transform:uppercase;letter-spacing:.5px;
+  font-weight:600;
+}
+.rp-shell-next-title{color:#e7ecf5;font-weight:600;flex:1;min-width:180px}
+.rp-shell-next-btns{display:flex;gap:8px;flex-wrap:wrap}
+.rp-shell-next-btn{
+  background:linear-gradient(135deg,#37e0a6,#5b9dff);
+  color:#04210f;border:0;border-radius:8px;
+  padding:8px 16px;font-size:13px;font-weight:700;
+  cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.rp-shell-next-btn.ghost{
+  background:transparent;color:#37e0a6;
+  border:1px solid #37e0a6;
+}
+.rp-shell-next-btn:hover{opacity:.88}
+
+/* ===== 底部页脚 ===== */
+.rp-shell-footer{
+  margin-top:60px;
+  background:#080c1a;
+  border-top:1px solid rgba(60,80,120,0.4);
+  padding:40px 20px 24px;
+  color:#8a96b0;font-size:13px;
+}
+.rp-shell-footer-inner{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:32px;
+}
+.rp-shell-footer-col h4{
+  color:#e7ecf5;font-size:14px;margin:0 0 12px;font-weight:700;
+}
+.rp-shell-footer-col ul{list-style:none;padding:0;margin:0}
+.rp-shell-footer-col li{margin:6px 0}
+.rp-shell-footer-col a{color:#8a96b0;text-decoration:none}
+.rp-shell-footer-col a:hover{color:#5b9dff}
+.rp-shell-footer-about{color:#8a96b0;line-height:1.7}
+.rp-shell-footer-about .logo{font-weight:800;color:#fff;font-size:16px;margin-bottom:8px}
+.rp-shell-footer-about .logo span{color:#37e0a6}
+.rp-shell-footer-bottom{
+  max-width:1200px;margin:32px auto 0;
+  padding-top:20px;
+  border-top:1px solid rgba(60,80,120,0.3);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+  font-size:12px;
+}
+.rp-shell-footer-bottom a{color:#8a96b0;text-decoration:none}
+.rp-shell-footer-bottom a:hover{color:#5b9dff}
+
+/* ===== 移动端响应式 ===== */
+@media (max-width: 900px){
+  .rp-shell-nav{
+    position:absolute;top:100%;left:0;right:0;
+    background:rgba(11,16,32,0.98);
+    border-bottom:1px solid rgba(60,80,120,0.35);
+    flex-direction:column;align-items:stretch;
+    padding:8px;gap:2px;
+    display:none;
+  }
+  .rp-shell-nav.open{display:flex}
+  .rp-shell-nav-item{padding:10px 12px}
+  .rp-shell-nav-divider{display:none}
+  .rp-shell-menu-toggle{display:inline-block}
+  .rp-shell-search{display:none}
+  .rp-shell-footer-inner{grid-template-columns:1fr 1fr;gap:24px}
+}
+@media (max-width: 560px){
+  .rp-shell-footer-inner{grid-template-columns:1fr}
+  .rp-shell-next{flex-direction:column;align-items:flex-start}
+  .rp-shell-next-title{font-size:15px}
+}
+
+/* 已有 header/nav 的页面：让 shell 顶部覆盖，避免视觉重叠 */
+body.rp-has-legacy-header .rp-shell-header{border-bottom:0}
+
+/* ===== 五步流水线进度指示器 ===== */
+.rp-shell-pipeline{
+  max-width:1200px;margin:0 auto;
+  padding:8px 20px 4px;
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;
+}
+.rp-shell-pipeline-steps{
+  display:flex;align-items:center;gap:0;flex:1;
+  overflow-x:auto;white-space:nowrap;
+}
+.rp-shell-pipeline-step{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 10px;border-radius:6px;
+  color:#8a96b0;font-size:11px;font-weight:600;
+  cursor:pointer;text-decoration:none;
+  transition:all .15s;
+  border:1px solid transparent;
+}
+.rp-shell-pipeline-step:hover{color:#e7ecf5;background:rgba(91,157,255,0.08)}
+.rp-shell-pipeline-step.done{color:#37e0a6}
+.rp-shell-pipeline-step.done::before{content:'✓';margin-right:2px}
+.rp-shell-pipeline-step.current{
+  color:#04210f;
+  background:linear-gradient(135deg,#37e0a6,#5b9dff);
+  border-color:transparent;
+}
+.rp-shell-pipeline-connector{
+  flex:0 0 12px;height:2px;
+  background:linear-gradient(90deg,#37e0a6,#5b9dff);
+  border-radius:1px;
+  opacity:.4;
+}
+.rp-shell-pipeline-connector.done{opacity:1}
+.rp-shell-pipeline-connector.next{opacity:.25}
+.rp-shell-pipeline-progress{
+  font-size:11px;color:#8a96b0;
+  padding:4px 8px;
+  background:rgba(91,157,255,0.08);
+  border-radius:6px;
+  white-space:nowrap;
+}
+.rp-shell-pipeline-progress b{color:#37e0a6}

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<link rel="stylesheet" href="/_shell.css">
+<link rel="stylesheet" href="/_project-badge.css">
+
 <meta charset="UTF-8">
   <link rel="alternate" hreflang="zh-CN" href="https://roboparts.cc/adapter-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://roboparts.cc/adapter-generator.html">
@@ -295,6 +298,22 @@ function holesOf(s){
 }
 
 // three.js 场景
+// ===== RpProject 保存 (P1-1) =====
+var _rpSaveTimer = null;
+function scheduleRpSave(){
+  clearTimeout(_rpSaveTimer);
+  _rpSaveTimer = setTimeout(function(){
+    try {
+      if (typeof RpProject !== 'object') return;
+      RpProject.setForStep(4, {
+        curParams: curParams || null,
+        curGeom: curGeom || null,
+        savedAt: new Date().toISOString()
+      });
+    } catch(e) {}
+  }, 500);
+}
+
 let scene, camera, renderer, controls, mesh, curGeom, curParams;
 function initScene(){
   const el = document.getElementById('viewer');
@@ -359,6 +378,7 @@ function generate(){
   const {geo, outerR} = buildGeometry(p);
   if(mesh){ scene.remove(mesh); mesh.geometry.dispose(); }
   curGeom = geo; curParams = p;
+  scheduleRpSave();
   const mat = new THREE.MeshStandardMaterial({color:0x37e0a6, metalness:0.35, roughness:0.5, side:THREE.DoubleSide});
   mesh = new THREE.Mesh(geo, mat);
   scene.add(mesh);
@@ -571,5 +591,19 @@ initScene();
 window.addEventListener('load', ()=>{ readParamsFromUrl(); setTimeout(generate,200); });
 </script>
 <script>(function(){var s=localStorage.getItem('roboparts_session_id');if(!s){s='sess_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);localStorage.setItem('roboparts_session_id',s);}fetch('/api/analytics/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_type:'page_view',event_data:{page:'/adapter-generator'},session_id:s})}).catch(function(){});})();</script>
-</body>
+
+// ===== RpProject 恢复 (P1-1) =====
+window.addEventListener('DOMContentLoaded', function(){
+  try {
+    if (typeof RpProject === 'object') {
+      var saved = RpProject.getForStep(4);
+      if (saved && saved.curParams) {
+        curParams = saved.curParams;
+        curGeom = saved.curGeom;
+      }
+    }
+  } catch(e) {}
+});
+<script src="/rp-project.js"></script>
+<script src="/_shell.js"></script></body>
 </html>

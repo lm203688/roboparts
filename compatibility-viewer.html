@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<link rel="stylesheet" href="/_shell.css">
+<link rel="stylesheet" href="/_project-badge.css">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>法兰兼容性查看器 · RoboParts（PoC）</title>
@@ -197,5 +200,8 @@ document.getElementById('fallback').remove();
 resize();build();
 (function loop(){requestAnimationFrame(loop);controls.update();renderer.render(scene,camera);})();
 </script>
-</body>
+
+
+<script src="/rp-project.js"></script>
+<script src="/_shell.js"></script></body>
 </html>

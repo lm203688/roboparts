@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<link rel="stylesheet" href="/_shell.css">
+<link rel="stylesheet" href="/_project-badge.css">
+
 <meta charset="UTF-8">
   <link rel="alternate" hreflang="zh-CN" href="https://roboparts.cc/selection.html">
   <link rel="alternate" hreflang="x-default" href="https://roboparts.cc/selection.html">
@@ -552,7 +555,9 @@ async function runSelection() {
           }
         }
       }
-      renderResults(recommendations, data);
+        window.__lastResults = data;
+  scheduleRpSave();
+renderResults(recommendations, data);
       showToast('智能选型完成，共推荐 ' + recommendations.length + ' 个方案', 'success');
     } else {
       container.innerHTML = `
@@ -724,8 +729,60 @@ function fallbackCopy(text) {
   document.body.removeChild(ta);
 }
 
+// ===== RpProject 保存 (P1-1) =====
+var _rpSaveTimer = null;
+function scheduleRpSave(){
+  clearTimeout(_rpSaveTimer);
+  _rpSaveTimer = setTimeout(function(){
+    try {
+      if (typeof RpProject !== 'object') return;
+      var formData = {
+        scenario: document.getElementById('scenario').value,
+        protocol: document.getElementById('protocol').value,
+        budget: document.getElementById('budget').value,
+        minTorque: document.getElementById('min_torque').value,
+        maxWeight: document.getElementById('max_weight').value,
+        rosRequired: document.getElementById('ros_required').checked,
+        categories: Array.from(document.querySelectorAll('#categoryGrid input:checked')).map(cb => cb.value)
+      };
+      RpProject.setForStep(0, {
+        formData: formData,
+        lastResults: window.__lastResults || null,
+        savedAt: new Date().toISOString()
+      });
+    } catch(e) {}
+  }, 500);
+}
+
 // ============ 页面初始化 ============
 window.addEventListener('DOMContentLoaded', () => {
+  // ===== RpProject 恢复 (P1-1) =====
+  try {
+    if (typeof RpProject === 'object') {
+      var saved = RpProject.getForStep(0);
+      if (saved && saved.formData) {
+        var fd = saved.formData;
+        if (fd.scenario) document.getElementById('scenario').value = fd.scenario;
+        if (fd.protocol) document.getElementById('protocol').value = fd.protocol;
+        if (fd.budget) document.getElementById('budget').value = fd.budget;
+        if (fd.minTorque) document.getElementById('min_torque').value = fd.minTorque;
+        if (fd.maxWeight) document.getElementById('max_weight').value = fd.maxWeight;
+        if (typeof fd.rosRequired === 'boolean') document.getElementById('ros_required').checked = fd.rosRequired;
+        if (Array.isArray(fd.categories)) {
+          fd.categories.forEach(function(cat) {
+            var cb = document.querySelector('#categoryGrid input[value="' + cat + '"]');
+            if (cb) cb.checked = true;
+          });
+        }
+        if (saved.lastResults) {
+          window.__lastResults = saved.lastResults;
+        }
+        showToast('已从项目恢复筛选条件', 'success');
+      }
+    }
+  } catch(e) {}
+
+  // 从 localStorage 恢复 API Key
   // 从 localStorage 恢复 API Key
   const savedKey = localStorage.getItem('roboparts_api_key');
   if (savedKey) {
@@ -736,8 +793,21 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('api_key').addEventListener('change', (e) => {
     localStorage.setItem('roboparts_api_key', e.target.value.trim());
   });
+
+  // 表单变化时自动保存
+  ['scenario','protocol','budget','min_torque','max_weight'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('change', scheduleRpSave);
+  });
+  var rosEl = document.getElementById('ros_required');
+  if (rosEl) rosEl.addEventListener('change', scheduleRpSave);
+  var catGrid = document.getElementById('categoryGrid');
+  if (catGrid) catGrid.addEventListener('change', scheduleRpSave);
 });
 </script>
 <script>(function(){var s=localStorage.getItem('roboparts_session_id');if(!s){s='sess_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);localStorage.setItem('roboparts_session_id',s);}fetch('/api/analytics/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_type:'page_view',event_data:{page:'/selection'},session_id:s})}).catch(function(){});})();</script>
-</body>
+
+
+<script src="/rp-project.js"></script>
+<script src="/_shell.js"></script></body>
 </html>

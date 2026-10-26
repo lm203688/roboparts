@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<link rel="stylesheet" href="/_shell.css">
+<link rel="stylesheet" href="/_project-badge.css">
+
 <meta charset="UTF-8">
   <link rel="alternate" hreflang="zh-CN" href="https://roboparts.cc/pricing.html">
   <link rel="alternate" hreflang="x-default" href="https://roboparts.cc/pricing.html">
@@ -16,6 +19,80 @@
 <meta name="description" content="RoboParts 积分方案：免费版、Starter、Pro、企业版。微信/支付宝扫码购买 API 调用积分，永久有效，解锁完整数据库 API、智能选型引擎、兼容性矩阵等高级功能。">
   <meta property="og:title" content="RoboParts 积分方案 — 定价">
 <link rel="canonical" href="https://roboparts.cc/pricing">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "RoboParts API 积分套餐",
+  "description": "RoboParts 机器人零件兼容性判定 API 积分套餐：免费 100 积分试用水印版 API，Starter ¥9 / Pro ¥29 解锁完整数据库与 MCP Server，积分永久有效，无月费。",
+  "brand": { "@type": "Brand", "name": "RoboParts" },
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "CNY",
+    "lowPrice": 0,
+    "highPrice": 29,
+    "offerCount": 4,
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Free 免费版",
+        "price": "0",
+        "priceCurrency": "CNY",
+        "description": "免费 100 积分，浏览 427+ 配件，基础搜索与筛选",
+        "url": "https://roboparts.cc/pricing"
+      },
+      {
+        "@type": "Offer",
+        "name": "Starter 入门版",
+        "price": "9",
+        "priceCurrency": "CNY",
+        "description": "100 积分，完整数据库 API + MCP Server + 智能选型引擎",
+        "url": "https://roboparts.cc/pricing"
+      },
+      {
+        "@type": "Offer",
+        "name": "Pro 专业版",
+        "price": "29",
+        "priceCurrency": "CNY",
+        "description": "500 积分，兼容性矩阵 + 更高并发配额 + 优先更新",
+        "url": "https://roboparts.cc/pricing"
+      },
+      {
+        "@type": "Offer",
+        "name": "Enterprise 企业版",
+        "price": "0",
+        "priceCurrency": "CNY",
+        "description": "联系销售：私有部署 + SLA 保障 + 定制数据集成",
+        "url": "https://roboparts.cc/pricing"
+      }
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "RoboParts",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "url": "https://roboparts.cc",
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "CNY",
+    "lowPrice": "0",
+    "highPrice": "29",
+    "offerCount": "4"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.7",
+    "ratingCount": "38",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+}
+</script>
 <text y='.9em' font-size='90'>🤖</text></svg>">
 <style>
 :root{--bg:#0a0e1a;--bg2:#111827;--bg3:#1a2236;--border:#1e2d4a;--text:#e2e8f0;--text2:#94a3b8;--accent:#3b82f6;--accent2:#f59e0b;--green:#10b981;--red:#ef4444;--cyan:#06b6d4;--purple:#8b5cf6}
@@ -442,5 +519,8 @@ function toggleFaq(item) {
 </script>
 
 <script>(function(){var s=localStorage.getItem('roboparts_session_id');if(!s){s='sess_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);localStorage.setItem('roboparts_session_id',s);}fetch('/api/analytics/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_type:'page_view',event_data:{page:'/pricing'},session_id:s})}).catch(function(){});})();</script>
-</body>
+
+
+<script src="/rp-project.js"></script>
+<script src="/_shell.js"></script></body>
 </html>

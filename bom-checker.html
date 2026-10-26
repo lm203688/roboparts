@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<link rel="stylesheet" href="/_shell.css">
+<link rel="stylesheet" href="/_project-badge.css">
+
 <meta charset="UTF-8">
   <link rel="alternate" hreflang="zh-CN" href="https://roboparts.cc/bom-checker.html">
   <link rel="alternate" hreflang="x-default" href="https://roboparts.cc/bom-checker.html">
@@ -39,6 +42,30 @@
   .warn{color:var(--warn);background:#2a2410;border-left:3px solid var(--warn);padding:6px 10px;border-radius:6px;margin:4px 0}
   .pill{display:inline-block;background:#0e1530;border:1px solid #2a3556;border-radius:999px;padding:2px 10px;font-size:12px;color:var(--mut)}
   #result{display:none}
+  .ns-card{background:#0e1530;border:1px solid #2a3556;border-left:3px solid var(--warn);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:13px}
+  .ns-card.ns-unknown{border-left-color:#ffd166}
+  .ns-card.ns-conflict{border-left-color:var(--bad)}
+  .ns-card.ns-ok{border-left-color:var(--ok)}
+  .ns-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+  .ns-badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.5px}
+  .ns-badge.unk{background:rgba(255,209,102,0.15);color:var(--warn);border:1px solid rgba(255,209,102,0.4)}
+  .ns-badge.err{background:rgba(255,107,107,0.15);color:var(--bad);border:1px solid rgba(255,107,107,0.4)}
+  .ns-title{color:var(--txt);font-weight:600;flex:1}
+  .ns-row{display:grid;grid-template-columns:110px 1fr;gap:6px 14px;margin:6px 0;font-size:13px;align-items:baseline}
+  .ns-k{color:var(--mut);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+  .ns-v{color:var(--txt);line-height:1.6}
+  .ns-axes{display:flex;flex-wrap:wrap;gap:6px}
+  .ns-axis-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:6px;font-size:12px;font-weight:600}
+  .ns-axis-chip.missing{background:rgba(255,209,102,0.12);color:var(--warn);border:1px solid rgba(255,209,102,0.35)}
+  .ns-axis-chip.conflict{background:rgba(255,107,107,0.12);color:var(--bad);border:1px solid rgba(255,107,107,0.35)}
+  .ns-axis-chip.match{background:rgba(55,224,166,0.12);color:var(--ok);border:1px solid rgba(55,224,166,0.35)}
+  .ns-actions{margin-top:10px;padding-top:10px;border-top:1px dashed #2a3556;display:flex;gap:8px;flex-wrap:wrap}
+  .ns-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer}
+  .ns-btn.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f}
+  .ns-btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+  .ns-btn:hover{opacity:.88}
+  .ns-sources{margin-top:6px;font-size:12px;color:var(--mut);line-height:1.7}
+  .ns-sources code{background:#0a0e17;padding:1px 6px;border-radius:4px;color:var(--acc2);font-size:11px}
   .tip{color:var(--mut);font-size:12px}
   a{color:var(--acc2)}
   ol.asm{margin:8px 0;padding-left:4px;list-style:none;counter-reset:none}
@@ -76,6 +103,8 @@
     <div id="summary"></div>
     <h4>兼容性矩阵</h4>
     <div id="matrix" style="overflow:auto"></div>
+    <h4>🎯 下一步建议 <span class="tip">针对每个 ? / ✗ 判对，指出「缺哪一轴的哪个字段」与「补哪个数据源」</span></h4>
+    <div id="nextsteps"></div>
     <h4>可互换选型组</h4>
     <div id="groups"></div>
     <h4>冲突告警</h4>
@@ -98,7 +127,49 @@
 const API='/api';
 let rows=[];
 
+// ===== RpProject 接入 (P1-1) =====
+// 页面加载时从统一 project 状态恢复 BOM 数据
+function restoreFromRpProject(){
+  try {
+    if (typeof RpProject !== 'object') return false;
+    var saved = RpProject.getForStep(3);  // step 3 = bom
+    if (saved && saved.rows && saved.rows.length) {
+      rows = saved.rows;
+      render();
+      // 如果有历史检查结果，也恢复
+      if (saved.lastCheck) {
+        window.__lastProcure = saved.lastCheck;
+        // 重新渲染结果面板（简化版：只显示 summary）
+        var box = document.getElementById('result');
+        if (box) box.style.display = 'block';
+      }
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+// rows 变化时自动保存（防抖）
+var _rpSaveTimer = null;
+function scheduleRpSave(){
+  clearTimeout(_rpSaveTimer);
+  _rpSaveTimer = setTimeout(function(){
+    try {
+      if (typeof RpProject !== 'object') return;
+      RpProject.setForStep(3, {
+        rows: rows,
+        lastCheck: window.__lastProcure || null,
+        savedAt: new Date().toISOString()
+      });
+    } catch(e) {}
+  }, 500);
+}
+
 async function init(){
+  // 先尝试恢复
+  if (!restoreFromRpProject()) {
+    addPick(); addPick();
+  }
   try{
     const r=await fetch(API+'/oss?limit=200');
     const j=await r.json();
@@ -109,7 +180,10 @@ async function init(){
       sel.appendChild(o);
     });
   }catch(e){}
-  addPick(); addPick();
+  // P0-2 修复：删除此处的 addPick();addPick() 无条件补行。
+  // 原逻辑即使 restoreFromRpProject() 已恢复用户上次的 BOM，仍在末尾追加 2 个空行，
+  // 用户看到「恢复的 5 条 + 2 个多余行」，语义上把「继续上次工作」变成了「重新开工」。
+  // 恢复路径由 init() 顶部的 !restoreFromRpProject() 分支独占处理。
 }
 function addPick(){ const sel=document.getElementById('pick'); if(!sel.value) return; const id=sel.value; rows.push({kind:'id',id}); render(); }
 function addCustom(){ const v=document.getElementById('customId').value.trim(); if(!v) return; rows.push({kind:'id',id:v}); document.getElementById('customId').value=''; render(); }
@@ -147,6 +221,7 @@ function render(){
     c.appendChild(d);
   });
   document.getElementById('limitTip').textContent=`当前 ${rows.length} 个组件（免费层 ≤ 12，Pro 无限制）`;
+  scheduleRpSave();
 }
 
 async function runCheck(){
@@ -177,12 +252,106 @@ async function runCheck(){
       if(!m){html+='<td></td>';return;}
       const cls=m.overall_compatible===true?'ok':(m.overall_compatible===false?'bad':'null');
       const txt=m.overall_compatible===true?'✓':(m.overall_compatible===false?'✗':'?');
-      html+=`<td class="${cls}" title="${m.dimensions.map(d=>d.dimension+':'+(d.compatible===null?'?':d.compatible)).join('; ')}">${txt} ${m.compatibility_score}%</td>`;
+      html+=`<td class="${cls}" title="${m.dimensions.map(d=>d.dimension+':'+(d.compatible===null?'?':d.compatible)).join('; ')}">${txt} ${m.compatibility_score==null?'—':m.compatibility_score+'%'}</td>`;
     });
     html+='</tr>';
   });
   html+='</table>';
   document.getElementById('matrix').innerHTML=html;
+
+  // ==================== 🎯 下一步建议 ====================
+  // 对每个 unknown / conflict 判对给出"缺哪一轴的哪个字段 + 补哪个数据源"。
+  // 依据 Bottleneck Necessity 定理：unknown 的可执行化必须落到具体字段+数据源。
+  const AXIS_HOWTO = {
+    mechanical: {
+      fields: ['mount.flange', 'mount.standard', 'mount.pcd', 'mount.bolts', 'mount.thread'],
+      howto: '查产品页 → ISO 9409-1 法兰尺寸表 → 记录 pcd/bolts/thread 三元组',
+      source: 'ISO 9409-1 法兰尺寸表',
+      sourceUrl: '/iso-9409-flange.html'
+    },
+    electrical: {
+      fields: ['power.voltage_min', 'power.voltage_max', 'power.current', 'electrical_interface.protocol'],
+      howto: '查产品页电源规格 → 记录工作电压范围与静态电流',
+      source: '厂商 datasheet 电源章节',
+      sourceUrl: null
+    },
+    protocol: {
+      fields: ['protocol.family', 'protocol.bus', 'protocol.rate'],
+      howto: '查产品页接口规格 → 识别总线类型（CAN/RS485/I²C/...）与波特率',
+      source: '厂商 datasheet 通信接口章节',
+      sourceUrl: null
+    },
+    software: {
+      fields: ['ros_support', 'firmware.version'],
+      howto: '查产品页软件/生态信息 → 是否提供 ROS2 driver 或 SDK',
+      source: '厂商软件/驱动页面',
+      sourceUrl: null
+    }
+  };
+  const nsBox=document.getElementById('nextsteps');
+  const nsCards=[];
+  const seenPairs=new Set();
+  j.matrix.forEach(m=>{
+    if(m.overall_compatible===true) return;
+    const pairKey=[m.a,m.b].sort().join('|');
+    if(seenPairs.has(pairKey)) return;
+    seenPairs.add(pairKey);
+
+    const missingAxes=(m.dimensions||[]).filter(d=>d.compatible===null);
+    const conflictAxes=(m.dimensions||[]).filter(d=>d.compatible===false);
+    const kind = m.overall_compatible===false ? 'conflict' : 'unknown';
+    const badge = kind==='conflict'
+      ? '<span class="ns-badge err">✗ 不兼容</span>'
+      : '<span class="ns-badge unk">? 无法判定</span>';
+    const title = `${m.a} ⇄ ${m.b}`;
+
+    const chips=(missingAxes.concat(conflictAxes)).map(d=>{
+      const cls=d.compatible===false?'conflict':'missing';
+      const icon=d.compatible===false?'✗':'?';
+      return `<span class="ns-axis-chip ${cls}">${icon} ${d.dimension}${d.notes?(' · '+d.notes):''}</span>`;
+    }).join('') || '<span class="ns-v" style="color:var(--mut)">四轴均未声明</span>';
+
+    let howtoHtml='';
+    if(kind==='conflict' && conflictAxes.length){
+      conflictAxes.forEach(d=>{
+        const h=AXIS_HOWTO[d.dimension];
+        if(!h) return;
+        howtoHtml+=`<div class="ns-row"><div class="ns-k">${d.dimension}</div><div class="ns-v">
+          冲突：${d.notes||'双方声明不一致'}<br>
+          <span class="ns-sources">修复：核对 ${h.fields.map(f=>`<code>${f}</code>`).join(', ')} 字段值是否录错；或改用兼容规格；机械冲突可生成转接件解决。</span>
+        </div></div>`;
+      });
+    } else {
+      const targets = missingAxes.length ? missingAxes : Object.keys(AXIS_HOWTO).map(k=>({dimension:k,compatible:null,notes:''}));
+      targets.forEach(d=>{
+        const h=AXIS_HOWTO[d.dimension];
+        if(!h) return;
+        const srcLink = h.sourceUrl
+          ? `<a href="${h.sourceUrl}" style="color:var(--acc2);text-decoration:underline">▶ ${h.source}</a>`
+          : h.source;
+        howtoHtml+=`<div class="ns-row"><div class="ns-k">${d.dimension}</div><div class="ns-v">
+          缺字段：${h.fields.map(f=>`<code>${f}</code>`).join(', ')}<br>
+          <span class="ns-sources">补数据源：${srcLink} · ${h.howto}</span>
+        </div></div>`;
+      });
+    }
+
+    let btns='';
+    if(kind==='conflict' && conflictAxes.some(d=>d.dimension==='mechanical')){
+      btns+=`<a class="ns-btn primary" href="/adapter-generator?bom=${encodeURIComponent(bomId||'current')}" target="_blank">🔧 生成转接件解决机械冲突</a>`;
+    }
+    btns+=`<a class="ns-btn ghost" href="/data-hub.html" target="_blank">📊 查看数据中枢</a>`;
+
+    nsCards.push(`<div class="ns-card ns-${kind}">
+      <div class="ns-header">${badge}<div class="ns-title">${title}</div></div>
+      <div class="ns-axes">${chips}</div>
+      ${howtoHtml}
+      <div class="ns-actions">${btns}</div>
+    </div>`);
+  });
+  nsBox.innerHTML = nsCards.length
+    ? nsCards.join('')
+    : '<div class="tip" style="padding:12px 14px;background:rgba(55,224,166,0.06);border:1px solid rgba(55,224,166,0.3);border-radius:8px;color:var(--ok)">✓ 全部判对均兼容，无需下一步操作。</div>';
 
   document.getElementById('groups').innerHTML = j.interchangeable_groups.length
     ? j.interchangeable_groups.map(g=>`<div class="group">可互换：${g.join(' ⇄ ')}</div>`).join('')
@@ -234,6 +403,8 @@ async function runCheck(){
   }
   document.getElementById('purchase').innerHTML=ph;
   window.__lastProcure = j;
+  // 保存到 RpProject
+  scheduleRpSave();
 }
 function exportProcure(){
   const j=window.__lastProcure; if(!j||!j.components){alert('请先运行检查');return;}
@@ -248,5 +419,8 @@ function exportProcure(){
 init();
 </script>
 <script>(function(){var s=localStorage.getItem('roboparts_session_id');if(!s){s='sess_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);localStorage.setItem('roboparts_session_id',s);}fetch('/api/analytics/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event_type:'page_view',event_data:{page:'/bom-checker'},session_id:s})}).catch(function(){});})();</script>
-</body>
+
+
+<script src="/rp-project.js"></script>
+<script src="/_shell.js"></script></body>
 </html>

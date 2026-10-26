@@ -15,7 +15,19 @@
   # CSP · 保留 unsafe-inline 兼容现有 41 页内联脚本（designer.html 2187 行等），
   # 但**移除 unsafe-eval**（阻断 eval() 类 XSS 载荷）；unsafe-inline 的移除需
   # 配合 nonce/hash 机制重构，见审计 F6 P2 TODO（前端架构阶段）。
-  Content-Security-Policy: default-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://challenges.cloudflare.com; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://api.creem.io
+  #
+  # P0-6 修复（2026-10-26 全面审计报告）：
+  # 原 script-src 只列 challenges.cloudflare.com，缺 https://cdn.jsdelivr.net。
+  # 6 页实际使用 jsDelivr（Three.js 0.158/0.160/0.164、XLSX 0.18.5、urdf-loader）
+  #   - designer.html / assembly.html / adapter-generator.html / compatibility-viewer.html
+  #   - bom-import.html (xlsx.full.min.js)
+  #   - parts-viewer.html / index.html 也有 importmap 从 cdn.jsdelivr.net 拉 Three.js
+  # 结果：CSP 在生产环境直接阻断 Three.js 与 XLSX 加载，浏览器控制台报
+  #   "Refused to load the script ... because it violates the following CSP directive: script-src"
+  # 修法：加 https://cdn.jsdelivr.net（P0-6 短期最小改动，可审计锁定版本）。
+  # TODO(P2-6)：把 jsDelivr 的 npm 依赖改自托管 /vendor/ 路径并锁定 commit SHA，
+  #             届时把 CSP 收窄回 'self'。
+  Content-Security-Policy: default-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://challenges.cloudflare.com; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; connect-src 'self' https://challenges.cloudflare.com https://api.creem.io; worker-src 'self' blob: https://cdn.jsdelivr.net
   # Referrer-Policy + Permissions-Policy 已在顶部
 
 # /api/* · 数据端点

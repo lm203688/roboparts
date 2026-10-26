@@ -1,0 +1,134 @@
+================================================================================
+ROBOPARTS 本地数据完整性检查报告
+检查时间: 2026-08-03 02:34:51
+================================================================================
+
+【1. entities.json Meta 统计】
+--------------------------------------------------------------------------------
+  meta.total_entities:    493
+  实际 entities 数组长度:  453
+  总数匹配状态:            不一致 ✗
+  差值: -40 (实际比meta少 40 个)
+
+  meta 分类列表 (10 个):
+    actuators, chips, interfaces, llms, protocols, sensors, platforms, flexible_actuators, robot_ai_models, data_acquisition
+
+  各分类数量对比 (按 ID 前缀映射到主分类):
+
+  主分类                      meta声明     实际统计     差值 状态      
+  ------------------------------------------------------------
+  actuators                   155      120    -35 不一致 ✗   
+  chips                       103       84    -19 不一致 ✗   
+  interfaces                   14        6     -8 不一致 ✗   
+  llms                         30       30     +0 一致 ✓    
+  protocols                    64       42    -22 不一致 ✗   
+  sensors                      62        0    -62 不一致 ✗   
+  platforms                    23        0    -23 不一致 ✗   
+  flexible_actuators            6        0     -6 不一致 ✗   
+  robot_ai_models              21       20     -1 不一致 ✗   
+  data_acquisition             15        0    -15 不一致 ✗   
+
+  meta.updated: 2026-07-27T21:44:14.430Z
+  分类数量一致性总体: 存在不一致 ✗
+
+  实体 category 字段值分布 (共 64 种不同值):
+    - sensors: 42
+    - actuators: 37
+    - communication: 37
+    - compute: 32
+    - AI Accelerator: 25
+    - joint_actuator: 23
+    - protocols: 23
+    - platforms: 23
+    - llms: 20
+    - robot_ai_models: 20
+    - actuator: 19
+    - chips: 17
+    - servo: 10
+    - interfaces: 9
+    - motor: 8
+    - VLA: 7
+    - hand_actuator: 6
+    - mcu: 6
+    - flexible_actuators: 6
+    - interface: 5
+    ... 还有 44 个子分类
+
+【2. 本地分类文件一致性检查】
+--------------------------------------------------------------------------------
+  文件名                               实体数 ID范围            ID连续    
+  -----------------------------------------------------------------
+  actuators.json                    155 001-3274        否 ✗     
+  chips.json                        103 001-2026        否 ✗     
+  interfaces.json                    14 001-006         是 ✓     
+  llms.json                          30 001-030         否 ✗     
+  protocols.json                     64 001-046         否 ✗     
+  sensors.json                       62 001-062         否 ✗     
+  platforms.json                     23 001-014         是 ✓     
+  flexible_actuators.json             6 001-006         是 ✓     
+  robot_ai_models.json               21 001-021         是 ✓     
+  data_acquisition.json              15 001-015         是 ✓     
+  -----------------------------------------------------------------
+  合计                                493
+
+  分类文件合计:          493
+  meta.total_entities:   493
+  entities.json 实际数:  453
+  分类文件合计 vs meta:  一致 ✓
+  分类文件合计 vs 实际:  不一致 ✗
+
+【3. 国际化字段完整性检查】
+--------------------------------------------------------------------------------
+  实体总数:                  453
+  name 含中文的实体数:       39
+  其中有 name_en 的实体数:   39
+  缺少 name_en 的实体数:     0
+  name_en 覆盖率:            100.00%
+  覆盖率评价:                优秀 ✓
+
+【4. 数据时效性抽查 - robot_ai_models】
+--------------------------------------------------------------------------------
+  robot_ai_models 实体总数:  21
+  有 release_date 的实体数:  21
+  占比:                      100.00%
+  覆盖率评价:                完整 ✓
+
+  最新 3 个实体 (按 release_date 降序):
+    1. [2026-07-30] Gemini Robotics 2 (Google DeepMind)  (id: RAI-021)
+    2. [2026-07-27] τ(0)-VLA (上海创智学院/智元机器人)  (id: RAI-018)
+    3. [2026-07-23] FabriVLA 0.89B (优艾智合)  (id: RAI-009)
+
+【5. data.json 结构检查】
+--------------------------------------------------------------------------------
+  顶层键:                    ['meta', 'data']
+  meta.name:                 RoboParts
+  meta.total_entities:       493
+  meta.categories 数量:      10
+  meta.categories 列表:      ['actuators', 'chips', 'interfaces', 'llms', 'protocols', 'sensors', 'platforms', 'flexible_actuators', 'robot_ai_models', 'data_acquisition']
+  meta.updated:              2026-08-01T00:00:00.000Z
+  data 数组长度:             0
+
+  meta.category_counts:
+    - actuators: 155
+    - chips: 103
+    - interfaces: 14
+    - llms: 30
+    - protocols: 64
+    - sensors: 62
+    - platforms: 23
+    - flexible_actuators: 6
+    - robot_ai_models: 21
+    - data_acquisition: 15
+
+  data.json vs entities.json 总数一致: 是 ✓
+
+【总结】
+--------------------------------------------------------------------------------
+  发现 3 个问题:
+    1. entities.json 实体数(453)与meta声明(493)不一致，差40个
+    2. 部分分类的meta声明数量与实际统计不一致
+    3. 分类文件合计(493)与entities.json实际数(453)不一致
+
+================================================================================
+检查完成
+================================================================================

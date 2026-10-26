@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<link rel="stylesheet" href="/_shell.css">
+<link rel="stylesheet" href="/_project-badge.css">
+
 <meta charset="UTF-8">
   <link rel="alternate" hreflang="zh-CN" href="https://roboparts.cc/urdf-library.html">
   <link rel="alternate" hreflang="x-default" href="https://roboparts.cc/urdf-library.html">
@@ -166,6 +169,13 @@ footer a{color:var(--accent);text-decoration:none}
 /* ========== 热门角标 ========== */
 .model-card{position:relative}
 .hot-badge{position:absolute;top:-8px;left:-8px;background:var(--error);color:#fff;font-size:.68rem;font-weight:800;padding:3px 10px;border-radius:8px;z-index:10;box-shadow:0 2px 8px rgba(239,68,68,0.4);letter-spacing:.5px}
+/* P0-12 资产分级徽章：右上角显示 L0-L4，颜色按成熟度递进 */
+.tier-badge{position:absolute;top:-8px;right:-8px;font-size:.65rem;font-weight:700;padding:3px 8px;border-radius:8px;z-index:10;letter-spacing:.3px;box-shadow:0 2px 6px rgba(0,0,0,0.15);cursor:help}
+.tier-L0{background:#e2e8f0;color:#475569}
+.tier-L1{background:#dbeafe;color:#1e40af}
+.tier-L2{background:#e0e7ff;color:#3730a3}
+.tier-L3{background:#fef3c7;color:#92400e}
+.tier-L4{background:#d1fae5;color:#065f46}
 
 /* ========== 响应式 ========== */
 @media(max-width:768px){
@@ -432,10 +442,16 @@ function renderModels() {
     const typeLabel = TYPE_LABELS[m.robot_type] || m.robot_type;
     const typeClass = m.robot_type || 'arm';
     const hotBadge = isHotModel(m.id) ? '<span class="hot-badge">HOT</span>' : '';
+    // P0-12 资产分级徽章：所有预置模型默认 L0（元数据骨架），L1+ 需显式登记 source 与 assumptions
+    const tierInfo = m.asset_tier || { tier: 'L0', schema: { name: '元数据模型' } };
+    const tierLabel = tierInfo.tier + (tierInfo.schema && tierInfo.schema.name ? ' · ' + tierInfo.schema.name : '');
+    const tierTip = tierInfo.assumptions || '参数化元数据（估算几何/质量/惯量），非厂商 CAD、非实测。';
+    const tierBadge = `<span class="tier-badge tier-${escapeHtml(tierInfo.tier)}" title="${escapeHtml(tierTip)}">${escapeHtml(tierLabel)}</span>`;
 
     return `
       <div class="model-card" onclick="openModal('${escapeHtml(m.id)}')" style="cursor:pointer">
         ${hotBadge}
+        ${tierBadge}
         <div class="mc-header">
           <div>
             <div class="mc-name">${escapeHtml(m.name)}</div>
@@ -563,5 +579,8 @@ window.addEventListener('DOMContentLoaded', () => {
   loadModels('');
 });
 </script>
-</body>
+
+
+<script src="/rp-project.js"></script>
+<script src="/_shell.js"></script></body>
 </html>

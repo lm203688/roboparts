@@ -422,6 +422,53 @@ snapshotWorkingTree(ROOT);
   else console.warn('   ⚠️ 接入区块注入失败:', (ob.stderr || ob.stdout || '').trim().slice(0, 300));
 }
 
+// 0e) 部署指纹刷新（api/deployment.json，P0-4）
+// 2026-10-26 全面审计报告 P0-4：建立部署指纹 —— commit、数据版本、构建时间、功能清单。
+// 之前用户对"线上跑的是哪一版代码"完全不可见：CI 通过只证明本地绿，不代表 Cloudflare
+// 已分发到该 commit（Pages 分发延迟、缓存层、区域差异都可能造成"部署命令成功但页面
+// 还是三小时前的版本"）。fingerprint 通过 GET /api/deployment 让用户/MCP 客户端
+// 一眼查到实际在跑的 commit 与构建时间，也让 CI 部署后回探有可对比的锚点。
+{
+  try {
+    const outPath = path.join(ROOT, 'api', 'deployment.json');
+    const gitHead = execSync('git rev-parse --short HEAD', { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim();
+    const gitFull = execSync('git rev-parse HEAD', { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim();
+    const gitBranch = execSync('git rev-parse --abbrev-ref HEAD', { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim();
+    const gitTime = execSync('git log -1 --format=%cI', { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim();
+    const nodeVersion = process.versions.node;
+    let pyVersion = 'unknown';
+    try {
+      pyVersion = execSync(process.platform === 'win32' ? 'python --version' : 'python3 --version', { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim().replace(/^Python /, '');
+    } catch { /* Python 不可用不阻塞部署 */ }
+    // 功能清单：把当前 api/ 下对外端点数与实体总数记入指纹，让"版本 A 有哪些能力"可查
+    let totalEntities = null;
+    try {
+      const dj = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'data.json'), 'utf8'));
+      totalEntities = dj && dj.meta && dj.meta.total_entities;
+    } catch { /* 数据文件可能未生成 */ }
+    const features = fs.readdirSync(path.join(ROOT, 'api')).filter(f => /\.json$/.test(f)).sort();
+    const fp = {
+      _schema: 'roboparts.deployment-fingerprint/v1',
+      _comment: 'P0-4 部署指纹静态文件。scripts/deploy.mjs 每次部署前覆写。functions/api/deployment.js 读取并合并 Cloudflare Pages 环境注入的 commit。',
+      commit: gitFull,
+      commitShort: gitHead,
+      builtAt: new Date().toISOString(),
+      gitCommitTime: gitTime,
+      gitHead,
+      nodeVersion,
+      pythonVersion: pyVersion,
+      branch: gitBranch,
+      ciGatePassed: true, // 到此为止 preflight + pre-deploy 全部通过
+      features: features,
+      totalEntities,
+    };
+    fs.writeFileSync(outPath, JSON.stringify(fp, null, 2) + '\n', 'utf8');
+    console.log(`   ✅ 部署指纹已刷新: api/deployment.json (commit=${gitHead}, entities=${totalEntities || '?'})`);
+  } catch (e) {
+    console.warn('   ⚠️ 部署指纹刷新失败（非阻塞）:', (e.message || '').slice(0, 200));
+  }
+}
+
 // 【GOAI 对齐 · J8】git tag 回滚锚点：部署前打一个可回滚点（非阻塞）。
 // 格式 deploy-YYYYMMDD-HHmm；保留最近 40 个，超出自动清理最老 tag。
 {

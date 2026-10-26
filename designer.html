@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<link rel="stylesheet" href="/_shell.css">
+<link rel="stylesheet" href="/_project-badge.css">
+
 <meta charset="UTF-8">
   <link rel="alternate" hreflang="zh-CN" href="https://roboparts.cc/designer.html">
   <link rel="alternate" hreflang="x-default" href="https://roboparts.cc/designer.html">
@@ -1752,7 +1755,16 @@ body {
     <div class="modal-body" id="bomBody"></div>
     <div class="modal-footer">
       <button class="bt-btn" onclick="exportCSV()">&#128190; 导出CSV</button>
+      <button class="bt-btn" style="background:linear-gradient(135deg,#37e0a6,#5b9dff);color:#04210f;font-weight:800" onclick="window.open('/bom-checker.html','_self')">▶ 去 BOM 校验</button>
       <button class="bt-btn" onclick="closeBOM()">关闭</button>
+    </div>
+    <div style="text-align:center;padding:0 20px 12px;font-size:11px;color:var(--text2)">
+      <b>BOM 已生成？</b>下一步 →
+      <a href="/bom-checker.html" style="color:var(--accent);font-weight:700;text-decoration:underline">▶ BOM 校验</a>
+      ·
+      <a href="/adapter-generator.html" style="color:var(--accent);font-weight:700;text-decoration:underline">▶ 转接件生成</a>
+      ·
+      <a href="/assembly.html" style="color:var(--accent);font-weight:700;text-decoration:underline">▶ 装配级检查</a>
     </div>
   </div>
 </div>
@@ -2183,6 +2195,7 @@ function placeModule(moduleId) {
     category,
     placedAt: Date.now()
   });
+  scheduleRpSave();
 
   updateScene();
   updatePlacedTags();
@@ -2209,6 +2222,7 @@ function updatePlacedTags() {
 
 function removeModule(moduleId) {
   placedModules = placedModules.filter(p => p.module.id !== moduleId);
+  scheduleRpSave();
   if (selectedModuleId === moduleId) {
     selectedModuleId = null;
     showPropsEmpty();
@@ -3142,7 +3156,7 @@ function exportCSV() {
   a.click();
   URL.revokeObjectURL(url);
 
-  showToast('CSV文件已下载', 'success');
+  showToast('CSV文件已下载 · 下一步：<a href="/bom-checker.html" style="color:#37e0a6;font-weight:700;text-decoration:underline">▶ BOM 校验</a>', 'success');
 }
 
 // ============================================================
@@ -3171,6 +3185,7 @@ function clearCanvas() {
     return;
   }
   placedModules = [];
+  scheduleRpSave();
   selectedModuleId = null;
   showPropsEmpty();
   updateScene();
@@ -3235,6 +3250,21 @@ function switchToDesignView() {
   }
 }
 
+// ===== RpProject 保存 (P1-1) =====
+var _rpSaveTimer = null;
+function scheduleRpSave(){
+  clearTimeout(_rpSaveTimer);
+  _rpSaveTimer = setTimeout(function(){
+    try {
+      if (typeof RpProject !== 'object') return;
+      RpProject.setForStep(2, {
+        placedModules: placedModules,
+        savedAt: new Date().toISOString()
+      });
+    } catch(e) {}
+  }, 500);
+}
+
 // ============================================================
 // INIT
 // ============================================================
@@ -3243,6 +3273,20 @@ window.addEventListener('DOMContentLoaded', () => {
   initThree();
   updateStats();
   updatePlacedTags();
+
+  // ===== RpProject 接入 (P1-1) =====
+  // 从统一 project 状态恢复设计
+  try {
+    if (typeof RpProject === 'object') {
+      var saved = RpProject.getForStep(2);  // step 2 = design
+      if (saved && saved.placedModules && saved.placedModules.length) {
+        placedModules = saved.placedModules;
+        updatePlacedTags();
+        updateStats();
+        showToast('已从项目恢复设计', 'success');
+      }
+    }
+  } catch(e) {}
 
   // Load shared config from URL
   (function loadSharedConfig() {
@@ -4065,5 +4109,8 @@ console.log('[URDF Loader] Module initialized. urdf-loader@0.13.1 + Three.js@0.1
 // Welcome overlay control
 window.hideWelcome = function() { const o = document.getElementById('welcomeOverlay'); if(o) o.style.display='none'; };
 </script>
-</body>
+
+
+<script src="/rp-project.js"></script>
+<script src="/_shell.js"></script></body>
 </html>

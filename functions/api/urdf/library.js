@@ -2,6 +2,7 @@
  * RoboParts URDF 模型库 API
  * GET /api/urdf/library          - 获取 URDF 模型列表（支持 ?robot_type= 筛选）
  * GET /api/urdf/library?id=xxx   - 获取单个 URDF 模型详情
+ * GET /api/urdf/library?tier=L0  - 按资产分级筛选（L0-L4，见下方 ASSET_TIER_SCHEMA）
  *
  * 预置模型：60 个（URDF-001 ~ URDF-060）
  *   URDF-001 ~ URDF-025  原始基础模型
@@ -13,12 +14,20 @@
  *   URDF-048 ~ URDF-058  中国机器人品牌（小鹏Iron、傅利叶GR-1/2、星动纪元、逐际动力、银河通用、有鹿、大象、睿尔曼、大然）
  *   URDF-059 ~ URDF-060  仿真常用平台（PR2、TurtleBot3）
  *
+ * P0-12 资产分级（2026-10-26 全面审计报告）：
+ *   L0 元数据模型 · L1 结构可解析 · L2 运动学有效 · L3 物理参数可追 · L4 验证资产
+ *   本库 60 个预置模型**全部落 L0**——由 robot_type + joints 数动态生成的参数化骨架，
+ *   几何/质量/惯量都是脚本内估算，非厂商 CAD、非实测。对外契约不再自称"60+ 即开即用"，
+ *   而是明确"60 个 L0 元数据模型 + 分级筛选"。导入真实厂商 URDF 时通过
+ *   ASSET_TIER_OVERRIDES 显式登记更高档位并附 source 与 assumptions。
+ *
  * 功能：
  * 1. CORS 支持（onRequestOptions）
  * 2. 从 KV（env.URDF_LIBRARY）读取 URDF 模型
  * 3. 如果 KV 中没有数据，返回预置的 60 个模型列表
- * 4. 支持按 robot_type 筛选（humanoid / quadruped / arm / hand / gripper / amr）
- * 5. 返回模型列表（id, name, robot_type, description, joints_count, download_url）
+ * 4. 支持按 robot_type / compatibility / sim / tier 筛选
+ * 5. 返回模型列表（id, name, robot_type, description, joints_count, download_url,
+ *    asset_tier, compatibility）
  */
 
 // 预置 URDF 模型（当 KV 为空时返回）
@@ -936,6 +945,82 @@ const PRESET_URDF_MODELS = [
 const VALID_ROBOT_TYPES = ['humanoid', 'quadruped', 'arm', 'hand', 'gripper', 'amr'];
 const KV_MODELS_KEY = 'urdf_models';
 
+// ===================== P0-12 · 资产分级 L0-L4（2026-10-26 全面审计报告） =====================
+// 审计原话："60 个预设模型由元数据动态生成通用骨架，不应与厂商授权 URDF 混为一谈。
+// 建议把'60+ 即开即用'改为按 L0–L4 筛选的真实资产清单。"
+//
+// 分级定义（每级必须满足下一级所有条件）：
+//   L0 · 元数据模型：有名称、类型、来源和估算边界。对外称「参数化元数据」。
+//       本库 60 个预置模型全部落此级——`generateURDF()` 按 robot_type + joints 数
+//       动态生成通用骨架，几何/质量/惯量都是脚本内硬编码估算，无厂商 CAD、无实测。
+//   L1 · 结构可解析：XML Schema 通过、引用完整、单位明确。对外称「可导入原型」。
+//       条件：需要独立的 URDF Schema 校验器实际跑过 + 每个 link/joint 引用都能追溯。
+//   L2 · 运动学有效：连杆树、关节轴、限位、坐标系、TCP 经测试。对外称「运动学原型」。
+//       条件：需要在 MuJoCo/Gazebo 中实际 forwardKinematics 对照参考实现。
+//   L3 · 物理参数可追：质量、惯量、摩擦、执行器参数有来源与假设。对外称「仿真候选资产」。
+//       条件：每个物理参数附 source（datasheet/实测/估算）与假设说明。
+//   L4 · 验证资产：跨引擎回归、关键运动学/动力学对照、必要时真机标定。对外称「已验证仿真资产」。
+//       条件：ISO 2321 / ISO 22166 级验证；需要真机 + 跨仿真器回归。
+//
+// 诚实边界：RoboParts 目前**没有任何 L1+ 资产**——60 个预置都是 L0。
+// 这条分级存在本身的价值是把「估算骨架」和「厂商真实 URDF」在对外契约上彻底分开，
+// 而不是继续用"60+ 即开即用"这种把 L0 说成 L2+ 的营销措辞。
+//
+// 每个 model 对象可通过显式字段 `asset_tier: 'L0' | 'L1' | ... | 'L4'` 覆盖默认值，
+// 供未来导入真实厂商 URDF 时使用（例如 URDF-026 若换成 Unitree 官方 TienKung URDF，
+// 就应显式标注 asset_tier: 'L3' 并补 source/datasheet URL）。
+const ASSET_TIER_SCHEMA = {
+  L0: { name: '元数据模型', external: '参数化元数据', requires: '有名称、类型、来源和估算边界' },
+  L1: { name: '结构可解析', external: '可导入原型', requires: 'XML Schema 通过、引用完整、单位明确' },
+  L2: { name: '运动学有效', external: '运动学原型', requires: '连杆树、关节轴、限位、TCP 经测试' },
+  L3: { name: '物理参数可追', external: '仿真候选资产', requires: '质量、惯量、摩擦、执行器参数有来源与假设' },
+  L4: { name: '验证资产', external: '已验证仿真资产', requires: '跨引擎回归、关键运动学/动力学对照、必要时真机标定' },
+};
+const VALID_ASSET_TIERS = Object.keys(ASSET_TIER_SCHEMA);
+
+// 显式覆盖表：预置 60 个默认 L0。将来导入真实厂商 URDF 时在此登记更高档位。
+// 每条必须写清 source（datasheet URL 或实测记录 ID）与 assumptions 才允许标 L1+。
+const ASSET_TIER_OVERRIDES = {
+  // 示例（禁用）：
+  // 'URDF-006': {
+  //   tier: 'L3',
+  //   source: 'https://github.com/unitreerobotics/unitree_ros/blob/main/...',
+  //   assumptions: '质量/惯量取自 Unitree G1 官方 datasheet v2.3（2024-08）',
+  //   verified_at: '2026-XX-XX',
+  // },
+};
+
+function getAssetTier(model) {
+  const override = ASSET_TIER_OVERRIDES[model && model.id];
+  if (override) {
+    return {
+      tier: override.tier,
+      source: override.source || 'override',
+      assumptions: override.assumptions || '',
+      verified_at: override.verified_at || null,
+      schema: ASSET_TIER_SCHEMA[override.tier] || ASSET_TIER_SCHEMA.L0,
+    };
+  }
+  // 预置模型默认 L0：RoboParts 元数据驱动的通用骨架
+  return {
+    tier: 'L0',
+    source: 'RoboParts metadata-generated skeleton',
+    assumptions: '几何/质量/惯量为参数化估算（robot_type + joints 数），非厂商 CAD、非实测。'
+      + ' 下载产物可导入仿真器作原型开发，不应用于生产级动力学仿真或安全相关判断。',
+    verified_at: null,
+    schema: ASSET_TIER_SCHEMA.L0,
+  };
+}
+
+function tierSummary(models) {
+  const counts = { L0: 0, L1: 0, L2: 0, L3: 0, L4: 0 };
+  for (const m of models) {
+    const t = getAssetTier(m).tier;
+    if (counts[t] !== undefined) counts[t]++;
+  }
+  return counts;
+}
+
 // ===================== URDF 兼容性标签体系 =====================
 // 基于模型属性自动生成兼容性标签，无需逐个手动标注
 
@@ -1084,6 +1169,7 @@ export async function onRequestGet(context) {
   const robotType = url.searchParams.get('robot_type');
   const compatTag = url.searchParams.get('compatibility');
   const simPlatform = url.searchParams.get('sim');
+  const tierParam = url.searchParams.get('tier');
 
   try {
     // 尝试从 KV 读取模型库
@@ -1147,6 +1233,12 @@ export async function onRequestGet(context) {
         );
       });
     }
+    // P0-12 资产分级筛选：?tier=L0（单个）或 ?tier=L0,L1（逗号分隔多个）
+    if (tierParam) {
+      const wanted = tierParam.split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
+      const wantedSet = new Set(wanted);
+      filtered = filtered.filter(m => wantedSet.has(getAssetTier(m).tier));
+    }
 
     // 统计各类型数量
     const typeCounts = {};
@@ -1162,8 +1254,15 @@ export async function onRequestGet(context) {
         filter: robotType || null,
         compatibility_filter: compatTag || null,
         sim_filter: simPlatform || null,
+        tier_filter: tierParam || null,
         available_robot_types: VALID_ROBOT_TYPES,
         type_counts: typeCounts,
+        // P0-12 资产分级总览（未筛选前全库分布，让调用方一次看到"真实资产清单"）
+        asset_tier_schema: ASSET_TIER_SCHEMA,
+        asset_tier_counts_all: tierSummary(models),
+        asset_tier_counts_filtered: tierSummary(filtered),
+        asset_tier_note: '默认 L0（RoboParts 元数据驱动的参数化骨架）。'
+          + 'L1+ 需显式 asset_tier 覆盖并附 source 与 assumptions（见 ASSET_TIER_OVERRIDES）。',
       },
       models: filtered.map(enrichModel),
     };
@@ -1203,9 +1302,10 @@ async function loadModels(env) {
   return PRESET_URDF_MODELS;
 }
 
-// 补充列表展示字段（joints_count 等别名，保持向后兼容）+ 兼容性信息
+// 补充列表展示字段（joints_count 等别名，保持向后兼容）+ 兼容性信息 + P0-12 资产分级
 function enrichModel(model) {
   const compat = getCompatibilityInfo(model);
+  const tier = getAssetTier(model);
   return {
     id: model.id,
     name: model.name,
@@ -1223,6 +1323,8 @@ function enrichModel(model) {
     download_url: model.download_url,
     // 兼容性标签体系（B-01）
     compatibility: compat,
+    // P0-12 资产分级：L0=元数据骨架 / L1=结构可解析 / L2=运动学有效 / L3=物理可追 / L4=已验证
+    asset_tier: tier,
   };
 }
 
