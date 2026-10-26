@@ -1,7 +1,7 @@
 {
   "name": "roboparts-mcp-server",
   "version": "1.1.1",
-  "description": "MCP server for RoboParts — 798 humanoid robot component entities across 20 categories with compatibility, mechanical interface and parameter-comparability data. Vendor-neutral: we neither manufacture nor resell any part.",
+  "description": "MCP server for RoboParts — 868 robot component entities across 20 categories with 20 tools: compatibility (4-dim product layer + 3-axis research layer), mechanical interface, parameter-comparability, assembly preflight, VLA→body binding, and research progress. Vendor-neutral: we neither manufacture nor resell any part. Full tool docs: https://roboparts.cc/docs/mcp-tools.md",
   "type": "module",
   "main": "index.js",
   "bin": {

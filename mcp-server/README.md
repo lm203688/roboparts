@@ -10,34 +10,52 @@ RoboParts MCP (Model Context Protocol) Server 是一个标准化接口，允许 
 ## 项目介绍
 
 本 MCP Server 基于 `@modelcontextprotocol/sdk` 构建，使用 stdio 传输协议，
-启动时从 **https://roboparts.cc/api** 拉取全部数据（688 条实体），
+启动时从 **https://roboparts.cc/api** 拉取全部数据（**868 条实体 / 20 个品类**），
 为 AI Agent 提供结构化的机器人零部件查询能力。
 
 数据实时取自线上，不随包版本过期。若数据源不可达，服务会**明确报错退出**，
 而不是以空库启动、对每次查询都回「未找到」—— 静默失败比崩溃更难排查。
 内网或离线环境可用环境变量 `ROBOPARTS_API_BASE` 指向自建镜像。
 
-### 支持的数据品类（10 类 / 688 条，与官网口径一致）
+> 📖 **完整工具文档：** [docs/mcp-tools.md](../docs/mcp-tools.md)（含 20 个生产工具的
+> 完整参数、返回、示例与口径纪律）。本 README 仅列本地子集（10 个），桥接层工具
+> （`explain_*` / `check_co_mount` / `get_body_binding` 等）仅在生产端点提供。
 
-| 品类 | 标识 | 条数 | 说明 |
-|------|------|------|------|
-| 执行器 | actuators | 199 | 舵机、电机控制器等 |
-| 芯片 | chips | 108 | 计算芯片、MCU 等 |
-| 传感器 | sensors | 90 | LiDAR、IMU、触觉传感器等 |
-| 通信协议 | protocols | 64 | EtherCAT、CANopen 等 |
-| 机器人 AI 模型 | robot_ai_models | 44 | RT-2、π0 等具身智能模型 |
-| 数据采集 | data_acquisition | 43 | 遥操作、动捕等数采方案 |
-| 大语言模型 | llms | 42 | GPT-4o、Claude、VLA 模型等 |
-| 机器人平台 | platforms | 40 | 人形、四足等机器人平台 |
-| 接口 | interfaces | 37 | USB、MIPI CSI、PCIe 等 |
-| 柔性执行器 | flexible_actuators | 21 | 气动人工肌肉、SMA 等 |
+### 支持的数据品类（20 类 / 868 条，与官网口径一致）
+
+| 品类 | 标识 | 条数 |
+|------|------|------|
+| 执行器 | actuators | 222 |
+| 芯片 | chips | 108 |
+| 机器人平台 | platforms | 106 |
+| 传感器 | sensors | 95 |
+| 通信协议 | protocols | 64 |
+| 机器人 AI 模型 | robot_ai_models | 44 |
+| 数据采集 | data_acquisition | 43 |
+| 大语言模型 | llms | 42 |
+| 接口 | interfaces | 37 |
+| 柔性执行器 | flexible_actuators | 21 |
+| 夹爪 | grippers | 23 |
+| 仿生机构 | bionic_mechanisms | 17 |
+| 减速器 | reducers | 14 |
+| 控制器 | controllers | 4 |
+| 结构件 | structural | 3 |
+| 线缆 | cables | 2 |
+| 电源 | power | 2 |
+| PCB | pcb | 2 |
+| 连接器 | connectors | 2 |
+| 一体化关节 | integrated_joints | 1 |
+
+（条数为 `api/entities.json` 现算，以真相源为准。真相源会漂移，本表随数据刷新可能滞后；
+`npm run` 与 `npx roboparts-mcp-server` 启动时都从线上拉最新数据。）
 
 ### 我们不隐瞒的三件事
 
 1. **参数为厂商公开声明值，未经我方实测复现**，请勿当作实测值用于最终选型。
 2. **跨厂商可直接横向比较的 A 级条目目前为 0 条。** 各家参数口径（如转速的定义方式）
    尚不统一，我们宁可如实标注，也不做一个看起来整齐、实则不可比的排行榜。
-3. **机械接口有明确线索的仅占 5.75%。** 这是行业普遍未公开的部分，我们在补，但目前确实很少。
+3. **机械接口有明确线索的占少数。** 这是行业普遍未公开的部分，我们在补，但目前确实很少。
+   详见 `get_standard_audit` 与 `check_compatibility` 的 verdict_reason。
 
 **中立声明**：RoboParts 不生产、不销售、不代理任何零部件，与所收录厂商无销售利益关系。
 
@@ -271,16 +289,14 @@ AI Agent 调用：export_bom({
 
 ## 数据来源
 
-数据文件位于 `../api/` 目录，包含以下 JSON 文件：
+数据文件位于 `../api/` 目录（本地开发回退），生产环境从 `https://roboparts.cc/api` 拉取。
+完整品类清单与条数见 `api/entities.json` 的 `meta.categories`（真相源，本表随时会漂移）：
 
-- `actuators.json` - 执行器数据（147 条）
-- `sensors.json` - 传感器数据（42 条）
-- `chips.json` - 芯片数据（95 条）
-- `protocols.json` - 通信协议数据（64 条）
-- `platforms.json` - 机器人平台数据（23 条）
-- `llms.json` - 大语言模型数据（27 条）
-- `interfaces.json` - 接口数据（14 条）
-- `compatibility_matrix.json` - 兼容性规则矩阵
+- 20 个品类实体：actuators / sensors / chips / protocols / platforms / llms / interfaces /
+  flexible_actuators / robot_ai_models / data_acquisition / grippers / bionic_mechanisms /
+  reducers / controllers / structural / cables / power / pcb / connectors / integrated_joints
+- 派生产物：compatibility_matrix / evidence_ledger / co_mount / morphology_graph /
+  standard-audit / compose_semantics / reachability_gap 等（详见 `api/` 目录）
 
 ## 技术架构
 
