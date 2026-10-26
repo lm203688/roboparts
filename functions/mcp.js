@@ -34,11 +34,40 @@ import { lintUrdf } from './_urdf_lint.js';
 import { queryCoMount } from './_lib/co_mount_engine.js';
 
 const SERVER_NAME = 'roboparts';
-const SERVER_VERSION = '1.1.1';
+const SERVER_VERSION = '1.2.0';
 
-/** 支持的协议版本，降序。客户端报的版本若在列则原样回应，否则回落到首个。 */
-const SUPPORTED_PROTOCOLS = ['2025-06-18', '2025-03-26', '2024-11-05'];
+/** 支持的协议版本，降序。客户端报的版本若在列则原样回应，否则回落到首个。
+ *  【2026-10-27 P2-6】加 2025-11-25：MCP 双版本协商，配合 capabilities.experimental.roboparts
+ *  暴露 protocol_versions_supported + capabilities_by_version。
+ */
+const SUPPORTED_PROTOCOLS = ['2025-11-25', '2025-06-18', '2025-03-26', '2024-11-05'];
 const PREFERRED_PROTOCOL = SUPPORTED_PROTOCOLS[0];
+
+/** 【2026-10-27 P2-6】协议版本 → 支持的能力映射。
+ *  2024-11-05：基础 11 个业务工具 + 9 个桥接工具（20 个）
+ *  2025-11-25：+ 6 个双版本/Trace 层工具（26 个）
+ *  按协商版本过滤 tools/list 返回集合，防止旧客户端看到不认识的 schema。
+ */
+const CAPABILITIES_BY_VERSION = {
+  '2024-11-05': ['legacy'],
+  '2025-11-25': ['dual_version', 'trace_replay', 'long_task_handles', 'explain_unknown'],
+};
+
+/** 【2026-10-27 P2-6】三态诚实边界。
+ *  hosted 端点（Cloudflare Workers）与 stdio npm 包的关键差异：
+ *    - no_server_side_persistence：Workers 无跨请求内存，trace 环形缓冲只在 stdio
+ *    - no_hard_cancel：Workers 是短生命周期 request，无中断通道
+ *    - no_multi_tenant_isolation：单会话，无 user_id 隔离（跟 stdio 一致）
+ *    - no_trace_buffer_across_requests：hosted 独有——trace_export 只能回当前请求内的 trace
+ *    - no_task_handles_across_requests：hosted 独有——长任务句柄只回当前请求内的任务
+ */
+const HOSTED_HONEST_LIMITS = [
+  'no_server_side_persistence',
+  'no_hard_cancel',
+  'no_multi_tenant_isolation',
+  'no_trace_buffer_across_requests',
+  'no_task_handles_across_requests',
+];
 
 /**
  * 全部品类 —— 必须与 api/entities.json 的 meta.categories 完全一致。
@@ -631,6 +660,131 @@ const TOOLS = [
       '★ 只绑开源 VLA——闭源模型无公开验证栈，不编造绑定。只读、免鉴权。',
     inputSchema: { type: 'object', properties: {}, required: [] },
   },
+
+  // ============================================================
+  // 【2026-10-27 P2-6】双版本 / Trace 层（6 个新工具）
+  // ------------------------------------------------------------
+  // hosted 端点的诚实边界：Cloudflare Workers 是短生命周期 request，
+  // 无跨请求内存持久化。所以：
+  //   - explain_unknown：真实现（读 entity map 现算字段缺口）
+  //   - trace_export / trace_replay：hosted 返回 honest_note 引导到 stdio
+  //     （跨请求 trace 需 KV/Durable Object 持久化，属新架构决策）
+  //   - start_long_task / get_task_status / cancel_task：hosted 返回
+  //     honest_note 引导到 stdio（跨请求任务句柄同理）
+  // 客户端能"看到"这 6 个工具 = 版本协商成功的信号；调用后收到
+  // honest_note = 引导使用正确的运行环境，不是失败。
+  // ============================================================
+
+  {
+    name: 'explain_unknown',
+    description:
+      '结构化解释「为什么某次判定是 unknown」。三种模式：' +
+      '① component_id + category → 返回该实体的 evidence_gaps / null 字段清单；' +
+      '② verdict_id → 反查当前请求内的判定（hosted 端点无跨请求会话，仅回当前请求）；' +
+      '③ 无参 → 返回全库 unknown 覆盖率摘要。' +
+      '★ 口径纪律：字段级扫描 ≠ 因果归因（后者属 gap_classification 研究层）。只读、免鉴权。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        component_id: { type: 'string', description: '组件 ID，如 ACT-001、SENS-001' },
+        category: {
+          type: 'string',
+          description: `品类：${CATEGORIES.join(' / ')}`,
+          enum: CATEGORIES,
+        },
+        verdict_id: { type: 'string', description: '判定 verdict_id（hosted 端点仅当前请求内可查）' },
+        max_gaps: { type: 'number', description: '最多返回多少条缺口', default: 20 },
+      },
+    },
+  },
+
+  {
+    name: 'start_long_task',
+    description:
+      '启动长任务并返回任务句柄。' +
+      '★ hosted 端点（Cloudflare Workers）无跨请求内存持久化，任务句柄只在 stdio npm 包 ' +
+      '（roboparts-mcp-server）里可用。本端点返回 honest_note 引导到 stdio 模式，' +
+      '不假装能保存跨请求任务。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        task_type: {
+          type: 'string',
+          enum: ['batch_check_compatibility', 'bulk_export_bom', 'deep_dialect_evaluate'],
+          description: '预定义任务类型',
+        },
+        args: { type: 'object', description: '任务参数' },
+      },
+      required: ['task_type'],
+    },
+  },
+
+  {
+    name: 'get_task_status',
+    description:
+      '查询长任务状态。' +
+      '★ hosted 端点无跨请求任务句柄，返回 honest_note 引导到 stdio 模式。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        task_id: { type: 'string', description: '任务 ID（stdio 模式下 start_long_task 返回）' },
+      },
+      required: ['task_id'],
+    },
+  },
+
+  {
+    name: 'cancel_task',
+    description:
+      '置任务取消标志位。' +
+      '★ stdio 无中断通道，cancel 只置标志位；任务体在下一 checkpoint 才退出。' +
+      'hosted 端点无跨请求任务句柄，返回 honest_note 引导到 stdio。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        task_id: { type: 'string', description: '任务 ID' },
+      },
+      required: ['task_id'],
+    },
+  },
+
+  {
+    name: 'trace_export',
+    description:
+      '导出调用轨迹（默认去敏）。' +
+      '★ hosted 端点无跨请求内存持久化，trace 环形缓冲只在 stdio npm 包可用。' +
+      '本端点返回 honest_note 引导到 stdio 模式；stdio 支持 ' +
+      'ROBOPARTS_TRACE_FILE 环境变量落盘 JSONL 供事后回放。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        limit: { type: 'number', description: '最多返回多少条', default: 200 },
+        tool: { type: 'string', description: '按工具名过滤' },
+        since: { type: 'string', description: 'ISO 8601 时间戳起点' },
+        redact: { type: 'boolean', description: '是否去敏（默认 true）', default: true },
+      },
+    },
+  },
+
+  {
+    name: 'trace_replay',
+    description:
+      '从 JSONL 文本重放轨迹（结构校验 + 计数）。' +
+      '本端点可处理**当前请求内传入的** json_lines；不做"重算 verdict"' +
+      '（语义重放属 P3，需要完整输入重演）。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        json_lines: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'JSONL 行数组（每行一条 trace JSON）',
+        },
+        strict: { type: 'boolean', description: '严格模式：首个 parse 失败即中断', default: false },
+      },
+      required: ['json_lines'],
+    },
+  },
 ];
 
 /**
@@ -745,6 +899,181 @@ async function toolCheckCoMount(env, request, args = {}) {
     fetchAsset(env, request, 'api/robot_tool_side.json'),
   ]);
   return queryCoMount(cm, ts, args);
+}
+
+/**
+ * 【2026-10-27 P2-6】explain_unknown — hosted 端点真实现。
+ *
+ * 审计报告 §4.4："把'为什么 unknown''哪条证据导致冲突'作为标准工具，
+ * 而非仅靠自然语言解释"。本函数把"字段缺口"从自然语言解释升级为结构化标准。
+ *
+ * 三种模式（互斥）：
+ *   - component_id + category：返回该实体的 evidence_gaps / null 字段清单
+ *   - verdict_id：反查当前请求内的判定（hosted 无跨请求会话，返回 hint）
+ *   - 无参降级：返回全库 unknown 覆盖率摘要
+ *
+ * 口径纪律：字段级扫描 ≠ 因果归因（后者属 gap_classification 研究层）。
+ */
+async function toolExplainUnknown(env, request, args = {}) {
+  const { component_id, category, verdict_id, max_gaps } = args;
+  const limit = Math.min(Math.max(Number(max_gaps) || 20, 1), 100);
+
+  // --- 分支 1：verdict_id 反查（hosted 端点无跨请求会话）---
+  if (verdict_id) {
+    return {
+      verdict_id,
+      found: false,
+      mode: 'verdict_id_lookup',
+      error: 'verdict_not_available_in_hosted_mode',
+      honest_note:
+        'hosted 端点（Cloudflare Workers）是短生命周期 request，无跨请求会话。' +
+        'verdict_id 反查只在 stdio npm 包（`npx roboparts-mcp-server`）可用，' +
+        '或可通过 trace_export 落盘后离线重放。',
+      stdio_command: 'npx roboparts-mcp-server',
+      stdio_hint: '在 stdio 会话内调用 explain_unknown({ verdict_id }) 反查当前会话',
+      evidence_version: SERVER_VERSION,
+    };
+  }
+
+  // --- 分支 2：component_id ---
+  if (component_id) {
+    if (!category) {
+      return {
+        error: '参数缺失: 给 component_id 时必须同时给 category',
+        evidence_version: SERVER_VERSION,
+      };
+    }
+    const { map } = await getEntities(env, request);
+    const item = map[component_id];
+    if (!item) {
+      return {
+        component_id,
+        category,
+        found: false,
+        error: 'component_not_found',
+        suggestion: '使用 search_components 确认 ID 与品类',
+        evidence_version: SERVER_VERSION,
+      };
+    }
+    // 提取所有带 evidence_gap / gap / verdict_reason 语义的字段
+    const UNKNOWN_KEYS = ['evidence_gaps', 'evidence_gap', 'gaps', 'unknown_fields',
+                          'verdict_reason', 'gap_cause', 'missing_fields'];
+    const evidenceGaps = [];
+    for (const key of UNKNOWN_KEYS) {
+      if (key in item) {
+        const v = item[key];
+        if (Array.isArray(v)) evidenceGaps.push({ source: key, items: v.slice(0, limit) });
+        else if (v && typeof v === 'object') evidenceGaps.push({ source: key, value: v });
+        else if (v) evidenceGaps.push({ source: key, value: v });
+      }
+    }
+    // 全库字段扫描：所有值为 null / 'unknown' / 'N/A' / '' 的字段
+    const nullFields = [];
+    for (const [k, v] of Object.entries(item)) {
+      if (v === null || v === undefined || v === 'unknown' || v === 'N/A' || v === '') {
+        nullFields.push(k);
+      }
+    }
+    return {
+      mode: 'component_lookup',
+      component_id,
+      category,
+      name: item.name || null,
+      manufacturer: item.manufacturer || null,
+      evidence_gaps: evidenceGaps.length > 0 ? evidenceGaps.slice(0, limit) : [],
+      null_or_unknown_fields: nullFields,
+      gap_count: evidenceGaps.length + nullFields.length,
+      summary: evidenceGaps.length === 0 && nullFields.length === 0
+        ? 'no_gaps: 该实体字段完整，不是 unknown 来源'
+        : `${evidenceGaps.length} 组显式 gap 记录 + ${nullFields.length} 个空/unknown 字段`,
+      honest_note: '字段级扫描，不代表完整因果归因；完整归因见 api/gap_classification.json',
+      evidence_version: SERVER_VERSION,
+    };
+  }
+
+  // --- 分支 3：无参降级：全库摘要 ---
+  const { list, map } = await getEntities(env, request);
+  const byCat = {};
+  let total = 0, nNull = 0, nGap = 0;
+  for (const item of list) {
+    const cat = item.category || 'unknown';
+    if (!byCat[cat]) byCat[cat] = { total: 0, with_gaps: 0, with_null: 0 };
+    byCat[cat].total += 1;
+    total += 1;
+    let hasGap = false, hasNull = false;
+    for (const key of ['evidence_gaps', 'evidence_gap', 'gaps', 'gap_cause']) {
+      if (key in item) { hasGap = true; break; }
+    }
+    for (const v of Object.values(item)) {
+      if (v === null || v === undefined || v === 'unknown' || v === 'N/A' || v === '') {
+        hasNull = true; break;
+      }
+    }
+    if (hasGap) { byCat[cat].with_gaps += 1; nGap += 1; }
+    if (hasNull) { byCat[cat].with_null += 1; nNull += 1; }
+  }
+  return {
+    mode: 'library_summary',
+    total_entities: total,
+    entities_with_null_or_unknown: nNull,
+    entities_with_evidence_gaps: nGap,
+    null_or_unknown_rate: total > 0 ? (nNull / total * 100).toFixed(2) + '%' : '0%',
+    evidence_gap_rate: total > 0 ? (nGap / total * 100).toFixed(2) + '%' : '0%',
+    by_category: byCat,
+    honest_note: '全库扫描，字段级而非因果级；精确归因见 api/gap_classification.json',
+    evidence_version: SERVER_VERSION,
+  };
+}
+
+/**
+ * 【2026-10-27 P2-6】trace_replay — hosted 端点真实现。
+ *
+ * 只处理**当前请求内传入的** json_lines：逐行 JSON.parse + 结构完整性检查。
+ * 不做"重算 verdict"——那需要完整输入重演，属于 P3 语义重放范畴。
+ */
+function toolTraceReplayHosted(args = {}) {
+  const lines = args.json_lines || [];
+  const strict = !!args.strict;
+  const events = [];
+  const errors = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (typeof line !== 'string' || !line.trim()) continue;
+    let obj;
+    try {
+      obj = JSON.parse(line);
+    } catch (e) {
+      errors.push({ line: i, error: 'parse_failed', message: String(e && e.message || e) });
+      if (strict) break;
+      continue;
+    }
+    if (!obj || typeof obj !== 'object') {
+      errors.push({ line: i, error: 'not_object' });
+      if (strict) break;
+      continue;
+    }
+    const missing = ['trace_id', 'tool', 'ts'].filter(k => !(k in obj));
+    if (missing.length > 0) {
+      errors.push({ line: i, error: 'missing_field', missing });
+      if (strict) break;
+      continue;
+    }
+    events.push(obj);
+  }
+  const uniqueTools = Array.from(new Set(events.map(e => e.tool)));
+  const uniqueTraces = new Set(events.map(e => e.trace_id)).size;
+  return {
+    mode: 'hosted_replay',
+    replayed: events.length,
+    total_lines: lines.length,
+    errors: errors.length,
+    error_detail: errors.slice(0, 10),
+    unique_tools: uniqueTools,
+    unique_traces: uniqueTraces,
+    honest_note:
+      '只验证「记录可解析、字段完整」，不重算 verdict——语义重放需要完整输入重演，属 P3 范畴。',
+    evidence_version: SERVER_VERSION,
+  };
 }
 
 /**
@@ -1490,6 +1819,18 @@ async function handleRpc(msg, context) {
             'judgments. We neither manufacture nor resell any part.',
           websiteUrl: 'https://roboparts.cc',
         },
+        // 【2026-10-27 P2-6】experimental.roboparts：让新版 MCP 客户端程序化判断
+        // 本端点支持的能力（版本协商 + 双版本/Trace 工具 + 诚实边界）。
+        // SDK 会自动协商 protocolVersion；此字段额外暴露 protocol_versions_supported
+        // 供目录站/Agent 自检读取，不用猜 SDK 实现。
+        experimental: {
+          roboparts: {
+            protocol_versions_supported: SUPPORTED_PROTOCOLS,
+            capabilities_by_version: CAPABILITIES_BY_VERSION,
+            evidence_version: SERVER_VERSION,
+            honest_limits: HOSTED_HONEST_LIMITS,
+          },
+        },
         instructions: buildInstructions(initFacts),
       });
     }
@@ -1660,6 +2001,80 @@ async function handleRpc(msg, context) {
         } else if (name === 'get_robot_tool_side') {
           recordMcp(context, 'toolsrc:script:get_robot_tool_side');
           payload = await toolExplainResearchLayer(env, request, 'toolside');
+
+        // ============================================================
+        // 【2026-10-27 P2-6】双版本 / Trace 层（6 个新工具）
+        // ------------------------------------------------------------
+        // hosted 端点的边界：Cloudflare Workers 是短生命周期 request，
+        // 无跨请求内存。所以：
+        //   - explain_unknown: 真实现（读 entity map 现算）
+        //   - trace_replay: 真实现（处理当前请求内传入的 json_lines）
+        //   - start_long_task / get_task_status / cancel_task / trace_export:
+        //     返回 honest_note 引导到 stdio（跨请求持久化需 KV/Durable Object）
+        // ============================================================
+
+        } else if (name === 'explain_unknown') {
+          recordMcp(context, 'toolsrc:script:explain_unknown');
+          payload = await toolExplainUnknown(env, request, args);
+        } else if (name === 'start_long_task') {
+          recordMcp(context, 'toolsrc:script:start_long_task_hosted_hint');
+          payload = {
+            mode: 'hosted_endpoint',
+            status: 'not_supported_in_hosted_mode',
+            honest_note:
+              'hosted 端点（Cloudflare Workers）是短生命周期 request，无跨请求内存持久化，' +
+              '无法保存长任务句柄跨请求。要使用 start_long_task / get_task_status / cancel_task，' +
+              '请改用 stdio npm 包：`npx roboparts-mcp-server`（本地启动 MCP server 进程，' +
+              '任务句柄在内存中存活 200 条）。',
+            stdio_package: 'roboparts-mcp-server@1.2.0',
+            stdio_command: 'npx roboparts-mcp-server',
+            evidence_version: SERVER_VERSION,
+            accepted_task_types: ['batch_check_compatibility', 'bulk_export_bom', 'deep_dialect_evaluate'],
+          };
+        } else if (name === 'get_task_status') {
+          recordMcp(context, 'toolsrc:script:get_task_status_hosted_hint');
+          payload = {
+            mode: 'hosted_endpoint',
+            status: 'not_supported_in_hosted_mode',
+            task_id: args.task_id || null,
+            honest_note:
+              'hosted 端点无跨请求任务句柄，无法查询任务状态。' +
+              '该 task_id 来自 stdio 模式（`npx roboparts-mcp-server`）的 start_long_task 返回，' +
+              '请在同一 stdio 会话内调用 get_task_status 查询。',
+            stdio_command: 'npx roboparts-mcp-server',
+            evidence_version: SERVER_VERSION,
+          };
+        } else if (name === 'cancel_task') {
+          recordMcp(context, 'toolsrc:script:cancel_task_hosted_hint');
+          payload = {
+            mode: 'hosted_endpoint',
+            status: 'not_supported_in_hosted_mode',
+            task_id: args.task_id || null,
+            honest_note:
+              'hosted 端点无跨请求任务句柄，无法取消任务。' +
+              '且 stdio 模式本身也无硬中断通道（cancel 只置标志位，任务体在下一 checkpoint 才退出）。' +
+              '请使用 stdio 模式在同一会话内取消。',
+            stdio_command: 'npx roboparts-mcp-server',
+            evidence_version: SERVER_VERSION,
+          };
+        } else if (name === 'trace_export') {
+          recordMcp(context, 'toolsrc:script:trace_export_hosted_hint');
+          payload = {
+            mode: 'hosted_endpoint',
+            status: 'not_supported_in_hosted_mode',
+            honest_note:
+              'hosted 端点无跨请求内存持久化，trace 环形缓冲只在 stdio npm 包可用。' +
+              '请使用 stdio 模式，并通过 ROBOPARTS_TRACE_FILE 环境变量落盘 JSONL 供事后回放：' +
+              '`ROBOPARTS_TRACE_FILE=/path/to/trace.jsonl npx roboparts-mcp-server`。',
+            stdio_command: 'npx roboparts-mcp-server',
+            stdio_env_var: 'ROBOPARTS_TRACE_FILE',
+            stdio_buffer_capacity: 1000,
+            evidence_version: SERVER_VERSION,
+          };
+        } else if (name === 'trace_replay') {
+          recordMcp(context, 'toolsrc:script:trace_replay');
+          payload = toolTraceReplayHosted(args);
+
         } else {
           return rpcError(id, -32602, `未知工具: ${name}`);
         }

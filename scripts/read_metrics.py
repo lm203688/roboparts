@@ -254,7 +254,13 @@ BUSINESS_TOOLS = ('search_components', 'get_component_detail',
                   'explain_evidence_cohort', 'explain_evidence_mdv',
                   'explain_connector_types', 'get_research_progress',
                   'check_co_mount', 'get_robot_tool_side',
-                  'get_behavior_evidence', 'get_body_binding')
+                  'get_behavior_evidence', 'get_body_binding',
+                  # 【2026-10-27 P2-6】双版本 / Trace 层：explain_unknown 返回
+                  # 实质技术结论（字段缺口清单），与 check_compatibility 同类。
+                  # start_long_task / get_task_status / cancel_task / trace_export
+                  # 在 hosted 端点仅返回 honest_note（不是实质结论），不计入业务；
+                  # trace_replay 只校验结构，也不是实质结论。故只列 explain_unknown。
+                  'explain_unknown')
 
 
 def mcp_report(total, n):
