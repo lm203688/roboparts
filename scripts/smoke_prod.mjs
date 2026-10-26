@@ -54,8 +54,9 @@ async function check(name, path, predicate, init = {}) {
   if (!r.ok) {
     return { name, pass: false, reason: `transport fail after ${RETRIES} retries: ${r.error}` };
   }
-  if (r.status !== 200 && r.status !== 308) {
-    return { name, pass: false, reason: `HTTP ${r.status}` };
+  const expected = init.expectStatus || [200, 308];
+  if (!expected.includes(r.status)) {
+    return { name, pass: false, reason: `HTTP ${r.status}（期望 ${expected.join('/')})` };
   }
   try {
     const verdict = predicate(r);
@@ -73,7 +74,7 @@ const checkIndex = async () => check(
   '/',
   (r) => {
     if (!r.text.includes('RoboParts')) return { ok: false, reason: '首页文本不含 "RoboParts"' };
-    if (!/<a\s+href=/.test(r.text)) return { ok: false, reason: '首页无任何 <a href>' 导航' };
+    if (!/<a\s+href=/.test(r.text)) return { ok: false, reason: '首页无任何 <a href> 导航' };
     return { ok: true };
   }
 );
@@ -121,7 +122,8 @@ const checkUrdfBadRequest = async () => check(
     catch (e) { return { ok: false, reason: `错误响应非 JSON: ${e.message}` }; }
     if (!d.error) return { ok: false, reason: '错误响应缺 error 字段' };
     return { ok: true };
-  }
+  },
+  { expectStatus: [400] }
 );
 
 /** /api/urdf/download?id=URDF-001&format=urdf 应返回 URDF XML，根元素 <robot> */
@@ -145,7 +147,7 @@ const checkMjcfDownload = async () => check(
   (r) => {
     if (!r.text.trimStart().startsWith('<?xml')) return { ok: false, reason: '响应非 XML' };
     if (!/<mujoco\s/.test(r.text)) return { ok: false, reason: '无 <mujoco 根元素——不合法 MJCF' };
-    if (!/<worldbody\s/.test(r.text)) return { ok: false, reason: '无 <worldbody>——MuJoCo 无法加载' };
+    if (!/<worldbody/.test(r.text)) return { ok: false, reason: '无 <worldbody>——MuJoCo 无法加载' };
     return { ok: true };
   }
 );
@@ -162,15 +164,17 @@ const checkAssetClassHeader = async () => check(
   }
 );
 
-/** Copilot 端点必须响应（200 或 503 密钥缺失均可） */
+/** Copilot 端点必须响应（200 或 503 密钥缺失均可；403 = 无 Origin 头，也算可达） */
 const checkCopilotReachable = async () => check(
-  '/api/copilot · 端点可达（200/503）',
+  '/api/copilot · 端点可达（200/403/503）',
   '/api/copilot',
   (r) => {
-    if (r.status !== 200 && r.status !== 503) return { ok: false, reason: `意外状态 ${r.status}` };
+    if (![200, 403, 503].includes(r.status)) return { ok: false, reason: `意外状态 ${r.status}` };
     return { ok: true };
   },
-  { method: 'POST', body: JSON.stringify({ prompt: 'selftest' }), headers: { 'content-type': 'application/json' } }
+  { method: 'POST', body: JSON.stringify({ prompt: 'selftest' }),
+    headers: { 'content-type': 'application/json', origin: 'https://roboparts.cc' },
+    expectStatus: [200, 403, 503] }
 );
 
 /** robots.txt 存在 */

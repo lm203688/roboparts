@@ -3,7 +3,7 @@
   "site_name": "RoboParts — 具身系统的组合校验层",
   "domain": "roboparts.cc",
   "tagline": "面向开源机器人构建者的具身系统组合校验层（vendor-neutral composition checker for embodied systems）：判定零件能否装配/共装/互换，输出可核验的三态结论（能/不能/不知道），并生成可 3D 打印的转接件。国际标准锚点：ISO 9409-1（机械法兰几何标号）+ ISO 22166-1（服务机器人模块化框架，德国主导，ISO/AWI 22166-1 FDIS 2026-04-05）+ GB/T 20255807-T-604（国内模块化信息模型，审查中）。核心资产不是零件数量，而是三态 fail-closed compose 引擎 + 三条代数律（可靠性 / 证据单调性 / 不可判定边界，经性质测试与变异测试验证）+ 三条研究假说（T2 已被证伪，见 NR-001；T3 为强假说）+ 78 项 CI 闸门 + 溯源纪律。中立第三方——不生产、不销售、不代理任何零部件，因此没有把选型结果导向自家产品的动机。",
-  "last_updated": "2026-10-19T00:00:00.000Z",
+  "last_updated": "2026-10-26T00:00:00.000Z",
   "total_entities": 868,
   "categories": {
     "actuators": 222,
