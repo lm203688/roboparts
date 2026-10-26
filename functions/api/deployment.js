@@ -55,12 +55,11 @@ export async function onRequestGet(context) {
   const { env } = context;
 
   // 1. 尝试读静态 fingerprint 文件（scripts/deploy.mjs 每次部署写入）
+  // 必须用 env.ASSETS.fetch 而不是裸 fetch——Cloudflare Pages 里裸 fetch 相对路径
+  // 会在 Worker 内部回环、拿不到静态资源，是本次 builtAt=unknown 的根因（2026-10-26 审计 P0-4）。
   let file = null;
   try {
-    const r = await fetch('/api/deployment.json', {
-      // 绕过浏览器缓存，拿最新
-      cache: 'no-store',
-    });
+    const r = await env.ASSETS.fetch(new URL('/api/deployment.json', 'http://localhost'));
     if (r.ok) file = await r.json();
   } catch { /* 文件可能不存在（老版本部署），继续走 env 路径 */ }
 
