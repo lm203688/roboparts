@@ -214,6 +214,32 @@ def gate_readme_stats_fresh():
             timeout=180)
 
 
+def gate_readme_counts():
+    """Sister README files (mcp-server/README.md, mcp-server/package.json) must not
+    hard-code the entity/category counts.
+
+    【20261026】Complement to gate_readme_stats_fresh. That gate only covers the root
+    README.md (which inject_readme_stats.py owns). But the same drift class recurred
+    in sister docs:
+
+        · mcp-server/README.md: "688 条实体 / 10 品类 / 5.75%"
+        · mcp-server/package.json description: "798 humanoid robot component entities"
+
+    Drifted 3 times (688 → 798 → 868) with every data regeneration, each time fixed
+    by hand. This is the same class of bug as gate_readme_stats_fresh, just in files
+    the injector doesn't own. This gate adds machine accounting for those files.
+
+    Also runs --self-test (4 yin-yang/mutation controls) so a silently-degraded
+    regex doesn't turn the gate into a paper tiger.
+    """
+    run_sub('对外文档数字与真相源一致',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'verify_readme_counts.py'), '--check'],
+            timeout=120)
+    run_sub('对外文档数字闸门自证（阴阳 + 变异 + 反向）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'verify_readme_counts.py'), '--self-test'],
+            timeout=60)
+
+
 def gate_meta_single_source():
     """The meta top level of entities.json must no longer contain derived duplicates.
 
@@ -4392,6 +4418,10 @@ GATES = [
     # changing the truth source" (measured 802 vs 868 unnoticed for long) — injector now in the
     # regen pipeline + this gate as double insurance.
     ('README 统计块与真相源一致', gate_readme_stats_fresh),
+    # 【20261026】Sister READMEs (mcp-server/README.md, mcp-server/package.json). Same drift
+    # class as above but in files inject_readme_stats.py doesn't own; 688 → 798 → 868 recurred
+    # 3 times, each fixed by hand. This gate forces the counts to match the truth source.
+    ('对外文档数字与真相源一致', gate_readme_counts),
     # 【20261008】Golden evaluation set. Guards "rule engine silently drifts from frozen anchors"
     # — previously this set existed but nobody ran it (4/6 false red); this gate wires it into CI.
     ('兼容性裁决 Golden 评估集（冻结锚点 + badcase）', gate_eval_compat),
