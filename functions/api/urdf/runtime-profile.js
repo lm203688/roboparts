@@ -26,6 +26,9 @@
 // 如果误 import { env, context } 会导致 Wrangler 部署期 SyntaxError：
 // "The requested module 'cloudflare:workers' does not provide an export named 'context'"。
 
+// 从 library.js 复用同一份预置 60 模型，避免 fallback 时数据不一致。
+import { PRESET_URDF_MODELS } from "./library.js";
+
 const PROFILE_SCHEMA_VERSION = "1.0";
 const KV_MODELS_KEY = "urdf_models"; // 与 library.js 共用同一 KV key
 
@@ -166,8 +169,8 @@ export async function onRequestGet(context) {
   const modelId = url.searchParams.get("id");
 
   // 数据源：从 KV 读整块 urdf_models 数组（与 library.js 同一 key），
-  // 再从数组 find 目标 ID。KV 不可用则返回 404（不假装 fallback，
-  // 预置 60 个模型的完整副本不属于本端点职责）。
+  // 再从数组 find 目标 ID。KV 不可用/为空则 fallback 到 PRESET_URDF_MODELS
+  // （复用 library.js 的同一份预置，保证"同 id 不同端点"给出同一模型）。
   let model = null;
   if (context.env.URDF_LIBRARY) {
     try {
@@ -179,6 +182,10 @@ export async function onRequestGet(context) {
         }
       }
     } catch (e) { /* KV 读取失败视为无模型 */ }
+  }
+  // KV 无数据（或 KV 绑定缺失）→ fallback 到预置模型
+  if (!model) {
+    model = PRESET_URDF_MODELS.find((m) => m.id === modelId) || null;
   }
 
   // 单模型模式

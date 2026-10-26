@@ -31,7 +31,9 @@
  */
 
 // 预置 URDF 模型（当 KV 为空时返回）
-const PRESET_URDF_MODELS = [
+// export 给 runtime-profile.js 等其他 urdf/* 端点复用同一份预置数据，
+// 避免各端点各自 fallback 时数据不一致（"契约漂移"的经典形态）。
+export const PRESET_URDF_MODELS = [
   {
     id: 'URDF-001',
     name: '6-DOF机械臂基础模型',
