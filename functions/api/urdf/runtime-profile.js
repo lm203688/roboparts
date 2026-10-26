@@ -21,7 +21,10 @@
 // 契约版本：X-RoboParts-ProfileSchema: 1.0
 // =============================================================================
 
-import { env, context } from "cloudflare:workers";
+// 注意：不 import cloudflare:workers —— 本函数只使用 onRequest*(context) 参数
+// 拿 env，与 functions/api/urdf/library.js 等其他端点保持一致。
+// 如果误 import { env, context } 会导致 Wrangler 部署期 SyntaxError：
+// "The requested module 'cloudflare:workers' does not provide an export named 'context'"。
 
 const PROFILE_SCHEMA_VERSION = "1.0";
 
