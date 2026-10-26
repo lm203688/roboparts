@@ -27,6 +27,7 @@
 // "The requested module 'cloudflare:workers' does not provide an export named 'context'"。
 
 const PROFILE_SCHEMA_VERSION = "1.0";
+const KV_MODELS_KEY = "urdf_models"; // 与 library.js 共用同一 KV key
 
 // ROS 2 版本枚举（与 library.js 的 SIMULATION_COMPAT / getROS2Compat 对齐）
 const SUPPORTED_DISTROS_BY_LEVEL = {
@@ -164,15 +165,21 @@ export async function onRequestGet(context) {
   const url = new URL(context.request.url);
   const modelId = url.searchParams.get("id");
 
-  // 数据源：优先 KV，回退预置
-  let source = "kv";
+  // 数据源：从 KV 读整块 urdf_models 数组（与 library.js 同一 key），
+  // 再从数组 find 目标 ID。KV 不可用则返回 404（不假装 fallback，
+  // 预置 60 个模型的完整副本不属于本端点职责）。
   let model = null;
-  try {
-    if (context.env.URDF_LIBRARY) {
-      const raw = await context.env.URDF_LIBRARY.get(modelId || "");
-      model = raw ? JSON.parse(raw) : null;
-    }
-  } catch (e) { /* fall through */ }
+  if (context.env.URDF_LIBRARY) {
+    try {
+      const raw = await context.env.URDF_LIBRARY.get(KV_MODELS_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+          model = parsed.find((m) => m.id === modelId) || null;
+        }
+      }
+    } catch (e) { /* KV 读取失败视为无模型 */ }
+  }
 
   // 单模型模式
   if (modelId) {
