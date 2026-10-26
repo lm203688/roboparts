@@ -1,0 +1,501 @@
+openapi: 3.1.0
+info:
+  title: RoboParts Public API
+  version: 1.0.0
+  description: |
+    RoboParts 公开 API 契约。当前覆盖 5 个稳定端点，作为破坏性变更的 CI 拦截基线。
+
+    **诚实边界**：
+    - 本文件只覆盖**稳定、无争议**的公开端点。业务层 MCP 工具、内部桥接端点、
+      付费 API 均**不在本契约内**——它们的演进不视为破坏性变更。
+    - Schema 描述**响应字段结构**，不描述业务语义（业务语义见 docs/mcp-tools.md 与 docs/api-versioning.md）。
+    - 所有端点遵循 `docs/api-versioning.md` 的 X-API-Version + X-Data-Version 双版本头约定。
+
+    **契约变更纪律**：
+    1. 破坏性变更（字段删除/类型变更/语义反转）→ MAJOR bump，需先在本文件登记，
+       再改代码，最后跑 `scripts/verify_openapi_contracts.py` 通过。
+    2. 兼容变更（新增字段/枚举扩项/精度提升）→ MINOR bump，本文件同步更新。
+    3. 版本头：所有端点必须在响应头带 `X-API-Version: v1` 与 `X-Data-Version: YYYY-MM-DD`。
+
+    **AI Agent 集成**：本 OpenAPI 文件位于 `https://roboparts.cc/openapi.yaml`
+    （部署后可直接 fetch），可被任何 OpenAPI-aware 工具自动生成 client SDK。
+
+servers:
+  - url: https://roboparts.cc
+    description: Production
+
+tags:
+  - name: Metadata
+    description: 部署指纹与数据集元信息
+  - name: Search
+    description: 关键词检索
+  - name: Compatibility
+    description: 兼容性裁决
+  - name: Analytics
+    description: 使用统计（漏斗/埋点）
+
+paths:
+  # ============ /api/deployment ============
+  /api/deployment:
+    get:
+      tags: [Metadata]
+      summary: 部署指纹
+      description: |
+        返回当前线上部署的 commit、构建时间、运行时版本、功能清单。
+        Agent 会话开始时打一次，把 fingerprint 带进上下文，避免引用三小时前已被回滚的数据。
+
+        数据来源优先级（functions/api/deployment.js）：
+        1. Cloudflare Pages 环境注入（GitHub Actions 部署）
+        2. 静态 `api/deployment.json`（scripts/deploy.mjs 写入）
+        3. 硬编码 `unknown` 兜底
+
+      operationId: getDeploymentFingerprint
+      responses:
+        '200':
+          description: 部署指纹可读
+          headers:
+            X-API-Version:
+              schema: { type: string, example: "v1" }
+              description: API 契约版本
+            X-Data-Version:
+              schema: { type: string, example: "2026-10-26" }
+              description: 数据版本
+            Cache-Control:
+              schema: { type: string, example: "no-store" }
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentFingerprint'
+              examples:
+                normal:
+                  value:
+                    commit: "abc76c64dfed1234567890abcdef"
+                    commitShort: "abc76c64dfed"
+                    branch: "main"
+                    deploymentId: "f5e3a1b2-..."
+                    builtAt: "2026-10-26T08:26:11.930Z"
+                    nodeVersion: "22.22.2"
+                    pythonVersion: "3.13.14"
+                    cloudflarePlatform: true
+                    fallbackSource: "env.ASSETS.fetch"
+        '503':
+          description: 指纹读取失败（罕见，仅当兜底文件也损坏）
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [error]
+                properties:
+                  error: { type: string }
+    head:
+      tags: [Metadata]
+      summary: HEAD 探活（复用 GET 的响应头，body 为空）
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-API-Version:
+              schema: { type: string }
+            X-Data-Version:
+              schema: { type: string }
+
+  # ============ /api/search ============
+  /api/search:
+    get:
+      tags: [Search]
+      summary: 关键词检索实体
+      description: |
+        在实体库中按字段加权搜索。命中域不含任何付费字段。
+        Quarantine 条目默认排除，但条数在 meta 里透明报出。
+
+        **失败策略**：数据加载失败一律 503（不返回空列表——空列表与"没搜到"外观相同，会误导调用方）。
+
+      operationId: searchEntities
+      parameters:
+        - $ref: '#/components/parameters/QueryRequired'
+        - $ref: '#/components/parameters/CategoryOptional'
+        - $ref: '#/components/parameters/LimitOptional'
+        - $ref: '#/components/parameters/IncludeQuarantineOptional'
+      responses:
+        '200':
+          description: 搜索结果
+          headers:
+            X-API-Version:
+              schema: { type: string, example: "v1" }
+            X-Data-Version:
+              schema: { type: string }
+            Cache-Control:
+              schema: { type: string, example: "public, max-age=300" }
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '400':
+          description: 非法 category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: 数据加载失败
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    head:
+      tags: [Search]
+      summary: HEAD 探活
+      responses:
+        '200':
+          description: OK
+
+  # ============ /api/compatibility ============
+  /api/compatibility:
+    get:
+      tags: [Compatibility]
+      summary: 两个实体的兼容性裁决
+      description: |
+        给定两个实体 ID 或名称，跨 protocol / electrical / mechanical / software 四维判定。
+        ID 不匹配时模糊匹配兜底（不匹配返回 not_found=true + hint）。
+
+        **裁决口径**：与 MCP 端点 /mcp 共用 `functions/_lib/compat_engine.js::judgePair`，
+        REST 与 MCP 对同一对零件必须给出相同答案（CI 有 gate_compatibility_rest_mcp_parity 守护）。
+
+      operationId: judgeCompatibility
+      parameters:
+        - $ref: '#/components/parameters/EntityARequired'
+        - $ref: '#/components/parameters/EntityBRequired'
+      responses:
+        '200':
+          description: 裁决结果（可能 success=true 或 not_found=true）
+          headers:
+            X-API-Version:
+              schema: { type: string, example: "v1" }
+            X-Data-Version:
+              schema: { type: string }
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CompatibilityVerdict'
+                  - $ref: '#/components/schemas/CompatibilityNotFound'
+        '400':
+          description: 参数缺失（a 或 b 未提供）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    head:
+      tags: [Compatibility]
+      summary: HEAD 探活
+      responses:
+        '200':
+          description: OK
+
+  # ============ /api/analytics/funnel ============
+  /api/analytics/funnel:
+    get:
+      tags: [Analytics]
+      summary: 今日漏斗计数与近 7 天趋势
+      description: |
+        P1-6 主链路埋点的漏斗查询。免鉴权、只读、聚合计数、无 PII。
+
+        **数据积累起点**：2026-10-26。此前日期返回 counts 全 0（不是错误）。
+        **X-Data-Version** 契约版本：改动 funnel 响应结构必须 bump。
+
+      operationId: getFunnelStats
+      responses:
+        '200':
+          description: 漏斗统计
+          headers:
+            X-API-Version:
+              schema: { type: string, example: "v1" }
+            X-Data-Version:
+              schema: { type: string, example: "2026-10-26" }
+            Cache-Control:
+              schema: { type: string, example: "public, max-age=60" }
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FunnelResponse'
+    head:
+      tags: [Analytics]
+      summary: HEAD 探活
+      responses:
+        '200':
+          description: OK
+
+  # ============ /api/entities.json (static, but schema-locked) ============
+  /api/entities.json:
+    get:
+      tags: [Metadata]
+      summary: 实体库快照（静态 JSON）
+      description: |
+        真相源快照。**这是唯一权威数据源**（api-versioning.md 明确）。
+        本契约只描述**顶层结构**（meta + entities[]），实体级字段不在此细化——
+        实体级 schema 见 `schemas/entities.schema.json`。
+
+        **付费分层**：免费请求返回 `_locked_fields` 白名单外的字段被遮蔽；
+        付费请求返回完整数据。
+
+      operationId: getEntitiesSnapshot
+      responses:
+        '200':
+          description: 实体库快照
+          headers:
+            X-API-Version:
+              schema: { type: string, example: "v1" }
+            X-Data-Version:
+              schema:
+                type: string
+                example: "2026-10-26"
+            Cache-Control:
+              schema: { type: string, example: "public, max-age=300" }
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntitiesSnapshot'
+
+components:
+  parameters:
+    QueryRequired:
+      name: q
+      in: query
+      required: true
+      schema: { type: string, minLength: 1 }
+      description: 关键词（大小写不敏感子串匹配）
+    CategoryOptional:
+      name: category
+      in: query
+      required: false
+      schema: { type: string }
+      description: 品类过滤（不合法返回 400）
+    LimitOptional:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    IncludeQuarantineOptional:
+      name: include_quarantine
+      in: query
+      required: false
+      schema: { type: boolean, default: false }
+      description: 是否包含 quarantine=true 的实体
+    EntityARequired:
+      name: a
+      in: query
+      required: true
+      schema: { type: string }
+      description: 实体 A 的 ID 或名称
+    EntityBRequired:
+      name: b
+      in: query
+      required: true
+      schema: { type: string }
+      description: 实体 B 的 ID 或名称
+
+  schemas:
+    # ---- deployment ----
+    DeploymentFingerprint:
+      type: object
+      required: [commitShort, builtAt, nodeVersion]
+      properties:
+        commit:
+          type: string
+          nullable: true
+          description: 完整 SHA（可能为 null 表示未知）
+        commitShort:
+          type: string
+          pattern: '^[0-9a-f]{10,40}$'
+          description: commit 短哈希（10-40 位）
+        branch:
+          type: string
+          nullable: true
+          description: 分支名（如 main）
+        deploymentId:
+          type: string
+          nullable: true
+          description: Cloudflare 部署 ID
+        builtAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: 构建时间（ISO 8601 UTC）
+        nodeVersion:
+          type: string
+          pattern: '^\\d+\\.\\d+\\.\\d+'
+          description: Node.js 版本
+        pythonVersion:
+          type: string
+          nullable: true
+        cloudflarePlatform:
+          type: boolean
+          description: 是否运行在 Cloudflare Pages 上
+        fallbackSource:
+          type: string
+          nullable: true
+          description: 数据来源（env 注入 / 静态文件 / unknown 兜底）
+
+    # ---- search ----
+    SearchResponse:
+      type: object
+      required: [query, meta, results]
+      properties:
+        query:
+          type: object
+          required: [q]
+          properties:
+            q: { type: string }
+            category:
+              type: [string, 'null']
+            limit: { type: integer }
+            include_quarantine: { type: boolean }
+        meta:
+          type: object
+          required: [total_indexed, matched, returned]
+          properties:
+            total_indexed: { type: integer }
+            searched_in: { type: string }
+            matched: { type: integer }
+            returned: { type: integer }
+            quarantine_matched_withheld: { type: integer }
+            quarantine_in_index: { type: integer }
+            ranking: { type: string }
+            not_searched: { type: string }
+            caveat: { type: string }
+        results:
+          type: array
+          items:
+            type: object
+            required: [id, name]
+            additionalProperties: true
+
+    # ---- compatibility ----
+    CompatibilityVerdict:
+      type: object
+      required: [success, a, b, verdict]
+      properties:
+        success: { type: boolean }
+        a:
+          type: object
+          description: 实体 A（含 id/name/resolved_from 等）
+          additionalProperties: true
+        b:
+          type: object
+          additionalProperties: true
+        verdict:
+          type: string
+          enum: [compatible, incompatible, unknown, partial]
+          description: 三态 + partial（部分维度兼容）
+        dimensions:
+          type: object
+          description: 四维裁决明细
+          additionalProperties: true
+        reasons:
+          type: array
+          items: { type: string }
+        hint:
+          type: string
+          nullable: true
+
+    CompatibilityNotFound:
+      type: object
+      required: [success, not_found, query, candidates, hint]
+      properties:
+        success:
+          type: boolean
+          const: false
+        not_found:
+          type: boolean
+          const: true
+        query: { type: string }
+        candidates:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        hint: { type: string }
+
+    # ---- analytics/funnel ----
+    FunnelResponse:
+      type: object
+      required: [date, counts, rates, pipeline_usage, history_7d]
+      properties:
+        date:
+          type: string
+          pattern: '^\\d{4}-\\d{2}-\\d{2}$'
+          description: 今日日期（UTC）
+        counts:
+          type: object
+          required: [visits, signups, trials_started, trials_completed, payments_started, payments_success, conversions]
+          properties:
+            visits: { type: integer, minimum: 0 }
+            signups: { type: integer, minimum: 0 }
+            trials_started: { type: integer, minimum: 0 }
+            trials_completed: { type: integer, minimum: 0 }
+            payments_started: { type: integer, minimum: 0 }
+            payments_success: { type: integer, minimum: 0 }
+            conversions: { type: integer, minimum: 0 }
+        rates:
+          type: object
+          properties:
+            signup_rate: { type: number, minimum: 0, maximum: 1 }
+            trial_start_rate: { type: number, minimum: 0, maximum: 1 }
+            trial_complete_rate: { type: number, minimum: 0, maximum: 1 }
+            payment_start_rate: { type: number, minimum: 0, maximum: 1 }
+            payment_success_rate: { type: number, minimum: 0, maximum: 1 }
+            conversion_rate: { type: number, minimum: 0, maximum: 1 }
+        pipeline_usage:
+          type: object
+          required: [selection, build_planner, designer, bom_checker, adapter_generator]
+          properties:
+            selection: { type: integer, minimum: 0 }
+            build_planner: { type: integer, minimum: 0 }
+            designer: { type: integer, minimum: 0 }
+            bom_checker: { type: integer, minimum: 0 }
+            adapter_generator: { type: integer, minimum: 0 }
+        history_7d:
+          type: array
+          maxItems: 7
+          items:
+            type: object
+            required: [date, visits, signups, conversions]
+            properties:
+              date: { type: string, pattern: '^\\d{4}-\\d{2}-\\d{2}$' }
+              visits: { type: integer, minimum: 0 }
+              signups: { type: integer, minimum: 0 }
+              conversions: { type: integer, minimum: 0 }
+        meta:
+          type: object
+          description: 埋点契约元信息（含 data_version）
+          additionalProperties: true
+
+    # ---- common ----
+    EntitiesSnapshot:
+      type: object
+      required: [meta, entities]
+      properties:
+        meta:
+          type: object
+          description: 数据集元信息（详见 api/entities.json 头部，含 provenance/coverage/access 等）
+          additionalProperties: true
+        entities:
+          type: array
+          description: 实体数组（结构见 schemas/entities.schema.json，本契约不细化单实体字段）
+          items:
+            type: object
+            additionalProperties: true
+
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error: { type: string }
+        message: { type: string }
+        details:
+          type: object
+          additionalProperties: true

@@ -240,6 +240,37 @@ def gate_readme_counts():
             timeout=60)
 
 
+def gate_openapi_contracts():
+    """OpenAPI 3.1 契约测试（P1-8 先行版，2026-10-26 落地）。
+
+    背景：审计 § 9.2 P1-8 要求"API Schema 优先覆盖项目/组合/裁决/证据/导出"，
+    破坏性变更被 CI 拦截。原方案依赖 P1-2（Composition IR v1）先落地，实际推进中
+    发现 5 个已稳定公开端点（/api/deployment /api/search /api/compatibility
+    /api/analytics/funnel /api/entities.json）可以先独立立契约，不等 IR。
+
+    落地策略：
+    - openapi.yaml 只描述这 5 个端点的响应结构，不描述业务语义
+    - scripts/verify_openapi_contracts.py 拉线上真实响应做 required/type/const/pattern 校验
+    - --self-test 提供 5 条自证对照（type 破坏 / 缺字段 / const 破坏 / 数组超量）
+      —— 闸门本身退化（正则失效、校验逻辑漏洞）时，自证失败会先变红
+    - --offline 用 mock 数据离线跑，保证 CI 在无网环境下也能执行
+
+    与 P1-2 的关系：P1-2 落地后，其产出的 Composition IR schema 会补到本契约的
+    components.schemas，作为新端点（/api/project /api/composition 等）的响应 schema。
+    """
+    script = os.path.join(ROOT, 'scripts', 'verify_openapi_contracts.py')
+    run_sub('OpenAPI 契约测试（5 稳定端点线上拉取）',
+            [sys.executable, script],
+            timeout=120)
+    run_sub('OpenAPI 契约测试自证（type/missing/const/array 四类破坏）',
+            [sys.executable, script, '--self-test'],
+            timeout=60)
+    # 离线兜底：网络不通时也能验证 spec + 校验器逻辑
+    run_sub('OpenAPI 契约离线模式（无网环境兜底）',
+            [sys.executable, script, '--offline'],
+            timeout=30)
+
+
 def gate_meta_single_source():
     """The meta top level of entities.json must no longer contain derived duplicates.
 
@@ -4422,6 +4453,9 @@ GATES = [
     # class as above but in files inject_readme_stats.py doesn't own; 688 → 798 → 868 recurred
     # 3 times, each fixed by hand. This gate forces the counts to match the truth source.
     ('对外文档数字与真相源一致', gate_readme_counts),
+    # 【2026-10-26 P1-8】OpenAPI 3.1 契约测试先行版。5 个已稳定公开端点先立契约，
+    # 不等 P1-2 Composition IR。含 3 个子闸门：线上拉取校验 / 自证对照 / 离线兜底。
+    ('OpenAPI 契约测试（5 稳定端点）', gate_openapi_contracts),
     # 【20261008】Golden evaluation set. Guards "rule engine silently drifts from frozen anchors"
     # — previously this set existed but nobody ran it (4/6 false red); this gate wires it into CI.
     ('兼容性裁决 Golden 评估集（冻结锚点 + badcase）', gate_eval_compat),
