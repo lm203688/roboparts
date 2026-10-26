@@ -184,6 +184,27 @@ const checkRobotsTxt = async () => check(
   (r) => r.text.includes('User-agent') ? { ok: true } : { ok: false, reason: '无 User-agent 指令' }
 );
 
+/** P1-6 主链路埋点：/api/analytics/funnel 必须返回合法漏斗 JSON */
+const checkFunnelEndpoint = async () => check(
+  '/api/analytics/funnel · P1-6 漏斗端点可达 + 契约完整',
+  '/api/analytics/funnel',
+  (r) => {
+    let d;
+    try { d = JSON.parse(r.text); }
+    catch (e) { return { ok: false, reason: `JSON 解析失败: ${e.message}` }; }
+    if (!d.date) return { ok: false, reason: '缺 date 字段' };
+    if (!d.counts || typeof d.counts.visits !== 'number') return { ok: false, reason: '缺 counts.visits（数字）' };
+    if (!d.rates) return { ok: false, reason: '缺 rates 字段' };
+    if (!d.pipeline_usage) return { ok: false, reason: '缺 pipeline_usage 字段（P1-6 主链 5 步）' };
+    if (!d.meta || !d.meta.data_version) return { ok: false, reason: '缺 meta.data_version' };
+    // pipeline_usage 必须含 5 步主链键
+    const steps = ['selection', 'build_planner', 'designer', 'bom_checker', 'adapter_generator'];
+    const missing = steps.filter(s => !(s in d.pipeline_usage));
+    if (missing.length) return { ok: false, reason: `pipeline_usage 缺步骤: ${missing.join(',')}` };
+    return { ok: true };
+  }
+);
+
 const CHECKS = [
   checkIndex,
   checkDataJson,
@@ -194,6 +215,7 @@ const CHECKS = [
   checkAssetClassHeader,
   checkCopilotReachable,
   checkRobotsTxt,
+  checkFunnelEndpoint,
 ];
 
 async function main() {

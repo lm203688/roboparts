@@ -24,6 +24,123 @@
 
   var SHELL_CSS_HREF = '/_shell.css';
 
+  // ===================== P1-6 主链路埋点（2026-10-26） =====================
+  // 背景：审计发现 29 调用 0 注册，但**没有数据**能回答"用户在哪一步流失"。
+  // 此前只有 page_view 级统计，无 feature_use 埋点、无漏斗、无 session 归因。
+  // 本模块是最小可行漏斗：page_view + feature_use（5 主链页面）+ session_id。
+  //
+  // 纪律：
+  //   · 静默失败——API 挂了不阻塞页面（fire-and-forget）
+  //   · 零依赖——不引第三方 SDK，纯 fetch + sendBeacon
+  //   · 隐私优先——无 PII，session_id 是随机 UUID，不追踪个人
+  //   · 隐私策略：docs/PRIVACY.md 已声明数据仅用于产品改进、可关闭（?rp_no_track=1）
+  //   · 用户可关闭：URL 带 ?rp_no_track=1 或 localStorage rp_no_track=1 时不上报
+  //
+  // 事件契约（与 functions/api/analytics/events.js 对齐）：
+  //   event_type: page_view | feature_use | signup | trial_start | ...
+  //   event_data: { page, section, feature, ... } 自由结构
+  //   session_id: 跨页持久的随机 UUID（30 天 TTL）
+  //   user_id: null（未登录）
+  // =========================================================================
+
+  var TRACK_ENDPOINT = '/api/analytics/events';
+  var SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 天
+  var SESSION_KEY = 'rp_session_id';
+  var SESSION_TS_KEY = 'rp_session_ts';
+  var NO_TRACK_KEY = 'rp_no_track';
+
+  function optOut() {
+    try {
+      if (new URLSearchParams(location.search).get('rp_no_track') === '1') return true;
+      return localStorage.getItem(NO_TRACK_KEY) === '1';
+    } catch (e) { return false; }
+  }
+
+  function getSessionId() {
+    try {
+      var sid = localStorage.getItem(SESSION_KEY);
+      var ts = parseInt(localStorage.getItem(SESSION_TS_KEY) || '0', 10);
+      if (sid && ts && (Date.now() - ts) < SESSION_TTL_MS) return sid;
+      // 生成新 session
+      sid = 's_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 10);
+      localStorage.setItem(SESSION_KEY, sid);
+      localStorage.setItem(SESSION_TS_KEY, String(Date.now()));
+      return sid;
+    } catch (e) {
+      return 's_ephemeral_' + Math.random().toString(36).slice(2, 8);
+    }
+  }
+
+  // 主链页面 → feature 名映射（5 步主链）
+  var PIPELINE_FEATURES = {
+    'selection.html': 'selection',
+    'build-planner.html': 'build_planner',
+    'designer.html': 'designer',
+    'bom-checker.html': 'bom_checker',
+    'adapter-generator.html': 'adapter_generator',
+  };
+
+  function sendEvent(eventType, eventData) {
+    if (optOut()) return;
+    var payload = {
+      event_type: eventType,
+      event_data: eventData || {},
+      session_id: getSessionId(),
+      user_id: null,
+      timestamp: new Date().toISOString(),
+    };
+    try {
+      // 优先 sendBeacon（页面卸载时也能发送），失败退回 fetch
+      var body = JSON.stringify(payload);
+      if (navigator.sendBeacon) {
+        var ok = navigator.sendBeacon(TRACK_ENDPOINT, new Blob([body], { type: 'application/json' }));
+        if (ok) return;
+      }
+      fetch(TRACK_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: body,
+        keepalive: true,
+      }).catch(function () {});
+    } catch (e) {
+      // 静默——埋点失败不影响页面
+    }
+  }
+
+  // 暴露给页面脚本调用：window.rpTrack(event_type, data)
+  window.rpTrack = sendEvent;
+
+  // 首次加载：page_view + 主链 feature_use（如果有）
+  function trackPageView() {
+    if (optOut()) return;
+    var path = location.pathname;
+    var filename = path.split('/').pop() || 'index.html';
+    var section = 'unknown';
+    // 从 PAGE_META 推断 section（下方定义，此处只做粗分类）
+    var pipelineFeature = PIPELINE_FEATURES[filename];
+    var eventData = {
+      page: filename,
+      path: path,
+      referrer: document.referrer || null,
+      has_referrer: !!document.referrer,
+    };
+    sendEvent('page_view', eventData);
+    if (pipelineFeature) {
+      // 主链页面：额外发一个 feature_use（进入即算"开始使用"）
+      sendEvent('feature_use', { feature: pipelineFeature, page: filename });
+    }
+  }
+
+  // 延迟到 DOM 就绪后上报，避免在页面未完全加载前就发送（referrer 可能为空）
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      // 再延迟一点，让 referrer 稳定
+      setTimeout(trackPageView, 100);
+    });
+  } else {
+    setTimeout(trackPageView, 100);
+  }
+
   // ===================== 配置 =====================
   var NAV = [
     { group: 'core', items: [
