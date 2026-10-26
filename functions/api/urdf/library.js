@@ -962,9 +962,18 @@ const KV_MODELS_KEY = 'urdf_models';
 //   L4 · 验证资产：跨引擎回归、关键运动学/动力学对照、必要时真机标定。对外称「已验证仿真资产」。
 //       条件：ISO 2321 / ISO 22166 级验证；需要真机 + 跨仿真器回归。
 //
-// 诚实边界：RoboParts 目前**没有任何 L1+ 资产**——60 个预置都是 L0。
-// 这条分级存在本身的价值是把「估算骨架」和「厂商真实 URDF」在对外契约上彻底分开，
-// 而不是继续用"60+ 即开即用"这种把 L0 说成 L2+ 的营销措辞。
+// 诚实边界：RoboParts 目前**没有任何 L2+ 资产**——60 个预置都是 L1。
+// L1 = 参数化骨架（几何由 box/cylinder 拼接、可跑通脚本级仿真、但不用于碰撞敏感任务或真机部署）。
+// L2 = 骨架 + 厂商声明物理（需 datasheet 溯源），L3+ = 需实测复现，L4 = 真实 CAD。
+// 这条分级存在本身的价值是把「估算骨架 (L1)」和「厂商真实 URDF (L2+)」在对外契约上彻底分开，
+// 而不是继续用"60+ 即开即用"这种把 L1 说成 L3+ 的营销措辞。
+//
+// 【2026-10-26 P2-2 修复历史一致性漂移】
+// 此前默认 tier='L0'，但 X-RoboParts-AssetClass 头却打 L1——两处契约对同一份导出物给出
+// 不同分级，是 P2-2 自动验证闸门必须抓到的场景。修正后：
+//   · library 默认 tier = L1（因为 download 实际返回的 XML 有几何骨架）
+//   · download 头 X-RoboParts-AssetClass = L1（未变，本来就是对的）
+// 两者对齐后才是「可下钻、可追责」的诚实边界。
 //
 // 每个 model 对象可通过显式字段 `asset_tier: 'L0' | 'L1' | ... | 'L4'` 覆盖默认值，
 // 供未来导入真实厂商 URDF 时使用（例如 URDF-026 若换成 Unitree 官方 TienKung URDF，
@@ -978,12 +987,12 @@ const ASSET_TIER_SCHEMA = {
 };
 const VALID_ASSET_TIERS = Object.keys(ASSET_TIER_SCHEMA);
 
-// 显式覆盖表：预置 60 个默认 L0。将来导入真实厂商 URDF 时在此登记更高档位。
-// 每条必须写清 source（datasheet URL 或实测记录 ID）与 assumptions 才允许标 L1+。
+// 显式覆盖表：预置 60 个默认 L1（参数化骨架，非真实 CAD）。将来导入真实厂商 URDF 时在此登记更高档位。
+// 每条必须写清 source（datasheet URL 或实测记录 ID）与 assumptions 才允许标 L2+。
 const ASSET_TIER_OVERRIDES = {
   // 示例（禁用）：
-  // 'URDF-006': {
-  //   tier: 'L3',
+  // 'URDF-026': {
+  //   tier: 'L2',
   //   source: 'https://github.com/unitreerobotics/unitree_ros/blob/main/...',
   //   assumptions: '质量/惯量取自 Unitree G1 官方 datasheet v2.3（2024-08）',
   //   verified_at: '2026-XX-XX',
@@ -1001,14 +1010,17 @@ function getAssetTier(model) {
       schema: ASSET_TIER_SCHEMA[override.tier] || ASSET_TIER_SCHEMA.L0,
     };
   }
-  // 预置模型默认 L0：RoboParts 元数据驱动的通用骨架
+  // 预置模型默认 L1：几何由 box/cylinder 参数化拼接（见 download.js L194 的 XML 注释），
+  // 不是"仅元数据"的 L0。这是 P0-12 落地后 P2-2 验证闸门抓到的历史漂移——原代码
+  // 错标为 L0，与 /api/urdf/download 的 X-RoboParts-AssetClass: L1 头不一致。
   return {
-    tier: 'L0',
-    source: 'RoboParts metadata-generated skeleton',
-    assumptions: '几何/质量/惯量为参数化估算（robot_type + joints 数），非厂商 CAD、非实测。'
-      + ' 下载产物可导入仿真器作原型开发，不应用于生产级动力学仿真或安全相关判断。',
+    tier: 'L1',
+    source: 'RoboParts parametric skeleton generator',
+    assumptions: '几何由 box/cylinder 按 robot_type + joints 数参数化拼接，非厂商 CAD；'
+      + '质量/惯量为硬编码预设表估算，非厂商声明值、非实测。'
+      + '可跑通脚本级动力学仿真，不应用于碰撞敏感任务或真机部署。',
     verified_at: null,
-    schema: ASSET_TIER_SCHEMA.L0,
+    schema: ASSET_TIER_SCHEMA.L1,
   };
 }
 

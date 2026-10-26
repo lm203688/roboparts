@@ -271,6 +271,32 @@ def gate_openapi_contracts():
             timeout=30)
 
 
+def gate_asset_class_consistency():
+    """资产分级 L0-L4 一致性（P2-2 落地，2026-10-26）。
+
+    背景：审计 § 9.3 P2-2 要求"仿真资产 L0–L4 与自动验证报告：L1/L2 全自动；
+    L3/L4 明示人工/实测边界"。P0-12 落下了分级定义 + `X-RoboParts-AssetClass`
+    响应头，但只落在 /api/urdf/download 一处，/api/urdf/library 的默认 tier='L0'
+    ——同一份导出物在两个端点给出不同分级，是"文档写对、代码写错"的经典漂移。
+
+    本闸门守三条：
+    1. schema_integrity：ASSET_TIER_SCHEMA 5 级定义完整（name/external/requires）
+    2. library_default_tier：预置模型默认 tier=L1（与 download 头一致，非 L0）
+    3. l2_plus_has_source：任何 L2+ 覆盖必须在 OVERRIDES 里显式登记 source
+    4. live_endpoint_consistency：线上 library.asset_tier.tier 与 download 响应头一致
+
+    --self-test 提供 5 条自证（L4 缺失 / L2 空 / 默认 L0 / override 未审 / 正常基线）。
+    --offline 只跑静态源码扫描，不拉线上。
+    """
+    script = os.path.join(ROOT, 'scripts', 'verify_asset_class.py')
+    run_sub('资产分级一致性（线上 library vs download 契约对齐）',
+            [sys.executable, script],
+            timeout=90)
+    run_sub('资产分级自证（schema/default/override 四类破坏）',
+            [sys.executable, script, '--self-test'],
+            timeout=30)
+
+
 def gate_meta_single_source():
     """The meta top level of entities.json must no longer contain derived duplicates.
 
@@ -4456,6 +4482,10 @@ GATES = [
     # 【2026-10-26 P1-8】OpenAPI 3.1 契约测试先行版。5 个已稳定公开端点先立契约，
     # 不等 P1-2 Composition IR。含 3 个子闸门：线上拉取校验 / 自证对照 / 离线兜底。
     ('OpenAPI 契约测试（5 稳定端点）', gate_openapi_contracts),
+    # 【2026-10-26 P2-2】资产分级 L0-L4 一致性。守 library.asset_tier 与 download
+    # X-RoboParts-AssetClass 头契约对齐；抓"文档写对、代码写错"的经典漂移
+    # （预置模型曾标 L0 但 download 头打 L1）。含 2 个子闸门：线上对齐 / 自证。
+    ('资产分级 L0-L4 一致性', gate_asset_class_consistency),
     # 【20261008】Golden evaluation set. Guards "rule engine silently drifts from frozen anchors"
     # — previously this set existed but nobody ran it (4/6 false red); this gate wires it into CI.
     ('兼容性裁决 Golden 评估集（冻结锚点 + badcase）', gate_eval_compat),
