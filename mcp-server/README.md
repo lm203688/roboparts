@@ -17,8 +17,8 @@ RoboParts MCP (Model Context Protocol) Server 是一个标准化接口，允许 
 而不是以空库启动、对每次查询都回「未找到」—— 静默失败比崩溃更难排查。
 内网或离线环境可用环境变量 `ROBOPARTS_API_BASE` 指向自建镜像。
 
-> 📖 **完整工具文档：** [docs/mcp-tools.md](../docs/mcp-tools.md)（含 20 个生产工具的
-> 完整参数、返回、示例与口径纪律）。本 README 仅列本地子集（10 个），桥接层工具
+> 📖 **完整工具文档：** [docs/mcp-tools.md](../docs/mcp-tools.md)（含 26 个生产工具的
+> 完整参数、返回、示例与口径纪律）。本 README 仅列本地子集（16 个），桥接层工具
 > （`explain_*` / `check_co_mount` / `get_body_binding` 等）仅在生产端点提供。
 
 ### 支持的数据品类（20 类 / 868 条，与官网口径一致）
@@ -234,6 +234,37 @@ npm start
 | items | array | 是 | 零部件列表，每项包含 {id, category, quantity} |
 
 **返回：** BOM 对象（项目名、总成本 USD/CNY、总模块数、items 详情、供应商建议）
+
+### 6-11. MCP 双版本 + Trace 回放（v1.2.0 新增）
+
+审计报告 §4.4 要求：「MCP 要做双版本适配与可回放任务……工具输入输出全部引用
+project_id + revision + evidence_version；长任务返回任务句柄、进度、可取消状态和
+最终结果；把'为什么 unknown''哪条证据导致冲突'作为标准工具，而非仅靠自然语言解释；
+为每次外部 Agent 调用保存可去敏回放的评估轨迹」。本节六个工具对应这一要求。
+
+| # | 工具 | 用途 | 三态诚实边界 |
+|---|---|---|---|
+| 6 | `explain_unknown` | 结构化解释「为什么 unknown」：给 component_id 返回 evidence_gaps / null 字段清单；给 verdict_id 反查当前会话；不给参数返回全库 unknown 覆盖率摘要 | 字段级扫描，非因果归因；跨会话需靠 `trace_export` 落盘后重放 |
+| 7 | `start_long_task` | 启动长任务并立即返回 task_id，任务体异步执行 | stdio 无中断通道，取消不是硬终止 |
+| 8 | `get_task_status` | 查询任务 status / progress / result | 环形缓冲 200 条上限，最老任务被淘汰 |
+| 9 | `cancel_task` | 置任务取消标志位 | 依赖任务体在 checkpoint 检查；对已结束任务返回 `task_already_<status>` |
+| 10 | `trace_export` | 导出本会话调用轨迹（默认去敏） | 只回当前 stdio 会话；服务端无持久化；`ROBOPARTS_TRACE_FILE` 环境变量可落盘 |
+| 11 | `trace_replay` | 从 JSONL 文本重放：结构校验 + 计数 | 只验证"记录可解析、字段完整"，不重算 verdict（属于 P3 语义重放范畴） |
+
+**协议版本协商**：Server 声明支持 `2024-11-05` / `2025-03-26` / `2025-11-25` 三个版本。
+基础 10 个工具在任意版本可用；上述 6 个扩展工具在 `2025-11-25+` 声明可用。
+客户端在 `initialize` 请求里传的 `protocolVersion` 会被 SDK 自动协商到共同版本；
+本 server 另在 `capabilities.experimental.roboparts` 里显式列出
+`protocol_versions_supported` 和 `capabilities_by_version`，方便新客户端程序化判断。
+
+**evidence_version 注入**：每次工具调用返回都挂 `trace_id` 和 `evidence_version`
+（当前 = 包版本 `1.2.0`），让调用方可以引用某个数据快照做对账。
+
+**三态诚实边界**（`capabilities.experimental.roboparts.honest_limits`）：
+
+- `no_server_side_persistence` — stdio 单进程，客户端断线 trace 就丢
+- `no_hard_cancel` — 无中断通道，cancel 只置标志位
+- `no_multi_tenant_isolation` — 单会话，无 user_id 隔离
 
 ## 使用示例
 

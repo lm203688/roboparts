@@ -336,6 +336,50 @@ def gate_ros_runtime_profile():
             timeout=30)
 
 
+def gate_mcp_dual_version():
+    """MCP 双版本 + Trace 回放契约校验（P2-6 落地，2026-10-27）。
+
+    背景：审计 §4.4 要求「MCP 要做双版本适配与可回放任务」——
+      - 协议版本协商（2024-11-05 / 2025-03-26 / 2025-11-25）
+      - 工具输入输出全部引用 project_id + revision + evidence_version
+      - 长任务返回任务句柄、进度、可取消状态和最终结果
+      - 「为什么 unknown」作为标准工具而非自然语言解释
+      - 每次外部 Agent 调用保存可去敏回放的评估轨迹
+
+    本闸门守四条（三态诚实边界内）：
+    1. schema_integrity：6 个新工具（explain_unknown / start_long_task /
+       get_task_status / cancel_task / trace_export / trace_replay）在
+       ListTools + CallTool 里均有定义与分发；trace.js 导出全部符号；
+       package.json 版本与 index.js PKG_VERSION 一致；files 白名单含 trace.js
+    2. version_negotiation：PROTOCOL_VERSIONS 数组正好含三个版本；
+       CAPABILITIES_BY_VERSION 覆盖 2024-11-05 与 2025-11-25 两个 key；
+       index.js capabilities.experimental.roboparts 暴露 protocol_versions_supported
+       与 capabilities_by_version；capabilities 里声明 tasks
+    3. trace_recording：CallTool handler 每次调用自动 recordTrace；
+       返回结果挂 trace_id + evidence_version；recordTrace 传 tool/args/
+       result/evidence_version；traceStart 计时起点存在；元工具
+       （trace_export / start_long_task / trace_replay）不能被 skip
+       recordTrace（防假绿）
+    4. honest_boundary：capabilities.experimental.roboparts.honest_limits
+       三条齐全（no_server_side_persistence / no_hard_cancel /
+       no_multi_tenant_isolation）——stdio 无中断通道、无服务端持久化、
+       单会话无多租户隔离的诚实边界
+
+    诚实边界：本闸门不越界声称"跨会话真取消"或"多租户真隔离"——
+    那需要 streamable HTTP + 后端状态存储，超出 stdio MCP 单进程范围。
+
+    --self-test 提供 6 条自证（baseline / 删工具声明 / 删 recordTrace /
+    删 honest_limit / 删协议版本 / 引号风格 / 注释伪装）。
+    """
+    script = os.path.join(ROOT, 'scripts', 'verify_mcp_dual_version.py')
+    run_sub('MCP 双版本 + Trace 契约（本地源码静态扫描）',
+            [sys.executable, script],
+            timeout=30)
+    run_sub('MCP 双版本 + Trace 自证（6 类破坏：声明/挂钩/边界/版本/引号/注释）',
+            [sys.executable, script, '--self-test'],
+            timeout=30)
+
+
 def gate_meta_single_source():
     """The meta top level of entities.json must no longer contain derived duplicates.
 
@@ -4530,6 +4574,12 @@ GATES = [
     # 三态诚实边界：当前唯一路径 inferred_from_metadata，validated=false，
     # evidence_gaps 显式登记 no_runtime_test_performed。3 个子闸门：线上/自证/离线。
     ('ROSRuntimeProfile 契约校验', gate_ros_runtime_profile),
+    # 【2026-10-27 P2-6】MCP 双版本 + Trace 回放契约。审计 §4.4 明确点名：
+    # 协议版本协商 + 长任务句柄 + evidence_version 注入 + "为什么 unknown"
+    # 作为标准工具 + 可去敏回放。stdio 单进程的诚实边界：无服务端持久化、
+    # 无硬中断、无多租户隔离——全部在 capabilities.experimental.roboparts.
+    # honest_limits 里显式声明。2 个子闸门：源码静态扫描 + 6 类破坏自证。
+    ('MCP 双版本 + Trace 回放契约', gate_mcp_dual_version),
     # 【20261008】Golden evaluation set. Guards "rule engine silently drifts from frozen anchors"
     # — previously this set existed but nobody ran it (4/6 false red); this gate wires it into CI.
     ('兼容性裁决 Golden 评估集（冻结锚点 + badcase）', gate_eval_compat),

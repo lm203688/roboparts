@@ -16,6 +16,12 @@ import { fileURLToPath } from 'url';
 // 【20260909-24】审查采纳 P0-3：dialects 孤岛接入调用链（reputation.js 因依赖
 // Node fs、Workers 端无法复用且当前无贡献写入链，接入即空转，暂不接）。
 import { dialectManager } from './dialects.js';
+// 【2026-10-27 P2-6】Trace 环形缓冲 + 长任务句柄 + 协议版本协商辅助
+import {
+  recordTrace, exportTraces, replayTrace, redact,
+  startLongTask, getTaskStatus, cancelTask, listTasks,
+  PROTOCOL_VERSIONS, CAPABILITIES_BY_VERSION, toolAvailableAt, filterToolsByVersion,
+} from './trace.js';
 
 // ============================================================
 // 路径与常量配置
@@ -36,7 +42,7 @@ const API_DIR = join(__dirname, '..', 'api');
 // 每一次 Agent 调用都会在边缘遥测里留下 mcp 来源记录，
 // 这正是当前唯一缺失的「AI 通道是否真被使用」的可测量信号。
 // ------------------------------------------------------------
-const PKG_VERSION = '1.1.1';
+const PKG_VERSION = '1.2.0';
 const REMOTE_BASE = (process.env.ROBOPARTS_API_BASE || 'https://roboparts.cc/api')
   .replace(/\/+$/, '');
 const USER_AGENT = `roboparts-mcp-server/${PKG_VERSION} (+https://roboparts.cc; mcp)`;
@@ -1252,6 +1258,11 @@ function exportBom(args) {
 // MCP Server 定义
 // ============================================================
 
+// 【2026-10-27 P2-6】声明支持的协议版本 + 每次调用注入的 evidence_version。
+// 客户端握手看到的 protocolVersion 由 SDK 协商；这里额外暴露 capabilities
+// 让新版本客户端能读到"这个 server 支持到 2025-11-25 的所有新工具"。
+const EVIDENCE_VERSION = PKG_VERSION; // 与包版本同源，防漂移
+
 const server = new Server(
   {
     name: 'roboparts-mcp-server',
@@ -1272,7 +1283,35 @@ const server = new Server(
   {
     capabilities: {
       tools: {},
+      // 【2026-10-27 P2-6】声明 tasks 能力（可列出、可取消）。
+      // 这是 MCP 2025-11-25 规范新增的；SDK 会自动协商，客户端不支持则忽略。
+      tasks: {
+        list: {},
+        cancel: {},
+        requests: {
+          tools: {
+            call: {}
+          }
+        }
+      }
     },
+    // 非规范字段：SDK 会保留在 serverInfo 里，让新客户端能读到我们支持的能力映射
+    experimental: {
+      roboparts: {
+        protocol_versions_supported: PROTOCOL_VERSIONS,
+        capabilities_by_version: CAPABILITIES_BY_VERSION,
+        evidence_version: EVIDENCE_VERSION,
+        // 三态诚实边界（供目录站索引时展示，也供 Agent 自检时读取）：
+        //   - 服务端持久化：不支持（stdio 单进程，断线即丢）
+        //   - 真取消：不支持（无中断通道，cancel 只置标志位）
+        //   - 多租户：不支持（单会话，无 user_id 隔离）
+        honest_limits: [
+          'no_server_side_persistence',
+          'no_hard_cancel',
+          'no_multi_tenant_isolation'
+        ]
+      }
+    }
   }
 );
 
@@ -1497,16 +1536,375 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
         },
         required: ['bom_items']
       }
+    },
+    // ============================================================
+    // 【2026-10-27 P2-6】MCP 双版本 + Trace 回放 —— 新增 6 个工具
+    // ------------------------------------------------------------
+    // 设计原则：
+    //  - explain_unknown：把"为什么 unknown"从自然语言解释升级为结构化
+    //    标准工具。调用方可以程序化读取 evidence_gaps 与 verdict_reason，
+    //    无需解析文本。
+    //  - start_long_task / get_task_status / cancel_task：任务句柄三件套。
+    //    stdio 无中断通道，cancel 只置标志位（诚实边界见 trace.js 头部）。
+    //  - trace_export / trace_replay：可去敏回放的评估轨迹。默认去敏开启，
+    //    摘要只留白名单字段 + hash，不透传原值。
+    // ============================================================
+    {
+      name: 'explain_unknown',
+      description: '解释为什么某次判定是 unknown。给定 component_id（或 verdict_id），返回结构化的 evidence_gaps / verdict_reason / blocking_axis 列表，替代自然语言解释。与 check_compatibility / preflight_check 配对使用。',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          component_id: { type: 'string', description: '组件 ID，如 ACT-001、SENS-001' },
+          category: {
+            type: 'string',
+            description: `品类: ${ALL_CATEGORIES.join(' / ')}`
+          },
+          verdict_id: { type: 'string', description: '兼容性判定的 verdict_id（如 v_XXX），与 component_id 二选一' },
+          max_gaps: { type: 'number', description: '最多返回多少条缺口', default: 20 }
+        }
+      }
+    },
+    {
+      name: 'start_long_task',
+      description: '启动一个长任务并立即返回 task_id。任务体是异步执行的；后续通过 get_task_status 查询进度，通过 cancel_task 置取消标志位。stdio MCP 无中断通道，取消不是硬终止。返回 task_id / status / name。',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          task_type: {
+            type: 'string',
+            enum: ['batch_check_compatibility', 'bulk_export_bom', 'deep_dialect_evaluate'],
+            description: '预定义任务类型（本版本仅这三种；后续扩展）'
+          },
+          args: {
+            type: 'object',
+            description: '任务参数（如批量 ID 列表、参数配置）'
+          }
+        },
+        required: ['task_type']
+      }
+    },
+    {
+      name: 'get_task_status',
+      description: '查询长任务状态。返回 status / progress / result（若 done）/ error（若 failed）/ cancelled。',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          task_id: { type: 'string', description: '任务 ID（start_long_task 返回）' }
+        },
+        required: ['task_id']
+      }
+    },
+    {
+      name: 'cancel_task',
+      description: '置任务取消标志位。stdio MCP 无中断通道——任务体在下一个 checkpoint 会自行退出。对已结束（done / failed / cancelled）的任务调用会返回 task_already_<status> 错误。',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          task_id: { type: 'string' }
+        },
+        required: ['task_id']
+      }
+    },
+    {
+      name: 'trace_export',
+      description: '导出本会话的调用轨迹。默认去敏（redact=true）：字符串只留长度 + hash，对象只留 keys，不透传原值。可选按 tool / since 过滤，limit 上限 1000（环形缓冲容量）。',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          limit: { type: 'number', description: '最多返回多少条（默认全部）', default: 200 },
+          tool: { type: 'string', description: '按工具名过滤' },
+          since: { type: 'string', description: 'ISO 8601 时间戳起点' },
+          redact: { type: 'boolean', description: '是否去敏（默认 true）', default: true }
+        }
+      }
+    },
+    {
+      name: 'trace_replay',
+      description: '从 JSONL 文本重放轨迹：逐行 JSON.parse + 结构完整性检查。不做"重算 verdict"（那属于 P3 范畴，需要完整输入）。返回 replayed / errors / unique_tools / unique_traces。',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          json_lines: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'JSONL 行数组（每行一条 trace JSON）'
+          },
+          strict: { type: 'boolean', description: '严格模式：首个 parse 失败即中断', default: false }
+        },
+        required: ['json_lines']
+      }
     }
   ]
 }));
 
 // ============================================================
-// 工具调用处理 (CallTool)
+// 【2026-10-27 P2-6】新增工具的实现
 // ============================================================
+
+/**
+ * 工具: explain_unknown
+ *
+ * 把"为什么 unknown"从自然语言解释升级为结构化标准工具。
+ * 报告 §4.4 明确点名："'为什么 unknown''哪条证据导致冲突'作为标准工具，
+ * 而非仅靠自然语言解释"。
+ *
+ * 实现策略：
+ *   - 给 component_id：从本地缓存取该实体，找 evidence_gaps / unknown 字段
+ *   - 给 verdict_id：从 check_compatibility 的历史 trace 反查（当前简化：
+ *     返回 verdict_id 对应的 trace 摘要）
+ *   - 都不给：返回全库 unknown 覆盖率摘要（不做无脑统计，报口径）
+ */
+function explainUnknown(args) {
+  const { component_id, category, verdict_id, max_gaps } = args;
+  const limit = Math.min(Math.max(Number(max_gaps) || 20, 1), 100);
+
+  // --- 分支 1：verdict_id 反查 ---
+  if (verdict_id) {
+    // 从内存 trace 里找该 verdict_id 对应的调用（简化：按 trace_id 前缀匹配）
+    const allTraces = exportTraces({ limit: TRACE_BUFFER_MAX, redact: false });
+    const matches = allTraces.filter(t =>
+      t.result_summary && (
+        t.result_summary.verdict_id === verdict_id ||
+        String(t.result_summary.reason || '').includes(verdict_id)
+      )
+    );
+    if (matches.length === 0) {
+      return {
+        verdict_id,
+        found: false,
+        error: 'verdict_not_in_current_session',
+        hint: 'verdict_id 只在当前 stdio 会话内可查；跨会话需通过 trace_export 落盘后重放',
+        traces_searched: allTraces.length
+      };
+    }
+    return {
+      verdict_id,
+      found: true,
+      trace_count: matches.length,
+      traces: matches.map(t => ({
+        trace_id: t.trace_id,
+        ts: t.ts,
+        tool: t.tool,
+        duration_ms: t.duration_ms,
+        result_summary: t.result_summary
+      })),
+      honest_note: '仅当前 stdio 会话内可查；服务端无持久化'
+    };
+  }
+
+  // --- 分支 2：component_id ---
+  if (component_id) {
+    if (!category) {
+      return { error: '参数缺失: 给 component_id 时必须同时给 category' };
+    }
+    const data = loadData(category);
+    const item = data.find(x => x.id === component_id);
+    if (!item) {
+      return {
+        component_id, category,
+        found: false,
+        error: 'component_not_found',
+        suggestion: '使用 search_components 确认 ID 与品类'
+      };
+    }
+    // 提取所有带 "unknown" / evidence_gap / gap 语义的字段
+    const evidenceGaps = [];
+    const UNKNOWN_KEYS = ['evidence_gaps', 'evidence_gap', 'gaps', 'unknown_fields',
+                          'verdict_reason', 'gap_cause', 'missing_fields'];
+    for (const key of UNKNOWN_KEYS) {
+      if (key in item) {
+        const v = item[key];
+        if (Array.isArray(v)) evidenceGaps.push({ source: key, items: v.slice(0, limit) });
+        else if (v && typeof v === 'object') evidenceGaps.push({ source: key, value: v });
+        else if (v) evidenceGaps.push({ source: key, value: v });
+      }
+    }
+    // 全库字段扫描：所有值为 null / 'unknown' / 'N/A' 的字段
+    const nullFields = [];
+    for (const [k, v] of Object.entries(item)) {
+      if (v === null || v === undefined || v === 'unknown' || v === 'N/A' || v === '') {
+        nullFields.push(k);
+      }
+    }
+    return {
+      component_id,
+      category,
+      name: item.name || null,
+      manufacturer: item.manufacturer || null,
+      evidence_gaps: evidenceGaps.length > 0 ? evidenceGaps.slice(0, limit) : [],
+      null_or_unknown_fields: nullFields,
+      gap_count: evidenceGaps.length + nullFields.length,
+      summary: evidenceGaps.length === 0 && nullFields.length === 0
+        ? 'no_gaps: 该实体字段完整，不是 unknown 来源'
+        : `${evidenceGaps.length} 组显式 gap 记录 + ${nullFields.length} 个空/unknown 字段`,
+      honest_note: '字段级缺口扫描，不代表完整因果归因；完整归因见 gap_classification 层'
+    };
+  }
+
+  // --- 分支 3：全库 unknown 覆盖率摘要（不给 ID 时的降级） ---
+  const allCats = ALL_CATEGORIES;
+  const stats = {
+    total_entities: 0,
+    entities_with_null_or_unknown: 0,
+    entities_with_evidence_gaps: 0,
+    by_category: {}
+  };
+  for (const cat of allCats) {
+    const items = loadData(cat);
+    let nNull = 0, nGap = 0;
+    for (const it of items) {
+      let hasGap = false;
+      for (const key of ['evidence_gaps', 'evidence_gap', 'gaps', 'gap_cause']) {
+        if (key in it) { hasGap = true; break; }
+      }
+      if (hasGap) nGap++;
+      // 是否有 null/unknown 字段
+      let hasNull = false;
+      for (const v of Object.values(it)) {
+        if (v === null || v === undefined || v === 'unknown' || v === 'N/A' || v === '') {
+          hasNull = true; break;
+        }
+      }
+      if (hasNull) nNull++;
+    }
+    stats.by_category[cat] = {
+      total: items.length,
+      with_evidence_gaps: nGap,
+      with_null_or_unknown: nNull
+    };
+    stats.total_entities += items.length;
+    stats.entities_with_null_or_unknown += nNull;
+    stats.entities_with_evidence_gaps += nGap;
+  }
+  stats.null_or_unknown_rate = stats.total_entities > 0
+    ? (stats.entities_with_null_or_unknown / stats.total_entities * 100).toFixed(2) + '%'
+    : '0%';
+  stats.evidence_gap_rate = stats.total_entities > 0
+    ? (stats.entities_with_evidence_gaps / stats.total_entities * 100).toFixed(2) + '%'
+    : '0%';
+  return {
+    mode: 'library_summary',
+    ...stats,
+    honest_note: '全库扫描，字段级而非因果级；精确归因见 explain_unknown(component_id=...)'
+  };
+}
+
+// 与 trace.js 里的 TRACE_CAPACITY 同步，避免漂移
+const TRACE_BUFFER_MAX = 1000;
+
+/**
+ * 工具: start_long_task
+ *
+ * 把长任务包成任务句柄。任务体是异步执行的，客户端拿 task_id 轮询状态。
+ * 报告 §4.4：「长任务返回任务句柄、进度、可取消状态和最终结果」。
+ *
+ * 目前只支持三种预定义任务类型：
+ *   - batch_check_compatibility: 批量兼容性检查
+ *   - bulk_export_bom: 批量 BOM 导出
+ *   - deep_dialect_evaluate: 深度方言评估
+ */
+function startLongTaskHandler(args) {
+  const { task_type, args: taskArgs } = args;
+  if (!task_type) {
+    return { error: '参数缺失: task_type 为必填', allowed: ['batch_check_compatibility', 'bulk_export_bom', 'deep_dialect_evaluate'] };
+  }
+
+  const taskBody = async (task, params) => {
+    switch (task_type) {
+      case 'batch_check_compatibility': {
+        const pairs = params.pairs || [];
+        if (!Array.isArray(pairs) || pairs.length === 0) {
+          throw new Error('batch_check_compatibility: pairs 必须是非空数组');
+        }
+        const results = [];
+        for (let i = 0; i < pairs.length; i++) {
+          task._checkCancel();
+          const p = pairs[i];
+          try {
+            const r = checkCompatibility({
+              component1_id: p.component1_id,
+              component1_category: p.component1_category,
+              component2_id: p.component2_id,
+              component2_category: p.component2_category
+            });
+            results.push({ index: i, ...p, verdict: r });
+          } catch (e) {
+            results.push({ index: i, ...p, error: e.message });
+          }
+          task._updateProgress((i + 1) / pairs.length * 100);
+        }
+        return { checked: results.length, results };
+      }
+      case 'bulk_export_bom': {
+        const boms = params.boms || [];
+        if (!Array.isArray(boms) || boms.length === 0) {
+          throw new Error('bulk_export_bom: boms 必须是非空数组');
+        }
+        const results = [];
+        for (let i = 0; i < boms.length; i++) {
+          task._checkCancel();
+          try {
+            const r = exportBom(boms[i]);
+            results.push({ index: i, verdict: r });
+          } catch (e) {
+            results.push({ index: i, error: e.message });
+          }
+          task._updateProgress((i + 1) / boms.length * 100);
+        }
+        return { exported: results.length, results };
+      }
+      case 'deep_dialect_evaluate': {
+        const requests = params.requests || [];
+        if (!Array.isArray(requests) || requests.length === 0) {
+          throw new Error('deep_dialect_evaluate: requests 必须是非空数组');
+        }
+        const results = [];
+        for (let i = 0; i < requests.length; i++) {
+          task._checkCancel();
+          try {
+            const r = dialectsEvaluate(requests[i]);
+            results.push({ index: i, verdict: r });
+          } catch (e) {
+            results.push({ index: i, error: e.message });
+          }
+          task._updateProgress((i + 1) / requests.length * 100);
+        }
+        return { evaluated: results.length, results };
+      }
+      default:
+        throw new Error(`未知 task_type: ${task_type}`);
+    }
+  };
+
+  return startLongTask({
+    name: task_type,
+    body: taskBody,
+    args: taskArgs || {}
+  });
+}
+
+/**
+ * 工具: trace_export
+ *
+ * 导出当前会话的调用轨迹（默认去敏）。
+ */
+function traceExportHandler(args) {
+  const { limit, tool, since, redact } = args;
+  const limitFinal = typeof limit === 'number' ? Math.min(limit, TRACE_BUFFER_MAX) : TRACE_BUFFER_MAX;
+  return exportTraces({
+    limit: limitFinal,
+    tool,
+    since,
+    redactEnabled: redact !== false // 默认 true
+  });
+}
+
+
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
+  const traceStart = performance.now();
 
   let result;
 
@@ -1544,8 +1942,53 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         result = exportBom(args || {});
         break;
 
+      // ============================================================
+      // 【2026-10-27 P2-6】新增 6 个工具的分发
+      // ============================================================
+
+      case 'explain_unknown':
+        result = explainUnknown(args || {});
+        break;
+
+      case 'start_long_task':
+        result = startLongTaskHandler(args || {});
+        break;
+
+      case 'get_task_status':
+        result = getTaskStatus(args.task_id);
+        break;
+
+      case 'cancel_task':
+        result = cancelTask(args.task_id);
+        break;
+
+      case 'trace_export':
+        result = traceExportHandler(args || {});
+        break;
+
+      case 'trace_replay':
+        result = replayTrace(args.json_lines || [], { strict: !!args.strict });
+        break;
+
       default:
         throw new Error(`未知工具: ${name}`);
+    }
+
+    // 【2026-10-27 P2-6】每次工具调用自动记入 trace 环形缓冲（去敏由 recordTrace 内部完成）
+    // start_long_task / trace_export / trace_replay 是"元工具"——它们本身也是被记录的
+    // 调用（防假绿：如果这些工具不进 trace，"能回放"就无从证明）
+    const trace = recordTrace({
+      tool: name,
+      args: args,
+      result: result,
+      duration_ms: performance.now() - traceStart,
+      evidence_version: EVIDENCE_VERSION,
+    });
+
+    // 把 trace_id 挂到返回结果里，方便客户端做关联
+    if (result && typeof result === 'object' && !Array.isArray(result)) {
+      result.trace_id = trace.trace_id;
+      result.evidence_version = EVIDENCE_VERSION;
     }
 
     return {

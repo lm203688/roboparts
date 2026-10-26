@@ -3,7 +3,7 @@
 **端点：** `https://roboparts.cc/mcp`
 **协议：** MCP（Model Context Protocol），stdio 与 streamable HTTP 均支持
 **鉴权：** 只读、免鉴权
-**当前工具数：** 20（11 业务 + 9 桥接）
+**当前工具数：** 26（11 业务 + 9 桥接 + 6 双版本/Trace 层，v1.2.0 新增）
 
 > **本文档由 `functions/mcp.js` 的 TOOLS 定义生成对应。**
 > 任何工具新增、改名或参数变更，都必须同步：
@@ -296,3 +296,145 @@ explain_compose_frontier（看整体）
 | 2026-10-15 | Phase A·A4 | +2 装配级：`plan_assembly` / `preflight_check` |
 | 2026-10-19 | +1 桥接 | `check_co_mount`（共装关系） |
 | 2026-10-26 | 桥接层扩展 | +3 桥接：`get_robot_tool_side` / `get_behavior_evidence` / `get_body_binding`；文档首次全量撰写 |
+| **2026-10-27** | **v1.2.0 · MCP 双版本 + Trace 回放** | **+6 工具**：`explain_unknown` / `start_long_task` / `get_task_status` / `cancel_task` / `trace_export` / `trace_replay`；Server 声明 `2024-11-05` / `2025-03-26` / `2025-11-25` 三版本协商；每次调用自动注入 `trace_id` + `evidence_version` |
+
+---
+
+## 三·五、双版本 / Trace 层（6 个 · v1.2.0 新增）
+
+审计报告 §4.4 明确点名：「MCP 要做双版本适配与可回放任务……工具输入输出全部引用
+project_id + revision + evidence_version；长任务返回任务句柄、进度、可取消状态和
+最终结果；把'为什么 unknown''哪条证据导致冲突'作为标准工具，而非仅靠自然语言解释；
+为每次外部 Agent 调用保存可去敏回放的评估轨迹」。本节对应落地。
+
+### 21. `explain_unknown` — 结构化解释「为什么 unknown」
+
+```json
+{
+  "component_id": "ACT-001",      // 与 verdict_id 二选一
+  "category": "actuators",        // 给 component_id 时必填
+  "verdict_id": "v_abc",          // 反查当前会话内的 verdict
+  "max_gaps": 20                  // 可选：默认 20，上限 100
+}
+```
+
+三种模式（互斥）：
+
+- **`component_id` 模式**：返回该实体的 `evidence_gaps` / `gap_cause` / `null_or_unknown_fields` / `gap_count`。**字段级扫描**，非因果归因（后者属 `gap_classification` 研究层）。
+- **`verdict_id` 反查模式**：仅查当前 stdio 会话的 trace 环形缓冲；跨会话请先 `trace_export` 落盘后 `trace_replay`。
+- **无参降级模式**：返回全库 `total_entities` / `null_or_unknown_rate` / `evidence_gap_rate` / 按品类拆解。
+
+**口径纪律**：字段级 vs 因果级是两个维度，不能混用（详见 §四 三态诚实纪律第 1 条）。
+
+### 22. `start_long_task` — 启动长任务
+
+```json
+{
+  "task_type": "batch_check_compatibility",
+  "args": {
+    "pairs": [
+      { "component1_id": "ACT-001", "component1_category": "actuators",
+        "component2_id": "CHIP-001", "component2_category": "chips" }
+    ]
+  }
+}
+```
+
+`task_type` 三选一：`batch_check_compatibility` / `bulk_export_bom` / `deep_dialect_evaluate`。
+
+**立即返回**：`{ task_id, status: "running", name }`。任务体异步执行，客户端通过
+`get_task_status` 轮询。
+
+**诚实边界**：stdio 无中断通道，`cancel_task` 只置标志位；任务体在下一个 checkpoint
+调用 `task._checkCancel()` 时才会退出。
+
+### 23. `get_task_status` — 查询任务
+
+```json
+{ "task_id": "tsk_..." }
+```
+
+返回 `{ status, progress, result, error, cancelled, ts, duration_ms }`。
+环形缓冲 200 条上限，最老任务被淘汰（返回 `task_not_found`）。
+
+### 24. `cancel_task` — 取消任务
+
+```json
+{ "task_id": "tsk_..." }
+```
+
+对已结束（`done` / `failed` / `cancelled`）任务返回 `task_already_<status>`。
+对 `queued` / `running` 任务置 `cancelled=true`。
+
+### 25. `trace_export` — 导出轨迹
+
+```json
+{
+  "limit": 200,                   // 默认 200，上限 1000（环形缓冲容量）
+  "tool": "check_compatibility",  // 按工具名过滤
+  "since": "2026-10-27T00:00:00Z",// ISO 8601 起点
+  "redact": true                   // 默认 true
+}
+```
+
+**去敏规则**（`redact=true` 时）：
+
+- 字符串 → `{ type: "string", length, hash8 }`（不透传原值）
+- 对象 → `{ type: "object", keys: [...] }`（只留键名，防 API key / 邮箱泄漏）
+- 数组 → `{ type: "array", length, sample_types }`
+- 敏感字段名（`api_key` / `token` / `password` / `secret` / `email` / `authorization` / `cookie` / `session_id`）→ `<redacted>`
+
+**服务端无持久化**：默认只回当前 stdio 会话。可选：设置环境变量
+`ROBOPARTS_TRACE_FILE=/path/to/trace.jsonl`，每次调用会 appendFileSync 落盘。
+
+### 26. `trace_replay` — 从 JSONL 重放
+
+```json
+{
+  "json_lines": ["{...}", "{...}"],
+  "strict": false                 // 默认 false，首个 parse 失败即中断
+}
+```
+
+返回 `{ replayed, total_lines, errors, error_detail, unique_tools, unique_traces }`。
+
+**只验证「记录可解析、字段完整」**（`trace_id` / `tool` / `ts` 至少齐全），
+**不重算 verdict**——语义重放需要完整输入重演，属于 P3 范畴（跨会话、带 diff）。
+
+### 协议版本协商
+
+Server 在 `initialize` 响应里通过 `capabilities.experimental.roboparts` 显式暴露：
+
+```json
+{
+  "protocol_versions_supported": ["2024-11-05", "2025-03-26", "2025-11-25"],
+  "capabilities_by_version": {
+    "2024-11-05": [ /* 基础 10 个工具 */ ],
+    "2025-11-25": [ /* 6 个新工具 */ ]
+  },
+  "evidence_version": "1.2.0",
+  "honest_limits": [
+    "no_server_side_persistence",
+    "no_hard_cancel",
+    "no_multi_tenant_isolation"
+  ]
+}
+```
+
+SDK 会自动在 `initialize` 请求/响应里协商到共同 `protocolVersion`；本 server
+额外暴露 `protocol_versions_supported` 数组，让新客户端能程序化判断可用性
+（而不是靠猜 SDK 实现）。
+
+**evidence_version 注入**：每次工具调用返回都挂 `trace_id` 和 `evidence_version`
+（= 包版本），让调用方可以引用某个数据快照做对账。
+
+### 三层能力对照
+
+| 层 | 引擎 | 维度 | 工具 |
+|---|---|---|---|
+| **产品面** | `functions/_lib/compat_engine.js` | protocol / electrical / mechanical / software（4 维） | 1–11 |
+| **研究层** | `scripts/compose_engine.py` | mechanical / electrical / signal（3 轴） | 12–20 |
+| **双版本 / Trace 层** | `mcp-server/trace.js` | 元能力（协议协商 + 轨迹 + 长任务） | 21–26 |
+
+Trace 层与兼容性判定**正交**：不改变任何 verdict，只提供"这次判定是怎么来的、
+能不能事后回放"的元信息层。跨层合并是产品决策，不是工具职责（沿用 §四 第 4 条）。
