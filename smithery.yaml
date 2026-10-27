@@ -78,3 +78,15 @@ tools:
     description: "查询**行为证据**：开源 VLA 在真机上的 benchmark 成功率（引用论文/官方报告，**非本仓自造日志**——本项目按锚点禁止造仿真器/训练栈）。"
   - name: get_body_binding
     description: "查询**开源 VLA → 机器人本体**的绑定及其强度分档。"
+  - name: explain_unknown
+    description: "结构化解释「为什么某次判定是 unknown」。"
+  - name: start_long_task
+    description: "启动长任务并返回任务句柄。★ hosted 端点（Cloudflare Workers）无跨请求内存持久化，任务句柄只在 stdio npm 包 （roboparts-mcp-server）里可用。"
+  - name: get_task_status
+    description: "查询长任务状态。★ hosted 端点无跨请求任务句柄，返回 honest_note 引导到 stdio 模式。"
+  - name: cancel_task
+    description: "置任务取消标志位。★ stdio 无中断通道，cancel 只置标志位；任务体在下一 checkpoint 才退出。"
+  - name: trace_export
+    description: "导出调用轨迹（默认去敏）。★ hosted 端点无跨请求内存持久化，trace 环形缓冲只在 stdio npm 包可用。"
+  - name: trace_replay
+    description: "从 JSONL 文本重放轨迹（结构校验 + 计数）。本端点可处理**当前请求内传入的** json_lines；不做\"重算 verdict\"（语义重放属 P3，需要完整输入重演）。"

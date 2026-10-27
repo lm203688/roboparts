@@ -380,6 +380,55 @@ def gate_mcp_dual_version():
             timeout=30)
 
 
+def gate_ir_export():
+    """Composition IR ⇄ OpenUSD/AAS 导出回读（P2-5 落地，2026-10-27）。
+
+    验收口径（审计报告 §9.3 P2-5）：同一 IR 可导出并回读，关键语义不丢失。
+
+    本闸门守三条：
+    1. IR 由真实 graph 现算（不手写期望值，判据由本地源给出）；
+    2. USD（真 OpenUSD pxr）/ AAS（IEC 63278）导出 → 回读，key_semantics 指纹
+       相等 ⇔ 语义不丢失；
+    3. 阴阳自证：改 .usda/.aas 里的 verdict / blockingDims 后指纹必须不等，
+       证明闸门能抓语义丢失，不是恒真。
+
+    诚实边界（fail-closed）：OpenUSD（pxr）是可选依赖。pxr 不可用时本闸门
+    必须**报红**（不静默 skip）——否则「导出并回读」从未真跑却绿，正犯
+    P0-9「命令未运行却算测过」。CI 需 `pip install usd-core`（已加入
+    requirements-dev.txt）；本地装不上时用 C:\\Python314\\python.exe 兜底。
+
+    --self-test 提供 6 条自证（阳性往返 / 阴性 verdict 变异 / 阴性 blocking
+    变异 / 守卫探测点 / blocking 集合序不变性）。
+    """
+    script = os.path.join(ROOT, 'scripts', 'verify_ir_export.py')
+    # fail-closed：pxr 不可用时先探测，再决定用哪个解释器；两个都不可用 → 报红
+    probe = subprocess.run(
+        [sys.executable, '-c', 'import pxr'], capture_output=True, text=True,
+        timeout=20, encoding='utf-8', errors='replace')
+    python = sys.executable
+    if probe.returncode != 0:
+        alt = r'C:\Python314\python.exe'
+        if os.path.exists(alt):
+            alt_probe = subprocess.run(
+                [alt, '-c', 'import pxr'], capture_output=True, text=True,
+                timeout=20, encoding='utf-8', errors='replace')
+            if alt_probe.returncode == 0:
+                python = alt
+            else:
+                bad('OpenUSD/AAS 导出回读（P2-5）',
+                    'pxr 不可用（usd-core 未安装），fail-closed 报红')
+                return
+        else:
+            bad('OpenUSD/AAS 导出回读（P2-5）',
+                'pxr 不可用且无 C:\\Python314 兜底，fail-closed 报红')
+            return
+
+    run_sub('OpenUSD/AAS 导出回读审计（IR 现算 + 语义指纹）',
+            [python, script], timeout=30)
+    run_sub('OpenUSD/AAS 导出回读自证（阳性/阴性/守卫）',
+            [python, script, '--self-test'], timeout=30)
+
+
 def gate_meta_single_source():
     """The meta top level of entities.json must no longer contain derived duplicates.
 
@@ -4320,7 +4369,9 @@ def gate_positioning_gate_count_consistency():
             for pat, label in patterns:
                 for m in pat.finditer(line):
                     n = int(m.group(1))
-                    if abs(n - actual_gates) > 1:
+                    # 容差 0：任何定位面数字与 GATES 长度不符即报红。
+                    # 此前 ±1 容差掩盖了 83 vs 84 的漂移（2026-10-27 教训）。
+                    if n != actual_gates:
                         issues.append((rel, lineno, label, n, actual_gates,
                                        line.strip()[:70]))
 
@@ -4580,6 +4631,12 @@ GATES = [
     # 无硬中断、无多租户隔离——全部在 capabilities.experimental.roboparts.
     # honest_limits 里显式声明。2 个子闸门：源码静态扫描 + 6 类破坏自证。
     ('MCP 双版本 + Trace 回放契约', gate_mcp_dual_version),
+    # 【2026-10-27 P2-5】OpenUSD/AAS 导出回读。审计 §9.3 P2-5 明确点名：
+    # 同一 IR 可导出并回读，关键语义不丢失。IR 由真实 graph 现算；
+    # USD（真 OpenUSD pxr）/ AAS（IEC 63278）导出→回读，key_semantics
+    # 指纹相等 ⇔ 语义不丢失。阴阳自证：改 verdict/blocking 后指纹必须不等。
+    # fail-closed：pxr 不可用时报红（不静默 skip，防 P0-9 假绿）。
+    ('OpenUSD/AAS 导出回读（P2-5）', gate_ir_export),
     # 【20261008】Golden evaluation set. Guards "rule engine silently drifts from frozen anchors"
     # — previously this set existed but nobody ran it (4/6 false red); this gate wires it into CI.
     ('兼容性裁决 Golden 评估集（冻结锚点 + badcase）', gate_eval_compat),

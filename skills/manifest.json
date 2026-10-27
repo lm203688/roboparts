@@ -401,6 +401,183 @@
       "params": []
     },
     {
+      "name": "roboparts-explain-unknown",
+      "title": "为什么判 unknown（字段级证据缺口）",
+      "type": "mcp_tool",
+      "tool": "explain_unknown",
+      "description": "结构化解释「为什么某次判定是 unknown」。三种模式：① component_id + category → 返回该实体的 evidence_gaps / null 字段清单；② verdict_id → 反查当前请求内的判定（hosted 端点无跨请求会话，仅回当前请求）；③ 无参 → 返回全库 unknown 覆盖率摘要。★ 口径纪律：字段级扫描 ≠ 因果归因（后者属 gap_classification 研究层）。只读、免鉴权。",
+      "when_to_use": "用户问「为什么这次判定是 unknown」「这个零件缺哪些字段」「全库 unknown 覆盖率多少」时。",
+      "guardrails": "★ 口径纪律：字段级扫描 ≠ 因果归因（后者属 gap_classification 研究层）。只读、免鉴权。unknown 表示「不知道」，不得改写为 compatible/incompatible。",
+      "params": [
+        {
+          "name": "component_id",
+          "type": "string",
+          "required": false,
+          "desc": "组件 ID，如 ACT-001、SENS-001"
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "required": false,
+          "desc": "品类：actuators / sensors / chips / interfaces / protocols / llms / platforms / flexible_actuators / robot_ai_models / data_acquisition / connectors / integrated_joints / reducers / controllers / grippers / structural / cables / power / pcb / bionic_mechanisms",
+          "enum": [
+            "actuators",
+            "sensors",
+            "chips",
+            "interfaces",
+            "protocols",
+            "llms",
+            "platforms",
+            "flexible_actuators",
+            "robot_ai_models",
+            "data_acquisition",
+            "connectors",
+            "integrated_joints",
+            "reducers",
+            "controllers",
+            "grippers",
+            "structural",
+            "cables",
+            "power",
+            "pcb",
+            "bionic_mechanisms"
+          ]
+        },
+        {
+          "name": "verdict_id",
+          "type": "string",
+          "required": false,
+          "desc": "判定 verdict_id（hosted 端点仅当前请求内可查）"
+        },
+        {
+          "name": "max_gaps",
+          "type": "number",
+          "required": false,
+          "desc": "最多返回多少条缺口"
+        }
+      ]
+    },
+    {
+      "name": "roboparts-start-long-task",
+      "title": "启动长任务并返回任务句柄",
+      "type": "mcp_tool",
+      "tool": "start_long_task",
+      "description": "启动长任务并返回任务句柄。★ hosted 端点（Cloudflare Workers）无跨请求内存持久化，任务句柄只在 stdio npm 包 （roboparts-mcp-server）里可用。本端点返回 honest_note 引导到 stdio 模式，不假装能保存跨请求任务。",
+      "when_to_use": "用户要批量兼容性检查 / BOM 批量导出 / 深度方言评估，需轮询进度时。",
+      "guardrails": "★ stdio npm 包（roboparts-mcp-server）有内存任务句柄；hosted 端点（Cloudflare Workers）无跨请求持久化，返回 honest_note 引导到 stdio，不假装能保存跨请求任务。",
+      "params": [
+        {
+          "name": "task_type",
+          "type": "string",
+          "required": true,
+          "desc": "预定义任务类型",
+          "enum": [
+            "batch_check_compatibility",
+            "bulk_export_bom",
+            "deep_dialect_evaluate"
+          ]
+        },
+        {
+          "name": "args",
+          "type": "object",
+          "required": false,
+          "desc": "任务参数"
+        }
+      ]
+    },
+    {
+      "name": "roboparts-get-task-status",
+      "title": "查询长任务状态",
+      "type": "mcp_tool",
+      "tool": "get_task_status",
+      "description": "查询长任务状态。★ hosted 端点无跨请求任务句柄，返回 honest_note 引导到 stdio 模式。",
+      "when_to_use": "用户拿着 start_long_task 返回的 task_id 查进度/结果时。",
+      "guardrails": "★ hosted 端点无跨请求任务句柄，返回 honest_note 引导到 stdio 模式。",
+      "params": [
+        {
+          "name": "task_id",
+          "type": "string",
+          "required": true,
+          "desc": "任务 ID（stdio 模式下 start_long_task 返回）"
+        }
+      ]
+    },
+    {
+      "name": "roboparts-cancel-task",
+      "title": "置任务取消标志位",
+      "type": "mcp_tool",
+      "tool": "cancel_task",
+      "description": "置任务取消标志位。★ stdio 无中断通道，cancel 只置标志位；任务体在下一 checkpoint 才退出。hosted 端点无跨请求任务句柄，返回 honest_note 引导到 stdio。",
+      "when_to_use": "用户想取消一个进行中的长任务时。",
+      "guardrails": "★ stdio 无中断通道，cancel 只置标志位；任务体在下一 checkpoint 才退出。hosted 端点返回 honest_note 引导到 stdio。",
+      "params": [
+        {
+          "name": "task_id",
+          "type": "string",
+          "required": true,
+          "desc": "任务 ID"
+        }
+      ]
+    },
+    {
+      "name": "roboparts-trace-export",
+      "title": "导出调用轨迹（默认去敏）",
+      "type": "mcp_tool",
+      "tool": "trace_export",
+      "description": "导出调用轨迹（默认去敏）。★ hosted 端点无跨请求内存持久化，trace 环形缓冲只在 stdio npm 包可用。本端点返回 honest_note 引导到 stdio 模式；stdio 支持 ROBOPARTS_TRACE_FILE 环境变量落盘 JSONL 供事后回放。",
+      "when_to_use": "用户想审计一次外部 Agent 调用了哪些工具、参数是什么时。",
+      "guardrails": "★ hosted 端点无跨请求内存持久化，trace 环形缓冲只在 stdio npm 包可用；stdio 支持 ROBOPARTS_TRACE_FILE 环境变量落盘 JSONL 供事后回放。默认去敏（api_key/token/password/secret 等→<redacted>）。",
+      "params": [
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "desc": "最多返回多少条"
+        },
+        {
+          "name": "tool",
+          "type": "string",
+          "required": false,
+          "desc": "按工具名过滤"
+        },
+        {
+          "name": "since",
+          "type": "string",
+          "required": false,
+          "desc": "ISO 8601 时间戳起点"
+        },
+        {
+          "name": "redact",
+          "type": "boolean",
+          "required": false,
+          "desc": "是否去敏（默认 true）"
+        }
+      ]
+    },
+    {
+      "name": "roboparts-trace-replay",
+      "title": "从 JSONL 重放轨迹",
+      "type": "mcp_tool",
+      "tool": "trace_replay",
+      "description": "从 JSONL 文本重放轨迹（结构校验 + 计数）。本端点可处理**当前请求内传入的** json_lines；不做\"重算 verdict\"（语义重放属 P3，需要完整输入重演）。",
+      "when_to_use": "用户拿到导出的 trace JSONL 想结构校验/计数时。",
+      "guardrails": "★ 本工具可处理当前请求内传入的 json_lines；不做「重算 verdict」（语义重放属 P3，需完整输入重演）。",
+      "params": [
+        {
+          "name": "json_lines",
+          "type": "array",
+          "required": true,
+          "desc": "JSONL 行数组（每行一条 trace JSON）"
+        },
+        {
+          "name": "strict",
+          "type": "boolean",
+          "required": false,
+          "desc": "严格模式：首个 parse 失败即中断"
+        }
+      ]
+    },
+    {
       "name": "roboparts-adapter-generate",
       "type": "web_resource",
       "title": "生成法兰转接件",

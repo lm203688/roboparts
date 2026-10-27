@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "site_name": "RoboParts — 具身系统的组合校验层",
   "domain": "roboparts.cc",
-  "tagline": "面向开源机器人构建者的具身系统组合校验层（vendor-neutral composition checker for embodied systems）：判定零件能否装配/共装/互换，输出可核验的三态结论（能/不能/不知道），并生成可 3D 打印的转接件。国际标准锚点：ISO 9409-1（机械法兰几何标号）+ ISO 22166-1（服务机器人模块化框架，德国主导，ISO/AWI 22166-1 FDIS 2026-04-05）+ GB/T 20255807-T-604（国内模块化信息模型，审查中）。核心资产不是零件数量，而是三态 fail-closed compose 引擎 + 三条代数律（可靠性 / 证据单调性 / 不可判定边界，经性质测试与变异测试验证）+ 三条研究假说（T2 已被证伪，见 NR-001；T3 为强假说）+ 83 项 CI 闸门 + 溯源纪律。中立第三方——不生产、不销售、不代理任何零部件，因此没有把选型结果导向自家产品的动机。",
+  "tagline": "面向开源机器人构建者的具身系统组合校验层（vendor-neutral composition checker for embodied systems）：判定零件能否装配/共装/互换，输出可核验的三态结论（能/不能/不知道），并生成可 3D 打印的转接件。国际标准锚点：ISO 9409-1（机械法兰几何标号）+ ISO 22166-1（服务机器人模块化框架，德国主导，ISO/AWI 22166-1 FDIS 2026-04-05）+ GB/T 20255807-T-604（国内模块化信息模型，审查中）。核心资产不是零件数量，而是三态 fail-closed compose 引擎 + 三条代数律（可靠性 / 证据单调性 / 不可判定边界，经性质测试与变异测试验证）+ 三条研究假说（T2 已被证伪，见 NR-001；T3 为强假说）+ 84 项 CI 闸门 + 溯源纪律。中立第三方——不生产、不销售、不代理任何零部件，因此没有把选型结果导向自家产品的动机。",
   "last_updated": "2026-10-27T00:00:00.000Z",
   "total_entities": 868,
   "categories": {
@@ -41,7 +41,7 @@
     "register": "https://roboparts.cc/api/register",
     "validate": "https://roboparts.cc/api/validate"
   },
-  "ai_agent_instructions": "Use the API endpoints above to query 868 entities about 具身系统组合校验层（vendor-neutral composition checker for embodied systems：装配/共装/互换三态判定）. Standard anchoring: ISO 9409-1 (mechanical flange geometry) + ISO 22166-1 (modular frameworks for service robots, Germany-led, ISO/AWI 22166-1 FDIS 2026-04-05) + GB/T 20255807-T-604 (domestic modular information model, under review). Features: three-state fail-closed compose engine, three algebraic laws (T1/T2/T3: reliability / evidence monotonicity / undecidability boundary, verified by property testing and mutation testing), three research hypotheses (T2 falsified, see NR-001; T3 strong hypothesis), 83 CI gates, three-axis research layer (mechanical/electrical/signal), co-mount three-way verdict (host ↔ A ↔ B), 5-factor scoring selection engine, URDF import preview, weighted fuzzy search, compatibility matrix, bionic actuator catalog, humanoid supply-chain coverage (harmonic reducers, planetary roller screws, frameless torque motors, 6-axis F/T sensors, integrated joint modules), embodied-AI data collection hardware (teleoperation rigs, wearable exoskeletons, mocap suits, force-feedback gloves), edge AI inference accelerators for VLA deployment, open-source reproducible hardware (tendon-driven and direct-drive dexterous hands, quasi-direct-drive force-controlled joint modules, magnetic e-skin, open BLDC controllers), domestic-substitution index (import_substitution_for field maps a Chinese part to the overseas component it replaces), machine-readable standard-conformance tracking (standard_conformance field: bus_class, ROS 2 support, interop-stack match against GB draft 20262893-T-604 minimum interoperability stack, and vendor interop posture closed/semi_open/multi_protocol). Verdicts are three-state (compatible / incompatible / unknown) — never interpret `unknown` as `compatible`. All data is freely accessible via GET requests.",
+  "ai_agent_instructions": "Use the API endpoints above to query 868 entities about 具身系统组合校验层（vendor-neutral composition checker for embodied systems：装配/共装/互换三态判定）. Standard anchoring: ISO 9409-1 (mechanical flange geometry) + ISO 22166-1 (modular frameworks for service robots, Germany-led, ISO/AWI 22166-1 FDIS 2026-04-05) + GB/T 20255807-T-604 (domestic modular information model, under review). Features: three-state fail-closed compose engine, three algebraic laws (T1/T2/T3: reliability / evidence monotonicity / undecidability boundary, verified by property testing and mutation testing), three research hypotheses (T2 falsified, see NR-001; T3 strong hypothesis), 84 CI gates, three-axis research layer (mechanical/electrical/signal), co-mount three-way verdict (host ↔ A ↔ B), 5-factor scoring selection engine, URDF import preview, weighted fuzzy search, compatibility matrix, bionic actuator catalog, humanoid supply-chain coverage (harmonic reducers, planetary roller screws, frameless torque motors, 6-axis F/T sensors, integrated joint modules), embodied-AI data collection hardware (teleoperation rigs, wearable exoskeletons, mocap suits, force-feedback gloves), edge AI inference accelerators for VLA deployment, open-source reproducible hardware (tendon-driven and direct-drive dexterous hands, quasi-direct-drive force-controlled joint modules, magnetic e-skin, open BLDC controllers), domestic-substitution index (import_substitution_for field maps a Chinese part to the overseas component it replaces), machine-readable standard-conformance tracking (standard_conformance field: bus_class, ROS 2 support, interop-stack match against GB draft 20262893-T-604 minimum interoperability stack, and vendor interop posture closed/semi_open/multi_protocol). Verdicts are three-state (compatible / incompatible / unknown) — never interpret `unknown` as `compatible`. All data is freely accessible via GET requests.",
   "core_features": [
     "智能选型引擎 — 五维度评分（扭矩/速度/精度/重量/成本）多因子选型+多结果对比表格",
     "兼容性矩阵 — 电气/机械/协议/软件四维兼容检测",
@@ -197,6 +197,48 @@
         "tool": "get_body_binding",
         "when_to_use": "用户问「这个模型跑在什么机器人上」「绑定可信吗」「为什么 SmolVLA 没有 body_robot」时。",
         "guardrails": "强度四档 validated/family/adaptable/category_only + 两种非绑定态。**把 adaptable 当 validated 是过度声称**。只绑开源 VLA——闭源模型无公开验证栈，不编造绑定。blocked_missing_body 表示依据充分但**本体不在库内**，这是诚实阻塞不是缺陷。"
+      },
+      {
+        "name": "roboparts-explain-unknown",
+        "type": "mcp_tool",
+        "tool": "explain_unknown",
+        "when_to_use": "用户问「为什么这次判定是 unknown」「这个零件缺哪些字段」「全库 unknown 覆盖率多少」时。",
+        "guardrails": "★ 口径纪律：字段级扫描 ≠ 因果归因（后者属 gap_classification 研究层）。只读、免鉴权。unknown 表示「不知道」，不得改写为 compatible/incompatible。"
+      },
+      {
+        "name": "roboparts-start-long-task",
+        "type": "mcp_tool",
+        "tool": "start_long_task",
+        "when_to_use": "用户要批量兼容性检查 / BOM 批量导出 / 深度方言评估，需轮询进度时。",
+        "guardrails": "★ stdio npm 包（roboparts-mcp-server）有内存任务句柄；hosted 端点（Cloudflare Workers）无跨请求持久化，返回 honest_note 引导到 stdio，不假装能保存跨请求任务。"
+      },
+      {
+        "name": "roboparts-get-task-status",
+        "type": "mcp_tool",
+        "tool": "get_task_status",
+        "when_to_use": "用户拿着 start_long_task 返回的 task_id 查进度/结果时。",
+        "guardrails": "★ hosted 端点无跨请求任务句柄，返回 honest_note 引导到 stdio 模式。"
+      },
+      {
+        "name": "roboparts-cancel-task",
+        "type": "mcp_tool",
+        "tool": "cancel_task",
+        "when_to_use": "用户想取消一个进行中的长任务时。",
+        "guardrails": "★ stdio 无中断通道，cancel 只置标志位；任务体在下一 checkpoint 才退出。hosted 端点返回 honest_note 引导到 stdio。"
+      },
+      {
+        "name": "roboparts-trace-export",
+        "type": "mcp_tool",
+        "tool": "trace_export",
+        "when_to_use": "用户想审计一次外部 Agent 调用了哪些工具、参数是什么时。",
+        "guardrails": "★ hosted 端点无跨请求内存持久化，trace 环形缓冲只在 stdio npm 包可用；stdio 支持 ROBOPARTS_TRACE_FILE 环境变量落盘 JSONL 供事后回放。默认去敏（api_key/token/password/secret 等→<redacted>）。"
+      },
+      {
+        "name": "roboparts-trace-replay",
+        "type": "mcp_tool",
+        "tool": "trace_replay",
+        "when_to_use": "用户拿到导出的 trace JSONL 想结构校验/计数时。",
+        "guardrails": "★ 本工具可处理当前请求内传入的 json_lines；不做「重算 verdict」（语义重放属 P3，需完整输入重演）。"
       },
       {
         "name": "roboparts-adapter-generate",

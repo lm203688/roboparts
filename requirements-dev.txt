@@ -7,3 +7,7 @@
 # - 2026-10-11 报告 P2-1 明确记录此问题。
 
 PyYAML>=6.0,<7.0
+# P2-5 OpenUSD/AAS 导出回读闸门需要真 OpenUSD（pxr）。CI 是 Python 3.12，
+# usd-core 25.11+ 提供 cp312 manylinux wheel；本地 Windows 用 cp313/cp314 wheel。
+# pxr 不可用时闸门 fail-closed 报红（防 P0-9「命令未运行却算测过」假绿）。
+usd-core>=25.11,<27.0

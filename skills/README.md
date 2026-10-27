@@ -34,6 +34,12 @@
 | `roboparts-tool-side` | mcp_tool | `get_robot_tool_side` | 用户问「这台机器人工具侧有几个电气接口」「tool_io_ports 是多少」「为什么 FR3 判 unknown」时。 |
 | `roboparts-behavior-evidence` | mcp_tool | `get_behavior_evidence` | 用户问「这个模型真机表现如何」「有没有实测成功率」「仿真成绩能当真机用吗」时。 |
 | `roboparts-body-binding` | mcp_tool | `get_body_binding` | 用户问「这个模型跑在什么机器人上」「绑定可信吗」「为什么 SmolVLA 没有 body_robot」时。 |
+| `roboparts-explain-unknown` | mcp_tool | `explain_unknown` | 用户问「为什么这次判定是 unknown」「这个零件缺哪些字段」「全库 unknown 覆盖率多少」时。 |
+| `roboparts-start-long-task` | mcp_tool | `start_long_task` | 用户要批量兼容性检查 / BOM 批量导出 / 深度方言评估，需轮询进度时。 |
+| `roboparts-get-task-status` | mcp_tool | `get_task_status` | 用户拿着 start_long_task 返回的 task_id 查进度/结果时。 |
+| `roboparts-cancel-task` | mcp_tool | `cancel_task` | 用户想取消一个进行中的长任务时。 |
+| `roboparts-trace-export` | mcp_tool | `trace_export` | 用户想审计一次外部 Agent 调用了哪些工具、参数是什么时。 |
+| `roboparts-trace-replay` | mcp_tool | `trace_replay` | 用户拿到导出的 trace JSONL 想结构校验/计数时。 |
 | `roboparts-adapter-generate` | web_resource | `/adapter-generator` | 兼容性判定为不兼容、且根因是机械法兰不匹配时，直接产出解决方案而非只给结论。 |
 | `roboparts-dataset-discovery` | dataset | `/agent-discovery.json` | 用户想下载/引用原始数据、做二次分析、或确认数据来源时。 |
 | `roboparts-supplier-risk` | methodology | `/docs/supplier-risk.html` | 用户问「这家供应商靠谱吗」「这个价格是不是太低了」「哪些零件数据存疑」时，给出可审计的风险结论而非拍脑袋。 |

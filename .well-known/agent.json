@@ -9,7 +9,7 @@
     "organization": "RoboParts",
     "url": "https://roboparts.cc"
   },
-  "version": "1.1.1",
+  "version": "1.2.0",
   "documentationUrl": "https://roboparts.cc/llms.txt",
   "capabilities": {
     "streaming": false,
@@ -366,6 +366,108 @@
         "application/json"
       ],
       "guardrails": "强度四档 validated/family/adaptable/category_only + 两种非绑定态。**把 adaptable 当 validated 是过度声称**。只绑开源 VLA——闭源模型无公开验证栈，不编造绑定。blocked_missing_body 表示依据充分但**本体不在库内**，这是诚实阻塞不是缺陷。"
+    },
+    {
+      "id": "roboparts-explain-unknown",
+      "name": "为什么判 unknown（字段级证据缺口）",
+      "description": "用户问「为什么这次判定是 unknown」「这个零件缺哪些字段」「全库 unknown 覆盖率多少」时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "guardrails": "★ 口径纪律：字段级扫描 ≠ 因果归因（后者属 gap_classification 研究层）。只读、免鉴权。unknown 表示「不知道」，不得改写为 compatible/incompatible。"
+    },
+    {
+      "id": "roboparts-start-long-task",
+      "name": "启动长任务并返回任务句柄",
+      "description": "用户要批量兼容性检查 / BOM 批量导出 / 深度方言评估，需轮询进度时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "guardrails": "★ stdio npm 包（roboparts-mcp-server）有内存任务句柄；hosted 端点（Cloudflare Workers）无跨请求持久化，返回 honest_note 引导到 stdio，不假装能保存跨请求任务。"
+    },
+    {
+      "id": "roboparts-get-task-status",
+      "name": "查询长任务状态",
+      "description": "用户拿着 start_long_task 返回的 task_id 查进度/结果时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "guardrails": "★ hosted 端点无跨请求任务句柄，返回 honest_note 引导到 stdio 模式。"
+    },
+    {
+      "id": "roboparts-cancel-task",
+      "name": "置任务取消标志位",
+      "description": "用户想取消一个进行中的长任务时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "guardrails": "★ stdio 无中断通道，cancel 只置标志位；任务体在下一 checkpoint 才退出。hosted 端点返回 honest_note 引导到 stdio。"
+    },
+    {
+      "id": "roboparts-trace-export",
+      "name": "导出调用轨迹（默认去敏）",
+      "description": "用户想审计一次外部 Agent 调用了哪些工具、参数是什么时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "guardrails": "★ hosted 端点无跨请求内存持久化，trace 环形缓冲只在 stdio npm 包可用；stdio 支持 ROBOPARTS_TRACE_FILE 环境变量落盘 JSONL 供事后回放。默认去敏（api_key/token/password/secret 等→<redacted>）。"
+    },
+    {
+      "id": "roboparts-trace-replay",
+      "name": "从 JSONL 重放轨迹",
+      "description": "用户拿到导出的 trace JSONL 想结构校验/计数时。",
+      "tags": [
+        "robotics",
+        "compatibility",
+        "mcp"
+      ],
+      "inputModes": [
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json"
+      ],
+      "guardrails": "★ 本工具可处理当前请求内传入的 json_lines；不做「重算 verdict」（语义重放属 P3，需完整输入重演）。"
     },
     {
       "id": "roboparts-adapter-generate",

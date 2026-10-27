@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roboparts.cc/schemas/composition_ir.schema.json",
+  "title": "RoboParts Composition IR v1",
+  "description": "组合判定中间表示（P2-5 OpenUSD/AAS 导出载体）。IR 由 compose_engine 从真实 graph 现算；key_semantics 指纹用于验收「导出并回读、关键语义不丢失」。",
+  "type": "object",
+  "required": ["ir_version", "schema", "composition"],
+  "properties": {
+    "ir_version": {
+      "const": "compose_ir/v1",
+      "description": "IR 版本，固定 compose_ir/v1"
+    },
+    "schema": {
+      "const": "https://roboparts.cc/schemas/composition_ir.schema.json"
+    },
+    "composition": {
+      "type": "object",
+      "required": ["id", "engine", "nodes", "pairs"],
+      "properties": {
+        "id": { "type": "string", "description": "组合标识" },
+        "engine": {
+          "const": "compose_engine/v1",
+          "description": "判定引擎版本"
+        },
+        "nodes": {
+          "type": "array",
+          "description": "参与组合的节点（判例闭包，非全图）",
+          "items": {
+            "type": "object",
+            "required": ["id", "ports"],
+            "properties": {
+              "id": { "type": "string" },
+              "label": { "type": "string" },
+              "category": { "type": "string" },
+              "manufacturer": { "type": "string" },
+              "ports": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["type", "status"],
+                  "properties": {
+                    "type": { "type": "string" },
+                    "status": {
+                      "type": "string",
+                      "enum": ["declared", "partial", "not_declared"]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "pairs": {
+          "type": "array",
+          "description": "判例（每轴裁决 + 阻断维 + 叙事 reason）",
+          "items": {
+            "type": "object",
+            "required": ["a", "b", "overall", "axes"],
+            "properties": {
+              "a": { "type": "string" },
+              "b": { "type": "string" },
+              "overall": {
+                "type": "string",
+                "enum": ["composed", "type_error", "unknown"]
+              },
+              "axes": {
+                "type": "object",
+                "required": ["mechanical", "electrical", "signal"],
+                "properties": {
+                  "mechanical": { "$ref": "#/$defs/axis" },
+                  "electrical": { "$ref": "#/$defs/axis" },
+                  "signal": { "$ref": "#/$defs/axis" }
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "axis": {
+      "type": "object",
+      "required": ["verdict", "blocking_dims", "reason"],
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": ["compatible", "compatible_via_adapter", "incompatible", "unknown"]
+        },
+        "blocking_dims": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "阻断维度（集合，顺序不参与语义）"
+        },
+        "reason": {
+          "type": "string",
+          "description": "叙事 reason（key_semantics 只认非空性，不参与指纹精确比较）"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
