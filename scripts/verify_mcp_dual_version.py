@@ -48,6 +48,7 @@ MCP_TRACE = os.path.join(ROOT, 'mcp-server', 'trace.js')
 MCP_PKG = os.path.join(ROOT, 'mcp-server', 'package.json')
 MCP_README = os.path.join(ROOT, 'mcp-server', 'README.md')
 MCP_DOCS = os.path.join(ROOT, 'docs', 'mcp-tools.md')
+MCP_HOSTED = os.path.join(ROOT, 'functions', 'mcp.js')
 
 EXPECTED_VERSIONS = ['2024-11-05', '2025-03-26', '2025-11-25']
 EXPECTED_NEW_TOOLS = [
@@ -63,6 +64,22 @@ EXPECTED_HONEST_LIMITS = [
     'no_hard_cancel',
     'no_multi_tenant_isolation',
 ]
+# hosted 端点专属边界（Cloudflare Workers 无跨请求持久化）
+EXPECTED_HOSTED_EXTRA_LIMITS = [
+    'no_trace_buffer_across_requests',
+    'no_task_handles_across_requests',
+]
+EXPECTED_HOSTED_REAL_IMPL_TOOLS = [
+    'explain_unknown',   # 读 entity map 现算
+    'trace_replay',      # 处理当前请求内的 json_lines
+]
+EXPECTED_HOSTED_HINT_TOOLS = [
+    'start_long_task',
+    'get_task_status',
+    'cancel_task',
+    'trace_export',
+]
+EXPECTED_SERVER_VERSION = '1.2.0'
 EXPECTED_TRACE_EXPORTS = [
     'PROTOCOL_VERSIONS',
     'CAPABILITIES_BY_VERSION',
@@ -78,7 +95,7 @@ EXPECTED_TRACE_EXPORTS = [
     'listTasks',
 ]
 
-CHECKS = ['schema_integrity', 'version_negotiation', 'trace_recording', 'honest_boundary']
+CHECKS = ['schema_integrity', 'version_negotiation', 'trace_recording', 'honest_boundary', 'hosted_sync']
 
 
 def strip_comments(source: str) -> str:
@@ -140,11 +157,23 @@ def find_tool_decl(name: str, source: str) -> bool:
 
 
 def find_case_dispatch(name: str, source: str) -> bool:
-    """在 CallTool switch 里查找 case 分发。"""
-    pattern = re.compile(
-        r"case\s+['\"]?" + re.escape(name) + r"['\"]?\s*:",
-    )
-    return bool(pattern.search(source))
+    """在 CallTool 分发里查找该工具的分发入口。
+
+    hosted 端点（functions/mcp.js）用 `else if (name === 'xxx')` 链分发，
+    stdio（mcp-server/index.js）用 switch-case。两者都必须识别，否则
+    hosted 同步校验会出现「格式表达力」假红（工具已实现但校验不认）。
+    同时保持对 switch-case 与 if/else-if 链的匹配，避免放宽成"只认字符串出现"。
+    """
+    patterns = [
+        # switch-case: case 'name': / case name:
+        re.compile(r"case\s+['\"]?" + re.escape(name) + r"['\"]?\s*:"),
+        # if/else-if 链: (else )?if (name === 'name')
+        re.compile(
+            r"(?:else\s+)?if\s*\(\s*name\s*===\s*['\"]" +
+            re.escape(name) + r"['\"]\s*\)"
+        ),
+    ]
+    return any(p.search(source) for p in patterns)
 
 
 def check_schema_integrity(index_src: str, trace_src: str, pkg: dict) -> dict:
@@ -310,6 +339,7 @@ def check_honest_boundary(index_src: str) -> dict:
     match = re.search(r"honest_limits\s*:\s*\[([^\]]+)\]", clean)
     if not match:
         errors.append("honest_limits_array_not_found: 未找到 honest_limits: [...] 结构")
+        found = []
     else:
         arr_body = match.group(1)
         found = []
@@ -319,15 +349,119 @@ def check_honest_boundary(index_src: str) -> dict:
             if expected not in found:
                 errors.append(f"missing_honest_limit: {expected}（实际: {found}）")
 
-    return {'pass': len(errors) == 0, 'errors': errors, 'found': found if 'found' in dir() else []}
+    return {'pass': len(errors) == 0, 'errors': errors, 'found': found}
+
+
+def check_hosted_sync(hosted_src: str) -> dict:
+    """hosted 端点（functions/mcp.js）与 stdio 能力同步。
+
+    审计报告 §4.4："保留旧客户端兼容层，新增协议版本协商，不做一次性破坏升级"。
+    要求：线上 hosted 端点必须能看到新版本号 + 新工具 + 新边界声明，
+    客户端才能感知能力升级。stdio 落地后 hosted 不同步 = 一半完成。
+    """
+    clean = strip_comments(hosted_src)
+    errors = []
+
+    # 1. SERVER_VERSION 必须升到 1.2.0（与 stdio 的 PKG_VERSION 一致）
+    sv_match = re.search(r"const\s+SERVER_VERSION\s*=\s*['\"]([^'\"]+)['\"]", clean)
+    if not sv_match:
+        errors.append("missing_server_version: hosted 未声明 SERVER_VERSION")
+    elif sv_match.group(1) != EXPECTED_SERVER_VERSION:
+        errors.append(
+            f"server_version_mismatch: hosted SERVER_VERSION={sv_match.group(1)} "
+            f"≠ {EXPECTED_SERVER_VERSION}（stdio 已升，hosted 未同步）"
+        )
+
+    # 2. SUPPORTED_PROTOCOLS 数组必须含 2025-11-25
+    sp_match = re.search(
+        r"const\s+SUPPORTED_PROTOCOLS\s*=\s*\[([^\]]+)\]",
+        clean
+    )
+    if not sp_match:
+        errors.append("missing_supported_protocols: hosted 未声明 SUPPORTED_PROTOCOLS")
+    else:
+        sp_body = sp_match.group(1)
+        found_versions = re.findall(r"['\"]([^'\"]+)['\"]", sp_body)
+        if '2025-11-25' not in found_versions:
+            errors.append(
+                f"missing_2025_11_25: SUPPORTED_PROTOCOLS={found_versions} "
+                f"未含 2025-11-25"
+            )
+
+    # 3. CAPABILITIES_BY_VERSION 常量必须存在
+    if 'CAPABILITIES_BY_VERSION' not in clean:
+        errors.append("missing_capabilities_by_version: hosted 未声明 CAPABILITIES_BY_VERSION")
+
+    # 4. HOSTED_HONEST_LIMITS 常量必须存在 + 5 条齐全（stdio 3 + hosted 2）
+    if 'HOSTED_HONEST_LIMITS' not in clean:
+        errors.append("missing_hosted_honest_limits: hosted 未声明 HOSTED_HONEST_LIMITS")
+    else:
+        hh_match = re.search(r"HOSTED_HONEST_LIMITS\s*=\s*\[([^\]]+)\]", clean)
+        if not hh_match:
+            errors.append("hosted_honest_limits_array_not_found")
+        else:
+            hh_body = hh_match.group(1)
+            hh_found = re.findall(r"['\"]([^'\"]+)['\"]", hh_body)
+            all_expected = EXPECTED_HONEST_LIMITS + EXPECTED_HOSTED_EXTRA_LIMITS
+            for e in all_expected:
+                if e not in hh_found:
+                    errors.append(f"missing_hosted_limit: {e}（实际: {hh_found}）")
+
+    # 5. initialize 响应必须暴露 experimental.roboparts（含 protocol_versions_supported 等）
+    if 'protocol_versions_supported' not in clean:
+        errors.append("missing_experimental_field: protocol_versions_supported")
+    if 'capabilities_by_version' not in clean:
+        errors.append("missing_experimental_field: capabilities_by_version")
+
+    # 6. TOOLS 数组必须含 6 个新工具
+    for tool in EXPECTED_NEW_TOOLS:
+        if not find_tool_decl(tool, clean):
+            errors.append(f"missing_tool_decl_hosted: {tool}")
+
+    # 7. 真实现工具必须调用真实实现函数（不能只是 honest_note 兜底）
+    for tool in EXPECTED_HOSTED_REAL_IMPL_TOOLS:
+        if not find_case_dispatch(tool, clean):
+            errors.append(f"missing_dispatch_hosted: {tool}")
+    # explain_unknown 必须真调用 toolExplainUnknown
+    if not re.search(r"toolExplainUnknown\s*\(", clean):
+        errors.append("missing_toolExplainUnknown_impl: 真实现函数未定义或未被调用")
+    if not re.search(r"toolTraceReplayHosted\s*\(", clean):
+        errors.append("missing_toolTraceReplayHosted_impl: 真实现函数未定义或未被调用")
+
+    # 8. hint 工具必须返回 honest_note（防"过度声称"）
+    for tool in EXPECTED_HOSTED_HINT_TOOLS:
+        if not find_case_dispatch(tool, clean):
+            errors.append(f"missing_dispatch_hosted: {tool}")
+    # hosted_hint 分支必须至少 4 处出现 honest_note
+    hint_count = len(re.findall(r"honest_note", clean))
+    if hint_count < 4:
+        errors.append(
+            f"insufficient_honest_note: hosted 应有 ≥4 处 honest_note "
+            f"（4 个 hint 工具各一处），实际 {hint_count} 处"
+        )
+    # hint 分支必须显式引导到 stdio
+    if 'stdio_command' not in clean:
+        errors.append("missing_stdio_redirect: hint 工具未引导到 stdio_command")
+
+    return {'pass': len(errors) == 0, 'errors': errors}
 
 
 def run_checks(index_src: str, trace_src: str, pkg: dict) -> dict:
+    # P2-6 收口：hosted 端点（functions/mcp.js）与 stdio 能力同步。
+    # 之前 run_checks 从未读取 MCP_HOSTED，也未调用 check_hosted_sync，
+    # 导致 CHECKS 里的 'hosted_sync' 在 results['checks'] 中缺失 -> main() KeyError。
+    # 这里补上读取与调用，使 hosted 同步校验真正生效。
+    try:
+        with open(MCP_HOSTED, encoding='utf-8') as f:
+            hosted_src = f.read()
+    except OSError:
+        hosted_src = ''
     results = {
         'schema_integrity': check_schema_integrity(index_src, trace_src, pkg),
         'version_negotiation': check_version_negotiation(index_src, trace_src),
         'trace_recording': check_trace_recording(index_src),
         'honest_boundary': check_honest_boundary(index_src),
+        'hosted_sync': check_hosted_sync(hosted_src),
     }
     all_pass = all(r['pass'] for r in results.values())
     return {'all_pass': all_pass, 'checks': results}
