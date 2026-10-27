@@ -55,6 +55,8 @@
   .ev .top .ts{color:var(--mut);font-size:11px;font-variant-numeric:tabular-nums}
   .ev .tid{color:var(--mut);font-size:10.5px;word-break:break-all;margin-top:3px;font-family:ui-monospace,monospace}
   .ev .pl{color:var(--mut);font-size:11.5px;margin-top:4px;word-break:break-all}
+  .ev.replaying{border-color:var(--acc);background:#12253d;box-shadow:0 0 0 1px var(--acc) inset}
+  .ev.past{opacity:.72}
   .cand{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 10px;background:var(--card2);border:1px solid #2a3556;border-radius:8px;margin:5px 0;font-size:12.5px}
   .cand .n{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .cand .cat{color:var(--mut);font-size:11px}
@@ -162,10 +164,23 @@
       <div class="row" style="margin-bottom:8px">
         <button class="mini" onclick="exportEvents()">⬇ 导出 JSON</button>
         <button class="mini" onclick="exportEventsNDJSON()">⬇ 导出 NDJSON</button>
+        <button class="mini" onclick="importEvents()">⬆ 导入/回放</button>
         <button class="mini" onclick="clearEvents()">清空</button>
       </div>
+      <input type="file" id="importFile" accept=".json,.ndjson,application/json,application/x-ndjson" style="display:none">
+      <div id="replayBox" style="display:none" class="row" >
+        <span class="tip" id="replayStatus">回放 0/0</span>
+        <select id="replaySpeed" class="revsel" style="width:auto" onchange="setReplaySpeed()">
+          <option value="2000">0.5x</option>
+          <option value="1000" selected>1x</option>
+          <option value="500">2x</option>
+          <option value="250">4x</option>
+        </select>
+        <button class="mini" onclick="toggleReplay()" id="btnReplay">⏸ 暂停回放</button>
+        <button class="mini" onclick="stopReplay()">⏹ 停止</button>
+      </div>
       <div class="evlist" id="evList"><div class="tip">事件流为空。操作左侧或中间区域会生成事件。</div></div>
-      <div class="tip" style="margin-top:8px">事件为只追加（append-only）。导出后可用 <code>trace_replay</code> 工具离线校验结构完整性。</div>
+      <div class="tip" style="margin-top:8px">事件为只追加（append-only）。可导出 JSON/NDJSON，也可<b>导入回放</b>（结构校验后按序重放，不改动原事件流）。导出后用 <code>trace_replay</code> 工具离线校验结构完整性。</div>
     </div>
   </div>
 
@@ -196,13 +211,14 @@
   // ============================================================
   // 事件模型（对齐 AG-UI 事件命名 + 项目三态诚实纪律）
   // 每类事件都有稳定 shape，可被 trace_replay 结构校验
+  // agui 字段：标注本事件在 AG-UI 事件模型中的对应命名（camelCase 互操作映射）
   // ============================================================
   var EVENT_TYPES = {
-    requirement_updated: { label: '需求更新', icon: '📋' },
-    candidate_proposed:  { label: '候选加入', icon: '🔍' },
-    verdict_computed:    { label: '裁决计算', icon: '⚖️' },
-    human_approved:      { label: '人工审批', icon: '✅' },
-    revision_frozen:     { label: '版本冻结', icon: '📸' }
+    requirement_updated: { label: '需求更新', icon: '📋', agui: 'task/updated' },
+    candidate_proposed:  { label: '候选加入', icon: '🔍', agui: 'artifact/updated' },
+    verdict_computed:    { label: '裁决计算', icon: '⚖️', agui: 'task/status-changed' },
+    human_approved:      { label: '人工审批', icon: '✅', agui: 'task/approved' },
+    revision_frozen:     { label: '版本冻结', icon: '📸', agui: 'thread/updated' }
   };
 
   var LS_EVENTS = 'rp_wb_events_v1';
@@ -564,6 +580,140 @@
     renderEvents(); updateStatus();
   };
 
+  // ============================================================
+  // 导入 / 结构校验 / 叙事回放（v0.2）
+  // 闭环：导出 JSON/NDJSON → 导入校验 → 按序回放（不改动原事件流）
+  // ============================================================
+  var replayTimer = null;
+  var replayIdx = 0;
+  var replaySpeedMs = 1000;
+  var replayRunning = false;
+
+  window.importEvents = function () {
+    document.getElementById('importFile').click();
+  };
+
+  function handleImportFile(file) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var text = String(reader.result || '');
+      var parsed = parseImport(text);
+      if (!parsed) { flash('导入失败：无法解析（需 JSON 数组 或 {schema,events} 或 NDJSON）。'); return; }
+      var v = validateEvents(parsed);
+      if (!v.ok) {
+        flash('导入被拒绝：' + v.errors.length + ' 处结构错误（首个：' + v.errors[0] + '）。');
+        return;
+      }
+      if (!confirm('导入将替换当前事件流（' + parsed.length + ' 条；版本快照不受影响）。继续？')) return;
+      stopReplay();
+      state.events = parsed;
+      state.seq = parsed.length;
+      persist(); renderEvents(); updateStatus();
+      flash('已导入 ' + parsed.length + ' 条事件（结构校验通过）。可点「导入/回放」回放。');
+    };
+    reader.onerror = function () { flash('导入失败：读取文件出错。'); };
+    reader.readAsText(file);
+  }
+
+  function parseImport(text) {
+    var t = String(text || '').trim();
+    if (!t) return null;
+    // 1) NDJSON：多行，每行一个 JSON 对象
+    var lines = t.split(/\r?\n/).filter(function (l) { return l.trim(); });
+    var isNdjson = lines.length > 1 && lines.every(function (l) { return l.trim().charAt(0) === '{'; });
+    if (isNdjson) {
+      var arr = [];
+      for (var i = 0; i < lines.length; i++) {
+        try { arr.push(JSON.parse(lines[i])); } catch (e) { return null; }
+      }
+      return arr;
+    }
+    // 2) JSON：数组 或 {schema, events} 包裹
+    try {
+      var obj = JSON.parse(t);
+      if (Array.isArray(obj)) return obj;
+      if (obj && Array.isArray(obj.events)) return obj.events;
+    } catch (e) { return null; }
+    return null;
+  }
+
+  // 结构校验（对齐 trace_replay 纪律：fail-fast，不静默丢弃）
+  function validateEvents(events) {
+    var errors = [];
+    var seen = {};
+    for (var i = 0; i < events.length; i++) {
+      var ev = events[i];
+      var tag = '#' + (i + 1);
+      if (!ev || typeof ev !== 'object') { errors.push(tag + ' 不是对象'); continue; }
+      if (!ev.trace_id || typeof ev.trace_id !== 'string') errors.push(tag + ' trace_id 缺失');
+      else if (seen[ev.trace_id]) errors.push(tag + ' trace_id 重复: ' + ev.trace_id);
+      else seen[ev.trace_id] = true;
+      if (!ev.type || typeof ev.type !== 'string') errors.push(tag + ' type 缺失');
+      else if (!EVENT_TYPES[ev.type]) errors.push(tag + ' type 未知: ' + ev.type);
+      if (!ev.ts || isNaN(Date.parse(ev.ts))) errors.push(tag + ' ts 非法 ISO');
+      if (ev.payload !== undefined && (typeof ev.payload !== 'object' || ev.payload === null)) errors.push(tag + ' payload 需为对象');
+    }
+    return { ok: errors.length === 0, errors: errors };
+  }
+
+  // ---------- 叙事回放：按序高亮，不改动原事件流 ----------
+  window.replayEvents = function () {
+    if (state.events.length === 0) { flash('事件流为空，无可回放。'); return; }
+    if (replayRunning) stopReplay();
+    replayRunning = true;
+    replayIdx = 0;
+    document.getElementById('replayBox').style.display = 'flex';
+    document.getElementById('btnReplay').textContent = '⏸ 暂停回放';
+    renderReplay();
+    replayTimer = setInterval(replayTick, replaySpeedMs);
+  };
+
+  function replayTick() {
+    replayIdx += 1;
+    if (replayIdx >= state.events.length) { stopReplay(); return; }
+    renderReplay();
+  }
+
+  function renderReplay() {
+    var el = document.getElementById('evList');
+    var status = document.getElementById('replayStatus');
+    var total = state.events.length;
+    var cur = state.events[replayIdx] || {};
+    status.textContent = '回放 ' + (replayIdx + 1) + '/' + total + ' · ' + (EVENT_TYPES[cur.type] || { label: cur.type }).label;
+    el.innerHTML = state.events.slice(0, replayIdx + 1).map(function (ev, j) {
+      var cls = (j === replayIdx) ? ' replaying' : ' past';
+      return renderEventHtml(ev, cls);
+    }).join('');
+    el.scrollTop = el.scrollHeight;
+  }
+
+  window.toggleReplay = function () {
+    if (!replayRunning) return;
+    if (replayTimer) {
+      clearInterval(replayTimer); replayTimer = null;
+      document.getElementById('btnReplay').textContent = '▶ 继续回放';
+    } else {
+      replayTimer = setInterval(replayTick, replaySpeedMs);
+      document.getElementById('btnReplay').textContent = '⏸ 暂停回放';
+    }
+  };
+
+  window.stopReplay = function () {
+    if (replayTimer) { clearInterval(replayTimer); replayTimer = null; }
+    replayRunning = false;
+    var box = document.getElementById('replayBox');
+    if (box) box.style.display = 'none';
+    renderEvents(); // 恢复正常（倒序）渲染
+  };
+
+  window.setReplaySpeed = function () {
+    replaySpeedMs = parseInt(document.getElementById('replaySpeed').value, 10) || 1000;
+    if (replayRunning && replayTimer) {
+      clearInterval(replayTimer);
+      replayTimer = setInterval(replayTick, replaySpeedMs);
+    }
+  };
+
   function download(name, text, type) {
     var blob = new Blob([text], { type: type });
     var url = URL.createObjectURL(blob);
@@ -580,23 +730,28 @@
       return;
     }
     el.innerHTML = state.events.slice().reverse().map(function (ev) {
-      var t = EVENT_TYPES[ev.type] || { label: ev.type, icon: '•' };
-      var payloadStr = '';
-      if (ev.payload) {
-        var keys = Object.keys(ev.payload);
-        if (keys.length) payloadStr = keys.map(function (k) {
-          var v = ev.payload[k];
-          if (v === null || v === undefined) v = 'null';
-          else if (typeof v === 'object') v = '{…}';
-          else v = String(v).slice(0, 80);
-          return '<b>' + esc(k) + '</b>=<code>' + esc(v) + '</code>';
-        }).join(' · ');
-      }
-      return '<div class="ev t-' + ev.type + '"><div class="top"><span class="k">' + t.icon + ' ' + t.label + '</span>' +
-        '<span class="ts">' + esc((ev.ts || '').replace('T', ' ').slice(0, 19)) + '</span></div>' +
-        (payloadStr ? '<div class="pl">' + payloadStr + '</div>' : '') +
-        '<div class="tid">' + esc(ev.trace_id) + '</div></div>';
+      return renderEventHtml(ev, '');
     }).join('');
+  }
+
+  // 渲染单条事件 HTML；extraClass 用于回放高亮（' replaying' / ' past'）
+  function renderEventHtml(ev, extraClass) {
+    var t = EVENT_TYPES[ev.type] || { label: ev.type, icon: '•' };
+    var payloadStr = '';
+    if (ev.payload) {
+      var keys = Object.keys(ev.payload);
+      if (keys.length) payloadStr = keys.map(function (k) {
+        var v = ev.payload[k];
+        if (v === null || v === undefined) v = 'null';
+        else if (typeof v === 'object') v = '{…}';
+        else v = String(v).slice(0, 80);
+        return '<b>' + esc(k) + '</b>=<code>' + esc(v) + '</code>';
+      }).join(' · ');
+    }
+    return '<div class="ev t-' + ev.type + (extraClass || '') + '"><div class="top"><span class="k">' + t.icon + ' ' + t.label + '</span>' +
+      '<span class="ts">' + esc((ev.ts || '').replace('T', ' ').slice(0, 19)) + '</span></div>' +
+      (payloadStr ? '<div class="pl">' + payloadStr + '</div>' : '') +
+      '<div class="tid">' + esc(ev.trace_id) + '</div></div>';
   }
 
   function updateStatus() {
@@ -629,6 +784,11 @@
   updateStatus();
   document.getElementById('searchBox').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') window.searchParts();
+  });
+  document.getElementById('importFile').addEventListener('change', function (e) {
+    var f = e.target.files && e.target.files[0];
+    if (f) handleImportFile(f);
+    e.target.value = '';
   });
 })();
 </script>
