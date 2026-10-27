@@ -153,6 +153,7 @@
       { s: 'design',       href: '/designer.html',       label: '③ 设计' },
       { s: 'design',       href: '/bom-checker.html',    label: '④ BOM 校验' },
       { s: 'design',       href: '/adapter-generator.html', label: '⑤ 转接件' },
+      { s: 'design',       href: '/compose-workbench.html', label: '🛠️ 组合工作台' },
     ]},
     { group: 'data', items: [
       { s: 'data',         href: '/data-hub.html',       label: '数据中枢' },
@@ -188,6 +189,7 @@
         { href: '/designer.html',         label: '设计画布' },
         { href: '/bom-checker.html',      label: 'BOM 校验' },
         { href: '/adapter-generator.html', label: '转接件生成' },
+        { href: '/compose-workbench.html', label: '组合工作台' },
         { href: '/assembly.html',         label: '装配级检查' },
       ],
     },
@@ -226,6 +228,7 @@
     'adapter-generator.html': { section: 'design',    breadcrumb: ['首页', '设计', '转接件生成'], next: { title: '生成后运行 BOM 校验', btns: [{ href: '/bom-checker.html', label: '▶ BOM 校验' }] } },
     'bom-checker.html':       { section: 'design',    breadcrumb: ['首页', '设计', 'BOM 校验'], next: { title: '校验结果有 type_error？生成转接件', btns: [{ href: '/adapter-generator.html', label: '▶ 转接件生成' }, { href: '/assembly.html', label: '装配级检查' }] } },
     'assembly.html':          { section: 'design',    breadcrumb: ['首页', '设计', '装配级检查'], next: { title: '回到 BOM 校验', btns: [{ href: '/bom-checker.html', label: '▶ BOM 校验' }] } },
+    'compose-workbench.html': { section: 'design',    breadcrumb: ['首页', '设计', '组合工作台'], next: { title: '组合完成？校验 BOM', btns: [{ href: '/bom-checker.html', label: '▶ BOM 校验' }, { href: '/adapter-generator.html', label: '转接件生成' }] } },
     'data-hub.html':          { section: 'data',      breadcrumb: ['首页', '数据中枢'], next: { title: '浏览零件库', btns: [{ href: '/parts-viewer.html', label: '▶ 零件库' }] } },
     'parts-viewer.html':      { section: 'data',      breadcrumb: ['首页', '数据中枢', '零件库'], next: { title: '选型 / 校验', btns: [{ href: '/selection.html', label: '▶ 选型' }, { href: '/bom-checker.html', label: 'BOM 校验' }] } },
     'urdf-library.html':      { section: 'data',      breadcrumb: ['首页', '数据中枢', 'URDF 库'], next: { title: '查看 ISO 9409 法兰', btns: [{ href: '/iso-9409-flange.html', label: '▶ ISO 9409-1' }] } },

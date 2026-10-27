@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="stylesheet" href="/_shell.css">
+<link rel="stylesheet" href="/_project-badge.css">
+<meta charset="UTF-8">
+<link rel="alternate" hreflang="zh-CN" href="https://roboparts.cc/compose-workbench.html">
+<link rel="alternate" hreflang="x-default" href="https://roboparts.cc/compose-workbench.html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParts · 组合工作台（Compose Workbench）</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0b1020">
+<link rel="canonical" href="https://roboparts.cc/compose-workbench">
+<meta name="description" content="组合工作台：把选型→校验→裁决→审批串成一条可审批、可暂停、可比较版本的事件流。每个动作生成结构化事件（requirement.updated / candidate.proposed / verdict.computed / human.approved / revision.frozen），事件流可导出、可离线回放。">
+<meta property="og:title" content="RoboParts · 组合工作台">
+<style>
+  :root{--bg:#0b1020;--card:#141b30;--card2:#0e1530;--acc:#37e0a6;--acc2:#5b9dff;--txt:#e7ecf5;--mut:#8a96b0;--bad:#ff6b6b;--ok:#37e0a6;--warn:#ffd166;--line:#233049}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.6}
+  .wrap{max-width:1280px;margin:0 auto;padding:30px 20px 60px}
+  h1{font-size:25px;margin:0 0 6px}
+  h2{font-size:15px;margin:0 0 12px;color:var(--acc);letter-spacing:.02em}
+  .sub{color:var(--mut);margin-bottom:18px;font-size:13.5px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:16px}
+  button{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#04210f;border:0;border-radius:9px;padding:9px 16px;font-weight:700;cursor:pointer;font-size:13px}
+  button.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc)}
+  button.mini{padding:4px 10px;font-size:12px;border-radius:7px;background:transparent;color:var(--acc2);border:1px solid #2a3556}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .row{display:flex;gap:10px;align-items:center;margin:8px 0;flex-wrap:wrap}
+  input[type=text]{background:var(--card2);color:var(--txt);border:1px solid #2a3556;border-radius:8px;padding:9px 10px;font-size:14px;flex:1;min-width:160px}
+  label{font-size:12.5px;color:var(--mut);min-width:64px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid #2a3556;border-radius:999px;padding:2px 10px;font-size:11.5px;color:var(--mut)}
+  .pill.acc{color:var(--acc);border-color:#2a4d3a}
+  .pill.bad{color:var(--bad);border-color:#4d2a2a}
+  .pill.warn{color:var(--warn);border-color:#4d4a2a}
+  .grid3{display:grid;grid-template-columns:1.05fr 1.15fr .95fr;gap:14px}
+  @media(max-width:1080px){.grid3{grid-template-columns:1fr}}
+  .slot{background:var(--card2);border:1px solid #2a3556;border-radius:10px;padding:10px 12px;margin:6px 0;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .slot .id{font-weight:700;color:var(--acc)}
+  .slot .nm{font-size:12.5px;color:var(--mut)}
+  .slot.empty{border-style:dashed;color:var(--mut)}
+  .slot.empty .id{color:var(--mut);font-weight:400}
+  .verdict{font-size:19px;font-weight:800;padding:13px 16px;border-radius:12px;margin:10px 0}
+  .v-compat{background:#0c2a1e;color:var(--ok);border-left:4px solid var(--ok)}
+  .v-incompat{background:#2a1414;color:var(--bad);border-left:4px solid var(--bad)}
+  .v-unknown{background:#161c2e;color:var(--mut);border-left:4px solid var(--mut)}
+  .ev{background:var(--card2);border-left:3px solid var(--acc2);border-radius:0 8px 8px 0;padding:9px 11px;margin:7px 0;font-size:12.5px}
+  .ev.t-verdict_computed{border-color:var(--warn)}
+  .ev.t-human_approved{border-color:var(--ok)}
+  .ev.t-revision_frozen{border-color:var(--acc2)}
+  .ev .top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+  .ev .top .k{font-weight:700;color:var(--txt)}
+  .ev .top .ts{color:var(--mut);font-size:11px;font-variant-numeric:tabular-nums}
+  .ev .tid{color:var(--mut);font-size:10.5px;word-break:break-all;margin-top:3px;font-family:ui-monospace,monospace}
+  .ev .pl{color:var(--mut);font-size:11.5px;margin-top:4px;word-break:break-all}
+  .cand{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 10px;background:var(--card2);border:1px solid #2a3556;border-radius:8px;margin:5px 0;font-size:12.5px}
+  .cand .n{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .cand .cat{color:var(--mut);font-size:11px}
+  .evlist{max-height:340px;overflow-y:auto;margin:-4px -6px;padding:0 6px}
+  .tip{color:var(--mut);font-size:12px}
+  .warn-box{color:var(--warn);background:#2a2410;border-left:3px solid var(--warn);padding:7px 11px;border-radius:6px;margin:8px 0;font-size:12.5px}
+  .hint{color:var(--mut);font-size:12px;margin-top:6px}
+  table{border-collapse:collapse;width:100%;font-size:12.5px;margin-top:6px}
+  th,td{border:1px solid #243049;padding:5px 8px;text-align:left;vertical-align:top}
+  th{background:var(--card2);color:var(--acc)}
+  a{color:var(--acc2)}
+  code{background:var(--card2);padding:1px 5px;border-radius:5px;font-size:12px}
+  .statusbar{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--mut);margin-bottom:14px}
+  .statusbar b{color:var(--txt);font-weight:700}
+  .stop{background:transparent;color:var(--warn);border:1px solid var(--warn)}
+  .diff-add{background:#0c2a1e;color:var(--ok)}
+  .diff-del{background:#2a1414;color:var(--bad)}
+  .diff-same{color:var(--mut)}
+  .revsel{background:var(--card2);color:var(--txt);border:1px solid #2a3556;border-radius:8px;padding:7px 9px;font-size:12.5px}
+  .paused-badge{background:#2a2410;color:var(--warn);border:1px solid var(--warn);border-radius:999px;padding:3px 11px;font-size:12px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🛠️ 组合工作台 <span class="pill">事件流 · 可审批 · 可比较版本</span></h1>
+  <div class="sub">
+    把「选型 → 校验 → 裁决 → 审批」串成一条<b>结构化事件流</b>：每个动作生成一条带
+    <code>trace_id</code> 的事件，可导出、可离线回放。用户可对裁决做<b>审批</b>、<b>暂停</b>流程、
+    冻结版本并<b>比较两版 BOM/裁决变化</b>。
+    协议参考 <a href="https://docs.ag-ui.com/introduction" target="_blank">AG-UI</a>（事件模型）与
+    <a href="https://a2a-protocol.org/latest/specification/" target="_blank">A2A</a>（任务状态）。
+    事件流与版本快照<b>仅存本地浏览器，不上报服务端</b>。
+  </div>
+
+  <div class="statusbar">
+    <span>事件数：<b id="stEvents">0</b></span>
+    <span>已审批：<b id="stApproved">0</b></span>
+    <span>版本快照：<b id="stRevs">0</b></span>
+    <span id="stPauseWrap" style="display:none"><span class="paused-badge">⏸ 已暂停</span></span>
+    <span style="flex:1"></span>
+    <span class="tip">数据源：<code>/api/search</code> · <code>/api/compatibility</code></span>
+  </div>
+
+  <div class="grid3">
+    <!-- ① 需求与候选 -->
+    <div class="card">
+      <h2>① 需求与候选</h2>
+      <div class="row">
+        <input type="text" id="searchBox" placeholder="搜索器件，如「夹爪」「力传感器」「DYNAMIXEL」…">
+        <button class="ghost" onclick="searchParts()">搜索</button>
+      </div>
+      <div class="hint" id="searchHint">字面匹配，非语义检索。支持 category 过滤。</div>
+      <div id="candList"><div class="tip">输入关键词开始搜索。</div></div>
+
+      <h2 style="margin-top:16px">约束（可暂停时修改）</h2>
+      <div class="row">
+        <label>预算 CNY</label>
+        <input type="text" id="budget" placeholder="如 50000" style="flex:0 0 110px">
+      </div>
+      <div class="row">
+        <label>应用场景</label>
+        <select id="scenario" class="revsel" style="flex:1">
+          <option value="">不限</option>
+          <option value="humanoid">人形 humanoid</option>
+          <option value="quadruped">四足 quadruped</option>
+          <option value="robot_arm">机械臂 robot_arm</option>
+          <option value="amr">移动机器人 amr</option>
+          <option value="industrial">工业 industrial</option>
+        </select>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="ghost" onclick="applyConstraints()">应用约束</button>
+        <button class="stop" onclick="togglePause()" id="btnPause">⏸ 暂停</button>
+      </div>
+      <div class="tip" style="margin-top:8px">约束目前是<b>工作流元数据</b>（写入事件流，供审批时引用），不自动过滤候选——自动推荐请用 <a href="/selection">选型助手</a>。</div>
+    </div>
+
+    <!-- ② 兼容性裁决 -->
+    <div class="card">
+      <h2>② 兼容性裁决</h2>
+      <div class="slot empty" id="slotA">
+        <div><div class="id">器件 A（未选）</div><div class="nm">从左侧候选中「设为 A」</div></div>
+      </div>
+      <div class="slot empty" id="slotB">
+        <div><div class="id">器件 B（未选）</div><div class="nm">从左侧候选中「设为 B」</div></div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button id="btnCheck" onclick="runVerdict()" disabled>▶ 校验兼容性</button>
+        <button class="mini" id="btnAdapter" onclick="openAdapter()" style="display:none">生成转接件</button>
+      </div>
+      <div id="verdictBox"></div>
+      <div id="verdictMeta"></div>
+      <div id="approveBox" style="display:none">
+        <div class="row" style="margin-top:10px">
+          <span class="tip">审批当前裁决：</span>
+          <button class="mini" onclick="approveVerdict(true)">✅ 批准</button>
+          <button class="mini" style="color:var(--bad);border-color:#4d2a2a" onclick="approveVerdict(false)">❌ 驳回</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 事件流 -->
+    <div class="card">
+      <h2>③ 事件流 <span class="pill" id="evCount">0</span></h2>
+      <div class="row" style="margin-bottom:8px">
+        <button class="mini" onclick="exportEvents()">⬇ 导出 JSON</button>
+        <button class="mini" onclick="exportEventsNDJSON()">⬇ 导出 NDJSON</button>
+        <button class="mini" onclick="clearEvents()">清空</button>
+      </div>
+      <div class="evlist" id="evList"><div class="tip">事件流为空。操作左侧或中间区域会生成事件。</div></div>
+      <div class="tip" style="margin-top:8px">事件为只追加（append-only）。导出后可用 <code>trace_replay</code> 工具离线校验结构完整性。</div>
+    </div>
+  </div>
+
+  <!-- ④ 版本快照 -->
+  <div class="card">
+    <h2>④ 版本快照 <span class="tip">冻结当前状态，比较两版 BOM/裁决变化</span></h2>
+    <div class="row">
+      <button onclick="freezeRevision()">📸 冻结当前版本</button>
+      <span id="revSummary" style="flex:1"></span>
+    </div>
+    <div id="revList"></div>
+    <div class="row" id="diffRow" style="display:none;margin-top:10px">
+      <label>比较</label>
+      <select id="diffFrom" class="revsel"></select>
+      <span class="tip">→</span>
+      <select id="diffTo" class="revsel"></select>
+      <button class="ghost" onclick="compareRevisions()">对比</button>
+    </div>
+    <div id="diffResult"></div>
+  </div>
+</div>
+
+<script src="/_shell.js" data-rp-section="design" data-rp-next="bom-checker"></script>
+<script>
+(function () {
+  'use strict';
+
+  // ============================================================
+  // 事件模型（对齐 AG-UI 事件命名 + 项目三态诚实纪律）
+  // 每类事件都有稳定 shape，可被 trace_replay 结构校验
+  // ============================================================
+  var EVENT_TYPES = {
+    requirement_updated: { label: '需求更新', icon: '📋' },
+    candidate_proposed:  { label: '候选加入', icon: '🔍' },
+    verdict_computed:    { label: '裁决计算', icon: '⚖️' },
+    human_approved:      { label: '人工审批', icon: '✅' },
+    revision_frozen:     { label: '版本冻结', icon: '📸' }
+  };
+
+  var LS_EVENTS = 'rp_wb_events_v1';
+  var LS_REVS   = 'rp_wb_revs_v1';
+
+  var state = {
+    events: [],
+    revisions: [],
+    seq: 0,
+    slotA: null,   // {id, name, category}
+    slotB: null,
+    verdict: null, // 最近一次裁决的 API 响应
+    paused: false,
+    filter: { q: '', category: '' }
+  };
+
+  // ---------- 持久化 ----------
+  function persist() {
+    try {
+      localStorage.setItem(LS_EVENTS, JSON.stringify(state.events));
+      localStorage.setItem(LS_REVS, JSON.stringify(state.revisions));
+    } catch (e) { /* 配额满 / 隐私模式：静默，事件流仍在内存可用 */ }
+  }
+  function restore() {
+    try {
+      var e = JSON.parse(localStorage.getItem(LS_EVENTS) || '[]');
+      var r = JSON.parse(localStorage.getItem(LS_REVS) || '[]');
+      if (Array.isArray(e)) state.events = e;
+      if (Array.isArray(r)) state.revisions = r;
+      var maxSeq = 0;
+      state.events.forEach(function (ev) {
+        var m = /^ev_[a-z0-9]+_(\d+)$/.exec(ev.trace_id || '');
+        if (m) maxSeq = Math.max(maxSeq, parseInt(m[1], 10));
+      });
+      state.seq = maxSeq;
+    } catch (e) { /* 损坏数据：忽略，从零开始 */ }
+  }
+
+  // ---------- 事件发射 ----------
+  function emit(type, payload) {
+    state.seq += 1;
+    var ev = {
+      trace_id: 'ev_' + Date.now().toString(36) + '_' + String(state.seq).padStart(4, '0'),
+      ts: new Date().toISOString(),
+      type: type,
+      payload: payload || {}
+    };
+    state.events.push(ev);
+    if (state.events.length > 500) state.events.shift(); // 环形上限，防内存膨胀
+    persist();
+    renderEvents();
+    updateStatus();
+    return ev;
+  }
+
+  // ---------- API 调用（防御式：不猜字段，拿不到就标 unknown） ----------
+  function apiSearch(q, category, limit) {
+    var url = '/api/search?q=' + encodeURIComponent(q);
+    if (category) url += '&category=' + encodeURIComponent(category);
+    url += '&limit=' + (limit || 12);
+    return fetch(url).then(function (r) { return r.json(); });
+  }
+  function apiCompat(a, b) {
+    return fetch('/api/compatibility?a=' + encodeURIComponent(a) + '&b=' + encodeURIComponent(b))
+      .then(function (r) { return r.json(); });
+  }
+
+  // ---------- 搜索与候选 ----------
+  window.searchParts = function () {
+    if (state.paused) { flash('流程已暂停，先恢复再继续。'); return; }
+    var q = document.getElementById('searchBox').value.trim();
+    if (!q) { document.getElementById('searchHint').textContent = '请输入关键词。'; return; }
+    document.getElementById('searchHint').textContent = '检索中…';
+    state.filter.q = q;
+    apiSearch(q, state.filter.category, 12).then(function (data) {
+      var list = (data && data.results) || [];
+      var hint = data && data.meta ? (data.meta.matched + ' 命中 / ' + data.meta.returned + ' 返回') : '';
+      document.getElementById('searchHint').textContent = hint || '无命中。';
+      renderCandidates(list);
+      if (list.length > 0) emit('requirement_updated', { q: q, matched: list.length, searched_in: data.meta ? data.meta.searched_in : 'all' });
+    }).catch(function () {
+      document.getElementById('searchHint').textContent = '检索失败，请重试。';
+    });
+  };
+
+  function renderCandidates(list) {
+    var el = document.getElementById('candList');
+    if (!list.length) { el.innerHTML = '<div class="tip">无匹配。</div>'; return; }
+    el.innerHTML = '';
+    list.forEach(function (it) {
+      var d = document.createElement('div');
+      d.className = 'cand';
+      var nm = it.name || it.name_en || it.id;
+      d.innerHTML = '<div class="n">' + esc(nm) + ' <span class="cat">' + esc(it.category || '') + '</span></div>';
+      var btns = document.createElement('span');
+      btns.innerHTML = '<button class="mini" onclick="setSlot(\'A\',\'' + esc(it.id) + '\',\'' + esc(String(nm).replace(/'/g, "\\'")) + '\',\'' + esc(it.category || '') + '\')">设为A</button> ' +
+                       '<button class="mini" onclick="setSlot(\'B\',\'' + esc(it.id) + '\',\'' + esc(String(nm).replace(/'/g, "\\'")) + '\',\'' + esc(it.category || '') + '\')">设为B</button>';
+      d.appendChild(btns);
+      el.appendChild(d);
+    });
+  }
+
+  window.setSlot = function (which, id, name, category) {
+    if (state.paused) { flash('流程已暂停，先恢复再继续。'); return; }
+    var obj = { id: id, name: name, category: category };
+    if (which === 'A') state.slotA = obj; else state.slotB = obj;
+    renderSlots();
+    emit('candidate_proposed', { slot: which, id: id, name: name, category: category });
+  };
+
+  function renderSlots() {
+    renderSlot('A', state.slotA);
+    renderSlot('B', state.slotB);
+    document.getElementById('btnCheck').disabled = !(state.slotA && state.slotB);
+  }
+  function renderSlot(which, obj) {
+    var el = document.getElementById('slot' + which);
+    if (!obj) {
+      el.className = 'slot empty';
+      el.innerHTML = '<div><div class="id">器件 ' + which + '（未选）</div><div class="nm">从左侧候选中「设为 ' + which + '」</div></div>';
+      return;
+    }
+    el.className = 'slot';
+    el.innerHTML = '<div style="flex:1;min-width:0"><div class="id">' + esc(obj.id) + '</div><div class="nm">' + esc(obj.name || '') + (obj.category ? ' · ' + esc(obj.category) : '') + '</div></div>' +
+      '<button class="mini" onclick="clearSlot(\'' + which + '\')">移除</button>';
+  }
+  window.clearSlot = function (which) {
+    if (which === 'A') state.slotA = null; else state.slotB = null;
+    state.verdict = null;
+    document.getElementById('verdictBox').innerHTML = '';
+    document.getElementById('verdictMeta').innerHTML = '';
+    document.getElementById('approveBox').style.display = 'none';
+    document.getElementById('btnAdapter').style.display = 'none';
+    renderSlots();
+  };
+
+  // ---------- 裁决 ----------
+  window.runVerdict = function () {
+    if (state.paused) { flash('流程已暂停，先恢复再继续。'); return; }
+    if (!state.slotA || !state.slotB) return;
+    var a = state.slotA.id, b = state.slotB.id;
+    document.getElementById('btnCheck').disabled = true;
+    document.getElementById('verdictBox').innerHTML = '<div class="tip">校验中…</div>';
+    apiCompat(a, b).then(function (data) {
+      state.verdict = data;
+      renderVerdict(data);
+      document.getElementById('btnCheck').disabled = false;
+      var info = {
+        a: a, b: b,
+        success: data && data.success !== false,
+        ambiguous: data && !!data.ambiguous,
+        not_found: data && !!data.not_found,
+        verdict: data && (data.verdict || (data.compatible !== undefined ? String(data.compatible) : null)),
+        verdict_reason: data && (data.verdict_reason || null),
+        resolve_note: data && data.resolve_note || null,
+        adapter_url: data && data.adapter_url || null
+      };
+      emit('verdict_computed', info);
+    }).catch(function () {
+      document.getElementById('verdictBox').innerHTML = '<div class="warn-box">裁决请求失败，请重试。</div>';
+      document.getElementById('btnCheck').disabled = false;
+      emit('verdict_computed', { a: a, b: b, success: false, error: 'fetch_failed' });
+    });
+  };
+
+  function renderVerdict(d) {
+    var box = document.getElementById('verdictBox');
+    var meta = document.getElementById('verdictMeta');
+    var appr = document.getElementById('approveBox');
+    var adapter = document.getElementById('btnAdapter');
+    if (!d || d.success === false) {
+      if (d && d.ambiguous) {
+        box.innerHTML = '<div class="warn-box">输入有歧义，系统未静默选择。请从候选中挑具体 ID：' + esc(d.hint || '') + '</div>';
+        meta.innerHTML = '<div class="tip">candidates_a: ' + ((d.candidates_a || []).length) + ' / candidates_b: ' + ((d.candidates_b || []).length) + '</div>';
+        appr.style.display = 'none'; adapter.style.display = 'none';
+        return;
+      }
+      if (d && d.not_found) {
+        box.innerHTML = '<div class="warn-box">实体未找到：' + esc(d.hint || '') + '</div>';
+        meta.innerHTML = ''; appr.style.display = 'none'; adapter.style.display = 'none';
+        return;
+      }
+      box.innerHTML = '<div class="v-unknown">⚠ 裁决失败</div>';
+      meta.innerHTML = '<div class="tip">' + esc(d && d.error || '') + '</div>';
+      appr.style.display = 'none'; adapter.style.display = 'none';
+      return;
+    }
+    // 三态：compatible / incompatible / unknown（verdict_reason 为 null = 证据不足）
+    var vStr = String(d.verdict || d.result || d.compatible || '').toLowerCase();
+    var vClass, vLabel;
+    if (vStr === 'true' || vStr === 'yes' || vStr === '1' || vStr === 'compatible') {
+      vClass = 'v-compat'; vLabel = '✅ 兼容';
+    } else if (vStr.indexOf('incompatible') >= 0 || vStr === 'false' || vStr === 'no' || vStr === '0') {
+      vClass = 'v-incompat'; vLabel = '❌ 不兼容';
+    } else {
+      vClass = 'v-unknown'; vLabel = '❓ 证据不足（unknown）';
+    }
+    if (!d.verdict_reason && (d.verdict === undefined && d.result === undefined && d.compatible === undefined)) {
+      vClass = 'v-unknown'; vLabel = '❓ 证据不足（unknown）';
+    }
+    box.innerHTML = '<div class="verdict ' + vClass + '">' + vLabel + '</div>' +
+      '<div class="tip">' + (d.verdict_reason ? esc(d.verdict_reason) : 'verdict_reason 为空 —— 证据不足，<b>不等于不兼容</b>。') + '</div>';
+    var bits = [];
+    if (d.resolve_note) bits.push('<div class="tip" style="margin-top:6px"><b>解析痕迹：</b>' + esc(d.resolve_note) + '</div>');
+    meta.innerHTML = bits.join('');
+    appr.style.display = (vClass === 'v-compat' || vClass === 'v-incompat') ? 'block' : 'none';
+    adapter.style.display = d.adapter_url ? 'inline-block' : 'none';
+  }
+
+  window.openAdapter = function () {
+    if (state.verdict && state.verdict.adapter_url) window.open(state.verdict.adapter_url, '_blank');
+  };
+
+  // ---------- 审批 ----------
+  window.approveVerdict = function (approved) {
+    if (state.paused) { flash('流程已暂停，先恢复再继续。'); return; }
+    if (!state.verdict || state.verdict.success === false) { flash('当前没有可审批的裁决。'); return; }
+    var v = state.verdict;
+    var payload = {
+      approved: approved,
+      a: state.slotA ? state.slotA.id : null,
+      b: state.slotB ? state.slotB.id : null,
+      verdict: v.verdict || v.result || (v.compatible !== undefined ? String(v.compatible) : null),
+      verdict_reason: v.verdict_reason || null
+    };
+    emit('human_approved', payload);
+    flash(approved ? '已批准该裁决（本地，未上报）。' : '已驳回该裁决（本地，未上报）。');
+  };
+
+  // ---------- 约束 ----------
+  window.applyConstraints = function () {
+    if (state.paused) { flash('流程已暂停，先恢复再继续。'); return; }
+    var payload = {
+      budget: document.getElementById('budget').value.trim() || null,
+      scenario: document.getElementById('scenario').value || null
+    };
+    emit('requirement_updated', payload);
+    flash('约束已写入事件流（供审批引用）。');
+  };
+
+  // ---------- 暂停 / 恢复 ----------
+  window.togglePause = function () {
+    state.paused = !state.paused;
+    document.getElementById('btnPause').textContent = state.paused ? '▶ 恢复' : '⏸ 暂停';
+    document.getElementById('btnPause').className = state.paused ? 'ghost' : 'stop';
+    document.getElementById('stPauseWrap').style.display = state.paused ? 'inline-flex' : 'none';
+    emit('requirement_updated', { paused: state.paused });
+  };
+
+  // ---------- 版本快照 ----------
+  window.freezeRevision = function () {
+    if (state.events.length === 0) { flash('事件流为空，无可冻结。'); return; }
+    var rev = {
+      rev_id: 'rv_' + Date.now().toString(36),
+      ts: new Date().toISOString(),
+      label: 'v' + (state.revisions.length + 1),
+      bom: state.slotA ? [{ id: state.slotA.id, name: state.slotA.name, category: state.slotA.category }, { id: state.slotB.id, name: state.slotB.name, category: state.slotB.category }] : [],
+      verdict: state.verdict ? {
+        a: state.slotA ? state.slotA.id : null,
+        b: state.slotB ? state.slotB.id : null,
+        verdict: state.verdict.verdict || (state.verdict.compatible !== undefined ? String(state.verdict.compatible) : null),
+        verdict_reason: state.verdict.verdict_reason || null,
+        success: state.verdict.success !== false
+      } : null,
+      approved: state.events.filter(function (e) { return e.type === 'human_approved'; }).length,
+      event_count: state.events.length
+    };
+    state.revisions.push(rev);
+    if (state.revisions.length > 20) state.revisions.shift();
+    persist();
+    emit('revision_frozen', { rev_id: rev.rev_id, label: rev.label, bom_size: rev.bom.length, event_count: rev.event_count });
+    renderRevisions();
+    updateStatus();
+    flash('已冻结 ' + rev.label + '（本地，未上报）。');
+  };
+
+  function renderRevisions() {
+    var el = document.getElementById('revList');
+    var diffRow = document.getElementById('diffRow');
+    if (state.revisions.length === 0) {
+      el.innerHTML = '<div class="tip">尚无版本快照。冻结当前状态以创建第一个。</div>';
+      document.getElementById('revSummary').innerHTML = '';
+      diffRow.style.display = 'none';
+      return;
+    }
+    el.innerHTML = '<table><tr><th>版本</th><th>时间</th><th>BOM</th><th>裁决</th><th>审批数</th><th>事件</th><th></th></tr>' +
+      state.revisions.slice().reverse().map(function (r) {
+        var vStr = r.verdict ? (r.verdict.verdict || '—') : '—';
+        return '<tr><td><b>' + esc(r.label) + '</b><br><code style="font-size:10px">' + esc(r.rev_id) + '</code></td>' +
+          '<td>' + esc((r.ts || '').replace('T', ' ').slice(0, 16)) + '</td>' +
+          '<td>' + esc(r.bom.map(function (b) { return b.id; }).join(' + ') || '—') + '</td>' +
+          '<td>' + esc(vStr) + '</td>' +
+          '<td>' + r.approved + '</td><td>' + r.event_count + '</td>' +
+          '<td><button class="mini" onclick="deleteRevision(\'' + esc(r.rev_id) + '\')">删除</button></td></tr>';
+      }).join('') + '</table>';
+    document.getElementById('revSummary').innerHTML = '<span class="tip">' + state.revisions.length + ' 个快照 · 最新 ' + esc(state.revisions[state.revisions.length - 1].label) + '</span>';
+    diffRow.style.display = state.revisions.length >= 2 ? 'flex' : 'none';
+    var opts = state.revisions.map(function (r) { return '<option value="' + esc(r.rev_id) + '">' + esc(r.label) + '</option>'; }).join('');
+    var from = document.getElementById('diffFrom'); from.innerHTML = opts;
+    var to = document.getElementById('diffTo'); to.innerHTML = opts;
+    if (state.revisions.length >= 2) {
+      from.selectedIndex = state.revisions.length - 2;
+      to.selectedIndex = state.revisions.length - 1;
+    }
+  }
+
+  window.deleteRevision = function (id) {
+    state.revisions = state.revisions.filter(function (r) { return r.rev_id !== id; });
+    persist(); renderRevisions(); updateStatus();
+  };
+
+  window.compareRevisions = function () {
+    var from = state.revisions.find(function (r) { return r.rev_id === document.getElementById('diffFrom').value; });
+    var to = state.revisions.find(function (r) { return r.rev_id === document.getElementById('diffTo').value; });
+    if (!from || !to || from === to) { flash('请选择两个不同的版本。'); return; }
+    var diff = diffRevisions(from, to);
+    renderDiff(from, to, diff);
+  };
+
+  function diffRevisions(a, b) {
+    var aIds = {}; a.bom.forEach(function (x) { aIds[x.id] = x; });
+    var bIds = {}; b.bom.forEach(function (x) { bIds[x.id] = x; });
+    var added = Object.keys(bIds).filter(function (id) { return !aIds[id]; }).map(function (id) { return bIds[id]; });
+    var removed = Object.keys(aIds).filter(function (id) { return !bIds[id]; }).map(function (id) { return aIds[id]; });
+    var verdictChanged = false;
+    var vFrom = a.verdict ? String(a.verdict.verdict) : null;
+    var vTo = b.verdict ? String(b.verdict.verdict) : null;
+    if (vFrom !== vTo) verdictChanged = true;
+    return { added: added, removed: removed, verdictChanged: verdictChanged, vFrom: vFrom, vTo: vTo,
+             aApproved: a.approved, bApproved: b.approved, aEvents: a.event_count, bEvents: b.event_count };
+  }
+
+  function renderDiff(a, b, d) {
+    var el = document.getElementById('diffResult');
+    var rows = [];
+    if (d.added.length) d.added.forEach(function (x) { rows.push('<tr><td class="diff-add">＋ 新增</td><td>' + esc(x.id) + ' · ' + esc(x.name || '') + '</td></tr>'); });
+    if (d.removed.length) d.removed.forEach(function (x) { rows.push('<tr><td class="diff-del">－ 移除</td><td>' + esc(x.id) + ' · ' + esc(x.name || '') + '</td></tr>'); });
+    if (!d.added.length && !d.removed.length) rows.push('<tr><td class="diff-same">＝ BOM 未变</td><td>—</td></tr>');
+    rows.push('<tr><td>裁决</td><td>' + esc(d.vFrom || '—') + ' → ' + esc(d.vTo || '—') + (d.verdictChanged ? ' <span class="pill bad">变化</span>' : ' <span class="pill acc">不变</span>') + '</td></tr>');
+    rows.push('<tr><td>审批数</td><td>' + d.aApproved + ' → ' + d.bApproved + '</td></tr>');
+    rows.push('<tr><td>事件数</td><td>' + d.aEvents + ' → ' + d.bEvents + '</td></tr>');
+    el.innerHTML = '<h4 style="margin:10px 0 6px">' + esc(a.label) + ' → ' + esc(b.label) + '</h4>' +
+      '<table><tr><th>项</th><th>对比</th></tr>' + rows.join('') + '</table>';
+  }
+
+  // ---------- 事件导出 ----------
+  window.exportEvents = function () {
+    if (!state.events.length) { flash('事件流为空。'); return; }
+    download('rp-workbench-events.json', JSON.stringify({ schema: 'roboparts/workbench-events/v1', exported_at: new Date().toISOString(), events: state.events }, null, 2), 'application/json');
+  };
+  window.exportEventsNDJSON = function () {
+    if (!state.events.length) { flash('事件流为空。'); return; }
+    download('rp-workbench-events.ndjson', state.events.map(function (e) { return JSON.stringify(e); }).join('\n'), 'application/x-ndjson');
+  };
+  window.clearEvents = function () {
+    if (state.events.length === 0) return;
+    if (!confirm('清空事件流？此操作不可撤销。')) return;
+    state.events = []; state.seq = 0; persist();
+    renderEvents(); updateStatus();
+  };
+
+  function download(name, text, type) {
+    var blob = new Blob([text], { type: type });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = name; document.body.appendChild(a); a.click();
+    document.body.removeChild(a); setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  // ---------- 渲染 ----------
+  function renderEvents() {
+    var el = document.getElementById('evList');
+    if (state.events.length === 0) {
+      el.innerHTML = '<div class="tip">事件流为空。操作左侧或中间区域会生成事件。</div>';
+      return;
+    }
+    el.innerHTML = state.events.slice().reverse().map(function (ev) {
+      var t = EVENT_TYPES[ev.type] || { label: ev.type, icon: '•' };
+      var payloadStr = '';
+      if (ev.payload) {
+        var keys = Object.keys(ev.payload);
+        if (keys.length) payloadStr = keys.map(function (k) {
+          var v = ev.payload[k];
+          if (v === null || v === undefined) v = 'null';
+          else if (typeof v === 'object') v = '{…}';
+          else v = String(v).slice(0, 80);
+          return '<b>' + esc(k) + '</b>=<code>' + esc(v) + '</code>';
+        }).join(' · ');
+      }
+      return '<div class="ev t-' + ev.type + '"><div class="top"><span class="k">' + t.icon + ' ' + t.label + '</span>' +
+        '<span class="ts">' + esc((ev.ts || '').replace('T', ' ').slice(0, 19)) + '</span></div>' +
+        (payloadStr ? '<div class="pl">' + payloadStr + '</div>' : '') +
+        '<div class="tid">' + esc(ev.trace_id) + '</div></div>';
+    }).join('');
+  }
+
+  function updateStatus() {
+    document.getElementById('stEvents').textContent = state.events.length;
+    document.getElementById('evCount').textContent = state.events.length;
+    document.getElementById('stApproved').textContent = state.events.filter(function (e) { return e.type === 'human_approved'; }).length;
+    document.getElementById('stRevs').textContent = state.revisions.length;
+  }
+
+  var flashTimer = null;
+  function flash(msg) {
+    var el = document.getElementById('searchHint');
+    el.textContent = msg;
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(function () {
+      el.textContent = '字面匹配，非语义检索。支持 category 过滤。';
+    }, 3000);
+  }
+
+  function esc(s) {
+    if (s === null || s === undefined) return '';
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  // ---------- 初始化 ----------
+  restore();
+  renderEvents();
+  renderSlots();
+  renderRevisions();
+  updateStatus();
+  document.getElementById('searchBox').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') window.searchParts();
+  });
+})();
+</script>
+</body>
+</html>
