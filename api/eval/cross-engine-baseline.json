@@ -1,0 +1,13 @@
+{
+  "version": "cross-engine-baseline/v1",
+  "generated_at": "2026-10-28T07:29:51.644003+00:00",
+  "matched_pairs": 38,
+  "total_mismatch": 24,
+  "true_defects": 0,
+  "attribution": {
+    "证据面不同（JS 有voltage数据 / PY 无有效端口）": 6,
+    "证据面不同（JS 无voltage数据 / PY 有端口类型）": 7,
+    "语义口径不同（JS 只答直接对接 / PY 区分需转接件）": 11
+  },
+  "note": "跨引擎差异登记基线（棘轮：只允许下降）。差异全可归因（设计差异非缺陷）。"
+}

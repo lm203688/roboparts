@@ -198,6 +198,26 @@ def gate_eval_compat():
             timeout=120)
 
 
+def gate_cross_engine_consistency():
+    """跨引擎一致性（P2-8 · 第一/三阶段）。
+
+    产品面 JS 引擎（judgePair）与研究层 Python 引擎（compose）对同一实体对在
+    共享轴（electrical/mechanical）上必须给出**可换算的一致裁决**。
+
+    **为什么不是"必须 100% 一致"**：两套引擎设计上就不同（诚实边界，见
+    dual-engine-bridge.md §三）——电气证据面不同（JS 读 voltage 标量 / PY 读
+    ELEC:CONNECTOR 端口）、机械语义粒度不同（JS 只答直接对接 / PY 区分需转接件）。
+    故本闸门是**差异登记 + 棘轮**：0 真缺陷（同输入不同结论必须红）+ 不一致
+    总量不超基线（只允许下降，新增差异须显式登记）。差异全可归因时放行，
+    不强行"修到一致"（那会破坏诚实边界）。
+
+    **阴阳自证**：阳性（当前数据通过）+ 阴性（注入 1 真缺陷判红）。
+    """
+    run_sub('跨引擎一致性（差异登记 + 棘轮 + 自证）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'verify_cross_engine.py'), '--check'],
+            timeout=180)
+
+
 def gate_readme_stats_fresh():
     """The README top RP-STATS block / §5 category table / §11 gate count must match the
     truth source computed live.
@@ -4713,6 +4733,10 @@ GATES = [
     # 【20261008】Golden evaluation set. Guards "rule engine silently drifts from frozen anchors"
     # — previously this set existed but nobody ran it (4/6 false red); this gate wires it into CI.
     ('兼容性裁决 Golden 评估集（冻结锚点 + badcase）', gate_eval_compat),
+    # 【2026-10-28 P2-8】跨引擎一致性。产品面 JS judgePair vs 研究层 PY compose，
+    # 共享轴（electrical/mechanical）可换算裁决一致。差异登记 + 棘轮（0 真缺陷
+    # 必须红；不一致总量只允许下降）。差异全可归因时放行，不强行修到一致。
+    ('跨引擎一致性（差异登记 + 棘轮 + 自证）', gate_cross_engine_consistency),
     ('meta 单一真相源', gate_meta_single_source),
     ('Functions 顶层安全', gate_functions_toplevel_safe),
     ('GitHub 配置 YAML 可解析', gate_github_yaml_parses),
