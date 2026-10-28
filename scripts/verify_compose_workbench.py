@@ -84,6 +84,23 @@ VALIDATE_RULES = [
 ]
 
 
+def _func_body(src: str, name: str) -> str:
+    """提取 `function name(...) { ... }` 的函数体（花括号配平，跨嵌套健壮）。"""
+    m = re.search(rf"function\s+{re.escape(name)}\s*\([^)]*\)\s*\{{", src)
+    if not m:
+        return ""
+    start = m.end()
+    depth = 1
+    i = start
+    while i < len(src) and depth > 0:
+        if src[i] == "{":
+            depth += 1
+        elif src[i] == "}":
+            depth -= 1
+        i += 1
+    return src[m.start():i]
+
+
 def check_source(src: str) -> list[str]:
     """静态扫描源码，返回契约违规列表（空 = 通过）。"""
     errs: list[str] = []
@@ -123,6 +140,26 @@ def check_source(src: str) -> list[str]:
         if not re.search(rf"\b{re.escape(dot)}\b", src):
             errs.append(f"meta 对外声明缺事件名: {dot}")
 
+    # 6. 端到端回放校验（P2-7 剩余缺口补强）：导入事件流的 verdict 必须与引擎现算一致
+    #    ——回放结束须现算比对，防「导入假 verdict」展示为真实裁决（假绿源）
+    if not re.search(r"function\s+normVerdict\s*\(", src):
+        errs.append("缺归一化函数: normVerdict（三态 compatible/incompatible/unknown）")
+    body = _func_body(src, "verifyReplayAgainstEngine")
+    if not body:
+        errs.append("缺端到端校验函数: verifyReplayAgainstEngine")
+    else:
+        if "apiCompat(" not in body:
+            errs.append("verifyReplayAgainstEngine 未调用 apiCompat（未现算引擎 verdict）")
+        if "normVerdict(" not in body:
+            errs.append("verifyReplayAgainstEngine 未调用 normVerdict（未归一化比对）")
+    rt = _func_body(src, "replayTick")
+    if not rt:
+        errs.append("缺 replayTick 函数")
+    elif "verifyReplayAgainstEngine(" not in rt:
+        errs.append("replayTick 未触发 verifyReplayAgainstEngine（回放结束未做端到端校验）")
+    if "data-trace" not in src:
+        errs.append("renderEventHtml 缺 data-trace 属性（端到端校验无法标红定位）")
+
     return errs
 
 
@@ -144,7 +181,8 @@ def audit() -> int:
         return 1
     print(f"✅ compose-workbench 事件流契约通过：{len(EVENT_KEYS)} 类事件 / "
           f"{len(CORE_FUNCS)} 核心函数 / {len(REPLAY_UI)} 回放 UI / "
-          f"{len(VALIDATE_RULES)} 校验规则 / {len(EVENT_DOT)} 对外声明")
+          f"{len(VALIDATE_RULES)} 校验规则 / {len(EVENT_DOT)} 对外声明 / "
+          f"端到端回放校验（normVerdict + verifyReplayAgainstEngine + replayTick 触发 + data-trace）")
     return 0
 
 
@@ -182,6 +220,22 @@ def self_test() -> int:
     variant = re.sub(r"if \(!ev\.ts \|\| isNaN\(Date\.parse\(ev\.ts\)\)\)[^\n]*", "", src, count=1)
     cases.append(("missing_rule", check_source(variant), True))
 
+    # missing_norm：删 normVerdict 归一化函数（端到端校验缺比对基准）
+    variant = re.sub(r"function normVerdict\([^)]*\)\s*\{.*?\n  \}\n", "", src, count=1, flags=re.DOTALL)
+    cases.append(("missing_norm", check_source(variant), True))
+
+    # missing_verify：删 verifyReplayAgainstEngine 端到端校验函数
+    variant = re.sub(r"function verifyReplayAgainstEngine\([^)]*\)\s*\{.*?\n  \}\n", "", src, count=1, flags=re.DOTALL)
+    cases.append(("missing_verify", check_source(variant), True))
+
+    # missing_apicall：把 verifyReplayAgainstEngine 内的 apiCompat 现算改成 stub（不再现算引擎 verdict）
+    variant = re.sub(r"apiCompat\(p\.a, p\.b\)", "apiCompatStub(p.a, p.b)", src, count=1)
+    cases.append(("missing_apicall", check_source(variant), True))
+
+    # missing_trigger：删 replayTick 里的端到端校验触发（回放结束不再现算比对）
+    variant = re.sub(r"verifyReplayAgainstEngine\(\); // 回放结束[^\n]*", "", src, count=1)
+    cases.append(("missing_trigger", check_source(variant), True))
+
     all_ok = True
     for name, errs, expect_fail in cases:
         if expect_fail:
@@ -194,7 +248,7 @@ def self_test() -> int:
         all_ok = all_ok and ok
 
     if all_ok:
-        print("✅ 自证 6/6 通过（阴阳对照）")
+        print("✅ 自证 10/10 通过（阴阳对照）")
         return 0
     print("❌ 自证失败：存在漏抓或误报")
     return 1

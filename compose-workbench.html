@@ -670,7 +670,11 @@
 
   function replayTick() {
     replayIdx += 1;
-    if (replayIdx >= state.events.length) { stopReplay(); return; }
+    if (replayIdx >= state.events.length) {
+      stopReplay();
+      verifyReplayAgainstEngine(); // 回放结束：端到端校验导入 verdict 与引擎现算一致
+      return;
+    }
     renderReplay();
   }
 
@@ -705,6 +709,66 @@
     if (box) box.style.display = 'none';
     renderEvents(); // 恢复正常（倒序）渲染
   };
+
+  // ---------- 端到端校验：导入事件流的 verdict 必须与引擎现算一致 ----------
+  // 归一化三态：compatible / incompatible / unknown（对齐 renderVerdict 判据，不猜字段）
+  function normVerdict(v) {
+    if (v === undefined || v === null || v === '') return 'unknown';
+    var s = String(v).toLowerCase();
+    if (s === 'true' || s === 'yes' || s === '1' || s === 'compatible') return 'compatible';
+    if (s.indexOf('incompatible') >= 0 || s === 'false' || s === 'no' || s === '0') return 'incompatible';
+    return 'unknown';
+  }
+
+  function verifyReplayAgainstEngine() {
+    var verdictEvents = state.events.filter(function (e) { return e.type === 'verdict_computed'; });
+    var statusEl = document.getElementById('replayStatus');
+    if (verdictEvents.length === 0) {
+      if (statusEl) statusEl.textContent = '端到端校验：无裁决事件，跳过。';
+      return;
+    }
+    if (statusEl) statusEl.textContent = '端到端校验 ' + verdictEvents.length + ' 条裁决与引擎现算一致性…';
+    var mismatched = [];
+    var done = 0;
+    function maybeDone() {
+      if (done < verdictEvents.length) return;
+      if (statusEl) {
+        if (mismatched.length === 0) {
+          statusEl.textContent = '端到端校验通过：' + verdictEvents.length + ' 条裁决均与引擎现算一致 ✅';
+          statusEl.style.color = 'var(--ok)';
+        } else {
+          statusEl.textContent = '端到端校验：' + mismatched.length + ' 条与引擎现算不符 ⚠️';
+          statusEl.style.color = 'var(--warn)';
+          mismatched.forEach(function (mm) {
+            var node = document.querySelector('[data-trace="' + mm.trace_id + '"]');
+            if (node) node.style.borderColor = 'var(--bad)';
+          });
+        }
+      }
+    }
+    verdictEvents.forEach(function (ev) {
+      var p = ev.payload || {};
+      if (!p.a || !p.b) {
+        done += 1;
+        mismatched.push({ trace_id: ev.trace_id, reason: '缺少 a/b 无法校验' });
+        maybeDone();
+        return;
+      }
+      apiCompat(p.a, p.b).then(function (data) {
+        done += 1;
+        var expect = normVerdict(p.verdict);
+        var actual = normVerdict(data && (data.verdict || data.result || data.compatible));
+        if (expect !== actual) {
+          mismatched.push({ trace_id: ev.trace_id, a: p.a, b: p.b, expected: expect, actual: actual });
+        }
+        maybeDone();
+      }).catch(function () {
+        done += 1;
+        mismatched.push({ trace_id: ev.trace_id, a: p.a, b: p.b, reason: '引擎请求失败' });
+        maybeDone();
+      });
+    });
+  }
 
   window.setReplaySpeed = function () {
     replaySpeedMs = parseInt(document.getElementById('replaySpeed').value, 10) || 1000;
@@ -748,7 +812,7 @@
         return '<b>' + esc(k) + '</b>=<code>' + esc(v) + '</code>';
       }).join(' · ');
     }
-    return '<div class="ev t-' + ev.type + (extraClass || '') + '"><div class="top"><span class="k">' + t.icon + ' ' + t.label + '</span>' +
+    return '<div class="ev t-' + ev.type + (extraClass || '') + '" data-trace="' + esc(ev.trace_id || '') + '"><div class="top"><span class="k">' + t.icon + ' ' + t.label + '</span>' +
       '<span class="ts">' + esc((ev.ts || '').replace('T', ' ').slice(0, 19)) + '</span></div>' +
       (payloadStr ? '<div class="pl">' + payloadStr + '</div>' : '') +
       '<div class="tid">' + esc(ev.trace_id) + '</div></div>';

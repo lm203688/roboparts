@@ -159,8 +159,11 @@ def build():
     ev_hist = Counter(p["electrical"] for p in both_evidenced)
 
     # 法兰画像：L2 节点用哪个 ISO 9409-1 标号
+    # 2026-10-28 教训：原 `for nid in {..} | {..}` 遍历 set 联合，键序受
+    # PYTHONHASHSEED 影响（实测 seed=42 与 seed=0/1 输出不同键序），违反
+    # 确定性铁律。加 sorted() 使键序确定（按 nid 字典序插入）。
     flanges = Counter()
-    for nid in {p["a"] for p in l2} | {p["b"] for p in l2}:
+    for nid in sorted({p["a"] for p in l2} | {p["b"] for p in l2}):
         for port in nodes[nid].get("ports") or []:
             if port["type"].startswith("MECH:") and port.get("status") in EFFECTIVE \
                     and "ISO9409-1" in port["type"]:

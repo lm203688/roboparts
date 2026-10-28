@@ -2851,6 +2851,40 @@ def gate_deployment_freshness():
 
     drift_days = (local_ts - live_ts).total_seconds() / 86400
     if drift_days < -0.5:
+        # 口径守卫（2026-10-28 教训）：线上比本地新，可能是「deploy 刷新线上
+        # 派生时间戳」的正常现象（deploy.mjs 部署后 git checkout 回滚本地，
+        # 线上永远比本地 git 略新），也可能是「仓内数据被回退」。必须区分：
+        # 数据内容一致 = 部署刷新（良性，warn 不阻塞）；
+        # 数据内容不一致 = 真回退（严重，bad）。
+        def _content_same_entities(a, b):
+            def strip_ts(o):
+                if isinstance(o, dict):
+                    return {k: strip_ts(v) for k, v in o.items()
+                            if k not in ('updated', 'last_updated', 'generated_at')}
+                if isinstance(o, list):
+                    return [strip_ts(x) for x in o]
+                return o
+            ia = {e.get('id'): strip_ts(e) for e in a if isinstance(e, dict)}
+            ib = {e.get('id'): strip_ts(e) for e in b if isinstance(e, dict)}
+            if set(ia) != set(ib):
+                return False
+            for eid in ia:
+                # 只比共有字段：线上 Worker 会注入/剥离呈现层字段（_locked_fields 等），
+                # 单方独有字段不参与「内容回退」判定
+                ka, kb = ia[eid], ib[eid]
+                for k in set(ka) & set(kb):
+                    if ka[k] != kb[k]:
+                        return False
+            return True
+        local_ents = local.get('entities') if isinstance(local, dict) else None
+        live_ents = live.get('entities') if isinstance(live, dict) else None
+        if local_ents is not None and live_ents is not None and \
+                _content_same_entities(local_ents, live_ents):
+            warn('部署新鲜度对账',
+                 f'线上 updated 比本地新 {abs(drift_days):.1f} 天，但数据内容一致'
+                 f'（线上部署刷新时间戳，非数据回退）。'
+                 f'线上={live_ts_str} / 本地={local_ts_str}')
+            return
         bad('部署新鲜度对账',
             f'线上 updated 竟然比本地新 {abs(drift_days):.1f} 天'
             f'（线上={live_ts_str} / 本地={local_ts_str}）——'
