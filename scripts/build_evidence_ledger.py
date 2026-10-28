@@ -156,20 +156,36 @@ def main() -> int:
             "positive": v >= 1,
         })
 
-    # KPI 棘轮
+    # KPI 棘轮：decidable_pairs = 贡献实际解锁的可判定对数，从真相源现算（MDV 之和）。
+    # 【2026-10-28 修复】旧实现 `prev + len(validated)` 每次 CI 都 +2（骨架贡献固定 2 条），
+    # 导致 128→132 纯虚增（违反「判据现算」铁律——骨架示例 target 不在 mdv_index、MDV=0，
+    # 实际不解锁任何可判定对）。改为从 mdv_index 现算。
     prev_ledger_path = ROOT / "api" / "evidence_ledger.json"
-    decidable_pairs_current = 0
+    prev = {}
     if prev_ledger_path.exists():
         try:
             prev = json.loads(prev_ledger_path.read_text(encoding="utf-8"))
-            decidable_pairs_current = prev.get("kpi", {}).get("decidable_pairs", 0)
         except Exception:
             pass
-    decidable_pairs_new = decidable_pairs_current + len(validated)  # 每条贡献解锁至少 1 对
+    prev_style = (prev.get("meta") or {}).get("kpi_style")
+    decidable_pairs_new = sum(
+        mdv_index.get(f"{c['target']['entity_id']}::{c['target']['axis']}", 0)
+        for c in validated
+    )
+    # 基线：旧产物是累加式（虚增）则重置为现算值；否则沿用上次产物（棘轮）
+    if prev_style == "computed":
+        decidable_pairs_current = (prev.get("kpi") or {}).get("decidable_pairs", 0)
+    else:
+        decidable_pairs_current = decidable_pairs_new  # 累加式旧基线作废，重置
 
     ledger = {
         "meta": {
             "version": "evidence_ledger/v1",
+            "kpi_style": "computed",
+            "kpi_reset_20261028": (
+                "旧实现累加式（prev+len(validated)）致 128→132 虚增；骨架贡献 target "
+                "不在 mdv_index（MDV=0），实际解锁对数=0。已改为 mdv_index 现算并重置基线。"
+            ),
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "source_schema": "schemas/evidence_contribution.schema.json",
             "total_contributions": len(validated),
@@ -188,7 +204,8 @@ def main() -> int:
         },
         "note": (
             "证据账本——追加式、不可改写、可复验。每条贡献必须通过 schema 校验 + 有溯源 + "
-            "falsifiable_check 可复验。KPI 棘轮：decidable_pairs 单调不降。"
+            "falsifiable_check 可复验。KPI 棘轮：decidable_pairs 从 mdv_index 现算（贡献实际解锁的"
+            "可判定对数），单调不降。"
         ),
     }
 

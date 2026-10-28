@@ -429,6 +429,40 @@ def gate_ir_export():
             [python, script, '--self-test'], timeout=30)
 
 
+def gate_compose_workbench():
+    """P2-7 组合工作台 AG-UI 事件流契约（2026-10-28 盘点后补齐）。
+
+    背景：compose-workbench.html 已实现 AG-UI 事件流（requirement.updated /
+    candidate.proposed / verdict.computed / human.approved / revision.frozen）
+    与导入/回放能力，但现有「组合语义 / 代数律」闸门守的是 compose 引擎
+    （scripts/compose_engine.py），**不守工作台页面本身**——事件流契约
+    无独立闸门守护。本闸门补齐该缺口。
+
+    守四条（静态源码扫描，判据由源码现算不手写期望值）：
+    1. event_types：EVENT_TYPES 恰含 5 类（下划线 key），每类带
+       label / icon / agui 三字段（agui 值须非空——AG-UI 互操作映射契约点）；
+    2. functions：核心函数齐备（emit / validateEvents / replayTick /
+       handleImportFile / parseImport / renderEvents / renderEventHtml）；
+    3. replay_ui：回放 UI 元素（replayBox / btnReplay / replayStatus /
+       replaySpeed）+ 回放状态（replayRunning / replaySpeedMs / replayTimer）；
+    4. validate_rules：validateEvents 对齐 trace_replay 纪律（fail-fast，
+       不静默丢弃）——trace_id 缺失/重复、type 未知（EVENT_TYPES 拒绝）、
+       ts 非法 ISO、payload 非对象，四类校验全部存在；
+    5. meta_anchor：meta description 对外声明含 5 类点分事件名，与内部
+       EVENT_TYPES 一致（不漂移）。
+
+    fail-closed：文件缺失 / 解析不出 → 报红（不静默 skip，防 P0-9 假绿）。
+
+    --self-test 提供 6 条自证（baseline / 删事件类 / 删函数 / agui 清空 /
+    删回放 UI / 删校验规则），只测绿路径的闸门等于没闸门。
+    """
+    script = os.path.join(ROOT, 'scripts', 'verify_compose_workbench.py')
+    run_sub('组合工作台 AG-UI 事件流契约审计（静态源码扫描）',
+            [sys.executable, script], timeout=30)
+    run_sub('组合工作台 AG-UI 事件流契约自证（6 类破坏：类型/函数/映射/UI/规则）',
+            [sys.executable, script, '--self-test'], timeout=30)
+
+
 def gate_meta_single_source():
     """The meta top level of entities.json must no longer contain derived duplicates.
 
@@ -4637,6 +4671,11 @@ GATES = [
     # 指纹相等 ⇔ 语义不丢失。阴阳自证：改 verdict/blocking 后指纹必须不等。
     # fail-closed：pxr 不可用时报红（不静默 skip，防 P0-9 假绿）。
     ('OpenUSD/AAS 导出回读（P2-5）', gate_ir_export),
+    # 【2026-10-28 P2-7】组合工作台 AG-UI 事件流契约。盘点发现
+    # compose-workbench.html 事件流（requirement.updated 等 5 类 + 导入/回放）
+    # 已落地，但现有「组合语义/代数律」闸门守的是 compose 引擎非工作台——
+    # 页面事件流契约无独立闸门守护，本闸门补齐。2 个子闸门：静态扫描 + 自证。
+    ('组合工作台 AG-UI 事件流契约（P2-7）', gate_compose_workbench),
     # 【20261008】Golden evaluation set. Guards "rule engine silently drifts from frozen anchors"
     # — previously this set existed but nobody ran it (4/6 false red); this gate wires it into CI.
     ('兼容性裁决 Golden 评估集（冻结锚点 + badcase）', gate_eval_compat),

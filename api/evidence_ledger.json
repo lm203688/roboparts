@@ -1,7 +1,9 @@
 {
   "meta": {
     "version": "evidence_ledger/v1",
-    "generated_at": "2026-10-27T22:04:33.504462+00:00",
+    "kpi_style": "computed",
+    "kpi_reset_20261028": "旧实现累加式（prev+len(validated)）致 128→132 虚增；骨架贡献 target 不在 mdv_index（MDV=0），实际解锁对数=0。已改为 mdv_index 现算并重置基线。",
+    "generated_at": "2026-10-28T03:59:52.009963+00:00",
     "source_schema": "schemas/evidence_contribution.schema.json",
     "total_contributions": 2
   },
@@ -92,9 +94,9 @@
     ]
   },
   "kpi": {
-    "decidable_pairs": 128,
-    "prev_decidable_pairs": 126,
+    "decidable_pairs": 0,
+    "prev_decidable_pairs": 0,
     "monotonic_non_decreasing": true
   },
-  "note": "证据账本——追加式、不可改写、可复验。每条贡献必须通过 schema 校验 + 有溯源 + falsifiable_check 可复验。KPI 棘轮：decidable_pairs 单调不降。"
+  "note": "证据账本——追加式、不可改写、可复验。每条贡献必须通过 schema 校验 + 有溯源 + falsifiable_check 可复验。KPI 棘轮：decidable_pairs 从 mdv_index 现算（贡献实际解锁的可判定对数），单调不降。"
 }

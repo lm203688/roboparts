@@ -179,12 +179,14 @@ def _find_ill_typed_reason(
         nodes_in_core.add(ida)
         nodes_in_core.add(idb)
 
-    # 排序：按 unknown 出现频次降序
+    # 排序：按 unknown 出现频次降序；freq 平局时按节点 ID（确定性 tiebreaker，
+    # 消除 set 迭代顺序依赖——freq 平局时 sorted 会受 PYTHONHASHSEED 影响导致
+    # minimal_core 每次运行不同，违反「判据现算/确定性」铁律）
     freq: Dict[str, int] = {}
     for ida, idb in unknown_by_axis[bottleneck]:
         freq[ida] = freq.get(ida, 0) + 1
         freq[idb] = freq.get(idb, 0) + 1
-    ranked = sorted(nodes_in_core, key=lambda nid: -freq.get(nid, 0))
+    ranked = sorted(nodes_in_core, key=lambda nid: (-freq.get(nid, 0), nid))
     # 取前 N 个（最小 core 大小上限）
     minimal_core = ranked[:min(3, len(ranked))]
 
