@@ -3,7 +3,7 @@
     "version": "evidence_ledger/v1",
     "kpi_style": "computed",
     "kpi_reset_20261028": "旧实现累加式（prev+len(validated)）致 128→132 虚增；骨架贡献 target 不在 mdv_index（MDV=0），实际解锁对数=0。已改为 mdv_index 现算并重置基线。",
-    "generated_at": "2026-10-28T06:08:20.325758+00:00",
+    "generated_at": "2026-10-28T15:08:14.567700+00:00",
     "source_schema": "schemas/evidence_contribution.schema.json",
     "total_contributions": 2
   },

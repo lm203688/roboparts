@@ -9,7 +9,7 @@
     "open_source_models": 5,
     "bound_now": 2,
     "bound_blocked_missing_body": 0,
-    "source_url_fixed": 0,
+    "source_url_fixed": 5,
     "source_url_still_search_link": 0
   },
   "bindings": {
@@ -47,7 +47,13 @@
     }
   },
   "source_url_remediation": {
-    "fixed": [],
+    "fixed": [
+      "LLM-028",
+      "LLM-029",
+      "LLM-030",
+      "CHIP-nvidia-cosmos-groot",
+      "CHIP-nvidia-cosmos-gr00t-v2"
+    ],
     "still_open": [],
     "why": "google.com/search 链接**不可复现**——同一链接在不同时间可能返回不同结果，违反出处纪律。能定位到一手页面的已改正；定位不到的如实登记，不假装已修。"
   },
