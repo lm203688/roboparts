@@ -1,40 +1,44 @@
 # -*- coding: utf-8 -*-
 """
-check_adapter_geometry.py —— 法兰转接件「三方几何一致性」闸门
+check_adapter_geometry.py —— 法兰转接件「多源几何一致性」闸门（5 源）
 ================================================================
 
-为什么需要（20260921 发现）
---------------------------
-同一个 ISO 9409-1 法兰参数，在**三处**各写了一份，且**没有任何机器在守**：
+为什么需要（20260921 发现，20261101 扩展为 5 源）
+--------------------------------------------------
+同一个 ISO 9409-1 法兰参数，在**多处**各写了一份，且**没有任何机器在守**：
 
     ① adapter-generator.html —— three.js 预览分支（浏览器里看到的 3D）
     ② adapter-generator.html —— OpenSCAD 导出模板（用户下载去打印的）
     ③ adapters/gen_adapter.py —— CLI/服务端（CadQuery，出真 BREP STEP）
+    ④ roboparts-dataset/scripts/gen_adapter.py —— 数据集分发副本 CLI
+    ⑤ adapters/example_adapter.scad —— 示例转接板（用户直接改来用）
 
-历史上这里真出过事：① 曾把 `pinPCD` 当**半径**用（`s.pinPCD*Math.cos(a)`），
-而 ②③ 按**直径**用 ⇒ 用户看到的预览与拿到手的 STL 是两套几何。
-A100 预设 pinPCD=50 恰好等于其螺栓节圆半径 50，两个销孔会正好压在 0°/180°
-的螺栓孔上，打印出来的板子装不上。
-
-更要紧的是**它是怎么被发现的**：靠人读完三处代码比对出来的，而 ③ 的注释
-在修复后还挂着"预览分支不一致"的过期警告一周（会误导下一个人"修"回去）。
-也就是说 —— 这条一致性完全靠人的记忆维持，而人的记忆没有闸门。
+历史上这里真出过事：
+  - ① 曾把 `pinPCD` 当**半径**用（`s.pinPCD*Math.cos(a)`），而 ②③ 按**直径**用
+    ⇒ 用户看到的预览与拿到手的 STL 是两套几何。A100 预设 pinPCD=50 恰好等于其
+    螺栓节圆半径 50，两个销孔会正好压在 0°/180° 的螺栓孔上。
+  - 【2026-11-01 R1】④⑤ 与主版分叉：④ 只有 4 档且 A50 pin_pcd=22、A80=4 孔、
+    pin_pcd=38、A100 写 6×M10、A160 写 8×M16（缺 A20/A31.5/A40/A63/A250）；
+    ⑤ A80 写 4 孔、pin_pcd 22/38。
+    而旧闸门只比 (pcd,holes,thread) 的 ①②③，**不含 pin_pcd，也不含 ④⑤**，
+    所以这些分叉全部静默通过 —— 用户按裁决库查到「A100 需转接」却拿到 6 孔的板。
 
 元教训（本项目第 N 次同型）：**同一个口径的第二份来源，就是漂移的起点。**
-本闸门不追求把三处合并成一份（浏览器端与 CLI 的技术栈不同，合并成本高于收益），
-而是把「三处必须一致」这件事变成可机械判定的，让分叉当轮就红。
+本闸门把「多源必须一致」这件事变成可机械判定的，让分叉当轮就红。
 
 本闸门查什么
 ------------
-A) 预设表的**自洽性**：label 里的标号（`A{n}` / `-{孔数}-M{螺纹}`）必须与
-   同一行的 pcd / holes / thread 字段一致。标号写 4 孔、字段写 6 孔 = 用户
-   按标号选型却拿到 6 孔的板。
+A) 预设表**自洽性**：label 里的标号（`A{n}` / `-{孔数}-M{螺纹}`）必须与
+   同一行的 pcd / holes / thread 字段一致。
 B) **口径统一**：预览分支必须按直径解释 pinPCD（存在 `/2`），OpenSCAD 模板的
-   `pins()` 模块必须按直径解释（`translate([pcd/2,...])`）。
-C) **跨实现一致**：`adapter-generator.html` 的预设与 `adapters/gen_adapter.py`
-   的预设，对同名 label 必须给出相同的 (pcd, holes, thread)。
-D) 阴阳自证：喂四种真实会发生的分叉（半径口径回退、label 与字段不符、
-   清空预设、删掉校验），闸门必须逐一判红 —— 否则它只是装饰。
+   `pins()` 模块必须按直径解释（`translate([pcd/2,...])`），两个 CLI 均按直径。
+C) **跨实现一致**：`adapter-generator.html` 预设 ↔ `adapters/gen_adapter.py` 预设
+   ↔ `roboparts-dataset/scripts/gen_adapter.py` 预设，对同名 label 必须给出相同的
+   (pcd, holes, thread, clr, pins, pin_d, pin_pcd)。
+D) **示例一致**：`adapters/example_adapter.scad` 的螺栓孔/销孔几何必须等于其
+   标号对应预设的权威值。
+E) 阴阳自证：喂各种真实会发生的分叉（半径口径回退、label 与字段不符、
+   跨实现分叉、数据集分叉、示例分叉、清空预设），闸门必须逐一判红。
 
 用法：
     python scripts/check_adapter_geometry.py            # 判红则退出码非零
@@ -42,7 +46,6 @@ D) 阴阳自证：喂四种真实会发生的分叉（半径口径回退、label
 """
 from __future__ import annotations
 
-import json
 import os
 import re
 import sys
@@ -50,6 +53,11 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HTML = os.path.join(ROOT, 'adapter-generator.html')
 CLI = os.path.join(ROOT, 'adapters', 'gen_adapter.py')
+DATASET_CLI = os.path.join(ROOT, 'roboparts-dataset', 'scripts', 'gen_adapter.py')
+EXAMPLE = os.path.join(ROOT, 'adapters', 'example_adapter.scad')
+
+#: 跨实现必须一致的字段（2026-11-01 从 (pcd,holes,thread) 扩到含 clr/pins/pin_d/pin_pcd）。
+FIELDS = ('pcd', 'holes', 'thread', 'clr', 'pins', 'pin_d', 'pin_pcd')
 
 FAILED: list[str] = []
 
@@ -68,33 +76,42 @@ def check(ok: bool, msg: str) -> None:
 # --------------------------------------------------------------------------
 
 #: HTML 预设行形如：
-#:   'A50':  {label:'ISO9409-1-A50-4-M6',  pcd:50,  holes:4, thread:'M6',  clr:6.5, pins:2, ...}
+#:   'A50':  {label:'ISO9409-1-A50-4-M6',  pcd:50,  holes:4, thread:'M6',  clr:6.5, pins:2, pinD:6, pinPCD:63},
+#:   'A100-KUKA': {label:'ISO9409-1-A100-4-M8 (KUKA)', ...}   # KUKA 变体（key 含字母）
 _HTML_PRESET_RE = re.compile(
-    r"'([A0-9.]+)'\s*:\s*\{[^}]*?label\s*:\s*'([^']*)'[^}]*?"
-    r"pcd\s*:\s*([0-9.]+)[^}]*?holes\s*:\s*(\d+)[^}]*?thread\s*:\s*'?M?(\d+)'?",
+    r"'([A-Za-z0-9.-]+)'\s*:\s*\{[^}]*?label\s*:\s*'([^']*)'[^}]*?"
+    r"pcd\s*:\s*([0-9.]+)[^}]*?holes\s*:\s*(\d+)[^}]*?thread\s*:\s*'?M?(\d+)'?"
+    r"[^}]*?clr\s*:\s*([0-9.]+)[^}]*?pins\s*:\s*(\d+)[^}]*?pinD\s*:\s*([0-9.]+)"
+    r"[^}]*?pinPCD\s*:\s*([0-9.]+)",
     re.S)
 
-#: CLI 预设形如：
-#:   "A50": dict(label="ISO9409-1-A50-4-M6", pcd=50.0, holes=4, thread="M6", ...)
+#: CLI 预设形如（两个 CLI 同构）：
+#:   "A50": dict(label="ISO9409-1-A50-4-M6", pcd=50.0, holes=4, thread="M6",
+#:               clr=6.5, pins=2, pin_d=6.0, pin_pcd=63.0),
+#:   "A100-KUKA": dict(label="ISO9409-1-A100-4-M8 (KUKA)", ...)
 _CLI_PRESET_RE = re.compile(
-    r'"([A0-9.]+)"\s*:\s*dict\(label\s*=\s*"([^"]*)"\s*,\s*'
-    r'pcd\s*=\s*([0-9.]+)\s*,\s*holes\s*=\s*(\d+)\s*,\s*thread\s*=\s*"M?(\d+)"',
+    r'"([A-Za-z0-9.-]+)"\s*:\s*dict\(label\s*=\s*"([^"]*)"\s*,\s*'
+    r'pcd\s*=\s*([0-9.]+)\s*,\s*holes\s*=\s*(\d+)\s*,\s*thread\s*=\s*"M?(\d+)"'
+    r'[^}]*?clr\s*=\s*([0-9.]+)[^}]*?pins\s*=\s*(\d+)[^}]*?pin_d\s*=\s*([0-9.]+)'
+    r'[^}]*?pin_pcd\s*=\s*([0-9.]+)',
     re.S)
 
 
 def parse_html_presets(src: str) -> dict:
     out = {}
-    for key, label, pcd, holes, thread in _HTML_PRESET_RE.findall(src):
-        out[key] = {'label': label, 'pcd': float(pcd),
-                    'holes': int(holes), 'thread': 'M' + thread}
+    for key, label, pcd, holes, thread, clr, pins, pind, pinpcd in _HTML_PRESET_RE.findall(src):
+        out[key] = {'label': label, 'pcd': float(pcd), 'holes': int(holes),
+                    'thread': 'M' + thread, 'clr': float(clr), 'pins': int(pins),
+                    'pin_d': float(pind), 'pin_pcd': float(pinpcd)}
     return out
 
 
 def parse_cli_presets(src: str) -> dict:
     out = {}
-    for key, label, pcd, holes, thread in _CLI_PRESET_RE.findall(src):
-        out[key] = {'label': label, 'pcd': float(pcd),
-                    'holes': int(holes), 'thread': 'M' + thread}
+    for key, label, pcd, holes, thread, clr, pins, pind, pinpcd in _CLI_PRESET_RE.findall(src):
+        out[key] = {'label': label, 'pcd': float(pcd), 'holes': int(holes),
+                    'thread': 'M' + thread, 'clr': float(clr), 'pins': int(pins),
+                    'pin_d': float(pind), 'pin_pcd': float(pinpcd)}
     return out
 
 
@@ -145,7 +162,7 @@ def preview_uses_diameter(html_src: str) -> bool:
 
 def scad_pins_uses_diameter(html_src: str) -> bool:
     """OpenSCAD 模板的 pins() 模块内部必须做 pcd/2 位移。"""
-    m = re.search(r'module\s+pins\s*\([^)]*\)\s*\{(.*?)\}', html_src, re.S)
+    m = re.search(r'module\s+pins\s*\([^)]*\)\s*\{([^}]*)\}', html_src, re.S)
     if not m:
         return False
     return bool(re.search(r'translate\s*\(\s*\[\s*pcd\s*/\s*2', m.group(1)))
@@ -158,43 +175,100 @@ def cli_uses_diameter(cli_src: str) -> bool:
 
 
 # --------------------------------------------------------------------------
-# C) 跨实现一致
+# C) 跨实现一致（以 HTML 主版为基准，逐一比对其余源）
 # --------------------------------------------------------------------------
-def cross_impl_conflicts(html_p: dict, cli_p: dict) -> list[str]:
+def cross_impl_conflicts(html_p: dict, *others: tuple) -> list[str]:
+    """html_p 为主版预设；others 为 (名称, 预设) 列表。比较 FIELDS 全字段。"""
     bad = []
-    common = sorted(set(html_p) & set(cli_p))
-    if len(common) < 5:
-        bad.append('两实现共有预设数过少（%d < 5），解析可能失效' % len(common))
-    for k in common:
-        a, b = html_p[k], cli_p[k]
-        for f in ('pcd', 'holes', 'thread'):
-            if a[f] != b[f]:
-                bad.append('%s: %s 处 %s=%r，CLI 处 %r' % (k, 'HTML', f, a[f], b[f]))
-    only_html = sorted(set(html_p) - set(cli_p))
-    only_cli = sorted(set(cli_p) - set(html_p))
-    if only_html:
-        bad.append('仅 HTML 有的预设: %s' % ' '.join(only_html))
-    if only_cli:
-        bad.append('仅 CLI 有的预设: %s' % ' '.join(only_cli))
+    if len(html_p) < 5:
+        bad.append('adapter-generator.html 预设解析到 %d 条（<5），闸门失效' % len(html_p))
+    for name, presets in others:
+        if len(presets) < 5:
+            bad.append('%s 预设解析到 %d 条（<5），闸门失效' % (name, len(presets)))
+        common = sorted(set(html_p) & set(presets))
+        for k in common:
+            a, b = html_p[k], presets[k]
+            for f in FIELDS:
+                if a[f] != b[f]:
+                    bad.append('%s: 主版 %s=%r，%s 处 %r' % (k, f, a[f], name, b[f]))
+        only_html = sorted(set(html_p) - set(presets))
+        only_other = sorted(set(presets) - set(html_p))
+        if only_html:
+            bad.append('仅主版有的预设: %s' % ' '.join(only_html))
+        if only_other:
+            bad.append('仅 %s 有的预设: %s' % (name, ' '.join(only_other)))
+    return bad
+
+
+# --------------------------------------------------------------------------
+# D) 示例一致：example_adapter.scad 几何必须等于其标号对应预设
+# --------------------------------------------------------------------------
+_EXAMPLE_HEADER_RE = re.compile(
+    r'ISO9409-1-(A[0-9.]+)-\d+-M\d+\s*[↔<->]+\s*ISO9409-1-(A[0-9.]+)-\d+-M\d+')
+_EXAMPLE_BOLT_RE = re.compile(
+    r'bolt_circle\(\s*([0-9.]+)\s*,\s*(\d+)\s*,\s*([0-9.]+)\s*,\s*([0-9.]+)\s*\)')
+_EXAMPLE_PINS_RE = re.compile(
+    r'pins\(\s*([0-9.]+)\s*,\s*(\d+)\s*,\s*([0-9.]+)\s*,\s*([0-9.]+)\s*\)')
+
+
+def example_conflicts(example_src: str, html_p: dict) -> list[str]:
+    bad = []
+    mh = _EXAMPLE_HEADER_RE.search(example_src)
+    if not mh:
+        return ['example_adapter.scad: 未解析到两侧法兰标号（ISO9409-1-A... ↔ ISO9409-1-A...）']
+    side_labels = [mh.group(1), mh.group(2)]
+    bolts = [(float(a), int(b), float(c)) for a, b, c, d in _EXAMPLE_BOLT_RE.findall(example_src)]
+    pins = [(float(a), int(b), float(c)) for a, b, c, d in _EXAMPLE_PINS_RE.findall(example_src)]
+    if len(bolts) != 2:
+        bad.append('example_adapter.scad: bolt_circle 调用数 %d != 2' % len(bolts))
+    if len(pins) != 2:
+        bad.append('example_adapter.scad: pins 调用数 %d != 2' % len(pins))
+    for i, lab in enumerate(side_labels):
+        if lab not in html_p:
+            bad.append('example_adapter.scad: 标号 %s 不在主版预设表' % lab)
+            continue
+        if len(bolts) < 2 or len(pins) < 2:
+            continue
+        p = html_p[lab]
+        bp, pp = bolts[i], pins[i]
+        side = 'AB'[i]
+        if bp[0] != p['pcd']:
+            bad.append('%s(示例侧%s): 螺栓节圆 %.1f != 主版 %.1f' % (lab, side, bp[0], p['pcd']))
+        if bp[1] != p['holes']:
+            bad.append('%s(示例侧%s): 孔数 %d != 主版 %d' % (lab, side, bp[1], p['holes']))
+        if abs(bp[2] - p['clr'] / 2) > 1e-9:
+            bad.append('%s(示例侧%s): 螺栓孔半径 %.2f != 主版 clr/2=%.2f'
+                       % (lab, side, bp[2], p['clr'] / 2))
+        if pp[0] != p['pin_pcd']:
+            bad.append('%s(示例侧%s): 销孔节圆 %.1f != 主版 %.1f' % (lab, side, pp[0], p['pin_pcd']))
+        if pp[1] != p['pins']:
+            bad.append('%s(示例侧%s): 销数 %d != 主版 %d' % (lab, side, pp[1], p['pins']))
+        if abs(pp[2] - p['pin_d'] / 2) > 1e-9:
+            bad.append('%s(示例侧%s): 销孔半径 %.2f != 主版 pin_d/2=%.2f'
+                       % (lab, side, pp[2], p['pin_d'] / 2))
     return bad
 
 
 # --------------------------------------------------------------------------
 # 主流程
 # --------------------------------------------------------------------------
-def audit(html_src: str, cli_src: str) -> list[str]:
+def audit(html_src: str, cli_src: str, dataset_src: str, example_src: str) -> list[str]:
     """纯函数：返回问题清单。阴阳自证直接复用它，保证测的是真东西。"""
     bad: list[str] = []
     hp = parse_html_presets(html_src)
     cp = parse_cli_presets(cli_src)
+    dp = parse_cli_presets(dataset_src)
 
     if len(hp) < 5:
         bad.append('adapter-generator.html 预设解析到 %d 条（<5），闸门失效' % len(hp))
     if len(cp) < 5:
         bad.append('adapters/gen_adapter.py 预设解析到 %d 条（<5），闸门失效' % len(cp))
+    if len(dp) < 5:
+        bad.append('roboparts-dataset/scripts/gen_adapter.py 预设解析到 %d 条（<5），闸门失效' % len(dp))
 
     bad += ['label 自洽: ' + x for x in label_conflicts(hp)]
     bad += ['label 自洽(CLI): ' + x for x in label_conflicts(cp)]
+    bad += ['label 自洽(dataset): ' + x for x in label_conflicts(dp)]
 
     if not preview_uses_diameter(html_src):
         bad.append('口径: 预览分支未见 pinPCD/2（疑似回退成半径解释 ⇒ 预览与产物两套几何）')
@@ -202,53 +276,78 @@ def audit(html_src: str, cli_src: str) -> list[str]:
         bad.append('口径: OpenSCAD pins() 模块未见 translate([pcd/2,...])')
     if not cli_uses_diameter(cli_src):
         bad.append('口径: CLI 未见 pin_pcd/2')
+    if not cli_uses_diameter(dataset_src):
+        bad.append('口径: dataset CLI 未见 pin_pcd/2')
 
-    bad += ['跨实现: ' + x for x in cross_impl_conflicts(hp, cp)]
+    bad += ['跨实现: ' + x for x in cross_impl_conflicts(hp, ('主 CLI', cp), ('数据集 CLI', dp))]
+    bad += ['示例: ' + x for x in example_conflicts(example_src, hp)]
     return bad
 
 
 def self_test() -> int:
-    """阴阳自证：四种真实会发生的分叉，闸门必须逐一判红。"""
+    """阴阳自证：真实会发生的分叉，闸门必须逐一判红。"""
     html = open(HTML, encoding='utf-8').read()
     cli = open(CLI, encoding='utf-8').read()
+    dataset = open(DATASET_CLI, encoding='utf-8').read()
+    example = open(EXAMPLE, encoding='utf-8').read()
     cases = []
 
     # 阳性：生产源码必须干净（否则闸门恒红，等于没装）
-    cases.append(('阳性(不该红): 生产源码通过全部判据', audit(html, cli), False))
+    cases.append(('阳性(不该红): 生产源码通过全部判据', audit(html, cli, dataset, example), False))
 
-    # 阴性 ①：预览回退成半径口径（历史真事故）。
-    # 【20260921 本自证自身出过一次假绿】第一版只替换 cos 那处，sin 那处仍留 `/2`，
-    # 闸门照常通过 ⇒ 阴性① 假绿。故这里**两处都替换**，模拟完整的历史回退形态；
-    # 同时预览判据已改为 cos 与 sin 都必须带 /2（见 preview_uses_diameter）。
+    # 阴性 ①：预览回退成半径口径（历史真事故）。两处都替换，模拟完整回退形态。
     mutated = (html.replace('s.pinPCD/2*Math.cos', 's.pinPCD*Math.cos')
                    .replace('s.pinPCD/2*Math.sin', 's.pinPCD*Math.sin'))
     assert mutated != html, '变异 ① 未生效：预览分支写法已改，请同步本自证'
-    # 半坏形态（只坏 cos）也必须判红 —— 这是第一版漏掉的假绿路径
+    # 半坏形态（只坏 cos）也必须判红 —— 第一版漏掉的假绿路径
     half = html.replace('s.pinPCD/2*Math.cos', 's.pinPCD*Math.cos')
     assert half != html, '变异 ①b 未生效'
-    cases.append(('阴性: 预览分支回退成半径解释（cos+sin 全回退）', audit(mutated, cli), True))
-    cases.append(('阴性: 预览分支只坏一半（仅 cos 回退，sin 仍对）', audit(half, cli), True))
+    cases.append(('阴性: 预览分支回退成半径解释（cos+sin 全回退）', audit(mutated, cli, dataset, example), True))
+    cases.append(('阴性: 预览分支只坏一半（仅 cos 回退，sin 仍对）', audit(half, cli, dataset, example), True))
 
     # 阴性 ②：label 与字段不符（标号写 4 孔、字段写 6 孔）
-    mutated = html.replace("'A50'", "'A50'")  # 保持解析面不变
-    mutated = re.sub(r"(label:'ISO9409-1-A50-4-M6',\s*pcd:50,\s*holes:)\d+", r"\g<1>6", mutated, count=1)
+    mutated = re.sub(r"(label:'ISO9409-1-A50-4-M6',\s*pcd:50,\s*holes:)\d+",
+                     r"\g<1>6", html, count=1)
     assert mutated != html, '变异 ② 未生效：A50 预设写法已改'
-    cases.append(('阴性: label 写 4 孔而字段写 6 孔', audit(mutated, cli), True))
+    cases.append(('阴性: label 写 4 孔而字段写 6 孔', audit(mutated, cli, dataset, example), True))
 
-    # 阴性 ③：跨实现分叉（CLI 侧 A80 改成 4×M6）
+    # 阴性 ③：主 CLI 跨实现分叉（A80 改成 4 孔）
     mutated = re.sub(r'("A80":\s*dict\(label="[^"]*",\s*pcd=80\.0,\s*holes=)\d+',
                      r'\g<1>4', cli, count=1)
     assert mutated != cli, '变异 ③ 未生效：CLI A80 预设写法已改'
-    cases.append(('阴性: CLI 与 HTML 对 A80 给出不同孔数', audit(html, mutated), True))
+    cases.append(('阴性: 主 CLI 与 HTML 对 A80 给出不同孔数', audit(html, mutated, dataset, example), True))
 
     # 阴性 ④：OpenSCAD pins() 被改成半径口径
     mutated = re.sub(r'(module\s+pins\s*\([^)]*\)\s*\{[^}]*?)pcd\s*/\s*2',
                      r'\g<1>pcd', html, count=1, flags=re.S)
     assert mutated != html, '变异 ④ 未生效：pins() 模块写法已改'
-    cases.append(('阴性: OpenSCAD pins() 改成半径口径', audit(mutated, cli), True))
+    cases.append(('阴性: OpenSCAD pins() 改成半径口径', audit(mutated, cli, dataset, example), True))
 
     # 阴性 ⑤：清空预设表（防"解析到 0 条"被当成通过）
-    cases.append(('阴性: 预设表被清空', audit('const FLANGE_PRESETS = {};', cli), True))
+    cases.append(('阴性: 预设表被清空', audit('const FLANGE_PRESETS = {};', cli, dataset, example), True))
+
+    # 阴性 ⑥：数据集 CLI 分叉（A80 pin_pcd 改回旧值 38 —— R1 抓到的那类）
+    mutated = re.sub(r'("A80":\s*dict\(label="[^"]*",\s*pcd=80\.0,\s*holes=\d+,\s*thread="M8",'
+                     r'\s*clr=8\.5,\s*pins=2,\s*pin_d=8\.0,\s*pin_pcd=)[0-9.]+',
+                     r'\g<1>38.0', dataset, count=1)
+    assert mutated != dataset, '变异 ⑥ 未生效：dataset A80 写法已改'
+    cases.append(('阴性: 数据集 CLI 的 A80 pin_pcd 分叉', audit(html, cli, mutated, example), True))
+
+    # 阴性 ⑦：数据集 CLI 分叉（A100 孔数改回 4 —— 旧 KUKA 4×M8 形态，R1 抓到的另一类）
+    mutated = re.sub(r'("A100":\s*dict\(label="[^"]*",\s*pcd=100\.0,\s*holes=)\d+',
+                     r'\g<1>4', dataset, count=1)
+    assert mutated != dataset, '变异 ⑦ 未生效：dataset A100 写法已改'
+    cases.append(('阴性: 数据集 CLI 的 A100 孔数分叉', audit(html, cli, mutated, example), True))
+
+    # 阴性 ⑧：示例分叉（A80 孔数改回 4 —— R1 抓到的另一类）
+    mutated = re.sub(r'(bolt_circle\(80\.00,\s*)\d+', r'\g<1>4', example, count=1)
+    assert mutated != example, '变异 ⑧ 未生效：example A80 写法已改'
+    cases.append(('阴性: example_adapter.scad 的 A80 孔数分叉', audit(html, cli, dataset, mutated), True))
+
+    # 阴性 ⑨：示例分叉（销孔节圆改回旧值 22 —— 08-18 待修形态）
+    mutated = example.replace('pins(63.0, 2, 3.00, 12.00)', 'pins(22.0, 2, 3.00, 12.00)')
+    assert mutated != example, '变异 ⑨ 未生效：example 销孔写法已改'
+    cases.append(('阴性: example_adapter.scad 的销孔节圆分叉', audit(html, cli, dataset, mutated), True))
 
     nfail = 0
     for name, problems, want_red in cases:
@@ -256,8 +355,10 @@ def self_test() -> int:
         ok = (is_red == want_red)
         if not ok:
             nfail += 1
-        print('  %s %s%s' % ('✅' if ok else '❌', name,
-                             '' if ok else ' → %s' % (problems[:2])))
+        mark = 'PASS' if ok else 'FAIL'
+        detail = '' if ok else ' -> %s' % (problems[:2])
+        # GBK/控制台安全：不用 emoji，用 ASCII 标记
+        print('  [%s] %s%s' % (mark, name, detail))
     print('\n阴阳自证：%d 例，%s' % (len(cases), 'PASS' if nfail == 0 else 'FAIL(%d)' % nfail))
     return 1 if nfail else 0
 
@@ -267,17 +368,20 @@ def main() -> int:
         return self_test()
     html = open(HTML, encoding='utf-8').read()
     cli = open(CLI, encoding='utf-8').read()
-    problems = audit(html, cli)
-    hp, cp = parse_html_presets(html), parse_cli_presets(cli)
-    print('=== 转接件三方几何一致性 ===')
-    print('  HTML 预设 %d 条 · CLI 预设 %d 条 · 共有 %d 条'
-          % (len(hp), len(cp), len(set(hp) & set(cp))))
+    dataset = open(DATASET_CLI, encoding='utf-8').read()
+    example = open(EXAMPLE, encoding='utf-8').read()
+    problems = audit(html, cli, dataset, example)
+    hp, cp, dp = parse_html_presets(html), parse_cli_presets(cli), parse_cli_presets(dataset)
+    print('=== 转接件多源几何一致性（5 源）===')
+    print('  HTML 预设 %d 条 · 主 CLI %d 条 · 数据集 CLI %d 条'
+          % (len(hp), len(cp), len(dp)))
     if problems:
-        print('❌ 判红 %d 项：' % len(problems))
+        print('[FAIL] 判红 %d 项：' % len(problems))
         for p in problems:
             print('   - ' + p)
         return 1
-    print('✅ 通过：label 自洽 · pinPCD 一律直径口径 · 跨实现 (pcd,holes,thread) 一致')
+    print('[PASS] 通过：label 自洽 · pinPCD 一律直径口径 · '
+          '跨实现 (pcd,holes,thread,clr,pins,pin_d,pin_pcd) 一致 · 示例一致')
     return 0
 
 

@@ -121,10 +121,18 @@ PRESETS: Dict[str, Dict] = {
                 clr=6.5, pins=0, pin_d=0.0, pin_pcd=0.0),
     "A80": dict(label="ISO9409-1-A80-6-M8", pcd=80.0, holes=6, thread="M8",
                 clr=8.5, pins=2, pin_d=8.0, pin_pcd=100.0),
-    "A100": dict(label="ISO9409-1-A100-4-M8", pcd=100.0, holes=4, thread="M8",
-                 clr=8.5, pins=0, pin_d=0.0, pin_pcd=0.0),
-    "A160": dict(label="ISO9409-1-A160-4-M12", pcd=160.0, holes=4, thread="M12",
-                 clr=13.0, pins=0, pin_d=0.0, pin_pcd=0.0),
+    # A100 / A160 存在两条真实支：ISO canonical 标准梯级（6×M10 / 8×M16）与
+    # KUKA 偏离（4×M8 / 4×M12）。canonical 为默认（用户最可能遇到标准法兰），
+    # KUKA 作为显式可选变体（key 后缀 -KUKA）。两条均登记于
+    # api/mechanical_interfaces.json#flange_designations（is_canonical_iso 区分）。
+    "A100": dict(label="ISO9409-1-A100-6-M10", pcd=100.0, holes=6, thread="M10",
+                 clr=10.5, pins=0, pin_d=0.0, pin_pcd=0.0),
+    "A100-KUKA": dict(label="ISO9409-1-A100-4-M8 (KUKA)", pcd=100.0, holes=4, thread="M8",
+                      clr=8.5, pins=0, pin_d=0.0, pin_pcd=0.0),
+    "A160": dict(label="ISO9409-1-A160-8-M16", pcd=160.0, holes=8, thread="M16",
+                 clr=17.0, pins=0, pin_d=0.0, pin_pcd=0.0),
+    "A160-KUKA": dict(label="ISO9409-1-A160-4-M12 (KUKA)", pcd=160.0, holes=4, thread="M12",
+                      clr=13.0, pins=0, pin_d=0.0, pin_pcd=0.0),
     "A250": dict(label="ISO9409-1-A250-4-M16", pcd=250.0, holes=4, thread="M16",
                  clr=17.0, pins=0, pin_d=0.0, pin_pcd=0.0),
 }

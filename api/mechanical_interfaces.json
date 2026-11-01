@@ -276,6 +276,35 @@
       "source_tier_note": "来源为 Industrial Robotics Hub 第三方法兰查表（汇总 OEM 手册，明确不编造），未达一手 OEM 出处 A 级；但其覆盖与 OEM 手册交叉验证，可靠性高于旧 abbpj 汇编页。"
     },
     {
+      "id": "ISO9409-1-A100-6-M10",
+      "d1_mm": 100,
+      "bolt_count": 6,
+      "thread": "M10",
+      "dowel_holes": "2×10H7",
+      "typical_payload_class": "通用",
+      "known_hosts": [
+        "Universal Robots UR50",
+        "Universal Robots UR5e",
+        "Universal Robots UR10e",
+        "Universal Robots UR16e",
+        "Fanuc LR Mate 200iD"
+      ],
+      "is_canonical_iso": true,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, 第三方汇编)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "aliases": [
+        "ISO 9409-1-100-6-M10",
+        "ISO 9409-1-A100-6-M10",
+        "ISO9409-1-100-6-M10",
+        "ISO9409-1-A100-6-M10"
+      ],
+      "source_tier_basis": "third_party_compilation_not_oem_domain",
+      "source_tier_note": "来源为 Industrial Robotics Hub（第三方汇编，非 OEM 手册，无法确认零误差）；未读任一 OEM 手册 A 系列页原文，汇编与 OEM 手册交叉验证，可靠性高于纯 abbpj 页面。",
+      "note": "ISO 9409-1 标准梯级：A100 = PCD100 6×M10（canonical）。KUKA 偏离支为 PCD100 4×M8（见 ISO9409-1-A100-4-M8，is_canonical_iso:false）。"
+    },
+    {
       "id": "ISO9409-1-A100-4-M8",
       "d1_mm": 100,
       "bolt_count": 4,
@@ -301,6 +330,34 @@
       "source_tier_basis": "third_party_compilation_not_oem_domain",
       "source_tier_note": "来源为 Industrial Robotics Hub 第三方法兰查表（汇总 OEM 手册，明确不编造），未达一手 OEM 出处 A 级；但其覆盖与 OEM 手册交叉验证，可靠性高于旧 abbpj 汇编页。",
       "note": "KUKA KR70/120/210 实测为 PCD100 4×M8，偏离 ISO 标准梯级（ISO 9409-1-100 为 6×M10）；OnRobot/Gimatic 确有对应转接盘。"
+    },
+    {
+      "id": "ISO9409-1-A160-8-M16",
+      "d1_mm": 160,
+      "bolt_count": 8,
+      "thread": "M16",
+      "dowel_holes": "2×16H7",
+      "typical_payload_class": "通用",
+      "known_hosts": [
+        "Universal Robots UR20",
+        "Universal Robots UR30",
+        "ABB IRB 4600",
+        "Fanuc M-20iB"
+      ],
+      "is_canonical_iso": true,
+      "source": "Industrial Robotics Hub ISO 9409-1 lookup (current 2026-07-25, 第三方汇编)",
+      "source_url": "https://www.industrialroboticshub.com/articles/robot-tool-flange-sizes-iso-9409-1",
+      "source_tier": "B",
+      "confidence": 0.85,
+      "aliases": [
+        "ISO 9409-1-160-8-M16",
+        "ISO 9409-1-A160-8-M16",
+        "ISO9409-1-160-8-M16",
+        "ISO9409-1-A160-8-M16"
+      ],
+      "source_tier_basis": "third_party_compilation_not_oem_domain",
+      "source_tier_note": "来源为 Industrial Robotics Hub（第三方汇编，非 OEM 手册，无法确认零误差）；未读任一 OEM 手册 A 系列页原文，汇编与 OEM 手册交叉验证，可靠性高于纯 abbpj 页面。",
+      "note": "ISO 9409-1 标准梯级：A160 = PCD160 8×M16（canonical）。KUKA 偏离支为 PCD160 4×M12（见 ISO9409-1-A160-4-M12，is_canonical_iso:false）。"
     },
     {
       "id": "ISO9409-1-A160-4-M12",

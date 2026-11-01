@@ -92,16 +92,44 @@ SHCS_HEAD_D: Dict[float, float] = {
     10: 16.0, 12: 18.0, 14: 21.0, 16: 24.0,
 }
 
-#: ISO 9409-1 型式 A 标准法兰预设（与 adapter-generator.html 的 PRESETS 对齐）。
+#: ISO 9409-1 型式 A 标准法兰预设（与 adapter-generator.html / adapters/gen_adapter.py 的 PRESETS 对齐）。
+#: 注：机器人行业 "A{n}" 中 n = 节圆直径 PCD；pin_pcd 为定位销节圆直径（仅标准梯级填真实值，
+#: 偏离尺寸 A20/A31.5/A100/A160/A250 厂商销孔几何未知，pins=0）。
+#: 【2026-11-01 R1 数据漂移闭环】此前本表仅 4 档且与主版分叉：
+#:   A50 pin_pcd=22（主版 63）· A80 pin_pcd=38（主版 100）· A100 写 6×M10（主版 4×M8）·
+#:   A160 写 8×M16（主版 4×M12），且缺 A20/A31.5/A40/A63/A250。
+#:   已同步为主版/裁决库（api/negative_compat.json）权威值。裁决库登记
+#:   ISO9409-1-A100-4-M8（pcd=100,4孔,M8）、ISO9409-1-A160-4-M12（pcd=160,4孔,M12）。
 PRESETS: Dict[str, Dict] = {
+    "A20": dict(label="ISO9409-1-A20-4-M3", pcd=20.0, holes=4, thread="M3",
+                clr=3.5, pins=0, pin_d=0.0, pin_pcd=0.0),
+    "A31.5": dict(label="ISO9409-1-A31.5-4-M5", pcd=31.5, holes=4, thread="M5",
+                  clr=5.5, pins=0, pin_d=0.0, pin_pcd=0.0),
+    "A40": dict(label="ISO9409-1-A40-4-M6", pcd=40.0, holes=4, thread="M6",
+                clr=6.5, pins=2, pin_d=6.0, pin_pcd=50.0),
     "A50": dict(label="ISO9409-1-A50-4-M6", pcd=50.0, holes=4, thread="M6",
-                clr=6.5, pins=2, pin_d=6.0, pin_pcd=22.0),
+                clr=6.5, pins=2, pin_d=6.0, pin_pcd=63.0),
+    # A63 此前缺失：裁决库（api/negative_compat.json，唯一真相源）登记 9 档含 A63-6-M6，
+    # 而本预设表只有 8 档 —— 用户查到「A63 必须转接」却选不到该预设，判定与产出断了链。
+    # 销孔一律置 0：pin_pcd 属厂商自定义尺寸，无公开依据不得按 A40/A50 的规律外推编造。
+    "A63": dict(label="ISO9409-1-A63-6-M6", pcd=63.0, holes=6, thread="M6",
+                clr=6.5, pins=0, pin_d=0.0, pin_pcd=0.0),
     "A80": dict(label="ISO9409-1-A80-6-M8", pcd=80.0, holes=6, thread="M8",
-                clr=8.5, pins=2, pin_d=8.0, pin_pcd=38.0),
+                clr=8.5, pins=2, pin_d=8.0, pin_pcd=100.0),
+    # A100 / A160 存在两条真实支：ISO canonical 标准梯级（6×M10 / 8×M16）与
+    # KUKA 偏离（4×M8 / 4×M12）。canonical 为默认（用户最可能遇到标准法兰），
+    # KUKA 作为显式可选变体（key 后缀 -KUKA）。两条均登记于
+    # api/mechanical_interfaces.json#flange_designations（is_canonical_iso 区分）。
     "A100": dict(label="ISO9409-1-A100-6-M10", pcd=100.0, holes=6, thread="M10",
-                 clr=10.5, pins=2, pin_d=10.0, pin_pcd=50.0),
+                 clr=10.5, pins=0, pin_d=0.0, pin_pcd=0.0),
+    "A100-KUKA": dict(label="ISO9409-1-A100-4-M8 (KUKA)", pcd=100.0, holes=4, thread="M8",
+                      clr=8.5, pins=0, pin_d=0.0, pin_pcd=0.0),
     "A160": dict(label="ISO9409-1-A160-8-M16", pcd=160.0, holes=8, thread="M16",
-                 clr=12.5, pins=0, pin_d=0.0, pin_pcd=0.0),
+                 clr=17.0, pins=0, pin_d=0.0, pin_pcd=0.0),
+    "A160-KUKA": dict(label="ISO9409-1-A160-4-M12 (KUKA)", pcd=160.0, holes=4, thread="M12",
+                      clr=13.0, pins=0, pin_d=0.0, pin_pcd=0.0),
+    "A250": dict(label="ISO9409-1-A250-4-M16", pcd=250.0, holes=4, thread="M16",
+                 clr=17.0, pins=0, pin_d=0.0, pin_pcd=0.0),
 }
 
 #: 未指定预设时的自定义侧默认值（对齐 HTML 的 CUSTOM）。
