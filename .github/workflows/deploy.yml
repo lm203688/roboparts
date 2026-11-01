@@ -11,7 +11,37 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # 【P0-5 修复, 2026-10-31】部署必须先过质量闸门。
+  # 此前 deploy.yml 是独立 workflow、无 needs，ci.yml 的 gate 与 deploy 可并发，
+  # 生产部署绕过全部安全检查（deploy.mjs 的 verify() 只在本地 npm run deploy 生效）。
+  # 现在把 86 项闸门**内嵌到部署流程本身**：无论 push 还是 workflow_dispatch，
+  # 闸门不过 = 不部署。这同时消除了"两条分叉部署路径"中 GitHub 路径的裸奔。
+  gate:
+    name: 质量闸门
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 无证据泄漏闸门要跑 git ls-files
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安装依赖
+        run: python -m pip install --quiet -r requirements-dev.txt
+
+      - name: 列出闸门
+        run: python scripts/ci_gate.py --list
+
+      - name: 跑质量闸门
+        run: python scripts/ci_gate.py
+
   deploy:
+    needs: gate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,9 +49,11 @@ jobs:
       - name: Prepare staging
         run: |
           mkdir -p .deploy-staging
-          rsync -a --exclude='.git' --exclude='.workbuddy' --exclude='ops' \
-                --exclude='node_modules' --exclude='__pycache__' --exclude='*.pyc' \
-                --exclude='.deploy-staging' ./. .deploy-staging/
+          rsync -a --exclude='.git' --exclude='.workbuddy' --exclude='.workbuddy-ai' \
+                --exclude='.opencode' --exclude='ops' --exclude='node_modules' \
+                --exclude='.secrets' --exclude='.tools' --exclude='.env.local' \
+                --exclude='.env' --exclude='.wrangler' --exclude='__pycache__' \
+                --exclude='*.pyc' --exclude='.deploy-staging' ./. .deploy-staging/
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
@@ -29,3 +61,11 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy .deploy-staging --project-name=robotparts
+
+      # 【P0-5 修复】部署后冒烟验证：命中线上站点跑核心断言（首页品牌/数据 JSON/
+      # 部署指纹/URDF 校验/资产类头/robots/漏斗端点），任一失败则部署 job 红。
+      # smoke_prod.mjs 退出码非 0 即失败；SMOKE_RETRIES 覆盖 CDN 传播窗口。
+      - name: 部署后冒烟验证（live 站点 + 重试）
+        env:
+          SMOKE_RETRIES: '5'
+        run: node scripts/smoke_prod.mjs

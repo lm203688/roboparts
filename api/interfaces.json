@@ -260,7 +260,7 @@
       "source": "https://www.electronicsforu.com/tutorial/articles/gpio-parallel-serial-interface/",
       "source_note": "GPIO 无单一组织规范；引用 electronicsforu 技术说明页作为参考描述",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -323,7 +323,7 @@
       "source": "https://en.wikipedia.org/wiki/Ethernet",
       "source_note": "IEEE 802.3；维基百科概述页作为通用描述源",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -338,8 +338,8 @@
       "description": "NVIDIA Isaac GR00T是人形机器人的基础模型和数据流水线研究与开发平台。包含GR00T N1.5基础模型和GR00T-Dreams合成数据生成工具。提供仿真环境(Isaac Lab)、人在回路的数据采集管道，以及NVIDIA端到端机器人平台用于大规模AI机器人训练和部署。",
       "source": "NVIDIA GTC 2025, Computex 2025",
       "category": "interfaces",
-      "confidence": 0.55,
-      "confidence_basis": "unclassified_source",
+      "confidence": 0.3,
+      "confidence_basis": "unclassified_source; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -740,7 +740,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0015",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-002",
@@ -853,7 +853,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0017",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-004",
@@ -910,7 +910,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0018",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-005",
@@ -966,7 +966,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0019",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-006",
@@ -1022,7 +1022,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0020",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-007",
@@ -1078,7 +1078,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0021",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-010",
@@ -1299,7 +1299,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0025",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-015",
@@ -1355,7 +1355,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0026",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-016",
@@ -1465,7 +1465,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0028",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-018",
@@ -1576,7 +1576,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0030",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-020",
@@ -1632,7 +1632,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0031",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-021",
@@ -1688,7 +1688,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0032",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-022",
@@ -1744,7 +1744,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0033",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-023",
@@ -1801,7 +1801,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0034",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-024",
@@ -1966,7 +1966,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0037",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "STD-ISO-10218",
@@ -2170,7 +2170,7 @@
         "interop_posture": "unknown",
         "iso22166_relevant": true
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "verified",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -2213,7 +2213,7 @@
         "interop_posture": "unknown",
         "iso22166_relevant": true
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "verified",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -2255,7 +2255,7 @@
         "interop_posture": "unknown",
         "iso22166_relevant": true
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "verified",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     }

@@ -23,6 +23,7 @@ async function hashEmail(email) {
 }
 
 import { readLedger } from '../../_lib/ledger.js';
+import { PLANS } from '../../_lib/plans.js';
 
 /**
  * 读账本用于附带展示。读不出来时返回 null（不是 []）——
@@ -178,14 +179,14 @@ export async function onRequestPost(context) {
       });
     }
     
-    // Determine credit amount based on product
+    // Determine credit amount based on product —— 统一到 PLANS 事实源
     const productId = creemData.product?.id || '';
     let credits = 0;
-    if (productId.includes('22YhSbY')) credits = 990; // Pro monthly
-    else if (productId.includes('4EpFVQ')) credits = 500; // API Access
-    else if (productId.includes('pny43r')) credits = 9999; // Lifetime
-    else if (productId.includes('5IooNC')) credits = 4999; // One-time data
-    else credits = 100; // Default
+    if (productId.includes('22YhSbY')) credits = PLANS.pro.credits; // Pro monthly
+    else if (productId.includes('4EpFVQ')) credits = PLANS.pro.credits; // API Access
+    else if (productId.includes('pny43r')) credits = PLANS.lifetime.credits; // Lifetime
+    else if (productId.includes('5IooNC')) credits = PLANS.starter.credits; // One-time data
+    else credits = PLANS.starter.credits; // Default
     
     // Store in KV
     if (env.USER_CREDITS) {

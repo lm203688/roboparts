@@ -43,487 +43,730 @@
         "id": "ACT-028",
         "name": "Robotiq 2F-85 Gripper",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.95,
+        "confidence_tier": "verified",
+        "confidence_basis": "vendor_official_manual_with_dimensioned_drawings"
       },
       {
         "id": "ACT-028",
         "name": "Robotiq 2F-85 Gripper",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.95,
+        "confidence_tier": "verified",
+        "confidence_basis": "vendor_official_manual_with_dimensioned_drawings"
       },
       {
         "id": "ACT-028",
         "name": "Robotiq 2F-85 Gripper",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-40-4-M6"
+        "declared": "ISO 9409-1-40-4-M6",
+        "confidence": 0.95,
+        "confidence_tier": "verified",
+        "confidence_basis": "vendor_official_manual_with_dimensioned_drawings"
       },
       {
         "id": "SENS-31",
         "name": "Robotiq FT 300 Force-Torque Sensor",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.92,
+        "confidence_tier": "verified",
+        "confidence_basis": "vendor_official_manual_with_coupling_bolt_pattern_table"
       },
       {
         "id": "SENS-31",
         "name": "Robotiq FT 300 Force-Torque Sensor",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.92,
+        "confidence_tier": "verified",
+        "confidence_basis": "vendor_official_manual_with_coupling_bolt_pattern_table"
       },
       {
         "id": "SENS-31",
         "name": "Robotiq FT 300 Force-Torque Sensor",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-40-4-M6"
+        "declared": "ISO 9409-1-40-4-M6",
+        "confidence": 0.92,
+        "confidence_tier": "verified",
+        "confidence_basis": "vendor_official_manual_with_coupling_bolt_pattern_table"
       },
       {
         "id": "SENS-37",
         "name": "ATI Mini45 Force-Torque Sensor",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.3,
+        "confidence_tier": "inferred",
+        "confidence_basis": "tier:official; tier_c_cap"
       },
       {
         "id": "SENS-047",
         "name": "ATI Mini40 六轴力/力矩传感器",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.3,
+        "confidence_tier": "inferred",
+        "confidence_basis": "tier:official; tier_c_cap"
       },
       {
         "id": "SENS-049",
         "name": "OnRobot HEX-E 六轴力/力矩传感器",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.3,
+        "confidence_tier": "inferred",
+        "confidence_basis": "tier:official; tier_c_cap"
       },
       {
         "id": "GRIP-001",
         "name": "OnRobot 2FG7",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "GRIP-002",
         "name": "Robotiq 2F-85",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "GRIP-002",
         "name": "Robotiq 2F-85",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "GRIP-002",
         "name": "Robotiq 2F-85",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-40-4-M6"
+        "declared": "ISO 9409-1-40-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "GRIP-006",
         "name": "Robotiq Hand-E",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "GRIP-006",
         "name": "Robotiq Hand-E",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "GRIP-006",
         "name": "Robotiq Hand-E",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-40-4-M6"
+        "declared": "ISO 9409-1-40-4-M6",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "GRIP-007",
         "name": "OnRobot RG2",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "GRIP-009",
         "name": "Schunk Co-act EGP 64",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "GRIP-009",
         "name": "Schunk Co-act EGP 64",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "GRIP-012",
         "name": "OnRobot VGC10",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "GRIP-014",
         "name": "Robotiq EPick",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "GRIP-014",
         "name": "Robotiq EPick",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "GRIP-014",
         "name": "Robotiq EPick",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-40-4-M6"
+        "declared": "ISO 9409-1-40-4-M6",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "SENS-852",
         "name": "ATI Axia80",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "SENS-854",
         "name": "OnRobot HEX-H",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "SENS-855",
         "name": "Robotiq FT 300-S",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "SENS-855",
         "name": "Robotiq FT 300-S",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "SENS-855",
         "name": "Robotiq FT 300-S",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-40-4-M6"
+        "declared": "ISO 9409-1-40-4-M6",
+        "confidence": 0.8,
+        "confidence_tier": "observed",
+        "confidence_basis": "verified_product_page"
       },
       {
         "id": "HUB-001",
         "name": "KR 3 AGILUS",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-20-4-M3"
+        "declared": "ISO 9409-1-20-4-M3",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-002",
         "name": "KR DELTA",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-20-4-M3"
+        "declared": "ISO 9409-1-20-4-M3",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-003",
         "name": "KR SCARA R600",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-20-4-M3"
+        "declared": "ISO 9409-1-20-4-M3",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-004",
         "name": "KR 6 R700 sixx",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-005",
         "name": "KR 10 R900 sixx",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-006",
         "name": "LBR iisy 3 R760",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-007",
         "name": "LBR iisy 11 R1300",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-008",
         "name": "LBR iiwa 14 R820",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-009",
         "name": "LBR iisy 15 R930",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-010",
         "name": "KR 20 R1810",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-011",
         "name": "KR 20 R3100 IONTEC",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-012",
         "name": "KR 30 R2100",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-013",
         "name": "KR 70 R2100",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-100-4-M8"
+        "declared": "ISO 9409-1-100-4-M8",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-014",
         "name": "KR 120 R2700-2",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-100-4-M8"
+        "declared": "ISO 9409-1-100-4-M8",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-015",
         "name": "KR 210 R2700-2 (QUANTEC)",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-100-4-M8"
+        "declared": "ISO 9409-1-100-4-M8",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-016",
         "name": "KR 500 R2830",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-160-4-M12"
+        "declared": "ISO 9409-1-160-4-M12",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-017",
         "name": "KR 1000 TITAN",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-250-4-M16"
+        "declared": "ISO 9409-1-250-4-M16",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-018",
         "name": "KR 10 R1100-2 (AGILUS)",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-40-4-M6"
+        "declared": "ISO 9409-1-40-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-019",
         "name": "LBR iiwa 7 R800",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-63-6-M6"
+        "declared": "ISO 9409-1-63-6-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-020",
         "name": "IRB 1010",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-021",
         "name": "IRB 1100",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-022",
         "name": "SWIFTI CRB 1100-4/0.58",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-023",
         "name": "IRB 1660ID-6/1.55",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-40-4-M6"
+        "declared": "ISO 9409-1-40-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-024",
         "name": "IRB 1200-7/0.7",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-40-4-M6"
+        "declared": "ISO 9409-1-40-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-025",
         "name": "IRB 1600-10/1.45",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-40-4-M6"
+        "declared": "ISO 9409-1-40-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-026",
         "name": "IRB 1300-11/0.9",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-40-4-M6"
+        "declared": "ISO 9409-1-40-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-027",
         "name": "GoFa CRB 15000 (5 kg)",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-028",
         "name": "GoFa CRB 15000-10/1.52",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-029",
         "name": "GoFa CRB 15000-12/1.27",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-030",
         "name": "UR3e",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-031",
         "name": "UR5e",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-032",
         "name": "UR7e",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-033",
         "name": "UR10e",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-034",
         "name": "UR12e",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-035",
         "name": "UR16e",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-036",
         "name": "UR15",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-037",
         "name": "UR20",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-80-6-M8"
+        "declared": "ISO 9409-1-80-6-M8",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-038",
         "name": "UR30",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-80-6-M8"
+        "declared": "ISO 9409-1-80-6-M8",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-039",
         "name": "LR Mate 200iD/7L",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-40-4-M6"
+        "declared": "ISO 9409-1-40-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-040",
         "name": "CRX-10iA",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-041",
         "name": "CRX-10iA/L",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-042",
         "name": "CRX-20iA/L",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-043",
         "name": "CRX-25iA",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-044",
         "name": "CR-35iB",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-100"
+        "declared": "ISO 9409-1-100",
+        "confidence": 0.5,
+        "confidence_tier": "derived",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-045",
         "name": "Motoman HC10",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-048",
         "name": "HC30PL",
         "entity_kind": "component",
-        "declared": "EN ISO 9409-1"
+        "declared": "EN ISO 9409-1",
+        "confidence": 0.5,
+        "confidence_tier": "derived",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-049",
         "name": "H2515",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-050",
         "name": "TM12",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.85,
+        "confidence_tier": "observed",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "SUPERDEX-fr3-v2",
         "name": "SuperDex Franka FR3 v2",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.95,
+        "confidence_tier": "verified",
+        "confidence_basis": "Direct file parse of upstream GitHub blob"
       },
       {
         "id": "SUPERDEX-fr3",
         "name": "SuperDex Franka FR3",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.95,
+        "confidence_tier": "verified",
+        "confidence_basis": "Direct file parse of upstream GitHub blob"
       },
       {
         "id": "SUPERDEX-2f-85",
         "name": "SuperDex Robotiq 2F-85",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-50-4-M6"
+        "declared": "ISO 9409-1-50-4-M6",
+        "confidence": 0.95,
+        "confidence_tier": "verified",
+        "confidence_basis": "Direct file parse of upstream GitHub blob"
       },
       {
         "id": "SUPERDEX-2f-85",
         "name": "SuperDex Robotiq 2F-85",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-40-4-M6"
+        "declared": "ISO 9409-1-40-4-M6",
+        "confidence": 0.95,
+        "confidence_tier": "verified",
+        "confidence_basis": "Direct file parse of upstream GitHub blob"
       },
       {
         "id": "SUPERDEX-2f-85",
         "name": "SuperDex Robotiq 2F-85",
         "entity_kind": "component",
-        "declared": "ISO 9409-1-31.5-4-M5"
+        "declared": "ISO 9409-1-31.5-4-M5",
+        "confidence": 0.95,
+        "confidence_tier": "verified",
+        "confidence_basis": "Direct file parse of upstream GitHub blob"
       }
     ],
     "unverified": [
@@ -532,21 +775,30 @@
         "name": "SuperDex Agilex OpenArm V20",
         "entity_kind": "component",
         "declared": "Proprietary (OpenArm flange)",
-        "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+        "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）",
+        "confidence": 0.95,
+        "confidence_tier": "verified",
+        "confidence_basis": "Direct file parse of upstream GitHub blob"
       },
       {
         "id": "SUPERDEX-openarm-v20-right-arm",
         "name": "SuperDex Agilex OpenArm V20",
         "entity_kind": "component",
         "declared": "Proprietary (OpenArm flange)",
-        "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+        "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）",
+        "confidence": 0.95,
+        "confidence_tier": "unverified",
+        "confidence_basis": "Direct file parse of upstream GitHub blob"
       },
       {
         "id": "SUPERDEX-allegro-v5-right",
         "name": "SuperDex Allegro Hand V5",
         "entity_kind": "component",
         "declared": "Proprietary (Allegro flange)",
-        "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+        "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）",
+        "confidence": 0.95,
+        "confidence_tier": "verified",
+        "confidence_basis": "Direct file parse of upstream GitHub blob"
       }
     ],
     "unresolvable_granularity": [
@@ -555,21 +807,30 @@
         "name": "Yeah Robotic Hand (formerly Rebelia)",
         "entity_kind": "component",
         "declared": "ISO 9409-1",
-        "note": "声明只到标准号本身，未给出 (PCD, 孔数, 螺纹)，无可核实内容；这不是笔误，是厂商未声明到可判定粒度"
+        "note": "声明只到标准号本身，未给出 (PCD, 孔数, 螺纹)，无可核实内容；这不是笔误，是厂商未声明到可判定粒度",
+        "confidence": 0.6,
+        "confidence_tier": "derived",
+        "confidence_basis": "community_open_source_project_bom"
       },
       {
         "id": "HUB-046",
         "name": "HC10DTP",
         "entity_kind": "component",
         "declared": "ISO 9409-1",
-        "note": "声明只到标准号本身，未给出 (PCD, 孔数, 螺纹)，无可核实内容；这不是笔误，是厂商未声明到可判定粒度"
+        "note": "声明只到标准号本身，未给出 (PCD, 孔数, 螺纹)，无可核实内容；这不是笔误，是厂商未声明到可判定粒度",
+        "confidence": 0.5,
+        "confidence_tier": "derived",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       },
       {
         "id": "HUB-047",
         "name": "HC20DTP",
         "entity_kind": "component",
         "declared": "ISO 9409-1",
-        "note": "声明只到标准号本身，未给出 (PCD, 孔数, 螺纹)，无可核实内容；这不是笔误，是厂商未声明到可判定粒度"
+        "note": "声明只到标准号本身，未给出 (PCD, 孔数, 螺纹)，无可核实内容；这不是笔误，是厂商未声明到可判定粒度",
+        "confidence": 0.5,
+        "confidence_tier": "derived",
+        "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
       }
     ],
     "note": "verified = 编码落在已知指定集且给出可判定的 (PCD, 孔数, 螺纹)；unverified = 不在已知指定集（可能未登记）；unresolvable_granularity = 只给到标准号本身、无可核实内容。后两者不属\"错误\"，但都不能算已核实。"
@@ -626,7 +887,10 @@
       "name": "SuperDex Agilex OpenArm V20",
       "entity_kind": "component",
       "declared": "Proprietary (OpenArm flange)",
-      "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+      "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）",
+      "confidence": 0.95,
+      "confidence_tier": "verified",
+      "confidence_basis": "Direct file parse of upstream GitHub blob"
     },
     {
       "type": "unverified_mechanical_claim",
@@ -634,7 +898,10 @@
       "name": "SuperDex Agilex OpenArm V20",
       "entity_kind": "component",
       "declared": "Proprietary (OpenArm flange)",
-      "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+      "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）",
+      "confidence": 0.95,
+      "confidence_tier": "unverified",
+      "confidence_basis": "Direct file parse of upstream GitHub blob"
     },
     {
       "type": "unverified_mechanical_claim",
@@ -642,7 +909,10 @@
       "name": "SuperDex Allegro Hand V5",
       "entity_kind": "component",
       "declared": "Proprietary (Allegro flange)",
-      "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）"
+      "note": "声明的机械编码不在已知指定集中，无法核实（可能为本表未登记的真实规范）",
+      "confidence": 0.95,
+      "confidence_tier": "verified",
+      "confidence_basis": "Direct file parse of upstream GitHub blob"
     }
   ],
   "conflict_count": 3,

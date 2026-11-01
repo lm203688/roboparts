@@ -1,4 +1,4 @@
-﻿/**
+/**
  * CF Pages Function: API Gateway with Field-Level Paywall
  * - Free: summary fields only (id, name, category, focus truncated)
  * - Pro: full data (requires Creem license key)
@@ -19,7 +19,9 @@ const PRO_PRODUCTS = [
 // 【20260808-11】清单已移入 `_lib/paywall.js` 作为单一真相源。
 // 起因是新增 `/api/entity/{id}` 需要同一套判定，若各端点各抄一份，
 // 两份清单必然随时间分叉，最终某个端点会在无人察觉时免费送出付费字段。
-import { PREMIUM_FIELDS } from '../_lib/paywall.js';
+import { PREMIUM_FIELDS, containsPremiumField, maskPremiumDeep, OPEN_DATASET_FILES } from '../_lib/paywall.js';
+import { PLANS } from '../_lib/plans.js';
+import { checkRateLimit, rateLimitHeaders } from '../_lib/ratelimit.js';
 
 const FOCUS_LIMIT = 200;
 const UPGRADE_URL = 'https://roboparts.cc/credits';
@@ -67,6 +69,19 @@ export async function onRequestGet(context) {
     });
   }
 
+  // 【P0-12】真限流：每 IP+路径 每 1 小时 300 次（免费层）；全局限流宽松（防单 IP 刷全库）。
+  // 此前零限流（仅响应头声明）。失败开放（KV 不可用 → degraded 放行）。
+  const ip = (request.headers.get('CF-Connecting-IP')
+    || (request.headers.get('x-forwarded-for') || '').split(',')[0].trim()
+    || 'unknown');
+  const rl = await checkRateLimit(env, { ip, scope: 'api:' + requestedFile, limit: 300, windowSec: 3600 });
+  if (!rl.allowed) {
+    return new Response(JSON.stringify({ error: 'rate_limited', message: '请求过于频繁，请稍后再试。' }), {
+      status: 429,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders, ...rateLimitHeaders(rl) },
+    });
+  }
+
   try {
     const assetUrl = new URL(`/api/${requestedFile}`, url.origin);
     const assetResponse = await env.ASSETS.fetch(assetUrl);
@@ -98,9 +113,19 @@ export async function onRequestGet(context) {
       await bumpStat(env, 'stat:api_calls:' + today);
     } catch (e) {}
 
-    // Apply paywall to entities.json only
-    if (requestedFile === 'entities.json' || requestedFile.endsWith('/entities.json')) {
-      return await applyPaywall(data, request, env, corsHeaders);
+    // Apply paywall to ANY JSON asset that actually carries PREMIUM_FIELDS.
+    // 【P0-4 修复】此前只挡 entities.json；其余承载付费字段的 JSON 全部裸奔。
+    // 用**结构判定**而非文件名清单：文件新增/更名不会漏登记（同一事实只有一处定义）。
+    // 开放数据集（CC BY 4.0，见 OPEN_DATASET_FILES）明确豁免，保持公开免费下载承诺。
+    if (requestedFile.endsWith('.json')) {
+      const baseName = requestedFile.split('/').pop();
+      if (!OPEN_DATASET_FILES.includes(baseName)) {
+        let payload = null;
+        try { payload = JSON.parse(data); } catch (_) { payload = null; }
+        if (payload && containsPremiumField(payload)) {
+          return await applyPaywall(data, request, env, corsHeaders);
+        }
+      }
     }
 
     return new Response(data, {
@@ -213,9 +238,12 @@ async function applyPaywall(data, request, env, corsHeaders) {
             credits_needed: cost - user.credits,
             recharge_url: 'https://roboparts.cc/credits',
             upgrade_options: [
-              { tier: 'Starter', price: '$9/mo', credits: 500, url: 'https://roboparts.cc/credits' },
-              { tier: 'Pro', price: '$29/mo', credits: 2000, url: 'https://roboparts.cc/credits' },
-              { tier: 'Lifetime', price: '$199', credits: 9999, url: 'https://roboparts.cc/credits' },
+                            ...Object.entries(PLANS).map(([tier, p]) => ({
+                tier: tier.charAt(0).toUpperCase() + tier.slice(1),
+                price: `$${p.price}`,
+                credits: p.credits,
+                url: 'https://roboparts.cc/credits',
+              })),
             ],
             message: 'Your free credits are exhausted. Recharge to unlock full data access.'
           }), {
@@ -249,47 +277,35 @@ async function applyPaywall(data, request, env, corsHeaders) {
     }
   }
 
-  // Free tier: filter fields
-  let entities, meta;
+  // Free tier: 深度屏蔽付费字段（【P0-4 修复】结构判定，非只认 entities/data 数组）
+  const masked = maskPremiumDeep(parsed);
+  const lockedTotal = masked.lockedCount;
+  let body;
   if (Array.isArray(parsed)) {
-    entities = parsed;
-    meta = { total: parsed.length };
+    body = masked.value;
   } else {
-    entities = parsed.entities || parsed.data || [];
-    meta = parsed.meta || {};
-  }
-
-  const filtered = entities.map(e => {
-    const out = {};
-    for (const [k, v] of Object.entries(e)) {
-      if (!PREMIUM_FIELDS.includes(k)) out[k] = v;
-    }
-    // Count locked (premium) fields actually present on this entity
-    const lockedCount = PREMIUM_FIELDS.filter(k => e[k] !== undefined).length;
-    out._locked_fields = lockedCount;
-    out._upgrade_url = UPGRADE_URL;
-    return out;
-  });
-
-  const result = {
-    meta: {
-      ...meta,
-      total_returned: filtered.length,
+    const base = masked.value;
+    const items = base.entities || base.data || [];
+    const meta = {
+      ...(parsed.meta || {}),
+      total_returned: items.length,
       tier: 'free',
-      locked_fields_per_entity: PREMIUM_FIELDS.filter(k => (entities[0] || {})[k] !== undefined).length,
+      locked_fields_per_entity: PREMIUM_FIELDS.filter(k => (items[0] || {})[k] !== undefined).length,
+      locked_fields_total: lockedTotal,
       upgrade_url: UPGRADE_URL,
       message: 'Free preview: 核心规格可见，深度数据（价格/兼容性/置信度/来源/合规/国产化率）需升级 Pro。使用 ?key=YOUR_API_KEY 或 Authorization: Bearer YOUR_API_KEY 获取完整数据。'
-    },
-    entities: filtered
-  };
+    };
+    body = { ...base, meta };
+  }
 
-  return new Response(JSON.stringify(result, null, 2), {
+  return new Response(JSON.stringify(body, null, 2), {
     status: 200,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Cache-Control': 'no-store',
       'X-API-Tier': 'free',
       ...corsHeaders,
+      ...rateLimitHeaders(rl),
     }
   });
 }

@@ -158,7 +158,8 @@
       "quarantine": false,
       "data_quality": "ok",
       "entity_kind": "component",
-      "verified": false
+      "verified": false,
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-002",
@@ -173,7 +174,8 @@
       "quarantine": false,
       "data_quality": "ok",
       "entity_kind": "component",
-      "verified": false
+      "verified": false,
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-003",
@@ -188,7 +190,8 @@
       "quarantine": false,
       "data_quality": "ok",
       "entity_kind": "component",
-      "verified": false
+      "verified": false,
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-006",
@@ -203,7 +206,8 @@
       "quarantine": false,
       "data_quality": "ok",
       "entity_kind": "component",
-      "verified": false
+      "verified": false,
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-007",
@@ -218,7 +222,8 @@
       "quarantine": false,
       "data_quality": "ok",
       "entity_kind": "component",
-      "verified": false
+      "verified": false,
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-008",
@@ -234,7 +239,8 @@
       "data_quality": "ok",
       "entity_kind": "component",
       "verified": false,
-      "source_scope": "vendor"
+      "source_scope": "vendor",
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-009",
@@ -250,7 +256,8 @@
       "data_quality": "ok",
       "needs_provenance": true,
       "entity_kind": "component",
-      "verified": false
+      "verified": false,
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-016",
@@ -265,7 +272,8 @@
       "quarantine": false,
       "data_quality": "ok",
       "entity_kind": "component",
-      "verified": false
+      "verified": false,
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-019",
@@ -280,7 +288,8 @@
       "quarantine": false,
       "data_quality": "ok",
       "entity_kind": "component",
-      "verified": false
+      "verified": false,
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-020",
@@ -295,7 +304,8 @@
       "quarantine": false,
       "data_quality": "ok",
       "entity_kind": "component",
-      "verified": false
+      "verified": false,
+      "confidence_tier": "derived"
     }
   ],
   "maturity_distribution": {

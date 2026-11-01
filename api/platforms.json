@@ -57,8 +57,8 @@
       "description_en": "Humanoid robot actuator 530,554+ patent analysis, entering key commercialization phase in 2026",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -169,7 +169,7 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -211,7 +211,7 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0004",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -397,7 +397,7 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0008",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -554,7 +554,7 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0011",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -607,7 +607,7 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0012",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -665,7 +665,7 @@
         "UDP"
       ],
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -720,7 +720,7 @@
         "UDP"
       ],
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -1348,7 +1348,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0027",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-002",
@@ -1406,7 +1406,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0028",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-005",
@@ -1464,7 +1464,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0029",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-006",
@@ -1522,7 +1522,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0030",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-007",
@@ -1580,7 +1580,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0031",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-008",
@@ -1638,7 +1638,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0032",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-009",
@@ -1696,7 +1696,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0033",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-010",
@@ -1754,7 +1754,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0034",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-011",
@@ -1812,7 +1812,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0035",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-013",
@@ -1870,7 +1870,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0036",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-015",
@@ -1985,7 +1985,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0038",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-017",
@@ -2043,7 +2043,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0039",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-018",
@@ -2101,7 +2101,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0040",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "ORG-matrixrobotics",
@@ -2175,7 +2175,7 @@
       "last_verified": "2026-08-18",
       "rp_id": "RP-PLA-0041",
       "entity_kind_basis": "type=humanoid_robot_company（企业/机构主体，不是实物零部件，无接口可判定）",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "PLAT-seeed-rebot-dm",
@@ -4161,7 +4161,7 @@
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
       "rp_id": "HUB-044",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "HUB-045",
@@ -4243,7 +4243,7 @@
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
       "rp_id": "HUB-046",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "HUB-047",
@@ -4283,7 +4283,7 @@
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
       "rp_id": "HUB-047",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "HUB-048",
@@ -4323,7 +4323,7 @@
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
       "rp_id": "HUB-048",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "HUB-049",

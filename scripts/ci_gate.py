@@ -929,23 +929,27 @@ def gate_demand_signal_classification():
 
 
 def gate_adapter_geometry():
-    """Flange adapter's "three-way geometric consistency" — preview / OpenSCAD export / CLI.
+    """Flange adapter's multi-source geometric consistency — preview / OpenSCAD / CLI / dataset / example.
 
-    2026-09-21 added. Background: the same ISO 9409-1 flange parameters were written in three
-    places (adapter-generator.html's three.js preview branch, the same file's OpenSCAD export
-    template, adapters/gen_adapter.py's CLI); the three stayed consistent **purely by human
-    memory**. Historically the preview branch actually used pinPCD as a radius, making "the 3D
-    seen in browser" and "the STL downloaded to print" two different geometries, and the only
-    way it was found was manually diffing the three code locations — gen_adapter.py's comment
-    kept an expired warning for a week after the fix, misleading the next person into "fixing"
-    it back.
+    2026-09-21 added; 2026-11-01 extended to five sources. Background: the same ISO 9409-1 flange
+    parameters were written in several places (adapter-generator.html's three.js preview branch,
+    the same file's OpenSCAD export template, adapters/gen_adapter.py's CLI, and later found
+    also roboparts-dataset/scripts/gen_adapter.py + adapters/example_adapter.scad); they stayed
+    consistent **purely by human memory**. Historically the preview branch actually used pinPCD
+    as a radius, making "the 3D seen in browser" and "the STL downloaded to print" two different
+    geometries. 2026-11-01 the dataset CLI (4 presets, A50 pin_pcd=22, A80=4-hole pin_pcd=38,
+    A100=6×M10, A160=8×M16) and example_adapter.scad (A80=4-hole, pin_pcd 22/38) forked from the
+    master values, and the old gate checked only (pcd,holes,thread) of two sources — so both forks
+    passed silently. This gate now checks all seven fields (pcd,holes,thread,clr,pins,pin_d,pin_pcd)
+    across all five sources.
 
     This gate runs check_adapter_geometry.py, which does two things:
       ① Audit production source (label self-consistent + pinPCD always diameter convention +
-         cross-implementation (pcd,holes,thread) consistent);
-      ② Yin-yang self-prove (feed 6 real forks: preview reverts radius, **breaks only half**,
-         label mismatches field, cross-implementation hole-count fork, pins() radius
-         convention, cleared preset table — each must turn red).
+         cross-source (pcd,holes,thread,clr,pins,pin_d,pin_pcd) consistent + example consistent);
+      ② Yin-yang self-prove (feed 11 real forks: preview reverts radius, **breaks only half**,
+         label mismatches field, cross-implementation hole-count fork, pins() radius convention,
+         cleared preset table, dataset pin_pcd fork, dataset hole-count fork, example hole-count
+         fork, example pin-pcd fork — each must turn red).
     Why self-proof is mandatory: the first-version criterion only scanned the whole file for
     `pinPCD/2*`; the preview has cos/sin in two places, so when only the cos place broke the
     gate still passed — a "broke-only-half" geometry fork got waved through. So this gate also
@@ -2266,6 +2270,107 @@ def gate_agent_discovery_positioning():
            'site_name/tagline/ai_agent_instructions 均含第二代锚点 + ISO 22166-1')
 
 
+def check_three_state(compose, co_mount):
+    """【纯函数】三态守恒核心判定 —— 供 gate 与 mutation_score 共用（P0-6）。
+
+    输入两个已解析 dict（可为 None），返回错误串列表；空列表 = 守恒成立。
+    为什么抽成纯函数：此前 gate_three_state_conservation 只读磁盘文件，变异评分
+    不得不用私有重实现谓词（mutation_score.py），两套逻辑必然漂移，且变异评分
+    从未真正跑过本闸门 —— 正是「变异体杀死率 1.00 不可信」的根源。
+    现在：闸门与变异评分**共用同一份判定逻辑**。
+    """
+    errs = []
+    # ── ① compose_semantics 三态守恒 ──
+    agg = (compose or {}).get('aggregates') or {}
+    oc = agg.get('overall_counts') or {}
+    pe = agg.get('pairs_evaluated')
+    if not isinstance(pe, int) or pe <= 0:
+        errs.append(f'compose pairs_evaluated 无效: {pe!r}')
+    else:
+        expected_keys = {'composed', 'type_error', 'unknown'}
+        missing = expected_keys - set(oc)
+        extra = set(oc) - expected_keys
+        if missing:
+            errs.append(f'compose overall_counts 缺键 {sorted(missing)}')
+        if extra:
+            errs.append(f'compose overall_counts 增键 {sorted(extra)}（未同步 pairs_evaluated 分母）')
+        tot = sum(oc.values())
+        if tot != pe:
+            errs.append(f'compose 三态不守恒: sum={tot} != pairs_evaluated={pe}')
+        # 轴边际守恒
+        for ax, m in (agg.get('axis_marginals') or {}).items():
+            ax_tot = sum(m.values())
+            if ax_tot != pe:
+                errs.append(f'compose 轴边际不守恒: {ax} sum={ax_tot} != {pe}')
+    # ── ② co_mount pair_verdict_histogram 守恒 ──
+    s = (co_mount or {}).get('summary') or {}
+    pe_cm = s.get('pair_evaluations')
+    hist = s.get('pair_verdict_histogram') or {}
+    if not isinstance(pe_cm, int) or pe_cm <= 0:
+        errs.append(f'co_mount pair_evaluations 无效: {pe_cm!r}')
+    else:
+        cm_tot = sum(hist.values())
+        if cm_tot != pe_cm:
+            errs.append(f'co_mount 三态不守恒: sum(hist)={cm_tot} != pair_evaluations={pe_cm}')
+    return errs
+
+
+def check_gap_distance(compose):
+    """【纯函数】取证指引可导航性：gap_distance 必须存在、非空且含 0 键（P0-6）。
+
+    语义：gap_distance[d] = 恰有 d 轴判 unknown 的对数。d=0 恒为 0（无缺口则不可能
+    unknown），d>=1 必须为正（本项目 d1=61 / d2=60705 / d3=369308）。
+    清空或删除 = 取证指引不可导航 —— 这正是 M4 变异体要抓的失效模式。
+    """
+    agg = (compose or {}).get('aggregates') or {}
+    gap = agg.get('gap_distance')
+    if not isinstance(gap, dict) or not gap:
+        return ['compose gap_distance 缺失或为空（取证指引不可导航）']
+    errs = []
+    if '0' not in gap:
+        errs.append('compose gap_distance 缺 0 键（恒为 0 的锚点被删）')
+    elif gap.get('0') not in (0, None):
+        errs.append(f"compose gap_distance[0] = {gap.get('0')}（应恒为 0）")
+    # d>=1 若数据有 unknown 则必须为正
+    oc = agg.get('overall_counts') or {}
+    if (oc.get('unknown') or 0) > 0:
+        for d in ('1', '2', '3'):
+            if (gap.get(d) or 0) <= 0:
+                errs.append(f'compose gap_distance[{d}] 缺失或为 0，但 unknown={oc.get("unknown")}')
+                break
+    return errs
+
+
+def check_honest_limits(compose):
+    """【纯函数】诚实边界：honest_limits 不得宣称「已全覆盖/无缺口」而数据仍有 unknown（P0-6）。
+
+    语义：honest_limits 是**自我设限**声明，若其中某句宣称组合判定已完成全轴覆盖/
+    无缺口，而 aggregates.gap_distance 仍显示 d>=1 有缺口，则该声明是**假声明**。
+    此前 M5 变异体的"杀手"只扫描变异体自己注入的 '⚠ FAKE' 标记（字面量恒真），
+    现改为**真实语义**：任何与可观测数据矛盾的声明都应判红。
+    """
+    meta = (compose or {}).get('meta') or {}
+    agg = (compose or {}).get('aggregates') or {}
+    gap = agg.get('gap_distance') or {}
+    oc = agg.get('overall_counts') or {}
+    limits = meta.get('honest_limits') or []
+    if not isinstance(limits, list):
+        return ['compose meta.honest_limits 缺失或非列表']
+    errs = []
+    has_gap = any((gap.get(d) or 0) > 0 for d in ('1', '2', '3'))
+    # 只匹配**积极完成声明**，不匹配解释性措辞（如"gap_distance['0'] 恒为 0（无缺口就
+    # 不可能是 unknown）"是 d=0 不变量的解释，不是"已完成覆盖"的宣称）。
+    CLAIM_TOKENS = ('已完成全轴覆盖', '已全覆盖', '全轴覆盖，无缺口', '无任何缺口',
+                    '覆盖率达100%', '覆盖率100%', '覆盖率达到100%', '已实现全轴覆盖')
+    for line in limits:
+        if not isinstance(line, str):
+            continue
+        claims_full = any(tok in line for tok in CLAIM_TOKENS)
+        if claims_full and has_gap and (oc.get('unknown') or 0) > 0:
+            errs.append(f'honest_limits 宣称全覆盖但 gap_distance 仍有缺口: {line[:60]}')
+    return errs
+
+
 def gate_three_state_conservation():
     """三态守恒不变量（2026-10-13 V2 报告 §6.3.3 主张二）。
 
@@ -2282,52 +2387,25 @@ def gate_three_state_conservation():
 
     同时校验轴边际：每个 axis 的 marginal 之和 == pairs_evaluated（三态完备性的
     每一轴视角）。任何一轴 sum ≠ pairs_evaluated 即整体守恒被破坏。
+
+    判定逻辑在纯函数 check_three_state()（与变异评分共用，P0-6）。
     """
     errs = []
-    # ── ① compose_semantics 三态守恒 ──
     cs_path = os.path.join(ROOT, 'api', 'compose_semantics.json')
+    cm_path = os.path.join(ROOT, 'api', 'co_mount.json')
     if not os.path.exists(cs_path):
         errs.append('compose_semantics.json 不存在')
+        compose = None
     else:
         with open(cs_path, encoding='utf-8') as f:
-            cs = json.load(f)
-        agg = cs.get('aggregates') or {}
-        oc = agg.get('overall_counts') or {}
-        pe = agg.get('pairs_evaluated')
-        if not isinstance(pe, int) or pe <= 0:
-            errs.append(f'compose pairs_evaluated 无效: {pe!r}')
-        else:
-            expected_keys = {'composed', 'type_error', 'unknown'}
-            missing = expected_keys - set(oc)
-            extra = set(oc) - expected_keys
-            if missing:
-                errs.append(f'compose overall_counts 缺键 {sorted(missing)}')
-            if extra:
-                errs.append(f'compose overall_counts 增键 {sorted(extra)}（未同步 pairs_evaluated 分母）')
-            tot = sum(oc.values())
-            if tot != pe:
-                errs.append(f'compose 三态不守恒: sum={tot} != pairs_evaluated={pe}')
-            # 轴边际守恒
-            for ax, m in (agg.get('axis_marginals') or {}).items():
-                ax_tot = sum(m.values())
-                if ax_tot != pe:
-                    errs.append(f'compose 轴边际不守恒: {ax} sum={ax_tot} != {pe}')
-    # ── ② co_mount pair_verdict_histogram 守恒 ──
-    cm_path = os.path.join(ROOT, 'api', 'co_mount.json')
+            compose = json.load(f)
     if not os.path.exists(cm_path):
         errs.append('co_mount.json 不存在')
+        co_mount = None
     else:
         with open(cm_path, encoding='utf-8') as f:
-            cm = json.load(f)
-        s = cm.get('summary') or {}
-        pe_cm = s.get('pair_evaluations')
-        hist = s.get('pair_verdict_histogram') or {}
-        if not isinstance(pe_cm, int) or pe_cm <= 0:
-            errs.append(f'co_mount pair_evaluations 无效: {pe_cm!r}')
-        else:
-            cm_tot = sum(hist.values())
-            if cm_tot != pe_cm:
-                errs.append(f'co_mount 三态不守恒: sum(hist)={cm_tot} != pair_evaluations={pe_cm}')
+            co_mount = json.load(f)
+    errs += check_three_state(compose, co_mount)
     if errs:
         bad('三态守恒不变量', '；'.join(errs[:4]))
     else:
@@ -2346,7 +2424,23 @@ def gate_mutation_score():
       ② score ≥ 0.85
       ③ 所有变异体状态必须为 killed 或 survived（无 unknown/error）
       ④ total_mutants ≥ 6（六条最小变异清单）
+      ⑤【P0-6】mutation-score.json 必须由本闸门**重跑现算**（杀死率用真实闸门纯函数），
+         generated_at 新鲜（≤48h）；禁止陈旧/手工工件（此前 generated_at 停在 2026-10-13）。
     """
+    # 【P0-6】先重跑 mutation_score.py：杀死率由真实闸门纯函数现算，generated_at 刷新。
+    p_score = os.path.join(ROOT, 'scripts', 'mutation_score.py')
+    if not os.path.exists(p_score):
+        bad('变异评分', 'scripts/mutation_score.py 不存在')
+        return
+    regen = subprocess.run(
+        [sys.executable, p_score],
+        capture_output=True, text=True, timeout=300, cwd=ROOT
+    )
+    if regen.returncode != 0:
+        bad('变异评分·重跑', 'mutation_score.py 重跑失败（阈值不达/崩溃）:\n%s'
+            % (regen.stdout + regen.stderr)[-500:])
+        return
+
     p = os.path.join(ROOT, 'api', 'mutation-score.json')
     if not os.path.exists(p):
         bad('变异评分', 'api/mutation-score.json 不存在')
@@ -2356,6 +2450,22 @@ def gate_mutation_score():
             m = json.load(f)
     except Exception as e:
         bad('变异评分', 'mutation-score.json 解析失败: %s' % e)
+        return
+
+    # 【P0-6】新鲜度：禁止陈旧变异评分工件。
+    gen_at = (m.get('meta') or {}).get('generated_at') or ''
+    try:
+        from datetime import datetime as _dt, timezone as _tz, timedelta as _td
+        dt = _dt.fromisoformat(gen_at)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=_tz.utc)
+        age = _dt.now(_tz.utc) - dt
+        if age > _td(hours=48):
+            bad('变异评分·新鲜度', 'generated_at=%s 已陈旧（age=%.1fh > 48h），禁止使用陈旧变异评分'
+                % (gen_at, age.total_seconds() / 3600))
+            return
+    except Exception:
+        bad('变异评分·新鲜度', 'generated_at 解析失败: %r' % gen_at)
         return
 
     schema = (m.get('meta') or {}).get('schema')
@@ -2410,6 +2520,104 @@ def gate_mutation_score():
         else:
             ok('变异评分·自证',
                 'mutation_score.py --self-test 通过（6 变异 + 6 组阴阳对照）')
+
+
+def gate_mcp_tool_parity():
+    """MCP 工具集对等闸门（P0-11）—— npm 包与托管服务工具名对等。
+
+    此前两个 MCP 面（functions/mcp.js hosted 26 工具 / mcp-server/index.js npm 16 工具）
+    静默漂移，且无闸门看住。本闸门要求：扣掉**显式登记**的意图分歧后两套工具名集合
+    相等；未登记的差异、过期清单、夸大清单一律判红。
+    判定逻辑在 scripts/verify_mcp_tool_parity.py（可独立运行 --list）。
+    """
+    p = os.path.join(ROOT, 'scripts', 'verify_mcp_tool_parity.py')
+    if not os.path.exists(p):
+        bad('MCP 工具集对等', 'scripts/verify_mcp_tool_parity.py 不存在')
+        return
+    r = subprocess.run([sys.executable, p], capture_output=True, text=True, timeout=60, cwd=ROOT)
+    tail = (r.stdout + r.stderr).strip()
+    if r.returncode != 0:
+        bad('MCP 工具集对等', tail[-600:])
+    else:
+        ok('MCP 工具集对等', tail[-160:])
+
+
+def gate_schema_contract():
+    """entities.json ↔ entities.schema.json 结构契约闸门（P0-8）。
+
+    此前 schemas/entities.schema.json **从未被任何闸门加载**（契约文件写好了但没人
+    校验）；schema_contract.py 只查 5 个核心字段。本闸门用 jsonschema 逐条校验
+    entities[]，任何违规 fail-closed 判红。判定逻辑在 scripts/verify_schema_contract.py
+    （含 --self-test 阴阳对照）。
+    """
+    p = os.path.join(ROOT, 'scripts', 'verify_schema_contract.py')
+    if not os.path.exists(p):
+        bad('schema 契约', 'scripts/verify_schema_contract.py 不存在')
+        return
+    r = subprocess.run([sys.executable, p], capture_output=True, text=True, timeout=120, cwd=ROOT)
+    tail = (r.stdout + r.stderr).strip()
+    if r.returncode != 0:
+        bad('schema 契约', tail[-600:])
+    else:
+        ok('schema 契约', tail[-160:])
+
+
+def gate_confidence_tier_range():
+    """confidence_tier ↔ confidence 值域不变量闸门（P0-9）。
+
+    此前 confidence_tier_rule() 按 source_tier 定档、覆盖 confidence 值域，产物与
+    schema 文档化区间冲突 479 条且无闸门看住。现：confidence_tier 只由 confidence
+    值域决定；本闸门跑 scripts/reconcile_confidence_tier.py --check，任何区间违规
+    判红（fail-closed）。调和脚本可独立运行（--check 只查不改）。
+    """
+    p = os.path.join(ROOT, 'scripts', 'reconcile_confidence_tier.py')
+    if not os.path.exists(p):
+        bad('confidence_tier 区间', 'scripts/reconcile_confidence_tier.py 不存在')
+        return
+    r = subprocess.run([sys.executable, p, '--check'], capture_output=True, text=True, timeout=120, cwd=ROOT)
+    tail = (r.stdout + r.stderr).strip()
+    if r.returncode != 0:
+        bad('confidence_tier 区间', tail[-600:])
+    else:
+        ok('confidence_tier 区间', 'confidence↔tier 值域一致（0 违规，479 条已调和）')
+
+
+def gate_tier_c_cap():
+    """Tier-C 上限闸门（P0-10）—— 无溯源实体不得声称高置信度。
+
+    govern_tier_c.py tier_definition 明确：C = 无溯源，confidence 上限 0.30。
+    此前 299 条 C 实体中 252 条 confidence ∈ [0.42,0.90] 超上限且无闸门看住。
+    本闸门跑 scripts/reconcile_tier_c_cap.py --check，任何超限判红（fail-closed）。
+    """
+    p = os.path.join(ROOT, 'scripts', 'reconcile_tier_c_cap.py')
+    if not os.path.exists(p):
+        bad('Tier-C 上限', 'scripts/reconcile_tier_c_cap.py 不存在')
+        return
+    r = subprocess.run([sys.executable, p, '--check'], capture_output=True, text=True, timeout=120, cwd=ROOT)
+    tail = (r.stdout + r.stderr).strip()
+    if r.returncode != 0:
+        bad('Tier-C 上限', tail[-600:])
+    else:
+        ok('Tier-C 上限', 'C 实体 confidence≤0.30 一致（252 条已压到上限）')
+
+
+def gate_confidence_sync():
+    """confidence / confidence_tier / confidence_basis 单事实源同步闸门（P0-9/10 收尾）。
+
+    同 id 记录同时嵌在 api/*.json 类别产物里；reconcile 只改了 entities.json（真相源）。
+    本闸门跑 scripts/sync_confidence_fields.py --check，任何跨文件漂移判红
+    （此前 5468 处 / 29 文件漂移，无闸门看住）。
+    """
+    p = os.path.join(ROOT, 'scripts', 'sync_confidence_fields.py')
+    if not os.path.exists(p):
+        bad('confidence 同步', 'scripts/sync_confidence_fields.py 不存在')
+        return
+    r = subprocess.run([sys.executable, p, '--check'], capture_output=True, text=True, timeout=180, cwd=ROOT)
+    tail = (r.stdout + r.stderr).strip()
+    if r.returncode != 0:
+        bad('confidence 同步', tail[-600:])
+    else:
+        ok('confidence 同步', 'confidence 字段跨文件单事实源一致（0 漂移）')
 
 
 def gate_synthesized_pair_pool():
@@ -3884,7 +4092,7 @@ def gate_paper_numbers_fresh():
     全部漂移，最大差 65 倍（type_error 4 → 262）。
 
     本闸门扫描两版论文（arxiv + mechatronics）里的：
-      - \\d{3}[,]\d{3}          → 4+ 位数字（351,649 形式）
+      - \\d{3}[,]\\d{3}         → 4+ 位数字（351,649 形式）
       - \\$\\d{3,4}\\$           → 数学模式包裹的整数（$802$ $112$ 形式）
       - \\$\\d{2,4}[.]\\d{1,2}\\% → 数学模式包裹的百分比（$5.69\\%$ 形式）
 
@@ -4765,6 +4973,22 @@ GATES = [
     # 6 条最小变异清单（M1~M6，覆盖三态破坏 / 轴边际 / 取证指引 / 诚实边界
     # 四类已知失效模式）的杀死率作为可评分度量。
     ('变异评分（6 变异体 kill rate ≥ 0.85）', gate_mutation_score),
+    # 【2026-10-31 P0-11】MCP 工具集对等。两个 MCP 面（hosted 26 / npm 16）此前静默
+    # 漂移且无闸门看住。本闸门要求：扣掉显式登记的意图分歧后两套工具名集合相等；
+    # 未登记差异 / 过期清单 / 夸大清单一律判红（防再度漂移）。
+    ('MCP 工具集对等（hosted ↔ npm 显式登记分歧）', gate_mcp_tool_parity),
+    # 【2026-10-31 P0-8】entities.json ↔ entities.schema.json 结构契约。此前 schema
+    # 契约文件从未被任何闸门加载；本闸门逐条校验 entities[]，任何违规 fail-closed。
+    ('schema 契约（entities.json ↔ entities.schema.json）', gate_schema_contract),
+    # 【2026-10-31 P0-9】confidence_tier ↔ confidence 值域不变量。此前规则按 source_tier
+    # 定档覆盖值域，产物与 schema 区间冲突 479 条且无闸门看住；本闸门 fail-closed。
+    ('confidence_tier 值域不变量（confidence↔tier 区间）', gate_confidence_tier_range),
+    # 【2026-10-31 P0-10】Tier-C 上限。govern_tier_c.py 明确 C=无溯源 confidence 上限
+    # 0.30；此前 252/299 超限且无闸门看住。本闸门 fail-closed。
+    ('Tier-C 上限（无溯源 confidence≤0.30）', gate_tier_c_cap),
+    # 【2026-10-31 P0-9/10 收尾】confidence 三字段跨文件单事实源。同 id 记录同时嵌在
+    # api/*.json 类别产物里；此前 5468 处/29 文件漂移且无闸门看住。本闸门 fail-closed。
+    ('confidence 字段单事实源（跨文件同步）', gate_confidence_sync),
     # 【2026-10-14 TDD-2026-01】世界模型排除闸门。把「不引入 H-JEPA / Odyssey-3 /
     # Cosmos 3 到核心链路」的决策从「被动回避」变成「可验证的留痕」。守三个不变量：
     # 决策文档存在、依赖面无推理库、五处定位声明面不出现具体模型名。与

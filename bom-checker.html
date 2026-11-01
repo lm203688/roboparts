@@ -200,13 +200,16 @@ function loadSampleBom(){
   // 自动运行检查
   setTimeout(runCheck, 800);
 }
+// 【P0-7】HTML 转义：ref/维度/错误信息来自 API，部分来自用户提交，未转义拼 innerHTML 构成 XSS。
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 function del(i){ rows.splice(i,1); render(); }
 function render(){
   const c=document.getElementById('rows'); c.innerHTML='';
   rows.forEach((r,i)=>{
     const d=document.createElement('div'); d.className='row';
     if(r.kind==='id'){
-      d.innerHTML=`<span class="pill">库内</span><input type="text" value="${r.id}" style="flex:1" onchange="rows[${i}].id=this.value"> <button class="ghost" onclick="del(${i})">✕</button>`;
+      d.innerHTML=`<span class="pill">库内</span><input type="text" value="${esc(r.id)}" style="flex:1" onchange="rows[${i}].id=this.value"> <button class="ghost" onclick="del(${i})">✕</button>`;
     } else {
       d.innerHTML=`<span class="pill">自定义</span>
         <input type="text" placeholder="名称" style="width:140px" onchange="rows[${i}].name=this.value">
@@ -236,23 +239,23 @@ async function runCheck(){
   const res=await fetch(API+'/bom/check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items})});
   const j=await res.json();
   const box=document.getElementById('result'); box.style.display='block';
-  if(!res.ok){ document.getElementById('summary').innerHTML=`<div class="warn">${j.message||j.error||'请求失败'}</div>`; return; }
+  if(!res.ok){ document.getElementById('summary').innerHTML=`<div class="warn">${esc(j.message||j.error||'请求失败')}</div>`; return; }
   document.getElementById('summary').innerHTML=`<div class="pill">组件 ${j.summary.components}</div> <div class="pill">兼容对 ${j.summary.compatible_pairs}/${j.summary.pairs}</div> <div class="pill">可互换组 ${j.summary.interchangeable_groups}</div> <div class="pill">层级 ${j.tier}</div>`;
 
   // 矩阵
   let html='<table><tr><th>A \\ B</th>';
   const refs=j.components.map(c=>c.ref);
-  refs.forEach(r=>html+=`<th>${r}</th>`);
+  refs.forEach(r=>html+=`<th>${esc(r)}</th>`);
   html+='</tr>';
   refs.forEach((ra,i)=>{
-    html+=`<tr><th>${ra}</th>`;
+    html+=`<tr><th>${esc(ra)}</th>`;
     refs.forEach((rb,j2)=>{
       if(i===j2){html+='<td>—</td>';return;}
       const m=j.matrix.find(x=>(x.a===ra&&x.b===rb)||(x.a===rb&&x.b===ra));
       if(!m){html+='<td></td>';return;}
       const cls=m.overall_compatible===true?'ok':(m.overall_compatible===false?'bad':'null');
       const txt=m.overall_compatible===true?'✓':(m.overall_compatible===false?'✗':'?');
-      html+=`<td class="${cls}" title="${m.dimensions.map(d=>d.dimension+':'+(d.compatible===null?'?':d.compatible)).join('; ')}">${txt} ${m.compatibility_score==null?'—':m.compatibility_score+'%'}</td>`;
+      html+=`<td class="${cls}" title="${esc(m.dimensions.map(d=>d.dimension+':'+(d.compatible===null?'?':d.compatible)).join('; '))}">${txt} ${m.compatibility_score==null?'—':esc(m.compatibility_score)+'%'}</td>`;
     });
     html+='</tr>';
   });

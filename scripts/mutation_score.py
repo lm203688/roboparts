@@ -133,42 +133,27 @@ MUTANTS: List[Tuple[str, str, str, Mutator]] = [
 
 
 # ---------------------------------------------------------------- 判据执行
+# 【P0-6 修复】不再使用**私有重实现**谓词，而是**导入 ci_gate.py 的真实闸门纯函数**。
+# 此前 mutation_score.py 用本地 _run_three_state_gate / _run_honest_limits_gate /
+# _run_gap_distance_gate 打分，与真实闸门是两套逻辑；真实闸门被删仍报 1.00；
+# 且 M5 的"杀手"只扫描变异体自己注入的 '⚠ FAKE' 标记（字面量恒真）。
+# 现在：杀死率 = 真实闸门逻辑（check_three_state / check_gap_distance / check_honest_limits）
+# 对变异产物判红的比例 —— 评分因此与闸门同源、可溯源、不可自我指涉。
 
-def _run_three_state_gate(mutated: Dict[str, Any]) -> bool:
-    """直接执行三态守恒不等式（不跑完整 CI，只跑本层判据）。"""
-    agg = mutated.get('aggregates') or {}
-    oc = agg.get('overall_counts') or {}
-    pe = agg.get('pairs_evaluated')
-    if not isinstance(pe, int) or pe <= 0:
-        return False  # 判据无效，视为杀死
-    if sum(oc.values()) != pe:
-        return False
-    for ax, m in (agg.get('axis_marginals') or {}).items():
-        if sum(m.values()) != pe:
-            return False
-    return True
+_CI_GATE_CACHE = None
 
 
-def _run_honest_limits_gate(mutated: Dict[str, Any]) -> bool:
-    """检查 honest_limits 是否有"⚠ FAKE"标记（这是变异体的自我标识）。"""
-    meta = mutated.get('meta') or {}
-    limits = meta.get('honest_limits') or []
-    for line in limits:
-        if 'FAKE' in line:
-            return False
-    return True
+def _ci_gate():
+    """惰性导入 ci_gate.py（只定义函数，不在 __main__ 下运行 main）。"""
+    global _CI_GATE_CACHE
+    if _CI_GATE_CACHE is None:
+        sys.path.insert(0, os.path.join(ROOT, 'scripts'))
+        import ci_gate
+        _CI_GATE_CACHE = ci_gate
+    return _CI_GATE_CACHE
 
 
-def _run_gap_distance_gate(mutated: Dict[str, Any]) -> bool:
-    """检查 gap_distance 非空（取证指引必须可导航）。"""
-    agg = mutated.get('aggregates') or {}
-    gap = agg.get('gap_distance')
-    if not isinstance(gap, dict) or not gap:
-        return False
-    return True
-
-
-# 每条变异体 → 应被哪些闸门杀死
+# 每条变异体 → 应被哪些真实闸门杀死（闸门名与 ci_gate.py 的纯函数一一对应）
 GATE_FOR_MUTANT: Dict[str, List[str]] = {
     'M1': ['three_state_conservation'],
     'M2': ['three_state_conservation'],
@@ -179,15 +164,19 @@ GATE_FOR_MUTANT: Dict[str, List[str]] = {
 }
 
 
-def evaluate_mutant(mid: str, mutated: Dict[str, Any]) -> bool:
-    """跑变异体对应的所有闸门，任一杀死即视为杀死。"""
+def evaluate_mutant(mid: str, mutated: Dict[str, Any], co_mount: Dict[str, Any]) -> bool:
+    """跑真实闸门纯函数，任一判红（返回非空错误列表）即视为**被杀死**。
+
+    co_mount 为真实基线（check_three_state 同时校验 compose 与 co_mount 守恒）。
+    """
+    ci = _ci_gate()
     gates = GATE_FOR_MUTANT.get(mid, [])
     for g in gates:
-        if g == 'three_state_conservation' and not _run_three_state_gate(mutated):
+        if g == 'three_state_conservation' and ci.check_three_state(mutated, co_mount):
             return True
-        if g == 'gap_distance_navigable' and not _run_gap_distance_gate(mutated):
+        if g == 'gap_distance_navigable' and ci.check_gap_distance(mutated):
             return True
-        if g == 'honest_limits_fresh' and not _run_honest_limits_gate(mutated):
+        if g == 'honest_limits_fresh' and ci.check_honest_limits(mutated):
             return True
     return False
 
@@ -202,8 +191,18 @@ def load_product(fname: str) -> Dict[str, Any]:
 
 
 def score() -> Dict[str, Any]:
-    """跑全部变异体，返回完整报告。"""
+    """跑全部变异体，返回完整报告。
+
+    【P0-6】杀死率由**真实闸门纯函数**（ci_gate.check_three_state / check_gap_distance /
+    check_honest_limits）对变异产物判红得出；co_mount 为真实基线，供 check_three_state
+    同时校验 compose 与 co_mount 守恒（M1-M3/M6 的变异产物必须与真实 co_mount 同判）。
+    """
     results = []
+    # 真实 co_mount 基线（check_three_state 需同时校验两个产物）
+    try:
+        co_mount_baseline = load_product('co_mount.json')
+    except FileNotFoundError:
+        co_mount_baseline = None
     for mid, desc, fname, mutator in MUTANTS:
         try:
             baseline = load_product(fname)
@@ -221,7 +220,7 @@ def score() -> Dict[str, Any]:
                 'status': 'mutator_error', 'reason': str(e),
             })
             continue
-        killed = evaluate_mutant(mid, mutated)
+        killed = evaluate_mutant(mid, mutated, co_mount_baseline)
         results.append({
             'id': mid, 'desc': desc, 'target': fname,
             'status': 'killed' if killed else 'survived',
@@ -284,11 +283,16 @@ def self_test() -> int:
         if not cond:
             fails.append(msg)
 
+    ci = _ci_gate()
     baseline = load_product('compose_semantics.json')
+    try:
+        co_mount_baseline = load_product('co_mount.json')
+    except FileNotFoundError:
+        co_mount_baseline = None
     mutated_m1 = _mut_compose_composed_plus_one(baseline)
-    check(not _run_three_state_gate(mutated_m1),
-          '阳性①: M1 破坏三态守恒应被三态闸门判红')
-    check(_run_three_state_gate(baseline),
+    check(bool(ci.check_three_state(mutated_m1, co_mount_baseline)),
+          '阳性①: M1 破坏三态守恒应被三态闸门判红（真实闸门纯函数）')
+    check(not ci.check_three_state(baseline, co_mount_baseline),
           '阴性①: 原始产物三态守恒应被三态闸门放行')
 
     # 恒全杀桩必须能识别出"原始产物也被杀"（那是异常），
@@ -300,17 +304,17 @@ def self_test() -> int:
 
     # 变异 M4 应被 gap_distance 闸门判红
     mutated_m4 = _mut_compose_gap_distance_empty(baseline)
-    check(not _run_gap_distance_gate(mutated_m4),
-          '阳性②: M4 清空 gap_distance 应被判红')
-    check(_run_gap_distance_gate(baseline),
+    check(bool(ci.check_gap_distance(mutated_m4)),
+          '阳性②: M4 清空 gap_distance 应被判红（真实闸门纯函数）')
+    check(not ci.check_gap_distance(baseline),
           '阴性②: 原始产物 gap_distance 非空应放行')
 
     # 变异 M5 应被 honest_limits 闸门判红
     mutated_m5 = _mut_compose_honest_limit_added(baseline)
-    check(not _run_honest_limits_gate(mutated_m5),
-          '阳性③: M5 追加伪造"已完成"声明应被判红')
-    check(_run_honest_limits_gate(baseline),
-          '阴性③: 原始产物 honest_limits 无伪造标记应放行')
+    check(bool(ci.check_honest_limits(mutated_m5)),
+          '阳性③: M5 追加伪造"已完成全轴覆盖"声明应被判红（真实闸门纯函数）')
+    check(not ci.check_honest_limits(baseline),
+          '阴性③: 原始产物 honest_limits 无矛盾声明应放行')
 
     # 评分器端到端：真产物基线全部 6 条变异应全被杀（score = 1.0）
     report = score()

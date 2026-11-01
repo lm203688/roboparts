@@ -91,7 +91,7 @@
       "entity_kind_basis": "默认归类",
       "connector": "JST EHR-03（TTL 3-pin；PCB header B3B-EH-A）",
       "last_verified": "2026-09-08",
-      "confidence_tier": "inferred"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-002",
@@ -159,7 +159,7 @@
       "entity_kind_basis": "默认归类",
       "connector": "JST EHR-03（TTL 3-pin；PCB header B3B-EH-A）",
       "last_verified": "2026-09-08",
-      "confidence_tier": "inferred"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-003",
@@ -226,7 +226,7 @@
       "entity_kind_basis": "默认归类",
       "connector": "JST EHR-04（RS-485 4-pin；PCB header B4B-EH-A）",
       "last_verified": "2026-09-08",
-      "confidence_tier": "inferred"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-004",
@@ -292,7 +292,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -362,7 +362,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -425,7 +425,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -488,7 +488,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -555,7 +555,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -622,7 +622,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "kollmorgen.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -750,7 +750,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -812,7 +812,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -872,7 +872,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -932,7 +932,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -995,7 +995,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -1060,7 +1060,7 @@
       "entity_kind_basis": "默认归类",
       "connector": "XT30PW-M（电源/CAN）+ A1257WR-S-3P（UART 调试）",
       "last_verified": "2026-09-08",
-      "confidence_tier": "inferred"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-017",
@@ -1123,7 +1123,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -1252,7 +1252,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -1315,7 +1315,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -1710,7 +1710,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -1776,7 +1776,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -2047,7 +2047,7 @@
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "lynxmotion.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -2110,7 +2110,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -2141,8 +2141,8 @@
       "category": "actuators",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-29",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2175,7 +2175,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hyundai-gripper",
@@ -2201,8 +2201,8 @@
       "category": "actuators",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-29",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2339,8 +2339,8 @@
       "description_en": "LG Electronics CES 2026 released actuator brand for humanoid robot Cloid",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2375,7 +2375,7 @@
       "source_url": "https://www.google.com/search?q=LG%20Electronics%20LG%20Electronics%20Robotics%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-tesla-optimus-hand",
@@ -2445,7 +2445,7 @@
       "source_url": "https://tesla.com/tesla-optimus-gen-3-hand-actuator",
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-robotis-20dof-hand",
@@ -2479,8 +2479,8 @@
       "description_en": "ROBOTIS 20-DOF robot hand, 2026 new release",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2549,8 +2549,8 @@
       "description_en": "FIRST Tech Challenge standardized motor, simplified robot design",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2618,8 +2618,8 @@
       "description_en": "High torque density compact actuator, dedicated for humanoid robots",
       "source": "web aggregation (credibility C)",
       "last_verified": "2026-05-30",
-      "confidence": 0.45,
-      "confidence_basis": "sources[].credibility=C",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=C; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -2687,8 +2687,8 @@
       ],
       "source": "web aggregation (credibility C)",
       "last_verified": "2026-05-30",
-      "confidence": 0.45,
-      "confidence_basis": "sources[].credibility=C",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=C; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -2756,8 +2756,8 @@
       "description_en": "Hyundai Mobis mass-production actuators for Boston Dynamics Atlas",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2792,7 +2792,7 @@
       "source_url": "https://www.google.com/search?q=Hyundai%20Mobis%20Hyundai%20Mobis%20Atlas%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-unitree-b2-motor-v2",
@@ -2861,7 +2861,7 @@
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-figure-03-actuator",
@@ -2894,8 +2894,8 @@
       "description_en": "Figure 03 humanoid robot custom actuator",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2963,8 +2963,8 @@
       "description_en": "Electric Atlas dedicated actuator, high dynamic performance",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2999,7 +2999,7 @@
       "source_url": "https://www.google.com/search?q=Boston%20Dynamics%20Boston%20Dynamics%20Electric%20Atlas%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-kai-humanoid-actuator",
@@ -3031,8 +3031,8 @@
       "description_en": "KAI humanoid robot dedicated actuator",
       "source": "web aggregation (credibility C)",
       "last_verified": "2026-05-30",
-      "confidence": 0.45,
-      "confidence_basis": "sources[].credibility=C",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=C; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -3100,8 +3100,8 @@
       "description_en": "OMNI humanoid robot actuator system",
       "source": "web aggregation (credibility C)",
       "last_verified": "2026-05-30",
-      "confidence": 0.45,
-      "confidence_basis": "sources[].credibility=C",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=C; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -3169,8 +3169,8 @@
       "description_en": "1X NEO humanoid robot actuator",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3238,8 +3238,8 @@
       "description_en": "Joint module for humanoid robots co-developed by Schaeffler and Hexagon Robotics",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3274,7 +3274,7 @@
       "source_url": "https://www.google.com/search?q=Schaeffler%2FHexagon%20Robotics%20Schaeffler-Hexagon%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-roland-berger-hd-actuator",
@@ -3309,8 +3309,8 @@
       "manufacturer_en": "Multiple Manufacturers",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3342,7 +3342,7 @@
       "source_url": "https://www.google.com/search?q=%E5%A4%9A%E5%AE%B6%20Roland%20Berger%20HD%20Actuator%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "status=market_trend（市场趋势条目，非具体在售型号）",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-tmotor-ak80-9-v2",
@@ -3378,8 +3378,8 @@
       "description_en": "T-Motor AK80-9 upgrade version, humanoid robot joint motor",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3447,8 +3447,8 @@
       "description_en": "CubeMars GL40 upgrade version, humanoid robot joint actuator",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3517,8 +3517,8 @@
       "description_en": "Faulhaber next-generation miniature precision motor for robot joints and precision control",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3553,7 +3553,7 @@
       "source_url": "https://www.google.com/search?q=Faulhaber%20Faulhaber%203274%20BP4%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-moog-smartmotor-v2",
@@ -3587,8 +3587,8 @@
       "description_en": "Moog SmartMotor upgrade version, industrial-grade smart servo",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3623,7 +3623,7 @@
       "source_url": "https://www.google.com/search?q=Moog%20Moog%20SmartMotor%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-schaeffler-compact",
@@ -3728,8 +3728,8 @@
       "manufacturer_en": "Kpower (Guangdong)",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-31",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3797,8 +3797,8 @@
       "description_en": "Welling next-generation joint module series, harmonic + planetary dual approach",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-31",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3870,8 +3870,8 @@
       "description_en": "Mosrac WHG-240 48V frameless BLDC torque motor, dedicated for humanoid robot joints",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-31",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3940,8 +3940,8 @@
       "description_en": "HONPINE HPJM upgrade version, 6-in-1 deeply integrated joint module, 31.5mm hollow shaft",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-31",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4010,8 +4010,8 @@
       "description_en": "CT-Unite's first GaN magnetic encoder chip-driven actuator, stable operation at 180°C",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-31",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4152,8 +4152,8 @@
       "description_en": "Neura Robotics dexterous hand, 2026 breakthrough humanoid robot actuator",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-01",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4222,8 +4222,8 @@
       "description_en": "LG Electronics CES 2026 released Cloid humanoid robot actuator brand, consumer-grade positioning",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-01",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4258,7 +4258,7 @@
       "source_url": "https://www.google.com/search?q=LG%20Electronics%20LG%20Cloid%20Robotics%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-keyirobot-hand",
@@ -4291,8 +4291,8 @@
       "description_en": "2026 humanoid robot dexterous hand actuator breakthrough, driving precision manipulation",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-01",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4467,7 +4467,7 @@
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-robozaps-actuator",
@@ -4501,8 +4501,8 @@
       "description_en": "RoboZaps humanoid robot actuator kit, purchasable solution in 2026",
       "source": "web aggregation (credibility C)",
       "last_verified": "2026-06-01",
-      "confidence": 0.45,
-      "confidence_basis": "sources[].credibility=C",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=C; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -4570,8 +4570,8 @@
       "description_en": "Humanoid and Schaeffler partnership for 1000+ humanoid robot actuator orders, reported by Forbes",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-01",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4606,7 +4606,7 @@
       "source_url": "https://www.google.com/search?q=Humanoid%2FSchaeffler%20Humanoid-Schaeffler%201000%2B%20Robot%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-inspire-linear-servo",
@@ -4619,8 +4619,8 @@
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "INSPIRE micro linear servo actuator, miniature size, high-precision force control for humanoid robot fingers and precision joints",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4668,8 +4668,8 @@
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "INSPIRE dexterous hand, micro linear servo driven, high-precision force control for humanoid robot precision operations",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4717,8 +4717,8 @@
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "Dielectric elastomer actuator, new soft robotics actuation technology, material innovation breakthrough, bionic muscle drive",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4766,8 +4766,8 @@
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "IAI America 2026 robot actuator product line update, covering multiple actuator types",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4815,8 +4815,8 @@
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "Boston Dynamics Atlas product electric actuator v2, jointly released at CES 2026 with Hyundai",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4864,8 +4864,8 @@
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "Tesla Optimus Gen 3 actuator kit, 50+ actuators, commercial deployment in 2026",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4913,8 +4913,8 @@
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "FIRST A301 motor v2, standardizing and simplifying FTC robot design, enhanced performance and reliability",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4962,8 +4962,8 @@
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "Atlas product actuator jointly released by Hyundai and Boston Dynamics, showcased at CES 2026",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5026,8 +5026,8 @@
       "description_en": "Schaeffler modular joint system, supporting gearbox + motor + encoder + controller 4-in-1 integration, modular design adaptable to different humanoid robots",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-03",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5060,7 +5060,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "act-kpower-fullbody",
@@ -5088,8 +5088,8 @@
       "description_en": "Kpower humanoid robot full-body servo kit, Guangdong Kpower released complete selection guide, covering joints/hands/waist",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5150,8 +5150,8 @@
       "description_en": "Welling Parts harmonic drive joint module, high-precision harmonic reducer + frameless torque motor integrated solution",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5212,8 +5212,8 @@
       "description_en": "Welling Parts planetary drive joint module, high-torque planetary reducer + frameless torque motor integrated solution",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5274,8 +5274,8 @@
       "description_en": "Mosrac 48V frameless BLDC torque motor series, complete WHG product line, covering all humanoid robot joint requirements",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5337,8 +5337,8 @@
       "description_en": "CT-Unite GaN magnetic encoder actuator production version, stable at 180°C, 21-bit resolution, <2μs latency, mass production in Q3 2026",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5399,8 +5399,8 @@
       "description_en": "Agility Robotics Digit v2 actuator, upgraded bipedal humanoid robot actuator deployed by Amazon",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-03",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5433,7 +5433,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "act-patsnap-analysis",
@@ -5461,8 +5461,8 @@
       "description_en": "Comprehensive analysis of humanoid robot actuator patents, 530,554+ patents analyzed, actuators account for 70% of total humanoid robot production cost",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-03",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5492,7 +5492,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "type=patent_analysis（研究/报告类条目，非可采购零部件）",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-iai-robot",
@@ -5526,8 +5526,8 @@
       "description_en": "IAI smart actuator robot series, 2026 updated product line guide",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5596,8 +5596,8 @@
       "description_en": "IAI 2026 updated robot product line guide, organized by actuator type",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5666,8 +5666,8 @@
       "description_en": "CubeMars AK45-36 ultra-high torque actuator, 36:1 gear ratio, integrated BLDC motor + planetary gearbox + driver board",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5735,8 +5735,8 @@
       "description_en": "CubeMars AK70-10 humanoid robot actuator, compact design, high torque density",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5805,8 +5805,8 @@
       "description_en": "CubeMars QDD motor series, dedicated for humanoid and quadruped robots, high torque control precision and response speed",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5875,8 +5875,8 @@
       "description_en": "CubeMars frameless torque motor, high torque density + controllable rotor inertia, outer rotor design",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5966,7 +5966,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -6022,7 +6022,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -6087,7 +6087,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -6204,7 +6204,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived",
+      "confidence_tier": "observed",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -6219,8 +6219,8 @@
       "year": "2025-2026",
       "description": "EngineAI T800 humanoid robot actuator system with 29 articulated body joints (full-body DOF, excluding dexterous hands). Capable of 360° motion range. High-torque actuators powered by solid-state battery. Aluminum-alloy frame. Full-stack in-house development.",
       "source": "EngineAI 2025-2026",
-      "confidence": 0.55,
-      "confidence_basis": "unclassified_source",
+      "confidence": 0.3,
+      "confidence_basis": "unclassified_source; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -6311,7 +6311,7 @@
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived",
+      "confidence_tier": "observed",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -8830,7 +8830,7 @@
       },
       "price_range": "$2000-3500",
       "source": "RoboParts Bionic Series",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -8846,7 +8846,7 @@
       ],
       "name_en": "SEA-Torque-50 Series Elastic Actuator",
       "description_en": "Series elastic actuator for high compliance control in bionic joints. Elastic elements store and release energy, achieving bio-muscle-like compliance.",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -8897,7 +8897,7 @@
       },
       "price_range": "$800-1500",
       "source": "RoboParts Bionic Series",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -8913,7 +8913,7 @@
       ],
       "name_en": "SEA-Torque-20 Compact Series Elastic Actuator",
       "description_en": "Compact SEA for bionic arms and dexterous hand joints, high power density design.",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -8963,7 +8963,7 @@
       },
       "price_range": "$150-400",
       "source": "Research / Community",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -8980,7 +8980,7 @@
       "name_en": "FlexDrive-100 Flexible Actuator",
       "description_en": "Flexible actuator based on pneumatic artificial muscle (PAM), achieving bio-muscle contraction/extension motion with high power-to-weight ratio.",
       "type_en": "Flexible Drive",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9030,7 +9030,7 @@
       },
       "price_range": "$20-80",
       "source": "Dynalloy / Research",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -9046,7 +9046,7 @@
       ],
       "name_en": "MuscleWire-10 Shape Memory Alloy Actuator",
       "description_en": "Shape memory alloy wire actuator, contracts upon electrification to produce displacement, for micro bionic robots and flexible mechanisms.",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9097,7 +9097,7 @@
       },
       "price_range": "$5000-8000",
       "source": "RoboParts Bionic Series",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -9114,7 +9114,7 @@
       "name_en": "BioSpine-7 Bionic Spine Module",
       "description_en": "7-DOF bionic spine module, simulating human spine flexion/extension, lateral bending and rotation for humanoid robot torso.",
       "type_en": "Multi-DOF Module",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9217,7 +9217,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "actuator-hand-002",
@@ -9234,7 +9234,7 @@
       },
       "price_range": "$15000-25000",
       "source": "SimLab / Research",
-      "confidence": 0.85,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -9251,7 +9251,7 @@
       "name_en": "Allegro Hand Four-Finger Dexterous Hand",
       "description_en": "16-DOF four-finger dexterous hand, open-source design, widely used in academic research and prototyping.",
       "type_en": "Multi-Finger Dexterous Hand",
-      "confidence_basis": "tier:specsheet",
+      "confidence_basis": "tier:specsheet; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -9284,7 +9284,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "actuator-hand-003",
@@ -9354,7 +9354,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "ACT-hd-leaderdrive-lcs",
@@ -9390,9 +9390,9 @@
       "domestic_rate": "国产主力",
       "import_dependency": "低",
       "source": "绿的谐波官网 + 东方财富/雪球产业研报 (2026-02~06)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9457,9 +9457,9 @@
       },
       "domestic_rate": "国产主力",
       "source": "绿的谐波产品系列公开资料 + 券商供应链拆解 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9519,9 +9519,9 @@
       },
       "domestic_rate": "国产主力",
       "source": "绿的谐波产品系列公开资料 + 东方财富供应链分析 (2026-06)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9612,7 +9612,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-hd-harmonicdrive-csg2uh",
@@ -9639,9 +9639,9 @@
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "Harmonic Drive Systems 产品体系 + 行业份额研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9697,9 +9697,9 @@
       ],
       "domestic_rate": "国产",
       "source": "谐波减速器行业格局研报（雪球/东方财富，2026）",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9754,9 +9754,9 @@
       ],
       "domestic_rate": "国产",
       "source": "谐波减速器行业格局研报（雪球/东方财富，2026）",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9811,9 +9811,9 @@
       ],
       "domestic_rate": "国产",
       "source": "大族激光机器人业务公开资料 + 谐波格局研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9885,9 +9885,9 @@
       "domestic_rate": "国产龙头",
       "import_dependency": "低",
       "source": "五洲新春公开披露 + 人形机器人丝杠产业链拆解研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9954,9 +9954,9 @@
       },
       "domestic_rate": "国产",
       "source": "恒立液压公开披露 + 丝杠国产替代盘点 (sensorexpert, 2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10024,9 +10024,9 @@
       },
       "domestic_rate": "国产",
       "source": "贝斯特/宇华精机公开披露 + 丝杠八家龙头盘点 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10094,9 +10094,9 @@
       },
       "domestic_rate": "国产",
       "source": "秦川机床公开披露 + 丝杠产业链研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10162,9 +10162,9 @@
       },
       "domestic_rate": "国产",
       "source": "北特科技公开披露 + 丝杠国产替代研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10228,9 +10228,9 @@
       },
       "domestic_rate": "国产",
       "source": "鼎智科技/江苏雷利公开披露 + 人形零部件研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10287,9 +10287,9 @@
       ],
       "domestic_rate": "国产",
       "source": "双林股份公开披露 + 行星滚柱丝杠标的梳理 (同花顺, 2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10352,9 +10352,9 @@
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "Rollvis 公开产品资料 + 丝杠全球格局研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10411,9 +10411,9 @@
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "人形机器人丝杠产业链拆解研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10477,9 +10477,9 @@
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "Ewellix / Schaeffler 公开资料 + 丝杠全球格局研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10536,9 +10536,9 @@
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "SKF 公开产品资料 + 人形丝杠产业链拆解 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10595,9 +10595,9 @@
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "Bosch Rexroth 公开产品资料 + 丝杠全球格局研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10663,9 +10663,9 @@
       },
       "domestic_rate": "国产主力",
       "source": "步科股份投资者关系活动记录 (2026-05) + 官网产品资料",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10761,7 +10761,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "ACT-fm-leisai-fm2",
@@ -10795,9 +10795,9 @@
       },
       "domestic_rate": "国产主力",
       "source": "雷赛智能官网 + 国产无框力矩电机横评 (2026-05)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10889,7 +10889,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "ACT-fm-hcfa-humdb",
@@ -10953,7 +10953,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "ACT-fm-inovance-mx-tmb",
@@ -10983,9 +10983,9 @@
       },
       "domestic_rate": "国产主力",
       "source": "汇川技术官网 + 机器人电机行业分析 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11110,9 +11110,9 @@
       },
       "domestic_rate": "国产",
       "source": "伟创电气官网 + 无框力矩电机上市企业盘点 (aibangbots, 2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11178,9 +11178,9 @@
       },
       "domestic_rate": "国产主力",
       "source": "卧龙电驱公开披露 + 机器人电机企业分析 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11240,9 +11240,9 @@
       },
       "domestic_rate": "国产",
       "source": "大族激光官网 + 无框力矩电机企业盘点 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11318,9 +11318,9 @@
       },
       "domestic_rate": "国产",
       "source": "国产无框力矩电机厂家横评 (2026-05) + 企业公开资料",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11389,9 +11389,9 @@
       },
       "domestic_rate": "国产主力",
       "source": "鸣志电器公开披露 + 人形伺服赛道分析 (东方财富, 2026-07)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11460,9 +11460,9 @@
       },
       "domestic_rate": "国产主力",
       "source": "绿的谐波公开披露 + Gasgoo (2026-02-09) + 券商研报",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11528,9 +11528,9 @@
       },
       "domestic_rate": "国产",
       "source": "昊志机电官网 + 人形伺服/驱控赛道分析 (东方财富, 2026-07)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11593,9 +11593,9 @@
       },
       "domestic_rate": "国产主力",
       "source": "步科股份官网 + 人形伺服赛道分析 (东方财富, 2026-07)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11658,9 +11658,9 @@
       },
       "domestic_rate": "国产主力",
       "source": "雷赛智能官网 + 无框力矩电机企业盘点 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11726,9 +11726,9 @@
       },
       "domestic_rate": "国产主力",
       "source": "拓普集团公开披露 + 人形机器人丝杠产业链拆解 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11792,9 +11792,9 @@
       },
       "domestic_rate": "国产主力",
       "source": "东方财富供应链分析 (2026-06) + 三花智控公开披露",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11853,9 +11853,9 @@
       },
       "domestic_rate": "国产",
       "source": "兆威机电公开资料 + 机器人电机企业分析 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11919,9 +11919,9 @@
       },
       "domestic_rate": "国产",
       "source": "拓邦股份公开披露 + 机器人电机企业分析 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -12349,7 +12349,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "BRG-crb-iko-crbf",
@@ -12408,7 +12408,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "BRG-crb-hiwin",
@@ -12464,7 +12464,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "LUB-hd-grease-sk",
@@ -12521,7 +12521,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "LUB-nabtesco-vigo-re0",
@@ -12578,7 +12578,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "SEAL-klueber-nbu15",
@@ -12635,7 +12635,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "GBX-neugart-ple",
@@ -12692,7 +12692,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "GBX-wittenstein-tp",
@@ -12749,7 +12749,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "GBX-shimpo-vrs",
@@ -12806,7 +12806,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "LIN-ewellix-casm",
@@ -12863,7 +12863,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "LIN-tolomatic-erd",
@@ -12920,7 +12920,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "LIN-iai-rcp6",
@@ -12977,7 +12977,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "MAT-flexspline-42crmo",
@@ -13034,7 +13034,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "MAT-flexspline-30crmnsia",
@@ -13148,7 +13148,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "TDN-sava-cable",
@@ -13205,7 +13205,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "MOT-maxon-re25",
@@ -13262,7 +13262,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "MOT-faulhaber-1741cxr",
@@ -13319,7 +13319,7 @@
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "category": "actuators",

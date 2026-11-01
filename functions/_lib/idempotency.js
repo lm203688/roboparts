@@ -61,6 +61,10 @@ export function idempotencyStore(env) {
  * @param {number} [opts.ttlSeconds]         TTL，默认 30 天
  * @param {string} [opts.requested_at]       记录首次请求时间（默认当前 UTC ISO）
  * @param {object} [opts.metadata]           附加元数据（如 actor / origin）
+ * @param {boolean} [opts.skipReplay]        true：key 已存在时**直接回放首次结果，不重跑 fn**。
+ *                                           用于 fn 有**副作用**（如加积分）的场景——重跑 fn 会
+ *                                           二次入账，且 deepEqual 对"余额不同"必然判 conflict。
+ *                                           首次结果即权威，回放只读、绝不重执行副作用。
  * @returns {Promise<{
  *   status: 'created'|'replayed'|'conflict'|'unavailable'|'error',
  *   result?: any,
@@ -122,7 +126,17 @@ export async function runIdempotent(env, key, fn, opts = {}) {
         backend: store.backend,
       };
     }
-    // 2) 重新执行 fn（对"业务结果"做真等值比较，不靠 JSON.stringify 的字节顺序）
+    // 2a) skipReplay：有副作用的操作（加积分/扣费）**绝不重跑 fn**，首次结果即权威。
+    //     重跑会造成二次入账，且 deepEqual 对"余额已变"必然判 conflict —— 都是错的。
+    if (opts.skipReplay) {
+      return {
+        status: 'replayed',
+        result: prev._result,
+        backend: store.backend,
+      };
+    }
+    // 2b) 默认：重新执行 fn（对"业务结果"做真等值比较，不靠 JSON.stringify 的字节顺序）。
+    //     仅适合纯/幂等 fn；有副作用的调用方应传 skipReplay: true。
     let cur;
     try {
       cur = await fn();

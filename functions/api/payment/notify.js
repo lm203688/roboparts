@@ -6,11 +6,7 @@
  * 服务器需返回 "success" 表示已收到通知
  */
 
-const CREDIT_MAP = {
-  'starter': 100,
-  'pro': 500,
-  'lifetime': 999999,
-};
+import { PLANS } from '../../_lib/plans.js';
 
 /**
  * Hash email using SHA-256 for privacy-safe storage
@@ -138,7 +134,7 @@ export async function onRequestPost(context) {
         }
 
         const userKey = userInfo.api_key || orderData.api_key;
-        const creditsToAdd = userInfo.credits || orderData.credits || CREDIT_MAP[orderData.plan] || 0;
+        const creditsToAdd = userInfo.credits || orderData.credits || PLANS[orderData.plan]?.credits || 0;
 
         if (creditsToAdd > 0 && userKey) {
           // 获取用户当前积分

@@ -66,7 +66,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -111,7 +111,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -156,7 +156,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -201,7 +201,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -246,7 +246,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -259,7 +259,7 @@
       "description": "Pulsed laser-based 3D mapping sensor. Essential for autonomous navigation and obstacle detection. Solid-state LiDAR is replacing mechanical spinning units.",
       "manufacturer": "Velodyne (Ouster), Luminar, Hesai, Livox, Innoviz",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -268,7 +268,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -303,7 +303,7 @@
       "source_url": "https://www.google.com/search?q=Velodyne%20(Ouster)%2C%20Luminar%2C%20Hesai%2C%20Livox%2C%20Innoviz%20LiDAR%20(Light%20Detection%20and%20Ranging)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-002",
@@ -314,7 +314,7 @@
       "description": "Pixels fire independently when brightness changes, mimicking the retina. Extremely low latency (μs), high dynamic range, low power. Ideal for high-speed robotics.",
       "manufacturer": "Prophesee (Metavision), iniVation (DAVIS), CelePixel",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -323,7 +323,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -369,7 +369,7 @@
       "description": "Optical tactile sensors that capture high-resolution contact geometry and force distribution. Enable dexterous robotic manipulation.",
       "manufacturer": "GelSight (MIT spinoff), SynTouch, Pressure Profile Systems",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -378,7 +378,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -413,7 +413,7 @@
       "source_url": "https://www.google.com/search?q=GelSight%20(MIT%20spinoff)%2C%20SynTouch%2C%20Pressure%20Profile%20Systems%20Tactile%20Sensor%20(GelSight)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-004",
@@ -424,7 +424,7 @@
       "description": "Combines accelerometer, gyroscope, and magnetometer for orientation and motion tracking. Essential for robot balance and navigation.",
       "manufacturer": "Bosch, InvenSense (TDK), STMicroelectronics, Analog Devices",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -433,7 +433,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -468,7 +468,7 @@
       "source_url": "https://www.google.com/search?q=Bosch%2C%20InvenSense%20(TDK)%2C%20STMicroelectronics%2C%20Analog%20Devices%20IMU%20(Inertial%20Measurement%20Unit)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-005",
@@ -479,7 +479,7 @@
       "description": "Measures forces and torques in 6 axes (Fx, Fy, Fz, Tx, Ty, Tz). Critical for robotic assembly, polishing, and safe human-robot interaction.",
       "manufacturer": "ATI Industrial Automation, OnRobot, SCHUNK, ME-Meßsysteme",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -488,7 +488,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -534,7 +534,7 @@
       "description": "High-density three-axis tactile sensor for humanoid and industrial robot hands. Each taxel measures normal and shear forces in 3 axes, enabling robots to understand what they touch. Featured at CES 2026, the uSkin system now covers fingertips, phalanges, and palm with a nail element for precision interaction. Combined with uAi software for tactile intelligence.",
       "manufacturer": "XELA Robotics",
       "source": "Intel Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -543,7 +543,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -578,7 +578,7 @@
       "source_url": "https://www.google.com/search?q=XELA%20Robotics%20XELA%20uSkin%203-Axis%20Tactile%20Sensor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-007",
@@ -631,7 +631,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-008",
@@ -642,7 +642,7 @@
       "description": "2026年触觉基础模型(Tactile Foundation Models)概念兴起，为机器人赋予触觉感知。新一代触觉传感器套件模仿人类皮肤，采用流体填充阻抗传感和水听器(麦克风)检测振动。可感知温度、热变化、振动和压力。预计到2026年底，每台新人形机器人都将标配触觉传感器，每个机器人手指都将嵌入触觉感知。",
       "manufacturer": "Multiple (Meta AI Research, XELA, academic labs)",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -652,7 +652,7 @@
       },
       "category": "sensors",
       "description_en": "The concept of Tactile Foundation Models emerged in 2026, endowing robots with tactile perception. The new generation of tactile sensor suites mimics human skin, using fluid-filled impedance sensing and hydrophones (microphones) for vibration detection. Capable of sensing temperature, thermal changes, vibration, and pressure. By the end of 2026, every new humanoid robot is expected to come with standard tactile sensors, with tactile perception embedded in each robot finger.",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -687,7 +687,7 @@
       "source_url": "https://www.google.com/search?q=Multiple%20(Meta%20AI%20Research%2C%20XELA%2C%20academic%20labs)%20Tactile%20Foundation%20Model%20Sensor%20Suite%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-009",
@@ -698,7 +698,7 @@
       "description": "仿生柔性触觉传感器，用于智能软体机器人。从硬件构建块和触觉传感到控制算法和应用，实现了类皮肤的多模态感知。2025-2026年研究进展包括柔性电子皮肤、可拉伸传感器阵列和自愈合触觉材料，为人形机器人和软体机器人提供更自然的人机交互能力。",
       "manufacturer": "Academic research (ACS Applied Materials & Interfaces 2025)",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -708,7 +708,7 @@
       },
       "category": "sensors",
       "description_en": "Bio-inspired flexible tactile sensor for intelligent soft robots. From hardware building blocks and tactile sensing to control algorithms and applications, achieving skin-like multimodal perception. 2025-2026 research progress includes flexible electronic skin, stretchable sensor arrays, and self-healing tactile materials, providing more natural human-robot interaction capabilities for humanoid and soft robots.",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -858,7 +858,7 @@
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-unitree-h1-360depth",
@@ -918,7 +918,7 @@
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-13",
@@ -928,7 +928,7 @@
       "range": "180m",
       "description": "A 360-degree rotating LiDAR sensor with high-resolution point cloud generation for detailed environmental mapping and obstacle detection.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -937,7 +937,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -970,7 +970,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-14",
@@ -980,7 +980,7 @@
       "range": "N/A",
       "description": "A high-precision inertial measurement unit combining accelerometer, gyroscope, and magnetometer data for accurate orientation and motion tracking.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -989,7 +989,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -1022,7 +1022,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-15",
@@ -1032,7 +1032,7 @@
       "range": "50m (daylight)",
       "description": "A high-definition color camera with motorized pan, tilt, and zoom capabilities for long-range visual inspection and object recognition.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1041,7 +1041,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -1084,7 +1084,7 @@
       "range": "30m",
       "description": "A camera system capturing images in visible, near-infrared, and thermal spectrums for advanced material analysis and thermal anomaly detection.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1093,7 +1093,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -1136,7 +1136,7 @@
       "range": "0-5mm",
       "description": "A conformable sensor array covering a robotic limb, capable of detecting pressure, vibration, and temperature across its entire surface.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1145,7 +1145,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -1178,7 +1178,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-18",
@@ -1188,7 +1188,7 @@
       "range": "N/A",
       "description": "A dense matrix of force-sensitive resistors located on a robotic gripper to provide fine-grained feedback for delicate manipulation tasks.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1197,7 +1197,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -1230,7 +1230,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-19",
@@ -1240,7 +1240,7 @@
       "range": "6m",
       "description": "A circular array of ultrasonic transducers providing wide-angle proximity detection and obstacle avoidance in cluttered environments.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1249,7 +1249,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -1292,7 +1292,7 @@
       "range": "N/A",
       "description": "A high-fidelity sensor mounted between a robotic arm and its end-effector to measure all six components of force and torque.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1301,7 +1301,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -1344,7 +1344,7 @@
       "range": "100m",
       "description": "A no-moving-parts LiDAR sensor with a fixed field of view, providing rapid, vibration-resistant scanning for dynamic environments.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1353,7 +1353,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -1386,7 +1386,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-22",
@@ -1396,7 +1396,7 @@
       "range": "10m",
       "description": "A non-contact optical sensor that uses laser interferometry to measure surface vibrations and acoustic emissions with high precision.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1405,7 +1405,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -1438,7 +1438,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-23",
@@ -1448,7 +1448,7 @@
       "range": "30m",
       "description": "A neuromorphic camera that only reports pixel changes, enabling ultra-fast response to motion and low-latency visual processing.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1457,7 +1457,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -1500,7 +1500,7 @@
       "range": "N/A",
       "description": "A single, highly sensitive robotic fingertip with a 3D array of sensors to provide rich feedback on object shape, texture, and slip.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1509,7 +1509,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -1552,7 +1552,7 @@
       "range": "5m",
       "description": "An active depth-sensing camera that illuminates a scene with infrared light to create real-time 3D depth maps for navigation and interaction.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1561,7 +1561,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -1594,7 +1594,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-26",
@@ -1604,7 +1604,7 @@
       "range": "N/A",
       "description": "A multi-element microphone system for beamforming, sound source localization, and acoustic scene analysis.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1613,7 +1613,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -1646,7 +1646,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-27",
@@ -1656,7 +1656,7 @@
       "range": "N/A",
       "description": "A compact sensor integrated into a joint to measure torque, providing critical feedback for force-controlled movements and safety.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1665,7 +1665,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -1708,7 +1708,7 @@
       "range": "70 meters",
       "description": "A 3D spinning LiDAR sensor with 32 channels, providing high-resolution point cloud data for obstacle detection, mapping, and localization.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1717,7 +1717,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -1750,7 +1750,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-29",
@@ -1760,7 +1760,7 @@
       "range": "N/A",
       "description": "A miniature inertial measurement unit providing precise data on orientation, angular velocity, and acceleration for motion tracking and stability control.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1769,7 +1769,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -1802,7 +1802,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-30",
@@ -1812,7 +1812,7 @@
       "range": "10 meters (depth)",
       "description": "An RGB-D camera that captures color images and depth data simultaneously, ideal for 3D perception, gesture recognition, and human-robot interaction.",
       "source": "Intel Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1821,7 +1821,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -1854,7 +1854,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-31",
@@ -1924,7 +1924,7 @@
       "range": "10 meters",
       "description": "A long-range ultrasonic sensor that detects obstacles by emitting sound waves and measuring the time it takes for the echo to return, useful for navigation and collision avoidance.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1933,7 +1933,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -1966,7 +1966,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-33",
@@ -1976,7 +1976,7 @@
       "range": "N/A",
       "description": "A biomimetic tactile sensor that mimics the human sense of touch, providing data on pressure, vibration, and temperature for delicate manipulation and object recognition.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -1985,7 +1985,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2018,7 +2018,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-34",
@@ -2028,7 +2028,7 @@
       "range": "120 meters",
       "description": "A solid-state LiDAR sensor with 64 vertical channels, offering high-resolution 3D point clouds for long-range environmental mapping and perception.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -2037,7 +2037,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -2080,7 +2080,7 @@
       "range": "N/A",
       "description": "A 9-axis absolute orientation sensor that fuses accelerometer, gyroscope, and magnetometer data to provide accurate heading and tilt information.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -2089,7 +2089,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2122,7 +2122,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-36",
@@ -2132,7 +2132,7 @@
       "range": "N/A",
       "description": "A high-resolution global shutter camera optimized for machine vision applications, capable of capturing fast-moving objects with minimal distortion.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -2141,7 +2141,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2174,7 +2174,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-37",
@@ -2184,7 +2184,7 @@
       "range": "45 N, 2.25 Nm",
       "description": "A compact, high-precision force-torque sensor designed for integration into small robotic arms and end-effectors for delicate tasks.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -2193,7 +2193,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2230,7 +2230,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-38",
@@ -2240,7 +2240,7 @@
       "range": "2-4 meters",
       "description": "A low-cost, popular ultrasonic sensor commonly used for short-range obstacle detection and distance measurement in hobbyist and educational robotics projects.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -2249,7 +2249,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2282,7 +2282,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-39",
@@ -2292,7 +2292,7 @@
       "range": "N/A",
       "description": "An array of force-sensitive resistors (FSRs) that maps pressure distribution across a surface, ideal for grip force control and slip detection.",
       "source": "ROS Wiki / Open Source Community",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -2301,7 +2301,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -2344,7 +2344,7 @@
       "range": "100 meters",
       "description": "A high-performance, low-cost solid-state LiDAR with a 360-degree horizontal and 25-degree vertical field of view, designed for autonomous navigation.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -2353,7 +2353,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2386,7 +2386,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-41",
@@ -2396,7 +2396,7 @@
       "range": "N/A",
       "description": "A 12.3-megapixel camera module with a large sensor, providing excellent low-light performance and high dynamic range for detailed visual perception.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -2405,7 +2405,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -2448,7 +2448,7 @@
       "range": "17 N, 0.17 Nm",
       "description": "A miniature, high-sensitivity force-torque sensor perfect for applications requiring precise measurement of very small forces and torques, such as micro-manipulation.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -2457,7 +2457,7 @@
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2490,7 +2490,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "sensor-ft-001",
@@ -2561,7 +2561,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "sensor-ft-002",
@@ -2579,7 +2579,7 @@
       },
       "price_range": "$2000-4000",
       "source": "坤维科技 Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -2596,7 +2596,7 @@
       "name_en": "Kunwei KWR46B 6-Axis Force Sensor",
       "description_en": "Domestic 6-axis force sensor, cost-effective, batch-applied to humanoid robot joints.",
       "type_en": "Force/Torque Sensor",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2629,7 +2629,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "sensor-tactile-001",
@@ -2699,7 +2699,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "sensor-imu-001",
@@ -2769,7 +2769,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-047",
@@ -2781,7 +2781,7 @@
       "description": "应变片式六轴力/力矩传感器，全球科研工业标杆。Mini系列直径40mm，重量仅50g。EtherCAT/CAN接口，串扰<1%",
       "manufacturer": "ATI Industrial Automation (Novanta)",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -2790,7 +2790,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2829,7 +2829,7 @@
       "source_url": "https://www.google.com/search?q=ATI%20Industrial%20Automation%20(Novanta)%20ATI%20Mini40%20%E5%85%AD%E8%BD%B4%E5%8A%9B%2F%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-048",
@@ -2841,7 +2841,7 @@
       "description": "ATI Mini45六轴力传感器，45mm直径，兼容UR/FANUC/KUKA/ABB等主流机械臂",
       "manufacturer": "ATI Industrial Automation (Novanta)",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -2850,7 +2850,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2885,7 +2885,7 @@
       "source_url": "https://www.google.com/search?q=ATI%20Industrial%20Automation%20(Novanta)%20ATI%20Mini45%20%E5%85%AD%E8%BD%B4%E5%8A%9B%2F%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-049",
@@ -2897,7 +2897,7 @@
       "description": "六轴力/力矩传感器，直插UR接口即插即用，图形化编程，1小时上手",
       "manufacturer": "OnRobot",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -2906,7 +2906,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2945,7 +2945,7 @@
       "source_url": "https://www.google.com/search?q=OnRobot%20OnRobot%20HEX-E%20%E5%85%AD%E8%BD%B4%E5%8A%9B%2F%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-050",
@@ -2957,7 +2957,7 @@
       "description": "数字式微型六轴力传感器，EtherCAT/RS422/USB，ROS友好，学术研究理想平台",
       "manufacturer": "Bota Systems",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -2966,7 +2966,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3001,7 +3001,7 @@
       "source_url": "https://www.google.com/search?q=Bota%20Systems%20Bota%20Systems%20MiniONE%20%E5%85%AD%E8%BD%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-051",
@@ -3013,7 +3013,7 @@
       "description": "国产六维力传感器精度0.1%FS，响应频率≥10kHz，人形机器人六维力市占约70%，据报进入特斯拉Optimus供应链",
       "manufacturer": "蓝点触控 (LinkTouch)",
       "source": "Web Research",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -3022,7 +3022,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -3069,7 +3069,7 @@
       "description": "多轴力传感器，1-6轴200+型号，解耦精度0.5%FS，线性0.3%FS，抗过载300%，EtherCAT接口",
       "manufacturer": "宇立仪器 (Sunrise SRI)",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -3078,7 +3078,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3113,7 +3113,7 @@
       "source_url": "https://www.google.com/search?q=%E5%AE%87%E7%AB%8B%E4%BB%AA%E5%99%A8%20(Sunrise%20SRI)%20%E5%AE%87%E7%AB%8B%E4%BB%AA%E5%99%A8%20M4313SXX%20%E5%A4%9A%E8%BD%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-053",
@@ -3125,7 +3125,7 @@
       "description": "光学视触觉传感器，高分辨率几何/纹理/法向力/剪切力。USB即插即用，输出图像可直接接入VLA大模型",
       "manufacturer": "GelSight Inc. (MIT)",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -3134,7 +3134,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3169,7 +3169,7 @@
       "source_url": "https://www.google.com/search?q=GelSight%20Inc.%20(MIT)%20GelSight%20Mini%20%E8%A7%86%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-054",
@@ -3181,7 +3181,7 @@
       "description": "光学视触觉传感器，内置摄像头+弹性凝胶，开源设计，适配Meta触觉研究平台",
       "manufacturer": "Meta AI Research",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -3190,7 +3190,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3225,7 +3225,7 @@
       "source_url": "https://www.google.com/search?q=Meta%20AI%20Research%20Meta%20DIGIT%20%E8%A7%86%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-055",
@@ -3237,7 +3237,7 @@
       "description": "仿生光学触觉传感器，弹性穹顶+针阵列+摄像头，完全开源3D打印",
       "manufacturer": "Bristol Robotics Laboratory",
       "source": "Web Research",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -3246,7 +3246,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -3293,7 +3293,7 @@
       "description": "仿生液耦多模态触觉传感器，刚性核+弹性体+导电液，感知法向力/剪切力/微纹理/温度",
       "manufacturer": "SynTouch LLC",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -3302,7 +3302,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3337,7 +3337,7 @@
       "source_url": "https://www.google.com/search?q=SynTouch%20LLC%20SynTouch%20BioTac%20%E4%BB%BF%E7%94%9F%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-057",
@@ -3349,7 +3349,7 @@
       "description": "多维高分辨率视触觉传感器，120Hz输出，IP65防护，500万次按压测试，CAN FD接口",
       "manufacturer": "戴盟机器人 (Daimon Robotics)",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -3358,7 +3358,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3393,7 +3393,7 @@
       "source_url": "https://www.google.com/search?q=%E6%88%B4%E7%9B%9F%E6%9C%BA%E5%99%A8%E4%BA%BA%20(Daimon%20Robotics)%20%E6%88%B4%E7%9B%9F%E6%9C%BA%E5%99%A8%E4%BA%BA%20DM-Tac%20W2%20%E8%A7%86%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-058",
@@ -3405,7 +3405,7 @@
       "description": "ITPU多维触觉传感技术，全栈方案含硬件+数据采集+算法+VTLA具身模型，估值破百亿",
       "manufacturer": "帕西尼感知科技 (PaXini)",
       "source": "Web Research",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -3414,7 +3414,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -3461,7 +3461,7 @@
       "description": "压阻式薄膜压力分布传感器，0.15mm柔性，349传感单元，支持总力/压力分布/峰值压力/力心分析",
       "manufacturer": "Tekscan",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -3470,7 +3470,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3505,7 +3505,7 @@
       "source_url": "https://www.google.com/search?q=Tekscan%20Tekscan%20I-Scan%20%E5%8E%8B%E5%8A%9B%E5%88%86%E5%B8%83%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-060",
@@ -3517,7 +3517,7 @@
       "description": "电容式触觉压力分布传感器，Barrett机器手和PR2夹爪标配，TactileGlove II数据手套",
       "manufacturer": "Pressure Profile Systems (PPS)",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -3526,7 +3526,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3561,7 +3561,7 @@
       "source_url": "https://www.google.com/search?q=Pressure%20Profile%20Systems%20(PPS)%20PPS%20TactArray%20%E8%A7%A6%E8%A7%89%E5%8E%8B%E5%8A%9B%E5%88%86%E5%B8%83%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-061",
@@ -3573,7 +3573,7 @@
       "description": "柔性触觉传感器/电子皮肤，石墨烯/碳纳米管柔性压阻材料，厚度≤0.3mm，入选2025具身智能十大创新产品",
       "manufacturer": "汉威科技/能斯达电子",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -3582,7 +3582,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3617,7 +3617,7 @@
       "source_url": "https://www.google.com/search?q=%E6%B1%89%E5%A8%81%E7%A7%91%E6%8A%80%2F%E8%83%BD%E6%96%AF%E8%BE%BE%E7%94%B5%E5%AD%90%20%E6%B1%89%E5%A8%81%2F%E8%83%BD%E6%96%AF%E8%BE%BE%20ZNS-01%20%E6%9F%94%E6%80%A7%E7%94%B5%E5%AD%90%E7%9A%AE%E8%82%A4%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-062",
@@ -3629,7 +3629,7 @@
       "description": "AI触觉芯片(SNN脉冲传感芯片)+柔性触觉，国产灵巧手柔性触觉感知最大上游芯片供应商",
       "manufacturer": "他山科技 (清华系)",
       "source": "Web Research",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -3638,7 +3638,7 @@
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -3791,7 +3791,7 @@
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-ft-sri-c075xx",
@@ -4004,9 +4004,9 @@
       },
       "domestic_rate": "国产头部",
       "source": "六维力传感器主流供应商与供应链状况 (eefocus, 2026-03) + 坤维官网",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -4068,9 +4068,9 @@
       },
       "domestic_rate": "国产",
       "source": "六维力传感器主流供应商与供应链状况 (eefocus, 2026-03)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -4131,9 +4131,9 @@
       },
       "domestic_rate": "国产",
       "source": "六维力传感器主流供应商与供应链状况 (eefocus, 2026-03)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -4194,9 +4194,9 @@
       },
       "domestic_rate": "国产",
       "source": "六维力传感器主流供应商与供应链状况 (eefocus, 2026-03)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -4257,9 +4257,9 @@
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "六维力传感器主流供应商与供应链状况 (eefocus, 2026-03) + ME 官网",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -4315,9 +4315,9 @@
       ],
       "domestic_rate": "国产",
       "source": "昊志机电官网 + 人形伺服/驱控赛道分析 (东方财富, 2026-07)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -4375,8 +4375,8 @@
       "domestic_rate": "国产",
       "import_substitution_for": "ATI / Schunk 六维力传感器",
       "source": "柯力传感上市公司公开披露 + 六维力赛道公开分析 (2026)",
-      "confidence": 0.45,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -4435,8 +4435,8 @@
       "domestic_rate": "国产",
       "import_substitution_for": "海外应变式六维力传感器",
       "source": "安培龙上市公司公开披露 + 机器人传感器国产化赛道分析 (2026)",
-      "confidence": 0.45,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -4496,8 +4496,8 @@
       "domestic_rate": "国产",
       "import_substitution_for": "ATI / Robotiq 力控传感器",
       "source": "千分一官网 + 国产六维力厂商梳理 (2026)",
-      "confidence": 0.42,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -4559,8 +4559,8 @@
       },
       "domestic_rate": "国产",
       "source": "中航电测上市公司公开披露 + 应变式传感器产业链分析",
-      "confidence": 0.45,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -4620,8 +4620,8 @@
       "domestic_rate": "国产",
       "import_substitution_for": "Xsens MTi / ADI ADIS 系列 IMU",
       "source": "芯动联科上市公司公开披露 + MEMS 惯性器件国产化分析",
-      "confidence": 0.5,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -4681,8 +4681,8 @@
       "domestic_rate": "国产",
       "import_substitution_for": "Bosch / 村田 车规 IMU",
       "source": "华依科技上市公司公开披露 + 车规 IMU 国产化公开报道",
-      "confidence": 0.42,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -4749,8 +4749,8 @@
       "domestic_rate": "国产",
       "import_substitution_for": "Intel RealSense D435i / D455",
       "source": "奥比中光官网产品页 + Orbbec SDK / ROS 驱动开源仓库",
-      "confidence": 0.6,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": true,
       "data_quality": "ok",
@@ -4817,8 +4817,8 @@
       "domestic_rate": "国产",
       "import_substitution_for": "Photoneo / Zivid 工业 3D 相机",
       "source": "图漾科技官网产品页与 SDK 文档",
-      "confidence": 0.5,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -4884,8 +4884,8 @@
       "domestic_rate": "国产",
       "import_substitution_for": "Velodyne / Ouster 近场激光雷达",
       "source": "禾赛科技官网产品页与上市公司公开披露",
-      "confidence": 0.55,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -4950,8 +4950,8 @@
       "domestic_rate": "国产",
       "import_substitution_for": "分立式 LiDAR + 深度相机组合方案",
       "source": "速腾聚创官网与港交所公开披露 + 机器人感知产品发布公开报道",
-      "confidence": 0.45,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",

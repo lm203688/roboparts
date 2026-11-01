@@ -92,6 +92,9 @@ function rosCell(e){
     return '<span style="opacity:.55" title="ROS 支持情况为 Pro 字段，或厂商未声明">–</span>';
   return '<span style="opacity:.7" title="厂商未声明 ROS 支持情况（注意：这不是「不支持」）">? 未声明</span>';
 }
+// 【P0-7】HTML 转义：OSS 组件字段来自 API，部分来自用户提交，未转义拼 innerHTML 构成 XSS。
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 async function load(){
   const u=new URL(API+'/oss',location.origin);
   u.searchParams.set('limit','500');
@@ -103,9 +106,9 @@ async function load(){
   current.forEach((e,i)=>{
     const tr=document.createElement('tr'); tr.dataset.i=i;
     tr.innerHTML=`<td><input type="checkbox" onchange="toggle(this,${i})"></td>
-      <td>${e.id}</td><td>${e.name}</td><td>${e.category}</td><td>${e.manufacturer||''}</td>
-      <td>${e.protocol||''}</td><td>${e.interface||''}</td><td>${e.voltage||''}</td>
-      <td>${rosCell(e)}</td><td>${e.source_robot||''}</td>`;
+      <td>${esc(e.id)}</td><td>${esc(e.name)}</td><td>${esc(e.category)}</td><td>${esc(e.manufacturer||'')}</td>
+      <td>${esc(e.protocol||'')}</td><td>${esc(e.interface||'')}</td><td>${esc(e.voltage||'')}</td>
+      <td>${rosCell(e)}</td><td>${esc(e.source_robot||'')}</td>`;
     tb.appendChild(tr);
   });
 }

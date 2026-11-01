@@ -36,6 +36,10 @@
 const BASE = 'https://www.roboparts.cc';
 const q = document.getElementById('q');
 const res = document.getElementById('res');
+// 【P0-7】HTML 转义：实体 name/category/manufacturer 来自 API，部分来自用户提交
+// （spec-declare / supplier 注册），未转义直接拼 innerHTML 构成存储型 XSS 链。
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 let t;
 q.addEventListener('input', () => {
   clearTimeout(t);
@@ -47,9 +51,9 @@ q.addEventListener('input', () => {
       const d = await r.json();
       const list = (d.results || []);
       res.innerHTML = list.length
-        ? list.map(x => `<a class="item" href="${BASE}/api/entity/${encodeURIComponent(x.id)}" target="_blank" rel="noopener">
-            <div class="n">${x.name || x.id}</div>
-            <div class="m">${x.category || ''} · ${x.manufacturer || '未知厂商'}</div></a>`).join('')
+        ? list.map(x => `<a class="item" href="${BASE}/api/entity/${encodeURIComponent(esc(x.id))}" target="_blank" rel="noopener">
+            <div class="n">${esc(x.name || x.id)}</div>
+            <div class="m">${esc(x.category || '')} · ${esc(x.manufacturer || '未知厂商')}</div></a>`).join('')
         : '<div class="empty">未找到匹配，换个关键词试试，或去主站浏览全库。</div>';
     } catch (e) {
       res.innerHTML = '<div class="empty">检索暂不可用。</div>';

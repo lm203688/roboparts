@@ -51,8 +51,8 @@
       "quarantine": false,
       "source": "公开报道（MATRIX-1 集成 33 个一体化关节执行器，集成丝杠+电机+驱动+减速器+编码器+传感器；36氪/IT之家/百度百科）",
       "source_tier": "C",
-      "confidence": 0.5,
-      "confidence_basis": "press_reported_module_composition",
+      "confidence": 0.3,
+      "confidence_basis": "press_reported_module_composition; tier_c_cap",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",

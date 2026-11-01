@@ -136,7 +136,8 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-fr3",
@@ -244,7 +245,8 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-openarm-v20-left-arm",
@@ -350,7 +352,8 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-openarm-v20-right-arm",
@@ -456,7 +459,8 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "confidence_tier": "unverified"
     },
     {
       "id": "SUPERDEX-fr3-dg5f-short-seed-right",
@@ -547,7 +551,8 @@
         "attach_bot_api"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "confidence_tier": "unverified"
     },
     {
       "id": "SUPERDEX-fr3-dg5f-short-right",
@@ -637,7 +642,8 @@
         "attach_bot_api"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-example-bot-2dof",
@@ -728,7 +734,8 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-2f-85",
@@ -842,7 +849,8 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-allegro-v5-right",
@@ -982,7 +990,8 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-dg5f-short-right",
@@ -1136,7 +1145,8 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-wuji-hand2-beta1-right",
@@ -1298,7 +1308,8 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-dg5f-seed",
@@ -1383,7 +1394,8 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "confidence_tier": "verified"
     },
     {
       "id": "SUPERDEX-openarm-v20-torso",
@@ -1466,7 +1478,8 @@
         "ray_rllib_ready"
       ],
       "needs_provenance": false,
-      "quarantine": false
+      "quarantine": false,
+      "confidence_tier": "verified"
     }
   ]
 }

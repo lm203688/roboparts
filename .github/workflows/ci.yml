@@ -45,7 +45,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          # 【2026-10-31】node 20 → 22.22.2，对齐 package.json engines (>=22.22.0) 与 .nvmrc。
+          # 此前 CI 用 20 但 engines 要求 >=22.22.0，是版本不一致（报告 P1-31）。
+          node-version: '22.22.2'
 
       - name: 安装依赖
         # 走 requirements-dev.txt（PyYAML 供「GitHub 配置 YAML 可解析」闸门使用；

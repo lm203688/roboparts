@@ -130,9 +130,21 @@ class UnmappedCategory(Exception):
 #   unverified  = 无出处或 quarantine（<=0.3，且 source 缺失必须 quarantine=true）
 # 优先级：source_tier 优先（A 直接 verified）→ data_quality 兜底 → confidence 值域。
 def confidence_tier_rule(entity):
-    """按 entity 字段派生 confidence_tier。返回五档枚举之一。"""
+    """按 entity 字段派生 confidence_tier。返回五档枚举之一。
+
+    【20261031-P0-9 修复】此前实现把 **source_tier（出处可信度）** 与
+    **confidence_tier（置信度）** 两个正交轴混为一谈：优先按 source_tier 定档，
+    直接覆盖 confidence 值域（如 tier A + conf 0.5 → 'observed'，但 schema 文档化
+    区间 observed 是 0.7~0.9）。后果：stored 数据 100% 匹配该规则，却与
+    schemas/entities.schema.json $defs.ConfidenceTier 的**文档化区间**冲突 476 条
+    ——「同一事实两处定义」，schema 说 A、规则做 B。
+
+    修复：**confidence_tier 只由 confidence 值域决定**（schema 文档化区间），
+    source_tier 不作覆盖（它是出处轴，不是置信轴）。保留两条硬铁律：
+      - 无出处 且 未 quarantine → unverified（D5 铁律）
+      - quarantine=true → unverified（诚实标记，等补证据）
+    """
     tier = entity.get('source_tier')
-    dq = (entity.get('data_quality') or 'ok').lower()
     conf = entity.get('confidence')
     src = entity.get('source') or entity.get('sources')
     q = bool(entity.get('quarantine', False))
@@ -143,25 +155,16 @@ def confidence_tier_rule(entity):
     # quarantine=true：诚实标记为 unverified（等补证据）
     if q:
         return 'unverified'
-    # source_tier A 且 confidence 高：verified
-    if tier == 'A' and isinstance(conf, (int, float)) and conf >= 0.9:
-        return 'verified'
-    if tier == 'A':
-        return 'observed'
-    # source_tier B：中可信度，落在 derived/observed
-    if tier == 'B':
-        if isinstance(conf, (int, float)) and conf >= 0.65:
-            return 'derived'
-        return 'inferred'
-    # 无 tier（source_tier 缺失）：用 confidence 兜底
+    # confidence_tier 只由 confidence 值域决定（schema 文档化区间）
     if isinstance(conf, (int, float)):
         if conf >= 0.9:
             return 'verified'
-        if conf >= 0.65:
+        if conf >= 0.7:
+            return 'observed'
+        if conf >= 0.5:
             return 'derived'
-        if conf >= 0.4:
+        if conf >= 0.3:
             return 'inferred'
-        return 'unverified'
     return 'unverified'
 
 

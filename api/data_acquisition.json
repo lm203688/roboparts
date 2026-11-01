@@ -536,7 +536,7 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-DAT-0009",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -587,7 +587,7 @@
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-DAT-0010",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -911,8 +911,8 @@
         "household_task"
       ],
       "source": "Stanford Mobile ALOHA 项目主页与论文（arXiv 2401.02117）",
-      "confidence": 0.62,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": true,
       "data_quality": "ok",
@@ -974,8 +974,8 @@
         "imitation_learning"
       ],
       "source": "Open-TeleVision 项目主页与论文（arXiv 2407.01512）",
-      "confidence": 0.62,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": true,
       "data_quality": "ok",
@@ -1035,8 +1035,8 @@
         "manipulator"
       ],
       "source": "AirExo-2 论文与开源仓库（上海交大 IRM Lab, 2025）",
-      "confidence": 0.55,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -1096,8 +1096,8 @@
         "imitation_learning"
       ],
       "source": "Bunny-VisionPro 项目主页与论文（arXiv 2407.03162）",
-      "confidence": 0.55,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -1156,8 +1156,8 @@
         "imitation_learning"
       ],
       "source": "ACE 项目主页与论文（arXiv 2408.11805）",
-      "confidence": 0.55,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -1217,8 +1217,8 @@
         "imitation_learning"
       ],
       "source": "DOGlove 项目主页与论文（上海交大, arXiv 2502.07730）",
-      "confidence": 0.55,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -1278,8 +1278,8 @@
         "teleoperation"
       ],
       "source": "Manus 官网产品页 + 机器人动捕方案商公开资料",
-      "confidence": 0.5,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -1339,8 +1339,8 @@
         "motion_capture"
       ],
       "source": "Rokoko 官网产品页 + 人形机器人运动重定向公开实践",
-      "confidence": 0.5,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -1401,8 +1401,8 @@
         "motion_capture"
       ],
       "source": "诺亦腾官网产品页 + 国内动捕方案选型资料",
-      "confidence": 0.5,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -1462,8 +1462,8 @@
         "imitation_learning"
       ],
       "source": "FastUMI 论文与开源仓库（arXiv 2409.19499）",
-      "confidence": 0.5,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -1523,8 +1523,8 @@
         "imitation_learning"
       ],
       "source": "HumanPlus 项目主页与论文（arXiv 2406.10454）",
-      "confidence": 0.62,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": true,
       "data_quality": "ok",
@@ -1614,7 +1614,7 @@
       "source_tier_prev": "C",
       "rp_id": "RP-DAT-0027",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-neuro-snoworigin-band",
@@ -1650,8 +1650,8 @@
         "prosthetic_control"
       ],
       "source": "36氪报道（2026-07-13），龚虹嘉、陆奇投资",
-      "confidence": 0.72,
-      "confidence_basis": "press_coverage_verified",
+      "confidence": 0.3,
+      "confidence_basis": "press_coverage_verified; tier_c_cap",
       "last_verified": "2026-08-24",
       "verified": true,
       "data_quality": "ok",
@@ -1676,7 +1676,7 @@
       "rp_id": "RP-DAT-0028",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-neuro-aemg-ref",
@@ -1711,8 +1711,8 @@
         "prosthetic_control"
       ],
       "source": "CVPR 2026 论文 + GitHub 开源",
-      "confidence": 0.85,
-      "confidence_basis": "peer_reviewed_paper",
+      "confidence": 0.3,
+      "confidence_basis": "peer_reviewed_paper; tier_c_cap",
       "last_verified": "2026-08-24",
       "verified": true,
       "data_quality": "ok",
@@ -1739,7 +1739,7 @@
       "source_url": "https://www.google.com/search?q=AEMG-series%EF%BC%88CVPR%202026%20%E5%BC%80%E6%BA%90%EF%BC%89%20AEMG%20%E9%80%9A%E7%94%A8%E8%82%8C%E7%94%B5%E9%87%87%E9%9B%86%E5%8F%82%E8%80%83%E5%B9%B3%E5%8F%B0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-oss-agibot-world",
@@ -1906,7 +1906,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0032",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-004",
@@ -1962,7 +1962,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0033",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-005",
@@ -2073,7 +2073,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0035",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-007",
@@ -2130,7 +2130,7 @@
       "source_tier_basis": "deep_link:github.com/google-deepmind/puppeteer",
       "rp_id": "RP-DAT-0036",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "XDA-008",
@@ -2186,7 +2186,7 @@
       "source_tier_basis": "deep_link:github.com/google-deepmind/telekinesis",
       "rp_id": "RP-DAT-0037",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "XDA-009",
@@ -2352,7 +2352,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0040",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-012",
@@ -2408,7 +2408,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0041",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-013",
@@ -2464,7 +2464,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0042",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-014",
@@ -2575,7 +2575,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0044",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-016",
@@ -2630,7 +2630,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0045",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-017",
@@ -2686,7 +2686,7 @@
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0046",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     }
   ]
 }

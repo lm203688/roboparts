@@ -95,10 +95,10 @@ export async function resolveAuthState(request, env) {
       if (ud) {
         const u = JSON.parse(ud);
         if (u.plan === 'pro' || u.plan === 'admin' || (u.credits || 0) > 0) {
-          return /{ tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided, use_header: useHeader };/
+          return { tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided, use_header: useHeader };
         }
       }
-      return /{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key: '', use_header: useHeader };/
+      return { tier: 'free', auth_state: 'verified_free', auth_failure: null, key: '', use_header: useHeader };
     } catch (e) {
       return { tier: 'free', auth_state: 'unverified', auth_failure: { source: 'kv', kind: 'lookup_failed', message: e && e.message }, key: '' };
     }
@@ -119,14 +119,14 @@ export async function resolveAuthState(request, env) {
     //   401/403  = 我们自己的 CREEM_API_KEY 有问题，与用户订阅无关 → unverified；
     //   5xx/429/网络异常 = 真故障 → unverified。
     if (r.status === 404 || r.status === 400) {
-      return /{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: 'not_found', key: '', use_header: useHeader };/
+      return { tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: 'not_found', key: '', use_header: useHeader };
     }
     if (!r.ok) {
       return { tier: 'free', auth_state: 'unverified', auth_failure: { source: 'creem', kind: 'upstream_status_' + r.status }, key: '', use_header: useHeader };
     }
     const d = await r.json();
-    if (d.status === 'active') return /{ tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided, use_header: useHeader };/
-    return /{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: d.status || 'inactive', key: '', use_header: useHeader };/
+    if (d.status === 'active') return { tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided, use_header: useHeader };
+    return { tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: d.status || 'inactive', key: '', use_header: useHeader };
   } catch (e) {
     return { tier: 'free', auth_state: 'unverified', auth_failure: { source: 'creem', kind: 'validate_failed', message: e && e.message }, key: '' };
   }

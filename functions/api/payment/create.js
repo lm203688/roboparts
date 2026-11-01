@@ -9,11 +9,7 @@
  * - lifetime: ¥199 / 无限积分(999999)
  */
 
-const PLANS = {
-  starter: { price: 9, credits: 100, title: 'RoboParts Starter - 100积分' },
-  pro: { price: 29, credits: 500, title: 'RoboParts Pro - 500积分' },
-  lifetime: { price: 199, credits: 999999, title: 'RoboParts Lifetime - 无限积分' },
-};
+import { PLANS } from '../../_lib/plans.js';
 
 const API_GATEWAY = 'https://api.xunhupay.com/payment/do.html';
 

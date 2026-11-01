@@ -762,6 +762,13 @@ def build(paths=None, with_timestamp=True):
             'entity_kind': kind,
             'category': e.get('category'),
             'manufacturer': e.get('manufacturer') or e.get('developer'),
+            # confidence 三标签随行：派生文件里的实体引用须与真相源逐键一致
+            # （confidence 跨文件单事实源闸门）。之前 build() 不投影这三个字段，
+            # 而 reconcile 后同步脚本把它们塞进产物 → 形态图闸门判「nodes 漂移」。
+            # 生产端忠实投影后，新鲜构建与已提交产物一致，两闸门同时变绿。
+            'confidence': e.get('confidence'),
+            'confidence_tier': e.get('confidence_tier'),
+            'confidence_basis': e.get('confidence_basis'),
             # 零端口的节点在本图中无法参与任何组合。不是删除它（删了就看不见），
             # 而是显式标出 + 给原因，让"这个实体为什么组不进去"可被追问。
             'composable': bool(ports),

@@ -32,6 +32,7 @@
 import { judgePair, loadEntityMap, loadCuratedList, semanticSearch } from './_lib/compat_engine.js';
 import { lintUrdf } from './_urdf_lint.js';
 import { queryCoMount } from './_lib/co_mount_engine.js';
+import { checkRateLimit, rateLimitHeaders } from './_lib/ratelimit.js';
 
 const SERVER_NAME = 'roboparts';
 const SERVER_VERSION = '1.2.0';
@@ -2189,7 +2190,19 @@ export async function onRequestHead(context) {
 }
 
 export async function onRequestPost(context) {
-  const { request } = context;
+  const { request, env } = context;
+
+  // 【P0-12】真限流：MCP 是 Agent 高频面（compose 引擎昂贵）。每 IP 每 1 小时 600 次，
+  // 失败开放（KV 不可用 → degraded 放行）。此前零限流。
+  const ip = (request.headers.get('CF-Connecting-IP')
+    || (request.headers.get('x-forwarded-for') || '').split(',')[0].trim()
+    || 'unknown');
+  const rl = await checkRateLimit(env, { ip, scope: 'mcp', limit: 600, windowSec: 3600 });
+  if (!rl.allowed) {
+    return new Response(JSON.stringify(rpcError(null, -32029, 'MCP 调用过于频繁，请稍后再试。')), {
+      status: 429, headers: { ...jsonHeaders, ...rateLimitHeaders(rl) },
+    });
+  }
 
   let body;
   try {

@@ -461,14 +461,17 @@ def _norm_json(obj):
 # 处理：把 SDK 里承载数字的句子纳入本脚本重写面；任一条正则**失配即判红**，
 # 防止 SDK 改版后这里静默失效（那会变成「闸门绿，但它已经没在看东西」）。
 SDK_DIR = os.path.join(DIST, 'python-sdk')
-PAYMENT_CFG = os.path.join(ROOT, 'functions', 'api', 'payment', 'create.js')
+# 【P0-4】套餐唯一真相源已抽到 functions/_lib/plans.js（此前 payment/create.js 三处
+# 硬编码互相矛盾）。此处必须读**同一份真相源**，否则又是「同一口径第二份来源」。
+PAYMENT_CFG = os.path.join(ROOT, 'functions', '_lib', 'plans.js')
 
 
 def plan_truth():
-    """套餐（价格 / 积分）唯一真相源 = 真正扣费的那个文件。
+    """套餐（价格 / 积分）唯一真相源 = functions/_lib/plans.js（20261031-P0-4）。
 
-    为什么不新造一个 plans.json：扣费逻辑已经在 create.js 里，再造一份就是
-    「同一口径的第二份来源」，正是本项目反复踩的漂移起点。解析不足 3 档即抛。
+    为什么不新造一个 plans.json：plans.js 已是三处扣费/计费逻辑共同 import 的
+    单一真相源，再造一份就是「同一口径的第二份来源」，正是本项目反复踩的漂移起点。
+    解析不足 3 档即抛。
     """
     src = open(PAYMENT_CFG, encoding='utf-8').read()
     out = {}
@@ -476,7 +479,7 @@ def plan_truth():
             r"(\w+)\s*:\s*\{\s*price\s*:\s*(\d+)\s*,\s*credits\s*:\s*(\d+)\s*,", src):
         out[m.group(1)] = (int(m.group(2)), int(m.group(3)))
     if len(out) < 3:
-        raise SystemExit('!! 从 functions/api/payment/create.js 解析到 %d 档套餐（<3），'
+        raise SystemExit('!! 从 functions/_lib/plans.js 解析到 %d 档套餐（<3），'
                          'SDK 套餐数字拒绝生成' % len(out))
     return out
 

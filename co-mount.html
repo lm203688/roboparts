@@ -153,32 +153,37 @@ async function query(){
 }
 
 const LABEL={mountable:'✅ 可共装',port_exhausted:'⚠ 装不下（工程约束）',type_error:'✖ 类型错误（确定不兼容）',unknown:'？未知（数据不足）'};
+// 【P0-7】HTML 转义：host/interpretation/evidence 字段来自 API，部分来自用户提交，
+// 未转义拼 innerHTML 构成存储型 XSS。类名用 v+verdict 需先做字母数字清洗。
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const vcls = v => String(v || '').replace(/[^a-z0-9_-]/gi, '');
 
 function render(j){
   const vb=document.getElementById('verdictBox');
   if(j.error){
-    vb.innerHTML=`<div class="warn">${j.error}${j.hint?'<br>'+j.hint:''}${j.known_hosts?'<br>已知宿主：'+j.known_hosts.join(' / '):''}</div>`;
+    vb.innerHTML=`<div class="warn">${esc(j.error)}${j.hint?'<br>'+esc(j.hint):''}${j.known_hosts?'<br>已知宿主：'+esc(j.known_hosts.join(' / ')):''}</div>`;
     document.getElementById('stages').innerHTML='';
     document.getElementById('evidence').innerHTML='';
     document.getElementById('caliber').textContent='';
     return;
   }
   const v=j.verdict;
-  vb.innerHTML=`<div class="verdict v-${v}">${LABEL[v]||v}</div>
-    <div class="tip">宿主 <b>${j.host_name||''}</b>（${j.host}） · ${j.a} × ${j.b}</div>
-    <div class="tip" style="margin-top:6px">${j.interpretation||''}</div>`;
+  vb.innerHTML=`<div class="verdict v-${vcls(v)}">${esc(LABEL[v]||v)}</div>
+    <div class="tip">宿主 <b>${esc(j.host_name||'')}</b>（${esc(j.host)}） · ${esc(j.a)} × ${esc(j.b)}</div>
+    <div class="tip" style="margin-top:6px">${esc(j.interpretation||'')}</div>`;
 
   const s=j.stage_verdicts||{};
-  const stage=(k,label)=>{const val=s[k]||'—';const cls=(val==='fit'||val==='complementary')?'ok':(val==='unknown'?'':'');return `<div class="box"><div class="k">${label}</div><div class="v">${val}</div></div>`;};
+  const stage=(k,label)=>{const val=s[k]||'—';const cls=(val==='fit'||val==='complementary')?'ok':(val==='unknown'?'':'');return `<div class="box"><div class="k">${esc(label)}</div><div class="v">${esc(val)}</div></div>`;};
   document.getElementById('stages').innerHTML='<div class="stage">'+
     stage('mount_fit.a','机械同型 · A')+stage('mount_fit.b','机械同型 · B')+
     stage('port_budget','工具侧位数预算')+'</div>'+
-    '<div class="stage">'+stage('signal_complementary','信号角色互补')+'<div class="box"><div class="k">综合裁决</div><div class="v">'+v+'</div></div></div>';
+    '<div class="stage">'+stage('signal_complementary','信号角色互补')+'<div class="box"><div class="k">综合裁决</div><div class="v">'+esc(v)+'</div></div></div>';
 
   document.getElementById('evidence').innerHTML=(j.evidence||[]).map(e=>{
-    const src=e.source_url?`<a href="${e.source_url}" target="_blank" rel="noopener">${e.source||e.source_url}</a> · Tier ${e.source_tier||'?'}`:(e.source||'—');
-    return `<div class="ev"><b>${e.kind}</b> · ${e.ref||''}${e.name?'（'+e.name+'）':''}<br>${e.claim||''}
-      <div class="meta">出处：${src}${e.confidence!=null?' · confidence '+e.confidence:''}</div></div>`;
+    const src=e.source_url?`<a href="${esc(e.source_url)}" target="_blank" rel="noopener">${esc(e.source||e.source_url)}</a> · Tier ${esc(e.source_tier||'?')}`:(esc(e.source||'—'));
+    return `<div class="ev"><b>${esc(e.kind)}</b> · ${esc(e.ref||'')}${e.name?'（'+esc(e.name)+'）':''}<br>${esc(e.claim||'')}
+      <div class="meta">出处：${src}${e.confidence!=null?' · confidence '+esc(e.confidence):''}</div></div>`;
   }).join('');
 
   document.getElementById('caliber').textContent='口径：'+(j.caliber||'')+'　'+((j.warning)||'');
