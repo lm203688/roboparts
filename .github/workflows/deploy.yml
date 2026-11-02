@@ -40,13 +40,16 @@ jobs:
       # 文件不存在 → 恒红。gate job 此前无 Setup Node，无法用 export_training_dataset.mjs 生成。
       # 修复：gate job 加 Setup Node + 用 regen_derived 的 export_training_dataset 步骤生成，
       # 与 deploy job 行为一致（派生物不入库，但 gate 检查时先本地生成）。
+      # 【2026-11-02 修订】export_training_dataset.mjs 是 ESM 模块，必须用 node 运行
+      # （regen_derived.py 同用 node，见 STEPS line 98）。此前误写 python 导致 SyntaxError
+      # （invalid character '→' U+2192，Python 不解析 ESM 语法）。
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       - name: 生成 training_dataset（供 href 闸门检查）
-        run: python scripts/export_training_dataset.mjs
+        run: node scripts/export_training_dataset.mjs
 
       - name: 列出闸门
         run: python scripts/ci_gate.py --list
