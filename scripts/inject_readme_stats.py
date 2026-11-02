@@ -128,6 +128,18 @@ def gate_count():
     items" would be noticed by no one. Running it once and taking the line count
     is the only wording that cannot lie.
     """
+    # 【20261102】优先直接 import ci_gate.GATES 常量（与 --list 输出同一事实源，
+    # 不撒谎）：Windows 沙箱 spawn 子进程被限（WinError 5）时 --check 曾崩溃成假红。
+    # import 失败（如语法错误）再回退 spawn，仍失败则拒绝生成（不猜数）。
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            'ci_gate_module', os.path.join(ROOT, 'scripts', 'ci_gate.py'))
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return len(mod.GATES)
+    except Exception:
+        pass
     p = os.path.join(ROOT, 'scripts', 'ci_gate.py')
     out = subprocess.run([sys.executable, p, '--list'],
                          cwd=ROOT, capture_output=True, text=True, timeout=120)
@@ -191,8 +203,8 @@ def inject(check=False):
         # otherwise any commit that doesn't regenerate README would false-red
         # (false alarms becoming routine).
         def _strip_date(s):
-            return re.sub(r'- \*\*Last updated\*\*:\s*\d{4}-\d{2}-\d{2}',
-                          '- **Last updated**: <DATE>', s)
+            return re.sub(r'- \*\*Last updated / 最后更新\*\*:\s*\d{4}-\d{2}-\d{2}',
+                          '- **Last updated / 最后更新**: <DATE>', s)
         if _strip_date(text) != _strip_date(original):
             print('❌ README stats block inconsistent with source of truth: %s (run python scripts/inject_readme_stats.py to fix)'
                   % ', '.join(changed))

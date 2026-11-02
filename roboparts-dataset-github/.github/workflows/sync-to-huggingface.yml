@@ -1,0 +1,93 @@
+# RoboParts Dataset: GitHub -> HuggingFace 自动同步
+# 触发: push main 分支 (尤其 data/ 变更) 或手动触发
+# 依赖: HF_TOKEN secret (HF 写入令牌)
+# 文档: https://huggingface.co/docs/hub/repositories-github-actions
+
+name: Sync to HuggingFace Hub
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/**'
+      - 'huggingface_dataset_card.md'
+      - 'README.md'
+  workflow_dispatch:
+    inputs:
+      commit_message:
+        description: '自定义提交消息 (留空则自动生成)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  sync-to-hf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # 1. 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      # 2. 生成变更摘要 (用于 HF commit message)
+      - name: Generate change summary
+        id: changes
+        run: |
+          if [[ -n "${{ inputs.commit_message }}" ]]; then
+            echo "summary=${{ inputs.commit_message }}" >> "$GITHUB_OUTPUT"
+          else
+            # 提取简短 commit 信息
+            SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
+            CHANGED=$(git diff --name-only HEAD~1 -- data/ 2>/dev/null | head -5)
+            COUNT=$(echo "$CHANGED" | grep -c . || true)
+            if [ "$COUNT" -gt 0 ]; then
+              FILES=$(echo "$CHANGED" | tr '\n' ', ' | sed 's/,$//')
+              MSG="sync from GitHub ${SHORT_SHA}: updated ${FILES}"
+            else
+              MSG="sync from GitHub ${SHORT_SHA}: metadata/card update"
+            fi
+            echo "summary=${MSG}" >> "$GITHUB_OUTPUT"
+            echo "commit_msg=${MSG}" >> "$GITHUB_OUTPUT"
+          fi
+
+      # 3. 同步到 HuggingFace Dataset
+      - name: Sync to HuggingFace
+        uses: huggingface/hub-sync@v1.2.0
+        with:
+          github_repo_id: ${{ github.repository }}
+          huggingface_repo_id: roboparts/roboparts-dataset
+          hf_token: ${{ secrets.HF_TOKEN }}
+          repo_type: dataset
+          commit_message: ${{ steps.changes.outputs.commit_message }}
+
+      # 4. 同步完成通知
+      - name: Sync summary
+        run: |
+          echo "## HuggingFace Sync Complete" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Repo**: roboparts/roboparts-dataset" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Trigger**: ${{ github.event_name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Commit**: ${GITHUB_SHA}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Message**: ${{ steps.changes.outputs.summary }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "View at: https://huggingface.co/datasets/roboparts/roboparts-dataset" >> "$GITHUB_STEP_SUMMARY"
+
+  # 验证 HF 端数据可访问
+  verify:
+    needs: sync-to-hf
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Verify dataset accessible
+        run: |
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://huggingface.co/api/datasets/roboparts/roboparts-dataset")
+          if [ "$HTTP_CODE" -eq 200 ]; then
+            echo "Dataset is accessible (HTTP $HTTP_CODE)"
+          else
+            echo "Warning: dataset returned HTTP $HTTP_CODE"
+          fi

@@ -1,5 +1,5 @@
 const DB = {
-  "updated": "2026-10-28T14:38:21.701967Z",
+  "updated": "2026-11-02T00:45:49.325993Z",
   "stats": {
     "actuators": 222,
     "sensors": 95,
@@ -89,7 +89,7 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "connector": "JST EHR-03（TTL 3-pin；PCB header B3B-EH-A）",
       "last_verified": "2026-09-08",
-      "confidence_tier": "inferred"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-002",
@@ -157,7 +157,7 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "connector": "JST EHR-03（TTL 3-pin；PCB header B3B-EH-A）",
       "last_verified": "2026-09-08",
-      "confidence_tier": "inferred"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-003",
@@ -224,7 +224,7 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "connector": "JST EHR-04（RS-485 4-pin；PCB header B4B-EH-A）",
       "last_verified": "2026-09-08",
-      "confidence_tier": "inferred"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-004",
@@ -290,7 +290,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -360,7 +360,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -423,7 +423,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -486,7 +486,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -553,7 +553,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -620,7 +620,7 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "kollmorgen.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -748,7 +748,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -810,7 +810,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -870,7 +870,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -930,7 +930,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -993,7 +993,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -1058,7 +1058,7 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "connector": "XT30PW-M（电源/CAN）+ A1257WR-S-3P（UART 调试）",
       "last_verified": "2026-09-08",
-      "confidence_tier": "inferred"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-017",
@@ -1121,7 +1121,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -1250,7 +1250,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -1313,7 +1313,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -1708,7 +1708,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -1774,7 +1774,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -2045,7 +2045,7 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
       "source": "lynxmotion.com (URL 引用)",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -2108,7 +2108,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -2139,8 +2139,8 @@ const DB = {
       "category": "actuators",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-29",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2173,7 +2173,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-hyundai-gripper",
@@ -2199,8 +2199,8 @@ const DB = {
       "category": "actuators",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-29",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2337,8 +2337,8 @@ const DB = {
       "description_en": "LG Electronics CES 2026 released actuator brand for humanoid robot Cloid",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2373,7 +2373,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=LG%20Electronics%20LG%20Electronics%20Robotics%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-tesla-optimus-hand",
@@ -2443,7 +2443,7 @@ const DB = {
       "source_url": "https://tesla.com/tesla-optimus-gen-3-hand-actuator",
       "tier_upgrade_reason": "Auto-backfilled source_url from vendor_url_pattern at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-robotis-20dof-hand",
@@ -2477,8 +2477,8 @@ const DB = {
       "description_en": "ROBOTIS 20-DOF robot hand, 2026 new release",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2547,8 +2547,8 @@ const DB = {
       "description_en": "FIRST Tech Challenge standardized motor, simplified robot design",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2616,8 +2616,8 @@ const DB = {
       "description_en": "High torque density compact actuator, dedicated for humanoid robots",
       "source": "web aggregation (credibility C)",
       "last_verified": "2026-05-30",
-      "confidence": 0.45,
-      "confidence_basis": "sources[].credibility=C",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=C; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -2685,8 +2685,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility C)",
       "last_verified": "2026-05-30",
-      "confidence": 0.45,
-      "confidence_basis": "sources[].credibility=C",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=C; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -2754,8 +2754,8 @@ const DB = {
       "description_en": "Hyundai Mobis mass-production actuators for Boston Dynamics Atlas",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2790,7 +2790,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Hyundai%20Mobis%20Hyundai%20Mobis%20Atlas%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-unitree-b2-motor-v2",
@@ -2859,7 +2859,7 @@ const DB = {
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-figure-03-actuator",
@@ -2892,8 +2892,8 @@ const DB = {
       "description_en": "Figure 03 humanoid robot custom actuator",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2961,8 +2961,8 @@ const DB = {
       "description_en": "Electric Atlas dedicated actuator, high dynamic performance",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -2997,7 +2997,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Boston%20Dynamics%20Boston%20Dynamics%20Electric%20Atlas%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-kai-humanoid-actuator",
@@ -3029,8 +3029,8 @@ const DB = {
       "description_en": "KAI humanoid robot dedicated actuator",
       "source": "web aggregation (credibility C)",
       "last_verified": "2026-05-30",
-      "confidence": 0.45,
-      "confidence_basis": "sources[].credibility=C",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=C; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -3098,8 +3098,8 @@ const DB = {
       "description_en": "OMNI humanoid robot actuator system",
       "source": "web aggregation (credibility C)",
       "last_verified": "2026-05-30",
-      "confidence": 0.45,
-      "confidence_basis": "sources[].credibility=C",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=C; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -3167,8 +3167,8 @@ const DB = {
       "description_en": "1X NEO humanoid robot actuator",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3236,8 +3236,8 @@ const DB = {
       "description_en": "Joint module for humanoid robots co-developed by Schaeffler and Hexagon Robotics",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3272,7 +3272,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Schaeffler%2FHexagon%20Robotics%20Schaeffler-Hexagon%20Joint%20Module%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-roland-berger-hd-actuator",
@@ -3307,8 +3307,8 @@ const DB = {
       "manufacturer_en": "Multiple Manufacturers",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3340,7 +3340,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%A4%9A%E5%AE%B6%20Roland%20Berger%20HD%20Actuator%20Series%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "status=market_trend（市场趋势条目，非具体在售型号）",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-tmotor-ak80-9-v2",
@@ -3376,8 +3376,8 @@ const DB = {
       "description_en": "T-Motor AK80-9 upgrade version, humanoid robot joint motor",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3445,8 +3445,8 @@ const DB = {
       "description_en": "CubeMars GL40 upgrade version, humanoid robot joint actuator",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3515,8 +3515,8 @@ const DB = {
       "description_en": "Faulhaber next-generation miniature precision motor for robot joints and precision control",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3551,7 +3551,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Faulhaber%20Faulhaber%203274%20BP4%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-moog-smartmotor-v2",
@@ -3585,8 +3585,8 @@ const DB = {
       "description_en": "Moog SmartMotor upgrade version, industrial-grade smart servo",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3621,7 +3621,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Moog%20Moog%20SmartMotor%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-schaeffler-compact",
@@ -3726,8 +3726,8 @@ const DB = {
       "manufacturer_en": "Kpower (Guangdong)",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-31",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3795,8 +3795,8 @@ const DB = {
       "description_en": "Welling next-generation joint module series, harmonic + planetary dual approach",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-31",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3868,8 +3868,8 @@ const DB = {
       "description_en": "Mosrac WHG-240 48V frameless BLDC torque motor, dedicated for humanoid robot joints",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-31",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -3938,8 +3938,8 @@ const DB = {
       "description_en": "HONPINE HPJM upgrade version, 6-in-1 deeply integrated joint module, 31.5mm hollow shaft",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-31",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4008,8 +4008,8 @@ const DB = {
       "description_en": "CT-Unite's first GaN magnetic encoder chip-driven actuator, stable operation at 180°C",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-31",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4150,8 +4150,8 @@ const DB = {
       "description_en": "Neura Robotics dexterous hand, 2026 breakthrough humanoid robot actuator",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-01",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4220,8 +4220,8 @@ const DB = {
       "description_en": "LG Electronics CES 2026 released Cloid humanoid robot actuator brand, consumer-grade positioning",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-01",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4256,7 +4256,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=LG%20Electronics%20LG%20Cloid%20Robotics%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-keyirobot-hand",
@@ -4289,8 +4289,8 @@ const DB = {
       "description_en": "2026 humanoid robot dexterous hand actuator breakthrough, driving precision manipulation",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-01",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4465,7 +4465,7 @@ const DB = {
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "ACT-robozaps-actuator",
@@ -4499,8 +4499,8 @@ const DB = {
       "description_en": "RoboZaps humanoid robot actuator kit, purchasable solution in 2026",
       "source": "web aggregation (credibility C)",
       "last_verified": "2026-06-01",
-      "confidence": 0.45,
-      "confidence_basis": "sources[].credibility=C",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=C; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -4568,8 +4568,8 @@ const DB = {
       "description_en": "Humanoid and Schaeffler partnership for 1000+ humanoid robot actuator orders, reported by Forbes",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-01",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4604,7 +4604,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Humanoid%2FSchaeffler%20Humanoid-Schaeffler%201000%2B%20Robot%20Actuator%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-inspire-linear-servo",
@@ -4617,8 +4617,8 @@ const DB = {
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "INSPIRE micro linear servo actuator, miniature size, high-precision force control for humanoid robot fingers and precision joints",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4666,8 +4666,8 @@ const DB = {
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "INSPIRE dexterous hand, micro linear servo driven, high-precision force control for humanoid robot precision operations",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4715,8 +4715,8 @@ const DB = {
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "Dielectric elastomer actuator, new soft robotics actuation technology, material innovation breakthrough, bionic muscle drive",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4764,8 +4764,8 @@ const DB = {
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "IAI America 2026 robot actuator product line update, covering multiple actuator types",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4813,8 +4813,8 @@ const DB = {
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "Boston Dynamics Atlas product electric actuator v2, jointly released at CES 2026 with Hyundai",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4862,8 +4862,8 @@ const DB = {
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "Tesla Optimus Gen 3 actuator kit, 50+ actuators, commercial deployment in 2026",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4911,8 +4911,8 @@ const DB = {
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "FIRST A301 motor v2, standardizing and simplifying FTC robot design, enhanced performance and reliability",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -4960,8 +4960,8 @@ const DB = {
       "source": "web_search_2026",
       "category": "actuators",
       "description_en": "Atlas product actuator jointly released by Hyundai and Boston Dynamics, showcased at CES 2026",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5024,8 +5024,8 @@ const DB = {
       "description_en": "Schaeffler modular joint system, supporting gearbox + motor + encoder + controller 4-in-1 integration, modular design adaptable to different humanoid robots",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-03",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5058,7 +5058,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "act-kpower-fullbody",
@@ -5086,8 +5086,8 @@ const DB = {
       "description_en": "Kpower humanoid robot full-body servo kit, Guangdong Kpower released complete selection guide, covering joints/hands/waist",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5148,8 +5148,8 @@ const DB = {
       "description_en": "Welling Parts harmonic drive joint module, high-precision harmonic reducer + frameless torque motor integrated solution",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5210,8 +5210,8 @@ const DB = {
       "description_en": "Welling Parts planetary drive joint module, high-torque planetary reducer + frameless torque motor integrated solution",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5272,8 +5272,8 @@ const DB = {
       "description_en": "Mosrac 48V frameless BLDC torque motor series, complete WHG product line, covering all humanoid robot joint requirements",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5335,8 +5335,8 @@ const DB = {
       "description_en": "CT-Unite GaN magnetic encoder actuator production version, stable at 180°C, 21-bit resolution, <2μs latency, mass production in Q3 2026",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5397,8 +5397,8 @@ const DB = {
       "description_en": "Agility Robotics Digit v2 actuator, upgraded bipedal humanoid robot actuator deployed by Amazon",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-03",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5431,7 +5431,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "act-patsnap-analysis",
@@ -5459,8 +5459,8 @@ const DB = {
       "description_en": "Comprehensive analysis of humanoid robot actuator patents, 530,554+ patents analyzed, actuators account for 70% of total humanoid robot production cost",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-03",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5490,7 +5490,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "type=patent_analysis（研究/报告类条目，非可采购零部件）",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "ACT-iai-robot",
@@ -5524,8 +5524,8 @@ const DB = {
       "description_en": "IAI smart actuator robot series, 2026 updated product line guide",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5594,8 +5594,8 @@ const DB = {
       "description_en": "IAI 2026 updated robot product line guide, organized by actuator type",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5664,8 +5664,8 @@ const DB = {
       "description_en": "CubeMars AK45-36 ultra-high torque actuator, 36:1 gear ratio, integrated BLDC motor + planetary gearbox + driver board",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5733,8 +5733,8 @@ const DB = {
       "description_en": "CubeMars AK70-10 humanoid robot actuator, compact design, high torque density",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5803,8 +5803,8 @@ const DB = {
       "description_en": "CubeMars QDD motor series, dedicated for humanoid and quadruped robots, high torque control precision and response speed",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5873,8 +5873,8 @@ const DB = {
       "description_en": "CubeMars frameless torque motor, high torque density + controllable rotor inertia, outer rotor design",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -5964,7 +5964,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -6020,7 +6020,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -6085,7 +6085,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -6202,7 +6202,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived",
+      "confidence_tier": "observed",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -6217,8 +6217,8 @@ const DB = {
       "year": "2025-2026",
       "description": "EngineAI T800 humanoid robot actuator system with 29 articulated body joints (full-body DOF, excluding dexterous hands). Capable of 360° motion range. High-torque actuators powered by solid-state battery. Aluminum-alloy frame. Full-stack in-house development.",
       "source": "EngineAI 2025-2026",
-      "confidence": 0.55,
-      "confidence_basis": "unclassified_source",
+      "confidence": 0.3,
+      "confidence_basis": "unclassified_source; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -6309,7 +6309,7 @@ const DB = {
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.909Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived",
+      "confidence_tier": "observed",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -8828,7 +8828,7 @@ const DB = {
       },
       "price_range": "$2000-3500",
       "source": "RoboParts Bionic Series",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -8844,7 +8844,7 @@ const DB = {
       ],
       "name_en": "SEA-Torque-50 Series Elastic Actuator",
       "description_en": "Series elastic actuator for high compliance control in bionic joints. Elastic elements store and release energy, achieving bio-muscle-like compliance.",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -8895,7 +8895,7 @@ const DB = {
       },
       "price_range": "$800-1500",
       "source": "RoboParts Bionic Series",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -8911,7 +8911,7 @@ const DB = {
       ],
       "name_en": "SEA-Torque-20 Compact Series Elastic Actuator",
       "description_en": "Compact SEA for bionic arms and dexterous hand joints, high power density design.",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -8961,7 +8961,7 @@ const DB = {
       },
       "price_range": "$150-400",
       "source": "Research / Community",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -8978,7 +8978,7 @@ const DB = {
       "name_en": "FlexDrive-100 Flexible Actuator",
       "description_en": "Flexible actuator based on pneumatic artificial muscle (PAM), achieving bio-muscle contraction/extension motion with high power-to-weight ratio.",
       "type_en": "Flexible Drive",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9028,7 +9028,7 @@ const DB = {
       },
       "price_range": "$20-80",
       "source": "Dynalloy / Research",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -9044,7 +9044,7 @@ const DB = {
       ],
       "name_en": "MuscleWire-10 Shape Memory Alloy Actuator",
       "description_en": "Shape memory alloy wire actuator, contracts upon electrification to produce displacement, for micro bionic robots and flexible mechanisms.",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9095,7 +9095,7 @@ const DB = {
       },
       "price_range": "$5000-8000",
       "source": "RoboParts Bionic Series",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -9112,7 +9112,7 @@ const DB = {
       "name_en": "BioSpine-7 Bionic Spine Module",
       "description_en": "7-DOF bionic spine module, simulating human spine flexion/extension, lateral bending and rotation for humanoid robot torso.",
       "type_en": "Multi-DOF Module",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9215,7 +9215,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "actuator-hand-002",
@@ -9232,7 +9232,7 @@ const DB = {
       },
       "price_range": "$15000-25000",
       "source": "SimLab / Research",
-      "confidence": 0.85,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -9249,7 +9249,7 @@ const DB = {
       "name_en": "Allegro Hand Four-Finger Dexterous Hand",
       "description_en": "16-DOF four-finger dexterous hand, open-source design, widely used in academic research and prototyping.",
       "type_en": "Multi-Finger Dexterous Hand",
-      "confidence_basis": "tier:specsheet",
+      "confidence_basis": "tier:specsheet; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -9282,7 +9282,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "actuator-hand-003",
@@ -9352,7 +9352,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "ACT-hd-leaderdrive-lcs",
@@ -9388,9 +9388,9 @@ const DB = {
       "domestic_rate": "国产主力",
       "import_dependency": "低",
       "source": "绿的谐波官网 + 东方财富/雪球产业研报 (2026-02~06)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9455,9 +9455,9 @@ const DB = {
       },
       "domestic_rate": "国产主力",
       "source": "绿的谐波产品系列公开资料 + 券商供应链拆解 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9517,9 +9517,9 @@ const DB = {
       },
       "domestic_rate": "国产主力",
       "source": "绿的谐波产品系列公开资料 + 东方财富供应链分析 (2026-06)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9610,7 +9610,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "ACT-hd-harmonicdrive-csg2uh",
@@ -9637,9 +9637,9 @@ const DB = {
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "Harmonic Drive Systems 产品体系 + 行业份额研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9695,9 +9695,9 @@ const DB = {
       ],
       "domestic_rate": "国产",
       "source": "谐波减速器行业格局研报（雪球/东方财富，2026）",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9752,9 +9752,9 @@ const DB = {
       ],
       "domestic_rate": "国产",
       "source": "谐波减速器行业格局研报（雪球/东方财富，2026）",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9809,9 +9809,9 @@ const DB = {
       ],
       "domestic_rate": "国产",
       "source": "大族激光机器人业务公开资料 + 谐波格局研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9883,9 +9883,9 @@ const DB = {
       "domestic_rate": "国产龙头",
       "import_dependency": "低",
       "source": "五洲新春公开披露 + 人形机器人丝杠产业链拆解研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -9952,9 +9952,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "恒立液压公开披露 + 丝杠国产替代盘点 (sensorexpert, 2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10022,9 +10022,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "贝斯特/宇华精机公开披露 + 丝杠八家龙头盘点 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10092,9 +10092,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "秦川机床公开披露 + 丝杠产业链研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10160,9 +10160,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "北特科技公开披露 + 丝杠国产替代研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10226,9 +10226,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "鼎智科技/江苏雷利公开披露 + 人形零部件研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10285,9 +10285,9 @@ const DB = {
       ],
       "domestic_rate": "国产",
       "source": "双林股份公开披露 + 行星滚柱丝杠标的梳理 (同花顺, 2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10350,9 +10350,9 @@ const DB = {
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "Rollvis 公开产品资料 + 丝杠全球格局研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10409,9 +10409,9 @@ const DB = {
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "人形机器人丝杠产业链拆解研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10475,9 +10475,9 @@ const DB = {
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "Ewellix / Schaeffler 公开资料 + 丝杠全球格局研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10534,9 +10534,9 @@ const DB = {
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "SKF 公开产品资料 + 人形丝杠产业链拆解 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10593,9 +10593,9 @@ const DB = {
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "Bosch Rexroth 公开产品资料 + 丝杠全球格局研报 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10661,9 +10661,9 @@ const DB = {
       },
       "domestic_rate": "国产主力",
       "source": "步科股份投资者关系活动记录 (2026-05) + 官网产品资料",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10759,7 +10759,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "ACT-fm-leisai-fm2",
@@ -10793,9 +10793,9 @@ const DB = {
       },
       "domestic_rate": "国产主力",
       "source": "雷赛智能官网 + 国产无框力矩电机横评 (2026-05)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -10887,7 +10887,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "ACT-fm-hcfa-humdb",
@@ -10951,7 +10951,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "ACT-fm-inovance-mx-tmb",
@@ -10981,9 +10981,9 @@ const DB = {
       },
       "domestic_rate": "国产主力",
       "source": "汇川技术官网 + 机器人电机行业分析 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11108,9 +11108,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "伟创电气官网 + 无框力矩电机上市企业盘点 (aibangbots, 2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11176,9 +11176,9 @@ const DB = {
       },
       "domestic_rate": "国产主力",
       "source": "卧龙电驱公开披露 + 机器人电机企业分析 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11238,9 +11238,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "大族激光官网 + 无框力矩电机企业盘点 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11316,9 +11316,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "国产无框力矩电机厂家横评 (2026-05) + 企业公开资料",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11387,9 +11387,9 @@ const DB = {
       },
       "domestic_rate": "国产主力",
       "source": "鸣志电器公开披露 + 人形伺服赛道分析 (东方财富, 2026-07)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11458,9 +11458,9 @@ const DB = {
       },
       "domestic_rate": "国产主力",
       "source": "绿的谐波公开披露 + Gasgoo (2026-02-09) + 券商研报",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11526,9 +11526,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "昊志机电官网 + 人形伺服/驱控赛道分析 (东方财富, 2026-07)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11591,9 +11591,9 @@ const DB = {
       },
       "domestic_rate": "国产主力",
       "source": "步科股份官网 + 人形伺服赛道分析 (东方财富, 2026-07)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11656,9 +11656,9 @@ const DB = {
       },
       "domestic_rate": "国产主力",
       "source": "雷赛智能官网 + 无框力矩电机企业盘点 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11724,9 +11724,9 @@ const DB = {
       },
       "domestic_rate": "国产主力",
       "source": "拓普集团公开披露 + 人形机器人丝杠产业链拆解 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11790,9 +11790,9 @@ const DB = {
       },
       "domestic_rate": "国产主力",
       "source": "东方财富供应链分析 (2026-06) + 三花智控公开披露",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11851,9 +11851,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "兆威机电公开资料 + 机器人电机企业分析 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -11917,9 +11917,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "拓邦股份公开披露 + 机器人电机企业分析 (2026)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -12347,7 +12347,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "BRG-crb-iko-crbf",
@@ -12406,7 +12406,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "BRG-crb-hiwin",
@@ -12462,7 +12462,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "LUB-hd-grease-sk",
@@ -12519,7 +12519,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "LUB-nabtesco-vigo-re0",
@@ -12576,7 +12576,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "SEAL-klueber-nbu15",
@@ -12633,7 +12633,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "GBX-neugart-ple",
@@ -12690,7 +12690,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "GBX-wittenstein-tp",
@@ -12747,7 +12747,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "GBX-shimpo-vrs",
@@ -12804,7 +12804,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "LIN-ewellix-casm",
@@ -12861,7 +12861,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "LIN-tolomatic-erd",
@@ -12918,7 +12918,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "LIN-iai-rcp6",
@@ -12975,7 +12975,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "MAT-flexspline-42crmo",
@@ -13032,7 +13032,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "MAT-flexspline-30crmnsia",
@@ -13146,7 +13146,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "TDN-sava-cable",
@@ -13203,7 +13203,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "MOT-maxon-re25",
@@ -13260,7 +13260,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "MOT-faulhaber-1741cxr",
@@ -13317,7 +13317,7 @@ const DB = {
         "has_controller_interface": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "category": "actuators",
@@ -13633,7 +13633,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -13678,7 +13678,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -13723,7 +13723,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -13768,7 +13768,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -13813,7 +13813,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -13826,7 +13826,7 @@ const DB = {
       "description": "Pulsed laser-based 3D mapping sensor. Essential for autonomous navigation and obstacle detection. Solid-state LiDAR is replacing mechanical spinning units.",
       "manufacturer": "Velodyne (Ouster), Luminar, Hesai, Livox, Innoviz",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -13835,7 +13835,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -13870,7 +13870,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Velodyne%20(Ouster)%2C%20Luminar%2C%20Hesai%2C%20Livox%2C%20Innoviz%20LiDAR%20(Light%20Detection%20and%20Ranging)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-002",
@@ -13881,7 +13881,7 @@ const DB = {
       "description": "Pixels fire independently when brightness changes, mimicking the retina. Extremely low latency (μs), high dynamic range, low power. Ideal for high-speed robotics.",
       "manufacturer": "Prophesee (Metavision), iniVation (DAVIS), CelePixel",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -13890,7 +13890,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -13936,7 +13936,7 @@ const DB = {
       "description": "Optical tactile sensors that capture high-resolution contact geometry and force distribution. Enable dexterous robotic manipulation.",
       "manufacturer": "GelSight (MIT spinoff), SynTouch, Pressure Profile Systems",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -13945,7 +13945,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -13980,7 +13980,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=GelSight%20(MIT%20spinoff)%2C%20SynTouch%2C%20Pressure%20Profile%20Systems%20Tactile%20Sensor%20(GelSight)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-004",
@@ -13991,7 +13991,7 @@ const DB = {
       "description": "Combines accelerometer, gyroscope, and magnetometer for orientation and motion tracking. Essential for robot balance and navigation.",
       "manufacturer": "Bosch, InvenSense (TDK), STMicroelectronics, Analog Devices",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14000,7 +14000,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -14035,7 +14035,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Bosch%2C%20InvenSense%20(TDK)%2C%20STMicroelectronics%2C%20Analog%20Devices%20IMU%20(Inertial%20Measurement%20Unit)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-005",
@@ -14046,7 +14046,7 @@ const DB = {
       "description": "Measures forces and torques in 6 axes (Fx, Fy, Fz, Tx, Ty, Tz). Critical for robotic assembly, polishing, and safe human-robot interaction.",
       "manufacturer": "ATI Industrial Automation, OnRobot, SCHUNK, ME-Meßsysteme",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14055,7 +14055,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -14101,7 +14101,7 @@ const DB = {
       "description": "High-density three-axis tactile sensor for humanoid and industrial robot hands. Each taxel measures normal and shear forces in 3 axes, enabling robots to understand what they touch. Featured at CES 2026, the uSkin system now covers fingertips, phalanges, and palm with a nail element for precision interaction. Combined with uAi software for tactile intelligence.",
       "manufacturer": "XELA Robotics",
       "source": "Intel Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14110,7 +14110,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -14145,7 +14145,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=XELA%20Robotics%20XELA%20uSkin%203-Axis%20Tactile%20Sensor%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-007",
@@ -14198,7 +14198,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-008",
@@ -14209,7 +14209,7 @@ const DB = {
       "description": "2026年触觉基础模型(Tactile Foundation Models)概念兴起，为机器人赋予触觉感知。新一代触觉传感器套件模仿人类皮肤，采用流体填充阻抗传感和水听器(麦克风)检测振动。可感知温度、热变化、振动和压力。预计到2026年底，每台新人形机器人都将标配触觉传感器，每个机器人手指都将嵌入触觉感知。",
       "manufacturer": "Multiple (Meta AI Research, XELA, academic labs)",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14219,7 +14219,7 @@ const DB = {
       },
       "category": "sensors",
       "description_en": "The concept of Tactile Foundation Models emerged in 2026, endowing robots with tactile perception. The new generation of tactile sensor suites mimics human skin, using fluid-filled impedance sensing and hydrophones (microphones) for vibration detection. Capable of sensing temperature, thermal changes, vibration, and pressure. By the end of 2026, every new humanoid robot is expected to come with standard tactile sensors, with tactile perception embedded in each robot finger.",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -14254,7 +14254,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Multiple%20(Meta%20AI%20Research%2C%20XELA%2C%20academic%20labs)%20Tactile%20Foundation%20Model%20Sensor%20Suite%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-009",
@@ -14265,7 +14265,7 @@ const DB = {
       "description": "仿生柔性触觉传感器，用于智能软体机器人。从硬件构建块和触觉传感到控制算法和应用，实现了类皮肤的多模态感知。2025-2026年研究进展包括柔性电子皮肤、可拉伸传感器阵列和自愈合触觉材料，为人形机器人和软体机器人提供更自然的人机交互能力。",
       "manufacturer": "Academic research (ACS Applied Materials & Interfaces 2025)",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14275,7 +14275,7 @@ const DB = {
       },
       "category": "sensors",
       "description_en": "Bio-inspired flexible tactile sensor for intelligent soft robots. From hardware building blocks and tactile sensing to control algorithms and applications, achieving skin-like multimodal perception. 2025-2026 research progress includes flexible electronic skin, stretchable sensor arrays, and self-healing tactile materials, providing more natural human-robot interaction capabilities for humanoid and soft robots.",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -14425,7 +14425,7 @@ const DB = {
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-unitree-h1-360depth",
@@ -14485,7 +14485,7 @@ const DB = {
       "source_url": "https://www.unitree.com/",
       "tier_upgrade_reason": "Auto-backfilled source_url from dataset_source at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-13",
@@ -14495,7 +14495,7 @@ const DB = {
       "range": "180m",
       "description": "A 360-degree rotating LiDAR sensor with high-resolution point cloud generation for detailed environmental mapping and obstacle detection.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14504,7 +14504,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -14537,7 +14537,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-14",
@@ -14547,7 +14547,7 @@ const DB = {
       "range": "N/A",
       "description": "A high-precision inertial measurement unit combining accelerometer, gyroscope, and magnetometer data for accurate orientation and motion tracking.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14556,7 +14556,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -14589,7 +14589,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-15",
@@ -14599,7 +14599,7 @@ const DB = {
       "range": "50m (daylight)",
       "description": "A high-definition color camera with motorized pan, tilt, and zoom capabilities for long-range visual inspection and object recognition.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14608,7 +14608,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -14651,7 +14651,7 @@ const DB = {
       "range": "30m",
       "description": "A camera system capturing images in visible, near-infrared, and thermal spectrums for advanced material analysis and thermal anomaly detection.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14660,7 +14660,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -14703,7 +14703,7 @@ const DB = {
       "range": "0-5mm",
       "description": "A conformable sensor array covering a robotic limb, capable of detecting pressure, vibration, and temperature across its entire surface.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14712,7 +14712,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -14745,7 +14745,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-18",
@@ -14755,7 +14755,7 @@ const DB = {
       "range": "N/A",
       "description": "A dense matrix of force-sensitive resistors located on a robotic gripper to provide fine-grained feedback for delicate manipulation tasks.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14764,7 +14764,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -14797,7 +14797,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-19",
@@ -14807,7 +14807,7 @@ const DB = {
       "range": "6m",
       "description": "A circular array of ultrasonic transducers providing wide-angle proximity detection and obstacle avoidance in cluttered environments.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14816,7 +14816,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -14859,7 +14859,7 @@ const DB = {
       "range": "N/A",
       "description": "A high-fidelity sensor mounted between a robotic arm and its end-effector to measure all six components of force and torque.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14868,7 +14868,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -14911,7 +14911,7 @@ const DB = {
       "range": "100m",
       "description": "A no-moving-parts LiDAR sensor with a fixed field of view, providing rapid, vibration-resistant scanning for dynamic environments.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14920,7 +14920,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -14953,7 +14953,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-22",
@@ -14963,7 +14963,7 @@ const DB = {
       "range": "10m",
       "description": "A non-contact optical sensor that uses laser interferometry to measure surface vibrations and acoustic emissions with high precision.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -14972,7 +14972,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -15005,7 +15005,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-23",
@@ -15015,7 +15015,7 @@ const DB = {
       "range": "30m",
       "description": "A neuromorphic camera that only reports pixel changes, enabling ultra-fast response to motion and low-latency visual processing.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15024,7 +15024,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -15067,7 +15067,7 @@ const DB = {
       "range": "N/A",
       "description": "A single, highly sensitive robotic fingertip with a 3D array of sensors to provide rich feedback on object shape, texture, and slip.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15076,7 +15076,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -15119,7 +15119,7 @@ const DB = {
       "range": "5m",
       "description": "An active depth-sensing camera that illuminates a scene with infrared light to create real-time 3D depth maps for navigation and interaction.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15128,7 +15128,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -15161,7 +15161,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-26",
@@ -15171,7 +15171,7 @@ const DB = {
       "range": "N/A",
       "description": "A multi-element microphone system for beamforming, sound source localization, and acoustic scene analysis.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15180,7 +15180,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -15213,7 +15213,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-27",
@@ -15223,7 +15223,7 @@ const DB = {
       "range": "N/A",
       "description": "A compact sensor integrated into a joint to measure torque, providing critical feedback for force-controlled movements and safety.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15232,7 +15232,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -15275,7 +15275,7 @@ const DB = {
       "range": "70 meters",
       "description": "A 3D spinning LiDAR sensor with 32 channels, providing high-resolution point cloud data for obstacle detection, mapping, and localization.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15284,7 +15284,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -15317,7 +15317,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-29",
@@ -15327,7 +15327,7 @@ const DB = {
       "range": "N/A",
       "description": "A miniature inertial measurement unit providing precise data on orientation, angular velocity, and acceleration for motion tracking and stability control.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15336,7 +15336,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -15369,7 +15369,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-30",
@@ -15379,7 +15379,7 @@ const DB = {
       "range": "10 meters (depth)",
       "description": "An RGB-D camera that captures color images and depth data simultaneously, ideal for 3D perception, gesture recognition, and human-robot interaction.",
       "source": "Intel Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15388,7 +15388,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -15421,7 +15421,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-31",
@@ -15491,7 +15491,7 @@ const DB = {
       "range": "10 meters",
       "description": "A long-range ultrasonic sensor that detects obstacles by emitting sound waves and measuring the time it takes for the echo to return, useful for navigation and collision avoidance.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15500,7 +15500,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -15533,7 +15533,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-33",
@@ -15543,7 +15543,7 @@ const DB = {
       "range": "N/A",
       "description": "A biomimetic tactile sensor that mimics the human sense of touch, providing data on pressure, vibration, and temperature for delicate manipulation and object recognition.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15552,7 +15552,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -15585,7 +15585,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-34",
@@ -15595,7 +15595,7 @@ const DB = {
       "range": "120 meters",
       "description": "A solid-state LiDAR sensor with 64 vertical channels, offering high-resolution 3D point clouds for long-range environmental mapping and perception.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15604,7 +15604,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -15647,7 +15647,7 @@ const DB = {
       "range": "N/A",
       "description": "A 9-axis absolute orientation sensor that fuses accelerometer, gyroscope, and magnetometer data to provide accurate heading and tilt information.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15656,7 +15656,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -15689,7 +15689,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-36",
@@ -15699,7 +15699,7 @@ const DB = {
       "range": "N/A",
       "description": "A high-resolution global shutter camera optimized for machine vision applications, capable of capturing fast-moving objects with minimal distortion.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15708,7 +15708,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -15741,7 +15741,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-37",
@@ -15751,7 +15751,7 @@ const DB = {
       "range": "45 N, 2.25 Nm",
       "description": "A compact, high-precision force-torque sensor designed for integration into small robotic arms and end-effectors for delicate tasks.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -15760,7 +15760,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -15797,7 +15797,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-38",
@@ -15807,7 +15807,7 @@ const DB = {
       "range": "2-4 meters",
       "description": "A low-cost, popular ultrasonic sensor commonly used for short-range obstacle detection and distance measurement in hobbyist and educational robotics projects.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15816,7 +15816,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -15849,7 +15849,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-39",
@@ -15859,7 +15859,7 @@ const DB = {
       "range": "N/A",
       "description": "An array of force-sensitive resistors (FSRs) that maps pressure distribution across a surface, ideal for grip force control and slip detection.",
       "source": "ROS Wiki / Open Source Community",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15868,7 +15868,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -15911,7 +15911,7 @@ const DB = {
       "range": "100 meters",
       "description": "A high-performance, low-cost solid-state LiDAR with a 360-degree horizontal and 25-degree vertical field of view, designed for autonomous navigation.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15920,7 +15920,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -15953,7 +15953,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-41",
@@ -15963,7 +15963,7 @@ const DB = {
       "range": "N/A",
       "description": "A 12.3-megapixel camera module with a large sensor, providing excellent low-light performance and high dynamic range for detailed visual perception.",
       "source": "Public Specification / Community Aggregation",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -15972,7 +15972,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -16015,7 +16015,7 @@ const DB = {
       "range": "17 N, 0.17 Nm",
       "description": "A miniature, high-sensitivity force-torque sensor perfect for applications requiring precise measurement of very small forces and torques, such as micro-manipulation.",
       "source": "ATI Industrial Automation Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -16024,7 +16024,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -16057,7 +16057,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "sensor-ft-001",
@@ -16128,7 +16128,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "sensor-ft-002",
@@ -16146,7 +16146,7 @@ const DB = {
       },
       "price_range": "$2000-4000",
       "source": "坤维科技 Official",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "compliant",
@@ -16163,7 +16163,7 @@ const DB = {
       "name_en": "Kunwei KWR46B 6-Axis Force Sensor",
       "description_en": "Domestic 6-axis force sensor, cost-effective, batch-applied to humanoid robot joints.",
       "type_en": "Force/Torque Sensor",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -16196,7 +16196,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "sensor-tactile-001",
@@ -16266,7 +16266,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "sensor-imu-001",
@@ -16336,7 +16336,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-047",
@@ -16348,7 +16348,7 @@ const DB = {
       "description": "应变片式六轴力/力矩传感器，全球科研工业标杆。Mini系列直径40mm，重量仅50g。EtherCAT/CAN接口，串扰<1%",
       "manufacturer": "ATI Industrial Automation (Novanta)",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -16357,7 +16357,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -16396,7 +16396,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=ATI%20Industrial%20Automation%20(Novanta)%20ATI%20Mini40%20%E5%85%AD%E8%BD%B4%E5%8A%9B%2F%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-048",
@@ -16408,7 +16408,7 @@ const DB = {
       "description": "ATI Mini45六轴力传感器，45mm直径，兼容UR/FANUC/KUKA/ABB等主流机械臂",
       "manufacturer": "ATI Industrial Automation (Novanta)",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -16417,7 +16417,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -16452,7 +16452,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=ATI%20Industrial%20Automation%20(Novanta)%20ATI%20Mini45%20%E5%85%AD%E8%BD%B4%E5%8A%9B%2F%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-049",
@@ -16464,7 +16464,7 @@ const DB = {
       "description": "六轴力/力矩传感器，直插UR接口即插即用，图形化编程，1小时上手",
       "manufacturer": "OnRobot",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -16473,7 +16473,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -16512,7 +16512,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=OnRobot%20OnRobot%20HEX-E%20%E5%85%AD%E8%BD%B4%E5%8A%9B%2F%E5%8A%9B%E7%9F%A9%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-050",
@@ -16524,7 +16524,7 @@ const DB = {
       "description": "数字式微型六轴力传感器，EtherCAT/RS422/USB，ROS友好，学术研究理想平台",
       "manufacturer": "Bota Systems",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -16533,7 +16533,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -16568,7 +16568,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Bota%20Systems%20Bota%20Systems%20MiniONE%20%E5%85%AD%E8%BD%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-051",
@@ -16580,7 +16580,7 @@ const DB = {
       "description": "国产六维力传感器精度0.1%FS，响应频率≥10kHz，人形机器人六维力市占约70%，据报进入特斯拉Optimus供应链",
       "manufacturer": "蓝点触控 (LinkTouch)",
       "source": "Web Research",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -16589,7 +16589,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -16636,7 +16636,7 @@ const DB = {
       "description": "多轴力传感器，1-6轴200+型号，解耦精度0.5%FS，线性0.3%FS，抗过载300%，EtherCAT接口",
       "manufacturer": "宇立仪器 (Sunrise SRI)",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -16645,7 +16645,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -16680,7 +16680,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E5%AE%87%E7%AB%8B%E4%BB%AA%E5%99%A8%20(Sunrise%20SRI)%20%E5%AE%87%E7%AB%8B%E4%BB%AA%E5%99%A8%20M4313SXX%20%E5%A4%9A%E8%BD%B4%E5%8A%9B%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-053",
@@ -16692,7 +16692,7 @@ const DB = {
       "description": "光学视触觉传感器，高分辨率几何/纹理/法向力/剪切力。USB即插即用，输出图像可直接接入VLA大模型",
       "manufacturer": "GelSight Inc. (MIT)",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -16701,7 +16701,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -16736,7 +16736,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=GelSight%20Inc.%20(MIT)%20GelSight%20Mini%20%E8%A7%86%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-054",
@@ -16748,7 +16748,7 @@ const DB = {
       "description": "光学视触觉传感器，内置摄像头+弹性凝胶，开源设计，适配Meta触觉研究平台",
       "manufacturer": "Meta AI Research",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -16757,7 +16757,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -16792,7 +16792,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Meta%20AI%20Research%20Meta%20DIGIT%20%E8%A7%86%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-055",
@@ -16804,7 +16804,7 @@ const DB = {
       "description": "仿生光学触觉传感器，弹性穹顶+针阵列+摄像头，完全开源3D打印",
       "manufacturer": "Bristol Robotics Laboratory",
       "source": "Web Research",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -16813,7 +16813,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -16860,7 +16860,7 @@ const DB = {
       "description": "仿生液耦多模态触觉传感器，刚性核+弹性体+导电液，感知法向力/剪切力/微纹理/温度",
       "manufacturer": "SynTouch LLC",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -16869,7 +16869,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -16904,7 +16904,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=SynTouch%20LLC%20SynTouch%20BioTac%20%E4%BB%BF%E7%94%9F%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-057",
@@ -16916,7 +16916,7 @@ const DB = {
       "description": "多维高分辨率视触觉传感器，120Hz输出，IP65防护，500万次按压测试，CAN FD接口",
       "manufacturer": "戴盟机器人 (Daimon Robotics)",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -16925,7 +16925,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -16960,7 +16960,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%88%B4%E7%9B%9F%E6%9C%BA%E5%99%A8%E4%BA%BA%20(Daimon%20Robotics)%20%E6%88%B4%E7%9B%9F%E6%9C%BA%E5%99%A8%E4%BA%BA%20DM-Tac%20W2%20%E8%A7%86%E8%A7%A6%E8%A7%89%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-058",
@@ -16972,7 +16972,7 @@ const DB = {
       "description": "ITPU多维触觉传感技术，全栈方案含硬件+数据采集+算法+VTLA具身模型，估值破百亿",
       "manufacturer": "帕西尼感知科技 (PaXini)",
       "source": "Web Research",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -16981,7 +16981,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -17028,7 +17028,7 @@ const DB = {
       "description": "压阻式薄膜压力分布传感器，0.15mm柔性，349传感单元，支持总力/压力分布/峰值压力/力心分析",
       "manufacturer": "Tekscan",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -17037,7 +17037,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -17072,7 +17072,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Tekscan%20Tekscan%20I-Scan%20%E5%8E%8B%E5%8A%9B%E5%88%86%E5%B8%83%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-060",
@@ -17084,7 +17084,7 @@ const DB = {
       "description": "电容式触觉压力分布传感器，Barrett机器手和PR2夹爪标配，TactileGlove II数据手套",
       "manufacturer": "Pressure Profile Systems (PPS)",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -17093,7 +17093,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -17128,7 +17128,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Pressure%20Profile%20Systems%20(PPS)%20PPS%20TactArray%20%E8%A7%A6%E8%A7%89%E5%8E%8B%E5%8A%9B%E5%88%86%E5%B8%83%E4%BC%A0%E6%84%9F%E5%99%A8%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-061",
@@ -17140,7 +17140,7 @@ const DB = {
       "description": "柔性触觉传感器/电子皮肤，石墨烯/碳纳米管柔性压阻材料，厚度≤0.3mm，入选2025具身智能十大创新产品",
       "manufacturer": "汉威科技/能斯达电子",
       "source": "Web Research",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -17149,7 +17149,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -17184,7 +17184,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=%E6%B1%89%E5%A8%81%E7%A7%91%E6%8A%80%2F%E8%83%BD%E6%96%AF%E8%BE%BE%E7%94%B5%E5%AD%90%20%E6%B1%89%E5%A8%81%2F%E8%83%BD%E6%96%AF%E8%BE%BE%20ZNS-01%20%E6%9F%94%E6%80%A7%E7%94%B5%E5%AD%90%E7%9A%AE%E8%82%A4%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.911Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "SENS-062",
@@ -17196,7 +17196,7 @@ const DB = {
       "description": "AI触觉芯片(SNN脉冲传感芯片)+柔性触觉，国产灵巧手柔性触觉感知最大上游芯片供应商",
       "manufacturer": "他山科技 (清华系)",
       "source": "Web Research",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-31",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -17205,7 +17205,7 @@ const DB = {
         "ros2_compatible": "partial"
       },
       "category": "sensors",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -17358,7 +17358,7 @@ const DB = {
         "typical_protocol": "I2C/SPI/CAN"
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "SENS-ft-sri-c075xx",
@@ -17571,9 +17571,9 @@ const DB = {
       },
       "domestic_rate": "国产头部",
       "source": "六维力传感器主流供应商与供应链状况 (eefocus, 2026-03) + 坤维官网",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -17635,9 +17635,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "六维力传感器主流供应商与供应链状况 (eefocus, 2026-03)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -17698,9 +17698,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "六维力传感器主流供应商与供应链状况 (eefocus, 2026-03)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -17761,9 +17761,9 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "六维力传感器主流供应商与供应链状况 (eefocus, 2026-03)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -17824,9 +17824,9 @@ const DB = {
       "domestic_rate": "进口",
       "import_dependency": "高",
       "source": "六维力传感器主流供应商与供应链状况 (eefocus, 2026-03) + ME 官网",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -17882,9 +17882,9 @@ const DB = {
       ],
       "domestic_rate": "国产",
       "source": "昊志机电官网 + 人形伺服/驱控赛道分析 (东方财富, 2026-07)",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-08-05",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -17942,8 +17942,8 @@ const DB = {
       "domestic_rate": "国产",
       "import_substitution_for": "ATI / Schunk 六维力传感器",
       "source": "柯力传感上市公司公开披露 + 六维力赛道公开分析 (2026)",
-      "confidence": 0.45,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -18002,8 +18002,8 @@ const DB = {
       "domestic_rate": "国产",
       "import_substitution_for": "海外应变式六维力传感器",
       "source": "安培龙上市公司公开披露 + 机器人传感器国产化赛道分析 (2026)",
-      "confidence": 0.45,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -18063,8 +18063,8 @@ const DB = {
       "domestic_rate": "国产",
       "import_substitution_for": "ATI / Robotiq 力控传感器",
       "source": "千分一官网 + 国产六维力厂商梳理 (2026)",
-      "confidence": 0.42,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -18126,8 +18126,8 @@ const DB = {
       },
       "domestic_rate": "国产",
       "source": "中航电测上市公司公开披露 + 应变式传感器产业链分析",
-      "confidence": 0.45,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -18187,8 +18187,8 @@ const DB = {
       "domestic_rate": "国产",
       "import_substitution_for": "Xsens MTi / ADI ADIS 系列 IMU",
       "source": "芯动联科上市公司公开披露 + MEMS 惯性器件国产化分析",
-      "confidence": 0.5,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -18248,8 +18248,8 @@ const DB = {
       "domestic_rate": "国产",
       "import_substitution_for": "Bosch / 村田 车规 IMU",
       "source": "华依科技上市公司公开披露 + 车规 IMU 国产化公开报道",
-      "confidence": 0.42,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -18316,8 +18316,8 @@ const DB = {
       "domestic_rate": "国产",
       "import_substitution_for": "Intel RealSense D435i / D455",
       "source": "奥比中光官网产品页 + Orbbec SDK / ROS 驱动开源仓库",
-      "confidence": 0.6,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": true,
       "data_quality": "ok",
@@ -18384,8 +18384,8 @@ const DB = {
       "domestic_rate": "国产",
       "import_substitution_for": "Photoneo / Zivid 工业 3D 相机",
       "source": "图漾科技官网产品页与 SDK 文档",
-      "confidence": 0.5,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -18451,8 +18451,8 @@ const DB = {
       "domestic_rate": "国产",
       "import_substitution_for": "Velodyne / Ouster 近场激光雷达",
       "source": "禾赛科技官网产品页与上市公司公开披露",
-      "confidence": 0.55,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -18517,8 +18517,8 @@ const DB = {
       "domestic_rate": "国产",
       "import_substitution_for": "分立式 LiDAR + 深度相机组合方案",
       "source": "速腾聚创官网与港交所公开披露 + 机器人感知产品发布公开报道",
-      "confidence": 0.45,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -19030,7 +19030,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0001",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -19089,7 +19089,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -19151,7 +19151,7 @@ const DB = {
       "source_tier_basis": "deep_link:www.raspberrypi.com/products/raspberry-pi-5/",
       "rp_id": "RP-CHI-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -19389,7 +19389,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0007",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -19448,7 +19448,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0008",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -19507,7 +19507,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0009",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -19560,7 +19560,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0010",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -19673,7 +19673,7 @@ const DB = {
       "source_tier_basis": "deep_link:coral.ai/products/",
       "rp_id": "RP-CHI-0012",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -19795,7 +19795,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0014",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -19915,7 +19915,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0016",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -20041,7 +20041,7 @@ const DB = {
       "source_tier_basis": "deep_link:www.microchip.com/en-us/products/fpgas-and-plds/system-on-ch",
       "rp_id": "RP-CHI-0018",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -20100,7 +20100,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0019",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -20162,7 +20162,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0020",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -20192,8 +20192,8 @@ const DB = {
       "category": "chips",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-29",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -20243,8 +20243,8 @@ const DB = {
       "category": "chips",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-29",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -20268,7 +20268,7 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0022",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "RP-honpine-hpjm",
@@ -20294,8 +20294,8 @@ const DB = {
       "category": "chips",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-29",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -20367,8 +20367,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -20394,7 +20394,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ10%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-qualcomm-iq9",
@@ -20437,8 +20437,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -20464,7 +20464,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Qualcomm%20Qualcomm%20Dragonwing%20IQ9%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-intel-core-ultra-s3-edge",
@@ -20508,8 +20508,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -20535,7 +20535,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Edge%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-nvidia-thor-v2",
@@ -20581,8 +20581,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -20608,7 +20608,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Jetson%20Thor%20(2026%20BC%20Award)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-amd-ryzen-ai-2026",
@@ -20651,8 +20651,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -20678,7 +20678,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=AMD%20AMD%20Ryzen%20AI%20Processor%202026%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-microsoft-braga",
@@ -20719,8 +20719,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -20790,8 +20790,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -20861,8 +20861,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -20888,7 +20888,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20Qualcomm%20IQ10%20Platform%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-qualcomm-rb6-v2",
@@ -20932,8 +20932,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21003,8 +21003,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21075,8 +21075,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-30",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21147,8 +21147,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21174,7 +21174,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Texas%20Instruments%20TI%20TDA4VP%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-mediatek-genio-700",
@@ -21221,8 +21221,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-31",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21248,7 +21248,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Genio%20700%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-mediatek-edge-ai-7b",
@@ -21293,8 +21293,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-31",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21320,7 +21320,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=MediaTek%20MediaTek%20Edge%20AI%20Chip%20(Dual%207B)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-rockchip-rk3588s-v2",
@@ -21369,8 +21369,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-31",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21445,8 +21445,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-05-31",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21556,8 +21556,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-07-31",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21583,7 +21583,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Intel%20Intel%20Core%20Ultra%20Series%203%20Robotics%20Edition%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-qualcomm-iq10-advantech",
@@ -21629,8 +21629,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-01",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21656,7 +21656,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=Advantech%2FQualcomm%20Advantech%20MIC-710AI%20(IQ10)%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-gigadevice-gd32h7-robot",
@@ -21702,8 +21702,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-01",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21741,8 +21741,8 @@ const DB = {
       "release_date": "2026",
       "source": "web_search_2026",
       "category": "chips",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21780,8 +21780,8 @@ const DB = {
       "release_date": "2026-01",
       "source": "web_search_2026",
       "category": "chips",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21819,8 +21819,8 @@ const DB = {
       "release_date": "2026-01",
       "source": "web_search_2026",
       "category": "chips",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21859,8 +21859,8 @@ const DB = {
       "status": "delayed",
       "source": "web_search_2026",
       "category": "chips",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21898,8 +21898,8 @@ const DB = {
       "release_date": "2026",
       "source": "web_search_2026",
       "category": "chips",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21952,8 +21952,8 @@ const DB = {
       "category": "chips",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-03",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -21977,7 +21977,7 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0048",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "chip-nvidia-t5000-v2",
@@ -22004,8 +22004,8 @@ const DB = {
       "category": "chips",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-03",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -22029,7 +22029,7 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0049",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "chip-mediatek-genio-700-v2",
@@ -22056,8 +22056,8 @@ const DB = {
       "category": "chips",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -22108,8 +22108,8 @@ const DB = {
       "category": "chips",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-03",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -22133,7 +22133,7 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-CHI-0051",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "chip-amd-ryzen-ai-v2",
@@ -22160,8 +22160,8 @@ const DB = {
       "category": "chips",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -22212,8 +22212,8 @@ const DB = {
       "category": "chips",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -22264,8 +22264,8 @@ const DB = {
       "category": "chips",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -22316,8 +22316,8 @@ const DB = {
       "category": "chips",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -22385,8 +22385,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -22456,8 +22456,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -22528,8 +22528,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -22599,8 +22599,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -22671,7 +22671,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0060",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -22723,7 +22723,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0061",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -22737,8 +22737,8 @@ const DB = {
       "year": "2025",
       "description": "Announced at CES January 2025, NVIDIA's desktop AI machine (originally called Digits) uses the GB10 chip combining the Grace processor and Blackwell GPU architecture. Designed for AI development and robotics workloads at the desktop level.",
       "source": "NVIDIA CES 2025",
-      "confidence": 0.55,
-      "confidence_basis": "unclassified_source",
+      "confidence": 0.3,
+      "confidence_basis": "unclassified_source; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -22880,7 +22880,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0065",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -22916,7 +22916,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0066",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -22952,7 +22952,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0067",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -22988,7 +22988,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0068",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23024,7 +23024,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0069",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23060,7 +23060,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0070",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23096,7 +23096,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0071",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23132,7 +23132,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0072",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23168,7 +23168,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0073",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23204,7 +23204,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0074",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23240,7 +23240,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0075",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23276,7 +23276,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0076",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23312,7 +23312,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0077",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23348,7 +23348,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0078",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23384,7 +23384,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0079",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23420,7 +23420,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0080",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23456,7 +23456,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0081",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23492,7 +23492,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0082",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23528,7 +23528,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0083",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23601,7 +23601,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0085",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23637,7 +23637,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0086",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23673,7 +23673,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0087",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23880,7 +23880,7 @@ const DB = {
       "source_tier_basis": "deep_link:coral.ai/products/",
       "rp_id": "RP-CHI-0091",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -23942,7 +23942,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0092",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -24059,7 +24059,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0094",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -24209,8 +24209,8 @@ const DB = {
       "vla_support": false,
       "toolchain": "Voyager SDK",
       "source": "Axelera AI 官网产品页与开发者文档",
-      "confidence": 0.5,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -24271,8 +24271,8 @@ const DB = {
       "domestic_rate": "国产",
       "toolchain": "Pulsar2",
       "source": "爱芯元智官网产品页 + 爱芯派开发板社区资料",
-      "confidence": 0.5,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -24330,8 +24330,8 @@ const DB = {
       "vla_support": false,
       "domestic_rate": "国产",
       "source": "爱芯元智官网产品线公开信息（2025~2026）",
-      "confidence": 0.42,
-      "confidence_basis": "tier:vendor_catalog_partial",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog_partial; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -24389,8 +24389,8 @@ const DB = {
       "vla_support": true,
       "domestic_rate": "国产",
       "source": "黑芝麻智能官网与港交所公开披露 + 车规芯片赛道公开分析",
-      "confidence": 0.45,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -24449,8 +24449,8 @@ const DB = {
       "domestic_rate": "国产",
       "toolchain": "TPU-MLIR / SOPHON SDK",
       "source": "算能科技官网产品页与 SOPHON SDK 文档",
-      "confidence": 0.5,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -24507,8 +24507,8 @@ const DB = {
       "domestic_rate": "国产",
       "toolchain": "Cambricon Neuware",
       "source": "寒武纪官网产品页与上市公司公开披露",
-      "confidence": 0.5,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -24594,7 +24594,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-CHI-0103",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-simaai-modalix",
@@ -24652,7 +24652,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CHI-0104",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "derived"
     },
     {
       "id": "CHIP-ambarella-n1-655",
@@ -24685,8 +24685,8 @@ const DB = {
       "vla_support": true,
       "toolchain": "Cooper Developer Platform",
       "source": "Ambarella 官网产品页与 CES/技术发布公开资料",
-      "confidence": 0.5,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -24747,8 +24747,8 @@ const DB = {
       "vla_support": false,
       "toolchain": "TI Edge AI SDK / TIDL",
       "source": "TI 官网产品页与 Edge AI SDK 文档",
-      "confidence": 0.55,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -24805,8 +24805,8 @@ const DB = {
       "vla_support": false,
       "toolchain": "DXNN SDK",
       "source": "DEEPX 官网产品页与合作伙伴模组资料",
-      "confidence": 0.45,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -24863,8 +24863,8 @@ const DB = {
       "vla_support": true,
       "domestic_rate": "国产",
       "source": "后摩智能官网与国产存算一体赛道公开报道（2024~2026）",
-      "confidence": 0.42,
-      "confidence_basis": "tier:community",
+      "confidence": 0.3,
+      "confidence_basis": "tier:community; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -25130,7 +25130,7 @@ const DB = {
       "source": "https://www.electronicsforu.com/tutorial/articles/gpio-parallel-serial-interface/",
       "source_note": "GPIO 无单一组织规范；引用 electronicsforu 技术说明页作为参考描述",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -25193,7 +25193,7 @@ const DB = {
       "source": "https://en.wikipedia.org/wiki/Ethernet",
       "source_note": "IEEE 802.3；维基百科概述页作为通用描述源",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -25208,8 +25208,8 @@ const DB = {
       "description": "NVIDIA Isaac GR00T是人形机器人的基础模型和数据流水线研究与开发平台。包含GR00T N1.5基础模型和GR00T-Dreams合成数据生成工具。提供仿真环境(Isaac Lab)、人在回路的数据采集管道，以及NVIDIA端到端机器人平台用于大规模AI机器人训练和部署。",
       "source": "NVIDIA GTC 2025, Computex 2025",
       "category": "interfaces",
-      "confidence": 0.55,
-      "confidence_basis": "unclassified_source",
+      "confidence": 0.3,
+      "confidence_basis": "unclassified_source; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -25610,7 +25610,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0015",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-002",
@@ -25723,7 +25723,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0017",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-004",
@@ -25780,7 +25780,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0018",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-005",
@@ -25836,7 +25836,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0019",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-006",
@@ -25892,7 +25892,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0020",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-007",
@@ -25948,7 +25948,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0021",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-010",
@@ -26169,7 +26169,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0025",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-015",
@@ -26225,7 +26225,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0026",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-016",
@@ -26335,7 +26335,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0028",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-018",
@@ -26446,7 +26446,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0030",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-020",
@@ -26502,7 +26502,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0031",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-021",
@@ -26558,7 +26558,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0032",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-022",
@@ -26614,7 +26614,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0033",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-023",
@@ -26671,7 +26671,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0034",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XIF-024",
@@ -26836,7 +26836,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-INT-0037",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "STD-ISO-10218",
@@ -27040,7 +27040,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": true
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "verified",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -27083,7 +27083,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": true
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "verified",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -27125,7 +27125,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": true
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "verified",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     }
@@ -27189,7 +27189,7 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0001",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -27251,7 +27251,7 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0002",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -27310,7 +27310,7 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0003",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -27497,7 +27497,7 @@ const DB = {
       "source": "https://www.sparkfun.com/tutorials/serial-communication-with-uart",
       "source_note": "UART 标准由 RS-232 (TIA-232) 定义；此页为通用技术说明",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -27562,7 +27562,7 @@ const DB = {
       "source": "https://www.nxp.com/webapp/download?colCode=I2C-BUS-SPEC",
       "source_note": "I2C 由 NXP (原 Philips) 定义，公开 spec 下载页",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -27627,7 +27627,7 @@ const DB = {
       "source": "https://www.microchip.com/en-us/products/interfaces/synchronous-serial-interface-spi",
       "source_note": "SPI 由 Motorola (现 NXP) 定义；Microchip 产品页含标准描述",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -27691,7 +27691,7 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0009",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -27800,7 +27800,7 @@ const DB = {
         "source_commit": "5bcd7c7",
         "source_path": "api/protocols.json"
       },
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -27862,7 +27862,7 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0011",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -27928,7 +27928,7 @@ const DB = {
       "source_tier_basis": "deep_link:www.modbus.org/specs.php",
       "rp_id": "RP-PRO-0012",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -28126,7 +28126,7 @@ const DB = {
       "source": "https://www.mipi.org/specifications/mipi-csi-2",
       "source_note": "MIPI CSI-2/3 由 MIPI Alliance 定义；官方 spec 目录页",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -28189,7 +28189,7 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0016",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -28252,7 +28252,7 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0017",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -28316,7 +28316,7 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0018",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -28447,7 +28447,7 @@ const DB = {
       "source": "https://en.wikipedia.org/wiki/SBUS",
       "source_note": "SBus 由 Futaba 定义（专有）；维基百科技术说明页",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -28580,7 +28580,7 @@ const DB = {
       "source_tier_basis": "deep_link:opcfoundation.org/about/opc-technologies/opc-ua/",
       "rp_id": "RP-PRO-0022",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -28646,7 +28646,7 @@ const DB = {
       "source_tier_basis": "deep_link:csa-iot.org/all-solutions/matter/",
       "rp_id": "RP-PRO-0023",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -28707,7 +28707,7 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0024",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -28771,7 +28771,7 @@ const DB = {
       "source": "https://www.3gpp.org/specifications-technical-reports",
       "source_note": "NB-IoT 由 3GPP (3GPP2) 定义；官方规范索引",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -28837,7 +28837,7 @@ const DB = {
       "source": "https://www.3gpp.org/specifications-technical-reports",
       "source_note": "5G NR 由 3GPP 定义；官方规范索引",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -28965,7 +28965,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0028",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": "2026-10-17",
       "last_verified_basis": "audit_backfill:probed"
     },
@@ -29030,7 +29030,7 @@ const DB = {
       "source": "https://www.omg.org/spec/xrce-dp/",
       "source_note": "DDS-XRCE 由 OMG 标准化；官方规范页",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -29095,7 +29095,7 @@ const DB = {
       "source": "https://arxiv.org/abs/2305.14749",
       "source_note": "Adaptive Protocol (AI-driven) 概念来源论文；非正式标准",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -29159,7 +29159,7 @@ const DB = {
       "source": "https://github.com/embodiedai-robotics/network-protocol-survey",
       "source_note": "Embodied AI 通信网络综述；无正式标准，标注为综述引用",
       "source_type": "spec",
-      "confidence_tier": "observed",
+      "confidence_tier": "inferred",
       "source_tier_prev": "C",
       "last_verified": null,
       "last_verified_basis": "never_probed"
@@ -29271,8 +29271,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-31",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -29297,7 +29297,7 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0033",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-035",
@@ -29344,8 +29344,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-31",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -29370,7 +29370,7 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0034",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "PROTO-036",
@@ -29444,7 +29444,7 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0035",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-040",
@@ -29488,8 +29488,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-01",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -29586,7 +29586,7 @@ const DB = {
       "source_tier_basis": "named_standard",
       "rp_id": "RP-PRO-0037",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "PROTO-042",
@@ -29599,8 +29599,8 @@ const DB = {
       "release_date": "2026",
       "source": "web_search_2026",
       "category": "protocols",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -29640,8 +29640,8 @@ const DB = {
       "release_date": "2026-2027",
       "source": "web_search_2026",
       "category": "protocols",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -29681,8 +29681,8 @@ const DB = {
       "release_date": "2026",
       "source": "web_search_2026",
       "category": "protocols",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -29722,8 +29722,8 @@ const DB = {
       "release_date": "2026",
       "source": "web_search_2026",
       "category": "protocols",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -29764,8 +29764,8 @@ const DB = {
       "status": "research",
       "source": "web_search_2026",
       "category": "protocols",
-      "confidence": 0.6,
-      "confidence_basis": "web_search",
+      "confidence": 0.3,
+      "confidence_basis": "web_search; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -29820,8 +29820,8 @@ const DB = {
       "category": "protocols",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -29873,8 +29873,8 @@ const DB = {
       "category": "protocols",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-03",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -29899,7 +29899,7 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0044",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-5g-nr-urllc",
@@ -29946,7 +29946,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0045",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -29975,8 +29975,8 @@ const DB = {
       "category": "protocols",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -30048,7 +30048,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0047",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -30097,7 +30097,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0048",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -30127,8 +30127,8 @@ const DB = {
       "category": "protocols",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-03",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -30180,8 +30180,8 @@ const DB = {
       "category": "protocols",
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-03",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -30206,7 +30206,7 @@ const DB = {
       "source_tier_basis": "aggregation_no_anchor",
       "rp_id": "RP-PRO-0050",
       "entity_kind_basis": "RP-STD- 前缀 / category=interfaces 且名称含标准编号",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "rproto-robot-comm-electronics",
@@ -30233,8 +30233,8 @@ const DB = {
       "category": "protocols",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -30286,8 +30286,8 @@ const DB = {
       "category": "protocols",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -30339,8 +30339,8 @@ const DB = {
       "category": "protocols",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -30392,8 +30392,8 @@ const DB = {
       "category": "protocols",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -30445,8 +30445,8 @@ const DB = {
       "category": "protocols",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -30518,7 +30518,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PRO-0056",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -30889,7 +30889,7 @@ const DB = {
       "source_tier_basis": "deep_link:openai.com/index/hello-gpt-4o/",
       "rp_id": "RP-LLM-0001",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -31001,7 +31001,7 @@ const DB = {
       "source_tier_basis": "deep_link:qwenlm.github.io/blog/qwen2.5-vl/",
       "rp_id": "RP-LLM-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -31846,7 +31846,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0024",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-002",
@@ -31899,7 +31899,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0025",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-003",
@@ -31951,7 +31951,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0026",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-004",
@@ -32004,7 +32004,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0027",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-005",
@@ -32057,7 +32057,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0028",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-006",
@@ -32110,7 +32110,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0029",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-007",
@@ -32163,7 +32163,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0030",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-008",
@@ -32216,7 +32216,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0031",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-009",
@@ -32269,7 +32269,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0032",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-010",
@@ -32321,7 +32321,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0033",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-011",
@@ -32374,7 +32374,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0034",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-012",
@@ -32535,7 +32535,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0037",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-016",
@@ -32588,7 +32588,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0038",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-017",
@@ -32640,7 +32640,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0039",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-018",
@@ -32693,7 +32693,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0040",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-019",
@@ -32746,7 +32746,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-LLM-0041",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XLLM-020",
@@ -32836,8 +32836,8 @@ const DB = {
       "description_en": "Humanoid robot actuator 530,554+ patent analysis, entering key commercialization phase in 2026",
       "source": "web aggregation (credibility B)",
       "last_verified": "2026-06-04",
-      "confidence": 0.62,
-      "confidence_basis": "sources[].credibility=B",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=B; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -32948,7 +32948,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -32990,7 +32990,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0004",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -33176,7 +33176,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0008",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -33333,7 +33333,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0011",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -33386,7 +33386,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-PLA-0012",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -33444,7 +33444,7 @@ const DB = {
         "UDP"
       ],
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -33499,7 +33499,7 @@ const DB = {
         "UDP"
       ],
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -34127,7 +34127,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0027",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-002",
@@ -34185,7 +34185,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0028",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-005",
@@ -34243,7 +34243,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0029",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-006",
@@ -34301,7 +34301,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0030",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-007",
@@ -34359,7 +34359,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0031",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-008",
@@ -34417,7 +34417,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0032",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-009",
@@ -34475,7 +34475,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0033",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-010",
@@ -34533,7 +34533,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0034",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-011",
@@ -34591,7 +34591,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0035",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-013",
@@ -34649,7 +34649,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0036",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-015",
@@ -34764,7 +34764,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0038",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-017",
@@ -34822,7 +34822,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0039",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XPLT-018",
@@ -34880,7 +34880,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PLA-0040",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "ORG-matrixrobotics",
@@ -34954,7 +34954,7 @@ const DB = {
       "last_verified": "2026-08-18",
       "rp_id": "RP-PLA-0041",
       "entity_kind_basis": "type=humanoid_robot_company（企业/机构主体，不是实物零部件，无接口可判定）",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "PLAT-seeed-rebot-dm",
@@ -36940,7 +36940,7 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
       "rp_id": "HUB-044",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "HUB-045",
@@ -37022,7 +37022,7 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
       "rp_id": "HUB-046",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "HUB-047",
@@ -37062,7 +37062,7 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
       "rp_id": "HUB-047",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "HUB-048",
@@ -37102,7 +37102,7 @@ const DB = {
       "entity_kind": "component",
       "source_tier_basis": "deep_link:www.industrialroboticshub.com/articles/robot-tool-flange-siz",
       "rp_id": "HUB-048",
-      "confidence_tier": "observed"
+      "confidence_tier": "derived"
     },
     {
       "id": "HUB-049",
@@ -38773,7 +38773,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-FLE-0004",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -38913,7 +38913,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0007",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XFA-002",
@@ -38959,7 +38959,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0008",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XFA-003",
@@ -39005,7 +39005,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0009",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XFA-004",
@@ -39051,7 +39051,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0010",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XFA-005",
@@ -39097,7 +39097,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0011",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XFA-006",
@@ -39143,7 +39143,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0012",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XFA-007",
@@ -39189,7 +39189,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0013",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "verified"
     },
     {
       "id": "XFA-008",
@@ -39235,7 +39235,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0014",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XFA-009",
@@ -39281,7 +39281,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0015",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XFA-010",
@@ -39327,7 +39327,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0016",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XFA-011",
@@ -39373,7 +39373,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0017",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XFA-013",
@@ -39419,7 +39419,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0018",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XFA-014",
@@ -39465,7 +39465,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0019",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XFA-015",
@@ -39511,7 +39511,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0020",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XFA-016",
@@ -39557,7 +39557,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-FLE-0021",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred"
+      "confidence_tier": "derived"
     },
     {
       "id": "XFA-017",
@@ -39647,8 +39647,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-05-30",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -39675,7 +39675,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Cosmos%20%2B%20GR00T%20Model%20Chip%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "CHIP-nvidia-cosmos-gr00t-v2",
@@ -39708,8 +39708,8 @@ const DB = {
       ],
       "source": "web aggregation (credibility A)",
       "last_verified": "2026-06-01",
-      "confidence": 0.72,
-      "confidence_basis": "sources[].credibility=A",
+      "confidence": 0.3,
+      "confidence_basis": "sources[].credibility=A; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -39736,7 +39736,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Cosmos%20%2B%20GR00T%20v2%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "LLM-003",
@@ -39948,7 +39948,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0006",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -39979,7 +39979,7 @@ const DB = {
       "embodied_ai": true,
       "description": "首个开放可商用人形机器人VLA模型（3B参数），支持标准化人工示教数据格式，已集成LeRobot v0.6.0（含世界模型策略VLA-JEPA），Apache 2.0许可",
       "source": "NVIDIA Official Blog 2026-07",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -39988,7 +39988,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "description_en": "First open-source commercializable humanoid robot VLA model (3B parameters), supporting standardized human teleoperation data formats, integrated with LeRobot v0.6.0 (including world model policy VLA-JEPA), Apache 2.0 license",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -40015,7 +40015,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=NVIDIA%20NVIDIA%20Isaac%20GR00T%201.7%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "LLM-029",
@@ -40043,7 +40043,7 @@ const DB = {
       "embodied_ai": true,
       "description": "超轻量VLA模型，适合边缘部署，已集成LeRobot",
       "source": "HuggingFace 2026",
-      "confidence": 0.9,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -40052,7 +40052,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "description_en": "Ultra-lightweight VLA model, suitable for edge deployment, integrated with LeRobot",
-      "confidence_basis": "tier:official",
+      "confidence_basis": "tier:official; tier_c_cap",
       "verified": true,
       "data_quality": "ok",
       "quarantine": false,
@@ -40079,7 +40079,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=HuggingFace%20SmolVLA%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.910Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "verified"
+      "confidence_tier": "inferred"
     },
     {
       "id": "LLM-030",
@@ -40107,7 +40107,7 @@ const DB = {
       "embodied_ai": true,
       "description": "π0升级版，支持流式动作生成(flow matching)，更精细的操控能力",
       "source": "Physical Intelligence 2026",
-      "confidence": 0.55,
+      "confidence": 0.3,
       "last_verified": "2026-07-22",
       "standard_compliance": {
         "gb_modular_humanoid": "pending",
@@ -40116,7 +40116,7 @@ const DB = {
         "ros2_compatible": "unknown"
       },
       "description_en": "pi_0 upgrade version, supporting streaming action generation (flow matching) for finer manipulation capabilities",
-      "confidence_basis": "tier:community",
+      "confidence_basis": "tier:community; tier_c_cap",
       "verified": false,
       "data_quality": "ok",
       "quarantine": false,
@@ -40184,7 +40184,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0010",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -40227,7 +40227,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0011",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -40478,7 +40478,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0016",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -40525,7 +40525,7 @@ const DB = {
       "source_tier_basis": "deep_link:huggingface.co/blog/smolvla",
       "rp_id": "RP-ROB-0017",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -40828,7 +40828,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0023",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -40871,7 +40871,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0024",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -40918,7 +40918,7 @@ const DB = {
       "source_tier_basis": "deep_link:huggingface.co/openvla/openvla-7b",
       "rp_id": "RP-ROB-0025",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -40962,7 +40962,7 @@ const DB = {
       "source": "厂商目录声明值：Community（无原始链接，未核验）",
       "rp_id": "RP-ROB-0026",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -41161,7 +41161,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-ROB-0030",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -41220,7 +41220,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0031",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XRAM-005",
@@ -41334,7 +41334,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0033",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XRAM-007",
@@ -41449,7 +41449,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0035",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XRAM-010",
@@ -41619,7 +41619,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0038",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XRAM-013",
@@ -41675,7 +41675,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0039",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XRAM-014",
@@ -41732,7 +41732,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0040",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XRAM-015",
@@ -41788,7 +41788,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0041",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XRAM-016",
@@ -41900,7 +41900,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0043",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XRAM-018",
@@ -41957,7 +41957,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-ROB-0044",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "ACE-VIDIHAND-001",
@@ -42587,7 +42587,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-DAT-0009",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -42638,7 +42638,7 @@ const DB = {
       "source_tier_basis": "named_vendor_catalog",
       "rp_id": "RP-DAT-0010",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -42962,8 +42962,8 @@ const DB = {
         "household_task"
       ],
       "source": "Stanford Mobile ALOHA 项目主页与论文（arXiv 2401.02117）",
-      "confidence": 0.62,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": true,
       "data_quality": "ok",
@@ -43025,8 +43025,8 @@ const DB = {
         "imitation_learning"
       ],
       "source": "Open-TeleVision 项目主页与论文（arXiv 2407.01512）",
-      "confidence": 0.62,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": true,
       "data_quality": "ok",
@@ -43086,8 +43086,8 @@ const DB = {
         "manipulator"
       ],
       "source": "AirExo-2 论文与开源仓库（上海交大 IRM Lab, 2025）",
-      "confidence": 0.55,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -43147,8 +43147,8 @@ const DB = {
         "imitation_learning"
       ],
       "source": "Bunny-VisionPro 项目主页与论文（arXiv 2407.03162）",
-      "confidence": 0.55,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -43207,8 +43207,8 @@ const DB = {
         "imitation_learning"
       ],
       "source": "ACE 项目主页与论文（arXiv 2408.11805）",
-      "confidence": 0.55,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -43268,8 +43268,8 @@ const DB = {
         "imitation_learning"
       ],
       "source": "DOGlove 项目主页与论文（上海交大, arXiv 2502.07730）",
-      "confidence": 0.55,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -43329,8 +43329,8 @@ const DB = {
         "teleoperation"
       ],
       "source": "Manus 官网产品页 + 机器人动捕方案商公开资料",
-      "confidence": 0.5,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -43390,8 +43390,8 @@ const DB = {
         "motion_capture"
       ],
       "source": "Rokoko 官网产品页 + 人形机器人运动重定向公开实践",
-      "confidence": 0.5,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -43452,8 +43452,8 @@ const DB = {
         "motion_capture"
       ],
       "source": "诺亦腾官网产品页 + 国内动捕方案选型资料",
-      "confidence": 0.5,
-      "confidence_basis": "tier:vendor_catalog",
+      "confidence": 0.3,
+      "confidence_basis": "tier:vendor_catalog; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -43513,8 +43513,8 @@ const DB = {
         "imitation_learning"
       ],
       "source": "FastUMI 论文与开源仓库（arXiv 2409.19499）",
-      "confidence": 0.5,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": false,
       "data_quality": "ok",
@@ -43574,8 +43574,8 @@ const DB = {
         "imitation_learning"
       ],
       "source": "HumanPlus 项目主页与论文（arXiv 2406.10454）",
-      "confidence": 0.62,
-      "confidence_basis": "tier:paper_openhardware",
+      "confidence": 0.3,
+      "confidence_basis": "tier:paper_openhardware; tier_c_cap",
       "last_verified": "2026-08-05",
       "verified": true,
       "data_quality": "ok",
@@ -43665,7 +43665,7 @@ const DB = {
       "source_tier_prev": "C",
       "rp_id": "RP-DAT-0027",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "DATA-neuro-snoworigin-band",
@@ -43701,8 +43701,8 @@ const DB = {
         "prosthetic_control"
       ],
       "source": "36氪报道（2026-07-13），龚虹嘉、陆奇投资",
-      "confidence": 0.72,
-      "confidence_basis": "press_coverage_verified",
+      "confidence": 0.3,
+      "confidence_basis": "press_coverage_verified; tier_c_cap",
       "last_verified": "2026-08-24",
       "verified": true,
       "data_quality": "ok",
@@ -43727,7 +43727,7 @@ const DB = {
       "rp_id": "RP-DAT-0028",
       "entity_kind_basis": "默认归类",
       "source_tier_prev": "B",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-neuro-aemg-ref",
@@ -43762,8 +43762,8 @@ const DB = {
         "prosthetic_control"
       ],
       "source": "CVPR 2026 论文 + GitHub 开源",
-      "confidence": 0.85,
-      "confidence_basis": "peer_reviewed_paper",
+      "confidence": 0.3,
+      "confidence_basis": "peer_reviewed_paper; tier_c_cap",
       "last_verified": "2026-08-24",
       "verified": true,
       "data_quality": "ok",
@@ -43790,7 +43790,7 @@ const DB = {
       "source_url": "https://www.google.com/search?q=AEMG-series%EF%BC%88CVPR%202026%20%E5%BC%80%E6%BA%90%EF%BC%89%20AEMG%20%E9%80%9A%E7%94%A8%E8%82%8C%E7%94%B5%E9%87%87%E9%9B%86%E5%8F%82%E8%80%83%E5%B9%B3%E5%8F%B0%20datasheet",
       "tier_upgrade_reason": "Auto-backfilled source_url from google_search at 2026-08-27T01:40:26.912Z",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "inferred"
     },
     {
       "id": "DATA-oss-agibot-world",
@@ -43957,7 +43957,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0032",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-004",
@@ -44013,7 +44013,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0033",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-005",
@@ -44124,7 +44124,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0035",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-007",
@@ -44181,7 +44181,7 @@ const DB = {
       "source_tier_basis": "deep_link:github.com/google-deepmind/puppeteer",
       "rp_id": "RP-DAT-0036",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "XDA-008",
@@ -44237,7 +44237,7 @@ const DB = {
       "source_tier_basis": "deep_link:github.com/google-deepmind/telekinesis",
       "rp_id": "RP-DAT-0037",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed"
+      "confidence_tier": "inferred"
     },
     {
       "id": "XDA-009",
@@ -44403,7 +44403,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0040",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-012",
@@ -44459,7 +44459,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0041",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-013",
@@ -44515,7 +44515,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0042",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-014",
@@ -44626,7 +44626,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0044",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-016",
@@ -44681,7 +44681,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0045",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     },
     {
       "id": "XDA-017",
@@ -44737,7 +44737,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-DAT-0046",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "derived"
+      "confidence_tier": "observed"
     }
   ],
   "connectors": [
@@ -44882,8 +44882,8 @@ const DB = {
       "quarantine": false,
       "source": "公开报道（MATRIX-1 集成 33 个一体化关节执行器，集成丝杠+电机+驱动+减速器+编码器+传感器；36氪/IT之家/百度百科）",
       "source_tier": "C",
-      "confidence": 0.5,
-      "confidence_basis": "press_reported_module_composition",
+      "confidence": 0.3,
+      "confidence_basis": "press_reported_module_composition; tier_c_cap",
       "standard_conformance": {
         "assessed": false,
         "bus_class": "unknown",
@@ -45083,7 +45083,7 @@ const DB = {
       "source_tier_basis": "deep_link:www.leaderdrive.com/about.html",
       "rp_id": "RP-RED-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -45134,7 +45134,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "verified",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -45185,7 +45185,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "verified",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -45236,7 +45236,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "verified",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -45288,7 +45288,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "observed",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -45340,7 +45340,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "observed",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -45391,7 +45391,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "observed",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -45442,7 +45442,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "observed",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -45494,7 +45494,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "observed",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -45652,7 +45652,7 @@ const DB = {
       "entity_kind_basis": "默认归类",
       "id": "RED-006",
       "rp_id": "RP-RED-0011",
-      "confidence_tier": "derived",
+      "confidence_tier": "observed",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     }
@@ -45852,7 +45852,7 @@ const DB = {
         "supports_rtos": true
       },
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -46147,7 +46147,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-GRI-0004",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -46663,7 +46663,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "observed",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -47551,7 +47551,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-STR-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -47603,7 +47603,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-STR-0003",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     }
@@ -47710,7 +47710,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-CAB-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     }
@@ -47826,7 +47826,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-POW-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     }
@@ -47882,7 +47882,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PCB-0001",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -47934,7 +47934,7 @@ const DB = {
       "source_tier_basis": "root_url_only",
       "rp_id": "RP-PCB-0002",
       "entity_kind_basis": "默认归类",
-      "confidence_tier": "inferred",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     }
@@ -48049,7 +48049,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -48162,7 +48162,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -48267,7 +48267,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -48369,7 +48369,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -48455,7 +48455,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -48550,7 +48550,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -48640,7 +48640,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -48740,7 +48740,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -48825,7 +48825,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -48960,7 +48960,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -49096,7 +49096,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "observed",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -49227,7 +49227,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "derived",
+      "confidence_tier": "observed",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     },
@@ -49356,7 +49356,7 @@ const DB = {
         "interop_posture": "unknown",
         "iso22166_relevant": false
       },
-      "confidence_tier": "observed",
+      "confidence_tier": "derived",
       "last_verified": null,
       "last_verified_basis": "never_probed"
     }

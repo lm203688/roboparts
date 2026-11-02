@@ -511,6 +511,61 @@ _HONEST_LIMITS = [
 ]
 
 
+_VOLATILE_KEYS = frozenset((
+    'confidence', 'confidence_tier', 'confidence_basis',  # sync 管区（生成器不投影）
+    'entity_kind', 'kind_basis',                          # govern_entity_kind 受管区
+    'generated_at',                                        # 每次重算天然不同
+))
+
+
+def strip_confidence(obj):
+    """递归移除易变字段（sync 管区 + generated_at），比较生成器与产物时忽略。"""
+    if isinstance(obj, dict):
+        return {k: strip_confidence(v) for k, v in obj.items()
+                if k not in _VOLATILE_KEYS}
+    if isinstance(obj, list):
+        return [strip_confidence(v) for v in obj]
+    return obj
+
+
+def _check_only():
+    """--check: 计算 build() 输出并与当前产物比较（忽略 confidence 同步管区字段）。
+
+    build_co_mount 的 hosts 记录硬编码取证可信度（confidence），而提交版由
+    sync_confidence_fields.py 按 entities.json 单事实源注入 —— 因此比较时必须
+    排除 confidence 三字段，否则 --check 永远误报「生成器与产物不一致」。
+
+    返回 0=一致（绿），1=漂移（红）。永不写盘。仅当 '--check' 在 argv 时才工作。
+    """
+    if '--check' not in sys.argv:
+        return None
+    out_tool_side = build_tool_side()
+    out_cm = build()
+    # meta.access 由注入器受管（见 deploy.mjs 0c/0d），不参与 build 逻辑
+    for rel, out in (("api/robot_tool_side.json", out_tool_side),
+                     ("api/co_mount.json", out_cm)):
+        out.get("meta", {}).pop("access", None)
+    all_ok = True
+    for rel, out in (("api/robot_tool_side.json", out_tool_side),
+                     ("api/co_mount.json", out_cm)):
+        path = os.path.join(ROOT, rel)
+        if not os.path.exists(path):
+            print(f"CHECK {rel}: 文件不存在", file=sys.stderr)
+            all_ok = False
+            continue
+        with open(path, encoding='utf-8') as f:
+            cur = json.load(f)
+        cur.get('meta', {}).pop('access', None)  # inject_api_access 受管区
+        expected = strip_confidence(out)
+        actual = strip_confidence(cur)
+        if expected == actual:
+            print(f"CHECK {rel}: OK（与生成器一致，忽略 confidence 同步字段）")
+        else:
+            all_ok = False
+            print(f"CHECK {rel}: 漂移（与生成器不一致）", file=sys.stderr)
+    return 0 if all_ok else 1
+
+
 def main() -> int:
     _validate()
     tool_side = build_tool_side()
@@ -534,4 +589,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    rc = _check_only()
+    if rc is not None:
+        sys.exit(rc)
     raise SystemExit(main())

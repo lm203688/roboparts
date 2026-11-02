@@ -58,7 +58,12 @@ ops/
 # Project-local analysis artifacts & dataset tooling (not served by the site)
 # 注意：mcp-server/ 已发布到 npm（roboparts-mcp-server），必须纳入版本控制，
 # 否则 npm 上的包和仓库里的包会 split-brain。仅其 node_modules/ 会被 L2 全局忽略。
-roboparts-dataset-github/
+# roboparts-dataset-github/ 已纳入版本控制（2026-11-02，Chief 裁决缺陷#5 修法①）：
+#   该目录是对外发布物（python-sdk 已发布 PyPI roboparts 1.0.0；HuggingFace/
+#   ModelScope 数据集卡片），必须纳入 git 否则 split-brain。sync_dataset_dist
+#   --check 的判据文件（README.md / data/roboparts_full.json / python-sdk 6 文件）
+#   在 checkout 上必须存在，否则闸门恒红。生成物（README.md、data/roboparts_full.json）
+#   由 sync_dataset_dist.py 生成，数据变化时随提交更新；不排除（checkout 需存在）。
 multi-persona-ux-analysis-v3/
 robot-ai-models-evaluation/
 scheduled-tasks-closure-analysis/

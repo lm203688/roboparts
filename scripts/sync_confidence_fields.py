@@ -34,6 +34,13 @@ def main() -> int:
     drift_files = []
     total_drift = 0
     for fn in sorted(os.listdir(API)):
+        if fn == 'training_dataset.json':
+            # 【2026-11-02】training_dataset 由 export_training_dataset.mjs 生成，
+            # .gitignore 排除（部署时生成）。其 confidence 位于【evidence 嵌套块】
+            # （语义化证据块），顶层刻意不带 confidence —— 不是「丢字段」。
+            # sync 扫顶层 FIELDS 会对它报假漂移（顶层 None vs 实体值），
+            # 故明确跳过（它不在 git 语义的「跨文件单事实源」范围内）。
+            continue
         if not fn.endswith('.json') or fn in ('entities.json', 'data.json'):
             continue
         p = os.path.join(API, fn)

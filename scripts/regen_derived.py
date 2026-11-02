@@ -41,8 +41,6 @@ NODE_CANDIDATES = [
 # 步骤：(标签, [解释器, 脚本, *args], 是否支持 --check)
 #  解释器为 None 表示用 sys.executable（python 步骤）。
 STEPS = [
-    ("对外数据集分发 (sync_dataset_dist)",
-     None, "sync_dataset_dist.py", True),
     ("语义索引 (build_semantic_index)",
      "node", "build_semantic_index.mjs", False),
     ("接入区块注入 (inject_onboarding)",
@@ -62,6 +60,14 @@ STEPS = [
      None, "govern_entity_kind.py", False),
     ("溯源等级治理+meta (enrich_provenance)",
      None, "enrich_provenance.py", False),
+    # 【20261102】对外数据集分发必须排在 audit_data_quality / govern_entity_kind /
+    # enrich_provenance 之后：三者都改写 entities.json 的实体内容
+    # （data_quality/quarantine、entity_kind、source/confidence/verified），
+    # sync_dataset_dist 原样透传 entities —— 若排在它们之前，会发布「旧 verified /
+    # 旧 data_quality」的副本，与真相源漂移（干净树实测：regen 后 sync --check 红，
+    # 首差 .entities[32].verified True vs False）。
+    ("对外数据集分发 (sync_dataset_dist)",
+     None, "sync_dataset_dist.py", True),
     ("机械接口覆盖 meta (fix_mi_meta)",
      None, "fix_mi_meta.py", False),
     ("归一化副本 (normalize_categories: data.js/分类JSON/api/data.json/meta.category_counts)",

@@ -409,7 +409,87 @@ def _access_block() -> dict:
     }
 
 
+_VOLATILE_KEYS = frozenset((
+    'confidence', 'confidence_tier', 'confidence_basis',  # sync 管区（生成器不投影）
+    'entity_kind', 'kind_basis',                          # govern_entity_kind 受管区
+    'generated_at',                                        # 每次重算天然不同
+))
+
+
+def strip_confidence(obj):
+    """递归移除易变字段（sync 管区 + generated_at），比较生成器与产物时忽略。"""
+    if isinstance(obj, dict):
+        return {k: strip_confidence(v) for k, v in obj.items()
+                if k not in _VOLATILE_KEYS}
+    if isinstance(obj, list):
+        return [strip_confidence(v) for v in obj]
+    return obj
+
+
+def _check_only():
+    """--check: 计算 build() 输出并与当前产物比较（忽略 confidence 同步管区字段）。
+
+    build 生成器不投影 confidence/confidence_tier/confidence_basis —— 这三个字段由
+    scripts/sync_confidence_fields.py 按 entities.json 单事实源注入。因此比较时必须
+    排除它们，否则 --check 永远误报「生成器与产物不一致」。
+
+    返回 0=一致（绿），1=漂移（红）。永不写盘。仅当 '--check' 在 argv 时才工作。
+    """
+    if '--check' not in sys.argv:
+        return None
+    out = build()
+    out['meta'].pop('access', None)  # inject_api_access 受管区，不参与 build 逻辑
+    path = os.path.join(ROOT, OUT_PATH)
+    if not os.path.exists(path):
+        print(f"CHECK {OUT_PATH}: 文件不存在", file=sys.stderr)
+        return 1
+    with open(path, encoding='utf-8') as f:
+        cur = json.load(f)
+    cur.get('meta', {}).pop('access', None)  # inject_api_access 受管区
+    expected = strip_confidence(out)
+    actual = strip_confidence(cur)
+    if expected == actual:
+        print(f"CHECK {OUT_PATH}: OK（与生成器一致，忽略 confidence 同步字段）")
+        return 0
+    def _diff(a, b, path=''):
+        if type(a) != type(b):
+            return [f"{path}: 类型不同 {type(a).__name__} vs {type(b).__name__}"]
+        if isinstance(a, dict):
+            d = []
+            for k in set(a) | set(b):
+                if k not in a:
+                    d.append(f"{path}.{k}: 缺失（当前有）")
+                elif k not in b:
+                    d.append(f"{path}.{k}: 缺失（生成器有）")
+                else:
+                    d.extend(_diff(a[k], b[k], f"{path}.{k}"))
+                if len(d) >= 5:
+                    break
+            return d
+        if isinstance(a, list):
+            if len(a) != len(b):
+                return [f"{path}: 长度 {len(a)} vs {len(b)}"]
+            d = []
+            for i, (x, y) in enumerate(zip(a, b)):
+                if x != y:
+                    d.extend(_diff(x, y, f"{path}[{i}]"))
+                if len(d) >= 5:
+                    break
+            return d
+        if a != b:
+            return [f"{path}: {a!r} vs {b!r}"]
+        return []
+    diffs = _diff(expected, actual)
+    print(f"CHECK {OUT_PATH}: 漂移 {len(diffs)}+ 处（前 5）", file=sys.stderr)
+    for d in diffs:
+        print(f"  {d}", file=sys.stderr)
+    return 1
+
+
 if __name__ == "__main__":
+    rc = _check_only()
+    if rc is not None:
+        sys.exit(rc)
     out = build()
     out["meta"]["access"] = _access_block()
     with open(os.path.join(ROOT, OUT_PATH), "w", encoding="utf-8") as f:

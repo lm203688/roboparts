@@ -1178,8 +1178,8 @@ def gate_evidence_valuation():
          different code paths (MDV via _decidable_matrix, compose via eval_all_pairs); if they
          diverge, one layer has gone stale.
     """
-    run_sub('MDV 生成（fail-fast 算术守卫）',
-            [sys.executable, os.path.join(ROOT, 'scripts', 'build_evidence_valuation.py')])
+    run_sub('MDV 生成（fail-fast 算术守卫，--check 只读校验不写盘）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_evidence_valuation.py'), '--check'])
     p = os.path.join(ROOT, 'api', 'evidence_valuation.json')
     if not os.path.exists(p):
         bad('MDV 产物', 'api/evidence_valuation.json missing')
@@ -1249,8 +1249,8 @@ def gate_cohort_feasibility():
         ③ The optimistic upper-bound disclaimer must be present (honest_limits contains the
            optimism note).
     """
-    run_sub('Cohort 生成（fail-fast 守恒守卫）',
-            [sys.executable, os.path.join(ROOT, 'scripts', 'build_cohort_feasibility.py')])
+    run_sub('Cohort 生成（fail-fast 守恒守卫，--check 只读校验不写盘）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_cohort_feasibility.py'), '--check'])
     p = os.path.join(ROOT, 'api', 'cohort_feasibility.json')
     if not os.path.exists(p):
         bad('Cohort 产物', 'api/cohort_feasibility.json missing')
@@ -1670,8 +1670,9 @@ def gate_co_mount():
          — **an over-claimed diagnosis is worse than no diagnosis**
     Also runs verify_co_mount.py's yin-yang + 11 mutations + engine-behavior verification.
     """
-    run_sub('共装层生成（fail-fast 宿主取证校验 + 字段口径守恒）',
-            [sys.executable, os.path.join(ROOT, 'scripts', 'build_co_mount.py')])
+    run_sub('共装层生成（--check 只读校验 + 字段口径守恒）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_co_mount.py'),
+             '--check'])
     p_cm = os.path.join(ROOT, 'api', 'co_mount.json')
     p_ts = os.path.join(ROOT, 'api', 'robot_tool_side.json')
     for p in (p_cm, p_ts):
@@ -1967,8 +1968,8 @@ def gate_compose_frontier():
     The mutation "change hypothesis into assertion" must turn red. **An over-claimed diagnosis
     is worse than no diagnosis.**
     """
-    run_sub('共装前沿生成（fail-fast 层级守恒）',
-            [sys.executable, os.path.join(ROOT, 'scripts', 'build_compose_frontier.py')])
+    run_sub('共装前沿生成（fail-fast 层级守恒，--check 只读校验不写盘）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'build_compose_frontier.py'), '--check'])
     p = os.path.join(ROOT, 'api', 'compose_frontier.json')
     if not os.path.exists(p):
         bad('共装前沿产物', 'api/compose_frontier.json missing')
@@ -3790,7 +3791,7 @@ def gate_unit_tests_not_empty():
 
     try:
         result = subprocess.run(
-            ['node', '--test'] + files,
+            ['node', '--test', '--test-reporter=tap'] + files,
             capture_output=True, text=True, timeout=120,
             cwd=ROOT)
     except Exception as e:
