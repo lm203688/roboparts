@@ -39,6 +39,9 @@ yarn-error.log*
 tmp/
 temp/
 *.tmp
+.tmp_*/
+.tmp-*/
+.tmp_git_commit.sh
 
 # Trae work files
 .trae-html-share-packages/

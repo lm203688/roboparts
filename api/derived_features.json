@@ -22,15 +22,15 @@
     },
     "counts": {
       "ladder_rungs": 13,
-      "registry_designations": 9,
-      "matches_canonical": 4,
+      "registry_designations": 11,
+      "matches_canonical": 6,
       "deviations": 3,
       "no_standard_rung": 2,
       "entity_tokens_in_use": 12,
       "entity_tokens_judged_by_derivation": 9,
       "entities_covered_by_judged_tokens": 79,
       "undecidable_tokens": 3,
-      "residual_entries": 9,
+      "residual_entries": 11,
       "residual_with_thread_delta": 5,
       "residual_with_outer_delta_declared": 0,
       "hole_delta_magnitudes_seen": [
@@ -45,7 +45,7 @@
       "dim_distributions": {
         "pcd+thread": 1,
         "thread": 1,
-        "none": 4,
+        "none": 6,
         "bolt_count+thread": 2,
         "bolt_count+pcd+thread": 1
       },
@@ -53,22 +53,22 @@
     },
     "cross_validation": {
       "is_canonical_iso_reproduced": {
-        "agreement": "9/9",
+        "agreement": "11/11",
         "disagreements": 0,
         "meaning": "推导层独立复现登记表手写的 is_canonical_iso 标签。这是**内部一致性**校验：两个独立写法对同一事实下结论，不一致即登记数据有错。"
       },
       "handwritten_note_recomputed": {
-        "notes_with_assertion": 5,
-        "machine_checkable": 5,
-        "agrees": 5,
+        "notes_with_assertion": 7,
+        "machine_checkable": 7,
+        "agrees": 7,
         "unparseable": 0,
         "meaning": "note 里「偏离 ISO 标准梯级为 N×Mk」「最近为 PCDx」这类断言可被机械复算，不必相信人写的话。不可解析的断言计为 unparseable 而非通过，避免假绿。"
       }
     },
     "freshness": {
       "basis": "锚定源内容哈希而非部署时间：内容不变则本层不变（幂等），内容一变本层必变。",
-      "mechanical_interfaces_sha256": "11b49ad282b4b16a",
-      "entities_sha256": "ad0d7f57c39a87cd"
+      "mechanical_interfaces_sha256": "341f85094982aaf8",
+      "entities_sha256": "3650df8c5a328114"
     },
     "ladder_provenance": {
       "ladder_block_type": "list",
@@ -82,7 +82,7 @@
       "agpl_boundary": "方法学参考 Shannon (KeygraphHQ/shannon, AGPL-3.0) 的「无漏洞利用，不报告」原则：只报告可复现的结论。AGPL 具网络传染性，仅借鉴原则，未复制任何代码。"
     },
     "source_tier_summary": {
-      "B": 9
+      "B": 11
     },
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
@@ -465,6 +465,47 @@
       "handwritten_note": "KUKA KR70/120/210 实测为 PCD100 4×M8，偏离 ISO 标准梯级（ISO 9409-1-100 为 6×M10）；OnRobot/Gimatic 确有对应转接盘。"
     },
     {
+      "id": "ISO9409-1-A100-6-M10",
+      "registry_source_tier": "B",
+      "pcd_mm": 100.0,
+      "bolt_count": 6,
+      "thread": "M10",
+      "on_standard_ladder": true,
+      "expected": {
+        "bolt_count": 6,
+        "thread": "M10",
+        "iso_outer_diameter": 125.0
+      },
+      "nearest_rungs": null,
+      "classification": "matches_canonical",
+      "deviation_dims": [],
+      "derived_is_canonical": true,
+      "residual": {
+        "target_rung_pcd_mm": 100.0,
+        "pcd_delta_mm": 0.0,
+        "bolt_count_delta": 0,
+        "thread_declared": "M10",
+        "thread_expected": "M10",
+        "thread_delta": false,
+        "iso_outer_diameter_delta_mm": null,
+        "min_correction_dims": [],
+        "compensation_path": "direct"
+      },
+      "stored_is_canonical_iso": true,
+      "flag_agrees_with_derivation": true,
+      "note_corroboration": {
+        "kind": "expected_pattern",
+        "recomputable": true,
+        "agrees": true,
+        "note_claims": [
+          "4xM8",
+          "6xM10"
+        ],
+        "derived_expected": "6xM10"
+      },
+      "handwritten_note": "ISO 9409-1 标准梯级：A100 = PCD100 6×M10（canonical）。KUKA 偏离支为 PCD100 4×M8（见 ISO9409-1-A100-4-M8，is_canonical_iso:false）。"
+    },
+    {
       "id": "ISO9409-1-A160-4-M12",
       "registry_source_tier": "B",
       "pcd_mm": 160.0,
@@ -510,6 +551,47 @@
         "derived_expected": "8xM16"
       },
       "handwritten_note": "KUKA KR500 实测为 PCD160 4×M12，偏离 ISO 标准梯级（ISO 9409-1-160 为 8×M16）。"
+    },
+    {
+      "id": "ISO9409-1-A160-8-M16",
+      "registry_source_tier": "B",
+      "pcd_mm": 160.0,
+      "bolt_count": 8,
+      "thread": "M16",
+      "on_standard_ladder": true,
+      "expected": {
+        "bolt_count": 8,
+        "thread": "M16",
+        "iso_outer_diameter": 200.0
+      },
+      "nearest_rungs": null,
+      "classification": "matches_canonical",
+      "deviation_dims": [],
+      "derived_is_canonical": true,
+      "residual": {
+        "target_rung_pcd_mm": 160.0,
+        "pcd_delta_mm": 0.0,
+        "bolt_count_delta": 0,
+        "thread_declared": "M16",
+        "thread_expected": "M16",
+        "thread_delta": false,
+        "iso_outer_diameter_delta_mm": null,
+        "min_correction_dims": [],
+        "compensation_path": "direct"
+      },
+      "stored_is_canonical_iso": true,
+      "flag_agrees_with_derivation": true,
+      "note_corroboration": {
+        "kind": "expected_pattern",
+        "recomputable": true,
+        "agrees": true,
+        "note_claims": [
+          "4xM12",
+          "8xM16"
+        ],
+        "derived_expected": "8xM16"
+      },
+      "handwritten_note": "ISO 9409-1 标准梯级：A160 = PCD160 8×M16（canonical）。KUKA 偏离支为 PCD160 4×M12（见 ISO9409-1-A160-4-M12，is_canonical_iso:false）。"
     },
     {
       "id": "ISO9409-1-A250-4-M16",

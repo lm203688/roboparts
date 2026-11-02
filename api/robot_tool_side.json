@@ -60,7 +60,8 @@
       "manufacturer": "Universal Robots",
       "entity_source_tier": "A",
       "confidence_tier": "observed",
-      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "entity_kind": "component"
     },
     {
       "tool_flange": "MECH:ISO9409-1-A50-4-M6",
@@ -90,7 +91,8 @@
       "manufacturer": "Universal Robots",
       "entity_source_tier": "A",
       "confidence_tier": "observed",
-      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)"
+      "confidence_basis": "industrialroboticshub verified flange table (OEM datasheets)",
+      "entity_kind": "component"
     },
     {
       "tool_flange": "MECH:ISO9409-1-A50-4-M6",
@@ -116,7 +118,8 @@
       "manufacturer": "Franka Emika",
       "entity_source_tier": "A",
       "confidence_tier": "verified",
-      "confidence_basis": "Direct file parse of upstream GitHub blob"
+      "confidence_basis": "Direct file parse of upstream GitHub blob",
+      "entity_kind": "component"
     }
   ],
   "coverage": {

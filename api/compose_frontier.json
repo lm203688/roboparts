@@ -90,7 +90,8 @@
       "mechanical_declared": true,
       "confidence": 0.95,
       "confidence_tier": "verified",
-      "confidence_basis": "vendor_official_manual_with_dimensioned_drawings"
+      "confidence_basis": "vendor_official_manual_with_dimensioned_drawings",
+      "entity_kind": "component"
     },
     {
       "id": "GRIP-001",
@@ -103,7 +104,8 @@
       "mechanical_declared": true,
       "confidence": 0.85,
       "confidence_tier": "observed",
-      "confidence_basis": "verified_product_page"
+      "confidence_basis": "verified_product_page",
+      "entity_kind": "component"
     },
     {
       "id": "GRIP-002",
@@ -116,7 +118,8 @@
       "mechanical_declared": true,
       "confidence": 0.85,
       "confidence_tier": "observed",
-      "confidence_basis": "verified_product_page"
+      "confidence_basis": "verified_product_page",
+      "entity_kind": "component"
     },
     {
       "id": "GRIP-006",
@@ -129,7 +132,8 @@
       "mechanical_declared": true,
       "confidence": 0.8,
       "confidence_tier": "observed",
-      "confidence_basis": "verified_product_page"
+      "confidence_basis": "verified_product_page",
+      "entity_kind": "component"
     },
     {
       "id": "GRIP-007",
@@ -142,7 +146,8 @@
       "mechanical_declared": true,
       "confidence": 0.8,
       "confidence_tier": "observed",
-      "confidence_basis": "verified_product_page"
+      "confidence_basis": "verified_product_page",
+      "entity_kind": "component"
     },
     {
       "id": "GRIP-009",
@@ -155,7 +160,8 @@
       "mechanical_declared": true,
       "confidence": 0.8,
       "confidence_tier": "observed",
-      "confidence_basis": "verified_product_page"
+      "confidence_basis": "verified_product_page",
+      "entity_kind": "component"
     },
     {
       "id": "GRIP-012",
@@ -168,7 +174,8 @@
       "mechanical_declared": true,
       "confidence": 0.8,
       "confidence_tier": "observed",
-      "confidence_basis": "verified_product_page"
+      "confidence_basis": "verified_product_page",
+      "entity_kind": "component"
     },
     {
       "id": "GRIP-014",
@@ -181,7 +188,8 @@
       "mechanical_declared": true,
       "confidence": 0.8,
       "confidence_tier": "observed",
-      "confidence_basis": "verified_product_page"
+      "confidence_basis": "verified_product_page",
+      "entity_kind": "component"
     },
     {
       "id": "SENS-047",
@@ -194,7 +202,8 @@
       "mechanical_declared": true,
       "confidence": 0.3,
       "confidence_tier": "inferred",
-      "confidence_basis": "tier:official; tier_c_cap"
+      "confidence_basis": "tier:official; tier_c_cap",
+      "entity_kind": "component"
     },
     {
       "id": "SENS-049",
@@ -207,7 +216,8 @@
       "mechanical_declared": true,
       "confidence": 0.3,
       "confidence_tier": "inferred",
-      "confidence_basis": "tier:official; tier_c_cap"
+      "confidence_basis": "tier:official; tier_c_cap",
+      "entity_kind": "component"
     },
     {
       "id": "SENS-31",
@@ -220,7 +230,8 @@
       "mechanical_declared": true,
       "confidence": 0.92,
       "confidence_tier": "verified",
-      "confidence_basis": "vendor_official_manual_with_coupling_bolt_pattern_table"
+      "confidence_basis": "vendor_official_manual_with_coupling_bolt_pattern_table",
+      "entity_kind": "component"
     },
     {
       "id": "SENS-37",
@@ -233,7 +244,8 @@
       "mechanical_declared": true,
       "confidence": 0.3,
       "confidence_tier": "inferred",
-      "confidence_basis": "tier:official; tier_c_cap"
+      "confidence_basis": "tier:official; tier_c_cap",
+      "entity_kind": "component"
     },
     {
       "id": "SENS-852",
@@ -246,7 +258,8 @@
       "mechanical_declared": true,
       "confidence": 0.8,
       "confidence_tier": "observed",
-      "confidence_basis": "verified_product_page"
+      "confidence_basis": "verified_product_page",
+      "entity_kind": "component"
     },
     {
       "id": "SENS-854",
@@ -259,7 +272,8 @@
       "mechanical_declared": true,
       "confidence": 0.8,
       "confidence_tier": "observed",
-      "confidence_basis": "verified_product_page"
+      "confidence_basis": "verified_product_page",
+      "entity_kind": "component"
     },
     {
       "id": "SENS-855",
@@ -272,7 +286,8 @@
       "mechanical_declared": true,
       "confidence": 0.8,
       "confidence_tier": "observed",
-      "confidence_basis": "verified_product_page"
+      "confidence_basis": "verified_product_page",
+      "entity_kind": "component"
     },
     {
       "id": "SUPERDEX-2f-85",
@@ -285,7 +300,8 @@
       "mechanical_declared": true,
       "confidence": 0.95,
       "confidence_tier": "verified",
-      "confidence_basis": "Direct file parse of upstream GitHub blob"
+      "confidence_basis": "Direct file parse of upstream GitHub blob",
+      "entity_kind": "component"
     }
   ],
   "evidence_targeting": [

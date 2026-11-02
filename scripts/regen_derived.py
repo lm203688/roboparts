@@ -72,6 +72,18 @@ STEPS = [
      None, "fix_mi_meta.py", False),
     ("归一化副本 (normalize_categories: data.js/分类JSON/api/data.json/meta.category_counts)",
      None, "normalize_categories.py", False),
+    # 【20261102】开源 VLA 绑定 + 行为证据 + provenance 必须排在 normalize_categories 之后：
+    # normalize_categories 从 entities.json 重建 robot_ai_models（丢 body_robot / behavior_evidence
+    # 指针），而 build_open_vla_binding 负责把 body_robot 写回（BINDINGS 硬编码），
+    # build_behavior_evidence 负责把行为证据指针写回，build_provenance 的 L3 判据（body→policy）
+    # 现读 body_robot——三者若排在 normalize 之前，提交版会丢 body_robot 而 provenance 沿用旧
+    # l3=true，同一提交不自洽（CI 实测：verify_provenance 漂移 links/chains/chain_summary）。
+    ("开源VLA绑定+出处修正 (build_open_vla_binding)",
+     None, "build_open_vla_binding.py", False),
+    ("行为证据层 (build_behavior_evidence)",
+     None, "build_behavior_evidence.py", False),
+    ("provenance 重建 (build_provenance)",
+     None, "build_provenance.py", False),
     # 【20261009】refresh_designations_in_use 必须排在 build_derived_features 之前：
     # 它刷新 mechanical_interfaces.json 的 designations_in_use 区块，
     # build_derived_features 依赖该区块的现算值计算新鲜度指纹。
