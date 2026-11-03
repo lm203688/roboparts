@@ -123,7 +123,7 @@ export async function onRequestGet(context) {
         let payload = null;
         try { payload = JSON.parse(data); } catch (_) { payload = null; }
         if (payload && containsPremiumField(payload)) {
-          return await applyPaywall(data, request, env, corsHeaders);
+          return await applyPaywall(data, request, env, corsHeaders, rl);
         }
       }
     }
@@ -150,7 +150,7 @@ export async function onRequestGet(context) {
   }
 }
 
-async function applyPaywall(data, request, env, corsHeaders) {
+async function applyPaywall(data, request, env, corsHeaders, rl) {
   let parsed;
   try {
     parsed = JSON.parse(data);
