@@ -106,6 +106,12 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # 【2026-11-03 修复】wrangler 部署失败（npx exit 1）根因：wrangler-action 未指定
+          # wranglerVersion 时安装 wrangler@4（latest 4.x，实测 4.156.2），而本地已验证
+          # 成功部署 v1.3 用的是 4.124.0。4.124 之后 32 个版本可能引入 pages deploy 回归
+          #（Cloudflare 侧无新部署记录 → 失败在 runner 客户端侧）。固定到已验证的 4.124.0，
+          # 保证 GitHub Actions 与本地部署一致（诚实：使用已知可复现版本，不追最新）。
+          wranglerVersion: '4.124.0'
           command: pages deploy .deploy-staging --project-name=robotparts
 
       # 【P0-5 修复】部署后冒烟验证：命中线上站点跑核心断言（首页品牌/数据 JSON/

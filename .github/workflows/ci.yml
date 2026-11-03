@@ -55,6 +55,15 @@ jobs:
         # 与本地 bootstrap 共用一份清单，避免「本地红 / 线上绿」的假分歧。
         run: python -m pip install --quiet -r requirements-dev.txt
 
+      # 【2026-11-03 修复】CI 红根因：gate job 此前缺「生成 training_dataset」步骤。
+      # 站内 href 闸门（gate_href_targets_exist）检查 data-hub.html→/api/training_dataset.json，
+      # 该文件 .gitignore 排除（设计派生物不入库、部署/CI 时生成）→ 文件不存在 → 恒红。
+      # deploy.yml 的 gate job 已有此步骤（2026-11-02 修复），ci.yml 缺 → CI 与 deploy 结果分歧。
+      # 修复：与 deploy.yml 对齐，加 Setup Node + 用 export_training_dataset.mjs 生成
+      #（ESM 模块，必须 node 运行，见 regen_derived.py STEPS line 98）。
+      - name: 生成 training_dataset（供 href 闸门检查）
+        run: node scripts/export_training_dataset.mjs
+
       - name: 列出闸门清单
         run: python scripts/ci_gate.py --list
 
