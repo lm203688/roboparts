@@ -82,13 +82,15 @@ jobs:
       # 导致 api/training_dataset.json（10MB，.gitignore 排除）在 GitHub 部署里从未生成 →
       # data-hub.html 的 /api/training_dataset.json 生产 404；且派生物（data.json 等）在
       # GitHub 部署里不随真相源刷新 → 陈旧闸门红。regen_derived.py 覆盖 0b2/0b4/0b5/0b6/0c/0d
-      # （含 normalize_categories 刷新 data.json、export_training_dataset 生成 training_dataset），
-      # build_standard_audit.py 覆盖 0b7。build_external_signals.py（0b8）依赖 SWARMLABS_API_KEY，
-      # GitHub Actions 无此 key 必然失败，且 CI 闸门不检查 external_signals → 保持提交版（诚实：不假装刷新）。
+      # （含 normalize_categories 刷新 data.json、export_training_dataset 生成 training_dataset）。
+      # 【2026-11-03 修复】build_standard_audit.py 硬依赖 ops/intel/hb-standards-ledger.json
+      # （.gitignore 排除，checkout 无此文件）→ deploy job 恒红。standard-audit.json 已入库且
+      # 自洽（提交版），无需部署时重生成，故移除该调用。
+      # build_external_signals.py（0b8）依赖 SWARMLABS_API_KEY，GitHub Actions 无此 key 必然
+      # 失败，且 CI 闸门不检查 external_signals → 保持提交版（诚实：不假装刷新）。
       - name: 重生成派生物（对齐 deploy.mjs 管线）
         run: |
           python scripts/regen_derived.py
-          python scripts/build_standard_audit.py
 
       - name: Prepare staging
         run: |
