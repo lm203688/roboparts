@@ -423,15 +423,15 @@ def gate_ir_export():
     script = os.path.join(ROOT, 'scripts', 'verify_ir_export.py')
     # fail-closed：pxr 不可用时先探测，再决定用哪个解释器；两个都不可用 → 报红
     probe = subprocess.run(
-        [sys.executable, '-c', 'import pxr'], capture_output=True, text=True,
-        timeout=20, encoding='utf-8', errors='replace')
+        [sys.executable, '-c', 'import pxr'], capture_output=True, text=True, encoding='utf-8', errors='replace',
+        timeout=20)
     python = sys.executable
     if probe.returncode != 0:
         alt = r'C:\Python314\python.exe'
         if os.path.exists(alt):
             alt_probe = subprocess.run(
-                [alt, '-c', 'import pxr'], capture_output=True, text=True,
-                timeout=20, encoding='utf-8', errors='replace')
+                [alt, '-c', 'import pxr'], capture_output=True, text=True, encoding='utf-8', errors='replace',
+                timeout=20)
             if alt_probe.returncode == 0:
                 python = alt
             else:
@@ -2435,7 +2435,7 @@ def gate_mutation_score():
         return
     regen = subprocess.run(
         [sys.executable, p_score],
-        capture_output=True, text=True, timeout=300, cwd=ROOT
+        capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=300, cwd=ROOT
     )
     if regen.returncode != 0:
         bad('变异评分·重跑', 'mutation_score.py 重跑失败（阈值不达/崩溃）:\n%s'
@@ -2512,7 +2512,7 @@ def gate_mutation_score():
     if os.path.exists(p_selftest):
         result = subprocess.run(
             [sys.executable, p_selftest, '--self-test'],
-            capture_output=True, text=True, timeout=180, cwd=ROOT
+            capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=180, cwd=ROOT
         )
         if result.returncode != 0:
             bad('变异评分·自证',
@@ -2535,7 +2535,7 @@ def gate_mcp_tool_parity():
     if not os.path.exists(p):
         bad('MCP 工具集对等', 'scripts/verify_mcp_tool_parity.py 不存在')
         return
-    r = subprocess.run([sys.executable, p], capture_output=True, text=True, timeout=60, cwd=ROOT)
+    r = subprocess.run([sys.executable, p], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=60, cwd=ROOT)
     tail = (r.stdout + r.stderr).strip()
     if r.returncode != 0:
         bad('MCP 工具集对等', tail[-600:])
@@ -2555,7 +2555,7 @@ def gate_schema_contract():
     if not os.path.exists(p):
         bad('schema 契约', 'scripts/verify_schema_contract.py 不存在')
         return
-    r = subprocess.run([sys.executable, p], capture_output=True, text=True, timeout=120, cwd=ROOT)
+    r = subprocess.run([sys.executable, p], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=120, cwd=ROOT)
     tail = (r.stdout + r.stderr).strip()
     if r.returncode != 0:
         bad('schema 契约', tail[-600:])
@@ -2575,7 +2575,7 @@ def gate_confidence_tier_range():
     if not os.path.exists(p):
         bad('confidence_tier 区间', 'scripts/reconcile_confidence_tier.py 不存在')
         return
-    r = subprocess.run([sys.executable, p, '--check'], capture_output=True, text=True, timeout=120, cwd=ROOT)
+    r = subprocess.run([sys.executable, p, '--check'], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=120, cwd=ROOT)
     tail = (r.stdout + r.stderr).strip()
     if r.returncode != 0:
         bad('confidence_tier 区间', tail[-600:])
@@ -2594,7 +2594,7 @@ def gate_tier_c_cap():
     if not os.path.exists(p):
         bad('Tier-C 上限', 'scripts/reconcile_tier_c_cap.py 不存在')
         return
-    r = subprocess.run([sys.executable, p, '--check'], capture_output=True, text=True, timeout=120, cwd=ROOT)
+    r = subprocess.run([sys.executable, p, '--check'], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=120, cwd=ROOT)
     tail = (r.stdout + r.stderr).strip()
     if r.returncode != 0:
         bad('Tier-C 上限', tail[-600:])
@@ -2613,7 +2613,7 @@ def gate_confidence_sync():
     if not os.path.exists(p):
         bad('confidence 同步', 'scripts/sync_confidence_fields.py 不存在')
         return
-    r = subprocess.run([sys.executable, p, '--check'], capture_output=True, text=True, timeout=180, cwd=ROOT)
+    r = subprocess.run([sys.executable, p, '--check'], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=180, cwd=ROOT)
     tail = (r.stdout + r.stderr).strip()
     if r.returncode != 0:
         bad('confidence 同步', tail[-600:])
@@ -2747,7 +2747,7 @@ def gate_synthesized_pair_pool():
     if os.path.exists(p_script):
         result = subprocess.run(
             [sys.executable, p_script, '--self-test'],
-            capture_output=True, text=True, timeout=60, cwd=ROOT
+            capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=60, cwd=ROOT
         )
         if result.returncode != 0:
             bad('合成对池·自证',
@@ -2858,7 +2858,7 @@ def gate_vlm_extraction_confidence():
     if os.path.exists(p_script):
         result = subprocess.run(
             [sys.executable, p_script, '--self-test'],
-            capture_output=True, text=True, timeout=30, cwd=ROOT
+            capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=30, cwd=ROOT
         )
         if result.returncode != 0:
             bad('VLM 抽取·自证',
@@ -3187,8 +3187,7 @@ def gate_no_single_scalar_fitness():
     # 运行 fitness self-test 检查多目标
     result = subprocess.run(
         [sys.executable, '-m', 'stages.fitness', '--self-test'],
-        capture_output=True, text=True, timeout=30,
-        encoding='utf-8', errors='replace')
+        capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=30)
     
     if result.returncode != 0:
         bad('多目标适应度', f'fitness self-test 失败: {result.stderr[:200]}')
@@ -3211,8 +3210,7 @@ def gate_no_anchoring_modification():
     # 检查最近的 git commit 是否修改了锚点文件
     result = subprocess.run(
         ['git', 'log', '--oneline', '-1', '--', 'docs/PROJECT_DIRECTIONS_V2.md'],
-        capture_output=True, text=True, cwd=ROOT,
-        encoding='utf-8', errors='replace')
+        capture_output=True, text=True, encoding='utf-8', errors='replace', cwd=ROOT,)
     
     if result.returncode == 0 and result.stdout.strip():
         last_commit = result.stdout.strip().splitlines()[0]
@@ -3239,8 +3237,7 @@ def gate_bridge_no_merge():
         import subprocess
         subprocess.run(
             [sys.executable, '-m', 'stages.bridge', '--write'],
-            capture_output=True, text=True, timeout=30,
-            encoding='utf-8', errors='replace')
+            capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=30,)
     
     with open(bridge_path, 'r', encoding='utf-8') as f:
         bridge = json.load(f)
@@ -3609,8 +3606,7 @@ def gate_deploy_live_verify():
     try:
         result = subprocess.run(
             [sys.executable, os.path.join(ROOT, 'scripts', 'verify_deploy_live.py'), '--ci'],
-            capture_output=True, text=True, timeout=60,
-            encoding='utf-8', errors='replace')
+            capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=60)
         output = result.stdout + result.stderr
         if result.returncode != 0:
             # 部署失败 -> 软通过（不阻塞，因为需用户操作）
@@ -3690,8 +3686,7 @@ def gate_lockfile_and_sbom():
     try:
         result = subprocess.run(
             [sys.executable, os.path.join(ROOT, 'scripts', 'gen_sbom.py'), '--check'],
-            capture_output=True, text=True, timeout=30,
-            encoding='utf-8', errors='replace')
+            capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=30)
         if result.returncode != 0:
             msg = (result.stdout + result.stderr).strip()
             bad(name, f'gen_sbom.py --check 失败：{msg[:200]}')
@@ -3792,7 +3787,7 @@ def gate_unit_tests_not_empty():
     try:
         result = subprocess.run(
             ['node', '--test', '--test-reporter=tap'] + files,
-            capture_output=True, text=True, timeout=120,
+            capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=120,
             cwd=ROOT)
     except Exception as e:
         bad(name, f'node --test 异常：{type(e).__name__}: {str(e)[:120]}')
