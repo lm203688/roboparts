@@ -7,6 +7,7 @@
 - **Name**: RoboParts — 具身系统的组合校验层（Vendor-neutral composition checker for embodied systems）
 - **Positioning**: 面向开源机器人构建者的组合校验层。判定零件能否装配/共装/互换，输出可核验的三态结论（能/不能/不知道），并生成可打印转接件。开源、中立、可追溯。
 - **English positioning**: Vendor-neutral composition checker for embodied systems — decide whether parts can be assembled / co-mounted / interchanged, returning verifiable three-state verdicts (compatible / incompatible / unknown) and printing transfer adapters. **International anchoring**: ISO 9409-1 (flange geometry) + **ISO 22166-1** (modular frameworks for service robots, Germany-led, revision `ISO/AWI 22166-1` FDIS 2026-04-05) + GB/T 20255807-T-604 (draft, domestic modular information model).
+- **Core goal / 核心目标（用户 2026-11-06 定义）**: 打造机器人生态，让机器人变成人人可组装的产业；其他生态可在平台接入形成配件标准化；用户数据（一致性+保密性）平台保留、上一台上传下一台下载植入；配件设计接入 3D 打印（平台下单→打印寄送→组装）；开源集中机器人小模型；与 FlyBrain（大脑）、世界模型（训练）呼应。分阶段实现方案见 `docs/roboparts-核心目标-20261106.md`。
 - **Why not a "part database"**: 数据只是载体，真正不可复制的是判定引擎（三态 fail-closed compose）+ 三条代数律（可靠性 / 证据单调性 / 不可判定边界，经性质测试与变异测试验证）+ 三条研究假说（其中 T2 已被证伪，见 NR-001；T3 为强假说，样本 56 对）+ 91 项 CI 闸门 + 溯源纪律。
 - **Domain**: roboparts.cc
 - **Live URL / 线上地址**: https://roboparts.cc

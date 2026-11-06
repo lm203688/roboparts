@@ -26,9 +26,14 @@ RoboParts 是「单一真相源 + 派生副本」架构。`api/entities.json` �
    避免产物文件被豁免修改污染。
 3. **不追踪未标注关系的产物**：只跟踪 ARTIFACTS 里明确列出的产物。未列入
    的产物不判定新鲜度，但会在报告末尾作为 "uncovered" 提醒（不阻塞）。
-4. **只依赖 mtime**：不读内容、不算 hash。内容指纹是另一个闸门（
-   `build_derived_features.py` 已经记录 entities.json 的 sha256），本闸门
-   只管时间线。
+4. **内容时间戳优先，mtime 兜底**：默认读文件内容里的时间戳字段
+   （`updated` / `meta.updated` / `meta.generated_at` / `meta.projection_generated_at` /
+   `generated_at`），因为**门禁运行的构建脚本 touch 会改写 mtime 但内容不变**
+   （见 2026-11-06 诊断：门禁副产物让 api/*.json mtime 变当天但 git diff 空），
+   用 mtime 判"上游比产物新"会产生周期假红。内容时间戳是"数据真实生成时刻"，
+   touch 不改它。无内容时间戳的产物（如 co_mount/croissant 是 --check 只读生成，
+   不被 touch）回退 mtime，安全。完整内容指纹（sha256）由 `build_derived_features.py`
+   的 freshness 字段负责，本闸门只管"时间线 + 内容时间戳"。
 
 用法
 ----
@@ -248,6 +253,50 @@ class FreshnessResult:
     producer: str
 
 
+def _parse_content_ts(value: Any) -> Optional[_dt.datetime]:
+    """解析内容时间戳字符串为 datetime（ISO 8601，容忍 Z / +00:00 / +08:00 / 无时区）。"""
+    if not isinstance(value, str) or not value.strip():
+        return None
+    s = value.strip()
+    # Python <3.11 不认 'Z'；统一替换为 '+00:00'
+    if s.endswith('Z'):
+        s = s[:-1] + '+00:00'
+    try:
+        dt = _dt.datetime.fromisoformat(s)
+    except ValueError:
+        return None
+    if dt.tzinfo is not None:
+        # 统一转 naive UTC（本地判定用 naive）
+        return dt.astimezone(_dt.timezone.utc).replace(tzinfo=None)
+    return dt
+
+
+def _content_timestamp(path: str) -> Optional[_dt.datetime]:
+    """读文件内容里的时间戳字段；JSON 里候选键依次探测。touch 不改内容时间戳。"""
+    full = os.path.join(ROOT, path)
+    if not os.path.exists(full):
+        return None
+    try:
+        with open(full, encoding='utf-8') as f:
+            data = json.load(f)
+    except (OSError, ValueError):
+        return None
+    if isinstance(data, dict):
+        meta = data.get('meta') if isinstance(data.get('meta'), dict) else {}
+        for key in ('updated', 'last_updated', 'generated_at'):
+            v = _parse_content_ts(data.get(key))
+            if v is not None:
+                return v
+        for key in ('updated', 'generated_at', 'projection_generated_at'):
+            v = _parse_content_ts(meta.get(key))
+            if v is not None:
+                return v
+        v = _parse_content_ts(data.get('generated_at'))
+        if v is not None:
+            return v
+    return None
+
+
 def _mtime(path: str) -> Optional[_dt.datetime]:
     full = os.path.join(ROOT, path)
     if not os.path.exists(full):
@@ -255,11 +304,17 @@ def _mtime(path: str) -> Optional[_dt.datetime]:
     return _dt.datetime.fromtimestamp(os.path.getmtime(full))
 
 
+def _freshness_time(path: str) -> Optional[_dt.datetime]:
+    """新鲜度判定用时间：内容时间戳优先（touch 不改），无则回退 mtime。"""
+    return _content_timestamp(path) or _mtime(path)
+
+
 def check_artifact(art: Artifact, exemptions: Dict[str, Exemption],
                    now: _dt.datetime) -> FreshnessResult:
-    art_mtime = _mtime(art.path)
+    # 内容时间戳优先（touch 不改），mtime 兜底——修复 2026-11-06 门禁副产物 mtime 假红
+    art_mtime = _freshness_time(art.path)
     missing_upstreams = [u for u in art.upstreams if not os.path.exists(os.path.join(ROOT, u))]
-    upstream_mtimes = [(_mtime(u), u) for u in art.upstreams if u not in missing_upstreams]
+    upstream_mtimes = [(_freshness_time(u), u) for u in art.upstreams if u not in missing_upstreams]
 
     upstream_max: Optional[_dt.datetime] = None
     upstream_oldest_ok: Optional[_dt.datetime] = None
