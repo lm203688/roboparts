@@ -108,8 +108,10 @@ api/training_dataset.json
 *.bak.*
 
 # 工程化配置文件（.env.example 入库，实际 .env.* 已排除）
-# 保留 package-lock.json（若使用 npm ci）；本仓未启用 npm ci，先忽略
-package-lock.json
+# 【2026-11-07 P0】package-lock.json 入库：构建可复现性（Chief m00756 第 3 项）。
+# 此前忽略导致 npm install 漂移（依赖版本不锁定）。入库后 CI 可 npm ci 精确复现。
+# 保留注释记录决策原因（原注释「本仓未启用 npm ci，先忽略」已过时——本仓启用 npm ci 后
+# 应锁版本；当前至少入库供复现与审计，npm ci 落地待 package.json 确认可复现）。
 
 # AOCI 索引/元数据（AOCI 工具的本地索引快照，非交付物）
 .aoci/

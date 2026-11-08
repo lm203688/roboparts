@@ -39,8 +39,8 @@
     "build:dataset": "node scripts/export_training_dataset.mjs",
     "sync:dist": "python scripts/sync_dataset_dist.py",
     "sync:dist:check": "python scripts/sync_dataset_dist.py --check",
-    "fmt": "prettier --write \"**/*.{js,mjs,json,md,html,yml,yaml}\"",
-    "fmt:check": "prettier --check \"**/*.{js,mjs,json,md,html,yml,yaml}\"",
+    "fmt": "prettier --write \"scripts/**/*.{js,mjs}\" \"functions/**/*.js\" \"mcp-server/**/*.{js,mjs}\" \"package.json\" \"eslint.config.mjs\" \".github/workflows/*.yml\" \".github/actions/**/*.js\"",
+    "fmt:check": "prettier --check \"scripts/**/*.{js,mjs}\" \"functions/**/*.js\" \"mcp-server/**/*.{js,mjs}\" \"package.json\" \"eslint.config.mjs\" \".github/workflows/*.yml\" \".github/actions/**/*.js\"",
     "lint": "eslint \"scripts/**/*.mjs\" \"scripts/**/*.js\" \"functions/**/*.js\" \"mcp-server/**/*.js\"",
     "doctor": "npm run fmt:check && npm run lint && python scripts/ci_gate.py --list"
   },
