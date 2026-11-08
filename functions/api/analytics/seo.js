@@ -46,10 +46,20 @@ export async function onRequestGet(context) {
     // 检测到的诊断信息（用于排查 ASSETS 不可用等场景）
     const diagnostics = [];
     if (sitemapResult.status === 'rejected') {
-      diagnostics.push('sitemap 检测异常: ' + (sitemapResult.reason && sitemapResult.reason.message ? sitemapResult.reason.message : String(sitemapResult.reason)));
+      diagnostics.push(
+        'sitemap 检测异常: ' +
+          (sitemapResult.reason && sitemapResult.reason.message
+            ? sitemapResult.reason.message
+            : String(sitemapResult.reason)),
+      );
     }
     if (contentResult.status === 'rejected') {
-      diagnostics.push('content 统计异常: ' + (contentResult.reason && contentResult.reason.message ? contentResult.reason.message : String(contentResult.reason)));
+      diagnostics.push(
+        'content 统计异常: ' +
+          (contentResult.reason && contentResult.reason.message
+            ? contentResult.reason.message
+            : String(contentResult.reason)),
+      );
     }
 
     const report = {
@@ -76,11 +86,14 @@ export async function onRequestGet(context) {
       },
     });
   } catch (e) {
-    return new Response(JSON.stringify({
-      error: 'Internal error',
-      message: e.message,
-      stack: e.stack,
-    }), { status: 500, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        error: 'Internal error',
+        message: e.message,
+        stack: e.stack,
+      }),
+      { status: 500, headers: corsHeaders },
+    );
   }
 }
 
@@ -95,9 +108,11 @@ async function checkSitemap(env) {
     return false;
   }
   try {
-    const res = await env.ASSETS.fetch(new Request('https://internal.local/sitemap.xml', {
-      method: 'GET',
-    }));
+    const res = await env.ASSETS.fetch(
+      new Request('https://internal.local/sitemap.xml', {
+        method: 'GET',
+      }),
+    );
     // 2xx 视为存在；404/5xx 视为不存在
     if (res && res.status >= 200 && res.status < 300) {
       // 进一步校验返回内容非空且包含 xml 标识，避免误判
@@ -132,9 +147,11 @@ async function countContentFiles(env) {
     return 0;
   }
   try {
-    const res = await env.ASSETS.fetch(new Request('https://internal.local/content/', {
-      method: 'GET',
-    }));
+    const res = await env.ASSETS.fetch(
+      new Request('https://internal.local/content/', {
+        method: 'GET',
+      }),
+    );
 
     if (!res || res.status < 200 || res.status >= 300) {
       // 目录列表不可访问（Cloudflare Pages 默认可能不开放目录浏览）
@@ -182,14 +199,14 @@ async function probeContentFiles(env) {
 
   const results = await Promise.allSettled(
     candidates.map(async (path) => {
-      const res = await env.ASSETS.fetch(new Request('https://internal.local' + path, { method: 'GET' }));
-      return (res && res.status >= 200 && res.status < 300) ? 1 : 0;
-    })
+      const res = await env.ASSETS.fetch(
+        new Request('https://internal.local' + path, { method: 'GET' }),
+      );
+      return res && res.status >= 200 && res.status < 300 ? 1 : 0;
+    }),
   );
 
-  return results
-    .filter(r => r.status === 'fulfilled' && r.value === 1)
-    .length;
+  return results.filter((r) => r.status === 'fulfilled' && r.value === 1).length;
 }
 
 // HEAD 探活：Pages 不把 HEAD 映射到 onRequestGet，缺此导出则一律 404 ——

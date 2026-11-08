@@ -46,15 +46,20 @@ function redactErr(msg) {
   return String(msg == null ? '' : msg)
     .replace(/(Authorization:\s*Bearer\s+)\S+/gi, '$1***')
     .replace(/(\bBearer\s+)[A-Za-z0-9_\-.=]{16,}/g, '$1***')
-    .replace(/\bsk-[A-Za-z0-9_\-]{16,}/g, 'sk-***')
+    .replace(/\bsk-[A-Za-z0-9_-]{16,}/g, 'sk-***')
     .slice(0, 140);
 }
 
 // 平台 canonical 法兰梯级（权威源 Industrial Robotics Hub《Robot Tool Flange Sizes by Brand》2026-07-25）。
 // 已发布标准的引用，非平台私有数据；用于锚定模型、防止臆造尺寸。
 const CANONICAL_FLANGE = [
-  'A40=4×M6', 'A50=4×M6', 'A63=6×M6', 'A80=6×M8',
-  'A100=6×M10', 'A160=8×M16', 'A250=8×M20',
+  'A40=4×M6',
+  'A50=4×M6',
+  'A63=6×M6',
+  'A80=6×M8',
+  'A100=6×M10',
+  'A160=8×M16',
+  'A250=8×M20',
 ];
 
 const SYSTEM_BASE = [
@@ -109,7 +114,7 @@ async function buildSystemPrompt(request) {
     const total = meta.total_entities;
     const cats = meta.categories;
     if (typeof total === 'number') {
-      const catN = (cats && typeof cats === 'object') ? Object.keys(cats).length : undefined;
+      const catN = cats && typeof cats === 'object' ? Object.keys(cats).length : undefined;
       parts.push(`平台实时规模：实体 ${total}${catN ? ` 个、覆盖 ${catN} 个品类` : ''}。`);
     }
     const mech = meta.mechanical_interface_coverage;
@@ -124,10 +129,10 @@ async function buildSystemPrompt(request) {
       const na = mech.not_applicable || 0;
       const applicable = notDeclared + declared + partial; // NA 不算分母
       const denom = mech.mech_applicable_total || applicable || total || 0;
-      const pct = denom > 0 ? ((declared + partial) / denom * 100).toFixed(2) : '0.00';
+      const pct = denom > 0 ? (((declared + partial) / denom) * 100).toFixed(2) : '0.00';
       parts.push(
         `机械接口声明：declared ${declared}/partial ${partial}/not_declared ${notDeclared}/` +
-        `not_applicable ${na}（声明率现算 ${pct}%，适用实体分母 ${denom}；数据随管线实时增长）。`
+          `not_applicable ${na}（声明率现算 ${pct}%，适用实体分母 ${denom}；数据随管线实时增长）。`,
       );
     }
     return parts.join('\n');
@@ -170,9 +175,12 @@ function contextBlock(ctx) {
       .join(' 与 ');
     parts.push(`用户当前正在判定的法兰：${desc}。`);
   }
-  if (ctx.verdict) parts.push(`本例规则裁决：${ctx.verdict === 'ok' ? '直接兼容' : '需要转接件'}。`);
+  if (ctx.verdict)
+    parts.push(`本例规则裁决：${ctx.verdict === 'ok' ? '直接兼容' : '需要转接件'}。`);
   if (Array.isArray(ctx.mentions) && ctx.mentions.length) {
-    parts.push(`用户在问题中提到了这些品牌/型号关键词：${ctx.mentions.join('、')}。若平台有对应实体，请在解释中指向其数据页。`);
+    parts.push(
+      `用户在问题中提到了这些品牌/型号关键词：${ctx.mentions.join('、')}。若平台有对应实体，请在解释中指向其数据页。`,
+    );
   }
   return parts.length ? '【当前上下文】\n' + parts.join('\n') : '';
 }
@@ -184,11 +192,13 @@ function buildReferences(ctx, entities) {
   if (ctx && Array.isArray(ctx.flanges)) {
     for (const f of ctx.flanges) {
       const line = CANONICAL_FLANGE.find((l) => l.startsWith('A' + f.pcd + '='));
-      if (line) refs.push({ kind: 'flange', label: `${line}（canonical 梯级）`, url: '/iso-9409-flange' });
+      if (line)
+        refs.push({ kind: 'flange', label: `${line}（canonical 梯级）`, url: '/iso-9409-flange' });
     }
   }
   refs.push({ kind: 'ref', label: 'ISO 9409-1 法兰速查', url: '/iso-9409-flange' });
-  if (ctx && ctx.adapterUrl) refs.push({ kind: 'tool', label: '打开转接件生成器', url: ctx.adapterUrl });
+  if (ctx && ctx.adapterUrl)
+    refs.push({ kind: 'tool', label: '打开转接件生成器', url: ctx.adapterUrl });
   if (ctx && Array.isArray(ctx.mentions) && ctx.mentions.length && Array.isArray(entities)) {
     const seen = new Set();
     const ents = refs.filter((r) => r.kind === 'entity');
@@ -201,7 +211,11 @@ function buildReferences(ctx, entities) {
         if (hay.includes(token)) {
           // P0-8b 修复：旧代码把所有命中的实体 url 都写死为 '/bionic'（仿生页），
           // 用户点了引用跳到错误页面。正确路径是 /entity/<id>，与全站实体详情页一致。
-          refs.push({ kind: 'entity', label: `${e.name || e.id}（${e.id}）`, url: `/entity/${encodeURIComponent(e.id)}` });
+          refs.push({
+            kind: 'entity',
+            label: `${e.name || e.id}（${e.id}）`,
+            url: `/entity/${encodeURIComponent(e.id)}`,
+          });
           seen.add(e.id);
           if (refs.filter((r) => r.kind === 'entity').length >= 3) break;
         }
@@ -212,7 +226,10 @@ function buildReferences(ctx, entities) {
   const keys = new Set();
   for (const r of refs) {
     const k = r.kind + '|' + r.label;
-    if (!keys.has(k)) { keys.add(k); uniq.push(r); }
+    if (!keys.has(k)) {
+      keys.add(k);
+      uniq.push(r);
+    }
   }
   return uniq;
 }
@@ -225,7 +242,14 @@ function buildReferences(ctx, entities) {
 // 规则：一个节点/边，只有能被 canonical 法兰梯级、用户显式给出的三要素、平台实体库、
 //       或可构造的转接件 URL 背书时才进图；否则进 dropped[] 并如实回传（不静默）。
 function buildCompatIR(ctx, entities) {
-  const ir = { kind: 'roboparts.compat-graph', version: 1, subject: null, nodes: [], edges: [], dropped: [] };
+  const ir = {
+    kind: 'roboparts.compat-graph',
+    version: 1,
+    subject: null,
+    nodes: [],
+    edges: [],
+    dropped: [],
+  };
   if (!ctx) return ir;
   const canon = (f) => CANONICAL_FLANGE.find((l) => l.startsWith('A' + f.pcd + '=')) || null;
   const mkFlangeNode = (f, side) => {
@@ -236,7 +260,11 @@ function buildCompatIR(ctx, entities) {
       label: `A${f.pcd}-${f.holes}-${f.thread}`,
       evidence: c
         ? { source: 'canonical_flange', ref: c, tier: 'canonical' }
-        : { source: 'user_input', ref: `${f.pcd}mm/${f.holes}孔/${f.thread}`, tier: 'user_supplied' },
+        : {
+            source: 'user_input',
+            ref: `${f.pcd}mm/${f.holes}孔/${f.thread}`,
+            tier: 'user_supplied',
+          },
     };
   };
   const fl = Array.isArray(ctx.flanges) ? ctx.flanges : [];
@@ -246,22 +274,41 @@ function buildCompatIR(ctx, entities) {
     ir.nodes.push(mkFlangeNode(a, 'A'), mkFlangeNode(b, 'B'));
     const ok = ctx.verdict === 'ok';
     ir.edges.push({
-      from: 'sideA', to: 'sideB', kind: 'verdict',
+      from: 'sideA',
+      to: 'sideB',
+      kind: 'verdict',
       label: ok ? '直接兼容' : '需转接件',
       evidence: { source: 'iso9409-1', ref: '节圆/孔数/螺纹逐项比对（judgeFlanges）' },
     });
     if (!ok) {
       if (ctx.adapterUrl && /^https?:\/\//.test(ctx.adapterUrl)) {
         ir.nodes.push({
-          id: 'adapter', type: 'adapter', label: '转接板',
+          id: 'adapter',
+          type: 'adapter',
+          label: '转接板',
           evidence: { source: 'adapter_generator', ref: ctx.adapterUrl, tier: 'rule' },
         });
         ir.edges.push(
-          { from: 'sideA', to: 'adapter', kind: 'mediated', label: '生成', evidence: { source: 'rule', ref: 'adapterUrl' } },
-          { from: 'adapter', to: 'sideB', kind: 'mediated', label: '对接', evidence: { source: 'rule', ref: 'adapterUrl' } },
+          {
+            from: 'sideA',
+            to: 'adapter',
+            kind: 'mediated',
+            label: '生成',
+            evidence: { source: 'rule', ref: 'adapterUrl' },
+          },
+          {
+            from: 'adapter',
+            to: 'sideB',
+            kind: 'mediated',
+            label: '对接',
+            evidence: { source: 'rule', ref: 'adapterUrl' },
+          },
         );
       } else {
-        ir.dropped.push({ candidate: 'adapter', reason: '裁决需转接件，但未能生成有效转接件 URL —— 不画无背书节点' });
+        ir.dropped.push({
+          candidate: 'adapter',
+          reason: '裁决需转接件，但未能生成有效转接件 URL —— 不画无背书节点',
+        });
       }
     }
   } else if (fl.length === 1) {
@@ -274,10 +321,13 @@ function buildCompatIR(ctx, entities) {
     for (const m of ctx.mentions.slice(0, 6)) {
       const token = String(m).toLowerCase();
       const hit = ents.find((e) =>
-        [e.id, e.name, e.brand || ''].filter(Boolean).join(' ').toLowerCase().includes(token));
+        [e.id, e.name, e.brand || ''].filter(Boolean).join(' ').toLowerCase().includes(token),
+      );
       if (hit) {
         ir.nodes.push({
-          id: 'ent:' + hit.id, type: 'entity', label: `${hit.name || hit.id}`,
+          id: 'ent:' + hit.id,
+          type: 'entity',
+          label: `${hit.name || hit.id}`,
           evidence: { source: 'entities.json', ref: hit.id, tier: 'platform_data' },
         });
       } else {
@@ -292,12 +342,20 @@ function buildCompatIR(ctx, entities) {
 // 「AI 只描述、编译器渲染」——这里进一步要求 AI 连描述都不得越出已核验的节点集）。
 function irGrounding(ir) {
   if (!ir || !ir.nodes.length) return '';
-  const lines = ir.nodes.map((n) => `- ${n.id}: ${n.label}（${n.type}；出处 ${n.evidence.source}）`);
+  const lines = ir.nodes.map(
+    (n) => `- ${n.id}: ${n.label}（${n.type}；出处 ${n.evidence.source}）`,
+  );
   const dropped = ir.dropped.length
-    ? '\n以下提及因**缺少数据背书已被拒绝**，回答中不得补全或猜测：' + ir.dropped.map((d) => d.candidate).join('、') + '。'
+    ? '\n以下提及因**缺少数据背书已被拒绝**，回答中不得补全或猜测：' +
+      ir.dropped.map((d) => d.candidate).join('、') +
+      '。'
     : '';
-  return '\n【兼容性图（唯一可信节点集，禁止越出）】\n' + lines.join('\n')
-    + '\n仅可引用以上节点；不得臆造图中不存在的零件、接口或尺寸。' + dropped;
+  return (
+    '\n【兼容性图（唯一可信节点集，禁止越出）】\n' +
+    lines.join('\n') +
+    '\n仅可引用以上节点；不得臆造图中不存在的零件、接口或尺寸。' +
+    dropped
+  );
 }
 
 export async function onRequestOptions() {
@@ -308,24 +366,32 @@ export async function onRequestPost({ request, env }) {
   // 仅限本站来源，避免密钥被他站盗用
   const origin = request.headers.get('origin') || '';
   if (!origin.includes('roboparts.cc')) {
-    return new Response(JSON.stringify({ error: 'forbidden_origin' }),
-      { status: 403, headers: { ...CORS, 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ error: 'forbidden_origin' }), {
+      status: 403,
+      headers: { ...CORS, 'Content-Type': 'application/json' },
+    });
   }
 
   let body;
-  try { body = await request.json(); } catch {
-    return new Response(JSON.stringify({ error: 'invalid_json' }),
-      { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } });
+  try {
+    body = await request.json();
+  } catch {
+    return new Response(JSON.stringify({ error: 'invalid_json' }), {
+      status: 400,
+      headers: { ...CORS, 'Content-Type': 'application/json' },
+    });
   }
-  const prompt = (body && body.prompt) ? String(body.prompt).slice(0, 2000) : '';
+  const prompt = body && body.prompt ? String(body.prompt).slice(0, 2000) : '';
   if (!prompt) {
-    return new Response(JSON.stringify({ error: 'missing_prompt' }),
-      { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ error: 'missing_prompt' }), {
+      status: 400,
+      headers: { ...CORS, 'Content-Type': 'application/json' },
+    });
   }
 
   // heyclicky 借鉴（必须在后端可行性判断之前算好，供降级分支也携带引用）：
   // 解析上下文 → 反查命中实体 → 生成“指给你看”的引用链。
-  const context = (body && body.context && typeof body.context === 'object') ? body.context : null;
+  const context = body && body.context && typeof body.context === 'object' ? body.context : null;
   let _entitiesForRef = null;
   if (context && Array.isArray(context.mentions) && context.mentions.length) {
     _entitiesForRef = await loadEntities(new URL(request.url).host);
@@ -334,21 +400,25 @@ export async function onRequestPost({ request, env }) {
   // archify 借鉴：先由规则引擎产出「已校验 IR」，再拿它同时喂给模型（锁死可引用节点集）
   // 与回传给前端（确定性渲染）。计算必须在任何 return 之前 —— 降级分支也要携带它。
   const ir = buildCompatIR(context, _entitiesForRef);
-  const system = (await buildSystemPrompt(request)) + '\n' + contextBlock(context) + irGrounding(ir);
+  const system =
+    (await buildSystemPrompt(request)) + '\n' + contextBlock(context) + irGrounding(ir);
 
   const backends = buildBackends(env);
   if (backends.length === 0) {
     // 未配置任何后端：直接降级，不抛 5xx（仍携带 references 让前端可点）
-    return new Response(JSON.stringify({
-      text: 'Copilot 推理后端未配置（维护中）。兼容性裁决仍可在平台数据与 ISO 9409-1 法兰库中查证。',
-      model: 'maintenance',
-      degraded: true,
-      detail: 'no_backend_configured',
-      attempts: [],
-      configured: [],
-      references,
-      ir,
-    }), { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
+    return new Response(
+      JSON.stringify({
+        text: 'Copilot 推理后端未配置（维护中）。兼容性裁决仍可在平台数据与 ISO 9409-1 法兰库中查证。',
+        model: 'maintenance',
+        degraded: true,
+        detail: 'no_backend_configured',
+        attempts: [],
+        configured: [],
+        references,
+        ir,
+      }),
+      { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } },
+    );
   }
 
   const timeoutMs = Number(env.COPILOT_UPSTREAM_TIMEOUT_MS) || 25000;
@@ -367,7 +437,7 @@ export async function onRequestPost({ request, env }) {
         method: 'POST',
         signal: controller.signal,
         headers: {
-          'Authorization': 'Bearer ' + b.key,
+          Authorization: 'Bearer ' + b.key,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -386,17 +456,27 @@ export async function onRequestPost({ request, env }) {
         continue; // 降级到下一个后端
       }
       const d = await r.json();
-      const text = (d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content)
-        ? d.choices[0].message.content : '';
+      const text =
+        d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content
+          ? d.choices[0].message.content
+          : '';
       if (!text) {
         lastDetail = `upstream_${b.name}_empty`;
         attempts.push({ backend: b.name, ok: false, error: 'empty_content' });
         continue;
       }
       attempts.push({ backend: b.name, ok: true });
-      return new Response(JSON.stringify({ text, model: `${b.name}:${b.model}`, references, ir,
-        attempts, configured: backends.map((x) => `${x.name}:${x.model}`) }),
-        { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
+      return new Response(
+        JSON.stringify({
+          text,
+          model: `${b.name}:${b.model}`,
+          references,
+          ir,
+          attempts,
+          configured: backends.map((x) => `${x.name}:${x.model}`),
+        }),
+        { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } },
+      );
     } catch (e) {
       const aborted = e && e.name === 'AbortError';
       lastDetail = aborted ? `upstream_${b.name}_timeout` : `upstream_${b.name}_fetch_failed`;
@@ -412,14 +492,17 @@ export async function onRequestPost({ request, env }) {
   }
 
   // 全部后端不可用：结构化降级，前端展示友好文案而非报错（仍携带 references）
-  return new Response(JSON.stringify({
-    text: 'Copilot 暂时不可用（推理后端维护中）。兼容性裁决仍可在平台数据与 ISO 9409-1 法兰库中查证。',
-    model: 'maintenance',
-    degraded: true,
-    detail: lastDetail,
-    attempts,
-    configured: backends.map((x) => `${x.name}:${x.model}`),
-    references,
-    ir,
-  }), { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
+  return new Response(
+    JSON.stringify({
+      text: 'Copilot 暂时不可用（推理后端维护中）。兼容性裁决仍可在平台数据与 ISO 9409-1 法兰库中查证。',
+      model: 'maintenance',
+      degraded: true,
+      detail: lastDetail,
+      attempts,
+      configured: backends.map((x) => `${x.name}:${x.model}`),
+      references,
+      ir,
+    }),
+    { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } },
+  );
 }

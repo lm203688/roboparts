@@ -40,14 +40,17 @@ async function bumpStat(env, key, by = 1) {
     const cur = await env.USER_CREDITS.get(key);
     const n = (cur ? parseInt(cur, 10) : 0) || 0;
     await env.USER_CREDITS.put(key, String(n + by));
-  } catch (e) { /* 度量失败不影响主流程 */ }
+  } catch (e) {
+    /* 度量失败不影响主流程 */
+  }
 }
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-  'Access-Control-Expose-Headers': 'X-Credits-Remaining, X-Credits-Warning, X-Credits-Threshold, X-API-Tier',
+  'Access-Control-Expose-Headers':
+    'X-Credits-Remaining, X-Credits-Warning, X-Credits-Threshold, X-API-Tier',
   'Content-Type': 'application/json; charset=utf-8',
 };
 
@@ -202,7 +205,7 @@ function parseTDP(str) {
 function parseVoltageRange(str) {
   if (!str) return null;
   const s = String(str);
-  const rangeMatch = s.match(/([\d.]+)\s*[~\-]\s*([\d.]+)\s*V/i);
+  const rangeMatch = s.match(/([\d.]+)\s*[~-]\s*([\d.]+)\s*V/i);
   if (rangeMatch) return { min: parseFloat(rangeMatch[1]), max: parseFloat(rangeMatch[2]) };
   const singleMatch = s.match(/([\d.]+)\s*V/i);
   if (singleMatch) return { min: parseFloat(singleMatch[1]), max: parseFloat(singleMatch[1]) };
@@ -228,7 +231,9 @@ function protocolMatch(item, protocol) {
     item.protocol,
     item.interface,
     Array.isArray(item.interfaces) ? item.interfaces.join('/') : '',
-  ].filter(Boolean).join(' ');
+  ]
+    .filter(Boolean)
+    .join(' ');
   return fields.toLowerCase().includes(protocol.toLowerCase());
 }
 
@@ -266,7 +271,7 @@ async function fetchCategoryData(env, request, category) {
 
 // 执行器筛选：扭矩、重量、协议、电压
 function filterActuators(items, requirements) {
-  let filtered = items.filter(a => {
+  let filtered = items.filter((a) => {
     if (requirements.torque_min) {
       const t = parseTorque(a.torque);
       if (t > 0 && t < requirements.torque_min) return false;
@@ -284,7 +289,7 @@ function filterActuators(items, requirements) {
   });
   // 若筛选结果为空，放宽协议与电压限制，仅保留硬性数值筛选
   if (filtered.length === 0) {
-    filtered = items.filter(a => {
+    filtered = items.filter((a) => {
       if (requirements.torque_min) {
         const t = parseTorque(a.torque);
         if (t > 0 && t < requirements.torque_min) return false;
@@ -304,16 +309,18 @@ function filterSensors(items, requirements, weights) {
   let filtered = items;
   // 按应用场景优先类型筛选
   if (weights.preferred_sensor_types && weights.preferred_sensor_types.length > 0) {
-    const preferred = filtered.filter(s =>
-      weights.preferred_sensor_types.some(t =>
-        String(s.type || '').toLowerCase().includes(t.toLowerCase())
-      )
+    const preferred = filtered.filter((s) =>
+      weights.preferred_sensor_types.some((t) =>
+        String(s.type || '')
+          .toLowerCase()
+          .includes(t.toLowerCase()),
+      ),
     );
     if (preferred.length > 0) filtered = preferred;
   }
   // 按精度/量程筛选（range 字段含数值时）
   if (requirements.precision_min) {
-    const precise = filtered.filter(s => {
+    const precise = filtered.filter((s) => {
       const m = String(s.range || '').match(/([\d.]+)/);
       return m && parseFloat(m[1]) >= requirements.precision_min;
     });
@@ -324,7 +331,7 @@ function filterSensors(items, requirements, weights) {
 
 // 芯片筛选：AI 算力、功耗、接口
 function filterChips(items, requirements) {
-  let filtered = items.filter(c => {
+  let filtered = items.filter((c) => {
     if (requirements.ai_perf_min) {
       const ai = parseAIPerf(c.ai_perf);
       if (ai > 0 && ai < requirements.ai_perf_min) return false;
@@ -340,7 +347,7 @@ function filterChips(items, requirements) {
     return true;
   });
   if (filtered.length === 0) {
-    filtered = items.filter(c => {
+    filtered = items.filter((c) => {
       if (requirements.ai_perf_min) {
         const ai = parseAIPerf(c.ai_perf);
         if (ai > 0 && ai < requirements.ai_perf_min) return false;
@@ -374,9 +381,9 @@ function rosState(item) {
 function scoreActuator(actuator, requirements, weights) {
   const reasons = [];
   let performance = 0; // /40
-  let cost = 0;        // /30
-  let ecosystem = 0;   // /20
-  let maturity = 0;    // /10
+  let cost = 0; // /30
+  let ecosystem = 0; // /20
+  let maturity = 0; // /10
 
   // --- 性能匹配度 (40) ---
   const torque = parseTorque(actuator.torque);
@@ -452,8 +459,8 @@ function scoreActuator(actuator, requirements, weights) {
   if (reqProtocol && protocolMatch(actuator, reqProtocol)) {
     ecosystem += 8;
     reasons.push(reqProtocol + '协议匹配');
-  } else if (weights.preferred_protocols.some(p => protocolMatch(actuator, p))) {
-    const matched = weights.preferred_protocols.find(p => protocolMatch(actuator, p));
+  } else if (weights.preferred_protocols.some((p) => protocolMatch(actuator, p))) {
+    const matched = weights.preferred_protocols.find((p) => protocolMatch(actuator, p));
     ecosystem += 6;
     reasons.push(matched + '协议适配' + weights.label + '场景');
   }
@@ -479,7 +486,7 @@ function scoreActuator(actuator, requirements, weights) {
 
   // --- 成熟度 (10) ---
   const trl = estimateTRL(actuator);
-  maturity = Math.round((trl - 1) / 8 * 10);
+  maturity = Math.round(((trl - 1) / 8) * 10);
 
   const score = Math.min(100, Math.round(performance + cost + ecosystem + maturity));
 
@@ -519,21 +526,21 @@ function actuatorCompatNotes(actuator) {
 function scoreSensor(sensor, requirements, weights) {
   const reasons = [];
   let performance = 0; // /40
-  let cost = 0;        // /30
-  let ecosystem = 0;   // /20
-  let maturity = 0;    // /10
+  let cost = 0; // /30
+  let ecosystem = 0; // /20
+  let maturity = 0; // /10
 
   const sensorType = String(sensor.type || '');
 
   // --- 性能匹配度 (40) ---
   // 类型与应用场景匹配
-  const typeMatched = weights.preferred_sensor_types.some(t =>
-    sensorType.toLowerCase().includes(t.toLowerCase())
+  const typeMatched = weights.preferred_sensor_types.some((t) =>
+    sensorType.toLowerCase().includes(t.toLowerCase()),
   );
   if (typeMatched) {
     performance += 24;
-    const matchedType = weights.preferred_sensor_types.find(t =>
-      sensorType.toLowerCase().includes(t.toLowerCase())
+    const matchedType = weights.preferred_sensor_types.find((t) =>
+      sensorType.toLowerCase().includes(t.toLowerCase()),
     );
     reasons.push(matchedType + '类型适配' + weights.label + '场景');
   } else {
@@ -584,7 +591,7 @@ function scoreSensor(sensor, requirements, weights) {
   if (sensor.year || sensor.source) trl += 1;
   if (typeMatched) trl += 1;
   trl = Math.min(9, trl);
-  maturity = Math.round((trl - 1) / 8 * 10);
+  maturity = Math.round(((trl - 1) / 8) * 10);
 
   const score = Math.min(100, Math.round(performance + cost + ecosystem + maturity));
 
@@ -600,8 +607,8 @@ function scoreSensor(sensor, requirements, weights) {
 function sensorCompatNotes(sensor, weights) {
   const notes = [];
   const sensorType = String(sensor.type || '');
-  const typeMatched = weights.preferred_sensor_types.some(t =>
-    sensorType.toLowerCase().includes(t.toLowerCase())
+  const typeMatched = weights.preferred_sensor_types.some((t) =>
+    sensorType.toLowerCase().includes(t.toLowerCase()),
   );
   if (typeMatched) {
     notes.push('类型与' + weights.label + '需求高度匹配');
@@ -618,9 +625,9 @@ function sensorCompatNotes(sensor, weights) {
 function scoreChip(chip, requirements, weights) {
   const reasons = [];
   let performance = 0; // /40
-  let cost = 0;        // /30
-  let ecosystem = 0;   // /20
-  let maturity = 0;    // /10
+  let cost = 0; // /30
+  let ecosystem = 0; // /20
+  let maturity = 0; // /10
 
   // --- 性能匹配度 (40) ---
   const aiPerf = parseAIPerf(chip.ai_perf);
@@ -701,11 +708,13 @@ function scoreChip(chip, requirements, weights) {
       reasons.push(requirements.protocol + '接口匹配');
     }
   }
-  if (weights.preferred_protocols.some(p => {
-    const ifaces = Array.isArray(chip.interfaces) ? chip.interfaces.join('/') : '';
-    return ifaces.toLowerCase().includes(p.toLowerCase());
-  })) {
-    const matched = weights.preferred_protocols.find(p => {
+  if (
+    weights.preferred_protocols.some((p) => {
+      const ifaces = Array.isArray(chip.interfaces) ? chip.interfaces.join('/') : '';
+      return ifaces.toLowerCase().includes(p.toLowerCase());
+    })
+  ) {
+    const matched = weights.preferred_protocols.find((p) => {
       const ifaces = Array.isArray(chip.interfaces) ? chip.interfaces.join('/') : '';
       return ifaces.toLowerCase().includes(p.toLowerCase());
     });
@@ -730,7 +739,7 @@ function scoreChip(chip, requirements, weights) {
 
   // --- 成熟度 (10) ---
   const trl = estimateTRL(chip);
-  maturity = Math.round((trl - 1) / 8 * 10);
+  maturity = Math.round(((trl - 1) / 8) * 10);
 
   const score = Math.min(100, Math.round(performance + cost + ecosystem + maturity));
 
@@ -780,27 +789,38 @@ function analyzeCompatibility(recommendations) {
     const actV = parseVoltageRange(topActuator.specs.voltage);
     const chipTdp = topChip.specs.tdp ? String(topChip.specs.tdp) : '';
     if (actV && actV.max >= 48) {
-      warnings.push('执行器高压(' + topActuator.specs.voltage + ')与芯片低压供电需额外电源管理模块');
+      warnings.push(
+        '执行器高压(' + topActuator.specs.voltage + ')与芯片低压供电需额外电源管理模块',
+      );
     }
     // 协议一致性
-    const actProto = String(topActuator.specs.protocol || '') + ' ' + String(topActuator.specs.interface || '');
-    const chipIfaces = Array.isArray(topChip.specs.interfaces) ? topChip.specs.interfaces.join('/') : '';
+    const actProto =
+      String(topActuator.specs.protocol || '') + ' ' + String(topActuator.specs.interface || '');
+    const chipIfaces = Array.isArray(topChip.specs.interfaces)
+      ? topChip.specs.interfaces.join('/')
+      : '';
     const commonProtos = ['CAN', 'EtherCAT', 'UART', 'SPI', 'I2C', 'USB'];
-    const actHas = commonProtos.filter(p => actProto.toLowerCase().includes(p.toLowerCase()));
-    const chipHas = commonProtos.filter(p => chipIfaces.toLowerCase().includes(p.toLowerCase()));
-    const shared = actHas.filter(p => chipHas.includes(p));
+    const actHas = commonProtos.filter((p) => actProto.toLowerCase().includes(p.toLowerCase()));
+    const chipHas = commonProtos.filter((p) => chipIfaces.toLowerCase().includes(p.toLowerCase()));
+    const shared = actHas.filter((p) => chipHas.includes(p));
     if (actHas.length > 0 && chipHas.length > 0 && shared.length === 0) {
-      warnings.push('执行器(' + actHas.join('/') + ')与芯片(' + chipHas.join('/') + ')无共同通信协议，需协议转换桥接');
+      warnings.push(
+        '执行器(' +
+          actHas.join('/') +
+          ')与芯片(' +
+          chipHas.join('/') +
+          ')无共同通信协议，需协议转换桥接',
+      );
     }
   }
 
   // ROS 一致性
-  const allItems = [
-    ...(recommendations.actuators || []),
-    ...(recommendations.chips || []),
-  ].filter(i => rosState(i.specs) !== 'unknown');
-  const rosMismatch = allItems.some(i => rosState(i.specs) === 'no') &&
-                      allItems.some(i => rosState(i.specs) === 'yes');
+  const allItems = [...(recommendations.actuators || []), ...(recommendations.chips || [])].filter(
+    (i) => rosState(i.specs) !== 'unknown',
+  );
+  const rosMismatch =
+    allItems.some((i) => rosState(i.specs) === 'no') &&
+    allItems.some((i) => rosState(i.specs) === 'yes');
   if (rosMismatch) {
     warnings.push('部分推荐器件不支持ROS，混合使用时需为非ROS器件编写额外驱动节点');
   }
@@ -808,7 +828,12 @@ function analyzeCompatibility(recommendations) {
   // 预算警告
   if (recommendations._total_cost_estimate != null && recommendations._budget != null) {
     if (recommendations._total_cost_estimate > recommendations._budget) {
-      warnings.push('推荐方案总预估$' + recommendations._total_cost_estimate + '超出预算$' + recommendations._budget);
+      warnings.push(
+        '推荐方案总预估$' +
+          recommendations._total_cost_estimate +
+          '超出预算$' +
+          recommendations._budget,
+      );
     }
   }
 
@@ -822,53 +847,64 @@ export async function onRequestOptions() {
 }
 
 export async function onRequestGet() {
-  return new Response(JSON.stringify({
-    endpoint: '/api/selection/engine',
-    method: 'POST',
-    description: '智能选型引擎：根据机器人应用场景与需求参数，对执行器、传感器、芯片进行筛选与综合评分（0-100），返回推荐列表及跨品类兼容性分析。每次调用消耗 2 积分。',
-    request_body: {
-      api_key: 'string (必填) - API 密钥，gtk_ 前缀，可在 https://roboparts.cc 获取',
-      application: 'string - 应用场景：humanoid | quadruped | robot_arm | amr | industrial，默认 humanoid',
-      requirements: {
-        max_budget: 'number - 最大预算（美元）',
-        torque_min: 'number - 最小扭矩要求（Nm）',
-        weight_max: 'number - 最大重量限制（g）',
-        voltage: 'number - 工作电压（V）',
-        ros_required: 'boolean - 是否要求支持 ROS',
-        protocol: 'string - 期望协议，如 EtherCAT / CAN / RS485',
-        ai_perf_min: 'number - 最小 AI 算力要求（TOPS）',
-        precision_min: 'number - 传感器最小精度/量程',
-        power_max: 'number - 芯片最大功耗（W）',
+  return new Response(
+    JSON.stringify(
+      {
+        endpoint: '/api/selection/engine',
+        method: 'POST',
+        description:
+          '智能选型引擎：根据机器人应用场景与需求参数，对执行器、传感器、芯片进行筛选与综合评分（0-100），返回推荐列表及跨品类兼容性分析。每次调用消耗 2 积分。',
+        request_body: {
+          api_key: 'string (必填) - API 密钥，gtk_ 前缀，可在 https://roboparts.cc 获取',
+          application:
+            'string - 应用场景：humanoid | quadruped | robot_arm | amr | industrial，默认 humanoid',
+          requirements: {
+            max_budget: 'number - 最大预算（美元）',
+            torque_min: 'number - 最小扭矩要求（Nm）',
+            weight_max: 'number - 最大重量限制（g）',
+            voltage: 'number - 工作电压（V）',
+            ros_required: 'boolean - 是否要求支持 ROS',
+            protocol: 'string - 期望协议，如 EtherCAT / CAN / RS485',
+            ai_perf_min: 'number - 最小 AI 算力要求（TOPS）',
+            precision_min: 'number - 传感器最小精度/量程',
+            power_max: 'number - 芯片最大功耗（W）',
+          },
+          categories: 'string[] - 选型品类，可选值：actuators / sensors / chips，默认全部',
+          count_per_category: 'number - 每个品类返回数量，1-20，默认 3',
+        },
+        example: {
+          api_key: 'gtk_demo_key',
+          application: 'humanoid',
+          requirements: {
+            max_budget: 50000,
+            torque_min: 10,
+            weight_max: 2000,
+            voltage: 48,
+            ros_required: true,
+            protocol: 'EtherCAT',
+            ai_perf_min: 100,
+          },
+          categories: ['actuators', 'sensors', 'chips'],
+          count_per_category: 3,
+        },
+        note: '此端点仅支持 POST 请求，请使用 curl 或 fetch 发送 POST 请求',
       },
-      categories: 'string[] - 选型品类，可选值：actuators / sensors / chips，默认全部',
-      count_per_category: 'number - 每个品类返回数量，1-20，默认 3',
+      null,
+      2,
+    ),
+    {
+      status: 200,
+      headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=3600' },
     },
-    example: {
-      api_key: 'gtk_demo_key',
-      application: 'humanoid',
-      requirements: {
-        max_budget: 50000,
-        torque_min: 10,
-        weight_max: 2000,
-        voltage: 48,
-        ros_required: true,
-        protocol: 'EtherCAT',
-        ai_perf_min: 100,
-      },
-      categories: ['actuators', 'sensors', 'chips'],
-      count_per_category: 3,
-    },
-    note: '此端点仅支持 POST 请求，请使用 curl 或 fetch 发送 POST 请求',
-  }, null, 2), {
-    status: 200,
-    headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=3600' },
-  });
+  );
 }
 
 export async function onRequestPost(context) {
   const { request, env } = context;
 
   try {
+    // 每个请求独立的额外响应头累积器（在函数内初始化，避免跨请求污染）
+    const responseExtraHeaders = {};
     const body = await request.json();
     const { api_key, application, requirements, categories, count_per_category } = body;
 
@@ -877,232 +913,257 @@ export async function onRequestPost(context) {
     let user;
     if (!api_key) {
       // 匿名免费试用：每个 IP 限 1 次
-      const clientIp = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For') || 'anonymous';
+      const clientIp =
+        request.headers.get('CF-Connecting-IP') ||
+        request.headers.get('X-Forwarded-For') ||
+        'anonymous';
       const trialKey = 'trial:selection:' + clientIp;
       const trialUsed = await env.USER_CREDITS.get(trialKey);
       if (trialUsed) {
-        return new Response(JSON.stringify({
-          error: 'Free trial already used',
-          message: '免费试用次数已用完（每个 IP 限 1 次）。请注册获取 API Key 继续调用。',
-          register_url: 'https://roboparts.cc/register',
-        }), { status: 402, headers: { ...corsHeaders, 'X-Trial-Used': 'true' } });
+        return new Response(
+          JSON.stringify({
+            error: 'Free trial already used',
+            message: '免费试用次数已用完（每个 IP 限 1 次）。请注册获取 API Key 继续调用。',
+            register_url: 'https://roboparts.cc/register',
+          }),
+          { status: 402, headers: { ...corsHeaders, 'X-Trial-Used': 'true' } },
+        );
       }
       // 标记试用已使用
       await env.USER_CREDITS.put(trialKey, 'true', { expirationTtl: 86400 * 30 }); // 30 天
       isFreeTrial = true;
       user = { credits: 0, api_calls: 0, free_trial: true };
     } else {
-    // 2. 验证 application
-    const app = application || 'humanoid';
-    if (!VALID_APPLICATIONS.includes(app)) {
-      return new Response(JSON.stringify({
-        error: 'Invalid application',
-        message: 'application 必须为: ' + VALID_APPLICATIONS.join(', '),
-        received: application,
-      }), { status: 400, headers: corsHeaders });
-    }
-
-    // 3. 验证 categories
-    const cats = Array.isArray(categories) && categories.length > 0
-      ? categories
-      : VALID_CATEGORIES;
-    const invalidCats = cats.filter(c => !VALID_CATEGORIES.includes(c));
-    if (invalidCats.length > 0) {
-      return new Response(JSON.stringify({
-        error: 'Invalid categories',
-        message: 'categories 仅支持: ' + VALID_CATEGORIES.join(', '),
-        received: invalidCats,
-      }), { status: 400, headers: corsHeaders });
-    }
-
-    const reqs = requirements || {};
-    const count = Math.min(20, Math.max(1, Number(count_per_category) || 3));
-    const weights = APPLICATION_WEIGHTS[app];
-
-    // 4. 验证积分系统（免费试用跳过）
-    if (!isFreeTrial) {
-      if (!env.USER_CREDITS) {
-        return new Response(JSON.stringify({
-          error: 'Credits system not configured',
-          message: 'USER_CREDITS KV 绑定缺失，无法完成积分扣费。',
-        }), { status: 500, headers: corsHeaders });
+      // 2. 验证 application
+      const app = application || 'humanoid';
+      if (!VALID_APPLICATIONS.includes(app)) {
+        return new Response(
+          JSON.stringify({
+            error: 'Invalid application',
+            message: 'application 必须为: ' + VALID_APPLICATIONS.join(', '),
+            received: application,
+          }),
+          { status: 400, headers: corsHeaders },
+        );
       }
 
-      const userData = await env.USER_CREDITS.get(api_key);
-      if (!userData) {
-        return new Response(JSON.stringify({
-          error: 'Invalid API key',
-          message: 'api_key 未在系统中注册，请前往 https://roboparts.cc 获取有效密钥。',
-        }), { status: 403, headers: corsHeaders });
+      // 3. 验证 categories
+      const cats =
+        Array.isArray(categories) && categories.length > 0 ? categories : VALID_CATEGORIES;
+      const invalidCats = cats.filter((c) => !VALID_CATEGORIES.includes(c));
+      if (invalidCats.length > 0) {
+        return new Response(
+          JSON.stringify({
+            error: 'Invalid categories',
+            message: 'categories 仅支持: ' + VALID_CATEGORIES.join(', '),
+            received: invalidCats,
+          }),
+          { status: 400, headers: corsHeaders },
+        );
       }
 
-      user = JSON.parse(userData);
+      const reqs = requirements || {};
+      const count = Math.min(20, Math.max(1, Number(count_per_category) || 3));
+      const weights = APPLICATION_WEIGHTS[app];
 
-      // 5. 积分不足
-      if (user.credits < CREDIT_COST) {
-        return new Response(JSON.stringify({
-          error: 'Insufficient credits',
-          credits_remaining: user.credits,
-          required: CREDIT_COST,
-          credits_needed: CREDIT_COST - user.credits,
-          recharge_url: UPGRADE_URL,
-          message: '积分不足，每次选型引擎调用消耗 ' + CREDIT_COST + ' 积分。',
-        }), {
-          status: 402,
-          headers: {
-            ...corsHeaders,
-            'X-Credits-Remaining': String(user.credits),
-            'X-Upgrade-URL': UPGRADE_URL,
-          },
-        });
-      }
-
-      // 6. 扣除积分
-      user.credits -= CREDIT_COST;
-      user.api_calls = (user.api_calls || 0) + 1;
-      await bumpStat(env, 'stat:selection_calls:total');
-      await bumpStat(env, 'stat:credits_consumed:total', CREDIT_COST);
-
-      const INITIAL_CREDITS = user.initial_credits || 100;
-      const LOW_THRESHOLD = Math.max(20, Math.floor(INITIAL_CREDITS * 0.2));
-      responseExtraHeaders['X-Credits-Remaining'] = String(user.credits);
-      if (user.credits <= LOW_THRESHOLD) {
-        responseExtraHeaders['X-Credits-Warning'] = 'low';
-        responseExtraHeaders['X-Credits-Threshold'] = String(LOW_THRESHOLD);
-        if (!user.low_alert_sent) {
-          user.low_alert_sent = true;
-          user.low_alert_at = new Date().toISOString();
+      // 4. 验证积分系统（免费试用跳过）
+      if (!isFreeTrial) {
+        if (!env.USER_CREDITS) {
+          return new Response(
+            JSON.stringify({
+              error: 'Credits system not configured',
+              message: 'USER_CREDITS KV 绑定缺失，无法完成积分扣费。',
+            }),
+            { status: 500, headers: corsHeaders },
+          );
         }
-      }
-      if (user.credits > LOW_THRESHOLD && user.low_alert_sent) {
-        user.low_alert_sent = false;
-        delete user.low_alert_at;
-      }
 
-      await env.USER_CREDITS.put(api_key, JSON.stringify(user));
-    } else {
-      // 免费试用：只统计调用，不扣积分
-      await bumpStat(env, 'stat:selection_calls:total');
-      await bumpStat(env, 'stat:selection_free_trial:total');
-      responseExtraHeaders['X-Trial-Used'] = 'true';
-      responseExtraHeaders['X-Register-URL'] = 'https://roboparts.cc/register';
-    }
+        const userData = await env.USER_CREDITS.get(api_key);
+        if (!userData) {
+          return new Response(
+            JSON.stringify({
+              error: 'Invalid API key',
+              message: 'api_key 未在系统中注册，请前往 https://roboparts.cc 获取有效密钥。',
+            }),
+            { status: 403, headers: corsHeaders },
+          );
+        }
 
-    // 7. 加载数据并执行选型
-    const recommendations = {};
-    let totalCostEstimate = 0;
+        user = JSON.parse(userData);
 
-    const unavailableCats = {};
-    for (const category of cats) {
-      const fetched = await fetchCategoryData(env, request, category);
-      // 取数失败 ≠ 无符合条件的零件。前者是我们的故障，必须单独记账并对外声明，
-      // 不能和"筛完确实没有"共用一个空数组。
-      if (!fetched.ok) {
-        recommendations[category] = null;
-        unavailableCats[category] = fetched.reason;
-        continue;
-      }
-      const allItems = fetched.items;
-      if (allItems.length === 0) {
-        recommendations[category] = [];
-        continue;
-      }
+        // 5. 积分不足
+        if (user.credits < CREDIT_COST) {
+          return new Response(
+            JSON.stringify({
+              error: 'Insufficient credits',
+              credits_remaining: user.credits,
+              required: CREDIT_COST,
+              credits_needed: CREDIT_COST - user.credits,
+              recharge_url: UPGRADE_URL,
+              message: '积分不足，每次选型引擎调用消耗 ' + CREDIT_COST + ' 积分。',
+            }),
+            {
+              status: 402,
+              headers: {
+                ...corsHeaders,
+                'X-Credits-Remaining': String(user.credits),
+                'X-Upgrade-URL': UPGRADE_URL,
+              },
+            },
+          );
+        }
 
-      // 筛选
-      let filtered;
-      if (category === 'actuators') {
-        filtered = filterActuators(allItems, reqs);
-      } else if (category === 'sensors') {
-        filtered = filterSensors(allItems, reqs, weights);
-      } else if (category === 'chips') {
-        filtered = filterChips(allItems, reqs);
+        // 6. 扣除积分
+        user.credits -= CREDIT_COST;
+        user.api_calls = (user.api_calls || 0) + 1;
+        await bumpStat(env, 'stat:selection_calls:total');
+        await bumpStat(env, 'stat:credits_consumed:total', CREDIT_COST);
+
+        const INITIAL_CREDITS = user.initial_credits || 100;
+        const LOW_THRESHOLD = Math.max(20, Math.floor(INITIAL_CREDITS * 0.2));
+        responseExtraHeaders['X-Credits-Remaining'] = String(user.credits);
+        if (user.credits <= LOW_THRESHOLD) {
+          responseExtraHeaders['X-Credits-Warning'] = 'low';
+          responseExtraHeaders['X-Credits-Threshold'] = String(LOW_THRESHOLD);
+          if (!user.low_alert_sent) {
+            user.low_alert_sent = true;
+            user.low_alert_at = new Date().toISOString();
+          }
+        }
+        if (user.credits > LOW_THRESHOLD && user.low_alert_sent) {
+          user.low_alert_sent = false;
+          delete user.low_alert_at;
+        }
+
+        await env.USER_CREDITS.put(api_key, JSON.stringify(user));
       } else {
-        filtered = allItems;
+        // 免费试用：只统计调用，不扣积分
+        await bumpStat(env, 'stat:selection_calls:total');
+        await bumpStat(env, 'stat:selection_free_trial:total');
+        responseExtraHeaders['X-Trial-Used'] = 'true';
+        responseExtraHeaders['X-Register-URL'] = 'https://roboparts.cc/register';
       }
 
-      // 评分
-      const scored = filtered.map(item => {
-        let result;
+      // 7. 加载数据并执行选型
+      const recommendations = {};
+      let totalCostEstimate = 0;
+
+      const unavailableCats = {};
+      for (const category of cats) {
+        const fetched = await fetchCategoryData(env, request, category);
+        // 取数失败 ≠ 无符合条件的零件。前者是我们的故障，必须单独记账并对外声明，
+        // 不能和"筛完确实没有"共用一个空数组。
+        if (!fetched.ok) {
+          recommendations[category] = null;
+          unavailableCats[category] = fetched.reason;
+          continue;
+        }
+        const allItems = fetched.items;
+        if (allItems.length === 0) {
+          recommendations[category] = [];
+          continue;
+        }
+
+        // 筛选
+        let filtered;
         if (category === 'actuators') {
-          result = scoreActuator(item, reqs, weights);
+          filtered = filterActuators(allItems, reqs);
         } else if (category === 'sensors') {
-          result = scoreSensor(item, reqs, weights);
+          filtered = filterSensors(allItems, reqs, weights);
         } else if (category === 'chips') {
-          result = scoreChip(item, reqs, weights);
+          filtered = filterChips(allItems, reqs);
         } else {
-          result = { score: 0, reasons: [], estimated_price: 0, compatibility_notes: '' };
+          filtered = allItems;
         }
-        return { item, result };
+
+        // 评分
+        const scored = filtered.map((item) => {
+          let result;
+          if (category === 'actuators') {
+            result = scoreActuator(item, reqs, weights);
+          } else if (category === 'sensors') {
+            result = scoreSensor(item, reqs, weights);
+          } else if (category === 'chips') {
+            result = scoreChip(item, reqs, weights);
+          } else {
+            result = { score: 0, reasons: [], estimated_price: 0, compatibility_notes: '' };
+          }
+          return { item, result };
+        });
+
+        // 排序（按综合评分降序）
+        scored.sort((a, b) => b.result.score - a.result.score);
+
+        // 取前 N 个，构建响应
+        const topN = scored.slice(0, count).map(({ item, result }) => {
+          const rec = {
+            id: item.id,
+            name: item.name,
+            score: result.score,
+            reasons: result.reasons,
+            specs: item,
+            estimated_price: result.estimated_price,
+            compatibility_notes: result.compatibility_notes,
+            score_breakdown: result.dimensions,
+          };
+          if (result.estimated_price > 0) {
+            totalCostEstimate += result.estimated_price;
+          }
+          return rec;
+        });
+
+        recommendations[category] = topN;
+      }
+
+      // 8. 跨品类兼容性分析
+      recommendations._total_cost_estimate = totalCostEstimate;
+      recommendations._budget = reqs.max_budget || null;
+      const compatibilityWarnings = analyzeCompatibility(recommendations);
+      delete recommendations._total_cost_estimate;
+      delete recommendations._budget;
+
+      // 9. 构建最终响应
+      const response = {
+        success: true,
+        meta: {
+          application: app,
+          application_label: weights.label,
+          budget: reqs.max_budget || null,
+          credits_remaining: user.credits,
+          credits_consumed: CREDIT_COST,
+          analyzed_categories: cats,
+          total_results: cats.reduce(
+            (sum, c) => sum + (recommendations[c] ? recommendations[c].length : 0),
+            0,
+          ),
+        },
+        recommendations,
+        total_cost_estimate: totalCostEstimate,
+        compatibility_warnings: compatibilityWarnings,
+        // 显式声明哪些品类是"没读到数据"而非"没有匹配项"。
+        // recommendations[cat] === null 即代表未知；调用方不得把它当成空推荐。
+        unavailable_categories: Object.keys(unavailableCats).length ? unavailableCats : undefined,
+        partial: Object.keys(unavailableCats).length > 0 || undefined,
+      };
+
+      return new Response(JSON.stringify(response, null, 2), {
+        status: 200,
+        headers: {
+          ...corsHeaders,
+          'Cache-Control': 'no-store',
+          ...responseExtraHeaders,
+        },
       });
-
-      // 排序（按综合评分降序）
-      scored.sort((a, b) => b.result.score - a.result.score);
-
-      // 取前 N 个，构建响应
-      const topN = scored.slice(0, count).map(({ item, result }) => {
-        const rec = {
-          id: item.id,
-          name: item.name,
-          score: result.score,
-          reasons: result.reasons,
-          specs: item,
-          estimated_price: result.estimated_price,
-          compatibility_notes: result.compatibility_notes,
-          score_breakdown: result.dimensions,
-        };
-        if (result.estimated_price > 0) {
-          totalCostEstimate += result.estimated_price;
-        }
-        return rec;
-      });
-
-      recommendations[category] = topN;
     }
-
-    // 8. 跨品类兼容性分析
-    recommendations._total_cost_estimate = totalCostEstimate;
-    recommendations._budget = reqs.max_budget || null;
-    const compatibilityWarnings = analyzeCompatibility(recommendations);
-    delete recommendations._total_cost_estimate;
-    delete recommendations._budget;
-
-    // 9. 构建最终响应
-    const response = {
-      success: true,
-      meta: {
-        application: app,
-        application_label: weights.label,
-        budget: reqs.max_budget || null,
-        credits_remaining: user.credits,
-        credits_consumed: CREDIT_COST,
-        analyzed_categories: cats,
-        total_results: cats.reduce((sum, c) => sum + (recommendations[c] ? recommendations[c].length : 0), 0),
-      },
-      recommendations,
-      total_cost_estimate: totalCostEstimate,
-      compatibility_warnings: compatibilityWarnings,
-      // 显式声明哪些品类是"没读到数据"而非"没有匹配项"。
-      // recommendations[cat] === null 即代表未知；调用方不得把它当成空推荐。
-      unavailable_categories: Object.keys(unavailableCats).length ? unavailableCats : undefined,
-      partial: Object.keys(unavailableCats).length > 0 || undefined,
-    };
-
-    return new Response(JSON.stringify(response, null, 2), {
-      status: 200,
-      headers: {
-        ...corsHeaders,
-        'Cache-Control': 'no-store',
-        ...responseExtraHeaders,
-      },
-    });
-  }
-
   } catch (e) {
-    return new Response(JSON.stringify({
-      error: 'Internal error',
-      message: e.message,
-      stack: e.stack,
-    }), { status: 500, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        error: 'Internal error',
+        message: e.message,
+        stack: e.stack,
+      }),
+      { status: 500, headers: corsHeaders },
+    );
   }
 }
 

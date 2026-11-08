@@ -8,7 +8,10 @@ const ENTITIES_PATH = join(ROOT, 'api', 'entities.json');
 const GOLDEN_PATH = join(ROOT, 'api', 'eval', 'compatibility-golden.json');
 
 if (!existsSync(ENTITIES_PATH) || !existsSync(GOLDEN_PATH)) {
-  console.error('❌ 评估前置文件缺失:', { entities: existsSync(ENTITIES_PATH), golden: existsSync(GOLDEN_PATH) });
+  console.error('❌ 评估前置文件缺失:', {
+    entities: existsSync(ENTITIES_PATH),
+    golden: existsSync(GOLDEN_PATH),
+  });
   process.exit(1);
 }
 
@@ -38,15 +41,22 @@ function evalCase(c) {
       failures.push(`applicable: 期望 ${exp.applicable} 实得 ${result.applicable}`);
     }
     // overall_compatible（boolean: true / false / null）
-    if (exp.overall_compatible !== undefined && result.overall_compatible !== exp.overall_compatible) {
-      failures.push(`overall_compatible: 期望 ${exp.overall_compatible} 实得 ${result.overall_compatible}`);
+    if (
+      exp.overall_compatible !== undefined &&
+      result.overall_compatible !== exp.overall_compatible
+    ) {
+      failures.push(
+        `overall_compatible: 期望 ${exp.overall_compatible} 实得 ${result.overall_compatible}`,
+      );
     }
     if (exp.overall_in) {
       // overall_in 接受 "compatible"→true, "incompatible"→false, "needs_review"→null
       const map = { compatible: true, incompatible: false, needs_review: null };
       const expected = exp.overall_in.map((s) => map[s] ?? s);
       if (!expected.includes(result.overall_compatible)) {
-        failures.push(`overall_compatible: 实得 ${result.overall_compatible} 不在期望范围 ${exp.overall_in.join(',')}`);
+        failures.push(
+          `overall_compatible: 实得 ${result.overall_compatible} 不在期望范围 ${exp.overall_in.join(',')}`,
+        );
       }
     }
     // evidence_count_min / evidence_count_exact
@@ -70,14 +80,16 @@ function evalCase(c) {
         if (idx === -1) continue;
         const actual = result.dimensions?.[idx]?.compatible;
         if (expected === null) {
-          if (actual !== null) failures.push(`dimensions[${idx}](${dimName}): 期望 null 实得 ${actual}`);
+          if (actual !== null)
+            failures.push(`dimensions[${idx}](${dimName}): 期望 null 实得 ${actual}`);
         } else {
           // actual 可能为 true / false / "true(弱)" 之类字符串，规范化
-          const actualNorm = actual === true || (typeof actual === 'string' && actual.startsWith('true'))
-            ? true
-            : actual === false
-              ? false
-              : null;
+          const actualNorm =
+            actual === true || (typeof actual === 'string' && actual.startsWith('true'))
+              ? true
+              : actual === false
+                ? false
+                : null;
           if (actualNorm !== expected) {
             failures.push(`dimensions[${idx}](${dimName}): 期望 ${expected} 实得 ${actual}`);
           }
@@ -86,7 +98,9 @@ function evalCase(c) {
     }
     // verdict_reason_contains
     if (exp.verdict_reason_contains) {
-      const reason = (result.verdict_reason || '') + (result.overall === 'incompatible' ? ' ' + (result.verdict_reason || '') : '');
+      const reason =
+        (result.verdict_reason || '') +
+        (result.overall === 'incompatible' ? ' ' + (result.verdict_reason || '') : '');
       const joined = result.verdict_reason || '';
       for (const kw of exp.verdict_reason_contains) {
         if (!joined.includes(kw)) failures.push(`verdict_reason 不包含 "${kw}"`);
@@ -105,7 +119,9 @@ const crash = results.filter((r) => r.status === 'CRASH').length;
 console.log('═'.repeat(54));
 console.log(' RoboParts 兼容性裁决评估 · ' + new Date().toISOString().slice(0, 19));
 console.log('═'.repeat(54));
-console.log(` Golden 集: ${golden._meta.freeze_anchors} freeze-anchor + ${golden._meta.badcases} badcase = ${golden._meta.total_cases} 条`);
+console.log(
+  ` Golden 集: ${golden._meta.freeze_anchors} freeze-anchor + ${golden._meta.badcases} badcase = ${golden._meta.total_cases} 条`,
+);
 console.log('');
 
 for (const r of results) {
@@ -119,7 +135,10 @@ console.log('');
 console.log('─'.repeat(54));
 console.log(` 结果: ${pass} PASS / ${fail} FAIL / ${crash} CRASH  (共 ${results.length})`);
 if (fail === 0 && crash === 0) console.log(' 判定: 全绿 ✅（规则引擎与预期一致，无回归）');
-else if (crash === 0) console.log(' 判定: 有 FAIL ⚠️（引擎行为与 Golden 集不一致，需排查——但也可能是 Golden 集与规则有差异）');
+else if (crash === 0)
+  console.log(
+    ' 判定: 有 FAIL ⚠️（引擎行为与 Golden 集不一致，需排查——但也可能是 Golden 集与规则有差异）',
+  );
 else console.log(' 判定: 有 CRASH ❌（引擎崩溃，阻塞）');
 console.log('');
 console.log(' 注：Golden 集为冻结回归锚点，非第三方认证真值。');

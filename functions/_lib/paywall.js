@@ -13,16 +13,16 @@
 
 /** 免费层不返回的高价值字段（黑名单：新增的普通字段默认免费可见）。 */
 export const PREMIUM_FIELDS = [
-  'price_range',        // 价格区间（最有变现价值的字段）
-  'compatibility',      // 兼容性结论
-  'confidence',         // 数据置信度
-  'source',             // 数据来源
-  'source_url',         // 来源链接
-  'standard_compliance',// 合规标签
-  'standard',           // 合规标准
-  'domestic_rate',      // 国产化率
-  'import_dependency',  // 进口依赖度
-  'last_verified',      // 最后核验时间
+  'price_range', // 价格区间（最有变现价值的字段）
+  'compatibility', // 兼容性结论
+  'confidence', // 数据置信度
+  'source', // 数据来源
+  'source_url', // 来源链接
+  'standard_compliance', // 合规标签
+  'standard', // 合规标准
+  'domestic_rate', // 国产化率
+  'import_dependency', // 进口依赖度
+  'last_verified', // 最后核验时间
 ];
 
 /**
@@ -36,7 +36,7 @@ export const PREMIUM_FIELDS = [
  * 此处作为单一事实源登记；`api/[[path]].js` 依此决定是否绕过付费墙。
  */
 export const OPEN_DATASET_FILES = [
-  'data.json',           // 公开数据集（文章/下载 CTA/CC BY 4.0）
+  'data.json', // 公开数据集（文章/下载 CTA/CC BY 4.0）
   'oss_components.json', // 开源组件数据层（公开功能页，325 组件）
 ];
 
@@ -54,7 +54,7 @@ export const OPEN_DATASET_FILES = [
  * 返回剔除付费字段后的浅拷贝，并给出**这一条实体上实际被锁掉的字段名**。
  *
  * 注意返回的是 locked 的具体字段名而不是个数：调用方（以及 AI agent）需要知道
- * "缺的是什么"，只给一个数字等于让对方猜。字段不存在于该实体时不计入 —— 
+ * "缺的是什么"，只给一个数字等于让对方猜。字段不存在于该实体时不计入 ——
  * 不把"我们本来就没这个数据"包装成"你没付费所以看不到"。
  */
 export function maskPremium(entity) {
@@ -95,7 +95,7 @@ export function containsPremiumField(node) {
 export function maskPremiumDeep(node) {
   if (Array.isArray(node)) {
     let locked = 0;
-    const arr = node.map(n => {
+    const arr = node.map((n) => {
       const r = maskPremiumDeep(n);
       locked += r.lockedCount;
       return r.value;
@@ -106,7 +106,10 @@ export function maskPremiumDeep(node) {
     const out = {};
     let locked = 0;
     for (const [k, v] of Object.entries(node)) {
-      if (PREMIUM_FIELDS.includes(k)) { locked += 1; continue; }
+      if (PREMIUM_FIELDS.includes(k)) {
+        locked += 1;
+        continue;
+      }
       const r = maskPremiumDeep(v);
       locked += r.lockedCount;
       out[k] = r.value;

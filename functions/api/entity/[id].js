@@ -44,33 +44,40 @@ export async function onRequestHead(context) {
 
 export async function onRequestGet(context) {
   const { request, env, params } = context;
-  const raw = Array.isArray(params.id) ? params.id.join('/') : (params.id || '');
+  const raw = Array.isArray(params.id) ? params.id.join('/') : params.id || '';
   const id = decodeURIComponent(raw).trim();
 
   if (!id) {
-    return json({
-      error: 'missing_id',
-      message: '用法：GET /api/entity/{id}，例如 /api/entity/ACT-001。'
-             + '不知道 ID 时用 /api/search?q=keyword 先检索。',
-    }, 400);
+    return json(
+      {
+        error: 'missing_id',
+        message:
+          '用法：GET /api/entity/{id}，例如 /api/entity/ACT-001。' +
+          '不知道 ID 时用 /api/search?q=keyword 先检索。',
+      },
+      400,
+    );
   }
 
   let map;
   try {
     map = await loadEntityMap(env, request);
   } catch (err) {
-    return json({
-      error: 'dataset_unavailable',
-      message: '实体库暂时不可用，本次查询未执行。这是服务故障，不代表该实体不存在。',
-      detail: String(err && err.message || err),
-    }, 503);
+    return json(
+      {
+        error: 'dataset_unavailable',
+        message: '实体库暂时不可用，本次查询未执行。这是服务故障，不代表该实体不存在。',
+        detail: String((err && err.message) || err),
+      },
+      503,
+    );
   }
 
   // 大小写不敏感兜底：ID 形如 ACT-001，调用方小写传入不应算"不存在"
   let entity = map[id];
   if (!entity) {
     const lower = id.toLowerCase();
-    const hit = Object.keys(map).find(k => k.toLowerCase() === lower);
+    const hit = Object.keys(map).find((k) => k.toLowerCase() === lower);
     if (hit) entity = map[hit];
   }
 
@@ -78,16 +85,20 @@ export async function onRequestGet(context) {
     // 给出同前缀的近邻，比单纯一句 not found 有用
     const prefix = id.split('-')[0].toUpperCase();
     const nearby = Object.keys(map)
-      .filter(k => k.toUpperCase().startsWith(prefix))
-      .sort().slice(0, 5);
-    return json({
-      error: 'entity_not_found',
-      id,
-      message: `实体 "${id}" 不在库中。`,
-      did_you_mean: nearby,
-      hint: '用 /api/search?q=keyword 按名称/厂商检索获取正确 ID。',
-      total_entities: Object.keys(map).length,
-    }, 404);
+      .filter((k) => k.toUpperCase().startsWith(prefix))
+      .sort()
+      .slice(0, 5);
+    return json(
+      {
+        error: 'entity_not_found',
+        id,
+        message: `实体 "${id}" 不在库中。`,
+        did_you_mean: nearby,
+        hint: '用 /api/search?q=keyword 按名称/厂商检索获取正确 ID。',
+        total_entities: Object.keys(map).length,
+      },
+      404,
+    );
   }
 
   const { entity: free, locked } = maskPremium(entity);
@@ -98,16 +109,18 @@ export async function onRequestGet(context) {
       tier: 'free',
       locked_fields: locked,
       locked_note: locked.length
-        ? '以上字段属付费层，本端点不返回。完整数据：GET /api/entities.json 并带 API Key '
-          + '（Authorization: Bearer <key> 或 ?key=<key>），自助领取见 POST /api/register。'
+        ? '以上字段属付费层，本端点不返回。完整数据：GET /api/entities.json 并带 API Key ' +
+          '（Authorization: Bearer <key> 或 ?key=<key>），自助领取见 POST /api/register。'
         : '该实体上没有付费层字段被锁定。',
       quarantine: entity.quarantine === true,
-      quarantine_note: entity.quarantine === true
-        ? '该条目已标记 quarantine=true —— 存在已知疑点（占位 ID / 无法核实的厂商 / 重复 / '
-          + '并非零件的行业词），不应作为选型或采购决策依据。'
-        : null,
-      caveat: '参数为厂商声明值或公开资料整理，未经我方实测；'
-            + '兼容性判定请用 POST /api/compatibility，不要仅凭本页字段推断。',
+      quarantine_note:
+        entity.quarantine === true
+          ? '该条目已标记 quarantine=true —— 存在已知疑点（占位 ID / 无法核实的厂商 / 重复 / ' +
+            '并非零件的行业词），不应作为选型或采购决策依据。'
+          : null,
+      caveat:
+        '参数为厂商声明值或公开资料整理，未经我方实测；' +
+        '兼容性判定请用 POST /api/compatibility，不要仅凭本页字段推断。',
     },
   });
 }

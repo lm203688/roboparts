@@ -32,12 +32,18 @@ export async function onRequestGet(context) {
   const url = new URL(request.url);
   const of = (url.searchParams.get('of') || '').trim();
   const q = (url.searchParams.get('q') || '').trim();
-  const limit = Math.min(Math.max(parseInt(url.searchParams.get('limit') || '10', 10) || 10, 1), 50);
+  const limit = Math.min(
+    Math.max(parseInt(url.searchParams.get('limit') || '10', 10) || 10, 1),
+    50,
+  );
   if (!of && !q) {
-    return new Response(JSON.stringify({
-      error: '缺少参数 of 或 q',
-      usage: '/api/discover?of=ACT-028&limit=10 或 /api/discover?q=六维力传感器',
-    }), { status: 400, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        error: '缺少参数 of 或 q',
+        usage: '/api/discover?of=ACT-028&limit=10 或 /api/discover?q=六维力传感器',
+      }),
+      { status: 400, headers: corsHeaders },
+    );
   }
   try {
     const map = await loadEntityMap(env, request);
@@ -45,17 +51,24 @@ export async function onRequestGet(context) {
     if (of) {
       seed = map[of];
       if (!seed) {
-        return new Response(JSON.stringify({ error: `未找到实体: ${of}` }),
-          { status: 404, headers: corsHeaders });
+        return new Response(JSON.stringify({ error: `未找到实体: ${of}` }), {
+          status: 404,
+          headers: corsHeaders,
+        });
       }
     }
 
     // ── 语义流：TF-IDF 余弦召回（宽召回） ──────────────────────────────
-    const semQuery = q || [
-      seed.name, seed.type,
-      Array.isArray(seed.applications) ? seed.applications.join(' ') : '',
-      seed.standard_conformance,
-    ].filter(Boolean).join(' ');
+    const semQuery =
+      q ||
+      [
+        seed.name,
+        seed.type,
+        Array.isArray(seed.applications) ? seed.applications.join(' ') : '',
+        seed.standard_conformance,
+      ]
+        .filter(Boolean)
+        .join(' ');
     const semRes = await semanticSearch(env, request, semQuery, Math.max(limit * 4, 40));
     const semMap = {};
     if (semRes && semRes.available && Array.isArray(semRes.results)) {
@@ -65,7 +78,7 @@ export async function onRequestGet(context) {
     // ── 几何流：对种子零件跑 judgePair 四维硬约束（精确过滤） ───────────
     // 仅把"已验证兼容"(overall=true) 的零件作为几何流独立候选纳入（封顶保护 CF CPU，
     // 几何流天然稀疏）；null（无硬证据）不单独成候选，只在语义命中的件上附 verdict。
-    const judged = {};   // id -> judgePair 结果（种子模式全量缓存，避免重复计算）
+    const judged = {}; // id -> judgePair 结果（种子模式全量缓存，避免重复计算）
     const geomMap = {}; // id -> {overall, score, reason}
     if (seed) {
       let kept = 0;
@@ -88,42 +101,49 @@ export async function onRequestGet(context) {
       if (seed && id === of) continue; // 不把种子零件自身当"发现"结果（自比还会判成兼容）
       const e = map[id];
       if (!e) continue;
-      const j = seed ? (judged[id] || judgePair(seed, e)) : null;
+      const j = seed ? judged[id] || judgePair(seed, e) : null;
       const overall = j ? j.overall_compatible : null;
       if (overall === false) continue; // 硬不兼容，直接排除
       const sim = semMap[id] != null ? semMap[id] : 0;
-      const geomBonus = overall === true ? 1 : (overall === null ? 0.35 : 0);
+      const geomBonus = overall === true ? 1 : overall === null ? 0.35 : 0;
       const fusion = Math.round((0.6 * sim + 0.4 * geomBonus) * 1000) / 1000;
       ranked.push({
         id,
         name: e.name,
         category: e.category,
         semantic_similarity: sim,
-        geometric_verdict: overall,        // true | null（false 已被排除）
+        geometric_verdict: overall, // true | null（false 已被排除）
         compatibility_score: j ? j.compatibility_score : null,
         fusion_score: fusion,
-        reason: j ? j.verdict_reason
-          : (sim > 0 ? '语义相近（几何流无双方声明，未验证兼容）' : '几何流已验证兼容'),
+        reason: j
+          ? j.verdict_reason
+          : sim > 0
+            ? '语义相近（几何流无双方声明，未验证兼容）'
+            : '几何流已验证兼容',
       });
     }
     ranked.sort((a, b) => b.fusion_score - a.fusion_score);
 
     const out = {
       available: true,
-      method: 'V-Link 双流融合：semantic(TF-IDF 余弦宽召回) + geometric(judgePair 四维硬约束) | '
-        + 'fusion=0.6*similarity+0.4*geomBonus(verified=1/unverified=0.35) | 排除 overall=false',
+      method:
+        'V-Link 双流融合：semantic(TF-IDF 余弦宽召回) + geometric(judgePair 四维硬约束) | ' +
+        'fusion=0.6*similarity+0.4*geomBonus(verified=1/unverified=0.35) | 排除 overall=false',
       seed: seed ? { id: seed.id, name: seed.name, category: seed.category } : null,
       query: q || null,
-      honest_boundary: 'geometric_verdict=null 表示几何流无双方声明、无法判定兼容，不等于兼容；'
-        + 'overall=false 已排除。语义相近 ≠ 能装在一起。',
+      honest_boundary:
+        'geometric_verdict=null 表示几何流无双方声明、无法判定兼容，不等于兼容；' +
+        'overall=false 已排除。语义相近 ≠ 能装在一起。',
       semantic_available: !!(semRes && semRes.available),
       count: ranked.length,
       results: ranked.slice(0, limit),
     };
     return new Response(JSON.stringify(out, null, 2), { status: 200, headers: corsHeaders });
   } catch (e) {
-    return new Response(JSON.stringify({ error: '发现失败: ' + e.message }),
-      { status: 500, headers: corsHeaders });
+    return new Response(JSON.stringify({ error: '发现失败: ' + e.message }), {
+      status: 500,
+      headers: corsHeaders,
+    });
   }
 }
 

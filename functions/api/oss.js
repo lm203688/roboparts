@@ -9,11 +9,25 @@
  */
 
 import {
-  newFailureCollector, loadJsonAsset, upstreamUnavailableResponse,
-  resolveAuthState, tierMessage, authHeaders,
+  newFailureCollector,
+  loadJsonAsset,
+  upstreamUnavailableResponse,
+  resolveAuthState,
+  tierMessage,
+  authHeaders,
 } from '../_lib/upstream.js';
 
-const PREMIUM_FIELDS = ['protocol', 'interface', 'voltage', 'ros_support', 'compatibility', 'price_range', 'standard', 'source_license', 'source_robot'];
+const PREMIUM_FIELDS = [
+  'protocol',
+  'interface',
+  'voltage',
+  'ros_support',
+  'compatibility',
+  'price_range',
+  'standard',
+  'source_license',
+  'source_robot',
+];
 const UPGRADE_URL = 'https://roboparts.cc/credits';
 
 const corsHeaders = {
@@ -36,7 +50,7 @@ function strip(e, tier) {
   for (const [k, v] of Object.entries(e)) {
     if (!PREMIUM_FIELDS.includes(k)) out[k] = v;
   }
-  out._locked_fields = PREMIUM_FIELDS.filter(k => e[k] !== undefined).length;
+  out._locked_fields = PREMIUM_FIELDS.filter((k) => e[k] !== undefined).length;
   out._upgrade_url = UPGRADE_URL;
   return out;
 }
@@ -51,8 +65,11 @@ export async function onRequestGet(context) {
   const failures = newFailureCollector();
   const loaded = await loadOss(env, request, failures);
   if (!loaded.ok) {
-    return upstreamUnavailableResponse(failures, corsHeaders,
-      '开源组件数据源未能读取；空结果与「不存在」不是同一件事，请勿据此判定组件缺失。');
+    return upstreamUnavailableResponse(
+      failures,
+      corsHeaders,
+      '开源组件数据源未能读取；空结果与「不存在」不是同一件事，请勿据此判定组件缺失。',
+    );
   }
   const { meta, data } = loaded;
 
@@ -69,7 +86,10 @@ export async function onRequestGet(context) {
     // 所以 total 保持原样（不改语义、不破坏既有调用方），但**强制**把成分摊开：
     // 今后任何低置信度批量摄取都会立刻在 by_confidence / by_source_tier 里显形，
     // 而不是悄悄把总数顶上去。decidable 直接回答"多少行真能参与兼容判断"。
-    const byCat = {}, byRobot = {}, byConfidence = {}, byTier = {};
+    const byCat = {},
+      byRobot = {},
+      byConfidence = {},
+      byTier = {};
     let decidable = 0;
     for (const e of data) {
       byCat[e.category] = (byCat[e.category] || 0) + 1;
@@ -83,48 +103,75 @@ export async function onRequestGet(context) {
       byTier[t] = (byTier[t] || 0) + 1;
       if (Array.isArray(e.compatibility) && e.compatibility.length > 0) decidable++;
     }
-    return new Response(JSON.stringify({
-      meta, total: data.length, by_category: byCat, by_robot: byRobot,
-      by_confidence: byConfidence, by_source_tier: byTier,
-      decidable_entities: decidable,
-      decidable_note: 'decidable_entities = 带非空 compatibility 的行数，即真正能参与兼容判断的部分；'
-        + 'total 仅为行数，两者的差额是「已收录但尚不能据以判断」的线索行，请勿混用。',
-    }, null, 2), { status: 200, headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=300' } });
+    return new Response(
+      JSON.stringify(
+        {
+          meta,
+          total: data.length,
+          by_category: byCat,
+          by_robot: byRobot,
+          by_confidence: byConfidence,
+          by_source_tier: byTier,
+          decidable_entities: decidable,
+          decidable_note:
+            'decidable_entities = 带非空 compatibility 的行数，即真正能参与兼容判断的部分；' +
+            'total 仅为行数，两者的差额是「已收录但尚不能据以判断」的线索行，请勿混用。',
+        },
+        null,
+        2,
+      ),
+      { status: 200, headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=300' } },
+    );
   }
 
   const q = (url.searchParams.get('q') || '').toLowerCase();
   const cat = url.searchParams.get('category') || '';
   const robot = url.searchParams.get('robot') || '';
-  let filtered = data.filter(e =>
-    (!cat || e.category === cat) &&
-    (!robot || (e.source_robot || '').includes(robot)) &&
-    (!q || (e.name + ' ' + e.manufacturer + ' ' + (e.standard || '')).toLowerCase().includes(q))
+  const filtered = data.filter(
+    (e) =>
+      (!cat || e.category === cat) &&
+      (!robot || (e.source_robot || '').includes(robot)) &&
+      (!q || (e.name + ' ' + e.manufacturer + ' ' + (e.standard || '')).toLowerCase().includes(q)),
   );
 
   const tierInfo = await resolveAuthState(request, env);
   const limit = Math.min(500, parseInt(url.searchParams.get('limit') || '50', 10));
-  const items = filtered.slice(0, limit).map(e => strip(e, tierInfo.tier));
+  const items = filtered.slice(0, limit).map((e) => strip(e, tierInfo.tier));
 
   // auth_state=unverified 时字段虽被剥离，但**不得**输出「需 Pro」话术：
   // 那是对用户付费状态的断言，而事实只是我们没验成密钥。
-  return new Response(JSON.stringify({
-    meta: { ...meta, tier: tierInfo.tier, auth_state: tierInfo.auth_state,
-      auth_failure: tierInfo.auth_failure || undefined,
-      total_matched: filtered.length, returned: items.length,
-      upgrade_url: tierInfo.auth_state === 'unverified' ? undefined : UPGRADE_URL,
-      message: tierMessage(tierInfo.auth_state,
-        '免费预览：核心字段可见，完整规格（协议/接口/电压/兼容性/价格）需 Pro。使用 ?key=YOUR_API_KEY 或 Authorization: Bearer YOUR_API_KEY。',
-        'Pro 层：完整规格已返回。') },
-    data: items,
-  }, null, 2), {
-    status: 200,
-    headers: {
-      ...corsHeaders,
-      'Cache-Control': tierInfo.auth_state === 'unverified' ? 'no-store' : 'public, max-age=300',
-      'X-API-Tier': tierInfo.tier,
-      ...authHeaders(tierInfo.auth_state, UPGRADE_URL),
+  return new Response(
+    JSON.stringify(
+      {
+        meta: {
+          ...meta,
+          tier: tierInfo.tier,
+          auth_state: tierInfo.auth_state,
+          auth_failure: tierInfo.auth_failure || undefined,
+          total_matched: filtered.length,
+          returned: items.length,
+          upgrade_url: tierInfo.auth_state === 'unverified' ? undefined : UPGRADE_URL,
+          message: tierMessage(
+            tierInfo.auth_state,
+            '免费预览：核心字段可见，完整规格（协议/接口/电压/兼容性/价格）需 Pro。使用 ?key=YOUR_API_KEY 或 Authorization: Bearer YOUR_API_KEY。',
+            'Pro 层：完整规格已返回。',
+          ),
+        },
+        data: items,
+      },
+      null,
+      2,
+    ),
+    {
+      status: 200,
+      headers: {
+        ...corsHeaders,
+        'Cache-Control': tierInfo.auth_state === 'unverified' ? 'no-store' : 'public, max-age=300',
+        'X-API-Tier': tierInfo.tier,
+        ...authHeaders(tierInfo.auth_state, UPGRADE_URL),
+      },
     },
-  });
+  );
 }
 
 // HEAD 探活：Pages 不把 HEAD 映射到 onRequestGet，缺此导出则一律 404 ——

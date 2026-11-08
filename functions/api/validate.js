@@ -9,7 +9,7 @@ const PRO_PRODUCTS = [
   'prod_pny43rzDa0mmBaj7d9k4w',
   'prod_5IooNCEQoCyqp758oeVPGT',
   'prod_5OFcAcJeXzfTMkDDt6woBh',
-  'prod_44o1TOBce0Zt00X4E5ACET'
+  'prod_44o1TOBce0Zt00X4E5ACET',
 ];
 
 export async function onRequestPost(context) {
@@ -35,7 +35,7 @@ async function handleRequest(context) {
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Content-Type': 'application/json',
-    'Cache-Control': 'no-store'
+    'Cache-Control': 'no-store',
   };
 
   // Handle CORS preflight
@@ -46,17 +46,20 @@ async function handleRequest(context) {
   try {
     const url = new URL(context.request.url);
     let key = url.searchParams.get('key');
-    
+
     if (!key && context.request.method === 'POST') {
       try {
         const body = await context.request.json();
         key = body.key;
-      } catch(e) {}
+      } catch (e) {
+        /* body 可能非 JSON */
+      }
     }
 
     if (!key) {
       return new Response(JSON.stringify({ valid: false, error: 'Missing license key' }), {
-        status: 400, headers: corsHeaders
+        status: 400,
+        headers: corsHeaders,
       });
     }
 
@@ -66,12 +69,16 @@ async function handleRequest(context) {
       return new Response(JSON.stringify(isValid), { headers: corsHeaders });
     }
 
-    return new Response(JSON.stringify({ valid: false, error: 'Invalid or inactive license key' }), {
-      headers: corsHeaders
-    });
-  } catch(e) {
+    return new Response(
+      JSON.stringify({ valid: false, error: 'Invalid or inactive license key' }),
+      {
+        headers: corsHeaders,
+      },
+    );
+  } catch (e) {
     return new Response(JSON.stringify({ valid: false, error: 'Validation service error' }), {
-      status: 500, headers: corsHeaders
+      status: 500,
+      headers: corsHeaders,
     });
   }
 }
@@ -84,13 +91,13 @@ async function validateLicense(key, env) {
     method: 'POST',
     headers: {
       'X-API-KEY': CREEM_API_KEY,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ key })
+    body: JSON.stringify({ key }),
   });
 
   const data = await resp.json();
-  
+
   if (data.status === 'active') {
     const productId = data.product_id;
     return {
@@ -98,7 +105,7 @@ async function validateLicense(key, env) {
       product_id: productId,
       product_name: data.product_name || 'Pro',
       is_pro: PRO_PRODUCTS.includes(productId),
-      expires_at: data.expires_at || null
+      expires_at: data.expires_at || null,
     };
   }
 
@@ -107,9 +114,9 @@ async function validateLicense(key, env) {
     method: 'POST',
     headers: {
       'X-API-KEY': CREEM_API_KEY,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ key })
+    body: JSON.stringify({ key }),
   });
 
   if (searchResp.ok) {
@@ -122,7 +129,7 @@ async function validateLicense(key, env) {
           product_id: license.product_id,
           product_name: license.product_name || 'Pro',
           is_pro: PRO_PRODUCTS.includes(license.product_id),
-          expires_at: license.expires_at || null
+          expires_at: license.expires_at || null,
         };
       }
     }

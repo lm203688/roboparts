@@ -33,12 +33,19 @@ export const AUDIT_BUFFER_CAP = 500;
 
 // 需要脱敏丢弃的字段名（大小写不敏感）
 const SENSITIVE_KEYS = new Set([
-  'api_key', 'apikey', 'api-key',
-  'token', 'access_token', 'refresh_token',
-  'password', 'passwd',
-  'authorization', 'auth',
+  'api_key',
+  'apikey',
+  'api-key',
+  'token',
+  'access_token',
+  'refresh_token',
+  'password',
+  'passwd',
+  'authorization',
+  'auth',
   'idempotency_key',
-  'secret', 'client_secret',
+  'secret',
+  'client_secret',
 ]);
 
 // 部分脱敏字段（保留哈希，避免完全不可追溯）
@@ -59,7 +66,11 @@ export function auditStore(env) {
     return { kv: env.AUDIT_LOG_KV, mapKey: (k) => k, backend: 'AUDIT_LOG_KV' };
   }
   if (env && env.USER_CREDITS) {
-    return { kv: env.USER_CREDITS, mapKey: (k) => AUDIT_FALLBACK_PREFIX + k, backend: 'USER_CREDITS:audit' };
+    return {
+      kv: env.USER_CREDITS,
+      mapKey: (k) => AUDIT_FALLBACK_PREFIX + k,
+      backend: 'USER_CREDITS:audit',
+    };
   }
   return null;
 }
@@ -71,7 +82,9 @@ export async function hashForRedaction(value) {
   try {
     const enc = new TextEncoder();
     const buf = await crypto.subtle.digest('SHA-256', enc.encode(s));
-    const hex = Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+    const hex = Array.from(new Uint8Array(buf))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
     return 'h:' + hex.slice(0, 12);
   } catch (e) {
     // 极罕见：crypto.subtle 不可用（非 TLS 上下文）时退化为长度标记
@@ -137,9 +150,7 @@ export async function appendAudit(env, entry, opts = {}) {
   if (!store) {
     return { status: 'unavailable', reason: 'no_audit_binding' };
   }
-  const ttl = opts.ttlSeconds
-    || Number(env.AUDIT_TTL_SECONDS)
-    || AUDIT_DEFAULT_TTL_SECONDS;
+  const ttl = opts.ttlSeconds || Number(env.AUDIT_TTL_SECONDS) || AUDIT_DEFAULT_TTL_SECONDS;
 
   if (!entry || typeof entry !== 'object' || typeof entry.action !== 'string') {
     return { status: 'error', reason: 'entry.action is required', backend: store.backend };
@@ -155,7 +166,11 @@ export async function appendAudit(env, entry, opts = {}) {
   try {
     raw = await store.kv.get(kvKey);
   } catch (e) {
-    return { status: 'unavailable', reason: 'kv_read_failed: ' + e.message, backend: store.backend };
+    return {
+      status: 'unavailable',
+      reason: 'kv_read_failed: ' + e.message,
+      backend: store.backend,
+    };
   }
   let buffer = [];
   if (raw !== null && raw !== undefined) {
@@ -208,7 +223,9 @@ export async function appendAudit(env, entry, opts = {}) {
         const body = JSON.stringify({ ...buffer[i], _hash: null });
         const enc = new TextEncoder();
         const buf = await crypto.subtle.digest('SHA-256', enc.encode(prevHash + '|' + body));
-        const hex = Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+        const hex = Array.from(new Uint8Array(buf))
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
         buffer[i]._hash = 'h:' + hex.slice(0, 24);
       } catch (e) {
         // hash 计算失败不阻塞写入；这条留 _hash:null 即可
@@ -222,7 +239,9 @@ export async function appendAudit(env, entry, opts = {}) {
     const body = JSON.stringify({ ...last, _hash: null });
     const enc = new TextEncoder();
     const buf = await crypto.subtle.digest('SHA-256', enc.encode(prevHash + '|' + body));
-    const hex = Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+    const hex = Array.from(new Uint8Array(buf))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
     last._hash = 'h:' + hex.slice(0, 24);
   } catch (e) {
     // 同上，不阻塞
@@ -233,7 +252,11 @@ export async function appendAudit(env, entry, opts = {}) {
     await store.kv.put(kvKey, JSON.stringify(buffer), { expirationTtl: ttl });
     return { status: 'written', backend: store.backend, buffered: buffer.length };
   } catch (e) {
-    return { status: 'unavailable', reason: 'kv_write_failed: ' + e.message, backend: store.backend };
+    return {
+      status: 'unavailable',
+      reason: 'kv_write_failed: ' + e.message,
+      backend: store.backend,
+    };
   }
 }
 
@@ -249,7 +272,8 @@ export async function readAuditDay(env, dayKey) {
   }
   try {
     const raw = await store.kv.get(store.mapKey('day:' + dayKey));
-    if (raw === null || raw === undefined) return { status: 'empty', records: [], backend: store.backend };
+    if (raw === null || raw === undefined)
+      return { status: 'empty', records: [], backend: store.backend };
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return { status: 'corrupt', records: null, backend: store.backend };
     return { status: 'ok', records: parsed, backend: store.backend };

@@ -46,14 +46,17 @@ const inputs = {
 async function fetchJson(url, opts = {}) {
   const res = await fetch(url, {
     ...opts,
-    headers: { 'Accept': 'application/json', ...(opts.headers || {}) },
+    headers: { Accept: 'application/json', ...(opts.headers || {}) },
   });
   const text = await res.text().catch(() => '');
   if (!res.ok) {
     throw new Error(`RoboParts API ${url} returned ${res.status}: ${text.slice(0, 500)}`);
   }
-  try { return JSON.parse(text); }
-  catch (e) { throw new Error(`RoboParts API ${url} 返回非 JSON：${text.slice(0, 200)}`); }
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    throw new Error(`RoboParts API ${url} 返回非 JSON：${text.slice(0, 200)}`);
+  }
 }
 
 /**
@@ -68,7 +71,11 @@ async function fetchJson(url, opts = {}) {
 async function runBomCheck() {
   const raw = fs.readFileSync(inputs.bomPath, 'utf-8');
   let bom;
-  try { bom = JSON.parse(raw); } catch { throw new Error(`BOM 文件必须是合法 JSON: ${inputs.bomPath}`); }
+  try {
+    bom = JSON.parse(raw);
+  } catch {
+    throw new Error(`BOM 文件必须是合法 JSON: ${inputs.bomPath}`);
+  }
 
   // 归一化 items：支持 components/parts/items 三种键 + 顶层数组
   let itemsRaw = bom.components || bom.parts || bom.items || bom;
@@ -93,25 +100,36 @@ async function runBomCheck() {
   // 从 matrix 里数三态：overall_compatible=true → compatible，false → incompatible，null → undecided(unknown)
   const matrix = r.matrix || [];
   const counts = {
-    compatible: matrix.filter(m => m.overall_compatible === true).length,
-    incompatible: matrix.filter(m => m.overall_compatible === false).length,
-    unknown: matrix.filter(m => m.overall_compatible === null).length,
+    compatible: matrix.filter((m) => m.overall_compatible === true).length,
+    incompatible: matrix.filter((m) => m.overall_compatible === false).length,
+    unknown: matrix.filter((m) => m.overall_compatible === null).length,
     needs_review: 0,
   };
-  const incompatiblePairs = matrix.filter(m => m.overall_compatible === false).map(m => {
-    const bad = m.dimensions.filter(d => d.compatible === false).map(d => d.dimension);
-    return { a: m.a, b: m.b, blocked_by: bad, score: m.compatibility_score };
-  });
-  const unknownPairs = matrix.filter(m => m.overall_compatible === null).map(m => ({
-    a: m.a, b: m.b, gap: 'insufficient_evidence_in_all_dimensions',
-  }));
+  const incompatiblePairs = matrix
+    .filter((m) => m.overall_compatible === false)
+    .map((m) => {
+      const bad = m.dimensions.filter((d) => d.compatible === false).map((d) => d.dimension);
+      return { a: m.a, b: m.b, blocked_by: bad, score: m.compatibility_score };
+    });
+  const unknownPairs = matrix
+    .filter((m) => m.overall_compatible === null)
+    .map((m) => ({
+      a: m.a,
+      b: m.b,
+      gap: 'insufficient_evidence_in_all_dimensions',
+    }));
 
   return {
     counts,
     incompatiblePairs,
     unknownPairs,
     results: [
-      { endpoint: '/api/bom/check', components: r.summary?.components, pairs: r.summary?.pairs, catalog_sources_ok: r.summary?.catalog_sources_ok },
+      {
+        endpoint: '/api/bom/check',
+        components: r.summary?.components,
+        pairs: r.summary?.pairs,
+        catalog_sources_ok: r.summary?.catalog_sources_ok,
+      },
     ],
     overall: deriveOverall(counts, inputs.strict),
     // 透传服务端元数据，便于 PR 评论展示装配步骤 / 采购建议
@@ -139,16 +157,40 @@ async function runUrdfCheck() {
   });
 
   const issues = r.issues || [];
-  const errors = issues.filter(i => i.severity === 'error');
-  const warnings = issues.filter(i => i.severity === 'warning');
+  const errors = issues.filter((i) => i.severity === 'error');
+  const warnings = issues.filter((i) => i.severity === 'warning');
 
   // 三态映射：severity=error → incompatible；info/warning 无 error → compatible（带警告）；接口失败 → unknown
-  const verdict = r.severity === 'error' ? 'incompatible' : (r.severity === 'warning' ? 'needs_review' : 'compatible');
+  const verdict =
+    r.severity === 'error'
+      ? 'incompatible'
+      : r.severity === 'warning'
+        ? 'needs_review'
+        : 'compatible';
   return {
-    counts: { compatible: verdict === 'compatible' ? 1 : 0, incompatible: verdict === 'incompatible' ? 1 : 0, unknown: 0, needs_review: verdict === 'needs_review' ? 1 : 0 },
-    incompatiblePairs: errors.map(e => ({ file: inputs.urdfPath, code: e.code, reason: e.message || e.message_zh || JSON.stringify(e) })),
+    counts: {
+      compatible: verdict === 'compatible' ? 1 : 0,
+      incompatible: verdict === 'incompatible' ? 1 : 0,
+      unknown: 0,
+      needs_review: verdict === 'needs_review' ? 1 : 0,
+    },
+    incompatiblePairs: errors.map((e) => ({
+      file: inputs.urdfPath,
+      code: e.code,
+      reason: e.message || e.message_zh || JSON.stringify(e),
+    })),
     unknownPairs: [],
-    results: [{ urdf: inputs.urdfPath, severity: r.severity, robot_name: r.robot_name, errors: errors.length, warnings: warnings.length, summary: r.summary, stats: r.stats }],
+    results: [
+      {
+        urdf: inputs.urdfPath,
+        severity: r.severity,
+        robot_name: r.robot_name,
+        errors: errors.length,
+        warnings: warnings.length,
+        summary: r.summary,
+        stats: r.stats,
+      },
+    ],
     overall: verdict,
     lint_issues: issues,
   };
@@ -166,16 +208,34 @@ async function runCoMountCheck() {
   const r = await fetchJson(url);
   const verdict = r.verdict || 'unknown';
   // co-mount 的四态归一到三态视图：mountable→compatible；port_exhausted/type_error→incompatible；unknown→unknown
-  const normalized = verdict === 'mountable' ? 'compatible' : (verdict === 'unknown' ? 'unknown' : 'incompatible');
+  const normalized =
+    verdict === 'mountable' ? 'compatible' : verdict === 'unknown' ? 'unknown' : 'incompatible';
   return {
     counts: { [normalized]: 1 },
-    incompatiblePairs: verdict === 'port_exhausted' || verdict === 'type_error'
-      ? [{ host: inputs.hostId, a: inputs.partA, b: inputs.partB, reason: r.reason, verdict }]
-      : [],
-    unknownPairs: verdict === 'unknown'
-      ? [{ host: inputs.hostId, a: inputs.partA, b: inputs.partB, gap: r.gap_reason || 'insufficient_evidence' }]
-      : [],
-    results: [{ host: inputs.hostId, a: inputs.partA, b: inputs.partB, verdict, evidence: r.evidence || [] }],
+    incompatiblePairs:
+      verdict === 'port_exhausted' || verdict === 'type_error'
+        ? [{ host: inputs.hostId, a: inputs.partA, b: inputs.partB, reason: r.reason, verdict }]
+        : [],
+    unknownPairs:
+      verdict === 'unknown'
+        ? [
+            {
+              host: inputs.hostId,
+              a: inputs.partA,
+              b: inputs.partB,
+              gap: r.gap_reason || 'insufficient_evidence',
+            },
+          ]
+        : [],
+    results: [
+      {
+        host: inputs.hostId,
+        a: inputs.partA,
+        b: inputs.partB,
+        verdict,
+        evidence: r.evidence || [],
+      },
+    ],
     overall: normalized,
     co_mount_verdict: verdict,
   };
@@ -198,7 +258,8 @@ async function postPrComment(markdown) {
   }
   try {
     await octokit.rest.issues.createComment({
-      owner, repo,
+      owner,
+      repo,
       issue_number: pull_request.number,
       body: markdown,
     });
@@ -209,8 +270,18 @@ async function postPrComment(markdown) {
 }
 
 function renderComment(out) {
-  const { overall, counts, incompatiblePairs, unknownPairs, results, server, lint_issues, co_mount_verdict } = out;
-  const emoji = { compatible: '✅', incompatible: '❌', unknown: '🤷', needs_review: '⚠️' }[overall] || '🔎';
+  const {
+    overall,
+    counts,
+    incompatiblePairs,
+    unknownPairs,
+    results,
+    server,
+    lint_issues,
+    co_mount_verdict,
+  } = out;
+  const emoji =
+    { compatible: '✅', incompatible: '❌', unknown: '🤷', needs_review: '⚠️' }[overall] || '🔎';
   const lines = [
     `## ${emoji} RoboParts 组合校验结果：\`${overall}\``,
     '',
@@ -223,19 +294,42 @@ function renderComment(out) {
   // BOM 服务端摘要
   if (server && server.summary) {
     const s = server.summary;
-    lines.push('', `**服务端统计**：${s.components} 组件 · ${s.pairs} 配对 · ${s.interchangeable_groups || 0} 可互换组 · ${s.purchase_options || 0} 采购渠道 · 目录源 ${s.catalog_sources_ok || '?'}`);
-    if (server.assembly_sequence_steps) lines.push(`装配步骤：${server.assembly_sequence_steps} 步`);
+    lines.push(
+      '',
+      `**服务端统计**：${s.components} 组件 · ${s.pairs} 配对 · ${s.interchangeable_groups || 0} 可互换组 · ${s.purchase_options || 0} 采购渠道 · 目录源 ${s.catalog_sources_ok || '?'}`,
+    );
+    if (server.assembly_sequence_steps)
+      lines.push(`装配步骤：${server.assembly_sequence_steps} 步`);
     if (s.catalog_sources_degraded && s.catalog_sources_degraded.length) {
-      lines.push('', `⚠️ 目录源降级：${s.catalog_sources_degraded.map(x => `${x.source}: ${x.reason}`).join(' · ')}`);
+      lines.push(
+        '',
+        `⚠️ 目录源降级：${s.catalog_sources_degraded.map((x) => `${x.source}: ${x.reason}`).join(' · ')}`,
+      );
     }
   }
 
   // URDF lint 结果
   if (lint_issues && lint_issues.length) {
-    const errs = lint_issues.filter(i => i.severity === 'error');
-    const warns = lint_issues.filter(i => i.severity === 'warning');
-    if (errs.length) lines.push('', `### ❌ URDF errors (${errs.length})`, '', '```json', JSON.stringify(errs.slice(0, 20), null, 2), '```');
-    if (warns.length) lines.push('', `### ⚠️ URDF warnings (${warns.length})`, '', '```json', JSON.stringify(warns.slice(0, 10), null, 2), '```');
+    const errs = lint_issues.filter((i) => i.severity === 'error');
+    const warns = lint_issues.filter((i) => i.severity === 'warning');
+    if (errs.length)
+      lines.push(
+        '',
+        `### ❌ URDF errors (${errs.length})`,
+        '',
+        '```json',
+        JSON.stringify(errs.slice(0, 20), null, 2),
+        '```',
+      );
+    if (warns.length)
+      lines.push(
+        '',
+        `### ⚠️ URDF warnings (${warns.length})`,
+        '',
+        '```json',
+        JSON.stringify(warns.slice(0, 10), null, 2),
+        '```',
+      );
   }
 
   // co-mount 四态
@@ -244,10 +338,24 @@ function renderComment(out) {
   }
 
   if (incompatiblePairs.length) {
-    lines.push('', '### 不兼容配对', '', '```json', JSON.stringify(incompatiblePairs.slice(0, 15), null, 2), '```');
+    lines.push(
+      '',
+      '### 不兼容配对',
+      '',
+      '```json',
+      JSON.stringify(incompatiblePairs.slice(0, 15), null, 2),
+      '```',
+    );
   }
   if (unknownPairs.length) {
-    lines.push('', '### 证据缺口（unknown）', '', '```json', JSON.stringify(unknownPairs.slice(0, 15), null, 2), '```');
+    lines.push(
+      '',
+      '### 证据缺口（unknown）',
+      '',
+      '```json',
+      JSON.stringify(unknownPairs.slice(0, 15), null, 2),
+      '```',
+    );
   }
   return lines.join('\n');
 }
@@ -267,14 +375,19 @@ try {
 
   await postPrComment(renderComment(out));
 
-  const failed = (inputs.failOnIncompatible && out.incompatiblePairs.length > 0)
-    || (inputs.strict && out.overall === 'unknown');
+  const failed =
+    (inputs.failOnIncompatible && out.incompatiblePairs.length > 0) ||
+    (inputs.strict && out.overall === 'unknown');
   if (failed) {
-    core.setFailed(`RoboParts 判定为 ${out.overall}（strict=${inputs.strict}, failOnIncompatible=${inputs.failOnIncompatible}）`);
+    core.setFailed(
+      `RoboParts 判定为 ${out.overall}（strict=${inputs.strict}, failOnIncompatible=${inputs.failOnIncompatible}）`,
+    );
   } else {
     core.info(`RoboParts 判定：${out.overall}`);
   }
 } catch (e) {
   core.setFailed(e.message);
-  await postPrComment(`❌ **RoboParts 组合校验失败**\n\n\`\`\`\n${e.message}\n\`\`\`\n\n查看文档：https://roboparts.cc/mcp-guide`);
+  await postPrComment(
+    `❌ **RoboParts 组合校验失败**\n\n\`\`\`\n${e.message}\n\`\`\`\n\n查看文档：https://roboparts.cc/mcp-guide`,
+  );
 }

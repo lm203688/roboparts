@@ -24,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # 无证据泄漏闸门要跑 git ls-files
+          fetch-depth: 0 # 无证据泄漏闸门要跑 git ls-files
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -63,7 +63,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # regen_derived 的 sync_dataset_dist / refresh_doc_counts 用 git 历史算新鲜度
+          fetch-depth: 0 # regen_derived 的 sync_dataset_dist / refresh_doc_counts 用 git 历史算新鲜度
 
       - name: Setup Python
         uses: actions/setup-python@v5

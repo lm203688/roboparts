@@ -1,6 +1,6 @@
 /**
  * P1 兼容性判定溯源日志 + BOM 置信度评分
- * 
+ *
  * 为 compatibility.js 和 bom/check.js 增加：
  * 1. 每条兼容性判定附带溯源卡片（触发哪条规则+置信度）
  * 2. BOM 检查结果增加整体置信度评分（0-100%）
@@ -14,7 +14,7 @@ const path = require('path');
 const compatPath = path.join(__dirname, '..', 'functions', 'api', 'compatibility.js');
 if (fs.existsSync(compatPath)) {
   let code = fs.readFileSync(compatPath, 'utf8');
-  
+
   // 在响应中增加 trace 字段
   if (!code.includes('traceability')) {
     // 找到返回结果的 JSON.stringify 处
@@ -26,7 +26,7 @@ if (fs.existsSync(compatPath)) {
           confidence: 0.85,
           derived_at: '${new Date().toISOString()}',
           note: 'Rule derived from voltage/protocol/interface match. Verify with manufacturer datasheet for production use.',
-        },`
+        },`,
     );
   }
   fs.writeFileSync(compatPath, code);
@@ -39,7 +39,7 @@ if (fs.existsSync(compatPath)) {
 const bomPath = path.join(__dirname, '..', 'functions', 'api', 'bom', 'check.js');
 if (fs.existsSync(bomPath)) {
   let code = fs.readFileSync(bomPath, 'utf8');
-  
+
   if (!code.includes('confidence_score')) {
     // 在结果中增加 confidence_score 计算
     const oldResultPattern = /results:\s*\[/;
@@ -63,7 +63,7 @@ if (fs.existsSync(bomPath)) {
           }).length / componentIds.length) * 100)
         : 0;
 
-      results: [`
+      results: [`,
       );
     }
   }

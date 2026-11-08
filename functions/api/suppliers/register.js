@@ -34,22 +34,17 @@ const corsHeaders = {
 
 // 合法的品类标识（用于校验，保持与前端一致）
 const VALID_CATEGORIES = [
-  'actuators',      // 执行器
-  'sensors',        // 传感器
-  'chips',          // 芯片
-  'controllers',    // 控制器
-  'protocols',      // 通信协议
-  'structures',     // 结构件
-  '3d_printing',    // 3D 打印服务
+  'actuators', // 执行器
+  'sensors', // 传感器
+  'chips', // 芯片
+  'controllers', // 控制器
+  'protocols', // 通信协议
+  'structures', // 结构件
+  '3d_printing', // 3D 打印服务
 ];
 
 // 合法的年营收范围
-const VALID_REVENUE_RANGES = [
-  '100万以下',
-  '100-1000万',
-  '1000-5000万',
-  '5000万以上',
-];
+const VALID_REVENUE_RANGES = ['100万以下', '100-1000万', '1000-5000万', '5000万以上'];
 
 // 邮箱格式校验
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -62,39 +57,49 @@ export async function onRequestOptions() {
 }
 
 export async function onRequestGet() {
-  return new Response(JSON.stringify({
-    endpoint: '/api/suppliers/register',
-    method: 'POST',
-    description: '供应商入驻申请：提交公司信息与产品品类，生成供应商 ID（SUP + 时间戳）并存入 KV，初始审核状态为 pending，同时建立邮箱查重索引（同一邮箱不可重复入驻）。',
-    request_body: {
-      company_name: 'string (必填) - 公司名称，不超过 100 字符',
-      contact_name: 'string - 联系人姓名',
-      contact_email: 'string (必填) - 联系邮箱，需符合邮箱格式',
-      contact_phone: 'string - 联系电话',
-      company_website: 'string - 公司网站，需以 http:// 或 https:// 开头',
-      product_categories: 'string[] (必填) - 产品品类，可选值：actuators / sensors / chips / controllers / protocols / structures / 3d_printing',
-      product_count: 'number - 产品数量，0-1000000',
-      description: 'string - 公司描述，不超过 500 字',
-      has_ros_support: 'boolean - 是否支持 ROS',
-      annual_revenue_range: 'string - 年营收范围：100万以下 / 100-1000万 / 1000-5000万 / 5000万以上',
+  return new Response(
+    JSON.stringify(
+      {
+        endpoint: '/api/suppliers/register',
+        method: 'POST',
+        description:
+          '供应商入驻申请：提交公司信息与产品品类，生成供应商 ID（SUP + 时间戳）并存入 KV，初始审核状态为 pending，同时建立邮箱查重索引（同一邮箱不可重复入驻）。',
+        request_body: {
+          company_name: 'string (必填) - 公司名称，不超过 100 字符',
+          contact_name: 'string - 联系人姓名',
+          contact_email: 'string (必填) - 联系邮箱，需符合邮箱格式',
+          contact_phone: 'string - 联系电话',
+          company_website: 'string - 公司网站，需以 http:// 或 https:// 开头',
+          product_categories:
+            'string[] (必填) - 产品品类，可选值：actuators / sensors / chips / controllers / protocols / structures / 3d_printing',
+          product_count: 'number - 产品数量，0-1000000',
+          description: 'string - 公司描述，不超过 500 字',
+          has_ros_support: 'boolean - 是否支持 ROS',
+          annual_revenue_range:
+            'string - 年营收范围：100万以下 / 100-1000万 / 1000-5000万 / 5000万以上',
+        },
+        example: {
+          company_name: '深圳机器人配件有限公司',
+          contact_name: '张三',
+          contact_email: 'zhangsan@robotparts.cn',
+          contact_phone: '13800138000',
+          company_website: 'https://example.com',
+          product_categories: ['actuators', 'sensors'],
+          product_count: 50,
+          description: '专注人形机器人关节模组...',
+          has_ros_support: true,
+          annual_revenue_range: '1000-5000万',
+        },
+        note: '此端点仅支持 POST 请求，请使用 curl 或 fetch 发送 POST 请求',
+      },
+      null,
+      2,
+    ),
+    {
+      status: 200,
+      headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=3600' },
     },
-    example: {
-      company_name: '深圳机器人配件有限公司',
-      contact_name: '张三',
-      contact_email: 'zhangsan@robotparts.cn',
-      contact_phone: '13800138000',
-      company_website: 'https://example.com',
-      product_categories: ['actuators', 'sensors'],
-      product_count: 50,
-      description: '专注人形机器人关节模组...',
-      has_ros_support: true,
-      annual_revenue_range: '1000-5000万',
-    },
-    note: '此端点仅支持 POST 请求，请使用 curl 或 fetch 发送 POST 请求',
-  }, null, 2), {
-    status: 200,
-    headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=3600' },
-  });
+  );
 }
 
 export async function onRequestPost(context) {
@@ -134,13 +139,23 @@ export async function onRequestPost(context) {
     }
 
     // 必填字段：product_categories（数组，至少一项）
-    if (!product_categories || !Array.isArray(product_categories) || product_categories.length === 0) {
+    if (
+      !product_categories ||
+      !Array.isArray(product_categories) ||
+      product_categories.length === 0
+    ) {
       errors.push('产品品类 (product_categories) 为必填项，且至少选择一项');
     } else {
       // 校验每个品类是否合法
-      const invalidCats = product_categories.filter(c => !VALID_CATEGORIES.includes(c));
+      const invalidCats = product_categories.filter((c) => !VALID_CATEGORIES.includes(c));
       if (invalidCats.length > 0) {
-        errors.push('产品品类包含无效值: ' + invalidCats.join(', ') + '（合法值: ' + VALID_CATEGORIES.join(', ') + '）');
+        errors.push(
+          '产品品类包含无效值: ' +
+            invalidCats.join(', ') +
+            '（合法值: ' +
+            VALID_CATEGORIES.join(', ') +
+            '）',
+        );
       }
     }
 
@@ -150,7 +165,11 @@ export async function onRequestPost(context) {
     }
 
     // 选填字段校验：company_website（URL 格式）
-    if (company_website && typeof company_website === 'string' && company_website.trim().length > 0) {
+    if (
+      company_website &&
+      typeof company_website === 'string' &&
+      company_website.trim().length > 0
+    ) {
       if (!URL_REGEX.test(company_website.trim())) {
         errors.push('公司网站格式不正确（需以 http:// 或 https:// 开头）');
       }
@@ -180,11 +199,14 @@ export async function onRequestPost(context) {
     }
 
     if (errors.length > 0) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '参数校验失败',
-        details: errors,
-      }), { status: 400, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '参数校验失败',
+          details: errors,
+        }),
+        { status: 400, headers: corsHeaders },
+      );
     }
 
     // ========== 邮箱查重 ==========
@@ -192,17 +214,22 @@ export async function onRequestPost(context) {
     if (env.SUPPLIERS) {
       const existingSupplierId = await env.SUPPLIERS.get('email_supplier_' + normalizedEmail);
       if (existingSupplierId) {
-        return new Response(JSON.stringify({
-          success: false,
-          error: '该邮箱已注册供应商，请勿重复入驻',
-          existing_supplier_id: existingSupplierId,
-        }), { status: 409, headers: corsHeaders });
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: '该邮箱已注册供应商，请勿重复入驻',
+            existing_supplier_id: existingSupplierId,
+          }),
+          { status: 409, headers: corsHeaders },
+        );
       }
     }
 
     // ========== 生成供应商 ID ==========
     const timestamp = Date.now();
-    const randomSuffix = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+    const randomSuffix = Math.floor(Math.random() * 10000)
+      .toString()
+      .padStart(4, '0');
     const supplierId = 'SUP' + timestamp + randomSuffix;
 
     // ========== 构建供应商数据 ==========
@@ -214,8 +241,10 @@ export async function onRequestPost(context) {
       contact_phone: contact_phone ? contact_phone.trim() : '',
       company_website: company_website ? company_website.trim() : '',
       product_categories: product_categories,
-      product_count: product_count !== undefined && product_count !== null && product_count !== ''
-        ? Number(product_count) : 0,
+      product_count:
+        product_count !== undefined && product_count !== null && product_count !== ''
+          ? Number(product_count)
+          : 0,
       description: description ? description.trim() : '',
       has_ros_support: has_ros_support === true,
       annual_revenue_range: annual_revenue_range || '',
@@ -234,30 +263,39 @@ export async function onRequestPost(context) {
     }
 
     // ========== 返回结果 ==========
-    return new Response(JSON.stringify({
-      success: true,
-      supplier_id: supplierId,
-      review_status: 'pending',
-      message: '供应商入驻申请已提交，我们将在 1-3 个工作日内完成审核。请妥善保存您的供应商 ID，用于后续询价。',
-      value_proposition: {
-        // 中立第三方定位：不抽佣、不销售、不导向自家产品——这是我们能被信任的前提，
-        // 也是入驻方能拿到下列收益的前提。写在这里而非隐藏在后端，是为了让供应商在
-        // 收到响应的那一刻就知道自己拿到什么、我们没打算拿什么。
-        no_commission: true,
-        free_endorsement: '你的零件声明了 ISO 9409-1 法兰几何后，RoboParts 判定引擎会在集成商的 BOM 检查里给它明确的「能装/不能装/不知道」结论——免费的可信度背书。',
-        appears_in_recommendations: '集成商用选型引擎或 BOM 检查器时，你的产品名会跟着推荐结果一起呈现。',
-        direct_inquiry: '集成商看到你的产品后可直接走 /api/suppliers/inquiry 询价，我们不做中间撮合。',
-        contributor_credit: '你提交的带出处声明会署名登记在 /contributors 页面。',
-      },
-      docs: 'https://roboparts.cc/suppliers',
-      submitted_at: supplierData.created,
-    }), { status: 201, headers: corsHeaders });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        supplier_id: supplierId,
+        review_status: 'pending',
+        message:
+          '供应商入驻申请已提交，我们将在 1-3 个工作日内完成审核。请妥善保存您的供应商 ID，用于后续询价。',
+        value_proposition: {
+          // 中立第三方定位：不抽佣、不销售、不导向自家产品——这是我们能被信任的前提，
+          // 也是入驻方能拿到下列收益的前提。写在这里而非隐藏在后端，是为了让供应商在
+          // 收到响应的那一刻就知道自己拿到什么、我们没打算拿什么。
+          no_commission: true,
+          free_endorsement:
+            '你的零件声明了 ISO 9409-1 法兰几何后，RoboParts 判定引擎会在集成商的 BOM 检查里给它明确的「能装/不能装/不知道」结论——免费的可信度背书。',
+          appears_in_recommendations:
+            '集成商用选型引擎或 BOM 检查器时，你的产品名会跟着推荐结果一起呈现。',
+          direct_inquiry:
+            '集成商看到你的产品后可直接走 /api/suppliers/inquiry 询价，我们不做中间撮合。',
+          contributor_credit: '你提交的带出处声明会署名登记在 /contributors 页面。',
+        },
+        docs: 'https://roboparts.cc/suppliers',
+        submitted_at: supplierData.created,
+      }),
+      { status: 201, headers: corsHeaders },
+    );
   } catch (e) {
-    return new Response(JSON.stringify({
-      success: false,
-      error: '服务器内部错误: ' + e.message,
-    }), { status: 500, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: '服务器内部错误: ' + e.message,
+      }),
+      { status: 500, headers: corsHeaders },
+    );
   }
 }
 

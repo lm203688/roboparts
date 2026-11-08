@@ -27,10 +27,13 @@ import { pathToFileURL } from 'node:url';
 import path from 'node:path';
 import fs from 'node:fs';
 
-const ROOT = path.dirname(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')));
+const ROOT = path.dirname(
+  path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')),
+);
 const enginePath = path.join(ROOT, 'functions', '_lib', 'compat_engine.js');
-const { evalDimension, judgePair, normalizeMechToken, parseIsoFlange } =
-  await import(pathToFileURL(enginePath).href);
+const { evalDimension, judgePair, normalizeMechToken, parseIsoFlange } = await import(
+  pathToFileURL(enginePath).href
+);
 
 let fail = 0;
 const ok = (cond, label) => {
@@ -39,27 +42,39 @@ const ok = (cond, label) => {
 };
 
 const ent = (id, mi) => ({
-  id, name: id, category: 'sensors', entity_kind: 'component',
-  mechanical_interface: { status: 'declared', mount_type: 'flange_mount', source: '测试夹具', ...mi },
+  id,
+  name: id,
+  category: 'sensors',
+  entity_kind: 'component',
+  mechanical_interface: {
+    status: 'declared',
+    mount_type: 'flange_mount',
+    source: '测试夹具',
+    ...mi,
+  },
 });
-const OEM = 'ISO 9409-1-50-4-M6';        // UR / Robotiq 一手手册写法（有空格、无 A）
-const NOSPACE = 'ISO9409-1-50-4-M6';     // 同一编码，无空格
-const APREFIX = 'ISO9409-1-A50-4-M6';    // 第三方集成商汇编写法（有 A）
-const NBHYPHEN = 'ISO 9409\u20111\u201150\u20114\u2011M6';  // PDF 复制常见的非断字连字符
-const OTHER = 'ISO 9409-1-31.5-4-M5';    // 真正不同的尺寸
+const OEM = 'ISO 9409-1-50-4-M6'; // UR / Robotiq 一手手册写法（有空格、无 A）
+const NOSPACE = 'ISO9409-1-50-4-M6'; // 同一编码，无空格
+const APREFIX = 'ISO9409-1-A50-4-M6'; // 第三方集成商汇编写法（有 A）
+const NBHYPHEN = 'ISO 9409\u20111\u201150\u20114\u2011M6'; // PDF 复制常见的非断字连字符
+const OTHER = 'ISO 9409-1-31.5-4-M5'; // 真正不同的尺寸
 
 // ── 冻结的修复前实现（只用于证明测试压在真缺陷上，不参与生产路径） ──────────
 function legacyIdValues(v) {
   return (Array.isArray(v) ? v : [v])
-    .filter(x => x !== null && x !== undefined)
-    .map(x => String(x).trim().toLowerCase())
-    .filter(x => x && x !== 'unknown');
+    .filter((x) => x !== null && x !== undefined)
+    .map((x) => String(x).trim().toLowerCase())
+    .filter((x) => x && x !== 'unknown');
 }
 function legacyMechanical(sa, sb) {
-  const ea = legacyIdValues(sa), eb = legacyIdValues(sb);
+  const ea = legacyIdValues(sa),
+    eb = legacyIdValues(sb);
   if (!ea.length || !eb.length) return { compatible: null };
-  const shared = ea.filter(p => eb.includes(p));
-  return { compatible: shared.length > 0, notes: shared.length ? '安装侧接口一致' : '机械接口无交集' };
+  const shared = ea.filter((p) => eb.includes(p));
+  return {
+    compatible: shared.length > 0,
+    notes: shared.length ? '安装侧接口一致' : '机械接口无交集',
+  };
 }
 
 console.log('=== 阳性 1：纯词法差异不得判「装不上」（空格 / 大小写 / 全角空格 / U+2011） ===');
@@ -71,57 +86,101 @@ for (const [label, other] of [
   ['首尾空白', `  ${OEM}\t`],
 ]) {
   const r = evalDimension('mechanical', ent('A', { standard: OEM }), ent('B', { standard: other }));
-  ok(r.compatible === true && r.relation === 'interchangeable', `${label} → 判为可互换（compatible=${r.compatible}）`);
+  ok(
+    r.compatible === true && r.relation === 'interchangeable',
+    `${label} → 判为可互换（compatible=${r.compatible}）`,
+  );
 }
 
 console.log('=== 阳性 2：工具侧↔安装侧的对接判定同样吃归一化（否则假红换个地方复发） ===');
 {
-  const r = evalDimension('mechanical',
+  const r = evalDimension(
+    'mechanical',
     ent('A', { standard: OTHER, tool_side: NOSPACE }),
-    ent('B', { standard: OEM }));
-  ok(r.compatible === true && r.relation === 'mateable', `跨写法仍判可对接（relation=${r.relation}）`);
+    ent('B', { standard: OEM }),
+  );
+  ok(
+    r.compatible === true && r.relation === 'mateable',
+    `跨写法仍判可对接（relation=${r.relation}）`,
+  );
 }
 
 console.log('=== 阴性 1：真正不同的尺寸仍必须判 false（不得被归一化洗成兼容） ===');
 {
   const r = evalDimension('mechanical', ent('A', { standard: OEM }), ent('B', { standard: OTHER }));
-  ok(r.compatible === false && r.relation === 'none', `50-4-M6 × 31.5-4-M5 仍判 false（compatible=${r.compatible}）`);
-  const r2 = evalDimension('mechanical', ent('A', { standard: 'PCD56-8-M4' }), ent('B', { standard: 'PCD60-4-M5' }));
+  ok(
+    r.compatible === false && r.relation === 'none',
+    `50-4-M6 × 31.5-4-M5 仍判 false（compatible=${r.compatible}）`,
+  );
+  const r2 = evalDimension(
+    'mechanical',
+    ent('A', { standard: 'PCD56-8-M4' }),
+    ent('B', { standard: 'PCD60-4-M5' }),
+  );
   ok(r2.compatible === false, '非 ISO 编码的真冲突仍判 false（归一化只动排版，不动内容）');
 }
 
 console.log('=== 阴性 2：带 A 与不带 A 属语义未定 → 必须判 null，两个方向都不许下结论 ===');
 {
-  const r = evalDimension('mechanical', ent('A', { standard: OEM }), ent('B', { standard: APREFIX }));
-  ok(r.compatible === null, `不判 false（假红）也不判 true（假绿），实得 compatible=${r.compatible}`);
-  ok(r.relation === 'undecided_designation_form', `relation=undecided_designation_form（实得 ${r.relation}）`);
-  ok(/ISO 9409-1 标准原文/.test(r.notes || ''), '说明里点明"须以标准原文为准、本平台未持有"，不含糊');
+  const r = evalDimension(
+    'mechanical',
+    ent('A', { standard: OEM }),
+    ent('B', { standard: APREFIX }),
+  );
+  ok(
+    r.compatible === null,
+    `不判 false（假红）也不判 true（假绿），实得 compatible=${r.compatible}`,
+  );
+  ok(
+    r.relation === 'undecided_designation_form',
+    `relation=undecided_designation_form（实得 ${r.relation}）`,
+  );
+  ok(
+    /ISO 9409-1 标准原文/.test(r.notes || ''),
+    '说明里点明"须以标准原文为准、本平台未持有"，不含糊',
+  );
 }
 
 console.log('=== 阴性 3：尺寸段不同就算都带前缀也不许并成「书写形式之争」 ===');
 {
-  const r = evalDimension('mechanical', ent('A', { standard: OEM }), ent('B', { standard: 'ISO9409-1-A31.5-4-M5' }));
-  ok(r.compatible === false && r.relation === 'none',
-    `A31.5-4-M5 × 50-4-M6 仍是真冲突（compatible=${r.compatible} / relation=${r.relation}）`);
+  const r = evalDimension(
+    'mechanical',
+    ent('A', { standard: OEM }),
+    ent('B', { standard: 'ISO9409-1-A31.5-4-M5' }),
+  );
+  ok(
+    r.compatible === false && r.relation === 'none',
+    `A31.5-4-M5 × 50-4-M6 仍是真冲突（compatible=${r.compatible} / relation=${r.relation}）`,
+  );
 }
 
 console.log('=== 阴性 4：老不变式不许被本次改动破坏（无数据 ≠ 不兼容） ===');
 {
-  const r = evalDimension('mechanical',
+  const r = evalDimension(
+    'mechanical',
     { id: 'A', name: 'A', mechanical_interface: { status: 'not_declared' } },
-    ent('B', { standard: OEM }));
+    ent('B', { standard: OEM }),
+  );
   ok(r.compatible === null, 'not_declared 仍为 null');
-  const r2 = evalDimension('mechanical',
+  const r2 = evalDimension(
+    'mechanical',
     ent('A', { standard: null, flange: null, mount_type: 'flange_mount' }),
-    ent('B', { standard: OEM }));
+    ent('B', { standard: OEM }),
+  );
   ok(r2.compatible === null, '只给 mount_type 仍为 null（L1.64 不许回退）');
 }
 
 console.log('=== 解析器：只认 ISO 9409-1 形态，不猜 ===');
 {
-  ok(normalizeMechToken(' iso 9409\u20111-50-4-m6 ') === 'ISO9409-1-50-4-M6', 'normalizeMechToken 归一到统一大写无空白形式');
+  ok(
+    normalizeMechToken(' iso 9409\u20111-50-4-m6 ') === 'ISO9409-1-50-4-M6',
+    'normalizeMechToken 归一到统一大写无空白形式',
+  );
   const p = parseIsoFlange(APREFIX);
-  ok(p && p.form === 'A' && p.d1 === 50 && p.bolts === 4 && p.thread === 'M6', 'parseIsoFlange 拆出 form/d1/bolts/thread 且保留字母前缀');
+  ok(
+    p && p.form === 'A' && p.d1 === 50 && p.bolts === 4 && p.thread === 'M6',
+    'parseIsoFlange 拆出 form/d1/bolts/thread 且保留字母前缀',
+  );
   ok(parseIsoFlange('PCD56-8-M4') === null, '非 ISO 编码返回 null（不硬套）');
   ok(parseIsoFlange('ISO 9409-1-50-4') === null, '缺螺纹段的残缺编码返回 null（不补全）');
 }
@@ -129,9 +188,12 @@ console.log('=== 解析器：只认 ISO 9409-1 形态，不猜 ===');
 console.log('=== 端到端：新状态必须活到对外响应，不能只活在 notes 里 ===');
 {
   const jp = judgePair(ent('A', { standard: OEM }), ent('B', { standard: APREFIX }));
-  const md = jp.dimensions.find(d => d.dimension === 'mechanical');
+  const md = jp.dimensions.find((d) => d.dimension === 'mechanical');
   ok(md && md.compatible === null, 'judgePair 的 mechanical 维度为 null');
-  ok(md && md.relation === 'undecided_designation_form', `judgePair 透传 relation（实得 ${md && md.relation}）`);
+  ok(
+    md && md.relation === 'undecided_designation_form',
+    `judgePair 透传 relation（实得 ${md && md.relation}）`,
+  );
   ok(jp.overall_compatible !== false, '整体结论不因书写形式之争塌成 false');
 }
 
@@ -144,7 +206,7 @@ console.log('=== 覆盖面：真实库里在用的编码必须都能被解析器
     const mi = e.mechanical_interface || {};
     for (const k of ['standard', 'flange', 'tool_side', 'tool_side_flange']) {
       const v = mi[k];
-      for (const x of (Array.isArray(v) ? v : [v])) {
+      for (const x of Array.isArray(v) ? v : [v]) {
         // 只收完整法兰设计编码（带尺寸段、螺栓数、螺纹段，如 ISO 9409-1-50-4-M6）；
         // 裸标准号（如 ISO 9409-1-100）不是设计编码，parseIsoFlange 正确地返回
         // null —— 把它算进"必须可解析"会制造假红（20260828 修正，20261009 加固：
@@ -154,18 +216,25 @@ console.log('=== 覆盖面：真实库里在用的编码必须都能被解析器
     }
   }
   ok(tokens.size > 0, `实体库中 ISO 9409 编码 ${tokens.size} 种（解析器覆盖面非空）`);
-  const unparsed = [...tokens].filter(t => parseIsoFlange(t) === null);
-  ok(unparsed.length === 0, `全部可被 parseIsoFlange 解析（无法解析: ${unparsed.join(', ') || '无'}）`);
+  const unparsed = [...tokens].filter((t) => parseIsoFlange(t) === null);
+  ok(
+    unparsed.length === 0,
+    `全部可被 parseIsoFlange 解析（无法解析: ${unparsed.join(', ') || '无'}）`,
+  );
 }
 
 console.log('=== 证非空转：冻结的修复前实现对同一输入确实判出假红 ===');
 {
   const legacy = legacyMechanical(OEM, NOSPACE);
-  ok(legacy.compatible === false,
-    `修复前实现复现缺陷：同一法兰的两种写法被判 compatible=false（${legacy.notes}）`);
+  ok(
+    legacy.compatible === false,
+    `修复前实现复现缺陷：同一法兰的两种写法被判 compatible=false（${legacy.notes}）`,
+  );
   const legacyA = legacyMechanical(OEM, APREFIX);
-  ok(legacyA.compatible === false,
-    '修复前实现对 A 前缀同样给出确定性 false（而正确答案是"判不了"）');
+  ok(
+    legacyA.compatible === false,
+    '修复前实现对 A 前缀同样给出确定性 false（而正确答案是"判不了"）',
+  );
 }
 
 if (fail) {

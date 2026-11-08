@@ -182,11 +182,7 @@ export async function runIdempotent(env, key, fn, opts = {}) {
     _schema_version: 1,
   };
   try {
-    await store.kv.put(
-      kvKey,
-      JSON.stringify(record),
-      { expirationTtl: ttl }
-    );
+    await store.kv.put(kvKey, JSON.stringify(record), { expirationTtl: ttl });
   } catch (e) {
     // 副作用已发生、KV 未落 —— 这是最坏情况，必须让上层可见
     return {
@@ -239,8 +235,12 @@ export function deepEqual(a, b) {
     }
     return true;
   }
-  const ak = Object.keys(a).filter((k) => a[k] !== undefined).sort();
-  const bk = Object.keys(b).filter((k) => b[k] !== undefined).sort();
+  const ak = Object.keys(a)
+    .filter((k) => a[k] !== undefined)
+    .sort();
+  const bk = Object.keys(b)
+    .filter((k) => b[k] !== undefined)
+    .sort();
   if (ak.length !== bk.length) return false;
   for (let i = 0; i < ak.length; i++) {
     if (ak[i] !== bk[i]) return false;

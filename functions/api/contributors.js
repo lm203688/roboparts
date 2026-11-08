@@ -16,7 +16,9 @@
  */
 
 import {
-  newFailureCollector, loadJsonAsset, upstreamUnavailableResponse,
+  newFailureCollector,
+  loadJsonAsset,
+  upstreamUnavailableResponse,
 } from '../_lib/upstream.js';
 
 const corsHeaders = {
@@ -50,8 +52,11 @@ export async function onRequestGet(context) {
   const failures = newFailureCollector();
   const loaded = await loadContrib(env, request, failures);
   if (!loaded.ok) {
-    return upstreamUnavailableResponse(failures, corsHeaders,
-      '贡献层数据源未能读取；空排行榜与「没有人贡献」不是同一件事，请勿据此判定项目无贡献。');
+    return upstreamUnavailableResponse(
+      failures,
+      corsHeaders,
+      '贡献层数据源未能读取；空排行榜与「没有人贡献」不是同一件事，请勿据此判定项目无贡献。',
+    );
   }
   const { meta, data: entities } = loaded;
 
@@ -79,20 +84,23 @@ export async function onRequestGet(context) {
     if (b.sample_ids.length < 3) b.sample_ids.push(e.id);
   }
 
-  const leaders = Array.from(bySource.values())
-    .sort((a, b) => b.entities_count - a.entities_count);
+  const leaders = Array.from(bySource.values()).sort((a, b) => b.entities_count - a.entities_count);
 
   // 维护者（git 作者；仓内 git 历史已重置，仅保留 1 位维护者）
   // 不在 API 中硬编码姓名——由 build 脚本从 git log 现算生成 api/contributors.json
-  const maintainers = (await (async () => {
-    try {
-      const r = await fetch('https://api.github.com/repos/lm203688/roboparts/contributors?per_page=10');
-      if (!r.ok) return [];
-      return await r.json();
-    } catch {
-      return [];
-    }
-  })()).map(c => ({
+  const maintainers = (
+    await (async () => {
+      try {
+        const r = await fetch(
+          'https://api.github.com/repos/lm203688/roboparts/contributors?per_page=10',
+        );
+        if (!r.ok) return [];
+        return await r.json();
+      } catch {
+        return [];
+      }
+    })()
+  ).map((c) => ({
     handle: c.login,
     display_name: c.name || c.login,
     kind: 'maintainer',
@@ -107,58 +115,82 @@ export async function onRequestGet(context) {
 
   // 徽章资格（前 10 名）—— 真实贡献者不足 10 人时返回空数组并说明
   const badgeThreshold = 10;
-  const badges = leaders.filter(l => l.entities_count >= badgeThreshold)
+  const badges = leaders
+    .filter((l) => l.entities_count >= badgeThreshold)
     .slice(0, 10)
-    .map(l => ({ handle: l.handle, display_name: l.display_name, level: '核心贡献者' }));
+    .map((l) => ({ handle: l.handle, display_name: l.display_name, level: '核心贡献者' }));
 
   // 单贡献者详情查询
   const handle = url.searchParams.get('handle');
   if (handle) {
-    const found = leaders.find(l => l.handle === handle)
-      || maintainers.find(m => m.handle === handle);
+    const found =
+      leaders.find((l) => l.handle === handle) || maintainers.find((m) => m.handle === handle);
     if (!found) {
-      return new Response(JSON.stringify({
-        meta: {
-          found: false,
-          handle,
-          reason: '未找到该 handle 的贡献记录。当前贡献层包含开源项目贡献者与仓库维护者；'
-            + '机械接口声明贡献者集合为空（issue 通道尚未开放真实提交）。',
-        },
-        data: null,
-      }, null, 2), { status: 404, headers: { ...corsHeaders, 'Cache-Control': 'no-store' } });
+      return new Response(
+        JSON.stringify(
+          {
+            meta: {
+              found: false,
+              handle,
+              reason:
+                '未找到该 handle 的贡献记录。当前贡献层包含开源项目贡献者与仓库维护者；' +
+                '机械接口声明贡献者集合为空（issue 通道尚未开放真实提交）。',
+            },
+            data: null,
+          },
+          null,
+          2,
+        ),
+        { status: 404, headers: { ...corsHeaders, 'Cache-Control': 'no-store' } },
+      );
     }
-    return new Response(JSON.stringify({
-      meta: { found: true, handle, generated_at: meta.generated_at },
-      data: found,
-    }, null, 2), { status: 200, headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=300' } });
+    return new Response(
+      JSON.stringify(
+        {
+          meta: { found: true, handle, generated_at: meta.generated_at },
+          data: found,
+        },
+        null,
+        2,
+      ),
+      { status: 200, headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=300' } },
+    );
   }
 
-  return new Response(JSON.stringify({
-    meta: {
-      ...meta,
-      total_contributions: entities.length,
-      total_oss_projects: leaders.length,
-      total_maintainers: maintainers.length,
-      total_mechanical_declare_contributors: mechContributors.length,
-      badge_threshold: badgeThreshold,
-      badge_granted_count: badges.length,
-      badge_note: badges.length === 0
-        ? '当前核心贡献者数为 0：开源项目贡献者按 URDF 摄取行数聚合，尚未达到 10 行门槛中的「项目级」判定；机械接口声明贡献者集合为空。'
-        : `前 ${badgeThreshold} 名开源项目贡献者获得核心贡献者徽章。`,
-      honest_limits: [
-        '本排行榜只列真实贡献者；没有匿名贡献、没有假名。',
-        '机械接口声明贡献者集合为空——issue 提交通道尚未有真实条目，我们不虚构。',
-        'git 历史已重置，仓库维护者仅 1 位（lm203688），不做「多作者」宣传。',
-      ],
+  return new Response(
+    JSON.stringify(
+      {
+        meta: {
+          ...meta,
+          total_contributions: entities.length,
+          total_oss_projects: leaders.length,
+          total_maintainers: maintainers.length,
+          total_mechanical_declare_contributors: mechContributors.length,
+          badge_threshold: badgeThreshold,
+          badge_granted_count: badges.length,
+          badge_note:
+            badges.length === 0
+              ? '当前核心贡献者数为 0：开源项目贡献者按 URDF 摄取行数聚合，尚未达到 10 行门槛中的「项目级」判定；机械接口声明贡献者集合为空。'
+              : `前 ${badgeThreshold} 名开源项目贡献者获得核心贡献者徽章。`,
+          honest_limits: [
+            '本排行榜只列真实贡献者；没有匿名贡献、没有假名。',
+            '机械接口声明贡献者集合为空——issue 提交通道尚未有真实条目，我们不虚构。',
+            'git 历史已重置，仓库维护者仅 1 位（lm203688），不做「多作者」宣传。',
+          ],
+        },
+        leaders,
+        maintainers,
+        mechanical_declare_contributors: mechContributors,
+        badges,
+      },
+      null,
+      2,
+    ),
+    {
+      status: 200,
+      headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=300' },
     },
-    leaders,
-    maintainers,
-    mechanical_declare_contributors: mechContributors,
-    badges,
-  }, null, 2), {
-    status: 200,
-    headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=300' },
-  });
+  );
 }
 
 export async function onRequestHead(context) {

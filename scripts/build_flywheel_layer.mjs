@@ -41,7 +41,9 @@ function findPython() {
     try {
       const r = spawnSync(c, ['--version'], { stdio: 'ignore' });
       if (r.status === 0) return c;
-    } catch { /* 试下一个 */ }
+    } catch {
+      /* 试下一个 */
+    }
   }
   return 'python'; // 兜底，失败由 spawnSync 暴露
 }
@@ -72,8 +74,8 @@ function hasDeclare(e) {
 
 function fromOss(e) {
   const cat = CAT_MAP[e.category];
-  if (!cat) return null;                 // structural/power 跳过
-  if (!hasDeclare(e)) return null;       // 无任何可裁决维度声明的跳过
+  if (!cat) return null; // structural/power 跳过
+  if (!hasDeclare(e)) return null; // 无任何可裁决维度声明的跳过
   return {
     id: e.id,
     name: e.name,
@@ -103,8 +105,10 @@ try {
   MECH_CONTRACT = loadContract();
 } catch (e) {
   console.error(`🛑 机械证据契约不可用：${e.message}`);
-  console.error('   → 本层拒绝采信任何机械声明（fail-closed）。修复 '
-    + 'scripts/mech_evidence_contract.json 后重跑。');
+  console.error(
+    '   → 本层拒绝采信任何机械声明（fail-closed）。修复 ' +
+      'scripts/mech_evidence_contract.json 后重跑。',
+  );
 }
 
 /** 用户/开源 BOM 条目 → 贡献实体。机械声明必须通过证据契约才采信。 */
@@ -123,8 +127,12 @@ function fromBom(b, srcLabel) {
     }
     mechanical_interface = {
       status: 'declared',
-      standard: mech.standard == null ? null
-        : (Array.isArray(mech.standard) ? mech.standard : [mech.standard]),
+      standard:
+        mech.standard == null
+          ? null
+          : Array.isArray(mech.standard)
+            ? mech.standard
+            : [mech.standard],
       flange: mech.flange || null,
       source: b.source_url,
       source_url: b.source_url,
@@ -163,12 +171,18 @@ function main() {
 
   // 先读原始内容（既用于合并，也用于「输入指纹」）
   let ossRaw = null;
-  try { ossRaw = fs.readFileSync(OSS, 'utf8'); }
-  catch { console.warn(`⚠️ 读取 ${path.relative(ROOT, OSS)} 失败`); }
+  try {
+    ossRaw = fs.readFileSync(OSS, 'utf8');
+  } catch {
+    console.warn(`⚠️ 读取 ${path.relative(ROOT, OSS)} 失败`);
+  }
   let seedRaw = null;
   if (fs.existsSync(SEED)) {
-    try { seedRaw = fs.readFileSync(SEED, 'utf8'); }
-    catch { console.warn(`⚠️ 读取 ${path.relative(ROOT, SEED)} 失败`); }
+    try {
+      seedRaw = fs.readFileSync(SEED, 'utf8');
+    } catch {
+      console.warn(`⚠️ 读取 ${path.relative(ROOT, SEED)} 失败`);
+    }
   } else {
     console.log(`ℹ️ 未发现 ops/seed-bom.json（用户 BOM 入口待提交；管道已就绪）`);
   }
@@ -177,14 +191,17 @@ function main() {
   // 可恢复/幂等：输入未变且上一轮 candidate 阶段 OK → 跳过整个重建
   if (!force && !dry) {
     try {
-      const r = spawnSync(PY,
-        [FLYWHEEL_STATE, 'should-run', 'candidate', inputFp],
-        { encoding: 'utf8', timeout: 30000 });
+      const r = spawnSync(PY, [FLYWHEEL_STATE, 'should-run', 'candidate', inputFp], {
+        encoding: 'utf8',
+        timeout: 30000,
+      });
       if ((r.stdout || '').trim() === 'skip') {
         console.log('♻️ candidate 阶段输入未变且上次 OK → 跳过重建（幂等/可恢复）');
         return 0;
       }
-    } catch { /* python 不可用则照常重建，不阻塞 */ }
+    } catch {
+      /* python 不可用则照常重建，不阻塞 */
+    }
   }
 
   // 1) OSS 真实反喂
@@ -192,14 +209,22 @@ function main() {
     try {
       const oss = JSON.parse(ossRaw);
       const arr = oss.data || oss.entities || [];
-      let added = 0, skipped = 0;
+      let added = 0,
+        skipped = 0;
       for (const e of arr) {
         const c = fromOss(e);
-        if (!c) { skipped++; continue; }
+        if (!c) {
+          skipped++;
+          continue;
+        }
         if (seen.has(c.id)) continue;
-        seen.add(c.id); out.push(c); added++;
+        seen.add(c.id);
+        out.push(c);
+        added++;
       }
-      console.log(`📥 OSS 反喂：解析 ${arr.length} 条，纳入贡献层 ${added} 条，跳过 ${skipped} 条（structural/power 或无声明）`);
+      console.log(
+        `📥 OSS 反喂：解析 ${arr.length} 条，纳入贡献层 ${added} 条，跳过 ${skipped} 条（structural/power 或无声明）`,
+      );
     } catch (e) {
       console.warn(`⚠️ 解析 ${path.relative(ROOT, OSS)} 失败: ${e.message}`);
     }
@@ -213,16 +238,19 @@ function main() {
       // 而 ops/seed-bom.json 的模板与 scripts/bom_backfill.py 写的键都是
       // entries —— 键名不匹配 ⇒ 提交条目一律被静默当成空入口（纳入 0 条）。
       // 这是"通道看起来是通的、其实从未通"的又一例：没有报错，只有 0。
-      const items = Array.isArray(bom)
-        ? bom
-        : (bom.entries || bom.components || bom.entities || []);
+      const items = Array.isArray(bom) ? bom : bom.entries || bom.components || bom.entities || [];
       let added = 0;
       for (const b of items) {
         const c = fromBom(b, 'seed-bom');
         if (!c) continue;
-        if (c._warn) { warnings.push(c._warn); continue; }
+        if (c._warn) {
+          warnings.push(c._warn);
+          continue;
+        }
         if (seen.has(c.id)) continue;
-        seen.add(c.id); out.push(c); added++;
+        seen.add(c.id);
+        out.push(c);
+        added++;
       }
       console.log(`📥 seed-bom：纳入 ${added} 条`);
     } catch (e) {
@@ -230,15 +258,19 @@ function main() {
     }
   }
 
-  if (warnings.length) warnings.forEach(w => console.warn('   ⚠️ ' + w));
+  if (warnings.length) warnings.forEach((w) => console.warn('   ⚠️ ' + w));
 
   const byCat = {};
   for (const e of out) byCat[e.category] = (byCat[e.category] || 0) + 1;
-  const mechDeclared = out.filter(e => e.mechanical_interface && e.mechanical_interface.standard).length;
-  const protoDeclared = out.filter(e => e.protocol).length;
-  const rosDeclared = out.filter(e => typeof e.ros_support === 'boolean').length;
+  const mechDeclared = out.filter(
+    (e) => e.mechanical_interface && e.mechanical_interface.standard,
+  ).length;
+  const protoDeclared = out.filter((e) => e.protocol).length;
+  const rosDeclared = out.filter((e) => typeof e.ros_support === 'boolean').length;
   console.log(`📊 贡献层合计 ${out.length} 条；按类目 ${JSON.stringify(byCat)}`);
-  console.log(`   协议声明 ${protoDeclared} | ROS 布尔 ${rosDeclared} | 机械接口声明 ${mechDeclared}（机械维度仍稀缺，待真实 BOM 贡献流入）`);
+  console.log(
+    `   协议声明 ${protoDeclared} | ROS 布尔 ${rosDeclared} | 机械接口声明 ${mechDeclared}（机械维度仍稀缺，待真实 BOM 贡献流入）`,
+  );
 
   if (dry) {
     console.log('\n🧪 --dry-run：未写入。');
@@ -248,7 +280,8 @@ function main() {
     meta: {
       layer: 'flywheel-contrib',
       generated_at: new Date().toISOString(),
-      description: '数据飞轮贡献层：开源机器人 BOM(URDF 摄取) + 用户/开源项目提交 BOM。由 compat_engine 运行时合并进主实体表，不修改主库 api/entities.json。',
+      description:
+        '数据飞轮贡献层：开源机器人 BOM(URDF 摄取) + 用户/开源项目提交 BOM。由 compat_engine 运行时合并进主实体表，不修改主库 api/entities.json。',
       curated_baseline: 708,
       contributions: out.length,
     },
@@ -259,10 +292,13 @@ function main() {
 
   // 记录 candidate 阶段状态（飞轮幂等/可恢复台账）
   try {
-    spawnSync(PY,
-      [FLYWHEEL_STATE, 'record', 'candidate', '--file', OUT, '--ok', '1'],
-      { encoding: 'utf8', timeout: 30000 });
-  } catch { /* 记录失败不阻塞主流程 */ }
+    spawnSync(PY, [FLYWHEEL_STATE, 'record', 'candidate', '--file', OUT, '--ok', '1'], {
+      encoding: 'utf8',
+      timeout: 30000,
+    });
+  } catch {
+    /* 记录失败不阻塞主流程 */
+  }
   return 0;
 }
 

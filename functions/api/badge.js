@@ -29,7 +29,9 @@ export async function onRequestGet(context) {
   try {
     const d = await (await fetch('/api/data.json')).json();
     total = d?.meta?.total_entities ?? '—';
-  } catch (e) { /* 取数失败不影响徽章渲染，显示占位符 */ }
+  } catch (e) {
+    /* 取数失败不影响徽章渲染，显示占位符 */
+  }
 
   const label = 'RoboParts';
   const msg = (typeof total === 'number' ? total : '—') + ' 机器人零部件';

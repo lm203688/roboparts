@@ -28,23 +28,32 @@ export async function onRequestGet(context) {
   const { request, env } = context;
   const url = new URL(request.url);
   const forId = url.searchParams.get('for');
-  const limit = Math.min(Math.max(parseInt(url.searchParams.get('limit') || '10', 10) || 10, 1), 50);
+  const limit = Math.min(
+    Math.max(parseInt(url.searchParams.get('limit') || '10', 10) || 10, 1),
+    50,
+  );
 
   if (!forId) {
-    return new Response(JSON.stringify({
-      error: '缺少参数',
-      usage: '/api/recommend?for=ACT-001&limit=10',
-    }), { status: 400, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        error: '缺少参数',
+        usage: '/api/recommend?for=ACT-001&limit=10',
+      }),
+      { status: 400, headers: corsHeaders },
+    );
   }
 
   let map;
   try {
     map = await loadEntityMap(env, request);
   } catch (e) {
-    return new Response(JSON.stringify({
-      error: '数据源不可用',
-      detail: String(e && e.message || e),
-    }), { status: 503, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        error: '数据源不可用',
+        detail: String((e && e.message) || e),
+      }),
+      { status: 503, headers: corsHeaders },
+    );
   }
 
   const res = await recommend(forId, map, { limit });

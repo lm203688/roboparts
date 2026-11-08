@@ -30,7 +30,7 @@ const ctx = (body) => ({
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   }),
-  env: {},               // 空壳：参数校验必须在取数之前完成
+  env: {}, // 空壳：参数校验必须在取数之前完成
   waitUntil: () => {},
 });
 
@@ -52,10 +52,15 @@ t('tools/list 可用', tools.length > 0, `实得 ${tools.length} 个工具`);
 const sample = (p) => {
   if (Array.isArray(p.enum) && p.enum.length) return p.enum[0];
   switch (p.type) {
-    case 'number': case 'integer': return 1;
-    case 'boolean': return false;
-    case 'array': return [];
-    case 'object': return {};
+    case 'number':
+    case 'integer':
+      return 1;
+    case 'boolean':
+      return false;
+    case 'array':
+      return [];
+    case 'object':
+      return {};
     default:
       // 需要真实 ID 的参数给一个库内确实存在的值，避免把"找不到"混进参数校验结论
       return /(^|_)id$/.test(p.name) ? 'ACT-001' : 'test';
@@ -69,8 +74,11 @@ for (const s of mcpSkills) {
   const schema = schemaOf.get(s.tool);
 
   // ① 工具真的存在
-  t(`[${s.name}] 绑定的工具 ${s.tool} 存在于 tools/list`, !!schema,
-    schema ? '' : `端点可用工具：${[...schemaOf.keys()].join(', ')}`);
+  t(
+    `[${s.name}] 绑定的工具 ${s.tool} 存在于 tools/list`,
+    !!schema,
+    schema ? '' : `端点可用工具：${[...schemaOf.keys()].join(', ')}`,
+  );
   if (!schema) continue;
 
   const props = schema.properties || {};
@@ -79,13 +87,21 @@ for (const s of mcpSkills) {
 
   // ③ 声明的参数名都真实存在
   const unknown = declaredNames.filter((n) => !(n in props));
-  t(`[${s.name}] 声明的参数名全部存在于 inputSchema`, unknown.length === 0,
-    unknown.length ? `不存在: ${unknown.join(', ')}；真实参数: ${Object.keys(props).join(', ')}` : '');
+  t(
+    `[${s.name}] 声明的参数名全部存在于 inputSchema`,
+    unknown.length === 0,
+    unknown.length
+      ? `不存在: ${unknown.join(', ')}；真实参数: ${Object.keys(props).join(', ')}`
+      : '',
+  );
 
   // ④ 必填参数不得漏报
   const missReq = required.filter((n) => !declaredNames.includes(n));
-  t(`[${s.name}] 必填参数未在清单中漏报`, missReq.length === 0,
-    missReq.length ? `漏报必填: ${missReq.join(', ')}` : '');
+  t(
+    `[${s.name}] 必填参数未在清单中漏报`,
+    missReq.length === 0,
+    missReq.length ? `漏报必填: ${missReq.join(', ')}` : '',
+  );
 
   // ② 照 manifest 调用，端点必须认
   const args = {};
@@ -97,18 +113,33 @@ for (const s of mcpSkills) {
     const p = s.params[0];
     args[p.name] = sample(p);
   }
-  const r = await rpc({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: s.tool, arguments: args } });
-  t(`[${s.name}] 照清单调用不返回 -32602`, r?.error?.code !== -32602,
-    r?.error?.code === -32602 ? `args=${JSON.stringify(args)} → ${r.error.message}` : `args=${JSON.stringify(args)}`);
+  const r = await rpc({
+    jsonrpc: '2.0',
+    id: 1,
+    method: 'tools/call',
+    params: { name: s.tool, arguments: args },
+  });
+  t(
+    `[${s.name}] 照清单调用不返回 -32602`,
+    r?.error?.code !== -32602,
+    r?.error?.code === -32602
+      ? `args=${JSON.stringify(args)} → ${r.error.message}`
+      : `args=${JSON.stringify(args)}`,
+  );
 }
 
 // ⑤ 阳性对照：端点确实在校验（否则 ② 全绿毫无意义）
 const guard = await rpc({
-  jsonrpc: '2.0', id: 2, method: 'tools/call',
+  jsonrpc: '2.0',
+  id: 2,
+  method: 'tools/call',
   params: { name: 'search_components', arguments: { __definitely_not_a_param__: 1 } },
 });
-t('阳性对照：端点确实会拒绝未知参数（否则上面全绿是假绿）',
-  guard?.error?.code === -32602, `实得 code=${guard?.error?.code ?? '无 error'}`);
+t(
+  '阳性对照：端点确实会拒绝未知参数（否则上面全绿是假绿）',
+  guard?.error?.code === -32602,
+  `实得 code=${guard?.error?.code ?? '无 error'}`,
+);
 
 const pass = results.filter(Boolean).length;
 console.log(`\n${pass}/${results.length} 通过`);

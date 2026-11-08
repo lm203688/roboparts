@@ -61,7 +61,9 @@ export async function onRequestGet(context) {
   try {
     const r = await env.ASSETS.fetch(new URL('/api/deployment.json', 'http://localhost'));
     if (r.ok) file = await r.json();
-  } catch { /* 文件可能不存在（老版本部署），继续走 env 路径 */ }
+  } catch {
+    /* 文件可能不存在（老版本部署），继续走 env 路径 */
+  }
 
   // 2. 合并：静态文件为主，env 提供 Cloudflare 侧真实 commit
   const envfp = envFingerprint(env);
@@ -79,7 +81,7 @@ export async function onRequestGet(context) {
     gitHead: (file && file.gitHead) || null,
     nodeVersion: (file && file.nodeVersion) || 'unknown',
     pythonVersion: (file && file.pythonVersion) || 'unknown',
-    ciGatePassed: (file && typeof file.ciGatePassed === 'boolean') ? file.ciGatePassed : null,
+    ciGatePassed: file && typeof file.ciGatePassed === 'boolean' ? file.ciGatePassed : null,
     ciGateSummary: (file && file.ciGateSummary) || null,
     features: (file && file.features) || [],
     // 数据新鲜度：data.json 里 meta.generated_at
@@ -98,7 +100,9 @@ export async function onRequestGet(context) {
         schemaVersion: j.meta && j.meta.schema_version,
       };
     }
-  } catch { /* 数据端点故障不影响 fingerprint 本身 */ }
+  } catch {
+    /* 数据端点故障不影响 fingerprint 本身 */
+  }
 
   return new Response(JSON.stringify(fingerprint, null, 2), {
     status: 200,

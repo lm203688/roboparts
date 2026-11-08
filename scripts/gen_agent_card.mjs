@@ -72,9 +72,9 @@ function deriveTags(name) {
 const skills = META.mcp_skills.map((s) => {
   const tool = BY_NAME.get(s.tool);
   return {
-    id: s.name,                       // A2A v1.0 要求 id 稳定，改动视作 breaking
-    name: s.title,                    // 人类可读
-    description: s.when_to_use,       // A2A client 拿这个判断能不能委派
+    id: s.name, // A2A v1.0 要求 id 稳定，改动视作 breaking
+    name: s.title, // 人类可读
+    description: s.when_to_use, // A2A client 拿这个判断能不能委派
     tags: deriveTags(s.name),
     inputModes: ['application/json'],
     outputModes: ['application/json'],
@@ -115,15 +115,13 @@ const card = {
       url: 'https://roboparts.cc/a2a',
       protocolBinding: 'JSONRPC',
       protocolVersion: '1.0',
-      note:
-        'A2A v1.0 message/send 桥接端点。把 A2A 委派映射到 MCP tools/call（与 /mcp 共用同一份工具表）。不解析自然语言意图——请在 message 的 data part 给出 {"tool":"<名>","arguments":{...}}；未给 tool 时返回能力清单。',
+      note: 'A2A v1.0 message/send 桥接端点。把 A2A 委派映射到 MCP tools/call（与 /mcp 共用同一份工具表）。不解析自然语言意图——请在 message 的 data part 给出 {"tool":"<名>","arguments":{...}}；未给 tool 时返回能力清单。',
     },
     {
       url: 'https://roboparts.cc/mcp',
       protocolBinding: 'JSONRPC',
       protocolVersion: '1.0',
-      note:
-        'MCP Streamable HTTP 端点（底层 JSON-RPC 2.0 over HTTPS）。调用工具走 MCP tools/call；若需 A2A 语义委派，改用 /a2a。',
+      note: 'MCP Streamable HTTP 端点（底层 JSON-RPC 2.0 over HTTPS）。调用工具走 MCP tools/call；若需 A2A 语义委派，改用 /a2a。',
     },
   ],
   capabilities: {
@@ -134,7 +132,7 @@ const card = {
   },
   defaultInputModes: ['application/json'],
   defaultOutputModes: ['application/json'],
-  skills: skills.map(({ _tool, ...s }) => s), /* 剥掉内部字段 */
+  skills: skills.map(({ _tool, ...s }) => s) /* 剥掉内部字段 */,
   /* security 字段：A2A v1.0 允许为空数组表示无认证（只读场景） */
   securitySchemes: {},
   security: [],

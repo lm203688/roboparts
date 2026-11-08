@@ -34,18 +34,24 @@ const BRANCH = gitStr(['rev-parse', '--abbrev-ref', 'HEAD']);
 // ---------- 2. 重写确认 ----------
 const LEDGER_FILE = new URL('../ops/history_rewrite_ledger.json', import.meta.url);
 let ledger = null;
-try { ledger = JSON.parse(fs.readFileSync(LEDGER_FILE, 'utf8')); } catch {}
+try {
+  ledger = JSON.parse(fs.readFileSync(LEDGER_FILE, 'utf8'));
+} catch {
+  /* ledger 不存在则视为无待同步事件 */
+}
 const pending = ledger?.events?.find((ev) => !ev.remote_synced_at) || null;
 if (!pending) {
   console.log('未检测到待同步的历史重写事件，按普通 force-push 处理。');
 } else {
   console.log(`检测到待同步重写事件：${pending.rewritten_at} 由 ${pending.tool} 执行`);
-  console.log(`  旧 HEAD ${pending.old_head.slice(0, 8)} → 新 HEAD ${pending.new_head.slice(0, 8)}`);
+  console.log(
+    `  旧 HEAD ${pending.old_head.slice(0, 8)} → 新 HEAD ${pending.new_head.slice(0, 8)}`,
+  );
 }
 if (pending && !ACK && !DRY) {
   throw new Error(
-    '这是破坏性操作（公开仓整段历史将被替换）。\n'
-    + '请确认后继续：node scripts/push-gitdata-force-rewrite.mjs --rewrite-acknowledged'
+    '这是破坏性操作（公开仓整段历史将被替换）。\n' +
+      '请确认后继续：node scripts/push-gitdata-force-rewrite.mjs --rewrite-acknowledged',
   );
 }
 
@@ -74,7 +80,8 @@ async function api(method, path, body, retries = 8) {
         keepalive: false,
       });
       const text = await res.text();
-      if (res.status >= 500 || res.status === 429) throw new Error(`${res.status}: ${text.slice(0, 200)}`);
+      if (res.status >= 500 || res.status === 429)
+        throw new Error(`${res.status}: ${text.slice(0, 200)}`);
       if (!res.ok) {
         const e = new Error(`GitHub API ${method} ${path} -> ${res.status}: ${text.slice(0, 400)}`);
         e.fatal = true;
@@ -97,18 +104,24 @@ console.log(`本地 HEAD ${localSha.slice(0, 8)}，将从根重放 ${commits.len
 
 if (OFFLINE_PLAN) {
   const rootSha = gitStr(['rev-list', '--max-parents=0', 'HEAD']).split('\n')[0];
-  const fileCount = gitStr(['ls-tree', '-r', '--name-only', 'HEAD']).split('\n').filter(Boolean).length;
+  const fileCount = gitStr(['ls-tree', '-r', '--name-only', 'HEAD'])
+    .split('\n')
+    .filter(Boolean).length;
   console.log('');
   console.log('===== 离线计划（未设置 GITHUB_TOKEN，全程没有联网）=====');
   console.log(`  目标仓库   ${OWNER}/${REPO}  分支 ${BRANCH}`);
   console.log(`  根提交     ${rootSha.slice(0, 8)}`);
   console.log(`  重放提交数 ${commits.length}`);
   console.log(`  HEAD 文件数 ${fileCount}（每个提交的变更 blob 会逐个 POST 上传）`);
-  console.log(`  收尾动作   PATCH /git/refs/heads/${BRANCH} force=true —— 远端该分支历史将被整段替换`);
+  console.log(
+    `  收尾动作   PATCH /git/refs/heads/${BRANCH} force=true —— 远端该分支历史将被整段替换`,
+  );
   console.log('');
   console.log('  ❔ 远端当前状态未核验（没有令牌就查不到远端 ref）。');
   console.log('     本次输出只说明「本地打算推什么」，不构成「推送可行」的结论。');
-  console.log('     要真正预演请带令牌：GITHUB_TOKEN=<token> node scripts/push-gitdata-force-rewrite.mjs --dry-run');
+  console.log(
+    '     要真正预演请带令牌：GITHUB_TOKEN=<token> node scripts/push-gitdata-force-rewrite.mjs --dry-run',
+  );
   process.exit(0);
 }
 
@@ -144,11 +157,15 @@ function loadState() {
     const saved = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'));
     if (saved.localHeadSha === localSha) {
       state = saved;
-      console.log(`检测到断点状态，已从 ${state.lastProcessedLocalSha ? state.lastProcessedLocalSha.slice(0, 8) : '根提交前'} 重续`);
+      console.log(
+        `检测到断点状态，已从 ${state.lastProcessedLocalSha ? state.lastProcessedLocalSha.slice(0, 8) : '根提交前'} 重续`,
+      );
       return true;
     }
     console.log('断点状态与当前 HEAD 不一致，从头开始');
-  } catch {}
+  } catch {
+    /* 重写失败不中断 */
+  }
   return false;
 }
 
@@ -173,12 +190,19 @@ async function ensureBlobUploaded(sha, mode, path) {
   const buf = git(['cat-file', 'blob', sha]);
   // 大 blob 上传最容易被网络重置，单独拉高重试次数并加前置间隔
   await new Promise((r) => setTimeout(r, 80));
-  const blob = await api('POST', '/git/blobs', {
-    content: buf.toString('base64'),
-    encoding: 'base64',
-  }, 12);
+  const blob = await api(
+    'POST',
+    '/git/blobs',
+    {
+      content: buf.toString('base64'),
+      encoding: 'base64',
+    },
+    12,
+  );
   if (blob.sha !== sha) {
-    throw new Error(`blob SHA 不一致：本地 ${sha.slice(0, 8)} != 远端 ${blob.sha.slice(0, 8)} (${path})`);
+    throw new Error(
+      `blob SHA 不一致：本地 ${sha.slice(0, 8)} != 远端 ${blob.sha.slice(0, 8)} (${path})`,
+    );
   }
   uploadedBlobs.add(sha);
   return blob.sha;
@@ -204,7 +228,10 @@ for (const c of commits) {
   const entries = [];
   for (const line of raw.split('\n').filter(Boolean)) {
     const mm = line.match(/^:(\d{6}) (\d{6}) [0-9a-f]{40} ([0-9a-f]{40}) ([A-Z])\d*\t(.+)$/);
-    if (!mm) { console.log(`  ! 无法解析 diff 行，中止: ${line}`); process.exit(1); }
+    if (!mm) {
+      console.log(`  ! 无法解析 diff 行，中止: ${line}`);
+      process.exit(1);
+    }
     const [, , newMode, newSha, status, pathRaw] = mm;
     const path = pathRaw.replace(/^"|"$/g, '');
     if (newMode === '160000') {
@@ -251,7 +278,9 @@ for (const c of commits) {
   };
   const commit = await api('POST', '/git/commits', commitBody);
 
-  console.log(`  ✅ ${c.slice(0, 8)} -> ${commit.sha.slice(0, 8)}  ${subject.split('\n')[0].slice(0, 60)}`);
+  console.log(
+    `  ✅ ${c.slice(0, 8)} -> ${commit.sha.slice(0, 8)}  ${subject.split('\n')[0].slice(0, 60)}`,
+  );
 
   // 完整性：重放后的 tree 必须与本地该提交的 tree 完全一致
   const localTree = gitStr(['rev-parse', `${c}^{tree}`]);
@@ -312,8 +341,14 @@ if (pending) {
 }
 
 // ---------- 11. 清理状态文件 & 更新 remote-tracking ref ----------
-try { fs.unlinkSync(STATE_FILE); } catch {}
-try { git(['update-ref', `refs/remotes/origin/${BRANCH}`, localSha]); } catch (e) {
+try {
+  fs.unlinkSync(STATE_FILE);
+} catch {
+  /* 文件可能不存在 */
+}
+try {
+  git(['update-ref', `refs/remotes/origin/${BRANCH}`, localSha]);
+} catch (e) {
   console.log(`  (remote-tracking ref 未更新: ${String(e.message).slice(0, 80)})`);
 }
 

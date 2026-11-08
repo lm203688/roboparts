@@ -27,8 +27,13 @@ export async function onRequestGet(context) {
   const q = (url.searchParams.get('q') || url.searchParams.get('query') || '').trim();
   const limit = Math.min(Math.max(parseInt(url.searchParams.get('limit') || '5', 10) || 5, 1), 50);
   if (!q) {
-    return new Response(JSON.stringify({ error: '缺少查询参数 q', usage: '/api/semantic-search?q=六维力传感器&limit=5' }),
-      { status: 400, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        error: '缺少查询参数 q',
+        usage: '/api/semantic-search?q=六维力传感器&limit=5',
+      }),
+      { status: 400, headers: corsHeaders },
+    );
   }
   const res = await semanticSearch(env, request, q, limit);
   return new Response(JSON.stringify(res, null, 2), { status: 200, headers: corsHeaders });
@@ -37,11 +42,18 @@ export async function onRequestGet(context) {
 export async function onRequestPost(context) {
   const { request, env } = context;
   let body = {};
-  try { body = await request.json(); } catch { /* 空 body 走 query 参数 */ }
+  try {
+    body = await request.json();
+  } catch {
+    /* 空 body 走 query 参数 */
+  }
   const q = String(body.query || body.q || '').trim();
   const limit = Math.min(Math.max(parseInt(body.limit || '5', 10) || 5, 1), 50);
   if (!q) {
-    return new Response(JSON.stringify({ error: '缺少 query 字段' }), { status: 400, headers: corsHeaders });
+    return new Response(JSON.stringify({ error: '缺少 query 字段' }), {
+      status: 400,
+      headers: corsHeaders,
+    });
   }
   const res = await semanticSearch(env, request, q, limit);
   return new Response(JSON.stringify(res, null, 2), { status: 200, headers: corsHeaders });

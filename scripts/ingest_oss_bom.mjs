@@ -85,15 +85,24 @@ function parseArgs(argv) {
 function resolveSources(sel) {
   if (!sel) return SOURCES;
   if (sel === 'sample') return [SAMPLE_SOURCE];
-  const byId = SOURCES.find(s => s.id === sel || s.id.toLowerCase() === sel.toLowerCase());
+  const byId = SOURCES.find((s) => s.id === sel || s.id.toLowerCase() === sel.toLowerCase());
   if (byId) return [byId];
   if (/^https?:\/\//.test(sel)) {
     return [{ id: 'ADHOC', name: sel, license: '', repo: '', robot_type: 'unknown', url: sel }];
   }
   const p = path.resolve(process.cwd(), sel);
   if (fs.existsSync(p)) {
-    return [{ id: 'LOCAL', name: path.basename(p), license: '', repo: '', robot_type: 'unknown',
-      url: `file://${path.relative(ROOT, p).replace(/\\/g, '/')}`, file: p }];
+    return [
+      {
+        id: 'LOCAL',
+        name: path.basename(p),
+        license: '',
+        repo: '',
+        robot_type: 'unknown',
+        url: `file://${path.relative(ROOT, p).replace(/\\/g, '/')}`,
+        file: p,
+      },
+    ];
   }
   throw new Error(`无法解析 --source "${sel}"：既不是 URL、已知 id，也不是存在的本地文件`);
 }
@@ -119,7 +128,7 @@ function extractLinks(xml) {
   }
   // 同名 link 只保留一次（URDF 内理论上唯一，实测有仓库重复引用）
   const seen = new Set();
-  return out.filter(l => (seen.has(l.name) ? false : (seen.add(l.name), true)));
+  return out.filter((l) => (seen.has(l.name) ? false : (seen.add(l.name), true)));
 }
 
 /** 抽取 <joint>，返回 child link -> {joint 名, 类型, parent} 的映射（连接关系）。 */
@@ -142,18 +151,33 @@ function extractJoints(xml) {
 // communication/structural/power），不引入 entities.json 那套 CANONICAL —— 两文件
 // 词表本就不同，混用会让 /api/oss?stats=1 的 by_category 变成两套口径的拼盘。
 const CATEGORY_RULES = [
-  ['sensors', /lidar|camera|imu|encoder|sensor|vision|depth|tof|radar|sonar|ultrasonic|gyro|accel|microphone|tactile/],
-  ['controllers', /mcu|sbc|jetson|raspberry|orin|nuc|controller|control_board|driver_board|pcb|mainboard|compute/],
+  [
+    'sensors',
+    /lidar|camera|imu|encoder|sensor|vision|depth|tof|radar|sonar|ultrasonic|gyro|accel|microphone|tactile/,
+  ],
+  [
+    'controllers',
+    /mcu|sbc|jetson|raspberry|orin|nuc|controller|control_board|driver_board|pcb|mainboard|compute/,
+  ],
   ['power', /battery|bms|dcdc|regulator|\bpsu\b|power_pack|powerboard/],
-  ['communication', /ethercat|canbus|can_bus|rs485|rs232|ethernet|antenna|wifi|router|\bhub\b|harness|connector/],
-  ['actuators', /servo|motor|actuator|gearbox|harmonic|reducer|gripper|\bhand\b|finger|thumb|\bjoint\b|drive/],
-  ['structural', /base_link|torso|pelvis|thigh|shank|calf|shoulder|elbow|wrist|ankle|\bhip\b|knee|foot|\bfeet\b|frame|bracket|plate|shell|cover|housing|chassis|\blink\b/],
+  [
+    'communication',
+    /ethercat|canbus|can_bus|rs485|rs232|ethernet|antenna|wifi|router|\bhub\b|harness|connector/,
+  ],
+  [
+    'actuators',
+    /servo|motor|actuator|gearbox|harmonic|reducer|gripper|\bhand\b|finger|thumb|\bjoint\b|drive/,
+  ],
+  [
+    'structural',
+    /base_link|torso|pelvis|thigh|shank|calf|shoulder|elbow|wrist|ankle|\bhip\b|knee|foot|\bfeet\b|frame|bracket|plate|shell|cover|housing|chassis|\blink\b/,
+  ],
 ];
 
 function inferCategory(blob) {
   const t = String(blob || '').toLowerCase();
   for (const [cat, re] of CATEGORY_RULES) if (re.test(t)) return cat;
-  return 'unknown';   // 推断不出就说不知道，不兜底
+  return 'unknown'; // 推断不出就说不知道，不兜底
 }
 
 /** 仅在名称里出现明确总线关键词时才落 protocol，否则 'N/A'（未声明）。 */
@@ -171,12 +195,22 @@ function inferProtocol(blob) {
 
 /** 归一化名：跨大小写/标点识别同一零件，用于去重。 */
 function normKey(s) {
-  return String(s || '').toLowerCase().replace(/[^a-z0-9\u4e00-\u9fa5]/g, '');
+  return String(s || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\u4e00-\u9fa5]/g, '');
 }
 
 /** 稳定 ID：同源同名每次复算一致 → 可去重、可 diff、可追溯。 */
 function stableId(sourceUrl, name) {
-  return 'OSS-BOM-' + crypto.createHash('sha1').update(`${sourceUrl}|${name}`).digest('hex').slice(0, 10).toUpperCase();
+  return (
+    'OSS-BOM-' +
+    crypto
+      .createHash('sha1')
+      .update(`${sourceUrl}|${name}`)
+      .digest('hex')
+      .slice(0, 10)
+      .toUpperCase()
+  );
 }
 
 function isPlausibleLink(name) {
@@ -190,8 +224,10 @@ function isPlausibleLink(name) {
  * 字段严格取自 oss_components.json 现有 schema；URDF 未提供的量留空，不编造。
  */
 function normalizeLink(link, joint, src, now) {
-  const meshes = [...String(link.body).matchAll(/filename="([^"]+)"/g)].map(m => m[1]).join(' ');
-  const materials = [...String(link.body).matchAll(/<material\s+name="([^"]+)"/g)].map(m => m[1]).join(' ');
+  const meshes = [...String(link.body).matchAll(/filename="([^"]+)"/g)].map((m) => m[1]).join(' ');
+  const materials = [...String(link.body).matchAll(/<material\s+name="([^"]+)"/g)]
+    .map((m) => m[1])
+    .join(' ');
   const blob = `${link.name} ${meshes} ${materials}`;
   const name = `${src.id} 连杆 ${link.name}`;
 
@@ -207,12 +243,12 @@ function normalizeLink(link, joint, src, now) {
     voltage: 'N/A',
     // ros_support 刻意不落字段：URDF 不含厂商能力声明，写 true/false 都是伪造。
     // regression.py 对派生抽取器有此不变式断言，勿加。
-    ros_ecosystem_origin: true,          // 出处如实记录：该刚体确实出现在 ROS/URDF 模型中
+    ros_ecosystem_origin: true, // 出处如实记录：该刚体确实出现在 ROS/URDF 模型中
     compatibility: [],
     applications: [src.id.toLowerCase().replace(/_/g, ''), src.robot_type],
-    weight: '',                          // URDF 的 <inertial> 是仿真质量，非零件净重，不冒充
+    weight: '', // URDF 的 <inertial> 是仿真质量，非零件净重，不冒充
     torque: '',
-    price_range: '',                     // URDF 无价格信息
+    price_range: '', // URDF 无价格信息
     standard: '',
     spec: joint
       ? `URDF link；父连杆 ${joint.parent || 'N/A'}，经关节 ${joint.jname}(${joint.type})`
@@ -228,8 +264,8 @@ function normalizeLink(link, joint, src, now) {
     live: true,
     // ---- 证据强度标注（对齐仓库治理词表：A 可复核一手 / B 弱归因 / C 无溯源）----
     source_tier: 'C',
-    confidence: 'low',                   // 注：本文件的 confidence 是字符串枚举
-    declared: false,                     // 非厂商声明，仅为上游模型文件推断
+    confidence: 'low', // 注：本文件的 confidence 是字符串枚举
+    declared: false, // 非厂商声明，仅为上游模型文件推断
     needs_provenance: true,
     first_seen: now,
     last_seen: now,
@@ -248,7 +284,10 @@ async function loadSource(src, warn) {
   }
   try {
     const res = await fetch(src.url, { headers: { 'User-Agent': 'roboparts-oss-bom-ingest' } });
-    if (!res.ok) { warn(`${src.id}: HTTP ${res.status} ← ${src.url}`); return null; }
+    if (!res.ok) {
+      warn(`${src.id}: HTTP ${res.status} ← ${src.url}`);
+      return null;
+    }
     return await res.text();
   } catch (e) {
     // 网络不可用是常态（离线环境 / 上游 404 / 限流），只警告不中断：
@@ -262,13 +301,22 @@ async function loadSource(src, warn) {
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   if (args.help) {
-    console.log(fs.readFileSync(fileURLToPath(import.meta.url), 'utf8')
-      .split('\n').slice(1, 26).join('\n').replace(/^ \* ?/gm, ''));
+    console.log(
+      fs
+        .readFileSync(fileURLToPath(import.meta.url), 'utf8')
+        .split('\n')
+        .slice(1, 26)
+        .join('\n')
+        .replace(/^ \* ?/gm, ''),
+    );
     return 0;
   }
 
   const warnings = [];
-  const warn = (m) => { warnings.push(m); console.warn(`⚠️  ${m}`); };
+  const warn = (m) => {
+    warnings.push(m);
+    console.warn(`⚠️  ${m}`);
+  };
   const sources = resolveSources(args.source);
   const now = new Date().toISOString();
 
@@ -282,7 +330,9 @@ async function main() {
       existingIds.add(e.id);
       existingKeys.add(`${normKey(e.name)}|${e.source_url || ''}`);
     }
-    console.log(`📖 现有库 ${doc.data.length} 条（meta.total_entities=${doc.meta?.total_entities}）`);
+    console.log(
+      `📖 现有库 ${doc.data.length} 条（meta.total_entities=${doc.meta?.total_entities}）`,
+    );
   } catch (e) {
     warn(`未能读取 ${path.relative(ROOT, OUT)}（${e.message}）；按空库处理`);
     doc = { meta: {}, data: [] };
@@ -290,17 +340,23 @@ async function main() {
 
   const additions = [];
   const perSource = {};
-  let parsedLinks = 0, skippedDup = 0;
+  let parsedLinks = 0,
+    skippedDup = 0;
 
   for (const src of sources) {
     const text = await loadSource(src, warn);
-    if (!text) { perSource[src.id] = 'FAILED'; continue; }
+    if (!text) {
+      perSource[src.id] = 'FAILED';
+      continue;
+    }
 
     const xml = stripComments(text);
     const links = extractLinks(xml);
     const { byChild, joints } = extractJoints(xml);
     parsedLinks += links.length;
-    console.log(`🔎 ${src.id}: 解析到 link ${links.length} 个 / joint ${joints.length} 个 ← ${src.url}`);
+    console.log(
+      `🔎 ${src.id}: 解析到 link ${links.length} 个 / joint ${joints.length} 个 ← ${src.url}`,
+    );
 
     let added = 0;
     for (const link of links) {
@@ -308,20 +364,28 @@ async function main() {
       if (!isPlausibleLink(link.name)) continue;
       const ent = normalizeLink(link, byChild.get(link.name), src, now);
       const key = `${normKey(ent.name)}|${ent.source_url}`;
-      if (existingKeys.has(key) || existingIds.has(ent.id)) { skippedDup++; continue; }
+      if (existingKeys.has(key) || existingIds.has(ent.id)) {
+        skippedDup++;
+        continue;
+      }
       existingKeys.add(key);
       existingIds.add(ent.id);
       additions.push(ent);
       added++;
     }
     perSource[src.id] = added;
-    if (additions.length >= args.limit) { console.log(`   已达 --limit ${args.limit}，停止摄取`); break; }
+    if (additions.length >= args.limit) {
+      console.log(`   已达 --limit ${args.limit}，停止摄取`);
+      break;
+    }
   }
 
   // 摘要
   const byCat = {};
   for (const e of additions) byCat[e.category] = (byCat[e.category] || 0) + 1;
-  console.log(`\n📊 解析 link 合计 ${parsedLinks}；将新增 ${additions.length} 条；跳过重复 ${skippedDup} 条`);
+  console.log(
+    `\n📊 解析 link 合计 ${parsedLinks}；将新增 ${additions.length} 条；跳过重复 ${skippedDup} 条`,
+  );
   console.log(`   按类目: ${JSON.stringify(byCat)}`);
   console.log(`   按来源: ${JSON.stringify(perSource)}`);
   if (warnings.length) console.log(`   警告 ${warnings.length} 条（见上）`);
@@ -340,13 +404,17 @@ async function main() {
   doc.data = [...(doc.data || []), ...additions];
   doc.meta = doc.meta || {};
   doc.meta.total_entities = doc.data.length;
-  doc.meta.last_updated = now;          // 飞轮 7 天新鲜度判据，regression L1.11 守护此字段
+  doc.meta.last_updated = now; // 飞轮 7 天新鲜度判据，regression L1.11 守护此字段
   fs.writeFileSync(OUT, JSON.stringify(doc, null, 2));
-  console.log(`\n✅ 已写入 ${path.relative(ROOT, OUT)}：+${additions.length} → total_entities=${doc.data.length}`);
+  console.log(
+    `\n✅ 已写入 ${path.relative(ROOT, OUT)}：+${additions.length} → total_entities=${doc.data.length}`,
+  );
   return 0;
 }
 
-main().then(c => process.exit(c)).catch(e => {
-  console.error(`❌ ${e.message}`);
-  process.exit(1);
-});
+main()
+  .then((c) => process.exit(c))
+  .catch((e) => {
+    console.error(`❌ ${e.message}`);
+    process.exit(1);
+  });

@@ -98,7 +98,7 @@ def parse_endpoint_constants(js_path: Path) -> dict:
     }
 
     # 1. schema version
-    m = re.search(r'PROFILE_SCHEMA_VERSION\s*=\s*"([^"]+)"', src)
+    m = re.search(r"PROFILE_SCHEMA_VERSION\s*=\s*['\"]([^'\"]+)['\"]", src)
     if m:
         result["schema_version"] = m.group(1)
 

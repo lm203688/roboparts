@@ -21,7 +21,7 @@ async function hashEmail(email) {
   const data = encoder.encode(email.toLowerCase().trim());
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 export async function onRequestOptions() {
@@ -30,7 +30,7 @@ export async function onRequestOptions() {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
-    }
+    },
   });
 }
 
@@ -57,7 +57,9 @@ function attribute(req) {
   if (!via) {
     try {
       via = (new URL(req.url).searchParams.get('via') || '').slice(0, 40);
-    } catch { /* URL 畸形则放弃参数归因 */ }
+    } catch {
+      /* URL 畸形则放弃参数归因 */
+    }
   }
   // 只接受安全字符：渠道名会落进 KV 键，不能被用来撑爆键空间或注入分隔符
   via = via.replace(/[^a-z0-9._-]/gi, '').toLowerCase();
@@ -65,8 +67,20 @@ function attribute(req) {
   if (via) return { source: 'channel', detail: via };
 
   // Agent 直连：AI 助手或脚本代用户执行 curl，通常无 referer、UA 为工具类
-  const agentish = ['python-requests', 'node-fetch', 'axios', 'httpx', 'okhttp',
-    'go-http-client', 'curl', 'wget', 'postman', 'openai', 'anthropic', 'langchain'];
+  const agentish = [
+    'python-requests',
+    'node-fetch',
+    'axios',
+    'httpx',
+    'okhttp',
+    'go-http-client',
+    'curl',
+    'wget',
+    'postman',
+    'openai',
+    'anthropic',
+    'langchain',
+  ];
   const hit = agentish.find((a) => ua.includes(a));
   if (hit) return { source: 'agent', detail: hit };
 
@@ -77,7 +91,9 @@ function attribute(req) {
       return h.endsWith('roboparts.cc')
         ? { source: 'web', detail: new URL(ref).pathname.slice(0, 40) }
         : { source: 'referral', detail: h };
-    } catch { /* referer 畸形，落到 unknown */ }
+    } catch {
+      /* referer 畸形，落到 unknown */
+    }
   }
   return { source: 'unknown', detail: ua.slice(0, 40) || 'no-ua' };
 }
@@ -92,25 +108,33 @@ function attribute(req) {
  * （同 L1.41 的 did_you_mean 思路：错误响应也是接入文档的一部分）。
  */
 export async function onRequestGet() {
-  return new Response(JSON.stringify({
-    error: 'Method Not Allowed',
-    message: '本端点用于自助领取 API Key，需以 POST 提交邮箱。',
-    method: 'POST',
-    endpoint: 'https://roboparts.cc/api/register',
-    request_body: { email: 'string - 你的邮箱，用于接收与找回 Key' },
-    example_curl: "curl -X POST https://roboparts.cc/api/register "
-      + "-H 'Content-Type: application/json' -d '{\"email\":\"you@example.com\"}'",
-    free_quota: '100 次/月，无需审批',
-    docs: 'https://roboparts.cc/llms.txt',
-  }, null, 2), {
-    status: 405,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Allow': 'POST, OPTIONS',
-      'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600',
+  return new Response(
+    JSON.stringify(
+      {
+        error: 'Method Not Allowed',
+        message: '本端点用于自助领取 API Key，需以 POST 提交邮箱。',
+        method: 'POST',
+        endpoint: 'https://roboparts.cc/api/register',
+        request_body: { email: 'string - 你的邮箱，用于接收与找回 Key' },
+        example_curl:
+          'curl -X POST https://roboparts.cc/api/register ' +
+          '-H \'Content-Type: application/json\' -d \'{"email":"you@example.com"}\'',
+        free_quota: '100 次/月，无需审批',
+        docs: 'https://roboparts.cc/llms.txt',
+      },
+      null,
+      2,
+    ),
+    {
+      status: 405,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        Allow: 'POST, OPTIONS',
+        'Content-Type': 'application/json; charset=utf-8',
+        'Cache-Control': 'public, max-age=3600',
+      },
     },
-  });
+  );
 }
 
 // HEAD 探活：Pages 不把 HEAD 映射到 onRequestGet，缺此导出则一律 404 ——
@@ -133,13 +157,14 @@ export async function onRequestPost(context) {
   try {
     const body = await request.json();
     const email = body.email;
-    
+
     if (!email || !email.includes('@')) {
       return new Response(JSON.stringify({ error: 'Valid email required' }), {
-        status: 400, headers: corsHeaders
+        status: 400,
+        headers: corsHeaders,
       });
     }
-    
+
     // Compute SHA-256 hash of the email for application-layer lookups
     const emailHash = await hashEmail(email);
 
@@ -151,24 +176,41 @@ export async function onRequestPost(context) {
     const attr = attribute(request);
 
     // Generate API key
-    const key = (isSelftest ? 'selftest_' : 'gtk_')
-      + Array.from(crypto.getRandomValues(new Uint8Array(24)))
-        .map(b => b.toString(16).padStart(2, '0')).join('');
+    const key =
+      (isSelftest ? 'selftest_' : 'gtk_') +
+      Array.from(crypto.getRandomValues(new Uint8Array(24)))
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('');
 
     const userData = {
-      email_hash: emailHash, credits: 100, plan: 'free', api_calls: 0, role: 'user',
+      email_hash: emailHash,
+      credits: 100,
+      plan: 'free',
+      api_calls: 0,
+      role: 'user',
       created: new Date().toISOString(),
-      source: attr.source, source_detail: attr.detail, selftest: isSelftest
+      source: attr.source,
+      source_detail: attr.detail,
+      selftest: isSelftest,
     };
-    
+
     // Store in KV (permanent, no TTL) — email stored as hash only, never plaintext
     if (env.API_KEYS) {
-      await env.API_KEYS.put(key, JSON.stringify({
-        email_hash: emailHash, plan: 'free', role: 'user', created: new Date().toISOString(),
-        rate_limit: 30, calls_today: 0, source: attr.source, selftest: isSelftest
-      }));
+      await env.API_KEYS.put(
+        key,
+        JSON.stringify({
+          email_hash: emailHash,
+          plan: 'free',
+          role: 'user',
+          created: new Date().toISOString(),
+          rate_limit: 30,
+          calls_today: 0,
+          source: attr.source,
+          selftest: isSelftest,
+        }),
+      );
     }
-    
+
     // Also create record in USER_CREDITS with same gtk_ key
     if (env.USER_CREDITS) {
       await env.USER_CREDITS.put(key, JSON.stringify(userData));
@@ -200,15 +242,22 @@ export async function onRequestPost(context) {
         }
         // 保留首个真实注册的完整现场，只写一次，供人工复盘
         if (!(await env.USER_CREDITS.get('stat:first_signup'))) {
-          await env.USER_CREDITS.put('stat:first_signup', JSON.stringify({
-            at: new Date().toISOString(), source: attr.source, detail: attr.detail,
-            ua: (request.headers.get('user-agent') || '').slice(0, 120),
-            ref: (request.headers.get('referer') || '').slice(0, 120)
-          }));
+          await env.USER_CREDITS.put(
+            'stat:first_signup',
+            JSON.stringify({
+              at: new Date().toISOString(),
+              source: attr.source,
+              detail: attr.detail,
+              ua: (request.headers.get('user-agent') || '').slice(0, 120),
+              ref: (request.headers.get('referer') || '').slice(0, 120),
+            }),
+          );
         }
       }
-    } catch (e) { /* 度量失败不影响注册主流程 */ }
-    
+    } catch (e) {
+      /* 度量失败不影响注册主流程 */
+    }
+
     // Write initial credit history record
     // 旧写法 `if (env.USER_CREDIT_HISTORY) {...}` 在该 KV 从未绑定的生产环境里
     // 恒为 false —— 赠送记录一条都没写过，而查询页照样说"你没有交易记录"。
@@ -221,24 +270,30 @@ export async function onRequestPost(context) {
       timestamp: new Date().toISOString(),
     });
     if (!ledgerWrite.ok) {
-      console.error('[register] ledger append failed', { reason: ledgerWrite.reason, backend: ledgerWrite.backend });
+      console.error('[register] ledger append failed', {
+        reason: ledgerWrite.reason,
+        backend: ledgerWrite.backend,
+      });
     }
 
-    return new Response(JSON.stringify({
-      success: true,
-      api_key: key,
-      plan: 'free',
-      credits: 100,
-      rate_limit: '30 requests/hour',
-      message: 'Save your API key. Use it as: Authorization: Bearer ' + key,
-      upgrade_url: 'https://roboparts.cc/credits',
-      ledger_recorded: ledgerWrite.ok,
-      ledger_error: ledgerWrite.ok ? undefined : ledgerWrite.reason,
-    }), { headers: corsHeaders });
-    
-  } catch(e) {
+    return new Response(
+      JSON.stringify({
+        success: true,
+        api_key: key,
+        plan: 'free',
+        credits: 100,
+        rate_limit: '30 requests/hour',
+        message: 'Save your API key. Use it as: Authorization: Bearer ' + key,
+        upgrade_url: 'https://roboparts.cc/credits',
+        ledger_recorded: ledgerWrite.ok,
+        ledger_error: ledgerWrite.ok ? undefined : ledgerWrite.reason,
+      }),
+      { headers: corsHeaders },
+    );
+  } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
-      status: 500, headers: corsHeaders
+      status: 500,
+      headers: corsHeaders,
     });
   }
 }

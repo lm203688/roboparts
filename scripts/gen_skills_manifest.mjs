@@ -65,14 +65,19 @@ const paramsOf = (tool) => {
       name,
       type: spec.type || 'string',
       required: required.has(name),
-      desc: String(spec.description || '').replace(/\s+/g, ' ').trim(),
+      desc: String(spec.description || '')
+        .replace(/\s+/g, ' ')
+        .trim(),
     };
     if (Array.isArray(spec.enum)) p.enum = spec.enum;
     return p;
   });
 };
 
-const oneLine = (s) => String(s || '').replace(/\s+/g, ' ').trim();
+const oneLine = (s) =>
+  String(s || '')
+    .replace(/\s+/g, ' ')
+    .trim();
 
 const mcpSkills = META.mcp_skills.map((s) => {
   const tool = BY_NAME.get(s.tool);
@@ -109,7 +114,10 @@ const manifest = {
 /* ── 4. README 表格（同源生成，避免文档与清单各说各话） ──────────────────── */
 const rows = [
   ...mcpSkills.map((s) => `| \`${s.name}\` | mcp_tool | \`${s.tool}\` | ${s.when_to_use} |`),
-  ...nonMcp.map((s) => `| \`${s.name}\` | ${s.type} | \`${s.endpoint.replace('https://roboparts.cc', '')}\` | ${s.when_to_use} |`),
+  ...nonMcp.map(
+    (s) =>
+      `| \`${s.name}\` | ${s.type} | \`${s.endpoint.replace('https://roboparts.cc', '')}\` | ${s.when_to_use} |`,
+  ),
 ];
 const table = [
   '<!-- SKILLS-TABLE:BEGIN 由 scripts/gen_skills_manifest.mjs 生成，勿手改 -->',
@@ -121,8 +129,20 @@ const table = [
 
 /* ── 5. agent-discovery.json 的 skills.items（第三处复述） ───────────────── */
 const adItems = [
-  ...mcpSkills.map((s) => ({ name: s.name, type: 'mcp_tool', tool: s.tool, when_to_use: s.when_to_use, ...(s.guardrails ? { guardrails: s.guardrails } : {}) })),
-  ...nonMcp.map((s) => ({ name: s.name, type: s.type, endpoint: s.endpoint, when_to_use: s.when_to_use, ...(s.guardrails ? { guardrails: s.guardrails } : {}) })),
+  ...mcpSkills.map((s) => ({
+    name: s.name,
+    type: 'mcp_tool',
+    tool: s.tool,
+    when_to_use: s.when_to_use,
+    ...(s.guardrails ? { guardrails: s.guardrails } : {}),
+  })),
+  ...nonMcp.map((s) => ({
+    name: s.name,
+    type: s.type,
+    endpoint: s.endpoint,
+    when_to_use: s.when_to_use,
+    ...(s.guardrails ? { guardrails: s.guardrails } : {}),
+  })),
 ];
 
 /* ── 6. 写入 / 校验 ─────────────────────────────────────────────────────── */
@@ -180,7 +200,9 @@ if (!ad.skills) {
         counts[c] = (counts[c] || 0) + 1;
       }
     }
-  } catch { /* 缺真相源不阻断 regen */ }
+  } catch {
+    /* 缺真相源不阻断 regen */
+  }
   if (counts && Object.keys(counts).length) {
     // 保留既有键序（读起来稳定），真相源里新出现的类目追加到末尾。
     const ordered = {};
@@ -195,7 +217,10 @@ if (!ad.skills) {
   if (typeof truth === 'number' && truth > 0) {
     ad.total_entities = truth;
     if (typeof ad.ai_agent_instructions === 'string') {
-      ad.ai_agent_instructions = ad.ai_agent_instructions.replace(/\b\d+\s+entities\b/i, `${truth} entities`);
+      ad.ai_agent_instructions = ad.ai_agent_instructions.replace(
+        /\b\d+\s+entities\b/i,
+        `${truth} entities`,
+      );
     }
   }
 }
@@ -263,7 +288,9 @@ for (const t of targets) {
   }
   drift += 1;
   if (CHECK) {
-    console.error(`❌ ${t.file} 与 functions/mcp.js 的 TOOLS 已漂移（运行 node scripts/gen_skills_manifest.mjs 重新生成）`);
+    console.error(
+      `❌ ${t.file} 与 functions/mcp.js 的 TOOLS 已漂移（运行 node scripts/gen_skills_manifest.mjs 重新生成）`,
+    );
   } else {
     fs.writeFileSync(abs, t.next, 'utf8');
     console.log(`✍️  ${t.file} 已重新生成`);
@@ -271,4 +298,6 @@ for (const t of targets) {
 }
 
 if (CHECK && drift) process.exit(1);
-console.log(`\n共 ${manifest.skills.length} 个技能（mcp_tool ${mcpSkills.length} / 其它 ${nonMcp.length}），全部绑定到真实存在的工具。`);
+console.log(
+  `\n共 ${manifest.skills.length} 个技能（mcp_tool ${mcpSkills.length} / 其它 ${nonMcp.length}），全部绑定到真实存在的工具。`,
+);

@@ -27,7 +27,9 @@
 import { pathToFileURL } from 'node:url';
 import path from 'node:path';
 
-const ROOT = path.dirname(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')));
+const ROOT = path.dirname(
+  path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')),
+);
 const enginePath = path.join(ROOT, 'functions', '_lib', 'compat_engine.js');
 const { evalDimension } = await import(pathToFileURL(enginePath).href);
 
@@ -47,14 +49,21 @@ function legacyMechanical(a, b) {
     const mi = x.mechanical_interface || {};
     const st = String(mi.status || '').toLowerCase();
     if (st === 'not_declared' || st === 'n_a') return [];
-    return [...new Set(['standard', 'flange'].flatMap(k => {
-      const v = mi[k];
-      return (Array.isArray(v) ? v : [v]).filter(Boolean).map(s => String(s).trim().toLowerCase());
-    }))];
+    return [
+      ...new Set(
+        ['standard', 'flange'].flatMap((k) => {
+          const v = mi[k];
+          return (Array.isArray(v) ? v : [v])
+            .filter(Boolean)
+            .map((s) => String(s).trim().toLowerCase());
+        }),
+      ),
+    ];
   };
-  const ea = keys(a), eb = keys(b);
+  const ea = keys(a),
+    eb = keys(b);
   if (!ea.length || !eb.length) return { compatible: null, notes: '无法判定' };
-  const shared = ea.filter(p => eb.includes(p));
+  const shared = ea.filter((p) => eb.includes(p));
   return {
     compatible: shared.length > 0,
     notes: shared.length ? '共享机械接口: ' + shared.join('/') : '机械接口无交集',
@@ -74,8 +83,12 @@ console.log('=== 阳性 1：两只夹爪，安装侧同为 ISO 9409-1-50-4-M6（
 
   // 自证：修复前的实现对同一输入给出无法区分关系类型的结论
   const legacy = legacyMechanical(a, b);
-  ok(legacy.compatible === true && /共享机械接口/.test(legacy.notes) && legacy.relation === undefined,
-     '修复前实现复现缺陷（同侧一致被渲染成「共享机械接口」且无关系类型）');
+  ok(
+    legacy.compatible === true &&
+      /共享机械接口/.test(legacy.notes) &&
+      legacy.relation === undefined,
+    '修复前实现复现缺陷（同侧一致被渲染成「共享机械接口」且无关系类型）',
+  );
 }
 
 console.log('=== 阳性 2：传感器工具侧 == 夹爪安装侧（真·可对接） ===');
@@ -99,9 +112,11 @@ console.log('=== 阳性 3：对接方向反过来同样成立（A.robot == B.too
 
 console.log('=== 阴性 1：安装侧无交集且无工具侧证据 → false（真冲突，不许变 null） ===');
 {
-  const r = evalDimension('mechanical',
+  const r = evalDimension(
+    'mechanical',
     ent('A', { status: 'declared', standard: [ISO50] }),
-    ent('B', { status: 'declared', standard: [ISO31] }));
+    ent('B', { status: 'declared', standard: [ISO31] }),
+  );
   ok(r.compatible === false, '无交集仍判 false');
   ok(r.relation === 'none', 'relation=none');
   ok(/安装侧/.test(r.notes), '说明里区分了侧别');
@@ -109,22 +124,30 @@ console.log('=== 阴性 1：安装侧无交集且无工具侧证据 → false（
 
 console.log('=== 阴性 2：一方未声明 → null（防假红的老不变式不许被本次改动破坏） ===');
 {
-  const r1 = evalDimension('mechanical',
+  const r1 = evalDimension(
+    'mechanical',
     ent('A', { status: 'declared', standard: [ISO50] }),
-    ent('B', { status: 'not_declared' }));
+    ent('B', { status: 'not_declared' }),
+  );
   ok(r1.compatible === null, 'not_declared 仍为 null（无数据 ≠ 不兼容）');
 
-  const r2 = evalDimension('mechanical',
+  const r2 = evalDimension(
+    'mechanical',
     ent('A', { status: 'declared', standard: [ISO50] }),
-    ent('B', { status: 'partial', mount_type: 'direct_mount' }));
+    ent('B', { status: 'partial', mount_type: 'direct_mount' }),
+  );
   ok(r2.compatible === null, '仅 mount_type 仍为 null（L1.x：安装方式不是身份键）');
 }
 
-console.log('=== 阴性 3：双方只声明工具侧 → 既不许判 true，也不许判 false（侧别不齐 = 判不了） ===');
+console.log(
+  '=== 阴性 3：双方只声明工具侧 → 既不许判 true，也不许判 false（侧别不齐 = 判不了） ===',
+);
 {
-  const r = evalDimension('mechanical',
+  const r = evalDimension(
+    'mechanical',
     ent('A', { status: 'declared', tool_side: [ISO50] }),
-    ent('B', { status: 'declared', tool_side: [ISO50] }));
+    ent('B', { status: 'declared', tool_side: [ISO50] }),
+  );
   // 两个都只暴露工具侧（都是上游件）：对接需要对方的安装侧，没有；
   // 互换需要双方安装侧，也没有。判 false 就是假红 —— 把"没声明安装侧"
   // 说成"装不上"。三态里这一格只能是 null。
@@ -136,13 +159,16 @@ console.log('=== 覆盖面：真实库数据必须仍能走通已有的那一对
 {
   const fs = await import('node:fs');
   const db = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'entities.json'), 'utf-8'));
-  const map = Object.fromEntries(db.entities.map(e => [e.id, e]));
-  const a = map['ACT-028'], b = map['SENS-31'];
+  const map = Object.fromEntries(db.entities.map((e) => [e.id, e]));
+  const a = map['ACT-028'],
+    b = map['SENS-31'];
   ok(!!a && !!b, '库内 ACT-028 / SENS-31 仍存在');
   if (a && b) {
     const r = evalDimension('mechanical', a, b);
-    ok(r.compatible === true && r.relation === 'interchangeable',
-       '真实数据这一对判为 interchangeable（数据只声明了安装侧，结论就只能到互换为止）');
+    ok(
+      r.compatible === true && r.relation === 'interchangeable',
+      '真实数据这一对判为 interchangeable（数据只声明了安装侧，结论就只能到互换为止）',
+    );
   }
 }
 
@@ -153,21 +179,31 @@ console.log('=== 端到端：relation 必须活到对外响应里，不能只活
   // 人话给了 LLM，机读字段给了程序，两个消费方结论不一致 = 等于没修。
   const { judgePair } = await import(pathToFileURL(enginePath).href);
   const comp = (id, mi) => ({ ...ent(id, mi), entity_kind: 'component', category: 'actuators' });
-  const j1 = judgePair(comp('A', { status: 'declared', standard: [ISO50] }),
-                       comp('B', { status: 'declared', standard: [ISO50] }));
-  const m1 = j1.dimensions.find(d => d.dimension === 'mechanical');
+  const j1 = judgePair(
+    comp('A', { status: 'declared', standard: [ISO50] }),
+    comp('B', { status: 'declared', standard: [ISO50] }),
+  );
+  const m1 = j1.dimensions.find((d) => d.dimension === 'mechanical');
   ok(m1.relation === 'interchangeable', 'judgePair 输出携带 relation=interchangeable');
 
-  const j2 = judgePair(comp('S', { status: 'declared', standard: [ISO50], tool_side: [ISO50] }),
-                       comp('G', { status: 'declared', standard: [ISO50] }));
-  ok(j2.dimensions.find(d => d.dimension === 'mechanical').relation === 'mateable',
-     'judgePair 输出携带 relation=mateable');
+  const j2 = judgePair(
+    comp('S', { status: 'declared', standard: [ISO50], tool_side: [ISO50] }),
+    comp('G', { status: 'declared', standard: [ISO50] }),
+  );
+  ok(
+    j2.dimensions.find((d) => d.dimension === 'mechanical').relation === 'mateable',
+    'judgePair 输出携带 relation=mateable',
+  );
 
   // 阴性：判不了的维度不许凭空冒出 relation（避免下游把 undefined 当成一种关系）
-  const j3 = judgePair(comp('A', { status: 'declared', standard: [ISO50] }),
-                       comp('B', { status: 'not_declared' }));
-  ok(!('relation' in j3.dimensions.find(d => d.dimension === 'mechanical')),
-     '不可判定的维度不输出 relation 字段（不制造第三种含义不明的取值）');
+  const j3 = judgePair(
+    comp('A', { status: 'declared', standard: [ISO50] }),
+    comp('B', { status: 'not_declared' }),
+  );
+  ok(
+    !('relation' in j3.dimensions.find((d) => d.dimension === 'mechanical')),
+    '不可判定的维度不输出 relation 字段（不制造第三种含义不明的取值）',
+  );
 }
 
 console.log(fail === 0 ? '\n✅ 机械侧别行为对照全部通过' : `\n❌ ${fail} 项未通过`);

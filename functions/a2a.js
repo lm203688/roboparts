@@ -47,7 +47,7 @@ function extractToolCall(message) {
   const parts = (message && message.parts) || [];
   for (const p of parts) {
     // A2A v1.0 data part：{ kind: 'data', data: {...} }
-    const d = p && (p.data !== undefined ? p.data : (p.kind === 'data' ? p.data : null));
+    const d = p && (p.data !== undefined ? p.data : p.kind === 'data' ? p.data : null);
     if (d && typeof d === 'object' && typeof d.tool === 'string') {
       return { tool: d.tool, arguments: d.arguments || {} };
     }
@@ -64,9 +64,9 @@ function capabilitiesReply() {
       {
         kind: 'text',
         text:
-          'RoboParts A2A 端点已就绪。本 agent 不解析自然语言意图（无内置 LLM）；'
-          + '请在 message 的 data part 里给出 {"tool": "<工具名>", "arguments": {...}}。'
-          + `可用工具共 ${TOOLS.length} 个，例如 search_components / check_compatibility / check_co_mount。`,
+          'RoboParts A2A 端点已就绪。本 agent 不解析自然语言意图（无内置 LLM）；' +
+          '请在 message 的 data part 里给出 {"tool": "<工具名>", "arguments": {...}}。' +
+          `可用工具共 ${TOOLS.length} 个，例如 search_components / check_compatibility / check_co_mount。`,
       },
       {
         kind: 'data',
@@ -101,10 +101,10 @@ export async function onRequestPost(context) {
     );
   }
   if (method !== 'message/send' && method !== 'SendMessage') {
-    return new Response(
-      JSON.stringify(rpcError(id, -32601, `Method not found: ${method}`)),
-      { status: 200, headers: corsHeaders },
-    );
+    return new Response(JSON.stringify(rpcError(id, -32601, `Method not found: ${method}`)), {
+      status: 200,
+      headers: corsHeaders,
+    });
   }
 
   const message = (params && (params.message || params)) || {};
@@ -121,8 +121,9 @@ export async function onRequestPost(context) {
   // 给了工具名但不在表内 → 明确报错，不静默
   if (!TOOL_NAMES.has(call.tool)) {
     return new Response(
-      JSON.stringify(rpcError(id, -32602, `未知工具: ${call.tool}`,
-        { known_tools: [...TOOL_NAMES] })),
+      JSON.stringify(
+        rpcError(id, -32602, `未知工具: ${call.tool}`, { known_tools: [...TOOL_NAMES] }),
+      ),
       { status: 200, headers: corsHeaders },
     );
   }
@@ -141,20 +142,27 @@ export async function onRequestPost(context) {
       }),
     });
     const j = await r.json();
-    const text = (j && j.result && j.result.content && j.result.content[0] && j.result.content[0].text) || '';
+    const text =
+      (j && j.result && j.result.content && j.result.content[0] && j.result.content[0].text) || '';
     let parsed = null;
-    try { parsed = JSON.parse(text); } catch { /* 非 JSON 就原样透传文本 */ }
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      /* 非 JSON 就原样透传文本 */
+    }
     return new Response(
-      JSON.stringify(rpcResult(id, {
-        kind: 'message',
-        role: 'agent',
-        parts: [
-          parsed
-            ? { kind: 'data', data: parsed }
-            : { kind: 'text', text: String(text).slice(0, 8000) },
-        ],
-        metadata: { bridged_tool: call.tool, source: 'mcp:tools/call' },
-      })),
+      JSON.stringify(
+        rpcResult(id, {
+          kind: 'message',
+          role: 'agent',
+          parts: [
+            parsed
+              ? { kind: 'data', data: parsed }
+              : { kind: 'text', text: String(text).slice(0, 8000) },
+          ],
+          metadata: { bridged_tool: call.tool, source: 'mcp:tools/call' },
+        }),
+      ),
       { status: 200, headers: corsHeaders },
     );
   } catch (e) {

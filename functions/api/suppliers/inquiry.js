@@ -39,33 +39,41 @@ export async function onRequestOptions() {
 }
 
 export async function onRequestGet() {
-  return new Response(JSON.stringify({
-    endpoint: '/api/suppliers/inquiry',
-    method: 'POST',
-    description: '供应商询价：向指定已注册供应商发起询价单，生成询价单号（INQ + 时间戳）并存入 KV，同时更新供应商询价计数。每次询价消耗 1 积分。',
-    request_body: {
-      api_key: 'string (必填) - API 密钥，需以 gtk_ 开头',
-      supplier_id: 'string (必填) - 供应商 ID，需以 SUP 开头',
-      component_ids: 'string[] - 零部件 ID 列表，可选',
-      quantity: 'number - 采购数量，1-1000000 之间的正整数',
-      project_name: 'string - 项目名称，不超过 100 字',
-      message: 'string - 询价留言，不超过 1000 字',
-      delivery_date: 'string - 期望交付日期，格式 YYYY-MM-DD',
+  return new Response(
+    JSON.stringify(
+      {
+        endpoint: '/api/suppliers/inquiry',
+        method: 'POST',
+        description:
+          '供应商询价：向指定已注册供应商发起询价单，生成询价单号（INQ + 时间戳）并存入 KV，同时更新供应商询价计数。每次询价消耗 1 积分。',
+        request_body: {
+          api_key: 'string (必填) - API 密钥，需以 gtk_ 开头',
+          supplier_id: 'string (必填) - 供应商 ID，需以 SUP 开头',
+          component_ids: 'string[] - 零部件 ID 列表，可选',
+          quantity: 'number - 采购数量，1-1000000 之间的正整数',
+          project_name: 'string - 项目名称，不超过 100 字',
+          message: 'string - 询价留言，不超过 1000 字',
+          delivery_date: 'string - 期望交付日期，格式 YYYY-MM-DD',
+        },
+        example: {
+          api_key: 'gtk_demo_key',
+          supplier_id: 'SUP1234567890',
+          component_ids: ['ACT-001', 'ACT-002'],
+          quantity: 10,
+          project_name: '人形机器人v1',
+          message: '需要批量采购，请提供报价',
+          delivery_date: '2026-09-01',
+        },
+        note: '此端点仅支持 POST 请求，请使用 curl 或 fetch 发送 POST 请求',
+      },
+      null,
+      2,
+    ),
+    {
+      status: 200,
+      headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=3600' },
     },
-    example: {
-      api_key: 'gtk_demo_key',
-      supplier_id: 'SUP1234567890',
-      component_ids: ['ACT-001', 'ACT-002'],
-      quantity: 10,
-      project_name: '人形机器人v1',
-      message: '需要批量采购，请提供报价',
-      delivery_date: '2026-09-01',
-    },
-    note: '此端点仅支持 POST 请求，请使用 curl 或 fetch 发送 POST 请求',
-  }, null, 2), {
-    status: 200,
-    headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=3600' },
-  });
+  );
 }
 
 export async function onRequestPost(context) {
@@ -74,15 +82,8 @@ export async function onRequestPost(context) {
   try {
     const body = await request.json();
 
-    const {
-      api_key,
-      supplier_id,
-      component_ids,
-      quantity,
-      project_name,
-      message,
-      delivery_date,
-    } = body;
+    const { api_key, supplier_id, component_ids, quantity, project_name, message, delivery_date } =
+      body;
 
     // ========== 1. 参数校验 ==========
     const errors = [];
@@ -130,27 +131,36 @@ export async function onRequestPost(context) {
     }
 
     if (errors.length > 0) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '参数校验失败',
-        details: errors,
-      }), { status: 400, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '参数校验失败',
+          details: errors,
+        }),
+        { status: 400, headers: corsHeaders },
+      );
     }
 
     // ========== 2. 验证 API Key ==========
     if (!env.USER_CREDITS) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '积分系统未配置',
-      }), { status: 500, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '积分系统未配置',
+        }),
+        { status: 500, headers: corsHeaders },
+      );
     }
 
     const userRecord = await env.USER_CREDITS.get(api_key);
     if (!userRecord) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: 'API Key 无效或不存在',
-      }), { status: 401, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'API Key 无效或不存在',
+        }),
+        { status: 401, headers: corsHeaders },
+      );
     }
 
     const userData = JSON.parse(userRecord);
@@ -158,41 +168,53 @@ export async function onRequestPost(context) {
 
     // 检查积分是否足够
     if (currentCredits < 1) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '积分不足，每次询价需消耗 1 积分',
-        current_credits: currentCredits,
-        required_credits: 1,
-        recharge_url: 'https://roboparts.cc/credits',
-      }), { status: 402, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '积分不足，每次询价需消耗 1 积分',
+          current_credits: currentCredits,
+          required_credits: 1,
+          recharge_url: 'https://roboparts.cc/credits',
+        }),
+        { status: 402, headers: corsHeaders },
+      );
     }
 
     // ========== 3. 验证供应商存在 ==========
     if (!env.SUPPLIERS) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '供应商系统未配置',
-      }), { status: 500, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '供应商系统未配置',
+        }),
+        { status: 500, headers: corsHeaders },
+      );
     }
 
     const supplierRecord = await env.SUPPLIERS.get(supplier_id);
     if (!supplierRecord) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '供应商 ID 不存在',
-        supplier_id: supplier_id,
-      }), { status: 404, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '供应商 ID 不存在',
+          supplier_id: supplier_id,
+        }),
+        { status: 404, headers: corsHeaders },
+      );
     }
 
     const supplierData = JSON.parse(supplierRecord);
 
     // 校验供应商审核状态（仅 approved 状态可询价，但为兼容老数据，pending 也允许）
     if (supplierData.review_status === 'rejected') {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '该供应商审核未通过，暂无法询价',
-        supplier_id: supplier_id,
-      }), { status: 403, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '该供应商审核未通过，暂无法询价',
+          supplier_id: supplier_id,
+        }),
+        { status: 403, headers: corsHeaders },
+      );
     }
 
     // ========== 4. 扣减积分 ==========
@@ -202,7 +224,9 @@ export async function onRequestPost(context) {
 
     // ========== 5. 生成询价单号 ==========
     const timestamp = Date.now();
-    const randomSuffix = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+    const randomSuffix = Math.floor(Math.random() * 10000)
+      .toString()
+      .padStart(4, '0');
     const inquiryId = 'INQ' + timestamp + randomSuffix;
 
     // ========== 6. 构建询价数据 ==========
@@ -213,8 +237,8 @@ export async function onRequestPost(context) {
       supplier_id: supplier_id,
       supplier_name: supplierData.company_name || '',
       component_ids: Array.isArray(component_ids) ? component_ids : [],
-      quantity: quantity !== undefined && quantity !== null && quantity !== ''
-        ? Number(quantity) : 1,
+      quantity:
+        quantity !== undefined && quantity !== null && quantity !== '' ? Number(quantity) : 1,
       project_name: project_name ? project_name.trim() : '',
       message: message ? message.trim() : '',
       delivery_date: delivery_date ? delivery_date.trim() : '',
@@ -232,17 +256,13 @@ export async function onRequestPost(context) {
       // 为避免单 key 过大，采用追加方式（实际生产可考虑分页或列表 KV）
       const listKey = 'supplier_inquiries_' + supplier_id;
       const existingList = await env.SUPPLIER_INQUIRIES.get(listKey);
-      const newList = existingList
-        ? existingList + ',' + inquiryId
-        : inquiryId;
+      const newList = existingList ? existingList + ',' + inquiryId : inquiryId;
       await env.SUPPLIER_INQUIRIES.put(listKey, newList);
 
       // 用户询价列表索引（方便用户查询自己发起的询价）
       const userListKey = 'user_inquiries_' + api_key;
       const existingUserList = await env.SUPPLIER_INQUIRIES.get(userListKey);
-      const newUserList = existingUserList
-        ? existingUserList + ',' + inquiryId
-        : inquiryId;
+      const newUserList = existingUserList ? existingUserList + ',' + inquiryId : inquiryId;
       await env.SUPPLIER_INQUIRIES.put(userListKey, newUserList);
     }
 
@@ -254,23 +274,28 @@ export async function onRequestPost(context) {
     }
 
     // ========== 9. 返回结果 ==========
-    return new Response(JSON.stringify({
-      success: true,
-      inquiry_id: inquiryId,
-      status: 'pending',
-      supplier_id: supplier_id,
-      supplier_name: supplierData.company_name || '',
-      message: '询价单已提交，供应商将在 1-3 个工作日内回复报价。',
-      credits_consumed: 1,
-      credits_remaining: userData.credits,
-      submitted_at: inquiryData.created,
-    }), { status: 201, headers: corsHeaders });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        inquiry_id: inquiryId,
+        status: 'pending',
+        supplier_id: supplier_id,
+        supplier_name: supplierData.company_name || '',
+        message: '询价单已提交，供应商将在 1-3 个工作日内回复报价。',
+        credits_consumed: 1,
+        credits_remaining: userData.credits,
+        submitted_at: inquiryData.created,
+      }),
+      { status: 201, headers: corsHeaders },
+    );
   } catch (e) {
-    return new Response(JSON.stringify({
-      success: false,
-      error: '服务器内部错误: ' + e.message,
-    }), { status: 500, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: '服务器内部错误: ' + e.message,
+      }),
+      { status: 500, headers: corsHeaders },
+    );
   }
 }
 

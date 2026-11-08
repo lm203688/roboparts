@@ -38,15 +38,25 @@ export const PROTOCOL_VERSIONS = [
 // 判断哪些工具是新增的，哪些是历史兼容的"。
 export const CAPABILITIES_BY_VERSION = {
   '2024-11-05': [
-    'search_components', 'get_component_detail', 'check_compatibility',
-    'compare_components', 'dialects_list', 'dialects_evaluate',
-    'recommend_for_application', 'export_bom', 'plan_assembly',
+    'search_components',
+    'get_component_detail',
+    'check_compatibility',
+    'compare_components',
+    'dialects_list',
+    'dialects_evaluate',
+    'recommend_for_application',
+    'export_bom',
+    'plan_assembly',
     'preflight_check',
   ],
   // 2026-10-27 P2-6 新增
   '2025-11-25': [
-    'explain_unknown', 'start_long_task', 'get_task_status',
-    'cancel_task', 'trace_export', 'trace_replay',
+    'explain_unknown',
+    'start_long_task',
+    'get_task_status',
+    'cancel_task',
+    'trace_export',
+    'trace_replay',
   ],
 };
 
@@ -75,7 +85,7 @@ export function toolAvailableAt(toolName, protocolVersion) {
  */
 export function filterToolsByVersion(toolNames, protocolVersion) {
   if (!protocolVersion) return toolNames.slice();
-  return toolNames.filter(n => toolAvailableAt(n, protocolVersion));
+  return toolNames.filter((n) => toolAvailableAt(n, protocolVersion));
 }
 
 // ------------------------------------------------------------
@@ -83,7 +93,7 @@ export function filterToolsByVersion(toolNames, protocolVersion) {
 // ------------------------------------------------------------
 
 const TRACE_CAPACITY = 1000; // 内存环形缓冲最大条数
-let traceBuf = [];           // [{trace_id, ts, tool, args_summary, result_summary, evidence_version, project_id, revision, duration_ms, status}]
+let traceBuf = []; // [{trace_id, ts, tool, args_summary, result_summary, evidence_version, project_id, revision, duration_ms, status}]
 let traceCounter = 0;
 
 /**
@@ -102,9 +112,16 @@ export function summarizeArgs(args) {
   if (!args || typeof args !== 'object') return { type: typeof args, size: 0 };
   const summary = {};
   for (const [k, v] of Object.entries(args)) {
-    if (v === null || v === undefined) { summary[k] = `null`; continue; }
+    if (v === null || v === undefined) {
+      summary[k] = `null`;
+      continue;
+    }
     if (Array.isArray(v)) {
-      summary[k] = { type: 'array', length: v.length, sample_types: Array.from(new Set(v.map(x => typeof x))).slice(0, 3) };
+      summary[k] = {
+        type: 'array',
+        length: v.length,
+        sample_types: Array.from(new Set(v.map((x) => typeof x))).slice(0, 3),
+      };
     } else if (typeof v === 'object') {
       // 对象：只报 keys，不透传值（防 API key / 邮箱等泄漏）
       summary[k] = { type: 'object', keys: Object.keys(v).slice(0, 10) };
@@ -124,9 +141,21 @@ export function summarizeArgs(args) {
  */
 export function summarizeResult(result) {
   if (!result || typeof result !== 'object') return { type: typeof result };
-  const interesting = ['compatible', 'verdict', 'well_typed', 'ill_typed', 'status',
-                       'task_id', 'trace_id', 'evidence_version', 'revision',
-                       'error', 'isError', 'reason', 'total_found'];
+  const interesting = [
+    'compatible',
+    'verdict',
+    'well_typed',
+    'ill_typed',
+    'status',
+    'task_id',
+    'trace_id',
+    'evidence_version',
+    'revision',
+    'error',
+    'isError',
+    'reason',
+    'total_found',
+  ];
   const summary = {};
   for (const k of interesting) {
     if (k in result) summary[k] = result[k];
@@ -144,8 +173,14 @@ export function summarizeResult(result) {
 export function redact(trace) {
   const redacted = { ...trace };
   const sensitiveKeys = new Set([
-    'api_key', 'token', 'password', 'secret', 'email',
-    'authorization', 'cookie', 'session_id'
+    'api_key',
+    'token',
+    'password',
+    'secret',
+    'email',
+    'authorization',
+    'cookie',
+    'session_id',
   ]);
   function walk(obj) {
     if (!obj || typeof obj !== 'object') return obj;
@@ -173,7 +208,16 @@ function hash8(s) {
 /**
  * 记录一条 trace。返回 trace 对象（含 trace_id）。
  */
-export function recordTrace({ tool, args, result, duration_ms, status, evidence_version, project_id, revision }) {
+export function recordTrace({
+  tool,
+  args,
+  result,
+  duration_ms,
+  status,
+  evidence_version,
+  project_id,
+  revision,
+}) {
   const trace = {
     trace_id: makeTraceId(),
     ts: new Date().toISOString(),
@@ -209,10 +253,10 @@ export function recordTrace({ tool, args, result, duration_ms, status, evidence_
  */
 export function exportTraces({ limit, tool, since, redactEnabled } = {}) {
   let out = traceBuf.slice();
-  if (tool) out = out.filter(t => t.tool === tool);
+  if (tool) out = out.filter((t) => t.tool === tool);
   if (since) {
     const ts = new Date(since).getTime();
-    out = out.filter(t => new Date(t.ts).getTime() >= ts);
+    out = out.filter((t) => new Date(t.ts).getTime() >= ts);
   }
   if (typeof limit === 'number' && limit > 0) out = out.slice(-limit);
   if (redactEnabled !== false) out = out.map(redact);
@@ -232,7 +276,7 @@ export function replayTrace(jsonLines, { strict } = {}) {
     try {
       const obj = JSON.parse(line);
       // 结构完整性检查：至少要有 trace_id / tool / ts
-      const missing = ['trace_id', 'tool', 'ts'].filter(k => !(k in obj));
+      const missing = ['trace_id', 'tool', 'ts'].filter((k) => !(k in obj));
       if (missing.length > 0) {
         errors.push({ line: idx, error: `missing_field`, missing });
         if (strict) break;
@@ -249,8 +293,8 @@ export function replayTrace(jsonLines, { strict } = {}) {
     total_lines: jsonLines.length,
     errors: errors.length,
     error_detail: errors.slice(0, 10),
-    unique_tools: Array.from(new Set(events.map(e => e.tool))),
-    unique_traces: new Set(events.map(e => e.trace_id)).size,
+    unique_tools: Array.from(new Set(events.map((e) => e.tool))),
+    unique_traces: new Set(events.map((e) => e.trace_id)).size,
   };
 }
 
@@ -301,7 +345,9 @@ export function startLongTask({ name, body, args }) {
         throw e;
       }
     },
-    _updateProgress: (p) => { task.progress = Math.max(0, Math.min(100, Number(p) || 0)); },
+    _updateProgress: (p) => {
+      task.progress = Math.max(0, Math.min(100, Number(p) || 0));
+    },
   };
   taskStore.set(id, task);
   if (taskStore.size > TASK_CAPACITY) {
@@ -371,7 +417,7 @@ export function cancelTask(task_id) {
       task_id,
       cancelled: false,
       error: `task_already_${t.status}`,
-      hint: '已结束的任务无法取消；取消只对 queued / running 生效'
+      hint: '已结束的任务无法取消；取消只对 queued / running 生效',
     };
   }
   t.cancelled = true;
@@ -380,7 +426,7 @@ export function cancelTask(task_id) {
   return {
     task_id,
     cancelled: true,
-    hint: '取消标志已置位；任务将在下一个 checkpoint 退出。stdio MCP 无中断通道，此非硬终止。'
+    hint: '取消标志已置位；任务将在下一个 checkpoint 退出。stdio MCP 无中断通道，此非硬终止。',
   };
 }
 
@@ -388,7 +434,7 @@ export function cancelTask(task_id) {
  * 列出所有任务（用于诊断）。
  */
 export function listTasks() {
-  return Array.from(taskStore.values()).map(t => ({
+  return Array.from(taskStore.values()).map((t) => ({
     task_id: t.id,
     name: t.name,
     status: t.status,

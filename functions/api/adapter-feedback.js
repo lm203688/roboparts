@@ -31,7 +31,10 @@ export async function onRequestPost(context) {
   try {
     body = await request.json();
   } catch (e) {
-    return new Response(JSON.stringify({ error: '请求体不是合法 JSON' }), { status: 400, headers: corsHeaders });
+    return new Response(JSON.stringify({ error: '请求体不是合法 JSON' }), {
+      status: 400,
+      headers: corsHeaders,
+    });
   }
 
   const flangeA = String(body.flangeA || '').slice(0, 80);
@@ -39,7 +42,10 @@ export async function onRequestPost(context) {
   const fit = String(body.fit || '').toLowerCase();
   const note = String(body.note || '').slice(0, 500);
   if (!['ok', 'bad', 'adjust'].includes(fit)) {
-    return new Response(JSON.stringify({ error: 'fit 必须是 ok / bad / adjust 之一' }), { status: 400, headers: corsHeaders });
+    return new Response(JSON.stringify({ error: 'fit 必须是 ok / bad / adjust 之一' }), {
+      status: 400,
+      headers: corsHeaders,
+    });
   }
 
   const id = 'adapter_feedback:' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
@@ -60,13 +66,29 @@ export async function onRequestPost(context) {
     // 维护索引（追加 ID，保留最近 200 条）
     let index = [];
     const raw = await kv.get('adapter_feedback:index');
-    if (raw) { try { index = JSON.parse(raw); } catch { index = []; } }
+    if (raw) {
+      try {
+        index = JSON.parse(raw);
+      } catch {
+        index = [];
+      }
+    }
     index.unshift(id);
     index = index.slice(0, 200);
     await kv.put('adapter_feedback:index', JSON.stringify(index));
-    return new Response(JSON.stringify({ ok: true, id, msg: '已记录，感谢回填！数据将作为社区安装口碑回流，供人工复核适配，不自动改写兼容性。' }), { status: 200, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        ok: true,
+        id,
+        msg: '已记录，感谢回填！数据将作为社区安装口碑回流，供人工复核适配，不自动改写兼容性。',
+      }),
+      { status: 200, headers: corsHeaders },
+    );
   } catch (e) {
-    return new Response(JSON.stringify({ error: '存储失败: ' + e.message }), { status: 500, headers: corsHeaders });
+    return new Response(JSON.stringify({ error: '存储失败: ' + e.message }), {
+      status: 500,
+      headers: corsHeaders,
+    });
   }
 }
 
@@ -78,7 +100,15 @@ export function aggregateCommunityFit(records, minSamples = 3) {
   for (const r of records) {
     if (!r || !r.flangeA || !r.flangeB) continue;
     const key = [r.flangeA, r.flangeB].sort().join('|');
-    if (!pairs.has(key)) pairs.set(key, { flangeA: r.flangeA, flangeB: r.flangeB, ok: 0, bad: 0, adjust: 0, samples: 0 });
+    if (!pairs.has(key))
+      pairs.set(key, {
+        flangeA: r.flangeA,
+        flangeB: r.flangeB,
+        ok: 0,
+        bad: 0,
+        adjust: 0,
+        samples: 0,
+      });
     const p = pairs.get(key);
     if (r.fit === 'ok' || r.fit === 'bad' || r.fit === 'adjust') p[r.fit] += 1;
     p.samples += 1;
@@ -92,8 +122,14 @@ export function aggregateCommunityFit(records, minSamples = 3) {
     else if (p.bad / decided >= 0.3) signal = 'needs_review';
     else signal = 'mixed_ok';
     out.push({
-      pair: `${p.flangeA}<->${p.flangeB}`, flangeA: p.flangeA, flangeB: p.flangeB,
-      ok: p.ok, bad: p.bad, adjust: p.adjust, samples: p.samples, signal,
+      pair: `${p.flangeA}<->${p.flangeB}`,
+      flangeA: p.flangeA,
+      flangeB: p.flangeB,
+      ok: p.ok,
+      bad: p.bad,
+      adjust: p.adjust,
+      samples: p.samples,
+      signal,
     });
   }
   out.sort((a, b) => b.samples - a.samples);
@@ -105,26 +141,50 @@ export async function onRequestGet(context) {
   const { env, request } = context;
   try {
     const kv = env.SUPPLIER_INQUIRIES;
-    if (!kv) return new Response(JSON.stringify({ error: 'KV 未绑定' }), { status: 500, headers: corsHeaders });
+    if (!kv)
+      return new Response(JSON.stringify({ error: 'KV 未绑定' }), {
+        status: 500,
+        headers: corsHeaders,
+      });
     const raw = await kv.get('adapter_feedback:index');
     const index = raw ? JSON.parse(raw) : [];
     const items = [];
-    for (const key of index.slice(0, 200)) {       // 全量读取（索引上限 200）做配对聚合
+    for (const key of index.slice(0, 200)) {
+      // 全量读取（索引上限 200）做配对聚合
       const r = await kv.get(key);
-      if (r) { try { items.push(JSON.parse(r)); } catch { /* 坏行跳过 */ } }
+      if (r) {
+        try {
+          items.push(JSON.parse(r));
+        } catch {
+          /* 坏行跳过 */
+        }
+      }
     }
-    const stats = items.reduce((a, x) => { a[x.fit] = (a[x.fit] || 0) + 1; return a; }, {});
+    const stats = items.reduce((a, x) => {
+      a[x.fit] = (a[x.fit] || 0) + 1;
+      return a;
+    }, {});
     // 回流 #1：物理安装反馈 → 社区口碑信号（透明、样本门控、不污染权威引擎）
-    const minSamples = parseInt(new URL(request.url).searchParams.get('minSamples') || '3', 10) || 3;
+    const minSamples =
+      parseInt(new URL(request.url).searchParams.get('minSamples') || '3', 10) || 3;
     const communityFit = aggregateCommunityFit(items, minSamples);
-    return new Response(JSON.stringify({
-      total: index.length, stats, recent: items.slice(0, 50),
-      community_fit: communityFit,
-      community_fit_note: 'community_fit 为社区实测安装口碑（物理反馈回填），与 api/entities.json 的权威兼容性声明相互独立；'
-        + `样本 < ${minSamples} 标 insufficient_data，bad 占比 ≥ 0.3 标 needs_review（供人工复核，不自动改写兼容性）。`,
-    }), { status: 200, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        total: index.length,
+        stats,
+        recent: items.slice(0, 50),
+        community_fit: communityFit,
+        community_fit_note:
+          'community_fit 为社区实测安装口碑（物理反馈回填），与 api/entities.json 的权威兼容性声明相互独立；' +
+          `样本 < ${minSamples} 标 insufficient_data，bad 占比 ≥ 0.3 标 needs_review（供人工复核，不自动改写兼容性）。`,
+      }),
+      { status: 200, headers: corsHeaders },
+    );
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: corsHeaders });
+    return new Response(JSON.stringify({ error: e.message }), {
+      status: 500,
+      headers: corsHeaders,
+    });
   }
 }
 

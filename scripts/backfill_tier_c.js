@@ -1,9 +1,9 @@
 /**
  * P0 溯源 Tier C 自动回填
- * 
+ *
  * 对 409 条 Tier C 实体，按 manufacturer → 厂商官网产品页面 的确定性模式
  * 回填 source_url 字段，将 Tier C 降至 Tier B。
- * 
+ *
  * 策略：
  * 1. 对知名厂商（UR/ABB/KUKA/Fanuc/西门子等），用已知产品页 URL 模式匹配
  * 2. 对其他厂商，搜索 manufacturer + name 拼接的产品搜索 URL
@@ -20,34 +20,36 @@ const data = JSON.parse(fs.readFileSync(entitiesPath, 'utf8'));
 // 已知确定性 URL 模式：manufacturer + name → URL
 const VENDOR_URL_PATTERNS = {
   'Universal Robots': (name) => `https://www.universal-robots.com/products/${slugify(name)}/`,
-  'ABB': (name) => `https://new.abb.com/products/robotics/robots/${slugify(name)}`,
-  'KUKA': (name) => `https://www.kuka.com/en-US/products/robots/${slugify(name)}`,
-  'Fanuc': (name) => `https://www.fanuc.com/en-us/products/robots/${slugify(name)}`,
-  'Siemens': (name) => `https://www.siemens.com/global/en/products/automation/${slugify(name)}`,
-  'Dexai': (name) => `https://www.dexairobotics.com/${slugify(name)}`,
-  'Lynxmotion': (name) => `https://lynxmotion.com/product/${slugify(name)}`,
-  'Kollmorgen': (name) => `https://www.kollmorgen.com/en/products/${slugify(name)}`,
-  'Schaeffler': (name) => `https://www.schaeffler.com/products/${slugify(name)}`,
-  'Tesla': (name) => `https://tesla.com/${slugify(name)}`,
+  ABB: (name) => `https://new.abb.com/products/robotics/robots/${slugify(name)}`,
+  KUKA: (name) => `https://www.kuka.com/en-US/products/robots/${slugify(name)}`,
+  Fanuc: (name) => `https://www.fanuc.com/en-us/products/robots/${slugify(name)}`,
+  Siemens: (name) => `https://www.siemens.com/global/en/products/automation/${slugify(name)}`,
+  Dexai: (name) => `https://www.dexairobotics.com/${slugify(name)}`,
+  Lynxmotion: (name) => `https://lynxmotion.com/product/${slugify(name)}`,
+  Kollmorgen: (name) => `https://www.kollmorgen.com/en/products/${slugify(name)}`,
+  Schaeffler: (name) => `https://www.schaeffler.com/products/${slugify(name)}`,
+  Tesla: (name) => `https://tesla.com/${slugify(name)}`,
 };
 
 // 产品搜索 URL（通用兜底）
 const SEARCH_URL_PATTERNS = {
-  'amazon': (mfr, name) => `https://www.amazon.com/s?k=${encodeURIComponent(mfr + ' ' + name)}`,
-  'google': (mfr, name) => `https://www.google.com/search?q=${encodeURIComponent(mfr + ' ' + name + ' datasheet')}`,
+  amazon: (mfr, name) => `https://www.amazon.com/s?k=${encodeURIComponent(mfr + ' ' + name)}`,
+  google: (mfr, name) =>
+    `https://www.google.com/search?q=${encodeURIComponent(mfr + ' ' + name + ' datasheet')}`,
 };
 
 // 已知数据集来源
 const DATASET_URLS = {
-  'OpenLoong': 'https://github.com/OpenLoong',
-  'LeRobot': 'https://github.com/huggingface/lerobot',
-  'unitree': 'https://www.unitree.com/',
-  'Agibot': 'https://www.agibot.cn/',
-  'Zhiyuan': 'https://www.zhiyuan-robotics.com/',
+  OpenLoong: 'https://github.com/OpenLoong',
+  LeRobot: 'https://github.com/huggingface/lerobot',
+  unitree: 'https://www.unitree.com/',
+  Agibot: 'https://www.agibot.cn/',
+  Zhiyuan: 'https://www.zhiyuan-robotics.com/',
 };
 
 function slugify(str) {
-  return str.toLowerCase()
+  return str
+    .toLowerCase()
     .replace(/[^a-z0-9\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
@@ -76,7 +78,10 @@ for (const entity of data.entities) {
   // 2. 数据集来源匹配
   if (!url) {
     for (const [ds, dsUrl] of Object.entries(DATASET_URLS)) {
-      if (mfr.toLowerCase().includes(ds.toLowerCase()) || name.toLowerCase().includes(ds.toLowerCase())) {
+      if (
+        mfr.toLowerCase().includes(ds.toLowerCase()) ||
+        name.toLowerCase().includes(ds.toLowerCase())
+      ) {
         url = dsUrl;
         method = 'dataset_source';
         break;

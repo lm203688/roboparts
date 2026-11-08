@@ -8,7 +8,16 @@
  * 用法：node selftest.mjs
  */
 import { spawn } from 'child_process';
-import { mkdtempSync, copyFileSync, mkdirSync, rmSync, existsSync, symlinkSync, readFileSync, unlinkSync } from 'fs';
+import {
+  mkdtempSync,
+  copyFileSync,
+  mkdirSync,
+  rmSync,
+  existsSync,
+  symlinkSync,
+  readFileSync,
+  unlinkSync,
+} from 'fs';
 import { tmpdir } from 'os';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -48,14 +57,23 @@ async function run() {
   const child = spawn(process.execPath, [join(pkg, 'index.js')], {
     cwd: pkg,
     stdio: ['pipe', 'pipe', 'pipe'],
-    env: { ...process.env, NODE_PATH: join(__dirname, 'node_modules') }
+    env: { ...process.env, NODE_PATH: join(__dirname, 'node_modules') },
   });
 
-  let out = '', err = '';
-  let exited = false, exitInfo = '';
-  child.stdout.on('data', d => { out += d; });
-  child.stderr.on('data', d => { err += d; });
-  child.on('exit', (code, sig) => { exited = true; exitInfo = `code=${code} signal=${sig}`; });
+  let out = '',
+    err = '';
+  let exited = false,
+    exitInfo = '';
+  child.stdout.on('data', (d) => {
+    out += d;
+  });
+  child.stderr.on('data', (d) => {
+    err += d;
+  });
+  child.on('exit', (code, sig) => {
+    exited = true;
+    exitInfo = `code=${code} signal=${sig}`;
+  });
 
   // 【20260805-23】原实现用固定 sleep(6s) 等预载完成，属于计时竞态而非判据：
   // 加上退避重试后启动可能超过 6s，闸门就会把「慢」误报成「坏」。
@@ -65,24 +83,32 @@ async function run() {
     const t0 = Date.now();
     while (Date.now() - t0 < capMs) {
       if (predicate()) return true;
-      if (exited) throw new Error(`子进程在「${label}」期间退出（${exitInfo}）\n--- stderr ---\n${err}`);
-      await new Promise(r => setTimeout(r, 200));
+      if (exited)
+        throw new Error(`子进程在「${label}」期间退出（${exitInfo}）\n--- stderr ---\n${err}`);
+      await new Promise((r) => setTimeout(r, 200));
     }
     return false;
   }
 
   function replyOk(id) {
-    return out.split('\n').some(line => {
+    return out.split('\n').some((line) => {
       if (!line.trim().startsWith('{')) return false;
-      try { const m = JSON.parse(line); return m.id === id && (m.result || m.error); }
-      catch { return false; }
+      try {
+        const m = JSON.parse(line);
+        return m.id === id && (m.result || m.error);
+      } catch {
+        return false;
+      }
     });
   }
 
-  child.stdin.write(rpc(1, 'initialize', {
-    protocolVersion: '2024-11-05', capabilities: {},
-    clientInfo: { name: 'selftest', version: '1.0.0' }
-  }));
+  child.stdin.write(
+    rpc(1, 'initialize', {
+      protocolVersion: '2024-11-05',
+      capabilities: {},
+      clientInfo: { name: 'selftest', version: '1.0.0' },
+    }),
+  );
 
   // 就绪 = index.js 打出「已加载 N 条实体」。给足重试与慢网络的余量。
   const ready = await waitFor('预载数据', () => /已加载 \d+ 条实体/.test(err), 90000);
@@ -91,10 +117,12 @@ async function run() {
   child.stdin.write(rpc(2, 'tools/list', {}));
   await waitFor('tools/list 响应', () => replyOk(2), 30000);
 
-  child.stdin.write(rpc(3, 'tools/call', {
-    name: 'search_components',
-    arguments: { category: 'actuators', keyword: '', limit: 3 }
-  }));
+  child.stdin.write(
+    rpc(3, 'tools/call', {
+      name: 'search_components',
+      arguments: { category: 'actuators', keyword: '', limit: 3 },
+    }),
+  );
   await waitFor('tools/call 响应', () => replyOk(3), 30000);
   child.kill();
 
@@ -112,7 +140,9 @@ async function run() {
         const j = JSON.parse(txt);
         hits = j.total_found ?? j.results?.length ?? null;
       }
-    } catch { /* 非完整 JSON 行，跳过 */ }
+    } catch {
+      /* 非完整 JSON 行，跳过 */
+    }
   }
 
   const pass = loaded && Number(loaded[1]) > 0 && toolsOk && hits > 0;
@@ -133,7 +163,7 @@ async function run() {
 
 async function killAndWait(child) {
   if (child.exitCode === null && child.signalCode === null) child.kill();
-  await new Promise(r => {
+  await new Promise((r) => {
     if (child.exitCode !== null || child.signalCode !== null) return r();
     child.once('exit', r);
     setTimeout(r, 5000);
@@ -143,7 +173,11 @@ async function killAndWait(child) {
 function cleanup(dir) {
   // junction 必须先摘：unlink 只删链接本身，不会递归进真实 node_modules。
   const j = join(dir, 'pkg', 'node_modules');
-  try { if (existsSync(j)) unlinkSync(j); } catch { /* 尽力而为 */ }
+  try {
+    if (existsSync(j)) unlinkSync(j);
+  } catch {
+    /* 尽力而为 */
+  }
   try {
     rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 150 });
   } catch (e) {
@@ -151,4 +185,7 @@ function cleanup(dir) {
   }
 }
 
-run().catch(e => { console.error('自检异常:', e); process.exit(1); });
+run().catch((e) => {
+  console.error('自检异常:', e);
+  process.exit(1);
+});

@@ -20,8 +20,17 @@ const corsHeaders = {
 };
 
 const ALLOWED_CATS = new Set([
-  'actuators', 'sensors', 'chips', 'protocols', 'platforms', 'llms',
-  'interfaces', 'flexible_actuators', 'data_acquisition', 'robot_ai_models', 'connectors',
+  'actuators',
+  'sensors',
+  'chips',
+  'protocols',
+  'platforms',
+  'llms',
+  'interfaces',
+  'flexible_actuators',
+  'data_acquisition',
+  'robot_ai_models',
+  'connectors',
 ]);
 
 export async function onRequestOptions() {
@@ -35,22 +44,37 @@ export async function onRequestHead(context) {
 export async function onRequestPost(context) {
   const { request, env } = context;
   let body;
-  try { body = await request.json(); } catch {
-    return new Response(JSON.stringify({ error: 'JSON 解析失败' }), { status: 400, headers: corsHeaders });
+  try {
+    body = await request.json();
+  } catch {
+    return new Response(JSON.stringify({ error: 'JSON 解析失败' }), {
+      status: 400,
+      headers: corsHeaders,
+    });
   }
   const comps = Array.isArray(body) ? body : (body && body.components) || [];
   if (!Array.isArray(comps) || !comps.length) {
-    return new Response(JSON.stringify({ error: '缺少 components 数组或为空' }), { status: 400, headers: corsHeaders });
+    return new Response(JSON.stringify({ error: '缺少 components 数组或为空' }), {
+      status: 400,
+      headers: corsHeaders,
+    });
   }
 
   const preview = [];
   const valid = [];
   for (const c of comps) {
-    if (!c || !c.id) { preview.push({ status: 'rejected', reason: '缺少 id' }); continue; }
+    if (!c || !c.id) {
+      preview.push({ status: 'rejected', reason: '缺少 id' });
+      continue;
+    }
     const mech = c.mechanical_interface;
     const mechSrc = c.source_url || (mech && mech.source_url);
     if (mech && mech.standard && !mechSrc) {
-      preview.push({ id: c.id, status: 'rejected', reason: '机械接口声明需 source_url 方可核实（避免不可核实数据污染）' });
+      preview.push({
+        id: c.id,
+        status: 'rejected',
+        reason: '机械接口声明需 source_url 方可核实（避免不可核实数据污染）',
+      });
       continue;
     }
     const cat = ALLOWED_CATS.has(c.category) ? c.category : 'actuators';
@@ -68,23 +92,38 @@ export async function onRequestPost(context) {
 
   const isSelf = context.request.headers.get('x-roboparts-selftest');
   if (!isSelf && env && env.USER_CREDITS && valid.length) {
-    const key = 'bom:pending:' + new Date().toISOString() + ':' + Math.random().toString(36).slice(2, 8);
+    const key =
+      'bom:pending:' + new Date().toISOString() + ':' + Math.random().toString(36).slice(2, 8);
     try {
-      await env.USER_CREDITS.put(key, JSON.stringify({
-        components: valid,
-        received_at: new Date().toISOString(),
-        submitter: (body && body.submitter) || 'web',
-      }), { expirationTtl: 60 * 60 * 24 * 30 });
+      await env.USER_CREDITS.put(
+        key,
+        JSON.stringify({
+          components: valid,
+          received_at: new Date().toISOString(),
+          submitter: (body && body.submitter) || 'web',
+        }),
+        { expirationTtl: 60 * 60 * 24 * 30 },
+      );
     } catch (e) {
-      return new Response(JSON.stringify({ error: '待审队列写入失败', detail: String(e && e.message || e) }), { status: 503, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({ error: '待审队列写入失败', detail: String((e && e.message) || e) }),
+        { status: 503, headers: corsHeaders },
+      );
     }
   }
 
-  return new Response(JSON.stringify({
-    accepted: true,
-    queued: valid.length,
-    rejected: preview.filter(p => p.status === 'rejected').length,
-    note: '已存入待审队列；维护者审核后通过 scripts/build_flywheel_layer.mjs 合入贡献层并部署，方进入公开裁决流。',
-    preview,
-  }, null, 2), { status: 200, headers: corsHeaders });
+  return new Response(
+    JSON.stringify(
+      {
+        accepted: true,
+        queued: valid.length,
+        rejected: preview.filter((p) => p.status === 'rejected').length,
+        note: '已存入待审队列；维护者审核后通过 scripts/build_flywheel_layer.mjs 合入贡献层并部署，方进入公开裁决流。',
+        preview,
+      },
+      null,
+      2,
+    ),
+    { status: 200, headers: corsHeaders },
+  );
 }

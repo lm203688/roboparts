@@ -43,7 +43,7 @@ function mapEntityKind(ent) {
     const specKeywords = ['usb', 'can', 'rs', 'ieee', 'ethernet', 'tcp', 'ip', 'protocol'];
     const typeLower = type.toLowerCase();
     const nameLower = name.toLowerCase();
-    if (specKeywords.some(k => typeLower.includes(k) || nameLower.includes(k))) {
+    if (specKeywords.some((k) => typeLower.includes(k) || nameLower.includes(k))) {
       return 'specification';
     }
     // Physical connectors stay as component
@@ -64,7 +64,7 @@ function mapEntityKind(ent) {
     const orgKeywords = ['ai', 'robot', 'inc', 'corp', 'tech', 'co.', 'ltd', 'group'];
     const typeLower = type.toLowerCase();
     const nameLower = name.toLowerCase();
-    if (orgKeywords.some(k => typeLower.includes(k) || nameLower.includes(k))) {
+    if (orgKeywords.some((k) => typeLower.includes(k) || nameLower.includes(k))) {
       return 'organization';
     }
     // Check entity_type
@@ -89,7 +89,7 @@ function mapEntityKind(ent) {
 }
 
 let changed = 0;
-ents.forEach(ent => {
+ents.forEach((ent) => {
   const old = ent.entity_kind;
   const newKind = mapEntityKind(ent);
   if (old !== newKind) {
@@ -107,9 +107,9 @@ const samples = {
   'IF-001': 'specification',
   'LLM-001': 'software',
   'RAI-001': 'software',
-  'ACT-001': 'component'
+  'ACT-001': 'component',
 };
-ents.forEach(ent => {
+ents.forEach((ent) => {
   const id = ent.id || ent.rp_id || '';
   if (samples[id]) {
     const expected = samples[id];
@@ -122,36 +122,38 @@ ents.forEach(ent => {
 // Now recalculate everything
 const total = ents.length;
 const kinds = {};
-ents.forEach(x => { kinds[x.entity_kind] = (kinds[x.entity_kind]||0)+1; });
+ents.forEach((x) => {
+  kinds[x.entity_kind] = (kinds[x.entity_kind] || 0) + 1;
+});
 console.log('entity_kind distribution:', kinds);
 console.log('changed:', changed);
 
 // Update meta
-const clean = ents.filter(x => !x.quarantine).length;
-const realA = ents.filter(x => x.source_tier === 'A' && !x.quarantine).length;
-const tierB = ents.filter(x => x.source_tier === 'B' && !x.quarantine).length;
-const tierC = ents.filter(x => x.source_tier === 'C' && !x.quarantine).length;
-const sourceCount = ents.filter(x => x.source).length;
-const lastVerified = ents.filter(x => x.last_verified).length;
-const verifiedTrue = ents.filter(x => x.verified === true).length;
-const verifiedFalse = ents.filter(x => x.verified === false).length;
+const clean = ents.filter((x) => !x.quarantine).length;
+const realA = ents.filter((x) => x.source_tier === 'A' && !x.quarantine).length;
+const tierB = ents.filter((x) => x.source_tier === 'B' && !x.quarantine).length;
+const tierC = ents.filter((x) => x.source_tier === 'C' && !x.quarantine).length;
+const sourceCount = ents.filter((x) => x.source).length;
+const lastVerified = ents.filter((x) => x.last_verified).length;
+const verifiedTrue = ents.filter((x) => x.verified === true).length;
+const verifiedFalse = ents.filter((x) => x.verified === false).length;
 
 // mechanical_interface coverage
-const declared = ents.filter(x => x.mechanical_interface?.status === 'declared').length;
-const partial = ents.filter(x => x.mechanical_interface?.status === 'partial').length;
-const not_declared = ents.filter(x => x.mechanical_interface?.status === 'not_declared').length;
-const n_a = ents.filter(x => x.mechanical_interface?.status === 'n_a').length;
+const declared = ents.filter((x) => x.mechanical_interface?.status === 'declared').length;
+const partial = ents.filter((x) => x.mechanical_interface?.status === 'partial').length;
+const not_declared = ents.filter((x) => x.mechanical_interface?.status === 'not_declared').length;
+const n_a = ents.filter((x) => x.mechanical_interface?.status === 'n_a').length;
 
 // breakdown
 const breakdown = {};
-ents.forEach(x => {
+ents.forEach((x) => {
   const dq = typeof x.data_quality === 'string' ? x.data_quality : 'ok';
-  breakdown[dq] = (breakdown[dq]||0)+1;
+  breakdown[dq] = (breakdown[dq] || 0) + 1;
 });
 
 // facts counts for 5 categories
 const kindCounts = {};
-Object.keys(kinds).forEach(k => kindCounts[k + '_entities'] = kinds[k]);
+Object.keys(kinds).forEach((k) => (kindCounts[k + '_entities'] = kinds[k]));
 
 const now = new Date().toISOString();
 
@@ -167,19 +169,22 @@ e.meta.total_entities = total;
 
 e.meta.data_quality = {
   audited_at: now,
-  total, clean, quarantined: total - clean,
-  quarantine_pct: ((total-clean)/total*100).toFixed(2),
+  total,
+  clean,
+  quarantined: total - clean,
+  quarantine_pct: (((total - clean) / total) * 100).toFixed(2),
   breakdown,
   policy: 'quarantine=true 的条目不删除，前端默认不进选型结果',
-  duplicate_policy: '同名同厂商的重复登记只保留一条规范条目，其余标 data_quality=duplicate + duplicate_of=<规范 id> 并隔离。',
-  duplicates_resolved: e.meta.data_quality?.duplicates_resolved || []
+  duplicate_policy:
+    '同名同厂商的重复登记只保留一条规范条目，其余标 data_quality=duplicate + duplicate_of=<规范 id> 并隔离。',
+  duplicates_resolved: e.meta.data_quality?.duplicates_resolved || [],
 };
 
 e.meta.provenance_coverage = {
-  source_pct: (sourceCount/total*100).toFixed(2),
-  traceable_pct: parseFloat((realA/total*100).toFixed(2)),
+  source_pct: ((sourceCount / total) * 100).toFixed(2),
+  traceable_pct: parseFloat(((realA / total) * 100).toFixed(2)),
   confidence_pct: 100,
-  last_verified_pct: (lastVerified/total*100).toFixed(2),
+  last_verified_pct: ((lastVerified / total) * 100).toFixed(2),
   tier_a_traceable: realA,
   tier_b_attributable: tierB,
   tier_c_none: tierC,
@@ -188,25 +193,34 @@ e.meta.provenance_coverage = {
   verify_threshold: 0.6,
   clean_set: {
     total: clean,
-    source_pct: (ents.filter(x => x.source && !x.quarantine).length/clean*100).toFixed(2),
-    traceable_pct: parseFloat((realA/clean*100).toFixed(2)),
+    source_pct: ((ents.filter((x) => x.source && !x.quarantine).length / clean) * 100).toFixed(2),
+    traceable_pct: parseFloat(((realA / clean) * 100).toFixed(2)),
     confidence_pct: 100,
-    last_verified_pct: (ents.filter(x => x.last_verified && !x.quarantine).length/clean*100).toFixed(2),
+    last_verified_pct: (
+      (ents.filter((x) => x.last_verified && !x.quarantine).length / clean) *
+      100
+    ).toFixed(2),
   },
   tier_definition: {
     A: '可点开复核的一手来源（官方规格书/标准文本/带链接厂商文档）',
     B: '弱归因（厂商目录声明值、官网首页，无原始链接）',
-    C: '无溯源（历史导入，待补来源，confidence 上限 0.30）'
+    C: '无溯源（历史导入，待补来源，confidence 上限 0.30）',
   },
   tier_rule: 'source_tier 由证据形态推导，不由录入者自封。判据唯一源 scripts/govern_source_tier.py',
   total_clean: clean,
-  total
+  total,
 };
 
 e.meta.mechanical_interface_coverage = {
-  total, declared, partial, not_declared, not_applicable: n_a,
-  coupled_categories: ['actuators','sensors','platforms','flexible_actuators','connectors'],
-  coupled_count: ents.filter(x => ['actuators','sensors','platforms','flexible_actuators','connectors'].includes(x.category)).length
+  total,
+  declared,
+  partial,
+  not_declared,
+  not_applicable: n_a,
+  coupled_categories: ['actuators', 'sensors', 'platforms', 'flexible_actuators', 'connectors'],
+  coupled_count: ents.filter((x) =>
+    ['actuators', 'sensors', 'platforms', 'flexible_actuators', 'connectors'].includes(x.category),
+  ).length,
 };
 
 e.meta.entity_kinds = kinds;
@@ -215,7 +229,7 @@ e.meta.entity_kinds.definition = {
   specification: '规范/协议类条目（EtherCAT/USB/ISO 标准等）',
   software: '软件/模型类条目（GPT-4o/GR00T 等 AI 模型）',
   organization: '企业主体（Figure AI/波士顿动力 等公司）',
-  market_intelligence: '市场情报/非实体信息'
+  market_intelligence: '市场情报/非实体信息',
 };
 
 // Write with newline
@@ -227,30 +241,86 @@ console.log('kindCounts:', kindCounts);
 
 // Now rebuild all derived files
 // data.json
-const dj = {meta:{generated_from:'entities.json',generated_at:now,entity_count:total,total_entities:total,note:'Read-only projection'},count:total,data:ents.map(x=>({...x}))};
+const dj = {
+  meta: {
+    generated_from: 'entities.json',
+    generated_at: now,
+    entity_count: total,
+    total_entities: total,
+    note: 'Read-only projection',
+  },
+  count: total,
+  data: ents.map((x) => ({ ...x })),
+};
 fs.writeFileSync('api/data.json', JSON.stringify(dj, null, 2), 'utf8');
 
 // graph.json
-const compat = JSON.parse(fs.readFileSync('api/compatibility.json','utf8'));
-const edges = (compat.rules||[]).map(r => ({from:r.from_rp_id||r.from,to:r.to_rp_id||r.to,type:r.relationship_type||'compatible',derived:r.derived||false,confidence:r.confidence||0.85}));
-fs.writeFileSync('api/graph.json', JSON.stringify({meta:{generated_from:'entities.json + compatibility.json',generated_at:now,node_count:total,edge_count:edges.length},nodes:ents.map(x=>({id:x.rp_id||x.id,label:x.name||x.name_en||x.id,category:x.category,manufacturer:x.manufacturer,entity_kind:x.entity_kind})),edges}, null, 2), 'utf8');
+const compat = JSON.parse(fs.readFileSync('api/compatibility.json', 'utf8'));
+const edges = (compat.rules || []).map((r) => ({
+  from: r.from_rp_id || r.from,
+  to: r.to_rp_id || r.to,
+  type: r.relationship_type || 'compatible',
+  derived: r.derived || false,
+  confidence: r.confidence || 0.85,
+}));
+fs.writeFileSync(
+  'api/graph.json',
+  JSON.stringify(
+    {
+      meta: {
+        generated_from: 'entities.json + compatibility.json',
+        generated_at: now,
+        node_count: total,
+        edge_count: edges.length,
+      },
+      nodes: ents.map((x) => ({
+        id: x.rp_id || x.id,
+        label: x.name || x.name_en || x.id,
+        category: x.category,
+        manufacturer: x.manufacturer,
+        entity_kind: x.entity_kind,
+      })),
+      edges,
+    },
+    null,
+    2,
+  ),
+  'utf8',
+);
 
 // Category JSONs
-Object.keys(e.meta.category_counts).forEach(cat => {
-  const catEnts = ents.filter(x => x.category === cat);
-  fs.writeFileSync('api/'+cat+'.json', JSON.stringify({meta:{category:cat,source:'entities.json projection',generated_at:now},count:catEnts.length,updated:now,data:catEnts}, null, 2), 'utf8');
+Object.keys(e.meta.category_counts).forEach((cat) => {
+  const catEnts = ents.filter((x) => x.category === cat);
+  fs.writeFileSync(
+    'api/' + cat + '.json',
+    JSON.stringify(
+      {
+        meta: { category: cat, source: 'entities.json projection', generated_at: now },
+        count: catEnts.length,
+        updated: now,
+        data: catEnts,
+      },
+      null,
+      2,
+    ),
+    'utf8',
+  );
 });
 
 // data.js
 const db = { updated: now, stats: e.meta.category_counts };
-Object.keys(e.meta.category_counts).forEach(cat => { db[cat] = ents.filter(x => x.category === cat); });
+Object.keys(e.meta.category_counts).forEach((cat) => {
+  db[cat] = ents.filter((x) => x.category === cat);
+});
 fs.writeFileSync('data.js', 'const DB = ' + JSON.stringify(db) + ';\n', 'utf8');
 
 // agent-discovery.json
-let ad = JSON.parse(fs.readFileSync('agent-discovery.json','utf8'));
+const ad = JSON.parse(fs.readFileSync('agent-discovery.json', 'utf8'));
 ad.total_entities = total;
 ad.categories = {};
-Object.keys(e.meta.category_counts).forEach(k => { ad.categories[k] = e.meta.category_counts[k]; });
+Object.keys(e.meta.category_counts).forEach((k) => {
+  ad.categories[k] = e.meta.category_counts[k];
+});
 fs.writeFileSync('agent-discovery.json', JSON.stringify(ad, null, 2), 'utf8');
 
 console.log('All derived files rebuilt');

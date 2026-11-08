@@ -112,7 +112,7 @@ async function hitOnce(path, init = {}) {
     });
     return { path, status: r.status, ms: Date.now() - t0 };
   } catch (e) {
-    return { path, status: 0, ms: Date.now() - t0, error: String(e && e.message || e) };
+    return { path, status: 0, ms: Date.now() - t0, error: String((e && e.message) || e) };
   }
 }
 
@@ -164,27 +164,43 @@ async function main() {
   const bad = results.filter((r) => !r.pass);
   const transportBad = bad.filter((r) => r.transport);
   if (asJson) {
-    console.log(JSON.stringify({
-      target: TARGET, results, failed: bad.length,
-      // 分开给出，读的人（含下一轮的我）才不会把"我这边没网"写成"站点断链"
-      site_failures: bad.length - transportBad.length,
-      transport_failures: transportBad.length,
-      flaky_recovered: results.filter((r) => r.recovered).length,
-    }, null, 2));
+    console.log(
+      JSON.stringify(
+        {
+          target: TARGET,
+          results,
+          failed: bad.length,
+          // 分开给出，读的人（含下一轮的我）才不会把"我这边没网"写成"站点断链"
+          site_failures: bad.length - transportBad.length,
+          transport_failures: transportBad.length,
+          flaky_recovered: results.filter((r) => r.recovered).length,
+        },
+        null,
+        2,
+      ),
+    );
   } else {
     console.log(`=== RoboParts 探活 · ${TARGET} · 隔离头已带（不污染真实遥测）===`);
     for (const r of results) {
       const note = r.recovered ? `  (第${r.recovered}次重试才通·瞬断)` : '';
       const kind = r.transport ? `  [传输层无响应 ×${r.attempts}]` : '';
-      console.log(`${r.pass ? '✅' : '❌'} ${String(r.status).padStart(3)} ${String(r.ms).padStart(5)}ms  ${r.path}${kind}${note}${r.error ? '  ' + r.error : ''}`);
+      console.log(
+        `${r.pass ? '✅' : '❌'} ${String(r.status).padStart(3)} ${String(r.ms).padStart(5)}ms  ${r.path}${kind}${note}${r.error ? '  ' + r.error : ''}`,
+      );
     }
     const flaky = results.filter((r) => r.recovered).length;
     if (flaky) console.log(`\n⚠️  ${flaky} 条经重试后恢复（本机网络瞬断，非站点故障）`);
     if (transportBad.length) {
-      console.log(`\n❗ ${transportBad.length} 条连续 ${TRANSPORT_RETRIES} 次拿不到响应：` +
-        `先确认本机出网，再判定站点 —— 不要直接写成"站点断链"`);
+      console.log(
+        `\n❗ ${transportBad.length} 条连续 ${TRANSPORT_RETRIES} 次拿不到响应：` +
+          `先确认本机出网，再判定站点 —— 不要直接写成"站点断链"`,
+      );
     }
-    console.log(bad.length ? `\n❌ ${bad.length}/${results.length} 条异常` : `\n✅ 全部 ${results.length} 条正常`);
+    console.log(
+      bad.length
+        ? `\n❌ ${bad.length}/${results.length} 条异常`
+        : `\n✅ 全部 ${results.length} 条正常`,
+    );
   }
   process.exit(bad.length ? 1 : 0);
 }

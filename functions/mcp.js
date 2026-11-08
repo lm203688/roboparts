@@ -85,10 +85,26 @@ const HOSTED_HONEST_LIMITS = [
  * 文案里也别写死个数，用 `${CATEGORIES.length}` 现算。
  */
 const CATEGORIES = [
-  'actuators', 'sensors', 'chips', 'interfaces', 'protocols',
-  'llms', 'platforms', 'flexible_actuators', 'robot_ai_models', 'data_acquisition',
-  'connectors', 'integrated_joints', 'reducers', 'controllers', 'grippers',
-  'structural', 'cables', 'power', 'pcb', 'bionic_mechanisms',
+  'actuators',
+  'sensors',
+  'chips',
+  'interfaces',
+  'protocols',
+  'llms',
+  'platforms',
+  'flexible_actuators',
+  'robot_ai_models',
+  'data_acquisition',
+  'connectors',
+  'integrated_joints',
+  'reducers',
+  'controllers',
+  'grippers',
+  'structural',
+  'cables',
+  'power',
+  'pcb',
+  'bionic_mechanisms',
 ];
 
 /**
@@ -113,7 +129,8 @@ const RESOURCES = [
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Accept, Authorization, MCP-Protocol-Version, Mcp-Session-Id',
+  'Access-Control-Allow-Headers':
+    'Content-Type, Accept, Authorization, MCP-Protocol-Version, Mcp-Session-Id',
   'Access-Control-Expose-Headers': 'Mcp-Session-Id, MCP-Protocol-Version',
   'Access-Control-Max-Age': '86400',
 };
@@ -147,7 +164,9 @@ function shardOf() {
   return _shard;
 }
 
-function bump(key, n = 1) { _buf[key] = (_buf[key] || 0) + n; }
+function bump(key, n = 1) {
+  _buf[key] = (_buf[key] || 0) + n;
+}
 
 /* 【20260806-15】flush 串行化 —— 修一个「计数器自己在丢数」的静默缺陷。
  *
@@ -178,7 +197,11 @@ function bump(key, n = 1) { _buf[key] = (_buf[key] || 0) + n; }
 let _flushChain = Promise.resolve();
 
 function scheduleFlush(context) {
-  _flushChain = _flushChain.then(() => flushMcp(context.env)).catch(() => {});
+  _flushChain = _flushChain
+    .then(() => flushMcp(context.env))
+    .catch(() => {
+      /* flush 失败不致命 */
+    });
   context.waitUntil(_flushChain);
 }
 
@@ -192,14 +215,21 @@ async function flushMcp(env) {
   const kv = env && env.USER_CREDITS;
   if (!kv) return;
   const day = new Date().toISOString().slice(0, 10);
-  if (day !== _writeDay) { _writeDay = day; _writes = 0; }
+  if (day !== _writeDay) {
+    _writeDay = day;
+    _writes = 0;
+  }
   if (_writes >= MAX_WRITES_PER_ISOLATE_DAY) return;
   const entries = Object.entries(_buf);
   _buf = Object.create(null);
   _writes++;
   const key = `metrics:${day}:s${shardOf()}`;
   let prev = {};
-  try { prev = (await kv.get(key, { type: 'json' })) || {}; } catch { /* 读失败按新建处理 */ }
+  try {
+    prev = (await kv.get(key, { type: 'json' })) || {};
+  } catch {
+    /* 读失败按新建处理 */
+  }
   for (const [k, v] of entries) prev[k] = (prev[k] || 0) + v;
   prev._updated = new Date().toISOString();
   await kv.put(key, JSON.stringify(prev), { expirationTtl: METRIC_TTL });
@@ -222,7 +252,8 @@ const SELFTEST_HEADER = 'x-roboparts-selftest';
  * User-Agent 是 tools/call 现场唯一稳定可得的调用方线索，故在此分类落盘，
  * 让业务调用从下一次起真正可分账。
  * ─────────────────────────────────────────────────────────────────────────── */
-const PROBE_UA_RE = /probe|verifymcp|enricher|scanner|health[-_]?check|monitor|inspector|glama|glimind|mcpbeat|scoring/i;
+const PROBE_UA_RE =
+  /probe|verifymcp|enricher|scanner|health[-_]?check|monitor|inspector|glama|glimind|mcpbeat|scoring/i;
 
 /** 归因粒度刻意取粗：probe/script/browser/bot/unknown，避免 KV 键爆炸。 */
 function callerKind(context) {
@@ -235,7 +266,9 @@ function callerKind(context) {
     if (/bot|spider|crawler/i.test(ua)) return 'bot';
     if (/mozilla|safari|chrome/i.test(ua)) return 'browser';
     return 'unknown';
-  } catch { return 'unknown'; }
+  } catch {
+    return 'unknown';
+  }
 }
 
 function recordMcp(context, event) {
@@ -246,7 +279,9 @@ function recordMcp(context, event) {
     // 不能像普通流量那样等下一个请求来触发 —— 零流量站点上那等于永久丢失。
     // 经 scheduleFlush 串行化，避免同一请求内两次 record 的 flush 互相覆盖。
     scheduleFlush(context);
-  } catch { /* 遥测永不影响主流程 */ }
+  } catch {
+    /* 遥测永不影响主流程 */
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -281,7 +316,11 @@ const TOOLS = [
             '多个词不做 AND 拆分，"harmonic drive 20Nm" 会被当作一整个串匹配，实测返回 0 条；' +
             '请只给一个词（如 "harmonic" 命中 9 条），再用 category 收窄。',
         },
-        limit: { type: 'number', description: '返回条数上限，默认 10，最大 50（超出按 50 截断）。', default: 10 },
+        limit: {
+          type: 'number',
+          description: '返回条数上限，默认 10，最大 50（超出按 50 截断）。',
+          default: 10,
+        },
         include_market_intelligence: {
           type: 'boolean',
           description:
@@ -330,7 +369,8 @@ const TOOLS = [
         },
         component2_id: {
           type: 'string',
-          description: '零件 2 的 ID，取值方式同 component1_id。两个 ID 可以属于不同品类（跨品类比对正是本工具的用途）。',
+          description:
+            '零件 2 的 ID，取值方式同 component1_id。两个 ID 可以属于不同品类（跨品类比对正是本工具的用途）。',
         },
       },
       required: ['component1_id', 'component2_id'],
@@ -347,7 +387,8 @@ const TOOLS = [
       properties: {
         ids: {
           type: 'array',
-          description: '待对比零部件 ID 数组（2~6 个），形如 ["ACT-001", "ACT-002"]。请先用 search_components 确认 ID。',
+          description:
+            '待对比零部件 ID 数组（2~6 个），形如 ["ACT-001", "ACT-002"]。请先用 search_components 确认 ID。',
           items: { type: 'string' },
           minItems: 2,
           maxItems: 6,
@@ -382,7 +423,11 @@ const TOOLS = [
             '每条结果会附 price_fit：within（确定在预算内）/ partial（区间跨越预算）/ unknown（库内无价格，未经校验）。' +
             '不传则不做任何价格筛选，也不返回 price_fit。',
         },
-        count: { type: 'number', description: '每品类返回条数，默认 3，上限 10（超出按 10 截断）。四个品类各自独立计数。', default: 3 },
+        count: {
+          type: 'number',
+          description: '每品类返回条数，默认 3，上限 10（超出按 10 截断）。四个品类各自独立计数。',
+          default: 3,
+        },
       },
       required: ['application'],
     },
@@ -429,9 +474,15 @@ const TOOLS = [
       properties: {
         query: {
           type: 'string',
-          description: '自然语言查询，如"六维力传感器 防水"或"ROS2 通信模组"。中英文均可，建议具体。',
+          description:
+            '自然语言查询，如"六维力传感器 防水"或"ROS2 通信模组"。中英文均可，建议具体。',
         },
-        k: { type: 'number', description: '语义召回返回的候选零部件条数（top-k），默认 5，取值 1–30；数值越大召回越广但越可能偏离查询意图。', default: 5 },
+        k: {
+          type: 'number',
+          description:
+            '语义召回返回的候选零部件条数（top-k），默认 5，取值 1–30；数值越大召回越广但越可能偏离查询意图。',
+          default: 5,
+        },
       },
       required: ['query'],
     },
@@ -473,7 +524,7 @@ const TOOLS = [
           description: '零件 2 的 ID，取值方式同 component1_id。两个 ID 可以属于不同品类。',
         },
       },
-        required: ['component1_id', 'component2_id'],
+      required: ['component1_id', 'component2_id'],
     },
   },
   {
@@ -543,11 +594,13 @@ const TOOLS = [
       properties: {
         component1_id: {
           type: 'string',
-          description: '零件 1 的 ID，形如 ACT-001 / GRIP-002 / SENS-852。请先用 search_components 取得。',
+          description:
+            '零件 1 的 ID，形如 ACT-001 / GRIP-002 / SENS-852。请先用 search_components 取得。',
         },
         component2_id: {
           type: 'string',
-          description: '零件 2 的 ID。若省略，则只返回库级聚合结论（frontier 概览 + composed 归因）。',
+          description:
+            '零件 2 的 ID。若省略，则只返回库级聚合结论（frontier 概览 + composed 归因）。',
         },
       },
       required: [],
@@ -614,7 +667,10 @@ const TOOLS = [
     inputSchema: {
       type: 'object',
       properties: {
-        host: { type: 'string', description: '宿主机器人 id，如 HUB-030（UR3e）、HUB-031（UR5e）、SUPERDEX-fr3。' },
+        host: {
+          type: 'string',
+          description: '宿主机器人 id，如 HUB-030（UR3e）、HUB-031（UR5e）、SUPERDEX-fr3。',
+        },
         a: { type: 'string', description: '器件 A 的实体 id，如 ACT-028。需与 b 同时给。' },
         b: { type: 'string', description: '器件 B 的实体 id，如 SENS-047。需与 a 同时给。' },
       },
@@ -693,7 +749,10 @@ const TOOLS = [
           description: `品类：${CATEGORIES.join(' / ')}`,
           enum: CATEGORIES,
         },
-        verdict_id: { type: 'string', description: '判定 verdict_id（hosted 端点仅当前请求内可查）' },
+        verdict_id: {
+          type: 'string',
+          description: '判定 verdict_id（hosted 端点仅当前请求内可查）',
+        },
         max_gaps: { type: 'number', description: '最多返回多少条缺口', default: 20 },
       },
     },
@@ -723,8 +782,7 @@ const TOOLS = [
   {
     name: 'get_task_status',
     description:
-      '查询长任务状态。' +
-      '★ hosted 端点无跨请求任务句柄，返回 honest_note 引导到 stdio 模式。',
+      '查询长任务状态。' + '★ hosted 端点无跨请求任务句柄，返回 honest_note 引导到 stdio 模式。',
     inputSchema: {
       type: 'object',
       properties: {
@@ -800,8 +858,9 @@ async function toolExplainComposeFrontier(env, request, args) {
   const out = {
     engine: 'scripts/compose_engine.py',
     caliber: CALIBER,
-    warning: '本口径与 check_compatibility 的四维（protocol/electrical/mechanical/software）'
-      + '维度不同，两者结论不可混用或直接比较。',
+    warning:
+      '本口径与 check_compatibility 的四维（protocol/electrical/mechanical/software）' +
+      '维度不同，两者结论不可混用或直接比较。',
   };
 
   const [sem, frontier] = await Promise.all([
@@ -814,8 +873,9 @@ async function toolExplainComposeFrontier(env, request, args) {
       ...out,
       error: 'compose_semantics.json 不可用',
       error_kind: 'data_unavailable',
-      note: '该产物由 scripts/build_compose_semantics.py 生成。未部署或构建失败时如实报错，'
-        + '不用其他口径的结论冒充。',
+      note:
+        '该产物由 scripts/build_compose_semantics.py 生成。未部署或构建失败时如实报错，' +
+        '不用其他口径的结论冒充。',
     };
   }
 
@@ -829,20 +889,23 @@ async function toolExplainComposeFrontier(env, request, args) {
       ...out,
       scope: 'library',
       overall_counts: agg.overall_counts || null,
-      note: '本库三轴 AND 收敛下 composed 通常为 0——这是**关系类型错配而非数据缺口**：'
-        + 'cobot EOAT（夹爪 + 力传感器）共享同一 ISO 9409-1 法兰、各占机器人侧一个电气端口，'
-        + '真实关系是「共装 co-mount」而非「点对点直连」。详见 frontier 段。',
-      frontier: frontier ? {
-        l1_cross_role_pairs: frontier.summary?.l1_pairs,
-        l1_nodes: frontier.summary?.l1_cross_role_nodes,
-        l2_pairs: frontier.summary?.l2_pairs,
-        l2_nodes: frontier.summary?.l2_nodes,
-        l3_composed_pairs: frontier.summary?.l3_pairs,
-        co_mount_hypothesis: frontier.co_mount_theorem?.statement || null,
-        co_mount_sample_caveat:
-          frontier.co_mount_theorem?.empirical_support?.sample_caveat || null,
-        flange_profile: frontier.summary?.co_mount_flange_profile || null,
-      } : null,
+      note:
+        '本库三轴 AND 收敛下 composed 通常为 0——这是**关系类型错配而非数据缺口**：' +
+        'cobot EOAT（夹爪 + 力传感器）共享同一 ISO 9409-1 法兰、各占机器人侧一个电气端口，' +
+        '真实关系是「共装 co-mount」而非「点对点直连」。详见 frontier 段。',
+      frontier: frontier
+        ? {
+            l1_cross_role_pairs: frontier.summary?.l1_pairs,
+            l1_nodes: frontier.summary?.l1_cross_role_nodes,
+            l2_pairs: frontier.summary?.l2_pairs,
+            l2_nodes: frontier.summary?.l2_nodes,
+            l3_composed_pairs: frontier.summary?.l3_pairs,
+            co_mount_hypothesis: frontier.co_mount_theorem?.statement || null,
+            co_mount_sample_caveat:
+              frontier.co_mount_theorem?.empirical_support?.sample_caveat || null,
+            flange_profile: frontier.summary?.co_mount_flange_profile || null,
+          }
+        : null,
       how_to_ask_about_a_pair: '传入 component1_id 与 component2_id 可得逐对逐轴裁决。',
     };
   }
@@ -857,8 +920,9 @@ async function toolExplainComposeFrontier(env, request, args) {
       component2_id: a2,
       error: 'compose_frontier.json 未携带 pair_index，无法给出逐对结论',
       error_kind: 'data_unavailable',
-      hint: '当前 compose_semantics.json 只存库级聚合（避免 42 万对全量落盘）。'
-        + '逐对结论请用 check_compatibility，或等本仓为研究层产物补 pair 索引。',
+      hint:
+        '当前 compose_semantics.json 只存库级聚合（避免 42 万对全量落盘）。' +
+        '逐对结论请用 check_compatibility，或等本仓为研究层产物补 pair 索引。',
       library_overall_counts: agg.overall_counts || null,
     };
   }
@@ -872,8 +936,9 @@ async function toolExplainComposeFrontier(env, request, args) {
       component2_id: a2,
       error: '该配对不在研究层的可判定集合内（pair_index 未命中）',
       error_kind: 'not_found',
-      note: '研究层的 213,531 对无序空间是**裁决空间**，不是全部配对；'
-        + '未命中通常意味着该对至少一侧无可组合端口。',
+      note:
+        '研究层的 213,531 对无序空间是**裁决空间**，不是全部配对；' +
+        '未命中通常意味着该对至少一侧无可组合端口。',
     };
   }
   return {
@@ -957,8 +1022,15 @@ async function toolExplainUnknown(env, request, args = {}) {
       };
     }
     // 提取所有带 evidence_gap / gap / verdict_reason 语义的字段
-    const UNKNOWN_KEYS = ['evidence_gaps', 'evidence_gap', 'gaps', 'unknown_fields',
-                          'verdict_reason', 'gap_cause', 'missing_fields'];
+    const UNKNOWN_KEYS = [
+      'evidence_gaps',
+      'evidence_gap',
+      'gaps',
+      'unknown_fields',
+      'verdict_reason',
+      'gap_cause',
+      'missing_fields',
+    ];
     const evidenceGaps = [];
     for (const key of UNKNOWN_KEYS) {
       if (key in item) {
@@ -984,9 +1056,10 @@ async function toolExplainUnknown(env, request, args = {}) {
       evidence_gaps: evidenceGaps.length > 0 ? evidenceGaps.slice(0, limit) : [],
       null_or_unknown_fields: nullFields,
       gap_count: evidenceGaps.length + nullFields.length,
-      summary: evidenceGaps.length === 0 && nullFields.length === 0
-        ? 'no_gaps: 该实体字段完整，不是 unknown 来源'
-        : `${evidenceGaps.length} 组显式 gap 记录 + ${nullFields.length} 个空/unknown 字段`,
+      summary:
+        evidenceGaps.length === 0 && nullFields.length === 0
+          ? 'no_gaps: 该实体字段完整，不是 unknown 来源'
+          : `${evidenceGaps.length} 组显式 gap 记录 + ${nullFields.length} 个空/unknown 字段`,
       honest_note: '字段级扫描，不代表完整因果归因；完整归因见 api/gap_classification.json',
       evidence_version: SERVER_VERSION,
     };
@@ -995,31 +1068,44 @@ async function toolExplainUnknown(env, request, args = {}) {
   // --- 分支 3：无参降级：全库摘要 ---
   const { list, map } = await getEntities(env, request);
   const byCat = {};
-  let total = 0, nNull = 0, nGap = 0;
+  let total = 0,
+    nNull = 0,
+    nGap = 0;
   for (const item of list) {
     const cat = item.category || 'unknown';
     if (!byCat[cat]) byCat[cat] = { total: 0, with_gaps: 0, with_null: 0 };
     byCat[cat].total += 1;
     total += 1;
-    let hasGap = false, hasNull = false;
+    let hasGap = false,
+      hasNull = false;
     for (const key of ['evidence_gaps', 'evidence_gap', 'gaps', 'gap_cause']) {
-      if (key in item) { hasGap = true; break; }
+      if (key in item) {
+        hasGap = true;
+        break;
+      }
     }
     for (const v of Object.values(item)) {
       if (v === null || v === undefined || v === 'unknown' || v === 'N/A' || v === '') {
-        hasNull = true; break;
+        hasNull = true;
+        break;
       }
     }
-    if (hasGap) { byCat[cat].with_gaps += 1; nGap += 1; }
-    if (hasNull) { byCat[cat].with_null += 1; nNull += 1; }
+    if (hasGap) {
+      byCat[cat].with_gaps += 1;
+      nGap += 1;
+    }
+    if (hasNull) {
+      byCat[cat].with_null += 1;
+      nNull += 1;
+    }
   }
   return {
     mode: 'library_summary',
     total_entities: total,
     entities_with_null_or_unknown: nNull,
     entities_with_evidence_gaps: nGap,
-    null_or_unknown_rate: total > 0 ? (nNull / total * 100).toFixed(2) + '%' : '0%',
-    evidence_gap_rate: total > 0 ? (nGap / total * 100).toFixed(2) + '%' : '0%',
+    null_or_unknown_rate: total > 0 ? ((nNull / total) * 100).toFixed(2) + '%' : '0%',
+    evidence_gap_rate: total > 0 ? ((nGap / total) * 100).toFixed(2) + '%' : '0%',
     by_category: byCat,
     honest_note: '全库扫描，字段级而非因果级；精确归因见 api/gap_classification.json',
     evidence_version: SERVER_VERSION,
@@ -1044,7 +1130,7 @@ function toolTraceReplayHosted(args = {}) {
     try {
       obj = JSON.parse(line);
     } catch (e) {
-      errors.push({ line: i, error: 'parse_failed', message: String(e && e.message || e) });
+      errors.push({ line: i, error: 'parse_failed', message: String((e && e.message) || e) });
       if (strict) break;
       continue;
     }
@@ -1053,7 +1139,7 @@ function toolTraceReplayHosted(args = {}) {
       if (strict) break;
       continue;
     }
-    const missing = ['trace_id', 'tool', 'ts'].filter(k => !(k in obj));
+    const missing = ['trace_id', 'tool', 'ts'].filter((k) => !(k in obj));
     if (missing.length > 0) {
       errors.push({ line: i, error: 'missing_field', missing });
       if (strict) break;
@@ -1061,8 +1147,8 @@ function toolTraceReplayHosted(args = {}) {
     }
     events.push(obj);
   }
-  const uniqueTools = Array.from(new Set(events.map(e => e.tool)));
-  const uniqueTraces = new Set(events.map(e => e.trace_id)).size;
+  const uniqueTools = Array.from(new Set(events.map((e) => e.tool)));
+  const uniqueTraces = new Set(events.map((e) => e.trace_id)).size;
   return {
     mode: 'hosted_replay',
     replayed: events.length,
@@ -1105,41 +1191,53 @@ async function toolExplainResearchLayer(env, request, kind) {
     comount: {
       path: 'api/co_mount.json',
       title: '共装裁决（第三种关系类型：三段 A↔宿主↔B）',
-      use: '用户问「这台机器人能不能同时装夹爪 A 和传感器 B」'
-        + '「两个夹爪能一起装吗」「为什么判 port_exhausted」时。',
-      picks: ['meta', 'summary', 'relation_semantics', 'single_mount',
-              'pair_verdicts', 'examples_mountable', 'examples_port_exhausted'],
+      use:
+        '用户问「这台机器人能不能同时装夹爪 A 和传感器 B」' +
+        '「两个夹爪能一起装吗」「为什么判 port_exhausted」时。',
+      picks: [
+        'meta',
+        'summary',
+        'relation_semantics',
+        'single_mount',
+        'pair_verdicts',
+        'examples_mountable',
+        'examples_port_exhausted',
+      ],
     },
     toolside: {
       path: 'api/robot_tool_side.json',
       title: '宿主工具侧接口取证（法兰/位数/连接器）',
-      use: '用户问「这台机器人工具侧有几个接口」「tool_io_ports 是多少」'
-        + '「为什么 FR3 判 unknown」时。',
+      use:
+        '用户问「这台机器人工具侧有几个接口」「tool_io_ports 是多少」' +
+        '「为什么 FR3 判 unknown」时。',
       picks: ['meta', 'hosts', 'coverage'],
     },
     behavior: {
       path: 'api/behavior_evidence.json',
       title: '行为证据（真机 benchmark 度量，非本仓自造日志）',
-      use: '用户问「这个模型真机表现如何」「有没有实测成功率」'
-        + '「仿真和真机成绩能混吗」时。',
-      picks: ['meta', 'summary', 'per_model', 'records', 'not_modelled',
-              'honest_limits'],
+      use: '用户问「这个模型真机表现如何」「有没有实测成功率」' + '「仿真和真机成绩能混吗」时。',
+      picks: ['meta', 'summary', 'per_model', 'records', 'not_modelled', 'honest_limits'],
     },
     binding: {
       path: 'api/open_vla_binding.json',
       title: '开源 VLA → 真实本体绑定（含强度分档与阻塞登记）',
-      use: '用户问「这个模型跑在什么机器人上」「绑定可信吗」'
-        + '「为什么 SmolVLA 没绑」时。',
-      picks: ['meta', 'summary', 'bindings', 'source_url_remediation',
-              'honest_limits'],
+      use: '用户问「这个模型跑在什么机器人上」「绑定可信吗」' + '「为什么 SmolVLA 没绑」时。',
+      picks: ['meta', 'summary', 'bindings', 'source_url_remediation', 'honest_limits'],
     },
     progress: {
       path: 'api/research_progress.json',
       title: '核心目标完成度（可复现判据，非拍脑袋）',
-      use: '用户问「这个项目做到什么程度了」「核心目标完成了几成」'
-        + '「composed 为什么是 0」时。',
-      picks: ['weighted_total_pct', 'scoring', 'raw_dimension_scores',
-              'weights', 'weight_rationale', 'dimensions', 'how_to_read', 'meta'],
+      use: '用户问「这个项目做到什么程度了」「核心目标完成了几成」' + '「composed 为什么是 0」时。',
+      picks: [
+        'weighted_total_pct',
+        'scoring',
+        'raw_dimension_scores',
+        'weights',
+        'weight_rationale',
+        'dimensions',
+        'how_to_read',
+        'meta',
+      ],
     },
     electrical: {
       path: 'api/electrical_evidence.json',
@@ -1159,8 +1257,8 @@ async function toolExplainResearchLayer(env, request, kind) {
       title: cfg.title,
       error: `${cfg.path} 不可用`,
       error_kind: 'data_unavailable',
-      note: '该产物由对应 build_*.py 生成。未部署或构建失败时如实报错，'
-        + '不用其他口径的结论冒充。',
+      note:
+        '该产物由对应 build_*.py 生成。未部署或构建失败时如实报错，' + '不用其他口径的结论冒充。',
     };
   }
   const out = { caliber: CAL, title: cfg.title, when_to_use: cfg.use, source: cfg.path };
@@ -1201,11 +1299,16 @@ let _flywheelExtraCache = null;
 
 async function getEntities(env, request) {
   if (_entityMapCache && _entityListCache) {
-    return { map: _entityMapCache, list: _entityListCache, curatedList: _curatedListCache, flywheelExtra: _flywheelExtraCache };
+    return {
+      map: _entityMapCache,
+      list: _entityListCache,
+      curatedList: _curatedListCache,
+      flywheelExtra: _flywheelExtraCache,
+    };
   }
-  const map = await loadEntityMap(env, request);   // 合并飞轮贡献层后的全量（裁决用）
+  const map = await loadEntityMap(env, request); // 合并飞轮贡献层后的全量（裁决用）
   const list = Object.values(map);
-  const curatedList = await loadCuratedList(env, request);  // 主库真值（对外数字口径，不含贡献层）
+  const curatedList = await loadCuratedList(env, request); // 主库真值（对外数字口径，不含贡献层）
   _entityMapCache = map;
   _entityListCache = list;
   _curatedListCache = curatedList;
@@ -1238,9 +1341,16 @@ async function getJsonAsset(env, request, path) {
  * 却从不说有多少条 —— 调用方无从判断这个提醒是边角情况还是普遍情况。
  * ═══════════════════════════════════════════════════════════════════════════ */
 const ID_PREFIX_CATEGORY = {
-  ACT: 'actuators', SENS: 'sensors', CHIP: 'chips', PROT: 'protocols',
-  IFACE: 'interfaces', PLAT: 'platforms', LLM: 'llms',
-  FLEX: 'flexible_actuators', DAQ: 'data_acquisition', RAM: 'robot_ai_models',
+  ACT: 'actuators',
+  SENS: 'sensors',
+  CHIP: 'chips',
+  PROT: 'protocols',
+  IFACE: 'interfaces',
+  PLAT: 'platforms',
+  LLM: 'llms',
+  FLEX: 'flexible_actuators',
+  DAQ: 'data_acquisition',
+  RAM: 'robot_ai_models',
   CONN: 'connectors',
 };
 
@@ -1263,7 +1373,9 @@ function datasetFacts(list, flywheelExtra) {
   const quarantined = list.filter((e) => e.quarantine === true).length;
   const priced = list.filter((e) => e.price_range).length;
   const idCatMismatch = list.filter((e) => {
-    const p = String(e.id || '').split('-')[0].toUpperCase();
+    const p = String(e.id || '')
+      .split('-')[0]
+      .toUpperCase();
     return ID_PREFIX_CATEGORY[p] && ID_PREFIX_CATEGORY[p] !== e.category;
   }).length;
   // 【20260809-03】此前 selectable = total - marketIntel，把 9 条**企业主体条目**
@@ -1276,16 +1388,16 @@ function datasetFacts(list, flywheelExtra) {
   const selectable = list.filter(isSelectableComponent).length;
   return {
     total_entities: total,
-    flywheel_contributions: flywheelExtra || 0,  // 飞轮贡献层额外可查实体（开源 BOM 反喂等），不计入 total_entities
-    selectable,                       // 可进检索/推荐的条目（白名单：仅 component）
+    flywheel_contributions: flywheelExtra || 0, // 飞轮贡献层额外可查实体（开源 BOM 反喂等），不计入 total_entities
+    selectable, // 可进检索/推荐的条目（白名单：仅 component）
     market_intelligence: marketIntel, // 专利地图/咨询报告，默认不出现在结果里
-    organizations,                    // 企业/机构主体条目，无物理接口，不进选型与兼容判定
-    specifications,                   // 接口/协议规范条目（规范本身，不是实现它的零件）
-    software,                         // AI 模型 / 软件条目，无机械与电气接口
-    quarantined,                      // 有已知疑点、默认不进选型结果
-    usable: selectable - list.filter((e) => e.quarantine === true
-      && isSelectableComponent(e)).length,
-    priced,                           // 带 price_range 的条目
+    organizations, // 企业/机构主体条目，无物理接口，不进选型与兼容判定
+    specifications, // 接口/协议规范条目（规范本身，不是实现它的零件）
+    software, // AI 模型 / 软件条目，无机械与电气接口
+    quarantined, // 有已知疑点、默认不进选型结果
+    usable:
+      selectable - list.filter((e) => e.quarantine === true && isSelectableComponent(e)).length,
+    priced, // 带 price_range 的条目
     id_category_mismatch: idCatMismatch,
     categories: CATEGORIES,
   };
@@ -1353,13 +1465,14 @@ function toolSearch(list, args) {
   // 默认剔除市场情报条目（专利地图 / 咨询报告 / 趋势条目）。
   // 它们留在库里有参考价值，但把「罗兰贝格执行器趋势」当成一款可选执行器返回给 Agent，
   // 会让对方对整个数据集失去信任 —— 见 scripts/govern_entity_kind.py 的发现经过。
-  let rows = includeMI ? list : list.filter(e => e.entity_kind !== 'market_intelligence');
-  if (category) rows = rows.filter(e => e.category === category);
+  let rows = includeMI ? list : list.filter((e) => e.entity_kind !== 'market_intelligence');
+  if (category) rows = rows.filter((e) => e.category === category);
   if (keyword) {
     const kw = String(keyword).toLowerCase();
-    rows = rows.filter(e =>
+    rows = rows.filter((e) =>
       [e.name, e.name_en, e.manufacturer, e.type, e.protocol, e.interface, e.description]
-        .filter(Boolean).some(f => String(f).toLowerCase().includes(kw))
+        .filter(Boolean)
+        .some((f) => String(f).toLowerCase().includes(kw)),
     );
   }
 
@@ -1367,9 +1480,10 @@ function toolSearch(list, args) {
     total_matched: rows.length,
     returned: Math.min(rows.length, limit),
     results: rows.slice(0, limit).map(summarize),
-    note: rows.length > limit
-      ? `共匹配 ${rows.length} 条，此处返回前 ${limit} 条。可用 category/keyword 收窄或提高 limit。`
-      : undefined,
+    note:
+      rows.length > limit
+        ? `共匹配 ${rows.length} 条，此处返回前 ${limit} 条。可用 category/keyword 收窄或提高 limit。`
+        : undefined,
   };
 }
 
@@ -1430,7 +1544,15 @@ function toolCompare(map, args) {
   }
   const specKeys = [];
   for (const e of found) {
-    for (const k of ['torque', 'speed', 'voltage', 'protocol', 'interface', 'weight', 'price_range']) {
+    for (const k of [
+      'torque',
+      'speed',
+      'voltage',
+      'protocol',
+      'interface',
+      'weight',
+      'price_range',
+    ]) {
       if (e[k] !== undefined && e[k] !== null && !specKeys.includes(k)) specKeys.push(k);
     }
   }
@@ -1470,8 +1592,18 @@ function toolCompat(map, args) {
   }
   const a = map[args.component1_id];
   const b = map[args.component2_id];
-  if (!a) return { error: `未找到实体: ${args.component1_id}`, error_kind: 'not_found', hint: '请先用 search_components 确认 ID。' };
-  if (!b) return { error: `未找到实体: ${args.component2_id}`, error_kind: 'not_found', hint: '请先用 search_components 确认 ID。' };
+  if (!a)
+    return {
+      error: `未找到实体: ${args.component1_id}`,
+      error_kind: 'not_found',
+      hint: '请先用 search_components 确认 ID。',
+    };
+  if (!b)
+    return {
+      error: `未找到实体: ${args.component2_id}`,
+      error_kind: 'not_found',
+      hint: '请先用 search_components 确认 ID。',
+    };
   return judgePair(a, b);
 }
 
@@ -1504,7 +1636,7 @@ function toolRecommend(list, args) {
     // 去千分位逗号（只去夹在数字之间的，避免误伤 "a, b" 这类枚举写法）
     const norm = raw.replace(/(\d),(?=\d{3}(\D|$))/g, '$1');
     const nums = (norm.match(/\d+(?:\.\d+)?/g) || []).map(parseFloat);
-    if (!nums.length) return { min: null, max: null, kind: 'unknown' };   // 'N/A (internal)' 等
+    if (!nums.length) return { min: null, max: null, kind: 'unknown' }; // 'N/A (internal)' 等
     if (/\+|以上|起|from/i.test(norm)) return { min: nums[0], max: Infinity, kind: 'open' };
     if (nums.length >= 2) return { min: Math.min(...nums), max: Math.max(...nums), kind: 'range' };
     return { min: nums[0], max: nums[0], kind: 'exact' };
@@ -1525,28 +1657,29 @@ function toolRecommend(list, args) {
   };
 
   const pick = (cat) => {
-    let rows = list.filter(e =>
-      e.category === cat &&
-      e.quarantine !== true &&
-      isSelectableComponent(e)   // 白名单：只有实物零部件进选型候选（见 isSelectableComponent 注释）
+    const rows = list.filter(
+      (e) => e.category === cat && e.quarantine !== true && isSelectableComponent(e), // 白名单：只有实物零部件进选型候选（见 isSelectableComponent 注释）
     );
-    const scored = rows.map(e => {
+    const scored = rows.map((e) => {
       const hay = [e.applications, e.name, e.type, e.description]
-        .flat().filter(Boolean).join(' ').toLowerCase();
-      const hit = hints.filter(h => hay.includes(h)).length;
+        .flat()
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+      const hit = hints.filter((h) => hay.includes(h)).length;
       return { e, hit };
     });
-    const matched = scored.filter(s => s.hit > 0).sort((x, y) => y.hit - x.hit);
+    const matched = scored.filter((s) => s.hit > 0).sort((x, y) => y.hit - x.hit);
     // 无场景标注时退回全量罗列 —— 但必须**逐品类**说清这一点。
     // 此前只在最外层给一句总的 caveat，若 actuators 命中而 platforms 没命中，
     // 调用方会以为四个品类都是场景匹配出来的，等于用一个真结论替另一个假结论背书。
     const sceneMatched = matched.length > 0;
-    let out = (sceneMatched ? matched : scored).map(s => s.e);
+    let out = (sceneMatched ? matched : scored).map((s) => s.e);
 
     // ── 预算过滤 ──────────────────────────────────────────────────────────
     // 旧行为：`p == null || p <= budget`，即**无价格的条目无条件放行**。
     // 全库仅少数条目有 price_range（实时数见 dataset.priced），于是 budget=50 会原样返回
-    // Tesla Optimus / Figure 03 这类整机，而响应里还回显 budget_usd=50 —— 
+    // Tesla Optimus / Figure 03 这类整机，而响应里还回显 budget_usd=50 ——
     // 等于主动断言「已按预算过滤」。这与本项目在 check_compatibility 上
     // 的既有教义（未声明的维度记为「无法判定」，不计入兼容）直接冲突：
     // **未知不得冒充通过**。
@@ -1557,27 +1690,33 @@ function toolRecommend(list, args) {
     let budgetNote;
     if (budget != null) {
       const RANK = { within: 0, partial: 1, unknown: 2 };
-      const tagged = out.map(e => ({ e, fit: priceFit(e, budget) }));
-      const kept = tagged.filter(t => t.fit !== 'over');
+      const tagged = out.map((e) => ({ e, fit: priceFit(e, budget) }));
+      const kept = tagged.filter((t) => t.fit !== 'over');
       const dropped = tagged.length - kept.length;
       // 稳定排序：同一 fit 档内保持原有的场景相关性顺序
-      kept.forEach((t, i) => { t._i = i; });
-      kept.sort((a, b) => (RANK[a.fit] - RANK[b.fit]) || (a._i - b._i));
-      const n = f => kept.filter(t => t.fit === f).length;
-      const nUnknown = n('unknown'), nWithin = n('within'), nPartial = n('partial');
+      kept.forEach((t, i) => {
+        t._i = i;
+      });
+      kept.sort((a, b) => RANK[a.fit] - RANK[b.fit] || a._i - b._i);
+      const n = (f) => kept.filter((t) => t.fit === f).length;
+      const nUnknown = n('unknown'),
+        nWithin = n('within'),
+        nPartial = n('partial');
       budgetNote =
         `预算 ${budget} USD：确定在预算内 ${nWithin} 条，可能在预算内 ${nPartial} 条，` +
         `库内无价格、未经预算校验 ${nUnknown} 条，确定超预算已剔除 ${dropped} 条。` +
-        (nUnknown ? '标记 price_fit="unknown" 的条目**不代表符合预算**，只代表库内没有价格依据，需向厂商询价。' : '');
-      out = kept.map(t => t.e);
-      const fitById = new Map(kept.map(t => [t.e.id, t.fit]));
+        (nUnknown
+          ? '标记 price_fit="unknown" 的条目**不代表符合预算**，只代表库内没有价格依据，需向厂商询价。'
+          : '');
+      out = kept.map((t) => t.e);
+      const fitById = new Map(kept.map((t) => [t.e.id, t.fit]));
       return {
         scene_matched: sceneMatched,
         basis: sceneMatched
           ? '按场景词命中数排序'
           : '该品类下无任何条目标注了此场景，以下仅为品类罗列，不代表适配该场景',
         budget_note: budgetNote,
-        items: out.slice(0, count).map(e => {
+        items: out.slice(0, count).map((e) => {
           const s = summarize(e);
           s.price_fit = fitById.get(e.id) || 'unknown';
           return s;
@@ -1602,7 +1741,8 @@ function toolRecommend(list, args) {
   };
 
   const unmatched = Object.entries(recommendations)
-    .filter(([, v]) => !v.scene_matched).map(([k]) => k);
+    .filter(([, v]) => !v.scene_matched)
+    .map(([k]) => k);
 
   return {
     application: app,
@@ -1610,13 +1750,15 @@ function toolRecommend(list, args) {
     // budget_usd 单独出现会被读成「结果已按此预算过滤干净」。库内只有少数条目
     // 有价格字段，这个断言在多数品类上不成立，必须与口径说明同时出现。
     // 覆盖数从 list 现算 —— 曾写死 194/688，总数涨到 706 后分母就成了谎。
-    budget_semantics: budget == null
-      ? undefined
-      : `库内 ${list.length} 条中仅 ${list.filter((e) => e.price_range).length} 条带 price_range。本次只剔除了「确定超预算」的条目；` +
-        '每条结果附 price_fit（within=确定在预算内 / partial=可能在预算内 / unknown=库内无价格，未经校验）。' +
-        'unknown 不是「符合预算」，逐品类数量见 recommendations[*].budget_note。',
+    budget_semantics:
+      budget == null
+        ? undefined
+        : `库内 ${list.length} 条中仅 ${list.filter((e) => e.price_range).length} 条带 price_range。本次只剔除了「确定超预算」的条目；` +
+          '每条结果附 price_fit（within=确定在预算内 / partial=可能在预算内 / unknown=库内无价格，未经校验）。' +
+          'unknown 不是「符合预算」，逐品类数量见 recommendations[*].budget_note。',
     recommendations,
-    method: '按 applications/name/type 字段的场景词命中数排序；已排除 quarantine 条目与市场情报条目',
+    method:
+      '按 applications/name/type 字段的场景词命中数排序；已排除 quarantine 条目与市场情报条目',
     caveat: '这是基于库内声明字段的启发式筛选，不是工程选型结论；下单前请核对厂商原始数据手册。',
     coverage_warning: unmatched.length
       ? `以下品类在库内没有针对 ${app} 的场景标注，其结果仅为品类罗列、不代表适配：${unmatched.join(' / ')}。` +
@@ -1633,8 +1775,11 @@ function toolBomCheck(map, args) {
   const raw = Array.isArray(args?.component_ids) ? args.component_ids : [];
   const ids = raw.map(String).filter(Boolean);
   if (ids.length < 2) {
-    return { error: 'component_ids 至少需要 2 个才能做矩阵校验', error_kind: 'invalid_params',
-      hint: '请传入至少两个真实存在的零件 ID。' };
+    return {
+      error: 'component_ids 至少需要 2 个才能做矩阵校验',
+      error_kind: 'invalid_params',
+      hint: '请传入至少两个真实存在的零件 ID。',
+    };
   }
   const nodes = ids.map((id) => {
     const e = map[id];
@@ -1688,13 +1833,26 @@ function toolReviewCompat(map, args) {
     return v === undefined || v === null || String(v).trim() === '';
   });
   if (missing.length) {
-    return { error: `缺少必填参数: ${missing.join(', ')}`, error_kind: 'invalid_params',
-      hint: '请同时传入 component1_id 与 component2_id。' };
+    return {
+      error: `缺少必填参数: ${missing.join(', ')}`,
+      error_kind: 'invalid_params',
+      hint: '请同时传入 component1_id 与 component2_id。',
+    };
   }
   const a = map[args.component1_id];
   const b = map[args.component2_id];
-  if (!a) return { error: `未找到实体: ${args.component1_id}`, error_kind: 'not_found', hint: '请先用 search_components 确认 ID。' };
-  if (!b) return { error: `未找到实体: ${args.component2_id}`, error_kind: 'not_found', hint: '请先用 search_components 确认 ID。' };
+  if (!a)
+    return {
+      error: `未找到实体: ${args.component1_id}`,
+      error_kind: 'not_found',
+      hint: '请先用 search_components 确认 ID。',
+    };
+  if (!b)
+    return {
+      error: `未找到实体: ${args.component2_id}`,
+      error_kind: 'not_found',
+      hint: '请先用 search_components 确认 ID。',
+    };
 
   // ── Worker 层：纯规则裁决（与 /api/compatibility 同一实现，无漂移）──
   const worker = judgePair(a, b);
@@ -1708,7 +1866,8 @@ function toolReviewCompat(map, args) {
     // J3-L3：操作数本身不是可判定对象（企业/规范/模型/情报），需人改问法。
     riskLevel = 'L3';
     action = 'reframe';
-    note = '操作数类型不适配兼容性裁决，本结论不可作为采购/设计依据，须换问法（见 verdict_reason）。';
+    note =
+      '操作数类型不适配兼容性裁决，本结论不可作为采购/设计依据，须换问法（见 verdict_reason）。';
     next = '以实物零部件为操作数重新提问；规范/模型类请改用对应的专用查询工具。';
   } else if (worker.overall_compatible === true && ec < 2) {
     // J2：证据不足 2 条却判兼容 → 降级，不把单证据当盖章。
@@ -1720,9 +1879,10 @@ function toolReviewCompat(map, args) {
     // J9：证据不足，明示局限，给可核查线索。
     riskLevel = ec >= 1 ? 'L1' : 'L2';
     action = 'flag_insufficient';
-    note = ec >= 1
-      ? `仅 ${ec} 条维度有证据，硬约束未全部覆盖，无法给出可盖章结论。`
-      : '双方在所有硬约束维度均无声明，完全无法判定。';
+    note =
+      ec >= 1
+        ? `仅 ${ec} 条维度有证据，硬约束未全部覆盖，无法给出可盖章结论。`
+        : '双方在所有硬约束维度均无声明，完全无法判定。';
     next = '补充厂商公开规格（机械接口 / 电压 / 协议）后再裁决；或用语义近邻做人工核查。';
   } else {
     // overall 已定且证据≥2 → 维持（J3-L0，可高置信采信）。
@@ -1734,7 +1894,8 @@ function toolReviewCompat(map, args) {
 
   return {
     // 原样透传 Worker 裁决，保证消费方拿到的四维细节不丢。
-    a: worker.a, b: worker.b,
+    a: worker.a,
+    b: worker.b,
     overall_compatible: worker.overall_compatible,
     compatibility_score: worker.compatibility_score,
     evidence_count: ec,
@@ -1747,7 +1908,8 @@ function toolReviewCompat(map, args) {
       action,
       note,
       recommended_next_step: next,
-      principle: '多 Agent 质保：Worker 裁决 + Governor 独立复核；结论须 ≥2 独立证据方可高置信采信（GOAI J2/J3/J9）。',
+      principle:
+        '多 Agent 质保：Worker 裁决 + Governor 独立复核；结论须 ≥2 独立证据方可高置信采信（GOAI J2/J3/J9）。',
     },
     source: 'rule-engine + governor-review (GOAI multi-agent pattern)',
   };
@@ -1757,7 +1919,9 @@ function toolReviewCompat(map, args) {
  * JSON-RPC 分发
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-function rpcResult(id, result) { return { jsonrpc: '2.0', id, result }; }
+function rpcResult(id, result) {
+  return { jsonrpc: '2.0', id, result };
+}
 function rpcError(id, code, message, data) {
   const e = { jsonrpc: '2.0', id: id ?? null, error: { code, message } };
   if (data !== undefined) e.error.data = data;
@@ -1801,7 +1965,13 @@ async function handleRpc(msg, context) {
       const version = SUPPORTED_PROTOCOLS.includes(asked) ? asked : PREFERRED_PROTOCOL;
       const client = params?.clientInfo?.name;
       recordMcp(context, 'initialize');
-      if (client) recordMcp(context, `client:${String(client).slice(0, 24).replace(/[^\w.-]/g, '_')}`);
+      if (client)
+        recordMcp(
+          context,
+          `client:${String(client)
+            .slice(0, 24)
+            .replace(/[^\w.-]/g, '_')}`,
+        );
       // 实况取数失败不阻断握手：tryFacts 返回 null，instructions 降级为纯静态边界声明。
       const initFacts = await tryFacts(env, request);
       return rpcResult(id, {
@@ -1838,7 +2008,7 @@ async function handleRpc(msg, context) {
 
     case 'notifications/initialized':
     case 'notifications/cancelled':
-      return null;   // 通知无响应
+      return null; // 通知无响应
 
     case 'ping':
       return rpcResult(id, {});
@@ -1850,7 +2020,9 @@ async function handleRpc(msg, context) {
     case 'tools/call': {
       const name = params?.name;
       const args = params?.arguments || {};
-      const toolSlug = String(name || 'unknown').slice(0, 32).replace(/[^\w.-]/g, '_');
+      const toolSlug = String(name || 'unknown')
+        .slice(0, 32)
+        .replace(/[^\w.-]/g, '_');
       recordMcp(context, `tool:${toolSlug}`);
       // 归因线：与 tool:* 同时写，读侧据此把业务调用分账为 probe / 真实调用方。
       // 没有这一行，"业务调用 N 次"就永远只是个不可归因的裸数字。
@@ -1895,12 +2067,24 @@ async function handleRpc(msg, context) {
           recordMcp(context, 'invalid_params');
           // 常见误名 → 正确参数名，直接把人送回正轨，而不是只说"你错了"。
           const ALIAS = {
-            query: 'keyword', q: 'keyword', search: 'keyword', term: 'keyword',
-            text: 'keyword', name: 'keyword', kw: 'keyword',
-            type: 'category', kind: 'category', class: 'category',
-            max: 'limit', count: 'limit', top_k: 'limit', n: 'limit',
-            id1: 'component1_id', id2: 'component2_id',
-            component_id: 'id', entity_id: 'id',
+            query: 'keyword',
+            q: 'keyword',
+            search: 'keyword',
+            term: 'keyword',
+            text: 'keyword',
+            name: 'keyword',
+            kw: 'keyword',
+            type: 'category',
+            kind: 'category',
+            class: 'category',
+            max: 'limit',
+            count: 'limit',
+            top_k: 'limit',
+            n: 'limit',
+            id1: 'component1_id',
+            id2: 'component2_id',
+            component_id: 'id',
+            entity_id: 'id',
           };
           const guesses = unknownArgs
             .map((k) => (ALIAS[k] && allowed.includes(ALIAS[k]) ? `${k} → ${ALIAS[k]}` : null))
@@ -1945,21 +2129,33 @@ async function handleRpc(msg, context) {
           const k = Math.min(Math.max(parseInt(args.k ?? 5, 10) || 5, 1), 30);
           const sem = await semanticSearch(env, request, query, k);
           if (!sem.available) {
-            payload = { available: false, reason: sem.reason,
-              fallback_keyword: toolSearch(list, { keyword: query, limit: k }) };
+            payload = {
+              available: false,
+              reason: sem.reason,
+              fallback_keyword: toolSearch(list, { keyword: query, limit: k }),
+            };
           } else {
             const results = sem.results.map((r) => {
               const e = map[r.id];
-              return { id: r.id, name: r.name, similarity: r.similarity,
-                category: e ? e.category : null, manufacturer: e ? (e.manufacturer || null) : null };
+              return {
+                id: r.id,
+                name: r.name,
+                similarity: r.similarity,
+                category: e ? e.category : null,
+                manufacturer: e ? e.manufacturer || null : null,
+              };
             });
             payload = { available: true, query: sem.query, count: results.length, results };
           }
         } else if (name === 'get_standard_audit') {
           const audit = await getJsonAsset(env, request, '/api/standard-audit.json');
           if (args.scope === 'conflicts') {
-            payload = { scope: 'conflicts', generated_at: audit.generated_at,
-              registry: audit.registry, conflicts: audit.conflicts };
+            payload = {
+              scope: 'conflicts',
+              generated_at: audit.generated_at,
+              registry: audit.registry,
+              conflicts: audit.conflicts,
+            };
           } else {
             payload = audit;
           }
@@ -1970,7 +2166,9 @@ async function handleRpc(msg, context) {
           const xml = String(args.urdf_xml || '');
           if (xml.length > 524288) {
             return rpcError(id, -32602, 'URDF XML 超过 512KB 限制', {
-              tool: name, max_size: 524288, actual_size: xml.length,
+              tool: name,
+              max_size: 524288,
+              actual_size: xml.length,
             });
           }
           payload = lintUrdf(xml, { checkLevel: args.check_level || 'all' });
@@ -2003,17 +2201,16 @@ async function handleRpc(msg, context) {
           recordMcp(context, 'toolsrc:script:get_robot_tool_side');
           payload = await toolExplainResearchLayer(env, request, 'toolside');
 
-        // ============================================================
-        // 【2026-10-27 P2-6】双版本 / Trace 层（6 个新工具）
-        // ------------------------------------------------------------
-        // hosted 端点的边界：Cloudflare Workers 是短生命周期 request，
-        // 无跨请求内存。所以：
-        //   - explain_unknown: 真实现（读 entity map 现算）
-        //   - trace_replay: 真实现（处理当前请求内传入的 json_lines）
-        //   - start_long_task / get_task_status / cancel_task / trace_export:
-        //     返回 honest_note 引导到 stdio（跨请求持久化需 KV/Durable Object）
-        // ============================================================
-
+          // ============================================================
+          // 【2026-10-27 P2-6】双版本 / Trace 层（6 个新工具）
+          // ------------------------------------------------------------
+          // hosted 端点的边界：Cloudflare Workers 是短生命周期 request，
+          // 无跨请求内存。所以：
+          //   - explain_unknown: 真实现（读 entity map 现算）
+          //   - trace_replay: 真实现（处理当前请求内传入的 json_lines）
+          //   - start_long_task / get_task_status / cancel_task / trace_export:
+          //     返回 honest_note 引导到 stdio（跨请求持久化需 KV/Durable Object）
+          // ============================================================
         } else if (name === 'explain_unknown') {
           recordMcp(context, 'toolsrc:script:explain_unknown');
           payload = await toolExplainUnknown(env, request, args);
@@ -2030,7 +2227,11 @@ async function handleRpc(msg, context) {
             stdio_package: 'roboparts-mcp-server@1.2.0',
             stdio_command: 'npx roboparts-mcp-server',
             evidence_version: SERVER_VERSION,
-            accepted_task_types: ['batch_check_compatibility', 'bulk_export_bom', 'deep_dialect_evaluate'],
+            accepted_task_types: [
+              'batch_check_compatibility',
+              'bulk_export_bom',
+              'deep_dialect_evaluate',
+            ],
           };
         } else if (name === 'get_task_status') {
           recordMcp(context, 'toolsrc:script:get_task_status_hosted_hint');
@@ -2075,7 +2276,6 @@ async function handleRpc(msg, context) {
         } else if (name === 'trace_replay') {
           recordMcp(context, 'toolsrc:script:trace_replay');
           payload = toolTraceReplayHosted(args);
-
         } else {
           return rpcError(id, -32602, `未知工具: ${name}`);
         }
@@ -2084,7 +2284,9 @@ async function handleRpc(msg, context) {
         recordMcp(context, 'tool_error');
         return rpcResult(id, {
           isError: true,
-          content: [{ type: 'text', text: `RoboParts 数据源暂时不可用: ${String(e && e.message || e)}` }],
+          content: [
+            { type: 'text', text: `RoboParts 数据源暂时不可用: ${String((e && e.message) || e)}` },
+          ],
         });
       }
 
@@ -2101,16 +2303,20 @@ async function handleRpc(msg, context) {
       if (!res) return rpcError(id, -32602, `未知资源: ${uri}`);
       try {
         const data = await getJsonAsset(env, request, '/api/training_dataset.json');
-        const text = JSON.stringify({
-          uri: res.uri,
-          note: '完整数据集约 10MB，建议直接 HTTP GET 该 uri 拉取。此处仅返回 meta 摘要。',
-          meta: data.meta || {},
-        }, null, 2);
+        const text = JSON.stringify(
+          {
+            uri: res.uri,
+            note: '完整数据集约 10MB，建议直接 HTTP GET 该 uri 拉取。此处仅返回 meta 摘要。',
+            meta: data.meta || {},
+          },
+          null,
+          2,
+        );
         return rpcResult(id, {
           contents: [{ uri: res.uri, mimeType: res.mimeType, text }],
         });
       } catch (e) {
-        return rpcError(id, -32603, `资源读取失败: ${String(e && e.message || e)}`);
+        return rpcError(id, -32603, `资源读取失败: ${String((e && e.message) || e)}`);
       }
     }
     case 'prompts/list':
@@ -2140,10 +2346,13 @@ export async function onRequestOptions() {
 export async function onRequestGet(context) {
   const accept = context.request.headers.get('accept') || '';
   if (accept.includes('text/event-stream')) {
-    return new Response(JSON.stringify({
-      error: 'SSE 流不适用于本服务',
-      detail: '本端点为无状态只读服务，无服务端主动推送。请直接用 POST 发送 JSON-RPC。',
-    }), { status: 405, headers: { ...jsonHeaders, 'Allow': 'POST, OPTIONS' } });
+    return new Response(
+      JSON.stringify({
+        error: 'SSE 流不适用于本服务',
+        detail: '本端点为无状态只读服务，无服务端主动推送。请直接用 POST 发送 JSON-RPC。',
+      }),
+      { status: 405, headers: { ...jsonHeaders, Allow: 'POST, OPTIONS' } },
+    );
   }
 
   recordMcp(context, 'discovery_get');
@@ -2151,27 +2360,35 @@ export async function onRequestGet(context) {
   // （真值 706）—— 一个错值被官方 Registry / Glama 等抓走后还会被二次分发。
   // 现改为实时统计；取数失败时给 null + 说明，绝不回落到某个"上次记得的数字"。
   const facts = await tryFacts(context.env, context.request);
-  return new Response(JSON.stringify({
-    name: SERVER_NAME,
-    version: SERVER_VERSION,
-    transport: 'streamable-http',
-    endpoint: 'https://roboparts.cc/mcp',
-    protocol_versions: SUPPORTED_PROTOCOLS,
-    authentication: 'none — 只读、免鉴权、不设 cookie、不存储调用方数据',
-    tools: TOOLS.map(t => ({ name: t.name, description: t.description })),
-    resources: RESOURCES,
-    dataset: facts || {
-      total_entities: null,
-      categories: CATEGORIES,
-      note: '本次实体统计取数失败，故不提供条数。宁可缺字段，也不返回可能已陈旧的数字。',
-    },
-    instructions: buildInstructions(facts),
-    quickstart: {
-      claude_desktop: '在 MCP 设置里添加一个 Streamable HTTP 服务器，URL 填 https://roboparts.cc/mcp，无需 API Key。',
-      curl: `curl -s -X POST https://roboparts.cc/mcp -H 'Content-Type: application/json' -H 'Accept: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'`,
-    },
-    docs: 'https://roboparts.cc/mcp-guide',
-  }, null, 2), { status: 200, headers: jsonHeaders });
+  return new Response(
+    JSON.stringify(
+      {
+        name: SERVER_NAME,
+        version: SERVER_VERSION,
+        transport: 'streamable-http',
+        endpoint: 'https://roboparts.cc/mcp',
+        protocol_versions: SUPPORTED_PROTOCOLS,
+        authentication: 'none — 只读、免鉴权、不设 cookie、不存储调用方数据',
+        tools: TOOLS.map((t) => ({ name: t.name, description: t.description })),
+        resources: RESOURCES,
+        dataset: facts || {
+          total_entities: null,
+          categories: CATEGORIES,
+          note: '本次实体统计取数失败，故不提供条数。宁可缺字段，也不返回可能已陈旧的数字。',
+        },
+        instructions: buildInstructions(facts),
+        quickstart: {
+          claude_desktop:
+            '在 MCP 设置里添加一个 Streamable HTTP 服务器，URL 填 https://roboparts.cc/mcp，无需 API Key。',
+          curl: `curl -s -X POST https://roboparts.cc/mcp -H 'Content-Type: application/json' -H 'Accept: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'`,
+        },
+        docs: 'https://roboparts.cc/mcp-guide',
+      },
+      null,
+      2,
+    ),
+    { status: 200, headers: jsonHeaders },
+  );
 }
 
 /**
@@ -2194,13 +2411,15 @@ export async function onRequestPost(context) {
 
   // 【P0-12】真限流：MCP 是 Agent 高频面（compose 引擎昂贵）。每 IP 每 1 小时 600 次，
   // 失败开放（KV 不可用 → degraded 放行）。此前零限流。
-  const ip = (request.headers.get('CF-Connecting-IP')
-    || (request.headers.get('x-forwarded-for') || '').split(',')[0].trim()
-    || 'unknown');
+  const ip =
+    request.headers.get('CF-Connecting-IP') ||
+    (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() ||
+    'unknown';
   const rl = await checkRateLimit(env, { ip, scope: 'mcp', limit: 600, windowSec: 3600 });
   if (!rl.allowed) {
     return new Response(JSON.stringify(rpcError(null, -32029, 'MCP 调用过于频繁，请稍后再试。')), {
-      status: 429, headers: { ...jsonHeaders, ...rateLimitHeaders(rl) },
+      status: 429,
+      headers: { ...jsonHeaders, ...rateLimitHeaders(rl) },
     });
   }
 
@@ -2209,7 +2428,8 @@ export async function onRequestPost(context) {
     body = await request.json();
   } catch {
     return new Response(JSON.stringify(rpcError(null, -32700, 'JSON 解析失败')), {
-      status: 400, headers: jsonHeaders,
+      status: 400,
+      headers: jsonHeaders,
     });
   }
 
@@ -2218,7 +2438,8 @@ export async function onRequestPost(context) {
   const msgs = isBatch ? body : [body];
   if (isBatch && msgs.length === 0) {
     return new Response(JSON.stringify(rpcError(null, -32600, '空批量请求')), {
-      status: 400, headers: jsonHeaders,
+      status: 400,
+      headers: jsonHeaders,
     });
   }
 
@@ -2228,7 +2449,7 @@ export async function onRequestPost(context) {
     try {
       r = await handleRpc(m, context);
     } catch (e) {
-      r = rpcError(m?.id ?? null, -32603, '内部错误', String(e && e.message || e));
+      r = rpcError(m?.id ?? null, -32603, '内部错误', String((e && e.message) || e));
     }
     if (r) responses.push(r);
   }

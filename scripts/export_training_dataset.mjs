@@ -39,7 +39,10 @@ const outPath = join(root, 'api', 'training_dataset.json');
 const raw = JSON.parse(readFileSync(entitiesPath, 'utf8'));
 const entities = raw.entities || raw.data || [];
 const metaStandards =
-  (raw.meta && raw.meta.standard_conformance_spec && raw.meta.standard_conformance_spec.standards) || [];
+  (raw.meta &&
+    raw.meta.standard_conformance_spec &&
+    raw.meta.standard_conformance_spec.standards) ||
+  [];
 
 /** 只有 entity_kind=component（含缺字段老数据）才是「有物理接口的实物零件」。 */
 function isComponent(e) {
@@ -74,12 +77,38 @@ function parseForceControlPrecisionNm(arr) {
 }
 
 // ── 模态暴露判定（复用真实声明字段，不编造）────────────────────────────────
-const TACTILE_MODALITY_TOKENS = ['tactile', 'touch', 'haptic_feedback', 'grasp_force', 'force_torque'];
+const TACTILE_MODALITY_TOKENS = [
+  'tactile',
+  'touch',
+  'haptic_feedback',
+  'grasp_force',
+  'force_torque',
+];
 const VISION_MODALITY_TOKENS = [
-  'vision', 'rgb', 'rgb_d', 'depth', 'stereo_rgb', '3d_position', 'pose', 'rigid_body_pose',
-  'skeleton', 'hand_pose', 'head_pose', 'fingertip_pose', 'gripper_pose', 'body_pose',
-  'joint_angle', 'finger_joints', 'hand_joint_angle', 'body_joint_angle', 'base_odometry',
-  'imu', 'human_demonstration', 'whole_body_action', 'state', 'action',
+  'vision',
+  'rgb',
+  'rgb_d',
+  'depth',
+  'stereo_rgb',
+  '3d_position',
+  'pose',
+  'rigid_body_pose',
+  'skeleton',
+  'hand_pose',
+  'head_pose',
+  'fingertip_pose',
+  'gripper_pose',
+  'body_pose',
+  'joint_angle',
+  'finger_joints',
+  'hand_joint_angle',
+  'body_joint_angle',
+  'base_odometry',
+  'imu',
+  'human_demonstration',
+  'whole_body_action',
+  'state',
+  'action',
 ];
 
 function hasToken(list, tokens) {
@@ -92,12 +121,19 @@ function modalityExposure(e) {
   const mi = e.mechanical_interface;
   const miIdentity =
     mi && typeof mi === 'object'
-      ? [...(mi.standard ? [mi.standard] : []), ...(mi.flange ? [mi.flange] : [])]
-          .filter(Boolean).length > 0 || (mi.tool_side || mi.tool_side_flange)
+      ? [...(mi.standard ? [mi.standard] : []), ...(mi.flange ? [mi.flange] : [])].filter(Boolean)
+          .length > 0 ||
+        mi.tool_side ||
+        mi.tool_side_flange
       : false;
 
   const force = {
-    declared: !!(e.torque || e.weight || (e.bionic_features && e.bionic_features.length) || hasToken(dm, ['force_torque', 'grasp_force'])),
+    declared: !!(
+      e.torque ||
+      e.weight ||
+      (e.bionic_features && e.bionic_features.length) ||
+      hasToken(dm, ['force_torque', 'grasp_force'])
+    ),
     torque_nm: parseTorqueNm(e.torque),
     weight_kg: parseWeightKg(e.weight),
     force_control_precision_nm: parseForceControlPrecisionNm(e.bionic_features),
@@ -118,7 +154,11 @@ function modalityExposure(e) {
     basis: [],
     note: null,
   };
-  if (hasToken(dm, TACTILE_MODALITY_TOKENS)) tactile.basis.push('data_modalities:' + dm.filter((x) => TACTILE_MODALITY_TOKENS.includes(String(x).toLowerCase())).join('/'));
+  if (hasToken(dm, TACTILE_MODALITY_TOKENS))
+    tactile.basis.push(
+      'data_modalities:' +
+        dm.filter((x) => TACTILE_MODALITY_TOKENS.includes(String(x).toLowerCase())).join('/'),
+    );
   if (e.material_note) tactile.basis.push('material_note');
   if (e.category === 'flexible_actuators') tactile.basis.push('category:flexible_actuators');
   if (e.bionic_features && e.bionic_features.length) tactile.basis.push('bionic_features');
@@ -126,7 +166,11 @@ function modalityExposure(e) {
 
   const geometric = {
     declared: !!(miIdentity || e.interface || e.flange || e.connector),
-    identity: miIdentity ? (mi && typeof mi === 'object' ? [mi.standard, mi.flange, mi.tool_side, mi.tool_side_flange].filter(Boolean) : []) : [],
+    identity: miIdentity
+      ? mi && typeof mi === 'object'
+        ? [mi.standard, mi.flange, mi.tool_side, mi.tool_side_flange].filter(Boolean)
+        : []
+      : [],
   };
 
   const voltage = parseVoltageRange(e.voltage);
@@ -169,7 +213,8 @@ function interactionOf(r) {
   const profiles = {
     flange_mount: {
       force_senses: ['axial_load', 'bolt_torque'],
-      guidance: '螺栓法兰对接：力觉策略应关注轴向载荷与拧紧扭矩；参考两侧 component.modality_details.force.torque_nm',
+      guidance:
+        '螺栓法兰对接：力觉策略应关注轴向载荷与拧紧扭矩；参考两侧 component.modality_details.force.torque_nm',
     },
     connector_insert: {
       force_senses: ['insertion_force', 'electrical_contact'],
@@ -225,7 +270,8 @@ const components = entities.filter(isComponent).map((e) => {
           caee060_relevant: !!e.standard_conformance.caee060_relevant,
           iso22166_relevant: !!e.standard_conformance.iso22166_relevant,
           bus_class: e.standard_conformance.bus_class || null,
-          ros2: typeof e.standard_conformance.ros2 === 'boolean' ? e.standard_conformance.ros2 : null,
+          ros2:
+            typeof e.standard_conformance.ros2 === 'boolean' ? e.standard_conformance.ros2 : null,
           interop_posture: e.standard_conformance.interop_posture || null,
         }
       : null,
@@ -279,7 +325,9 @@ const modalityCoverage = {
   tactile: countDeclared((c) => c.modality_details.tactile.declared),
   vision: countDeclared((c) => c.modality_details.vision.declared),
 };
-const forceWithNumeric = countDeclared((c) => c.modality_details.force.torque_nm != null || c.modality_details.force.weight_kg != null);
+const forceWithNumeric = countDeclared(
+  (c) => c.modality_details.force.torque_nm != null || c.modality_details.force.weight_kg != null,
+);
 
 // ── 4. 组装 + 写盘 ────────────────────────────────────────────────────────
 const out = {
@@ -287,7 +335,8 @@ const out = {
     schema_version: '2.0',
     generated_at: new Date().toISOString(),
     generator: 'scripts/export_training_dataset.mjs',
-    purpose: 'RoboParts 兼容性数据层 → 物理AI训练流水线（MoziSim / NVIDIA Isaac / TurboVLA 类 V+L→A 策略）可直接消费的结构化多模态数据底座',
+    purpose:
+      'RoboParts 兼容性数据层 → 物理AI训练流水线（MoziSim / NVIDIA Isaac / TurboVLA 类 V+L→A 策略）可直接消费的结构化多模态数据底座',
     source: 'api/entities.json（single source of truth）',
     license: 'CC BY 4.0',
     honesty:
@@ -317,7 +366,8 @@ const out = {
       },
       tactile: {
         provided_by_roboparts: 'declared-only',
-        source: 'data_modalities(tactile/touch/haptic_feedback/grasp_force) / category(flexible_actuators) / bionic_features / material_note',
+        source:
+          'data_modalities(tactile/touch/haptic_feedback/grasp_force) / category(flexible_actuators) / bionic_features / material_note',
         note: '声明级/类别级触觉相关（软体柔顺性、表面材质、抓握力），无原始触觉传感',
       },
     },
@@ -356,7 +406,10 @@ writeFileSync(outPath, JSON.stringify(out, null, 2));
 // ── 5. 收尾必须真调横切注入器（L1.55 教训）─────────────────────────────────
 {
   const py = process.platform === 'win32' ? 'python' : 'python3';
-  const inj = spawnSync(py, [join(root, 'scripts', 'inject_api_access.py')], { cwd: root, encoding: 'utf8' });
+  const inj = spawnSync(py, [join(root, 'scripts', 'inject_api_access.py')], {
+    cwd: root,
+    encoding: 'utf8',
+  });
   if (inj.status !== 0) {
     console.error('❌ meta.access 注入失败，导出视为失败（不许产出缺接入入口的对外 JSON）');
     console.error((inj.stderr || inj.stdout || '').trim().slice(0, 500));
@@ -371,5 +424,5 @@ console.log(
     `   edges(decided)=${decided}  compatible=${compatible}  conflict=${conflict}\n` +
     `   模态覆盖: geometric=${modalityCoverage.geometric} electrical=${modalityCoverage.electrical} ` +
     `force=${modalityCoverage.force}(数值${forceWithNumeric}) tactile=${modalityCoverage.tactile} vision=${modalityCoverage.vision}\n` +
-    `   耗时 ${ms}ms  文件大小 ${(statSync(outPath).size / 1024).toFixed(0)} KB`
+    `   耗时 ${ms}ms  文件大小 ${(statSync(outPath).size / 1024).toFixed(0)} KB`,
 );

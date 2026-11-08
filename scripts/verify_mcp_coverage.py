@@ -70,8 +70,10 @@ def parse_file_map(path):
             "请更新本脚本的正则，不要绕过校验。"
         )
     body = re.sub(r"//[^\n]*", "", m.group(1))
-    pairs = re.findall(r"['\"]([^'\"]+)['\"]\s*:\s*['\"]([^'\"]+)['\"]", body)
-    return {k: v for k, v in pairs}
+    # 键可以是带引号字符串（'key':）或无引号标识符（key:，prettier 会去合法标识符引号），
+    # 值必须是带引号字符串。prettier 的默认输出会把合法标识符键去引号，这里两种都容忍。
+    pairs = re.findall(r"(?:['\"]([^'\"]+)['\"]|([A-Za-z_$][\w$]*))\s*:\s*['\"]([^'\"]+)['\"]", body)
+    return {(k1 or k2): v for k1, k2, v in pairs}
 
 
 def parse_categories_array(path):

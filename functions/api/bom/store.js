@@ -48,7 +48,6 @@ export async function onRequestGet(context) {
 
     const boms = JSON.parse(stored);
     return json({ boms });
-
   } catch (error) {
     console.error('获取 BOM 失败:', error);
     return json({ error: 'failed_to_load', message: '获取 BOM 失败' }, 500);
@@ -97,7 +96,7 @@ export async function onRequestPost(context) {
       item_count: items.length,
     };
 
-    const existingIndex = boms.findIndex(b => b.bom_id === bom_id);
+    const existingIndex = boms.findIndex((b) => b.bom_id === bom_id);
     if (existingIndex >= 0) {
       boms[existingIndex] = bomData;
     } else {
@@ -119,7 +118,6 @@ export async function onRequestPost(context) {
       total_boms: boms.length,
       message: 'BOM 已保存',
     });
-
   } catch (error) {
     console.error('保存 BOM 失败:', error);
     return json({ error: 'failed_to_save', message: '保存 BOM 失败' }, 500);
@@ -154,7 +152,7 @@ export async function onRequestDelete(context) {
 
     // 删除指定 BOM
     const beforeCount = boms.length;
-    boms = boms.filter(b => b.bom_id !== bomId);
+    boms = boms.filter((b) => b.bom_id !== bomId);
     const deletedCount = beforeCount - boms.length;
 
     if (deletedCount === 0) {
@@ -169,7 +167,6 @@ export async function onRequestDelete(context) {
       bom_id: bomId,
       message: 'BOM 已删除',
     });
-
   } catch (error) {
     console.error('删除 BOM 失败:', error);
     return json({ error: 'failed_to_delete', message: '删除 BOM 失败' }, 500);

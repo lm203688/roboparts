@@ -1,12 +1,19 @@
 /**
  * 虎皮椒支付回调通知 API
  * POST /api/payment/notify
- * 
+ *
  * 虎皮椒在用户支付成功后会向 notify_url 发送 POST 通知
  * 服务器需返回 "success" 表示已收到通知
  */
 
 import { PLANS } from '../../_lib/plans.js';
+
+// CORS 头：回调接口允许跨域 POST
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
 
 /**
  * Hash email using SHA-256 for privacy-safe storage
@@ -17,7 +24,7 @@ async function hashEmail(email) {
   const data = encoder.encode(email.toLowerCase().trim());
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 export async function onRequestOptions() {
@@ -26,7 +33,7 @@ export async function onRequestOptions() {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
-    }
+    },
   });
 }
 
@@ -76,13 +83,14 @@ export async function onRequestPost(context) {
     if (!secret) {
       // 生产环境必须有密钥——否则无法验证签名
       console.error('[PAYMENT] XUNHU_SECRET not configured, rejecting callback');
-      return new Response(JSON.stringify({
-        error: 'Payment verification disabled',
-        error_kind: 'no_secret_configured',
-        message: 'Server configuration error: payment secret not set'
-      }), { status: 503, headers: corsHeaders });
-      console.error('XUNHU_SECRET not configured');
-      return new Response('fail', { status: 500 });
+      return new Response(
+        JSON.stringify({
+          error: 'Payment verification disabled',
+          error_kind: 'no_secret_configured',
+          message: 'Server configuration error: payment secret not set',
+        }),
+        { status: 503, headers: corsHeaders },
+      );
     }
 
     // 生成签名验证
@@ -134,7 +142,8 @@ export async function onRequestPost(context) {
         }
 
         const userKey = userInfo.api_key || orderData.api_key;
-        const creditsToAdd = userInfo.credits || orderData.credits || PLANS[orderData.plan]?.credits || 0;
+        const creditsToAdd =
+          userInfo.credits || orderData.credits || PLANS[orderData.plan]?.credits || 0;
 
         if (creditsToAdd > 0 && userKey) {
           // 获取用户当前积分
@@ -204,7 +213,6 @@ export async function onRequestPost(context) {
       status: 200,
       headers: { 'Content-Type': 'text/plain' },
     });
-
   } catch (e) {
     console.error('Payment notify error', e);
     return new Response('fail', { status: 500 });
@@ -215,11 +223,13 @@ export async function onRequestPost(context) {
  * 虎皮椒签名验证算法
  */
 function generateHash(params, secret) {
-  const sortedKeys = Object.keys(params).filter(k => {
-    return k !== 'hash' && params[k] !== null && params[k] !== '' && params[k] !== undefined;
-  }).sort();
+  const sortedKeys = Object.keys(params)
+    .filter((k) => {
+      return k !== 'hash' && params[k] !== null && params[k] !== '' && params[k] !== undefined;
+    })
+    .sort();
 
-  const stringA = sortedKeys.map(k => k + '=' + params[k]).join('&');
+  const stringA = sortedKeys.map((k) => k + '=' + params[k]).join('&');
   const stringSignTemp = stringA + secret;
 
   return md5(stringSignTemp);
@@ -241,17 +251,31 @@ function md5(str) {
   function md5cmn(q, a, b, x, s, t) {
     return safeAdd(bitRotateLeft(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b);
   }
-  function md5ff(a, b, c, d, x, s, t) { return md5cmn((b & c) | (~b & d), a, b, x, s, t); }
-  function md5gg(a, b, c, d, x, s, t) { return md5cmn((b & d) | (c & ~d), a, b, x, s, t); }
-  function md5hh(a, b, c, d, x, s, t) { return md5cmn(b ^ c ^ d, a, b, x, s, t); }
-  function md5ii(a, b, c, d, x, s, t) { return md5cmn(c ^ (b | ~d), a, b, x, s, t); }
+  function md5ff(a, b, c, d, x, s, t) {
+    return md5cmn((b & c) | (~b & d), a, b, x, s, t);
+  }
+  function md5gg(a, b, c, d, x, s, t) {
+    return md5cmn((b & d) | (c & ~d), a, b, x, s, t);
+  }
+  function md5hh(a, b, c, d, x, s, t) {
+    return md5cmn(b ^ c ^ d, a, b, x, s, t);
+  }
+  function md5ii(a, b, c, d, x, s, t) {
+    return md5cmn(c ^ (b | ~d), a, b, x, s, t);
+  }
 
   function binlMD5(x, len) {
     x[len >> 5] |= 0x80 << (len % 32);
     x[(((len + 64) >>> 9) << 4) + 14] = len;
-    var a = 1732584193, b = -271733879, c = -1732584194, d = 271733878;
+    var a = 1732584193,
+      b = -271733879,
+      c = -1732584194,
+      d = 271733878;
     for (var i = 0; i < x.length; i += 16) {
-      var olda = a, oldb = b, oldc = c, oldd = d;
+      var olda = a,
+        oldb = b,
+        oldc = c,
+        oldd = d;
       a = md5ff(a, b, c, d, x[i], 7, -680876936);
       d = md5ff(d, a, b, c, x[i + 1], 12, -389564586);
       c = md5ff(c, d, a, b, x[i + 2], 17, 606105819);
@@ -340,7 +364,7 @@ function md5(str) {
       output[i] = 0;
     }
     var length8 = input.length * 8;
-    for (var i = 0; i < length8; i += 8) {
+    for (i = 0; i < length8; i += 8) {
       output[i >> 5] |= (input.charCodeAt(i / 8) & 0xff) << (i % 32);
     }
     return output;

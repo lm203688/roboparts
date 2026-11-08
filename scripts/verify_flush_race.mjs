@@ -34,8 +34,15 @@ function makeKV(delayMs) {
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   return {
     store,
-    async get(key) { await sleep(delayMs); const v = store.get(key); return v ? JSON.parse(v) : null; },
-    async put(key, val) { await sleep(delayMs); store.set(key, val); },
+    async get(key) {
+      await sleep(delayMs);
+      const v = store.get(key);
+      return v ? JSON.parse(v) : null;
+    },
+    async put(key, val) {
+      await sleep(delayMs);
+      store.set(key, val);
+    },
   };
 }
 
@@ -56,27 +63,36 @@ async function run(label, segSource) {
     recordMcp(context, 'tool:check_compatibility');
     recordMcp(context, 'toolsrc:script:check_compatibility');
     await Promise.allSettled(pending);
-    await new Promise((r) => setTimeout(r, 120));   // 等尾部 put 落定
+    await new Promise((r) => setTimeout(r, 120)); // 等尾部 put 落定
 
-    let landed = {};
+    const landed = {};
     for (const v of kv.store.values()) Object.assign(landed, JSON.parse(v));
     delete landed._updated;
     return landed;
   } finally {
-    try { fs.unlinkSync(tmp); } catch { /* 清理失败不影响结论 */ }
+    try {
+      fs.unlinkSync(tmp);
+    } catch {
+      /* 清理失败不影响结论 */
+    }
   }
 }
 
 const fixed = SEG;
-const legacy = SEG.replace('scheduleFlush(context);',
-  'context.waitUntil(flushMcp(context.env).catch(() => {}));');
+const legacy = SEG.replace(
+  'scheduleFlush(context);',
+  'context.waitUntil(flushMcp(context.env).catch(() => {}));',
+);
 if (legacy === fixed) {
   console.error('❌ 反向注入失败：源码中未找到 scheduleFlush(context); 调用点');
   process.exit(2);
 }
 
 const EXPECT = { 'mcp:tool:check_compatibility': 1, 'mcp:toolsrc:script:check_compatibility': 1 };
-const fmt = (o) => Object.entries(o).map(([k, v]) => `${k}=${v}`).join(', ') || '（空）';
+const fmt = (o) =>
+  Object.entries(o)
+    .map(([k, v]) => `${k}=${v}`)
+    .join(', ') || '（空）';
 
 const legacyLanded = await run('legacy', legacy);
 const fixedLanded = await run('fixed', fixed);
@@ -90,9 +106,11 @@ const legacyLoses = !eq(legacyLanded);
 const fixedKeeps = eq(fixedLanded);
 
 console.log('');
-console.log(legacyLoses ? '✅ 旧版确实丢写（竞态复现，缺陷为真）'
-                        : '⚠️ 旧版未复现丢写：本机调度未撞上交错窗口，本次不足以证伪');
-console.log(fixedKeeps ? '✅ 修复版无丢写（串行化生效）'
-                       : '❌ 修复版仍丢写（串行化未生效）');
+console.log(
+  legacyLoses
+    ? '✅ 旧版确实丢写（竞态复现，缺陷为真）'
+    : '⚠️ 旧版未复现丢写：本机调度未撞上交错窗口，本次不足以证伪',
+);
+console.log(fixedKeeps ? '✅ 修复版无丢写（串行化生效）' : '❌ 修复版仍丢写（串行化未生效）');
 
 process.exit(fixedKeeps ? 0 : 1);

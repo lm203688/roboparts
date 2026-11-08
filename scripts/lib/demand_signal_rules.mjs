@@ -57,54 +57,157 @@ const __dirname = path.dirname(__filename);
 
 /** 物理机器人/硬件实体锚词：命中即认为标题在谈论实物部件而非软件语义。
  * 保守取高信号词，避免易误伤项（如 `ros` 单独写会命中 "pros"，故用 \bros\b）。 */
-const ROBOTIC_ANCHOR_RE = new RegExp([
-  // 构型
-  'humanoid', 'quadruped', 'bipedal', 'hexapod', 'robot\\b', 'robotic', 'robotics',
-  '人形', '四足', '仿生', '机器狗', '机器人',
-  // 机械接口
-  'end[.\\s-]?effector', 'flange', '\\bpcd\\b', 'iso[.\\s-]?9409', '法兰', '安装孔',
-  'joint[.\\s-]?ball', 'shoulder[.\\s-]?joint', 'hip[.\\s-]?joint', 'knee[.\\s-]?joint',
-  // 执行器
-  'servo', 'actuat', 'harmonic', 'planetary', 'reducer', 'gearbox', '舵机', '减速',
-  'stepper', 'steering', 'bl[dm]', '\\bvfd\\b', 'linear[.\\s-]?actuator', '丝杠',
-  // 传感/驱动
-  'torque[.\\s-]?sensor', 'force[.\\s-]?torque', '\\bfts\\b', 'encod', '\\bimu\\b',
-  '\\blidar\\b', 'gripper', '夹爪', 'gimbal',
-  // 结构/线缆
-  'chassis', 'extrusion', 'aluminum', 'harness', '\\bstl\\b', '\\bdxf\\b', '3d[.\\s-]?print',
-  // 协议/生态
-  'urdf', 'ros2', '\\bros\\b', 'feetech', 'sts3215', 'sts3210', 'dynamixel', 'so-?arm',
-  // 采购
-  '\\bmpn\\b', 'bill of materials', '\\bbom\\b',
-].join('|'), 'gi');
+const ROBOTIC_ANCHOR_RE = new RegExp(
+  [
+    // 构型
+    'humanoid',
+    'quadruped',
+    'bipedal',
+    'hexapod',
+    'robot\\b',
+    'robotic',
+    'robotics',
+    '人形',
+    '四足',
+    '仿生',
+    '机器狗',
+    '机器人',
+    // 机械接口
+    'end[.\\s-]?effector',
+    'flange',
+    '\\bpcd\\b',
+    'iso[.\\s-]?9409',
+    '法兰',
+    '安装孔',
+    'joint[.\\s-]?ball',
+    'shoulder[.\\s-]?joint',
+    'hip[.\\s-]?joint',
+    'knee[.\\s-]?joint',
+    // 执行器
+    'servo',
+    'actuat',
+    'harmonic',
+    'planetary',
+    'reducer',
+    'gearbox',
+    '舵机',
+    '减速',
+    'stepper',
+    'steering',
+    'bl[dm]',
+    '\\bvfd\\b',
+    'linear[.\\s-]?actuator',
+    '丝杠',
+    // 传感/驱动
+    'torque[.\\s-]?sensor',
+    'force[.\\s-]?torque',
+    '\\bfts\\b',
+    'encod',
+    '\\bimu\\b',
+    '\\blidar\\b',
+    'gripper',
+    '夹爪',
+    'gimbal',
+    // 结构/线缆
+    'chassis',
+    'extrusion',
+    'aluminum',
+    'harness',
+    '\\bstl\\b',
+    '\\bdxf\\b',
+    '3d[.\\s-]?print',
+    // 协议/生态
+    'urdf',
+    'ros2',
+    '\\bros\\b',
+    'feetech',
+    'sts3215',
+    'sts3210',
+    'dynamixel',
+    'so-?arm',
+    // 采购
+    '\\bmpn\\b',
+    'bill of materials',
+    '\\bbom\\b',
+  ].join('|'),
+  'gi',
+);
 
 /** AI/LLM 语境：命中即判 noise —— 这类仓库的 "compatible" 几乎从不指硬件。 */
-const AI_CTX_RE = new RegExp([
-  'openai', 'chatgpt', 'gpt[-.\\s]?\\d', '\\bclaude\\b', '\\bgemini\\b', '\\bllm\\b',
-  'responses\\s+api', 'websocket[.\\s-]?transport', '\\bgemm\\b', '\\bkernel\\b',
-  '\\bgpu\\b', '\\bcuda\\b', '[\\(\\[]hip[\\)\\]]', '\\btriton\\b', '\\bvllm\\b',
-  '\\binference\\b', '\\bmxfp\\b', '\\bfp16\\b', '\\bfp8\\b', 'completion',
-].join('|'), 'i');
+const AI_CTX_RE = new RegExp(
+  [
+    'openai',
+    'chatgpt',
+    'gpt[-.\\s]?\\d',
+    '\\bclaude\\b',
+    '\\bgemini\\b',
+    '\\bllm\\b',
+    'responses\\s+api',
+    'websocket[.\\s-]?transport',
+    '\\bgemm\\b',
+    '\\bkernel\\b',
+    '\\bgpu\\b',
+    '\\bcuda\\b',
+    '[\\(\\[]hip[\\)\\]]',
+    '\\btriton\\b',
+    '\\bvllm\\b',
+    '\\binference\\b',
+    '\\bmxfp\\b',
+    '\\bfp16\\b',
+    '\\bfp8\\b',
+    'completion',
+  ].join('|'),
+  'i',
+);
 
 /** 软件工程语境：兼容指代码/ABI/依赖/构建，非物理硬件。 */
-const SW_CTX_RE = new RegExp([
-  '\\bab[io]\\b', 'abi[.\\s-]?compat', 'dotnet', 'godot', 'kibana', '\\bfleet\\b',
-  '\\bdocker\\b', '\\bbump\\b', '\\bdependency\\b', 'trimming', 'generators',
-  'policy[.\\s-]?icon', 'browser', 'rest[.\\s-]?api', 'upstream',
-].join('|'), 'i');
+const SW_CTX_RE = new RegExp(
+  [
+    '\\bab[io]\\b',
+    'abi[.\\s-]?compat',
+    'dotnet',
+    'godot',
+    'kibana',
+    '\\bfleet\\b',
+    '\\bdocker\\b',
+    '\\bbump\\b',
+    '\\bdependency\\b',
+    'trimming',
+    'generators',
+    'policy[.\\s-]?icon',
+    'browser',
+    'rest[.\\s-]?api',
+    'upstream',
+  ].join('|'),
+  'i',
+);
 
 /** 兼容性/替换语义：本层关心的信号类型。 */
-const COMPAT_SEM_RE = new RegExp([
-  'compat', 'interchang', 'replacement', '\\breplace\\b', '\\bmounting\\b',
-  '互[换操]', '兼容', '适配', '替换', '互装', '\\bpcd\\b', 'iso[.\\s-]?9409',
-].join('|'), 'i');
+const COMPAT_SEM_RE = new RegExp(
+  [
+    'compat',
+    'interchang',
+    'replacement',
+    '\\breplace\\b',
+    '\\bmounting\\b',
+    '互[换操]',
+    '兼容',
+    '适配',
+    '替换',
+    '互装',
+    '\\bpcd\\b',
+    'iso[.\\s-]?9409',
+  ].join('|'),
+  'i',
+);
 
 /** 跨品牌/混用语义（与旧字段 cross_brand_compat_engine_users 同口径）。
  * 单独定义一次并作为「强兼容语义」并入 COMPAT_SEM 判定 —— 跨品牌混用本身就是
  * 兼容性诉求，不该漏。注意：不能带 g 标志，全局正则的 test() 会累积 lastIndex，
  * 同一字符串多次 test 结果交替反转。
  * 「mixing two brands」这类口语形态中间隔着不定长度文字，故用 {0,15} 窗口。 */
-const CROSS_BRAND_RE = /cross[.\s-]{0,3}brand|interoperab|互操作|不同[^\n]{0,6}品牌|different[^\n]{0,15}brand|mix(?:ing|ed|es|t)?[^\n]{0,15}brand/i;
+const CROSS_BRAND_RE =
+  /cross[.\s-]{0,3}brand|interoperab|互操作|不同[^\n]{0,6}品牌|different[^\n]{0,15}brand|mix(?:ing|ed|es|t)?[^\n]{0,15}brand/i;
 
 /** 机器人领域专属源：标题可信度更高，无锚词时退判 unclassified 而非 noise。 */
 const DOMAIN_SOURCES = new Set(['ros_discourse', 'stack_exchange', 'reddit']);
@@ -135,9 +238,7 @@ export function classifySignal(it = {}) {
   }
 
   const anchors = t.match(ROBOTIC_ANCHOR_RE);
-  const anchorList = anchors
-    ? [...new Set(anchors.map((a) => a.toLowerCase()))].slice(0, 4)
-    : [];
+  const anchorList = anchors ? [...new Set(anchors.map((a) => a.toLowerCase()))].slice(0, 4) : [];
   if (anchorList.length) basis.push('硬件锚词命中: ' + anchorList.join(' / '));
 
   const domainSrc = DOMAIN_SOURCES.has(src);
@@ -214,23 +315,35 @@ export function buildVerdict(p) {
   const head = `本轮监听 ${aliveSources} 个可达源、${totalHits} 条命中，经机器人硬件锚定判别：确认兼容性提问 ${confirmed} 条`;
   const tail = `、未判 ${unclassified} 条、判为非机器人信号 ${noise} 条`;
   if (confirmed === 0) {
-    return head + tail +
+    return (
+      head +
+      tail +
       '。自动抓取通道当前零确认信号——这不等于需求不存在，而是检索词未锚定机器人领域：' +
       '历史版本（2026-08-16/28 快照）曾把 AI/LLM 仓库的 "OpenAI-compatible"、' +
       '"ABI-compatible"、"GEMM replacement" 类 PR 以 real_signal=true 计为真实信号，' +
       '公开端点因此对外宣称了并不存在的 10 条提问。判别层现为三态 fail-closed。' +
-      '机械接口声明率 ' + pctStr + '%，即便有提问也多数答不出。';
+      '机械接口声明率 ' +
+      pctStr +
+      '%，即便有提问也多数答不出。'
+    );
   }
-  return head + tail +
-    '。机械接口声明率仅 ' + pctStr + '%，多数今天仍答不出——需求存在，供给（可计算兼容性）不足。';
+  return (
+    head +
+    tail +
+    '。机械接口声明率仅 ' +
+    pctStr +
+    '%，多数今天仍答不出——需求存在，供给（可计算兼容性）不足。'
+  );
 }
 
 /** 按声明率阈值给「能否答」的诚实估算（与 reflow 的 estimate 同口径）。 */
 export function estimateAnswerability(declRate) {
   if (declRate < 0.05) {
-    return '极低：跨品牌兼容类提问今天绝大多数答不出。抬声明率的合法通道是厂商 datasheet 补录、' +
+    return (
+      '极低：跨品牌兼容类提问今天绝大多数答不出。抬声明率的合法通道是厂商 datasheet 补录、' +
       'ISO 9409-1 查表补 A{n} 标准号、以及用户提交带出处的声明——不是批量导入开源 BOM ' +
-      '（写入 oss_components.json 不影响本指标的分母 entities.json）。';
+      '（写入 oss_components.json 不影响本指标的分母 entities.json）。'
+    );
   }
   return '部分可答：跨品牌兼容类提问多数仍答不出，仅少数有厂商 datasheet 出处的条目可判。';
 }
@@ -254,7 +367,7 @@ export function buildActionableFixes(declRate) {
   if (declRate !== undefined && declRate < 0.5) {
     fixes.push(
       '先证明需求再投数据采集：当前零确认信号，抬供给前应先证明有真实用户在问；' +
-        '且本层「无出处不收」，可答率 50% 只能靠厂商 datasheet 出处逐条登记，不能靠堆量。'
+        '且本层「无出处不收」，可答率 50% 只能靠厂商 datasheet 出处逐条登记，不能靠堆量。',
     );
   }
   return fixes;
@@ -266,12 +379,18 @@ const HISTORICAL_NOISE = [
   ['github', 'feat(core): support live component replacement'],
   ['github', 'Add guided alias activation and replacement workflow'],
   ['github', '[HIP] [FlyDSL] [Kernel] Extend MXFP4 GEMM1 replacement to A4W4'],
-  ['github', 'Feature request: opt-in upstream Responses WebSocket transport for OpenAI-compatible providers'],
+  [
+    'github',
+    'Feature request: opt-in upstream Responses WebSocket transport for OpenAI-compatible providers',
+  ],
   ['github', 'feat: stream compatible Chat completions'],
   ['github', 'dotnet: Make GodotSharp and generators compatible with trimming'],
   ['github', '[9.5] fix(fleet): hide version-specific policy icon for compatible agents (#287504)'],
   ['github', '[9.4] fix(fleet): hide version-specific policy icon for compatible agents (#287504)'],
-  ['github', 'build(deps): bump astral-sh/uv from 0.12.2 to 0.12.5 in /src/api in the docker-compatible group'],
+  [
+    'github',
+    'build(deps): bump astral-sh/uv from 0.12.2 to 0.12.5 in /src/api in the docker-compatible group',
+  ],
   ['github', 'declare C and C-unwind as mutually ABI-compatible'],
 ];
 
@@ -302,37 +421,64 @@ function selfTest() {
   // 阴性对照：历史版本判为 real_signal=true 的 10 条软件 PR 必须全部判 noise
   for (const [src, title] of HISTORICAL_NOISE) {
     const r = classifySignal({ title, source: src });
-    check('阴性·历史噪声判为 noise：' + title.slice(0, 46),
-      r.state === 'noise', '实判 ' + r.state + '（' + r.basis.join('; ') + '）');
+    check(
+      '阴性·历史噪声判为 noise：' + title.slice(0, 46),
+      r.state === 'noise',
+      '实判 ' + r.state + '（' + r.basis.join('; ') + '）',
+    );
   }
-  check('阴性·10 条历史噪声无一被误判为 confirmed',
-    HISTORICAL_NOISE.every(([s, t]) => classifySignal({ title: t, source: s }).state !== 'confirmed'));
+  check(
+    '阴性·10 条历史噪声无一被误判为 confirmed',
+    HISTORICAL_NOISE.every(
+      ([s, t]) => classifySignal({ title: t, source: s }).state !== 'confirmed',
+    ),
+  );
 
   // 阳性对照：真信号必须判 confirmed
   for (const [src, title] of CONFIRMED_CASES) {
     const r = classifySignal({ title, source: src });
-    check('阳性·真信号判为 confirmed：' + title.slice(0, 46),
-      r.state === 'confirmed', '实判 ' + r.state + '（' + r.basis.join('; ') + '）');
+    check(
+      '阳性·真信号判为 confirmed：' + title.slice(0, 46),
+      r.state === 'confirmed',
+      '实判 ' + r.state + '（' + r.basis.join('; ') + '）',
+    );
   }
 
   // 未判对照：领域专属源 + 无硬件锚词 → unclassified（不是 true、不是 noise）
   for (const [src, title] of UNCLASSIFIED_CASES) {
     const r = classifySignal({ title, source: src });
-    check('未判·领域源无锚词 → unclassified：' + title.slice(0, 44),
-      r.state === 'unclassified', '实判 ' + r.state + '（' + r.basis.join('; ') + '）');
+    check(
+      '未判·领域源无锚词 → unclassified：' + title.slice(0, 44),
+      r.state === 'unclassified',
+      '实判 ' + r.state + '（' + r.basis.join('; ') + '）',
+    );
   }
 
   // fail-closed 结构性断言：不存在默认判真的路径
-  check('fail-closed·空标题不判 confirmed',
-    classifySignal({ title: '', source: 'github' }).state !== 'confirmed');
-  check('fail-closed·无兼容语义不判 confirmed',
-    classifySignal({ title: 'How to build a robot arm', source: 'github' }).state !== 'confirmed');
+  check(
+    'fail-closed·空标题不判 confirmed',
+    classifySignal({ title: '', source: 'github' }).state !== 'confirmed',
+  );
+  check(
+    'fail-closed·无兼容语义不判 confirmed',
+    classifySignal({ title: 'How to build a robot arm', source: 'github' }).state !== 'confirmed',
+  );
   const allCases = [
-    ...HISTORICAL_NOISE, ...CONFIRMED_CASES, ...UNCLASSIFIED_CASES,
-    ['github', ''], ['github', 'How to build a robot arm'], ['github', 'Random title'],
+    ...HISTORICAL_NOISE,
+    ...CONFIRMED_CASES,
+    ...UNCLASSIFIED_CASES,
+    ['github', ''],
+    ['github', 'How to build a robot arm'],
+    ['github', 'Random title'],
   ];
-  check('fail-closed·所有输入只落在三态内',
-    allCases.every(([s, t]) => ['confirmed', 'unclassified', 'noise'].includes(classifySignal({ title: t, source: s }).state)));
+  check(
+    'fail-closed·所有输入只落在三态内',
+    allCases.every(([s, t]) =>
+      ['confirmed', 'unclassified', 'noise'].includes(
+        classifySignal({ title: t, source: s }).state,
+      ),
+    ),
+  );
 
   // 批量计数：real_query_count 只计 confirmed
   const mixed = [
@@ -344,16 +490,27 @@ function selfTest() {
   check('计数·confirmed=1', byState.confirmed === 1, JSON.stringify(byState));
   check('计数·noise=1', byState.noise === 1, JSON.stringify(byState));
   check('计数·unclassified=1', byState.unclassified === 1, JSON.stringify(byState));
-  check('计数·三态之和 = 输入数', byState.confirmed + byState.noise + byState.unclassified === mixed.length);
+  check(
+    '计数·三态之和 = 输入数',
+    byState.confirmed + byState.noise + byState.unclassified === mixed.length,
+  );
 
   // 对外字段：real_signal 与 signal_state 一致，旧字段不丢失
   const pub = toPublicSources(classifyBatch(mixed).out);
-  check('字段·real_signal = (state===confirmed)',
-    pub.every((p) => p.real_signal === (p.signal_state === 'confirmed')));
-  check('字段·保留向后兼容字段 name/url/signal_type/evidence/relevance',
-    pub.every((p) => 'name' in p && 'url' in p && 'signal_type' in p && 'evidence' in p && 'relevance' in p));
-  check('字段·relevance 不再是写死的「需判别」占位',
-    pub.every((p) => !/需判别/.test(p.relevance)));
+  check(
+    '字段·real_signal = (state===confirmed)',
+    pub.every((p) => p.real_signal === (p.signal_state === 'confirmed')),
+  );
+  check(
+    '字段·保留向后兼容字段 name/url/signal_type/evidence/relevance',
+    pub.every(
+      (p) => 'name' in p && 'url' in p && 'signal_type' in p && 'evidence' in p && 'relevance' in p,
+    ),
+  );
+  check(
+    '字段·relevance 不再是写死的「需判别」占位',
+    pub.every((p) => !/需判别/.test(p.relevance)),
+  );
 
   // verdict：零确认时不得宣称真实提问
   // 【2026-09-23 修】此前 declRatePct 入参写 '5.75'、断言也写 /5\.75%/ —— 同一事实
@@ -361,40 +518,81 @@ function selfTest() {
   // 改为单一来源：入参与期望都由 RATE 派生，杜绝再次分叉。
   const RATE = '5.69';
   const RATE_RE = new RegExp(`声明率 ${RATE.replace('.', '\\.')}%`);
-  const v0 = buildVerdict({ confirmed: 0, unclassified: 1, noise: 1, aliveSources: 3, totalHits: 3, declRatePct: RATE });
+  const v0 = buildVerdict({
+    confirmed: 0,
+    unclassified: 1,
+    noise: 1,
+    aliveSources: 3,
+    totalHits: 3,
+    declRatePct: RATE,
+  });
   check('verdict·confirmed=0 时不宣称「真实兼容性提问信号」', !/真实兼容性提问/.test(v0));
-  check('verdict·confirmed=0 时明示零确认与历史误判成因',
-    /零确认信号/.test(v0) && /real_signal=true/.test(v0));
+  check(
+    'verdict·confirmed=0 时明示零确认与历史误判成因',
+    /零确认信号/.test(v0) && /real_signal=true/.test(v0),
+  );
   check('verdict·confirmed=0 时仍披露声明率', RATE_RE.test(v0));
-  const v1 = buildVerdict({ confirmed: 3, unclassified: 1, noise: 5, aliveSources: 3, totalHits: 9, declRatePct: RATE });
-  check('verdict·confirmed>0 时保留「需求存在、供给不足」表述',
-    /需求存在/.test(v1) && /供给/.test(v1));
-  const vUnknown = buildVerdict({ confirmed: 0, unclassified: 0, noise: 0, aliveSources: 0, totalHits: 0, declRatePct: RATE });
-  check('verdict·通道全不可达 → UNKNOWN 且不推断零需求',
-    /UNKNOWN/.test(vUnknown) && /不推断需求为零/.test(vUnknown));
+  const v1 = buildVerdict({
+    confirmed: 3,
+    unclassified: 1,
+    noise: 5,
+    aliveSources: 3,
+    totalHits: 9,
+    declRatePct: RATE,
+  });
+  check(
+    'verdict·confirmed>0 时保留「需求存在、供给不足」表述',
+    /需求存在/.test(v1) && /供给/.test(v1),
+  );
+  const vUnknown = buildVerdict({
+    confirmed: 0,
+    unclassified: 0,
+    noise: 0,
+    aliveSources: 0,
+    totalHits: 0,
+    declRatePct: RATE,
+  });
+  check(
+    'verdict·通道全不可达 → UNKNOWN 且不推断零需求',
+    /UNKNOWN/.test(vUnknown) && /不推断需求为零/.test(vUnknown),
+  );
 
   // 声明率估算文案不得再指向无效的开源 BOM 反喂
   const est = estimateAnswerability(0.0078);
   check('estimate·不宣称开源 BOM 反喂能抬声明率', !/反喂 ingestion/.test(est));
-  check('estimate·指出合法通道为 datasheet/ISO/用户提交',
-    /datasheet/.test(est) && /ISO 9409-1/.test(est));
+  check(
+    'estimate·指出合法通道为 datasheet/ISO/用户提交',
+    /datasheet/.test(est) && /ISO 9409-1/.test(est),
+  );
   check('estimate·高声明率走另一分支', /部分可答/.test(estimateAnswerability(0.0569)));
 
   // 防「自测入参格式与真实调用方不一致」造成的假绿：buildVerdict 内部加 %，
   // 调用方必须传纯数字字符串。若有人传已带 % 的串，会出现 %% 这种对外可见的瑕疵。
-  check('verdict·无 %% 双百分号（declRatePct 须为纯数字串）',
-    !/%%/.test(v0) && !/%%/.test(v1) && !/%%/.test(vUnknown));
+  check(
+    'verdict·无 %% 双百分号（declRatePct 须为纯数字串）',
+    !/%%/.test(v0) && !/%%/.test(v1) && !/%%/.test(vUnknown),
+  );
 
   // 阳性对照：模拟 reflow 的真实事故（传入已带 % 的串），证明防御性剥离生效
-  const vPctSuffix = buildVerdict({ confirmed: 0, unclassified: 1, noise: 1, aliveSources: 3, totalHits: 3, declRatePct: RATE + '%' });
+  const vPctSuffix = buildVerdict({
+    confirmed: 0,
+    unclassified: 1,
+    noise: 1,
+    aliveSources: 3,
+    totalHits: 3,
+    declRatePct: RATE + '%',
+  });
   check('verdict·调用方误传带 % 的串也不会出现 %%', !/%%/.test(vPctSuffix));
   check('verdict·误传带 % 时仍保留正确的百分号', RATE_RE.test(vPctSuffix));
 
   const fixes = buildActionableFixes();
   check('fixes·不宣称开源 BOM 反喂 ingestion', !fixes.some((f) => /反喂 ingestion/.test(f)));
-  check('fixes·指出合法通道 datasheet / ISO 9409-1 / 用户提交',
-    /datasheet/.test(fixes.join('')) && /ISO 9409-1/.test(fixes.join(''))
-      && /用户提交/.test(fixes.join('')));
+  check(
+    'fixes·指出合法通道 datasheet / ISO 9409-1 / 用户提交',
+    /datasheet/.test(fixes.join('')) &&
+      /ISO 9409-1/.test(fixes.join('')) &&
+      /用户提交/.test(fixes.join('')),
+  );
   check('fixes·明示两条链路不相通', /oss_components\.json/.test(fixes.join('')));
   check('fixes·指出检索侧须锚定机器人领域', /锚定机器人领域/.test(fixes.join('')));
 
@@ -402,11 +600,12 @@ function selfTest() {
   check('fixes·declRate 缺省不追加条件项', fixes.length === 3);
   const fixesLow = buildActionableFixes(0.0569);
   check('fixes·低声明率追加「先证明需求」条件项', fixesLow.length === 4);
-  check('fixes·条件项指出「先证明需求再投数据采集」',
-    /先证明需求/.test(fixesLow[3]) && /无出处不收/.test(fixesLow[3]));
+  check(
+    'fixes·条件项指出「先证明需求再投数据采集」',
+    /先证明需求/.test(fixesLow[3]) && /无出处不收/.test(fixesLow[3]),
+  );
   const fixesHigh = buildActionableFixes(0.6);
-  check('fixes·高声明率不追加「先证明需求」（已可答，不该再说缺需求）',
-    fixesHigh.length === 3);
+  check('fixes·高声明率不追加「先证明需求」（已可答，不该再说缺需求）', fixesHigh.length === 3);
 
   printResult('需求信号判别层（demand_signal_rules）', passed, failures);
 }
@@ -424,8 +623,7 @@ function printResult(label, passed, failures) {
 // ---------------------------------------------------------------- CLI
 
 const argv = process.argv.slice(2);
-const isMain = process.argv[1]
-  && path.resolve(process.argv[1]) === __filename;
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === __filename;
 
 if (isMain) {
   if (argv.includes('--self-test')) {

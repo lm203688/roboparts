@@ -60,18 +60,21 @@ const BRANCH = gitStr(['rev-parse', '--abbrev-ref', 'HEAD']);
 function assertNoPendingRewrite() {
   let pend = null;
   try {
-    const led = JSON.parse(fs.readFileSync(
-      new URL('../ops/history_rewrite_ledger.json', import.meta.url), 'utf8'));
+    const led = JSON.parse(
+      fs.readFileSync(new URL('../ops/history_rewrite_ledger.json', import.meta.url), 'utf8'),
+    );
     pend = (led.events || []).find((ev) => !ev.remote_synced_at) || null;
-  } catch { return; }   // 台账缺失 = 从未重写过，按常规路径走
+  } catch {
+    return;
+  } // 台账缺失 = 从未重写过，按常规路径走
   if (!pend || process.argv.includes('--rewrite-acknowledged')) return;
   throw new Error(
-    `本地历史已于 ${pend.rewritten_at} 被 ${pend.tool} 重写（${pend.reason}），尚未同步到远端。\n`
-    + `  旧 HEAD ${pend.old_head.slice(0, 8)} → 新 HEAD ${pend.new_head.slice(0, 8)}，`
-    + `与远端已无共同祖先，逐提交重放无意义。\n`
-    + `  强制覆盖公开仓属破坏性操作（且 GitHub 仍按 SHA 缓存旧提交，需 support ticket 才真正抹除），`
-    + `自动飞轮拒绝代劳。\n`
-    + `  处置见 ops/results/_NEEDS_USER.md「远端历史清理」条目；确认后加 --rewrite-acknowledged 重跑。`
+    `本地历史已于 ${pend.rewritten_at} 被 ${pend.tool} 重写（${pend.reason}），尚未同步到远端。\n` +
+      `  旧 HEAD ${pend.old_head.slice(0, 8)} → 新 HEAD ${pend.new_head.slice(0, 8)}，` +
+      `与远端已无共同祖先，逐提交重放无意义。\n` +
+      `  强制覆盖公开仓属破坏性操作（且 GitHub 仍按 SHA 缓存旧提交，需 support ticket 才真正抹除），` +
+      `自动飞轮拒绝代劳。\n` +
+      `  处置见 ops/results/_NEEDS_USER.md「远端历史清理」条目；确认后加 --rewrite-acknowledged 重跑。`,
   );
 }
 assertNoPendingRewrite();
@@ -87,9 +90,14 @@ if (!TOKEN) {
       txt.match(/https:\/\/x-access-token:([^@\s]+)@github\.com/) ||
       txt.match(/https:\/\/[^:@\s]+:([^@\s]+)@github\.com/);
     if (m) TOKEN = m[1];
-  } catch {}
+  } catch {
+    /* 读取失败不致命 */
+  }
 }
-if (!TOKEN) throw new Error('未取到 GitHub token：设置 GITHUB_TOKEN 或确认 ~/.git-credentials 含 github.com 条目');
+if (!TOKEN)
+  throw new Error(
+    '未取到 GitHub token：设置 GITHUB_TOKEN 或确认 ~/.git-credentials 含 github.com 条目',
+  );
 
 // ---------- 1c. 日志脱敏（PAT 绝不进日志）----------
 // 20260914 实测：curl 子进程失败时 execFileSync 抛出的 Error.message 形如
@@ -112,15 +120,25 @@ async function api(method, path, body, retries = 3) {
   for (let i = 0; i <= retries; i++) {
     const tmp = `${os.tmpdir()}/gh-push-${process.pid}-${i}-${Date.now()}.json`;
     const args = [
-      '--ssl-no-revoke', '--tlsv1.3', '-sS',
-      '-m', String(Math.floor(API_TIMEOUT_MS / 1000)),
-      '-X', method,
-      '-H', `Authorization: Bearer ${TOKEN}`,
-      '-H', 'Accept: application/vnd.github+json',
-      '-H', 'Content-Type: application/json',
-      '-H', 'User-Agent: roboparts-gitdata-push',
-      '-o', tmp,
-      '-w', '%{http_code}',
+      '--ssl-no-revoke',
+      '--tlsv1.3',
+      '-sS',
+      '-m',
+      String(Math.floor(API_TIMEOUT_MS / 1000)),
+      '-X',
+      method,
+      '-H',
+      `Authorization: Bearer ${TOKEN}`,
+      '-H',
+      'Accept: application/vnd.github+json',
+      '-H',
+      'Content-Type: application/json',
+      '-H',
+      'User-Agent: roboparts-gitdata-push',
+      '-o',
+      tmp,
+      '-w',
+      '%{http_code}',
       url,
     ];
     if (body) args.push('-d', '@-');
@@ -132,11 +150,18 @@ async function api(method, path, body, retries = 3) {
       });
       const status = parseInt(String(statusStr).trim(), 10);
       let text = '';
-      try { text = fs.readFileSync(tmp, 'utf8'); } catch {}
+      try {
+        text = fs.readFileSync(tmp, 'utf8');
+      } catch {
+        /* 临时文件可能不存在 */
+      }
       fs.rmSync(tmp, { force: true });
-      if (status >= 500 || status === 429) throw new Error(redact(`${status}: ${text.slice(0, 200)}`));
+      if (status >= 500 || status === 429)
+        throw new Error(redact(`${status}: ${text.slice(0, 200)}`));
       if (status < 200 || status >= 300) {
-        const e = new Error(redact(`GitHub API ${method} ${path} -> ${status}: ${text.slice(0, 400)}`));
+        const e = new Error(
+          redact(`GitHub API ${method} ${path} -> ${status}: ${text.slice(0, 400)}`),
+        );
         e.fatal = true;
         throw e;
       }
@@ -163,7 +188,11 @@ async function api(method, path, body, retries = 3) {
 // 用状态文件把「远端 SHA -> 对应的本地 SHA」映射记下来，下次以本地等价物为基准。
 const STATE_FILE = `${gitStr(['rev-parse', '--git-dir'])}/gitdata-push-state.json`;
 let state = null;
-try { state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8')); } catch {}
+try {
+  state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'));
+} catch {
+  /* state 不存在则重置 */
+}
 
 // ---------- 3a. 历史重写预检（先于任何网络调用，失败快且可离线自测）----------
 // 20260810-18：用户执行 git filter-repo 清除运营文档历史后，本地 87 个提交哈希被
@@ -185,7 +214,11 @@ if (state && state.remote === remoteSha && state.local) {
 }
 
 let exists = true;
-try { git(['cat-file', '-e', `${baseLocal}^{commit}`]); } catch { exists = false; }
+try {
+  git(['cat-file', '-e', `${baseLocal}^{commit}`]);
+} catch {
+  exists = false;
+}
 if (!exists) {
   // 20260810-18：同一个"本地查无此远端 SHA"，有两种完全不同的成因，
   // 处置也完全相反 —— 误诊会让下一轮要么白等、要么把检查删掉硬推。
@@ -199,25 +232,34 @@ if (!exists) {
   // 真正的判据是台账自身的同步状态：重写事件没有 remote_synced_at = 远端还停在旧历史。
   let rewriteHit = null;
   try {
-    const led = JSON.parse(fs.readFileSync(
-      new URL('../ops/history_rewrite_ledger.json', import.meta.url), 'utf8'));
+    const led = JSON.parse(
+      fs.readFileSync(new URL('../ops/history_rewrite_ledger.json', import.meta.url), 'utf8'),
+    );
     for (const ev of led.events || []) {
-      if (!ev.remote_synced_at) { rewriteHit = ev; break; }
-      if (ev.old_head === remoteSha || (ev.map || {})[remoteSha]) { rewriteHit = ev; break; }
+      if (!ev.remote_synced_at) {
+        rewriteHit = ev;
+        break;
+      }
+      if (ev.old_head === remoteSha || (ev.map || {})[remoteSha]) {
+        rewriteHit = ev;
+        break;
+      }
     }
-  } catch { /* 台账缺失就按 (a) 处理 */ }
+  } catch {
+    /* 台账缺失就按 (a) 处理 */
+  }
   if (rewriteHit) {
     throw new Error(
-      `远端 ${remoteSha.slice(0, 8)} 是**重写前**的历史（本地于 ${rewriteHit.rewritten_at} `
-      + `执行 ${rewriteHit.tool}：${rewriteHit.reason}）。\n`
-      + `  本地新 HEAD = ${rewriteHit.new_head.slice(0, 8)}，与远端已无共同祖先，逐提交重放无意义。\n`
-      + `  这属于**必须由人确认**的破坏性操作（公开仓整段历史被替换，且 GitHub 仍会按 SHA \n`
-      + `  缓存旧提交，需另开 support ticket 才能真正抹除）——本脚本拒绝自作主张。\n`
-      + `  确认要覆盖时，见 ops/results/_NEEDS_USER.md 中的「远端历史清理」条目。`
+      `远端 ${remoteSha.slice(0, 8)} 是**重写前**的历史（本地于 ${rewriteHit.rewritten_at} ` +
+        `执行 ${rewriteHit.tool}：${rewriteHit.reason}）。\n` +
+        `  本地新 HEAD = ${rewriteHit.new_head.slice(0, 8)}，与远端已无共同祖先，逐提交重放无意义。\n` +
+        `  这属于**必须由人确认**的破坏性操作（公开仓整段历史被替换，且 GitHub 仍会按 SHA \n` +
+        `  缓存旧提交，需另开 support ticket 才能真正抹除）——本脚本拒绝自作主张。\n` +
+        `  确认要覆盖时，见 ops/results/_NEEDS_USER.md 中的「远端历史清理」条目。`,
     );
   }
   throw new Error(
-    `远端 ${remoteSha.slice(0, 8)} 在本地不存在且无状态映射 —— 远端可能被他处更新，请人工核对后再推`
+    `远端 ${remoteSha.slice(0, 8)} 在本地不存在且无状态映射 —— 远端可能被他处更新，请人工核对后再推`,
   );
 }
 
@@ -226,7 +268,7 @@ const remoteBaseCommit = await api('GET', `/git/commits/${remoteSha}`);
 const baseTreeLocal = gitStr(['rev-parse', `${baseLocal}^{tree}`]);
 if (remoteBaseCommit.tree.sha !== baseTreeLocal) {
   throw new Error(
-    `远端基准内容与本地不一致：远端 tree ${remoteBaseCommit.tree.sha} != 本地 ${baseTreeLocal} —— 拒绝覆盖`
+    `远端基准内容与本地不一致：远端 tree ${remoteBaseCommit.tree.sha} != 本地 ${baseTreeLocal} —— 拒绝覆盖`,
   );
 }
 
@@ -246,7 +288,9 @@ if (!FORCE) {
   console.log(`⚠️ 非快进推送（--force），基准 ${baseLocal.slice(0, 8)} 不是 HEAD 祖先`);
 }
 
-const commits = gitStr(['rev-list', '--reverse', `${baseLocal}..HEAD`]).split('\n').filter(Boolean);
+const commits = gitStr(['rev-list', '--reverse', `${baseLocal}..HEAD`])
+  .split('\n')
+  .filter(Boolean);
 console.log(`待重放 ${commits.length} 个提交`);
 
 // ---------- 4. 逐提交重放 ----------
@@ -262,10 +306,16 @@ for (const c of commits) {
   for (const line of raw.split('\n').filter(Boolean)) {
     // :<oldmode> <newmode> <oldsha> <newsha> <status>\t<path>
     const mm = line.match(/^:(\d{6}) (\d{6}) [0-9a-f]+ ([0-9a-f]+) ([A-Z])\d*\t(.+)$/);
-    if (!mm) { console.log(`  ! 无法解析 diff 行，中止: ${line}`); process.exit(1); }
+    if (!mm) {
+      console.log(`  ! 无法解析 diff 行，中止: ${line}`);
+      process.exit(1);
+    }
     const [, , newMode, newSha, status, pathRaw] = mm;
     const path = pathRaw.replace(/^"|"$/g, '');
-    if (newMode === '160000') { console.log(`  - 跳过子模块 ${path}`); continue; }
+    if (newMode === '160000') {
+      console.log(`  - 跳过子模块 ${path}`);
+      continue;
+    }
 
     if (status === 'D' || /^0+$/.test(newSha)) {
       entries.push({ path, mode: '100644', type: 'blob', sha: null }); // 删除
@@ -282,8 +332,14 @@ for (const c of commits) {
     }
   }
 
-  if (!entries.length) { console.log(`  (空提交，跳过 ${c.slice(0, 8)})`); continue; }
-  if (DRY) { console.log(`  [dry-run] 将提交: ${subject.split('\n')[0]}`); continue; }
+  if (!entries.length) {
+    console.log(`  (空提交，跳过 ${c.slice(0, 8)})`);
+    continue;
+  }
+  if (DRY) {
+    console.log(`  [dry-run] 将提交: ${subject.split('\n')[0]}`);
+    continue;
+  }
 
   const tree = await api('POST', '/git/trees', { base_tree: baseTree, tree: entries });
   const commit = await api('POST', '/git/commits', {
@@ -291,7 +347,9 @@ for (const c of commits) {
     tree: tree.sha,
     parents: [parentSha],
   });
-  console.log(`  ✅ ${c.slice(0, 8)} -> ${commit.sha.slice(0, 8)}  ${subject.split('\n')[0].slice(0, 60)}`);
+  console.log(
+    `  ✅ ${c.slice(0, 8)} -> ${commit.sha.slice(0, 8)}  ${subject.split('\n')[0].slice(0, 60)}`,
+  );
 
   // 完整性：重放后的 tree 必须与本地该提交的 tree 完全一致
   const localTree = gitStr(['rev-parse', `${c}^{tree}`]);
@@ -305,7 +363,10 @@ for (const c of commits) {
   baseTree = tree.sha;
 }
 
-if (DRY) { console.log('dry-run 结束'); process.exit(0); }
+if (DRY) {
+  console.log('dry-run 结束');
+  process.exit(0);
+}
 
 // ---------- 5. 更新分支引用 ----------
 const upd = await api('PATCH', `/git/refs/heads/${BRANCH}`, { sha: parentSha, force: FORCE });
@@ -322,12 +383,18 @@ console.log(`✅ 校验通过：远端内容与本地 HEAD 完全一致 (tree ${
 // 记录「远端 SHA -> 本地等价 SHA」映射，供下次运行识别基准
 fs.writeFileSync(
   STATE_FILE,
-  JSON.stringify({ remote: upd.object.sha, local: localSha, tree: finalTree, at: new Date().toISOString() }, null, 2)
+  JSON.stringify(
+    { remote: upd.object.sha, local: localSha, tree: finalTree, at: new Date().toISOString() },
+    null,
+    2,
+  ),
 );
 
 // remote-tracking ref 指向**本地等价提交**（远端 SHA 本地不存在，写了会 fatal）。
 // 内容等价，git status 因此显示同步，不会误导下一轮。
-try { git(['update-ref', `refs/remotes/origin/${BRANCH}`, localSha]); } catch (e) {
+try {
+  git(['update-ref', `refs/remotes/origin/${BRANCH}`, localSha]);
+} catch (e) {
   console.log(`  (remote-tracking ref 未更新: ${String(e.message).slice(0, 80)})`);
 }
 console.log('DONE');

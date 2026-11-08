@@ -20,20 +20,18 @@ export const CO_MOUNT_CALIBER =
   'research_py_co_mount_engine/v1（三段共装：mount_fit + port_budget + signal_complementary）';
 
 export const CO_MOUNT_WARNING =
-  '本口径为研究层三段共装判据，与 check_compatibility 的四维'
-  + '（protocol/electrical/mechanical/software）维度不同，两者结论不可混用或直接比较。';
+  '本口径为研究层三段共装判据，与 check_compatibility 的四维' +
+  '（protocol/electrical/mechanical/software）维度不同，两者结论不可混用或直接比较。';
 
 /** 裁决态的中文释义（与 build_co_mount 的语义保持一致，不改写结论）。 */
 export function coMountInterpret(verdict) {
   const m = {
-    mountable:
-      '可共装：机械同型 + 工具侧位数够 + 信号角色互补，三者均通过。',
+    mountable: '可共装：机械同型 + 工具侧位数够 + 信号角色互补，三者均通过。',
     port_exhausted:
       '装不下：宿主工具侧位数被占满（**工程约束**，需转接件或换本体），与「不知道」严格区分。',
     type_error:
       '类型错误：不构成共装关系（典型是同角色对，如两个夹爪一起装无意义），属**确定的否定答案**，不是数据缺口。',
-    unknown:
-      '未知：数据不足（如宿主工具侧位数未取证），fail-closed 判未知，不判通过。',
+    unknown: '未知：数据不足（如宿主工具侧位数未取证），fail-closed 判未知，不判通过。',
   };
   return m[verdict] || `裁决态 ${verdict}（未登记释义）`;
 }
@@ -99,8 +97,7 @@ export function queryCoMount(cm, ts, args = {}) {
       caliber: CO_MOUNT_CALIBER,
       error: 'api/co_mount.json 不可用',
       error_kind: 'data_unavailable',
-      note:
-        '该产物由 scripts/build_co_mount.py 生成。未部署或构建失败时如实报错，不用其他口径的结论冒充。',
+      note: '该产物由 scripts/build_co_mount.py 生成。未部署或构建失败时如实报错，不用其他口径的结论冒充。',
     };
   }
 
@@ -114,16 +111,14 @@ export function queryCoMount(cm, ts, args = {}) {
     caliber: CO_MOUNT_CALIBER,
     warning: CO_MOUNT_WARNING,
     question:
-      '「A 和 B 能不能同时装在同一台机器人的工具侧」——这是三段共装关系，'
-      + '不是点对点互插（后者见 check_compatibility）。',
+      '「A 和 B 能不能同时装在同一台机器人的工具侧」——这是三段共装关系，' +
+      '不是点对点互插（后者见 check_compatibility）。',
   };
 
   // ── 情形 1：host + a + b → 单对裁决 + 证据链 ──────────────────────────────
   if (host && a && b) {
     const pv = (cm.pair_verdicts || []).find(
-      (v) =>
-        v.host === host &&
-        ((v.a === a && v.b === b) || (v.a === b && v.b === a)),
+      (v) => v.host === host && ((v.a === a && v.b === b) || (v.a === b && v.b === a)),
     );
     if (!pv) {
       return {
@@ -131,8 +126,8 @@ export function queryCoMount(cm, ts, args = {}) {
         error_kind: 'not_evaluated',
         error: `未找到 ${host} 上 ${a} × ${b} 的共装裁决`,
         hint:
-          '该对可能不在被裁决的配对集内。先用 check_co_mount({host}) 查该宿主的单件可装性，'
-          + '或先用 search_components 确认实体 id。',
+          '该对可能不在被裁决的配对集内。先用 check_co_mount({host}) 查该宿主的单件可装性，' +
+          '或先用 search_components 确认实体 id。',
         known_hosts: Object.keys(hostsById),
       };
     }
@@ -160,9 +155,7 @@ export function queryCoMount(cm, ts, args = {}) {
         known_hosts: Object.keys(hostsById),
       };
     }
-    const singles = Object.values(cm.single_mount || {}).filter(
-      (s) => s.host === host,
-    );
+    const singles = Object.values(cm.single_mount || {}).filter((s) => s.host === host);
     return {
       ...base,
       host,
@@ -183,8 +176,8 @@ export function queryCoMount(cm, ts, args = {}) {
       },
       single_mount: singles,
       note:
-        'single_mount 回答「这个器件单独能不能装上去」；要问「两个能不能同时装」，'
-        + '请再传 a 与 b。tool_io_ports 为 null 表示**一手数据未公开**（刻意不填），据此判 unknown。',
+        'single_mount 回答「这个器件单独能不能装上去」；要问「两个能不能同时装」，' +
+        '请再传 a 与 b。tool_io_ports 为 null 表示**一手数据未公开**（刻意不填），据此判 unknown。',
     };
   }
 

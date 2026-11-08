@@ -44,10 +44,13 @@ export async function onRequestGet(context) {
   } catch (e) {
     // 数据源缺文件 = 诚实 404；不是 500 也不是空对象伪绿
     const status = e.status === 404 ? 404 : 503;
-    return new Response(JSON.stringify({
-      error: status === 404 ? '信号文件尚未生成（请先运行 demand_scan）' : '数据源不可用',
-      detail: String(e && e.message || e),
-    }), { status, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        error: status === 404 ? '信号文件尚未生成（请先运行 demand_scan）' : '数据源不可用',
+        detail: String((e && e.message) || e),
+      }),
+      { status, headers: corsHeaders },
+    );
   }
 }
 

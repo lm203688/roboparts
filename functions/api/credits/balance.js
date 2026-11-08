@@ -19,7 +19,7 @@ async function hashEmail(email) {
   const data = encoder.encode(email.toLowerCase().trim());
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 import { readLedger } from '../../_lib/ledger.js';
@@ -32,7 +32,7 @@ import { PLANS } from '../../_lib/plans.js';
 async function readHistoryField(env, apiKey) {
   const read = await readLedger(env, apiKey);
   return {
-    history: (read.status === 'ok' || read.status === 'empty') ? read.records : null,
+    history: read.status === 'ok' || read.status === 'empty' ? read.records : null,
     ledger_status: read.status,
     ledger_backend: read.backend,
   };
@@ -44,33 +44,37 @@ export async function onRequestOptions() {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    }
+    },
   });
 }
 
 export async function onRequestGet(context) {
   const { request, env } = context;
   const url = new URL(request.url);
-  const apiKey = url.searchParams.get('key') || 
-                 request.headers.get('Authorization')?.replace('Bearer ', '');
-  
+  const apiKey =
+    url.searchParams.get('key') || request.headers.get('Authorization')?.replace('Bearer ', '');
+
   const corsHeaders = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
   };
-  
+
   if (!apiKey) {
     return new Response(JSON.stringify({ error: 'API key required' }), {
-      status: 401, headers: corsHeaders
+      status: 401,
+      headers: corsHeaders,
     });
   }
-  
+
   // 存储未配置 ≠ 你余额为 0。这是我们的问题，必须说是我们的问题。
   if (!env.USER_CREDITS) {
-    return new Response(JSON.stringify({
-      error_kind: 'service_unconfigured',
-      error: '积分系统未配置，无法查询余额（这不代表你的余额为 0）。',
-    }), { status: 503, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        error_kind: 'service_unconfigured',
+        error: '积分系统未配置，无法查询余额（这不代表你的余额为 0）。',
+      }),
+      { status: 503, headers: corsHeaders },
+    );
   }
 
   const userData = await env.USER_CREDITS.get(apiKey);
@@ -83,32 +87,41 @@ export async function onRequestGet(context) {
   //     两个接口对同一个 key 给出互相矛盾的答案。
   // 现在与 history.js 统一口径：404 + not_found。
   if (!userData) {
-    return new Response(JSON.stringify({
-      error_kind: 'not_found',
-      error: 'API Key 无效或不存在。请核对 key；若尚未注册请先访问 /api/register 获取。',
-    }), { status: 404, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        error_kind: 'not_found',
+        error: 'API Key 无效或不存在。请核对 key；若尚未注册请先访问 /api/register 获取。',
+      }),
+      { status: 404, headers: corsHeaders },
+    );
   }
 
   let user;
   try {
     user = JSON.parse(userData);
   } catch (e) {
-    return new Response(JSON.stringify({
-      error_kind: 'account_corrupt',
-      error: '账户记录存在但无法解析，已记录待人工核查（这不代表你的余额为 0）。',
-    }), { status: 500, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        error_kind: 'account_corrupt',
+        error: '账户记录存在但无法解析，已记录待人工核查（这不代表你的余额为 0）。',
+      }),
+      { status: 500, headers: corsHeaders },
+    );
   }
 
   const led = await readHistoryField(env, apiKey);
-  return new Response(JSON.stringify({
-    email_hash: user.email_hash,
-    credits: user.credits || 0,
-    plan: user.plan || 'free',
-    api_calls: user.api_calls || 0,
-    history: led.history,               // 不可读时为 null，不是 []
-    ledger_status: led.ledger_status,
-    ledger_backend: led.ledger_backend,
-  }), { headers: corsHeaders });
+  return new Response(
+    JSON.stringify({
+      email_hash: user.email_hash,
+      credits: user.credits || 0,
+      plan: user.plan || 'free',
+      api_calls: user.api_calls || 0,
+      history: led.history, // 不可读时为 null，不是 []
+      ledger_status: led.ledger_status,
+      ledger_backend: led.ledger_backend,
+    }),
+    { headers: corsHeaders },
+  );
 }
 
 export async function onRequestPost(context) {
@@ -127,39 +140,49 @@ export async function onRequestPost(context) {
     // 如果只传了 api_key（无 license_key），则查询余额
     if (!license_key && api_key) {
       if (!env.USER_CREDITS) {
-        return new Response(JSON.stringify({
-          error_kind: 'service_unconfigured',
-          error: '积分系统未配置，无法查询余额（这不代表你的余额为 0）。',
-        }), { status: 503, headers: corsHeaders });
+        return new Response(
+          JSON.stringify({
+            error_kind: 'service_unconfigured',
+            error: '积分系统未配置，无法查询余额（这不代表你的余额为 0）。',
+          }),
+          { status: 503, headers: corsHeaders },
+        );
       }
       const userData = await env.USER_CREDITS.get(api_key);
       if (userData) {
         const user = JSON.parse(userData);
         const led = await readHistoryField(env, api_key);
-        return new Response(JSON.stringify({
-          email_hash: user.email_hash,
-          credits: user.credits || 0,
-          plan: user.plan || 'free',
-          api_calls: user.api_calls || 0,
-          history: led.history,           // 不可读时为 null，不是 []
-          ledger_status: led.ledger_status,
-          ledger_backend: led.ledger_backend,
-        }), { headers: corsHeaders });
+        return new Response(
+          JSON.stringify({
+            email_hash: user.email_hash,
+            credits: user.credits || 0,
+            plan: user.plan || 'free',
+            api_calls: user.api_calls || 0,
+            history: led.history, // 不可读时为 null，不是 []
+            ledger_status: led.ledger_status,
+            ledger_backend: led.ledger_backend,
+          }),
+          { headers: corsHeaders },
+        );
       }
       // not_found 的响应体里**不要**再带 credits/plan：
       // 那是账户属性，一个不存在的账户没有属性。带上就等于邀请调用方把它当余额读。
-      return new Response(JSON.stringify({
-        error_kind: 'not_found',
-        error: 'API Key 无效或不存在。请核对 key；若尚未注册请先访问 /api/register 获取。',
-      }), { status: 404, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          error_kind: 'not_found',
+          error: 'API Key 无效或不存在。请核对 key；若尚未注册请先访问 /api/register 获取。',
+        }),
+        { status: 404, headers: corsHeaders },
+      );
     }
 
     if (!license_key) {
       return new Response(JSON.stringify({ error: 'license_key or api_key required' }), {
-        status: 400, headers: corsHeaders
+        status: 400,
+        headers: corsHeaders,
       });
     }
-    
+
     // Validate license with Creem API
     const CREEM_API_KEY = env.CREEM_API_KEY;
     const creemResponse = await fetch('https://api.creem.io/v1/licenses/validate', {
@@ -170,24 +193,29 @@ export async function onRequestPost(context) {
       },
       body: JSON.stringify({ license_key }),
     });
-    
+
     const creemData = await creemResponse.json();
-    
+
     if (!creemData.valid && !creemData.activated) {
       return new Response(JSON.stringify({ error: 'Invalid license key' }), {
-        status: 400, headers: corsHeaders
+        status: 400,
+        headers: corsHeaders,
       });
     }
-    
+
     // Determine credit amount based on product —— 统一到 PLANS 事实源
     const productId = creemData.product?.id || '';
     let credits = 0;
-    if (productId.includes('22YhSbY')) credits = PLANS.pro.credits; // Pro monthly
-    else if (productId.includes('4EpFVQ')) credits = PLANS.pro.credits; // API Access
-    else if (productId.includes('pny43r')) credits = PLANS.lifetime.credits; // Lifetime
-    else if (productId.includes('5IooNC')) credits = PLANS.starter.credits; // One-time data
+    if (productId.includes('22YhSbY'))
+      credits = PLANS.pro.credits; // Pro monthly
+    else if (productId.includes('4EpFVQ'))
+      credits = PLANS.pro.credits; // API Access
+    else if (productId.includes('pny43r'))
+      credits = PLANS.lifetime.credits; // Lifetime
+    else if (productId.includes('5IooNC'))
+      credits = PLANS.starter.credits; // One-time data
     else credits = PLANS.starter.credits; // Default
-    
+
     // Store in KV
     if (env.USER_CREDITS) {
       // Determine user key: use provided api_key if it exists in KV, otherwise generate new gtk_ key
@@ -199,12 +227,17 @@ export async function onRequestPost(context) {
         }
       }
       if (!userKey) {
-        userKey = 'gtk_' + Array.from(crypto.getRandomValues(new Uint8Array(24)))
-          .map(b => b.toString(16).padStart(2, '0')).join('');
+        userKey =
+          'gtk_' +
+          Array.from(crypto.getRandomValues(new Uint8Array(24)))
+            .map((b) => b.toString(16).padStart(2, '0'))
+            .join('');
       }
-      
+
       const existing = await env.USER_CREDITS.get(userKey);
-      const user = existing ? JSON.parse(existing) : { credits: 0, plan: 'free', api_calls: 0, created: new Date().toISOString() };
+      const user = existing
+        ? JSON.parse(existing)
+        : { credits: 0, plan: 'free', api_calls: 0, created: new Date().toISOString() };
       user.credits = (user.credits || 0) + credits;
       if (email) {
         // Compute SHA-256 hash of the email for application-layer lookups
@@ -212,25 +245,31 @@ export async function onRequestPost(context) {
       }
       user.plan = 'pro';
       await env.USER_CREDITS.put(userKey, JSON.stringify(user));
-      
-      return new Response(JSON.stringify({
-        success: true,
-        api_key: userKey,
-        credits_added: credits,
-        total_credits: user.credits,
-        plan: 'pro',
-      }), { headers: corsHeaders });
+
+      return new Response(
+        JSON.stringify({
+          success: true,
+          api_key: userKey,
+          credits_added: credits,
+          total_credits: user.credits,
+          plan: 'pro',
+        }),
+        { headers: corsHeaders },
+      );
     }
-    
-    return new Response(JSON.stringify({
-      success: true,
-      credits_added: credits,
-      message: 'License valid. Contact support to activate credits.',
-    }), { headers: corsHeaders });
-    
-  } catch(e) {
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        credits_added: credits,
+        message: 'License valid. Contact support to activate credits.',
+      }),
+      { headers: corsHeaders },
+    );
+  } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
-      status: 500, headers: corsHeaders
+      status: 500,
+      headers: corsHeaders,
     });
   }
 }

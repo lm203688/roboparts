@@ -67,7 +67,8 @@ export async function onRequestGet(context) {
 
   const out = queryCoMount(cm, ts, args);
   // 参数类错误 → 400；数据不足类 → 200（fail-closed 的 unknown 是**有效答案**，不是错误）。
-  const status = out.error_kind === 'unknown_host' || out.error_kind === 'not_evaluated' ? 400 : 200;
+  const status =
+    out.error_kind === 'unknown_host' || out.error_kind === 'not_evaluated' ? 400 : 200;
   return new Response(JSON.stringify(out, null, 2), { status, headers: corsHeaders });
 }
 

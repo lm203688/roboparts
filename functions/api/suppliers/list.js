@@ -56,28 +56,37 @@ export async function onRequestGet(context) {
     const url = new URL(request.url);
     const category = url.searchParams.get('category') || '';
     const page = Math.max(1, parseInt(url.searchParams.get('page') || '1', 10) || 1);
-    const limit = Math.min(100, Math.max(1, parseInt(url.searchParams.get('limit') || '20', 10) || 20));
+    const limit = Math.min(
+      100,
+      Math.max(1, parseInt(url.searchParams.get('limit') || '20', 10) || 20),
+    );
 
     // 校验 category 参数
     if (category && !VALID_CATEGORIES.includes(category)) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '无效的品类参数',
-        valid_categories: VALID_CATEGORIES.map(c => ({ id: c, label: CATEGORY_LABELS[c] })),
-      }), { status: 400, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '无效的品类参数',
+          valid_categories: VALID_CATEGORIES.map((c) => ({ id: c, label: CATEGORY_LABELS[c] })),
+        }),
+        { status: 400, headers: corsHeaders },
+      );
     }
 
     // ========== 读取所有供应商 ==========
     if (!env.SUPPLIERS) {
-      return new Response(JSON.stringify({
-        success: true,
-        suppliers: [],
-        total: 0,
-        page: page,
-        limit: limit,
-        total_pages: 0,
-        message: '供应商系统尚未配置',
-      }), { headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          suppliers: [],
+          total: 0,
+          page: page,
+          limit: limit,
+          total_pages: 0,
+          message: '供应商系统尚未配置',
+        }),
+        { headers: corsHeaders },
+      );
     }
 
     // 遍历 KV 中所有 SUP 前缀的 key
@@ -96,9 +105,7 @@ export async function onRequestGet(context) {
 
       // 并行读取每个 key 的值
       if (listResult.keys && listResult.keys.length > 0) {
-        const values = await Promise.all(
-          listResult.keys.map(k => env.SUPPLIERS.get(k.name))
-        );
+        const values = await Promise.all(listResult.keys.map((k) => env.SUPPLIERS.get(k.name)));
 
         for (let i = 0; i < values.length; i++) {
           if (values[i]) {
@@ -132,7 +139,7 @@ export async function onRequestGet(context) {
     // ========== 按品类筛选 ==========
     let filteredSuppliers = allSuppliers;
     if (category) {
-      filteredSuppliers = allSuppliers.filter(s => {
+      filteredSuppliers = allSuppliers.filter((s) => {
         return Array.isArray(s.product_categories) && s.product_categories.includes(category);
       });
     }
@@ -151,7 +158,7 @@ export async function onRequestGet(context) {
     const pagedSuppliers = filteredSuppliers.slice(startIndex, startIndex + limit);
 
     // ========== 构造公开信息（脱敏：移除联系方式） ==========
-    const publicSuppliers = pagedSuppliers.map(s => {
+    const publicSuppliers = pagedSuppliers.map((s) => {
       return {
         supplier_id: s.supplier_id,
         company_name: s.company_name,
@@ -165,30 +172,35 @@ export async function onRequestGet(context) {
         created: s.created || '',
         // 联系方式脱敏：仅返回是否有联系方式，不返回具体值
         has_contact: !!(s.contact_name || s.contact_email || s.contact_phone),
-        has_website: !!(s.company_website),
+        has_website: !!s.company_website,
         // 网站可公开（用于用户访问供应商官网）
         company_website: s.company_website || '',
       };
     });
 
     // ========== 返回结果 ==========
-    return new Response(JSON.stringify({
-      success: true,
-      suppliers: publicSuppliers,
-      total: total,
-      page: page,
-      limit: limit,
-      total_pages: totalPages,
-      category_filter: category || null,
-      category_label: category ? CATEGORY_LABELS[category] : null,
-      available_categories: VALID_CATEGORIES.map(c => ({ id: c, label: CATEGORY_LABELS[c] })),
-    }), { headers: corsHeaders });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        suppliers: publicSuppliers,
+        total: total,
+        page: page,
+        limit: limit,
+        total_pages: totalPages,
+        category_filter: category || null,
+        category_label: category ? CATEGORY_LABELS[category] : null,
+        available_categories: VALID_CATEGORIES.map((c) => ({ id: c, label: CATEGORY_LABELS[c] })),
+      }),
+      { headers: corsHeaders },
+    );
   } catch (e) {
-    return new Response(JSON.stringify({
-      success: false,
-      error: '服务器内部错误: ' + e.message,
-    }), { status: 500, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: '服务器内部错误: ' + e.message,
+      }),
+      { status: 500, headers: corsHeaders },
+    );
   }
 }
 

@@ -41,7 +41,11 @@ async function get(url) {
   const ctl = new AbortController();
   const t = setTimeout(() => ctl.abort(), TIMEOUT_MS);
   try {
-    const r = await fetch(url, { headers: { 'User-Agent': UA }, signal: ctl.signal, redirect: 'follow' });
+    const r = await fetch(url, {
+      headers: { 'User-Agent': UA },
+      signal: ctl.signal,
+      redirect: 'follow',
+    });
     const body = r.status === 200 ? await r.text() : '';
     return { status: r.status, body, finalUrl: r.url };
   } finally {
@@ -58,7 +62,9 @@ function titleOf(html) {
  * @returns {{ok:boolean, host:string, reasons:string[], probes:object[], transportError:boolean}}
  */
 export async function checkHostParity(hostRaw) {
-  const host = String(hostRaw || '').replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  const host = String(hostRaw || '')
+    .replace(/^https?:\/\//, '')
+    .replace(/\/.*$/, '');
   const reasons = [];
   const probes = [];
   let transportError = false;
@@ -67,7 +73,13 @@ export async function checkHostParity(hostRaw) {
   const deepFile = 'bom-checker.html';
   const deepTitle = localTitle(deepFile);
   if (!homeTitle || !deepTitle) {
-    return { ok: false, host, reasons: ['本地真相源缺 title（index.html / ' + deepFile + '）'], probes, transportError: true };
+    return {
+      ok: false,
+      host,
+      reasons: ['本地真相源缺 title（index.html / ' + deepFile + '）'],
+      probes,
+      transportError: true,
+    };
   }
 
   // 1) 首页同源
@@ -91,14 +103,19 @@ export async function checkHostParity(hostRaw) {
       const t = titleOf(r.body);
       probes.push({ path: p, status: r.status, title: t });
       deepSeen = deepSeen || { status: r.status, title: t };
-      if (r.status === 200 && t === deepTitle) { deepOk = true; break; }
+      if (r.status === 200 && t === deepTitle) {
+        deepOk = true;
+        break;
+      }
     } catch (e) {
       transportError = true;
       probes.push({ path: p, error: e.message });
     }
   }
   if (!deepOk && !transportError) {
-    reasons.push(`深链不同源：/bom-checker 线上「${deepSeen && deepSeen.title}」≠ 本仓「${deepTitle}」`);
+    reasons.push(
+      `深链不同源：/bom-checker 线上「${deepSeen && deepSeen.title}」≠ 本仓「${deepTitle}」`,
+    );
     if (deepSeen && deepSeen.title === (probes[0] && probes[0].title)) {
       reasons.push('深链与首页返回同一页面 → 软 404（任意路径都回首页）');
     }
@@ -109,7 +126,8 @@ export async function checkHostParity(hostRaw) {
   try {
     const r = await get(`https://${host}/${nonce}`);
     probes.push({ path: '/' + nonce, status: r.status, title: titleOf(r.body) });
-    if (r.status === 200) reasons.push(`软 404：不存在路径 /${nonce} 返回 200（该主机把任意 URL 都当有效页）`);
+    if (r.status === 200)
+      reasons.push(`软 404：不存在路径 /${nonce} 返回 200（该主机把任意 URL 都当有效页）`);
   } catch (e) {
     transportError = true;
     probes.push({ path: '/' + nonce, error: e.message });
@@ -119,18 +137,28 @@ export async function checkHostParity(hostRaw) {
 }
 
 // CLI
-if (import.meta.url === `file://${process.argv[1].replace(/\\/g, '/')}` || process.argv[1]?.endsWith('verify_host_parity.mjs')) {
+if (
+  import.meta.url === `file://${process.argv[1].replace(/\\/g, '/')}` ||
+  process.argv[1]?.endsWith('verify_host_parity.mjs')
+) {
   let host = process.argv[2];
   if (!host) {
     try {
       const raw = readFileSync(join(ROOT, '.env.local'), 'utf8');
       const m = raw.match(/^\s*BAIDU_SITE\s*=\s*(.+?)\s*$/m);
       host = m ? m[1] : 'roboparts.cc';
-    } catch { host = 'roboparts.cc'; }
+    } catch {
+      host = 'roboparts.cc';
+    }
   }
   const res = await checkHostParity(host);
-  console.log(`[主机同源闸] ${res.host} → ${res.ok ? '同源 PASS' : (res.transportError ? '探测失败 UNKNOWN' : '不同源 FAIL')}`);
-  for (const p of res.probes) console.log(`   probe ${p.path} status=${p.status ?? '-'} title=${p.title ?? (p.error || '-')}`);
+  console.log(
+    `[主机同源闸] ${res.host} → ${res.ok ? '同源 PASS' : res.transportError ? '探测失败 UNKNOWN' : '不同源 FAIL'}`,
+  );
+  for (const p of res.probes)
+    console.log(
+      `   probe ${p.path} status=${p.status ?? '-'} title=${p.title ?? (p.error || '-')}`,
+    );
   for (const r of res.reasons) console.log(`   ✗ ${r}`);
-  process.exit(res.ok ? 0 : (res.transportError ? 2 : 1));
+  process.exit(res.ok ? 0 : res.transportError ? 2 : 1);
 }

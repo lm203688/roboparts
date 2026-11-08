@@ -8,41 +8,47 @@ export async function onRequestHead(context) {
     status: 200,
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    }
+      'Access-Control-Allow-Origin': '*',
+    },
   });
 }
 
 export async function onRequestPost(context) {
   const { env, request } = context;
-  
+
   try {
     const body = await request.json();
     const { modules } = body;
-    
+
     if (!modules || !Array.isArray(modules)) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: 'modules array is required'
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'modules array is required',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        },
+      );
     }
-    
+
     const rules = getCompatibilityRules();
     const result = validateCompatibility(modules, rules);
-    
-    return new Response(JSON.stringify({
-      success: true,
-      data: result
-    }), {
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-    });
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        data: result,
+      }),
+      {
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      },
+    );
   } catch (e) {
     return new Response(JSON.stringify({ success: false, error: e.message }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }
@@ -54,28 +60,31 @@ export async function onRequestPost(context) {
 export async function onRequestGet(context) {
   const { env, params } = context;
   const moduleId = params.id;
-  
+
   try {
     const rules = getCompatibilityRules();
     const compatible = rules[moduleId] || [];
-    
+
     const modules = await getModules();
-    const compatibleModules = modules.filter(m => compatible.includes(m.id));
-    
-    return new Response(JSON.stringify({
-      success: true,
-      data: {
-        module_id: moduleId,
-        compatible: compatibleModules,
-        total: compatibleModules.length
-      }
-    }), {
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-    });
+    const compatibleModules = modules.filter((m) => compatible.includes(m.id));
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        data: {
+          module_id: moduleId,
+          compatible: compatibleModules,
+          total: compatibleModules.length,
+        },
+      }),
+      {
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      },
+    );
   } catch (e) {
     return new Response(JSON.stringify({ success: false, error: e.message }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }
@@ -86,48 +95,48 @@ export async function onRequestOptions() {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
-    }
+    },
   });
 }
 
 function validateCompatibility(modules, rules) {
   const conflicts = [];
   const warnings = [];
-  
+
   for (let i = 0; i < modules.length; i++) {
     for (let j = i + 1; j < modules.length; j++) {
       const a = modules[i];
       const b = modules[j];
-      
+
       const aCompat = rules[a] || [];
       const bCompat = rules[b] || [];
-      
+
       if (!aCompat.includes(b) && !bCompat.includes(a)) {
         conflicts.push({
           modules: [a, b],
           reason: '接口不兼容',
-          severity: 'error'
+          severity: 'error',
         });
       }
     }
   }
-  
+
   const categories = {};
-  modules.forEach(m => {
+  modules.forEach((m) => {
     const cat = m.split('-').slice(0, 2).join('-');
     categories[cat] = (categories[cat] || 0) + 1;
   });
-  
+
   for (const [cat, count] of Object.entries(categories)) {
     if (cat.includes('JOINT') && count > 4) {
       warnings.push({
         type: 'redundancy',
         message: `关节模块数量较多 (${count})，可能造成资源浪费`,
-        severity: 'warning'
+        severity: 'warning',
       });
     }
   }
-  
+
   return {
     valid: conflicts.length === 0,
     conflicts,
@@ -135,23 +144,45 @@ function validateCompatibility(modules, rules) {
     summary: {
       total_modules: modules.length,
       conflicts_count: conflicts.length,
-      warnings_count: warnings.length
-    }
+      warnings_count: warnings.length,
+    },
   };
 }
 
 function getCompatibilityRules() {
   return {
-    'BIONIC-JOINT-001': ['BIONIC-ACTUATOR-001', 'BIONIC-ACTUATOR-002', 'BIONIC-FRAME-001', 'BIONIC-SKIN-001', 'CONN-M3-001'],
+    'BIONIC-JOINT-001': [
+      'BIONIC-ACTUATOR-001',
+      'BIONIC-ACTUATOR-002',
+      'BIONIC-FRAME-001',
+      'BIONIC-SKIN-001',
+      'CONN-M3-001',
+    ],
     'BIONIC-JOINT-002': ['BIONIC-ACTUATOR-001', 'BIONIC-FRAME-001', 'CONN-M3-001', 'CONN-M4-001'],
     'BIONIC-JOINT-003': ['BIONIC-FRAME-001', 'CONN-M3-001'],
-    'BIONIC-ACTUATOR-001': ['BIONIC-JOINT-001', 'BIONIC-JOINT-002', 'CTRL-ESP32-001', 'CTRL-RPI-001'],
+    'BIONIC-ACTUATOR-001': [
+      'BIONIC-JOINT-001',
+      'BIONIC-JOINT-002',
+      'CTRL-ESP32-001',
+      'CTRL-RPI-001',
+    ],
     'BIONIC-ACTUATOR-002': ['BIONIC-JOINT-001', 'CTRL-ESP32-001'],
     'BIONIC-SENSOR-001': ['BIONIC-FRAME-001', 'CTRL-ESP32-001', 'CTRL-RPI-001'],
     'BIONIC-SENSOR-002': ['CTRL-ESP32-001', 'CTRL-RPI-001'],
-    'BIONIC-FRAME-001': ['BIONIC-JOINT-001', 'BIONIC-JOINT-002', 'BIONIC-JOINT-003', 'BIONIC-SENSOR-001', 'BIONIC-SKIN-001'],
+    'BIONIC-FRAME-001': [
+      'BIONIC-JOINT-001',
+      'BIONIC-JOINT-002',
+      'BIONIC-JOINT-003',
+      'BIONIC-SENSOR-001',
+      'BIONIC-SKIN-001',
+    ],
     'BIONIC-SKIN-001': ['BIONIC-FRAME-001', 'BIONIC-JOINT-001'],
-    'CTRL-ESP32-001': ['BIONIC-ACTUATOR-001', 'BIONIC-ACTUATOR-002', 'BIONIC-SENSOR-001', 'BIONIC-SENSOR-002'],
+    'CTRL-ESP32-001': [
+      'BIONIC-ACTUATOR-001',
+      'BIONIC-ACTUATOR-002',
+      'BIONIC-SENSOR-001',
+      'BIONIC-SENSOR-002',
+    ],
     'CTRL-RPI-001': ['BIONIC-ACTUATOR-001', 'BIONIC-SENSOR-001', 'BIONIC-SENSOR-002'],
   };
 }

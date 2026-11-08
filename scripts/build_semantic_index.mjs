@@ -37,8 +37,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url)) + '/..';
-const DIM = 256;            // 向量维度（权衡：850 实体 × 256 ≈ 1.7MB JSON，检索 O(850×256) 可忽略）
-const CJK = /[一-鿿]/g;     // 中日韩统一表意文字
+const DIM = 256; // 向量维度（权衡：850 实体 × 256 ≈ 1.7MB JSON，检索 O(850×256) 可忽略）
+const CJK = /[一-鿿]/g; // 中日韩统一表意文字
 const EN = /[a-z0-9][a-z0-9.+#-]*/g;
 
 /** 稳定字符串哈希（FNV-1a 变体）→ 落在 [0, DIM)。 */
@@ -67,7 +67,7 @@ function tokenize(text) {
   if (cjkRuns) {
     for (const run of cjkRuns) {
       const chars = run.split('');
-      for (const c of chars) toks.push('c:' + c);          // uni-gram
+      for (const c of chars) toks.push('c:' + c); // uni-gram
       for (let i = 0; i < chars.length - 1; i++) toks.push('b:' + chars[i] + chars[i + 1]); // bi-gram
     }
   }
@@ -77,14 +77,23 @@ function tokenize(text) {
 /** 合成单实体文档文本。 */
 function entityDoc(e) {
   return [
-    e.name, e.name_en, e.manufacturer, e.type,
-    Array.isArray(e.applications) ? e.applications.join(' ') : (e.applications || ''),
-    e.protocol, e.interface, e.category,
-    typeof e.standard_conformance === 'string' ? e.standard_conformance
+    e.name,
+    e.name_en,
+    e.manufacturer,
+    e.type,
+    Array.isArray(e.applications) ? e.applications.join(' ') : e.applications || '',
+    e.protocol,
+    e.interface,
+    e.category,
+    typeof e.standard_conformance === 'string'
+      ? e.standard_conformance
       : JSON.stringify(e.standard_conformance || ''),
     e.mechanical_interface && e.mechanical_interface.standard,
-    e.voltage, e.source_tier,
-  ].filter(Boolean).join(' ');
+    e.voltage,
+    e.source_tier,
+  ]
+    .filter(Boolean)
+    .join(' ');
 }
 
 function loadEntities() {
@@ -106,7 +115,10 @@ function loadEntities() {
 
 function main() {
   const entities = loadEntities();
-  if (!entities.length) { console.error('无实体可索引'); process.exit(1); }
+  if (!entities.length) {
+    console.error('无实体可索引');
+    process.exit(1);
+  }
 
   // 1) 逐实体 token 化，统计 df（文档频率）
   const docs = entities.map((e) => {
@@ -152,7 +164,9 @@ function main() {
   fs.writeFileSync(outPath, JSON.stringify(payload), 'utf8');
 
   const mb = (fs.statSync(outPath).size / 1024 / 1024).toFixed(2);
-  console.log(`✅ 语义索引已生成: ${entities.length} 实体 × ${DIM} 维, ${Object.keys(idf).length} 词表, ${mb} MB → ${path.relative(ROOT, outPath)}`);
+  console.log(
+    `✅ 语义索引已生成: ${entities.length} 实体 × ${DIM} 维, ${Object.keys(idf).length} 词表, ${mb} MB → ${path.relative(ROOT, outPath)}`,
+  );
 }
 
 main();

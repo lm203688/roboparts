@@ -22,8 +22,13 @@ const CORS = {
 };
 
 const CANONICAL_FLANGE = [
-  'A40=4×M6', 'A50=4×M6', 'A63=6×M6', 'A80=6×M8',
-  'A100=6×M10', 'A160=8×M16', 'A250=8×M20',
+  'A40=4×M6',
+  'A50=4×M6',
+  'A63=6×M6',
+  'A80=6×M8',
+  'A100=6×M10',
+  'A160=8×M16',
+  'A250=8×M20',
 ];
 
 // ---- 提取逻辑（确定性，单源真值在此） ----
@@ -37,9 +42,13 @@ function parseSpec(text) {
   let m;
   while ((m = isoRe.exec(text))) {
     push({
-      pcd: +m[1], holes: +m[2], thread: 'M' + m[3],
+      pcd: +m[1],
+      holes: +m[2],
+      thread: 'M' + m[3],
       iso_code: `ISO 9409-1-${m[1]}-${m[2]}-M${m[3]}`,
-      confidence: 0.95, rules: ['iso_code'], raw: m[0].trim(),
+      confidence: 0.95,
+      rules: ['iso_code'],
+      raw: m[0].trim(),
     });
   }
 
@@ -49,9 +58,13 @@ function parseSpec(text) {
     while ((m = aRe.exec(text))) {
       const pcd = +m[1].slice(1); // A50 → 50 即 PCD
       push({
-        pcd, holes: +m[2], thread: 'M' + m[3],
+        pcd,
+        holes: +m[2],
+        thread: 'M' + m[3],
         iso_code: `ISO 9409-1-${pcd}-${m[2]}-M${m[3]}`,
-        confidence: 0.9, rules: ['a_notation'], raw: m[0].trim(),
+        confidence: 0.9,
+        rules: ['a_notation'],
+        raw: m[0].trim(),
       });
     }
   }
@@ -59,18 +72,25 @@ function parseSpec(text) {
   // 3) 散落几何（中英文，含中文数字孔数）：PCD 80 四孔 M8 / 六孔 M8 /
   //    节圆直径 80mm 6孔 M8 / pitch circle diameter 80 mm, 6 holes M8
   if (cands.length === 0) {
-    const pcdM = text.match(/(?:PCD|节圆直径|节圆|pitch\s*circle\s*diameter)[\s:：]*?(\d{2,3})\s*(?:mm)?/i);
-    const holeM = text.match(/(\d{1,2}|[一二三四五六七八九十])\s*(?:孔|holes|bolts|mounting\s*holes)/i);
+    const pcdM = text.match(
+      /(?:PCD|节圆直径|节圆|pitch\s*circle\s*diameter)[\s:：]*?(\d{2,3})\s*(?:mm)?/i,
+    );
+    const holeM = text.match(
+      /(\d{1,2}|[一二三四五六七八九十])\s*(?:孔|holes|bolts|mounting\s*holes)/i,
+    );
     const thrM = text.match(/M(\d{1,2})/i);
-    const CN = { '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9, '十': 10 };
+    const CN = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 };
     if (pcdM && holeM && thrM) {
       const pcd = +pcdM[1];
-      const holes = /^\d/.test(holeM[1]) ? +holeM[1] : (CN[holeM[1]] || 0);
+      const holes = /^\d/.test(holeM[1]) ? +holeM[1] : CN[holeM[1]] || 0;
       const thread = 'M' + thrM[1];
       push({
-        pcd, holes, thread,
+        pcd,
+        holes,
+        thread,
         iso_code: `ISO 9409-1-${pcd}-${holes}-${thread}`,
-        confidence: 0.7, rules: ['scattered_geometry'],
+        confidence: 0.7,
+        rules: ['scattered_geometry'],
         raw: `PCD ${pcd} / ${holes}孔 / ${thread}`,
       });
     }
@@ -132,14 +152,20 @@ export async function onRequestOptions() {
 
 export async function onRequestPost({ request }) {
   let body;
-  try { body = await request.json(); } catch {
-    return new Response(JSON.stringify({ error: 'invalid_json' }),
-      { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } });
+  try {
+    body = await request.json();
+  } catch {
+    return new Response(JSON.stringify({ error: 'invalid_json' }), {
+      status: 400,
+      headers: { ...CORS, 'Content-Type': 'application/json' },
+    });
   }
-  const text = (body && body.text) ? String(body.text).slice(0, 20000) : '';
+  const text = body && body.text ? String(body.text).slice(0, 20000) : '';
   if (!text.trim()) {
-    return new Response(JSON.stringify({ error: 'missing_text' }),
-      { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ error: 'missing_text' }), {
+      status: 400,
+      headers: { ...CORS, 'Content-Type': 'application/json' },
+    });
   }
 
   const cands = parseSpec(text);
@@ -154,6 +180,8 @@ export async function onRequestPost({ request }) {
     references,
     note: '确定性正则提取，不调用 LLM。产出 status="partial"，需人工补官域 source_url 后升 declared（遵守 AI 不编纪律）。',
   };
-  return new Response(JSON.stringify(out),
-    { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
+  return new Response(JSON.stringify(out), {
+    status: 200,
+    headers: { ...CORS, 'Content-Type': 'application/json' },
+  });
 }

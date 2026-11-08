@@ -30,7 +30,7 @@ const SHARDS = 16;
 const METRIC_TTL = 60 * 60 * 24 * 90;
 const MAX_WRITES_PER_ISOLATE_DAY = 200;
 
-let _buf = Object.create(null);   // { "<rec_id>": {adopt, ignore} }
+let _buf = Object.create(null); // { "<rec_id>": {adopt, ignore} }
 let _writes = 0;
 let _writeDay = '';
 let _shard = -1;
@@ -42,7 +42,11 @@ function shardOf() {
 }
 
 function scheduleFlush(context) {
-  _flushChain = _flushChain.then(() => flushFeedback(context.env)).catch(() => {});
+  _flushChain = _flushChain
+    .then(() => flushFeedback(context.env))
+    .catch(() => {
+      /* flush 失败不致命 */
+    });
   context.waitUntil(_flushChain);
 }
 
@@ -50,7 +54,10 @@ async function flushFeedback(env) {
   const entries = Object.entries(_buf);
   if (!entries.length) return;
   const day = new Date().toISOString().slice(0, 10);
-  if (day !== _writeDay) { _writeDay = day; _writes = 0; }
+  if (day !== _writeDay) {
+    _writeDay = day;
+    _writes = 0;
+  }
   if (_writes >= MAX_WRITES_PER_ISOLATE_DAY) return;
   _buf = Object.create(null);
   const kv = env && env.USER_CREDITS;
@@ -58,7 +65,11 @@ async function flushFeedback(env) {
   _writes++;
   const key = `recfb:${day}:s${shardOf()}`;
   let prev = {};
-  try { prev = (await kv.get(key, { type: 'json' })) || {}; } catch { /* 读失败按新建 */ }
+  try {
+    prev = (await kv.get(key, { type: 'json' })) || {};
+  } catch {
+    /* 读失败按新建 */
+  }
   for (const [recId, c] of entries) {
     prev[recId] = prev[recId] || { adopt: 0, ignore: 0 };
     prev[recId].adopt = (prev[recId].adopt || 0) + (c.adopt || 0);
@@ -93,57 +104,112 @@ export function aggregateRecfb(shards) {
 export async function onRequestGet(context) {
   const { env, request } = context;
   const kv = env && env.USER_CREDITS;
-  if (!kv) return new Response(JSON.stringify({ error: 'KV 未绑定' }), { status: 500, headers: corsHeaders });
-  const date = new URL(request.url).searchParams.get('date') || new Date().toISOString().slice(0, 10);
+  if (!kv)
+    return new Response(JSON.stringify({ error: 'KV 未绑定' }), {
+      status: 500,
+      headers: corsHeaders,
+    });
+  const date =
+    new URL(request.url).searchParams.get('date') || new Date().toISOString().slice(0, 10);
   const minSamples = parseInt(new URL(request.url).searchParams.get('minSamples') || '5', 10) || 5;
   const shards = [];
   for (let s = 0; s < SHARDS; s++) {
-    try { const v = await kv.get(`recfb:${date}:s${s}`, { type: 'json' }); if (v) shards.push(v); } catch { /* 分片缺失跳过 */ }
+    try {
+      const v = await kv.get(`recfb:${date}:s${s}`, { type: 'json' });
+      if (v) shards.push(v);
+    } catch {
+      /* 分片缺失跳过 */
+    }
   }
   const merged = aggregateRecfb(shards);
-  const signals = Object.entries(merged).map(([recId, c]) => {
-    const total = c.adopt + c.ignore;
-    const adoptRate = total ? c.adopt / total : 0;
-    const signal = total < minSamples ? 'insufficient_data'
-      : (adoptRate >= 0.6 ? 'well_adopted' : adoptRate <= 0.3 ? 'rarely_adopted' : 'mixed');
-    return { rec_id: recId, adopt: c.adopt, ignore: c.ignore, samples: total, adopt_rate: Math.round(adoptRate * 1000) / 1000, signal };
-  }).sort((a, b) => b.samples - a.samples);
-  return new Response(JSON.stringify({
-    date, total_shards_read: shards.length, signals,
-    note: '社区采纳信号（CLIFT 思想轻量版）：采集期回流为透明信号，样本不足标 insufficient_data，'
-      + '不参与排序调权（冷启动防假绿）；adopt_rate ≥ 0.6 标 well_adopted，≤ 0.3 标 rarely_adopted。',
-  }), { status: 200, headers: corsHeaders });
+  const signals = Object.entries(merged)
+    .map(([recId, c]) => {
+      const total = c.adopt + c.ignore;
+      const adoptRate = total ? c.adopt / total : 0;
+      const signal =
+        total < minSamples
+          ? 'insufficient_data'
+          : adoptRate >= 0.6
+            ? 'well_adopted'
+            : adoptRate <= 0.3
+              ? 'rarely_adopted'
+              : 'mixed';
+      return {
+        rec_id: recId,
+        adopt: c.adopt,
+        ignore: c.ignore,
+        samples: total,
+        adopt_rate: Math.round(adoptRate * 1000) / 1000,
+        signal,
+      };
+    })
+    .sort((a, b) => b.samples - a.samples);
+  return new Response(
+    JSON.stringify({
+      date,
+      total_shards_read: shards.length,
+      signals,
+      note:
+        '社区采纳信号（CLIFT 思想轻量版）：采集期回流为透明信号，样本不足标 insufficient_data，' +
+        '不参与排序调权（冷启动防假绿）；adopt_rate ≥ 0.6 标 well_adopted，≤ 0.3 标 rarely_adopted。',
+    }),
+    { status: 200, headers: corsHeaders },
+  );
 }
 
 export async function onRequestPost(context) {
   const { request, env } = context;
   let body;
-  try { body = await request.json(); } catch {
-    return new Response(JSON.stringify({ error: 'JSON 解析失败' }), { status: 400, headers: corsHeaders });
+  try {
+    body = await request.json();
+  } catch {
+    return new Response(JSON.stringify({ error: 'JSON 解析失败' }), {
+      status: 400,
+      headers: corsHeaders,
+    });
   }
   const { for_id, rec_id, action } = body || {};
   if (!for_id || !rec_id) {
-    return new Response(JSON.stringify({ error: '缺少 for_id 或 rec_id' }), { status: 400, headers: corsHeaders });
+    return new Response(JSON.stringify({ error: '缺少 for_id 或 rec_id' }), {
+      status: 400,
+      headers: corsHeaders,
+    });
   }
   if (action !== 'adopt' && action !== 'ignore') {
-    return new Response(JSON.stringify({ error: 'action 必须为 adopt 或 ignore' }), { status: 400, headers: corsHeaders });
+    return new Response(JSON.stringify({ error: 'action 必须为 adopt 或 ignore' }), {
+      status: 400,
+      headers: corsHeaders,
+    });
   }
 
   // 自检流量不落盘：只回显会怎么记，绝不污染真实信号。
   if (request.headers.get(SELFTEST_HEADER)) {
-    return new Response(JSON.stringify({ accepted: true, selftest: true, would_record: { [rec_id]: { [action]: 1 } } }),
-      { status: 200, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        accepted: true,
+        selftest: true,
+        would_record: { [rec_id]: { [action]: 1 } },
+      }),
+      { status: 200, headers: corsHeaders },
+    );
   }
 
   _buf[rec_id] = _buf[rec_id] || { adopt: 0, ignore: 0 };
   _buf[rec_id][action] += 1;
-  scheduleFlush(context);  // 隔离缓冲 + 分片串行 flush，不阻塞响应
+  scheduleFlush(context); // 隔离缓冲 + 分片串行 flush，不阻塞响应
 
-  return new Response(JSON.stringify({
-    accepted: true,
-    note: '已记入行为回流缓冲（冷启动阶段仅采集，不参与排序调权）。',
-    collected: { rec_id, action },
-  }, null, 2), { status: 200, headers: corsHeaders });
+  return new Response(
+    JSON.stringify(
+      {
+        accepted: true,
+        note: '已记入行为回流缓冲（冷启动阶段仅采集，不参与排序调权）。',
+        collected: { rec_id, action },
+      },
+      null,
+      2,
+    ),
+    { status: 200, headers: corsHeaders },
+  );
 }
 
 // HEAD 探活：Pages 不把 HEAD 映射到 onRequestGet，缺此导出则一律 404 ——

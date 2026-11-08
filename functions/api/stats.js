@@ -29,18 +29,23 @@ export async function onRequestGet(context) {
   ];
 
   if (!env.USER_CREDITS) {
-    return new Response(JSON.stringify({
-      available: false,
-      error: '度量 KV 未配置',
-    }), { status: 200, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        available: false,
+        error: '度量 KV 未配置',
+      }),
+      { status: 200, headers: corsHeaders },
+    );
   }
 
   const out = { available: true, updated_at: new Date().toISOString() };
   try {
-    await Promise.all(keys.map(async k => {
-      const v = await env.USER_CREDITS.get(k);
-      out[k.replace('stat:', '')] = v ? parseInt(v, 10) : 0;
-    }));
+    await Promise.all(
+      keys.map(async (k) => {
+        const v = await env.USER_CREDITS.get(k);
+        out[k.replace('stat:', '')] = v ? parseInt(v, 10) : 0;
+      }),
+    );
   } catch (e) {
     out.available = false;
     out.error = e.message;

@@ -29,8 +29,13 @@ export async function checkRateLimit(env, opts) {
   const limit = Math.max(1, opts.limit || 60);
   const windowSec = Math.max(10, opts.windowSec || 3600);
   const res = {
-    allowed: true, remaining: limit - 1, retryAfter: 0, degraded: false,
-    limit, windowSec, used: 1,
+    allowed: true,
+    remaining: limit - 1,
+    retryAfter: 0,
+    degraded: false,
+    limit,
+    windowSec,
+    used: 1,
   };
   if (!env || !env.USER_CREDITS) {
     res.degraded = true;

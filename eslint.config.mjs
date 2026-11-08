@@ -64,6 +64,41 @@ export default [
     },
   },
 
+  // Node 环境全局（scripts/ 与 mcp-server/ 在 Node 22 下运行）
+  {
+    files: ['scripts/**/*.{js,mjs}', 'mcp-server/**/*.js'],
+    languageOptions: {
+      globals: {
+        require: 'readonly',
+        __dirname: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        AbortSignal: 'readonly',
+        performance: 'readonly',
+        readdirSync: 'readonly',
+        mkdirSync: 'readonly',
+        Request: 'readonly',
+      },
+    },
+  },
+
+  // Cloudflare Workers 全局（functions/ 在 Workers 运行时下运行）
+  {
+    files: ['functions/**/*.js'],
+    languageOptions: {
+      globals: {
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        AbortSignal: 'readonly',
+        DOMParser: 'readonly',
+      },
+    },
+  },
+
   // Cloudflare Pages Functions 有全局 Request/Response 等
   {
     files: ['functions/**/*.js'],

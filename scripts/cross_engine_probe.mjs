@@ -19,7 +19,9 @@ import { judgePair } from '../functions/_lib/compat_engine.js';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const ents = JSON.parse(readFileSync(join(ROOT, 'api', 'entities.json'), 'utf8')).entities;
-const golden = JSON.parse(readFileSync(join(ROOT, 'api', 'eval', 'compatibility-golden.json'), 'utf8')).cases;
+const golden = JSON.parse(
+  readFileSync(join(ROOT, 'api', 'eval', 'compatibility-golden.json'), 'utf8'),
+).cases;
 
 const byId = new Map(ents.map((e) => [e.id, e]));
 const out = [];
@@ -32,7 +34,11 @@ for (const c of golden) {
   try {
     r = judgePair(a, b);
   } catch (e) {
-    out.push({ id: c.id, pair: [c.component1_id, c.component2_id], crash: e.message.slice(0, 120) });
+    out.push({
+      id: c.id,
+      pair: [c.component1_id, c.component2_id],
+      crash: e.message.slice(0, 120),
+    });
     continue;
   }
   out.push({
@@ -44,7 +50,7 @@ for (const c of golden) {
       r.dimensions.map((d) => [
         d.dimension,
         { compatible: d.compatible, score: d.score, relation: d.relation || null },
-      ])
+      ]),
     ),
   });
 }

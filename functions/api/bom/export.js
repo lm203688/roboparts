@@ -34,57 +34,73 @@ const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-  'Access-Control-Expose-Headers': 'X-Credits-Remaining, X-Credits-Warning, X-Credits-Threshold, X-API-Tier',
+  'Access-Control-Expose-Headers':
+    'X-Credits-Remaining, X-Credits-Warning, X-Credits-Threshold, X-API-Tier',
   'Content-Type': 'application/json; charset=utf-8',
 };
 
 // 类别中文名映射（与 designer.html 保持一致并扩展）
 const CATEGORY_NAMES = {
-  'actuators': '执行器',
-  'sensors': '传感器',
-  'controllers': '控制器',
-  'endeffectors': '末端执行器',
-  'chips': '芯片',
-  'structural': '结构件',
-  'power': '电源',
-  'communication': '通信',
+  actuators: '执行器',
+  sensors: '传感器',
+  controllers: '控制器',
+  endeffectors: '末端执行器',
+  chips: '芯片',
+  structural: '结构件',
+  power: '电源',
+  communication: '通信',
 };
 
 // 供应商建议映射
 const SUPPLIER_MAP = {
-  'actuators': [
+  actuators: [
     { name: 'ROBOTIS官方', url: 'https://www.robotis.com', note: 'DYNAMIXEL系列正品' },
     { name: 'T-Motor', url: 'https://shop.tmotor.com', note: 'AK系列直驱电机' },
     { name: 'Unitree', url: 'https://www.unitree.com', note: 'B系列关节电机' },
     { name: '嘉立创FA', url: 'https://fa.jlc.com', note: '国产替代执行器' },
   ],
-  'sensors': [
+  sensors: [
     { name: 'Bosch', url: 'https://www.bosch-sensortec.com', note: 'IMU/环境传感器' },
     { name: 'STMicroelectronics', url: 'https://www.st.com', note: 'IMU/ToF传感器' },
     { name: 'Ouster', url: 'https://ouster.com', note: 'LiDAR传感器' },
   ],
-  'chips': [
+  chips: [
     { name: 'NVIDIA', url: 'https://www.nvidia.com/embedded', note: 'Jetson系列' },
     { name: 'Qualcomm', url: 'https://www.qualcomm.com', note: 'RB系列机器人平台' },
     { name: '地平线', url: 'https://www.horizon.cc', note: '征程系列国产芯片' },
   ],
-  'controllers': [
+  controllers: [
     { name: 'Odrive', url: 'https://odriverobotics.com', note: '电机控制器' },
     { name: 'SimpleFOC', url: 'https://simplefoc.com', note: '开源FOC驱动' },
   ],
-  'default': [
+  default: [
     { name: '嘉立创FA', url: 'https://fa.jlc.com', note: '工业零部件一站式采购' },
     { name: '米思米', url: 'https://www.misumi.com.cn', note: '标准件快速采购' },
   ],
 };
 
 // 3D 打印建议（参考 designer.html get3DPrintAdvice）
-const STRUCTURAL_KEYWORDS = ['bracket', 'joint', 'link', 'frame', 'mount', '支架', '关节', '连杆', '臂', '结构', '底座', '固定'];
+const STRUCTURAL_KEYWORDS = [
+  'bracket',
+  'joint',
+  'link',
+  'frame',
+  'mount',
+  '支架',
+  '关节',
+  '连杆',
+  '臂',
+  '结构',
+  '底座',
+  '固定',
+];
 
 function get3DPrintAdvice(category, name) {
   const lowerName = (name || '').toLowerCase();
-  const isStructural = STRUCTURAL_KEYWORDS.some(k => lowerName.includes(k)) ||
-    category === 'actuators' || category === 'endeffectors';
+  const isStructural =
+    STRUCTURAL_KEYWORDS.some((k) => lowerName.includes(k)) ||
+    category === 'actuators' ||
+    category === 'endeffectors';
   if (isStructural) return '建议3D打印，预估成本¥30-200';
   // 传感器 / 控制器 / 其他均需外购
   return '需外购';
@@ -111,40 +127,49 @@ export async function onRequestOptions() {
 }
 
 export async function onRequestGet() {
-  return new Response(JSON.stringify({
-    endpoint: '/api/bom/export',
-    method: 'POST',
-    description: 'BOM 导出：将 BOM 条目导出为 CSV 或 JSON 格式，自动计算总成本，可选附带按品类聚合的供应商建议与 3D 打印建议。每次导出消耗 1 积分。',
-    request_body: {
-      api_key: 'string (必填) - API 密钥，gtk_ 前缀，可在 https://roboparts.cc 获取',
-      project_name: 'string - 项目名称，可选，默认“未命名项目”',
-      format: 'string - 导出格式：csv | json，默认 csv',
-      items: 'array (必填) - BOM 条目数组，每项可含 id / name / category / manufacturer / specs / price / quantity / supplier',
-      include_suppliers: 'boolean - 是否附带供应商建议，默认 false',
-    },
-    example: {
-      api_key: 'gtk_demo_key',
-      project_name: '人形机器人v1',
-      format: 'csv',
-      items: [
-        {
-          id: 'ACT-001',
-          name: 'DYNAMIXEL XM540-W270-T',
-          category: 'actuators',
-          manufacturer: 'ROBOTIS',
-          specs: '扭矩 10.0Nm @ 12V',
-          price: 1200,
-          quantity: 2,
-          supplier: 'ROBOTIS官方',
+  return new Response(
+    JSON.stringify(
+      {
+        endpoint: '/api/bom/export',
+        method: 'POST',
+        description:
+          'BOM 导出：将 BOM 条目导出为 CSV 或 JSON 格式，自动计算总成本，可选附带按品类聚合的供应商建议与 3D 打印建议。每次导出消耗 1 积分。',
+        request_body: {
+          api_key: 'string (必填) - API 密钥，gtk_ 前缀，可在 https://roboparts.cc 获取',
+          project_name: 'string - 项目名称，可选，默认“未命名项目”',
+          format: 'string - 导出格式：csv | json，默认 csv',
+          items:
+            'array (必填) - BOM 条目数组，每项可含 id / name / category / manufacturer / specs / price / quantity / supplier',
+          include_suppliers: 'boolean - 是否附带供应商建议，默认 false',
         },
-      ],
-      include_suppliers: true,
+        example: {
+          api_key: 'gtk_demo_key',
+          project_name: '人形机器人v1',
+          format: 'csv',
+          items: [
+            {
+              id: 'ACT-001',
+              name: 'DYNAMIXEL XM540-W270-T',
+              category: 'actuators',
+              manufacturer: 'ROBOTIS',
+              specs: '扭矩 10.0Nm @ 12V',
+              price: 1200,
+              quantity: 2,
+              supplier: 'ROBOTIS官方',
+            },
+          ],
+          include_suppliers: true,
+        },
+        note: '此端点仅支持 POST 请求，请使用 curl 或 fetch 发送 POST 请求',
+      },
+      null,
+      2,
+    ),
+    {
+      status: 200,
+      headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=3600' },
     },
-    note: '此端点仅支持 POST 请求，请使用 curl 或 fetch 发送 POST 请求',
-  }, null, 2), {
-    status: 200,
-    headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=3600' },
-  });
+  );
 }
 
 export async function onRequestPost(context) {
@@ -156,66 +181,84 @@ export async function onRequestPost(context) {
 
     // 1. 验证 api_key
     if (!api_key) {
-      return new Response(JSON.stringify({
-        error: 'api_key is required',
-        message: '请提供 api_key（gtk_ 前缀），可在 https://roboparts.cc 获取。',
-      }), { status: 401, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          error: 'api_key is required',
+          message: '请提供 api_key（gtk_ 前缀），可在 https://roboparts.cc 获取。',
+        }),
+        { status: 401, headers: corsHeaders },
+      );
     }
 
     // 2. 验证 format
     const fmt = (format || 'csv').toLowerCase();
     if (fmt !== 'csv' && fmt !== 'json') {
-      return new Response(JSON.stringify({
-        error: 'Invalid format',
-        message: "format 必须为 'csv' 或 'json'",
-        received: format,
-      }), { status: 400, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          error: 'Invalid format',
+          message: "format 必须为 'csv' 或 'json'",
+          received: format,
+        }),
+        { status: 400, headers: corsHeaders },
+      );
     }
 
     // 3. 验证 items
     if (!Array.isArray(items) || items.length === 0) {
-      return new Response(JSON.stringify({
-        error: 'items must be a non-empty array',
-        message: '请提供至少一个 BOM 条目。',
-      }), { status: 400, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          error: 'items must be a non-empty array',
+          message: '请提供至少一个 BOM 条目。',
+        }),
+        { status: 400, headers: corsHeaders },
+      );
     }
 
     // 4. 验证积分系统
     if (!env.USER_CREDITS) {
-      return new Response(JSON.stringify({
-        error: 'Credits system not configured',
-        message: 'USER_CREDITS KV 绑定缺失，无法完成积分扣费。',
-      }), { status: 500, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          error: 'Credits system not configured',
+          message: 'USER_CREDITS KV 绑定缺失，无法完成积分扣费。',
+        }),
+        { status: 500, headers: corsHeaders },
+      );
     }
 
     // 5. 查询用户积分
     const userData = await env.USER_CREDITS.get(api_key);
     if (!userData) {
-      return new Response(JSON.stringify({
-        error: 'Invalid API key',
-        message: 'api_key 未在系统中注册，请前往 https://roboparts.cc 获取有效密钥。',
-      }), { status: 403, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          error: 'Invalid API key',
+          message: 'api_key 未在系统中注册，请前往 https://roboparts.cc 获取有效密钥。',
+        }),
+        { status: 403, headers: corsHeaders },
+      );
     }
 
     const user = JSON.parse(userData);
 
     // 6. 积分不足
     if (user.credits < CREDIT_COST) {
-      return new Response(JSON.stringify({
-        error: 'Insufficient credits',
-        credits_remaining: user.credits,
-        required: CREDIT_COST,
-        credits_needed: CREDIT_COST - user.credits,
-        recharge_url: UPGRADE_URL,
-        message: '积分不足，每次 BOM 导出消耗 1 积分。',
-      }), {
-        status: 402,
-        headers: {
-          ...corsHeaders,
-          'X-Credits-Remaining': String(user.credits),
-          'X-Upgrade-URL': UPGRADE_URL,
+      return new Response(
+        JSON.stringify({
+          error: 'Insufficient credits',
+          credits_remaining: user.credits,
+          required: CREDIT_COST,
+          credits_needed: CREDIT_COST - user.credits,
+          recharge_url: UPGRADE_URL,
+          message: '积分不足，每次 BOM 导出消耗 1 积分。',
+        }),
+        {
+          status: 402,
+          headers: {
+            ...corsHeaders,
+            'X-Credits-Remaining': String(user.credits),
+            'X-Upgrade-URL': UPGRADE_URL,
+          },
         },
-      });
+      );
     }
 
     // 7. 扣除积分
@@ -297,7 +340,7 @@ export async function onRequestPost(context) {
 
       if (include_suppliers) {
         // 按品类汇总供应商建议
-        const usedCategories = [...new Set(enrichedItems.map(i => i.category).filter(Boolean))];
+        const usedCategories = [...new Set(enrichedItems.map((i) => i.category).filter(Boolean))];
         result.supplier_suggestions = {};
         for (const cat of usedCategories) {
           result.supplier_suggestions[cat] = {
@@ -325,7 +368,9 @@ export async function onRequestPost(context) {
     lines.push('# RoboParts BOM Export');
     lines.push('# 项目名称: ' + (project_name || '未命名项目'));
     lines.push('# 导出时间: ' + createdAt);
-    lines.push('# 总模块数: ' + totalQuantity + '  条目数: ' + itemCount + '  总成本(CNY): ' + totalCost);
+    lines.push(
+      '# 总模块数: ' + totalQuantity + '  条目数: ' + itemCount + '  总成本(CNY): ' + totalCost,
+    );
     lines.push('# 剩余积分: ' + user.credits);
 
     // 表头（10 列）
@@ -335,20 +380,24 @@ export async function onRequestPost(context) {
     for (const it of enrichedItems) {
       let supplierCell = it.supplier;
       if (!supplierCell && include_suppliers) {
-        supplierCell = getSupplierSuggestions(it.category).map(s => s.name).join('; ');
+        supplierCell = getSupplierSuggestions(it.category)
+          .map((s) => s.name)
+          .join('; ');
       }
-      lines.push([
-        it.index,
-        csvEscape(it.name),
-        csvEscape(it.category_name),
-        csvEscape(it.manufacturer),
-        csvEscape(it.specs),
-        it.price,
-        it.quantity,
-        it.subtotal,
-        csvEscape(supplierCell),
-        csvEscape(it.print_advice),
-      ].join(','));
+      lines.push(
+        [
+          it.index,
+          csvEscape(it.name),
+          csvEscape(it.category_name),
+          csvEscape(it.manufacturer),
+          csvEscape(it.specs),
+          it.price,
+          it.quantity,
+          it.subtotal,
+          csvEscape(supplierCell),
+          csvEscape(it.print_advice),
+        ].join(','),
+      );
     }
 
     // 总计行（总计标签置于序号列，数量合计置于数量列，成本合计置于小计列）
@@ -358,9 +407,11 @@ export async function onRequestPost(context) {
     if (include_suppliers) {
       lines.push('');
       lines.push('# --- 供应商建议 ---');
-      const usedCategories = [...new Set(enrichedItems.map(i => i.category).filter(Boolean))];
+      const usedCategories = [...new Set(enrichedItems.map((i) => i.category).filter(Boolean))];
       for (const cat of usedCategories) {
-        const names = getSupplierSuggestions(cat).map(s => s.name).join('; ');
+        const names = getSupplierSuggestions(cat)
+          .map((s) => s.name)
+          .join('; ');
         lines.push('# ' + getCategoryName(cat) + '(' + cat + '): ' + names);
       }
     }
@@ -377,17 +428,20 @@ export async function onRequestPost(context) {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        'Access-Control-Expose-Headers': 'Content-Disposition, X-Credits-Remaining, X-Credits-Warning, X-Credits-Threshold, X-API-Tier',
+        'Access-Control-Expose-Headers':
+          'Content-Disposition, X-Credits-Remaining, X-Credits-Warning, X-Credits-Threshold, X-API-Tier',
         ...responseExtraHeaders,
       },
     });
-
   } catch (e) {
-    return new Response(JSON.stringify({
-      error: 'Internal error',
-      message: e.message,
-      stack: e.stack,
-    }), { status: 500, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        error: 'Internal error',
+        message: e.message,
+        stack: e.stack,
+      }),
+      { status: 500, headers: corsHeaders },
+    );
   }
 }
 

@@ -80,14 +80,23 @@ export async function onRequestGet(context) {
     const rates = {
       signup_rate: funnel.visits > 0 ? funnel.signups / funnel.visits : 0,
       trial_start_rate: funnel.signups > 0 ? funnel.trials_started / funnel.signups : 0,
-      trial_complete_rate: funnel.trials_started > 0 ? funnel.trials_completed / funnel.trials_started : 0,
-      payment_start_rate: funnel.trials_completed > 0 ? funnel.payments_started / funnel.trials_completed : 0,
-      payment_success_rate: funnel.payments_started > 0 ? funnel.payments_success / funnel.payments_started : 0,
+      trial_complete_rate:
+        funnel.trials_started > 0 ? funnel.trials_completed / funnel.trials_started : 0,
+      payment_start_rate:
+        funnel.trials_completed > 0 ? funnel.payments_started / funnel.trials_completed : 0,
+      payment_success_rate:
+        funnel.payments_started > 0 ? funnel.payments_success / funnel.payments_started : 0,
       conversion_rate: funnel.visits > 0 ? funnel.conversions / funnel.visits : 0,
     };
 
     // 主链 5 步使用率（feature_use 事件）
-    const pipelineSteps = ['selection', 'build_planner', 'designer', 'bom_checker', 'adapter_generator'];
+    const pipelineSteps = [
+      'selection',
+      'build_planner',
+      'designer',
+      'bom_checker',
+      'adapter_generator',
+    ];
     const pipelineUsage = {};
     if (funnel.feature_use) {
       for (const step of pipelineSteps) {
@@ -124,16 +133,18 @@ export async function onRequestGet(context) {
         'X-Data-Version': '2026-10-26',
       },
     });
-
   } catch (error) {
     console.error('漏斗查询失败:', error);
-    return new Response(JSON.stringify({
-      error: 'processing_failed',
-      message: '漏斗查询失败',
-    }), {
-      status: 500,
-      headers: corsHeaders,
-    });
+    return new Response(
+      JSON.stringify({
+        error: 'processing_failed',
+        message: '漏斗查询失败',
+      }),
+      {
+        status: 500,
+        headers: corsHeaders,
+      },
+    );
   }
 }
 

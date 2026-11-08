@@ -42,10 +42,13 @@ export async function onRequestPost(context) {
     const { api_key } = body;
     return await handleHistory(api_key, env);
   } catch (e) {
-    return new Response(JSON.stringify({
-      success: false,
-      error: '请求格式错误: ' + e.message,
-    }), { status: 400, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: '请求格式错误: ' + e.message,
+      }),
+      { status: 400, headers: corsHeaders },
+    );
   }
 }
 
@@ -53,26 +56,35 @@ async function handleHistory(apiKey, env) {
   try {
     // ========== 1. 参数校验 ==========
     if (!apiKey || typeof apiKey !== 'string' || !apiKey.startsWith('gtk_')) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: 'API Key (api_key) 为必填项，且需以 gtk_ 开头',
-      }), { status: 400, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'API Key (api_key) 为必填项，且需以 gtk_ 开头',
+        }),
+        { status: 400, headers: corsHeaders },
+      );
     }
 
     // ========== 2. 验证 API Key ==========
     if (!env.USER_CREDITS) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '积分系统未配置',
-      }), { status: 500, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '积分系统未配置',
+        }),
+        { status: 500, headers: corsHeaders },
+      );
     }
 
     const userRecord = await env.USER_CREDITS.get(apiKey);
     if (!userRecord) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: 'API Key 无效或不存在',
-      }), { status: 401, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'API Key 无效或不存在',
+        }),
+        { status: 401, headers: corsHeaders },
+      );
     }
 
     // ========== 3. 读取账本（四态：ok / empty / unavailable / corrupt）==========
@@ -81,35 +93,43 @@ async function handleHistory(apiKey, env) {
     // 不可读必须让调用方知道，不能降级成"空账本 + success:true"
     const httpErr = ledgerHttp(read);
     if (httpErr) {
-      return new Response(JSON.stringify({
-        success: false,
-        error_kind: httpErr.error_kind,
-        error: httpErr.error,
-        ledger_status: read.status,
-        ledger_backend: read.backend,
-        detail: read.reason,
-      }), { status: httpErr.status, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error_kind: httpErr.error_kind,
+          error: httpErr.error,
+          ledger_status: read.status,
+          ledger_backend: read.backend,
+          detail: read.reason,
+        }),
+        { status: httpErr.status, headers: corsHeaders },
+      );
     }
 
     // ========== 4. 统计汇总（仅在 ok/empty 下才是数字）==========
     const sum = summarizeLedger(read);
 
     // ========== 5. 返回结果 ==========
-    return new Response(JSON.stringify({
-      success: true,
-      ledger_status: read.status,          // 'ok' | 'empty'
-      ledger_backend: read.backend,
-      history: read.records,
-      total: sum.total,
-      total_consumed: sum.total_consumed,
-      total_recharged: sum.total_recharged,
-    }), { headers: corsHeaders });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        ledger_status: read.status, // 'ok' | 'empty'
+        ledger_backend: read.backend,
+        history: read.records,
+        total: sum.total,
+        total_consumed: sum.total_consumed,
+        total_recharged: sum.total_recharged,
+      }),
+      { headers: corsHeaders },
+    );
   } catch (e) {
-    return new Response(JSON.stringify({
-      success: false,
-      error: '服务器内部错误: ' + e.message,
-    }), { status: 500, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: '服务器内部错误: ' + e.message,
+      }),
+      { status: 500, headers: corsHeaders },
+    );
   }
 }
 

@@ -16,7 +16,7 @@
  */
 const HEADERS = {
   'Access-Control-Allow-Origin': '*',
-  'Allow': 'OPTIONS',
+  Allow: 'OPTIONS',
   'Content-Type': 'application/json; charset=utf-8',
   'Cache-Control': 'public, max-age=3600',
 };
@@ -24,13 +24,15 @@ const HEADERS = {
 const BODY = {
   error: 'Gone',
   message: 'Creem 国际支付通道已于 2026-08-07 下线，本端点不再创建收银台。',
-  message_en: 'The Creem international checkout was retired on 2026-08-07. This endpoint no longer creates checkouts.',
+  message_en:
+    'The Creem international checkout was retired on 2026-08-07. This endpoint no longer creates checkouts.',
   use_instead: {
     self_serve: 'POST https://roboparts.cc/api/payment/create  (WeChat Pay / Alipay, CNY)',
     page: 'https://roboparts.cc/credits',
     outside_china: 'mailto:61960005@qq.com — 人工开票 + 手工发放积分 / manual invoicing',
   },
-  reason: 'Live payments were never enabled on the Creem account; keeping the route alive only produced checkouts that failed after order creation.',
+  reason:
+    'Live payments were never enabled on the Creem account; keeping the route alive only produced checkouts that failed after order creation.',
 };
 
 function gone() {

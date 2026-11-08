@@ -33,7 +33,11 @@ export function ledgerStore(env) {
     return { kv: env.USER_CREDIT_HISTORY, mapKey: (k) => k, backend: 'USER_CREDIT_HISTORY' };
   }
   if (env && env.USER_CREDITS) {
-    return { kv: env.USER_CREDITS, mapKey: (k) => LEDGER_FALLBACK_PREFIX + k, backend: 'USER_CREDITS:hist' };
+    return {
+      kv: env.USER_CREDITS,
+      mapKey: (k) => LEDGER_FALLBACK_PREFIX + k,
+      backend: 'USER_CREDITS:hist',
+    };
   }
   return null;
 }
@@ -54,7 +58,12 @@ export async function readLedger(env, apiKey) {
   try {
     raw = await store.kv.get(store.mapKey(apiKey));
   } catch (e) {
-    return { status: 'unavailable', reason: 'kv_read_failed: ' + e.message, records: null, backend: store.backend };
+    return {
+      status: 'unavailable',
+      reason: 'kv_read_failed: ' + e.message,
+      records: null,
+      backend: store.backend,
+    };
   }
   if (raw === null || raw === undefined) {
     return { status: 'empty', records: [], backend: store.backend };
@@ -94,7 +103,10 @@ export async function appendLedger(env, apiKey, entry) {
   if (cur.status === 'corrupt') {
     try {
       const raw = await store.kv.get(store.mapKey(apiKey));
-      await store.kv.put(store.mapKey(apiKey) + ':quarantine:' + Date.now(), raw == null ? '' : raw);
+      await store.kv.put(
+        store.mapKey(apiKey) + ':quarantine:' + Date.now(),
+        raw == null ? '' : raw,
+      );
       degraded = 'previous_ledger_quarantined:' + cur.reason;
     } catch (e) {
       return { ok: false, reason: 'quarantine_failed: ' + e.message, backend: store.backend };
@@ -145,10 +157,19 @@ export function summarizeLedger(read) {
 /** 把 readLedger 的状态映射为 HTTP 语义，供接口层统一口径 */
 export function ledgerHttp(read) {
   if (read.status === 'unavailable') {
-    return { status: 503, error_kind: 'ledger_unavailable', error: '积分账本当前不可读，无法确认你的交易记录（这不代表你没有交易）。请稍后重试或联系支持。' };
+    return {
+      status: 503,
+      error_kind: 'ledger_unavailable',
+      error:
+        '积分账本当前不可读，无法确认你的交易记录（这不代表你没有交易）。请稍后重试或联系支持。',
+    };
   }
   if (read.status === 'corrupt') {
-    return { status: 500, error_kind: 'ledger_corrupt', error: '积分账本存在但无法解析，已隔离留痕待人工核查（这不代表你没有交易）。' };
+    return {
+      status: 500,
+      error_kind: 'ledger_corrupt',
+      error: '积分账本存在但无法解析，已隔离留痕待人工核查（这不代表你没有交易）。',
+    };
   }
   return null;
 }

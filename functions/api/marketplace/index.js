@@ -9,44 +9,45 @@ export async function onRequestHead(context) {
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'Cache-Control': 'public, max-age=3600'
-    }
+      'Cache-Control': 'public, max-age=3600',
+    },
   });
 }
 
 export async function onRequestGet(context) {
   const { env, request } = context;
   const url = new URL(request.url);
-  
+
   const page = parseInt(url.searchParams.get('page') || '1');
   const limit = parseInt(url.searchParams.get('limit') || '20');
   const category = url.searchParams.get('category');
   const search = url.searchParams.get('search');
   const sort = url.searchParams.get('sort') || 'newest';
-  
+
   try {
     let items = [];
-    
+
     if (env.MARKETPLACE_KV) {
       const data = await env.MARKETPLACE_KV.get('marketplace:items', 'json');
       items = data || [];
     } else {
       items = getDemoItems();
     }
-    
+
     if (category) {
-      items = items.filter(i => i.data_type === category);
+      items = items.filter((i) => i.data_type === category);
     }
-    
+
     if (search) {
       const q = search.toLowerCase();
-      items = items.filter(i => 
-        i.title.toLowerCase().includes(q) ||
-        i.description.toLowerCase().includes(q) ||
-        i.tags.some(t => t.toLowerCase().includes(q))
+      items = items.filter(
+        (i) =>
+          i.title.toLowerCase().includes(q) ||
+          i.description.toLowerCase().includes(q) ||
+          i.tags.some((t) => t.toLowerCase().includes(q)),
       );
     }
-    
+
     switch (sort) {
       case 'popular':
         items.sort((a, b) => b.stats.downloads - a.stats.downloads);
@@ -58,22 +59,25 @@ export async function onRequestGet(context) {
       default:
         items.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     }
-    
+
     const total = items.length;
     const offset = (page - 1) * limit;
     const paged = items.slice(offset, offset + limit);
-    
-    return new Response(JSON.stringify({
-      success: true,
-      data: paged,
-      pagination: { page, limit, total, pages: Math.ceil(total / limit) }
-    }), {
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-    });
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        data: paged,
+        pagination: { page, limit, total, pages: Math.ceil(total / limit) },
+      }),
+      {
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      },
+    );
   } catch (e) {
     return new Response(JSON.stringify({ success: false, error: e.message }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }
@@ -84,10 +88,10 @@ export async function onRequestGet(context) {
  */
 export async function onRequestPost(context) {
   const { env, request } = context;
-  
+
   try {
     const body = await request.json();
-    
+
     const item = {
       id: `market-${Date.now()}`,
       user_id: body.user_id || 'anonymous',
@@ -103,23 +107,23 @@ export async function onRequestPost(context) {
       stats: { downloads: 0, likes: 0, rating: 0, reviews: 0 },
       created_at: new Date().toISOString().split('T')[0],
       updated_at: new Date().toISOString().split('T')[0],
-      verified: false
+      verified: false,
     };
-    
+
     if (env.MARKETPLACE_KV) {
-      const existing = await env.MARKETPLACE_KV.get('marketplace:items', 'json') || [];
+      const existing = (await env.MARKETPLACE_KV.get('marketplace:items', 'json')) || [];
       existing.push(item);
       await env.MARKETPLACE_KV.put('marketplace:items', JSON.stringify(existing));
     }
-    
+
     return new Response(JSON.stringify({ success: true, data: item }), {
       status: 201,
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
     });
   } catch (e) {
     return new Response(JSON.stringify({ success: false, error: e.message }), {
       status: 400,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }
@@ -130,7 +134,7 @@ export async function onRequestOptions() {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
-    }
+    },
   });
 }
 
@@ -151,7 +155,7 @@ function getDemoItems() {
       stats: { downloads: 234, likes: 89, rating: 4.7, reviews: 23 },
       created_at: '2026-08-15',
       updated_at: '2026-08-15',
-      verified: true
+      verified: true,
     },
     {
       id: 'market-002',
@@ -168,7 +172,7 @@ function getDemoItems() {
       stats: { downloads: 156, likes: 67, rating: 4.5, reviews: 15 },
       created_at: '2026-08-12',
       updated_at: '2026-08-12',
-      verified: true
+      verified: true,
     },
     {
       id: 'market-003',
@@ -185,7 +189,7 @@ function getDemoItems() {
       stats: { downloads: 312, likes: 102, rating: 4.8, reviews: 28 },
       created_at: '2026-08-10',
       updated_at: '2026-08-10',
-      verified: true
-    }
+      verified: true,
+    },
   ];
 }

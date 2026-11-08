@@ -982,10 +982,22 @@ const KV_MODELS_KEY = 'urdf_models';
 // 就应显式标注 asset_tier: 'L3' 并补 source/datasheet URL）。
 const ASSET_TIER_SCHEMA = {
   L0: { name: '元数据模型', external: '参数化元数据', requires: '有名称、类型、来源和估算边界' },
-  L1: { name: '结构可解析', external: '可导入原型', requires: 'XML Schema 通过、引用完整、单位明确' },
+  L1: {
+    name: '结构可解析',
+    external: '可导入原型',
+    requires: 'XML Schema 通过、引用完整、单位明确',
+  },
   L2: { name: '运动学有效', external: '运动学原型', requires: '连杆树、关节轴、限位、TCP 经测试' },
-  L3: { name: '物理参数可追', external: '仿真候选资产', requires: '质量、惯量、摩擦、执行器参数有来源与假设' },
-  L4: { name: '验证资产', external: '已验证仿真资产', requires: '跨引擎回归、关键运动学/动力学对照、必要时真机标定' },
+  L3: {
+    name: '物理参数可追',
+    external: '仿真候选资产',
+    requires: '质量、惯量、摩擦、执行器参数有来源与假设',
+  },
+  L4: {
+    name: '验证资产',
+    external: '已验证仿真资产',
+    requires: '跨引擎回归、关键运动学/动力学对照、必要时真机标定',
+  },
 };
 const VALID_ASSET_TIERS = Object.keys(ASSET_TIER_SCHEMA);
 
@@ -1018,9 +1030,10 @@ function getAssetTier(model) {
   return {
     tier: 'L1',
     source: 'RoboParts parametric skeleton generator',
-    assumptions: '几何由 box/cylinder 按 robot_type + joints 数参数化拼接，非厂商 CAD；'
-      + '质量/惯量为硬编码预设表估算，非厂商声明值、非实测。'
-      + '可跑通脚本级动力学仿真，不应用于碰撞敏感任务或真机部署。',
+    assumptions:
+      '几何由 box/cylinder 按 robot_type + joints 数参数化拼接，非厂商 CAD；' +
+      '质量/惯量为硬编码预设表估算，非厂商声明值、非实测。' +
+      '可跑通脚本级动力学仿真，不应用于碰撞敏感任务或真机部署。',
     verified_at: null,
     schema: ASSET_TIER_SCHEMA.L1,
   };
@@ -1041,12 +1054,12 @@ function tierSummary(models) {
 // 按作者/品牌确定仿真平台兼容性
 const SIMULATION_COMPAT = {
   // NVIDIA 生态 → Isaac Sim 原生支持
-  'NVIDIA': ['Isaac Sim', 'Gazebo', 'MuJoCo', 'PyBullet'],
+  NVIDIA: ['Isaac Sim', 'Gazebo', 'MuJoCo', 'PyBullet'],
   // Unitree → 官方 Isaac Gym/Sim + MuJoCo
   'Unitree Robotics': ['Isaac Sim', 'Gazebo', 'MuJoCo', 'PyBullet', 'Webots'],
   // ROBOTIS → Gazebo 原生 + Webots
   'ROBOTIS / Open Robotics': ['Gazebo', 'Webots', 'PyBullet', 'ROS 2'],
-  'ROBOTIS': ['Gazebo', 'Webots', 'PyBullet', 'ROS 2'],
+  ROBOTIS: ['Gazebo', 'Webots', 'PyBullet', 'ROS 2'],
   // Stanford/LeRobot → MuJoCo + PyBullet 优先
   'The K Rene/Fanny Reber (LeRobot)': ['MuJoCo', 'PyBullet', 'Gazebo'],
   'The K Rene (LeRobot)': ['MuJoCo', 'PyBullet', 'Gazebo'],
@@ -1059,7 +1072,7 @@ const SIMULATION_COMPAT = {
   // Boston Dynamics → 仿真有限
   'Boston Dynamics': ['Gazebo', 'PyBullet'],
   // ANYbotics → Gazebo + Webots
-  'ANYbotics': ['Gazebo', 'Webots', 'MuJoCo'],
+  ANYbotics: ['Gazebo', 'Webots', 'MuJoCo'],
   // 傅利叶 → Isaac Sim + Gazebo
   'Fourier Intelligence': ['Isaac Sim', 'Gazebo', 'MuJoCo'],
   // 大象机器人 → Gazebo + PyBullet
@@ -1082,8 +1095,15 @@ function getROS2Compat(model) {
   // Proprietary / Custom → 社区适配
   if (license.includes('PROPRIETARY') || license.includes('CUSTOM')) {
     // 知名品牌通常有社区 ROS 2 适配
-    const knownBrands = ['Unitree', 'ROBOTIS', 'Franka', 'Universal Robots', 'Boston Dynamics', 'Figure AI'];
-    if (knownBrands.some(b => author.includes(b))) return 'community';
+    const knownBrands = [
+      'Unitree',
+      'ROBOTIS',
+      'Franka',
+      'Universal Robots',
+      'Boston Dynamics',
+      'Figure AI',
+    ];
+    if (knownBrands.some((b) => author.includes(b))) return 'community';
     return 'unknown';
   }
   return 'unknown';
@@ -1152,10 +1172,14 @@ function getCompatibilityInfo(model) {
   const sims = SIMULATION_COMPAT[model.author] || ['Gazebo', 'PyBullet'];
   return {
     ros2: ros2,
-    ros2_details: ros2 === 'full' ? '原生支持 ROS 2 Humble/Jazzy' :
-                  ros2 === 'partial' ? '部分支持，需社区适配' :
-                  ros2 === 'community' ? '社区维护 ROS 2 适配包' :
-                  '兼容性未知，需自行验证',
+    ros2_details:
+      ros2 === 'full'
+        ? '原生支持 ROS 2 Humble/Jazzy'
+        : ros2 === 'partial'
+          ? '部分支持，需社区适配'
+          : ros2 === 'community'
+            ? '社区维护 ROS 2 适配包'
+            : '兼容性未知，需自行验证',
     simulation_platforms: sims,
     controllers: getControllerCompat(model),
     mesh_format: model.file_size && parseInt(model.file_size) > 50 ? 'DAE (Collada)' : 'STL',
@@ -1187,77 +1211,93 @@ export async function onRequestGet(context) {
 
   try {
     // 尝试从 KV 读取模型库
-    let models = await loadModels(env);
+    const models = await loadModels(env);
 
     // 单个模型查询
     if (id) {
-      const model = models.find(m => m.id === id);
+      const model = models.find((m) => m.id === id);
       if (!model) {
-        return new Response(JSON.stringify({
-          error: 'Model not found',
-          message: '未找到 ID 为 ' + id + ' 的 URDF 模型。',
-          available_ids: models.map(m => m.id),
-        }), { status: 404, headers: corsHeaders });
+        return new Response(
+          JSON.stringify({
+            error: 'Model not found',
+            message: '未找到 ID 为 ' + id + ' 的 URDF 模型。',
+            available_ids: models.map((m) => m.id),
+          }),
+          { status: 404, headers: corsHeaders },
+        );
       }
-      return new Response(JSON.stringify({
-        meta: {
-          id: model.id,
-          source: env.URDF_LIBRARY ? 'kv' : 'preset',
-          total: 1,
+      return new Response(
+        JSON.stringify(
+          {
+            meta: {
+              id: model.id,
+              source: env.URDF_LIBRARY ? 'kv' : 'preset',
+              total: 1,
+            },
+            model: enrichModel(model),
+          },
+          null,
+          2,
+        ),
+        {
+          status: 200,
+          headers: {
+            ...corsHeaders,
+            'Cache-Control': env.URDF_LIBRARY ? 'no-store' : 'public, max-age=300',
+          },
         },
-        model: enrichModel(model),
-      }, null, 2), {
-        status: 200,
-        headers: {
-          ...corsHeaders,
-          'Cache-Control': env.URDF_LIBRARY ? 'no-store' : 'public, max-age=300',
-        },
-      });
+      );
     }
 
     // 校验 robot_type 参数
     if (robotType && !VALID_ROBOT_TYPES.includes(robotType)) {
-      return new Response(JSON.stringify({
-        error: 'Invalid robot_type',
-        message: 'robot_type 必须为: ' + VALID_ROBOT_TYPES.join(', '),
-        received: robotType,
-      }), { status: 400, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          error: 'Invalid robot_type',
+          message: 'robot_type 必须为: ' + VALID_ROBOT_TYPES.join(', '),
+          received: robotType,
+        }),
+        { status: 400, headers: corsHeaders },
+      );
     }
 
     // 列表筛选
     let filtered = models;
     if (robotType) {
-      filtered = filtered.filter(m => m.robot_type === robotType);
+      filtered = filtered.filter((m) => m.robot_type === robotType);
     }
     // 兼容性标签筛选（B-01）
     if (compatTag) {
-      filtered = filtered.filter(m => {
+      filtered = filtered.filter((m) => {
         const compat = getCompatibilityInfo(m);
-        return compat.compatibility_tags.some(t =>
-          t.toLowerCase().includes(compatTag.toLowerCase())
+        return compat.compatibility_tags.some((t) =>
+          t.toLowerCase().includes(compatTag.toLowerCase()),
         );
       });
     }
     // 仿真平台筛选（B-01）
     if (simPlatform) {
-      filtered = filtered.filter(m => {
+      filtered = filtered.filter((m) => {
         const compat = getCompatibilityInfo(m);
-        return compat.simulation_platforms.some(s =>
-          s.toLowerCase().includes(simPlatform.toLowerCase())
+        return compat.simulation_platforms.some((s) =>
+          s.toLowerCase().includes(simPlatform.toLowerCase()),
         );
       });
     }
     // P0-12 资产分级筛选：?tier=L0（单个）或 ?tier=L0,L1（逗号分隔多个）
     if (tierParam) {
-      const wanted = tierParam.split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
+      const wanted = tierParam
+        .split(',')
+        .map((s) => s.trim().toUpperCase())
+        .filter(Boolean);
       const wantedSet = new Set(wanted);
-      filtered = filtered.filter(m => wantedSet.has(getAssetTier(m).tier));
+      filtered = filtered.filter((m) => wantedSet.has(getAssetTier(m).tier));
     }
 
     // 统计各类型数量
     const typeCounts = {};
     for (const t of VALID_ROBOT_TYPES) {
-      typeCounts[t] = models.filter(m => m.robot_type === t).length;
+      typeCounts[t] = models.filter((m) => m.robot_type === t).length;
     }
 
     const result = {
@@ -1275,8 +1315,9 @@ export async function onRequestGet(context) {
         asset_tier_schema: ASSET_TIER_SCHEMA,
         asset_tier_counts_all: tierSummary(models),
         asset_tier_counts_filtered: tierSummary(filtered),
-        asset_tier_note: '默认 L0（RoboParts 元数据驱动的参数化骨架）。'
-          + 'L1+ 需显式 asset_tier 覆盖并附 source 与 assumptions（见 ASSET_TIER_OVERRIDES）。',
+        asset_tier_note:
+          '默认 L0（RoboParts 元数据驱动的参数化骨架）。' +
+          'L1+ 需显式 asset_tier 覆盖并附 source 与 assumptions（见 ASSET_TIER_OVERRIDES）。',
       },
       models: filtered.map(enrichModel),
     };
@@ -1288,13 +1329,15 @@ export async function onRequestGet(context) {
         'Cache-Control': env.URDF_LIBRARY ? 'no-store' : 'public, max-age=300',
       },
     });
-
   } catch (e) {
-    return new Response(JSON.stringify({
-      error: 'Internal error',
-      message: e.message,
-      stack: e.stack,
-    }), { status: 500, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        error: 'Internal error',
+        message: e.message,
+        stack: e.stack,
+      }),
+      { status: 500, headers: corsHeaders },
+    );
   }
 }
 

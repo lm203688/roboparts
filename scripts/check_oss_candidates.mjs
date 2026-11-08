@@ -178,19 +178,21 @@ function selftest() {
   }
   // 鉴别力自证（L1.90 #10）：同一份冻结样本，旧判据 vs 新判据结论必须相反
   const oldVerdict = /bom/i.test('hardware/bom/bom.csv') ? 'PROMOTE' : 'HOLD';
-  const newVerdict = contentGate(FROZEN_LEROBOT_BOM).declared
-    ? 'PROMOTE'
-    : 'HOLD_CONTENT_GATE';
+  const newVerdict = contentGate(FROZEN_LEROBOT_BOM).declared ? 'PROMOTE' : 'HOLD_CONTENT_GATE';
   if (oldVerdict === 'PROMOTE' && newVerdict === 'HOLD_CONTENT_GATE') {
-    console.log('  ✅ 鉴别力自证：冻结 LeRobot BOM 上 旧判据=PROMOTE / 新判据=HOLD_CONTENT_GATE（结论相反，非空转）');
+    console.log(
+      '  ✅ 鉴别力自证：冻结 LeRobot BOM 上 旧判据=PROMOTE / 新判据=HOLD_CONTENT_GATE（结论相反，非空转）',
+    );
   } else {
-    console.log(`  ❌ 鉴别力自证失败：旧=${oldVerdict} 新=${newVerdict}（两版结论未相反 ⇒ 新闸可能空转）`);
+    console.log(
+      `  ❌ 鉴别力自证失败：旧=${oldVerdict} 新=${newVerdict}（两版结论未相反 ⇒ 新闸可能空转）`,
+    );
     bad++;
   }
   console.log(
     bad === 0
       ? `  ✅ 阴阳对照通过（路径 阳4/阴5 + 内容闸 阳4/阴5 + 空输入 3 + 鉴别力 1）`
-      : `  ❌ 阴阳对照失败 ${bad} 项`
+      : `  ❌ 阴阳对照失败 ${bad} 项`,
   );
   return bad === 0;
 }
@@ -279,14 +281,18 @@ async function main() {
           gated = gated || g;
         }
         if (gated === null) {
-          console.log(`  ❔ UNVERIFIED ${repo} —— BOM 原文拿不到（${why}），不判 PROMOTE 也不判 HOLD`);
+          console.log(
+            `  ❔ UNVERIFIED ${repo} —— BOM 原文拿不到（${why}），不判 PROMOTE 也不判 HOLD`,
+          );
           unverified++;
         } else if (gated.declared) {
-          console.log(`  🔔 PROMOTE ${repo} 内容闸命中 declared 接口：${gated.hits.join(', ')} ← ${why}`);
+          console.log(
+            `  🔔 PROMOTE ${repo} 内容闸命中 declared 接口：${gated.hits.join(', ')} ← ${why}`,
+          );
           promote++;
         } else {
           console.log(
-            `  ⏸️  HOLD_CONTENT_GATE ${repo} —— BOM 原文已读(${why})但无标准化接口声明（螺钉/STL/私有总线不算），declared 增量 0，不进管线`
+            `  ⏸️  HOLD_CONTENT_GATE ${repo} —— BOM 原文已读(${why})但无标准化接口声明（螺钉/STL/私有总线不算），declared 增量 0，不进管线`,
           );
           hold++;
         }
@@ -299,7 +305,7 @@ async function main() {
   }
 
   console.log(
-    `\n小结：PROMOTE ${promote} ｜ HOLD ${hold} ｜ UNKNOWN ${unknown} ｜ UNVERIFIED ${unverified}`
+    `\n小结：PROMOTE ${promote} ｜ HOLD ${hold} ｜ UNKNOWN ${unknown} ｜ UNVERIFIED ${unverified}`,
   );
   if (unknown > 0 || unverified > 0) {
     console.log('存在 UNKNOWN/UNVERIFIED：本轮不得声称「候选源都已复核过」。');

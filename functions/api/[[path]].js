@@ -10,7 +10,7 @@ const PRO_PRODUCTS = [
   'prod_pny43rzDa0mmBaj7d9k4w',
   'prod_5IooNCEQoCyqp758oeVPGT',
   'prod_5OFcAcJeXzfTMkDDt6woBh',
-  'prod_44o1TOBce0Zt00X4E5ACET'
+  'prod_44o1TOBce0Zt00X4E5ACET',
 ];
 // P0-2 付费墙修复：免费层默认返回除 PREMIUM_FIELDS 外的全部字段。
 // 此前 FREE_FIELDS 引用了 focus/hq/founded/development_stage 等不存在的字段，
@@ -19,7 +19,12 @@ const PRO_PRODUCTS = [
 // 【20260808-11】清单已移入 `_lib/paywall.js` 作为单一真相源。
 // 起因是新增 `/api/entity/{id}` 需要同一套判定，若各端点各抄一份，
 // 两份清单必然随时间分叉，最终某个端点会在无人察觉时免费送出付费字段。
-import { PREMIUM_FIELDS, containsPremiumField, maskPremiumDeep, OPEN_DATASET_FILES } from '../_lib/paywall.js';
+import {
+  PREMIUM_FIELDS,
+  containsPremiumField,
+  maskPremiumDeep,
+  OPEN_DATASET_FILES,
+} from '../_lib/paywall.js';
 import { PLANS } from '../_lib/plans.js';
 import { checkRateLimit, rateLimitHeaders } from '../_lib/ratelimit.js';
 
@@ -33,14 +38,16 @@ async function bumpStat(env, key, by = 1) {
     const cur = await env.USER_CREDITS.get(key);
     const n = (cur ? parseInt(cur, 10) : 0) || 0;
     await env.USER_CREDITS.put(key, String(n + by));
-  } catch (e) { /* 度量失败不影响主流程 */ }
+  } catch (e) {
+    /* 度量失败不影响主流程 */
+  }
 }
 
 const CREDIT_COSTS = {
-  'entities.json': 1,    // Full data export costs 1 credit (fixed from 50)
-  'data.json': 0,        // data.json is free (directory data)
-  'openapi.json': 0,     // API spec is free
-  'graph.json': 0,       // Graph data is free
+  'entities.json': 1, // Full data export costs 1 credit (fixed from 50)
+  'data.json': 0, // data.json is free (directory data)
+  'openapi.json': 0, // API spec is free
+  'graph.json': 0, // Graph data is free
 };
 
 export async function onRequestGet(context) {
@@ -71,15 +78,24 @@ export async function onRequestGet(context) {
 
   // 【P0-12】真限流：每 IP+路径 每 1 小时 300 次（免费层）；全局限流宽松（防单 IP 刷全库）。
   // 此前零限流（仅响应头声明）。失败开放（KV 不可用 → degraded 放行）。
-  const ip = (request.headers.get('CF-Connecting-IP')
-    || (request.headers.get('x-forwarded-for') || '').split(',')[0].trim()
-    || 'unknown');
-  const rl = await checkRateLimit(env, { ip, scope: 'api:' + requestedFile, limit: 300, windowSec: 3600 });
+  const ip =
+    request.headers.get('CF-Connecting-IP') ||
+    (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() ||
+    'unknown';
+  const rl = await checkRateLimit(env, {
+    ip,
+    scope: 'api:' + requestedFile,
+    limit: 300,
+    windowSec: 3600,
+  });
   if (!rl.allowed) {
-    return new Response(JSON.stringify({ error: 'rate_limited', message: '请求过于频繁，请稍后再试。' }), {
-      status: 429,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders, ...rateLimitHeaders(rl) },
-    });
+    return new Response(
+      JSON.stringify({ error: 'rate_limited', message: '请求过于频繁，请稍后再试。' }),
+      {
+        status: 429,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders, ...rateLimitHeaders(rl) },
+      },
+    );
   }
 
   try {
@@ -93,15 +109,18 @@ export async function onRequestGet(context) {
     const isHtmlFallback = assetContentType.includes('text/html');
 
     if (!assetResponse.ok || isHtmlFallback) {
-      return new Response(JSON.stringify({
-        error: 'Not Found',
-        path: `/api/${requestedFile}`,
-        status: isHtmlFallback ? 404 : assetResponse.status,
-        hint: 'Available: entities.json, data.json, openapi.json, graph.json, robot_ai_models.json, flexible_actuators.json'
-      }), {
-        status: 404,
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
-      });
+      return new Response(
+        JSON.stringify({
+          error: 'Not Found',
+          path: `/api/${requestedFile}`,
+          status: isHtmlFallback ? 404 : assetResponse.status,
+          hint: 'Available: entities.json, data.json, openapi.json, graph.json, robot_ai_models.json, flexible_actuators.json',
+        }),
+        {
+          status: 404,
+          headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        },
+      );
     }
 
     const data = await assetResponse.text();
@@ -111,7 +130,9 @@ export async function onRequestGet(context) {
       const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
       await bumpStat(env, 'stat:api_calls:total');
       await bumpStat(env, 'stat:api_calls:' + today);
-    } catch (e) {}
+    } catch (e) {
+      /* 统计失败不致命 */
+    }
 
     // Apply paywall to ANY JSON asset that actually carries PREMIUM_FIELDS.
     // 【P0-4 修复】此前只挡 entities.json；其余承载付费字段的 JSON 全部裸奔。
@@ -121,7 +142,11 @@ export async function onRequestGet(context) {
       const baseName = requestedFile.split('/').pop();
       if (!OPEN_DATASET_FILES.includes(baseName)) {
         let payload = null;
-        try { payload = JSON.parse(data); } catch (_) { payload = null; }
+        try {
+          payload = JSON.parse(data);
+        } catch (_) {
+          payload = null;
+        }
         if (payload && containsPremiumField(payload)) {
           return await applyPaywall(data, request, env, corsHeaders, rl);
         }
@@ -136,17 +161,20 @@ export async function onRequestGet(context) {
         'X-API-Tier': 'free',
         'X-Powered-By': 'GeneTech API Gateway',
         ...corsHeaders,
-      }
+      },
     });
-  } catch(e) {
-    return new Response(JSON.stringify({
-      error: 'Internal error',
-      message: e.message,
-      path: `/api/${requestedFile}`,
-    }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
-    });
+  } catch (e) {
+    return new Response(
+      JSON.stringify({
+        error: 'Internal error',
+        message: e.message,
+        path: `/api/${requestedFile}`,
+      }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      },
+    );
   }
 }
 
@@ -154,7 +182,7 @@ async function applyPaywall(data, request, env, corsHeaders, rl) {
   let parsed;
   try {
     parsed = JSON.parse(data);
-  } catch(e) {
+  } catch (e) {
     return new Response(data, {
       status: 200,
       headers: { 'Content-Type': 'application/json; charset=utf-8', ...corsHeaders },
@@ -231,30 +259,33 @@ async function applyPaywall(data, request, env, corsHeaders, rl) {
           });
         } else {
           // Insufficient credits: structured 402 with conversion guidance
-          return new Response(JSON.stringify({
-            error: 'Insufficient credits',
-            credits_remaining: user.credits,
-            required: cost,
-            credits_needed: cost - user.credits,
-            recharge_url: 'https://roboparts.cc/credits',
-            upgrade_options: [
-                            ...Object.entries(PLANS).map(([tier, p]) => ({
-                tier: tier.charAt(0).toUpperCase() + tier.slice(1),
-                price: `$${p.price}`,
-                credits: p.credits,
-                url: 'https://roboparts.cc/credits',
-              })),
-            ],
-            message: 'Your free credits are exhausted. Recharge to unlock full data access.'
-          }), {
-            status: 402,
-            headers: {
-              'Content-Type': 'application/json',
-              'X-Credits-Remaining': '0',
-              'X-Upgrade-URL': UPGRADE_URL,
-              ...corsHeaders,
-            }
-          });
+          return new Response(
+            JSON.stringify({
+              error: 'Insufficient credits',
+              credits_remaining: user.credits,
+              required: cost,
+              credits_needed: cost - user.credits,
+              recharge_url: 'https://roboparts.cc/credits',
+              upgrade_options: [
+                ...Object.entries(PLANS).map(([tier, p]) => ({
+                  tier: tier.charAt(0).toUpperCase() + tier.slice(1),
+                  price: `$${p.price}`,
+                  credits: p.credits,
+                  url: 'https://roboparts.cc/credits',
+                })),
+              ],
+              message: 'Your free credits are exhausted. Recharge to unlock full data access.',
+            }),
+            {
+              status: 402,
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Credits-Remaining': '0',
+                'X-Upgrade-URL': UPGRADE_URL,
+                ...corsHeaders,
+              },
+            },
+          );
         }
       }
     }
@@ -272,7 +303,7 @@ async function applyPaywall(data, request, env, corsHeaders, rl) {
           'Cache-Control': 'no-store',
           'X-API-Tier': 'pro',
           ...corsHeaders,
-        }
+        },
       });
     }
   }
@@ -290,10 +321,12 @@ async function applyPaywall(data, request, env, corsHeaders, rl) {
       ...(parsed.meta || {}),
       total_returned: items.length,
       tier: 'free',
-      locked_fields_per_entity: PREMIUM_FIELDS.filter(k => (items[0] || {})[k] !== undefined).length,
+      locked_fields_per_entity: PREMIUM_FIELDS.filter((k) => (items[0] || {})[k] !== undefined)
+        .length,
       locked_fields_total: lockedTotal,
       upgrade_url: UPGRADE_URL,
-      message: 'Free preview: 核心规格可见，深度数据（价格/兼容性/置信度/来源/合规/国产化率）需升级 Pro。使用 ?key=YOUR_API_KEY 或 Authorization: Bearer YOUR_API_KEY 获取完整数据。'
+      message:
+        'Free preview: 核心规格可见，深度数据（价格/兼容性/置信度/来源/合规/国产化率）需升级 Pro。使用 ?key=YOUR_API_KEY 或 Authorization: Bearer YOUR_API_KEY 获取完整数据。',
     };
     body = { ...base, meta };
   }
@@ -306,7 +339,7 @@ async function applyPaywall(data, request, env, corsHeaders, rl) {
       'X-API-Tier': 'free',
       ...corsHeaders,
       ...rateLimitHeaders(rl),
-    }
+    },
   });
 }
 
@@ -317,9 +350,9 @@ async function validateLicense(key, env) {
       method: 'POST',
       headers: {
         'X-API-KEY': CREEM_API_KEY,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ key })
+      body: JSON.stringify({ key }),
     });
     const data = await resp.json();
     if (data.status === 'active' && PRO_PRODUCTS.includes(data.product_id)) {
@@ -330,9 +363,9 @@ async function validateLicense(key, env) {
       method: 'POST',
       headers: {
         'X-API-KEY': CREEM_API_KEY,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ key })
+      body: JSON.stringify({ key }),
     });
     if (searchResp.ok) {
       const searchData = await searchResp.json();
@@ -344,7 +377,7 @@ async function validateLicense(key, env) {
       }
     }
     return false;
-  } catch(e) {
+  } catch (e) {
     return false;
   }
 }

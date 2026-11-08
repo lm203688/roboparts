@@ -41,10 +41,15 @@ function loadDotEnvLocal() {
       if (!line || line.startsWith('#') || !line.includes('=')) continue;
       const i = line.indexOf('=');
       const k = line.slice(0, i).trim();
-      const v = line.slice(i + 1).trim().replace(/^["']|["']$/g, '');
+      const v = line
+        .slice(i + 1)
+        .trim()
+        .replace(/^["']|["']$/g, '');
       if (k && !(k in process.env)) process.env[k] = v;
     }
-  } catch { /* .env.local 不可读不应阻断部署 */ }
+  } catch {
+    /* .env.local 不可读不应阻断部署 */
+  }
 }
 loadDotEnvLocal();
 
@@ -86,7 +91,12 @@ function resolvePython() {
     'C:\\Users\\xing\\.workbuddy\\binaries\\python\\versions\\3.13.12\\python.exe',
   ].filter(Boolean);
   for (const c of cands) {
-    try { execSync(`"${c}" --version`, { stdio: 'ignore' }); return c; } catch { /* try next */ }
+    try {
+      execSync(`"${c}" --version`, { stdio: 'ignore' });
+      return c;
+    } catch {
+      /* try next */
+    }
   }
   return 'python3';
 }
@@ -102,7 +112,8 @@ const DERIVED_RE = /^(api\/[^/]+\.json|data\.js|roboparts-dataset-github\/.+)/;
 const TS_PAT = /\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?Z?)?/g;
 function diffIsTimestampOnly(p) {
   const out = execSync(`git diff --unified=0 -- "${p}"`, { cwd: ROOT, encoding: 'utf8' });
-  const rem = [], add = [];
+  const rem = [],
+    add = [];
   for (const ln of out.split('\n')) {
     if (ln.startsWith('---') || ln.startsWith('+++')) continue;
     if (ln.startsWith('-')) rem.push(ln.slice(1));
@@ -123,23 +134,30 @@ function preflight() {
   // 把它吃掉，导致 slice(3) 少切一位、首个文件路径被截成 "pi/actuators.json"，
   // 从而误判为源内容改动并拒绝部署（20260908 实测：api/actuators.json 字母序第一，必踩）。
   const raw = execSync('git status --porcelain', { cwd: ROOT, encoding: 'utf8' })
-    .replace(/\r/g, '').replace(/\n+$/, '');
+    .replace(/\r/g, '')
+    .replace(/\n+$/, '');
   const dirty = raw.trim() ? raw : '';
   if (dirty) {
     const paths = dirty.split('\n').map((l) => l.slice(3));
     const content = paths.filter((p) => !DERIVED_RE.test(p));
     if (content.length) {
-      console.error('[preflight] ❌ 工作树有未提交的**源内容**改动，拒绝部署。请先 commit/push：\n'
-        + content.map((p) => '   ' + p).join('\n'));
+      console.error(
+        '[preflight] ❌ 工作树有未提交的**源内容**改动，拒绝部署。请先 commit/push：\n' +
+          content.map((p) => '   ' + p).join('\n'),
+      );
       process.exit(1);
     }
     const nonTs = paths.filter((p) => !diffIsTimestampOnly(p));
     if (nonTs.length) {
-      console.error('[preflight] ❌ 派生产物有非时间戳改动（疑似手改生成物或真相源漂移），拒绝部署：\n'
-        + nonTs.map((p) => '   ' + p).join('\n'));
+      console.error(
+        '[preflight] ❌ 派生产物有非时间戳改动（疑似手改生成物或真相源漂移），拒绝部署：\n' +
+          nonTs.map((p) => '   ' + p).join('\n'),
+      );
       process.exit(1);
     }
-    console.log(`[preflight] 派生时间戳漂移 ${paths.length} 个文件（deploy 自身 regen 产物，放行）`);
+    console.log(
+      `[preflight] 派生时间戳漂移 ${paths.length} 个文件（deploy 自身 regen 产物，放行）`,
+    );
   }
   // 2) 本地内容数字必须与真相源一致（防止过期硬编码品类数被上线，重演 7c63b7e→RED→b6252cc）
   const py = resolvePython();
@@ -157,7 +175,7 @@ function ensureRunTrace() {
   let day = `${now.getFullYear()}${p2(now.getMonth() + 1)}${p2(now.getDate())}`;
   let hh = p2(now.getHours());
   const resDir = path.join(ROOT, 'ops', 'results');
-  if (!fs.existsSync(resDir)) return;          // 无 ops/results 则不介入
+  if (!fs.existsSync(resDir)) return; // 无 ops/results 则不介入
 
   // 【20260809-11 修：占位归属「运行轮次」而非「墙钟小时」】
   //
@@ -204,12 +222,21 @@ function ensureRunTrace() {
       console.warn(`   ⚠️ ${msg} —— 忽略，按墙钟小时归属`);
     } else {
       const slotAt = new Date(+m[1], +m[2] - 1, +m[3], +m[4], 0, 0);
-      const curAt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0);
+      const curAt = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        now.getHours(),
+        0,
+        0,
+      );
       const diffH = (curAt - slotAt) / 3600000;
       if (diffH < 0) {
         console.warn(`   ⚠️ ROBOPARTS_RUN_SLOT 指向未来（${slotRaw}）—— 忽略，按墙钟小时归属`);
       } else if (diffH > 6) {
-        console.warn(`   ⚠️ ROBOPARTS_RUN_SLOT 距今 ${diffH}h 超出 6h 上限（${slotRaw}）—— 忽略，按墙钟小时归属`);
+        console.warn(
+          `   ⚠️ ROBOPARTS_RUN_SLOT 距今 ${diffH}h 超出 6h 上限（${slotRaw}）—— 忽略，按墙钟小时归属`,
+        );
       } else if (diffH > 0) {
         day = `${m[1]}${m[2]}${m[3]}`;
         hh = m[4];
@@ -217,11 +244,13 @@ function ensureRunTrace() {
       }
     }
   } else if (actorIsFlywheel) {
-    console.warn('   ⚠️ 发起方为 flywheel 但未设 ROBOPARTS_RUN_SLOT —— 跨小时部署将自造孤儿占位（L1.73）');
+    console.warn(
+      '   ⚠️ 发起方为 flywheel 但未设 ROBOPARTS_RUN_SLOT —— 跨小时部署将自造孤儿占位（L1.73）',
+    );
   }
 
   const reportPath = path.join(resDir, `roboparts-${day}-${hh}.md`);
-  if (fs.existsSync(reportPath)) return;       // 本轮已自行报告，正常路径
+  if (fs.existsSync(reportPath)) return; // 本轮已自行报告，正常路径
 
   // ⚠️ Windows + shell:true 下，**含空格的单个参数会被拆成两个**。
   // 首版写 `--pretty=format:%h %s` 正是栽在这里：git 实际收到两个参数、输出为空，
@@ -246,7 +275,8 @@ function ensureRunTrace() {
   // 占位却言之凿凿说有一轮跑挂了，把后续补写者引向"为不存在的运行编一份报告"。
   // 故如实记录发起方；未标注时写"未标注"，绝不假定是飞轮。飞轮轮次应设
   // ROBOPARTS_ACTOR=flywheel 后再调用本脚本。
-  const actor = (process.env.ROBOPARTS_ACTOR || '').trim() || '未标注（非飞轮轮次或未设置环境变量）';
+  const actor =
+    (process.env.ROBOPARTS_ACTOR || '').trim() || '未标注（非飞轮轮次或未设置环境变量）';
 
   const body = [
     `# RoboParts 飞轮 · ${stamp}`,
@@ -263,7 +293,9 @@ function ensureRunTrace() {
     `- ⚠️ **本文件为自动占位，尚未有人填写**。已知痕迹：git HEAD = \`${head}\`。`,
     `- 部署发起方：${actor}`,
     ...(slotNote ? [`- 归属说明：${slotNote}`] : []),
-    ...(changed.length ? ['- 部署时工作区未提交改动：', ...changed.map((c) => `  - \`${c}\``)] : []),
+    ...(changed.length
+      ? ['- 部署时工作区未提交改动：', ...changed.map((c) => `  - \`${c}\``)]
+      : []),
     '',
     '## 提升',
     '',
@@ -280,11 +312,13 @@ function ensureRunTrace() {
   const sumPath = path.join(resDir, '_SUMMARY.md');
   if (fs.existsSync(sumPath)) {
     let cur = fs.readFileSync(sumPath, 'utf8');
-    if (!cur.endsWith('\n')) cur += '\n';       // 不以换行结尾必粘连（L1.21 第 2 条不变式）
+    if (!cur.endsWith('\n')) cur += '\n'; // 不以换行结尾必粘连（L1.21 第 2 条不变式）
     cur += `- ${stamp} | 修复:⚠️自动占位(运行未填写报告,HEAD=${sha || '未知'}) | 提升:占位 | 待办:待该轮或下一轮补写\n`;
     fs.writeFileSync(sumPath, cur, 'utf8');
   }
-  console.log(`   ⚠️ ${slotNote ? '本轮 slot' : '本小时'}无报告，已落自动占位: ops/results/roboparts-${day}-${hh}.md`);
+  console.log(
+    `   ⚠️ ${slotNote ? '本轮 slot' : '本小时'}无报告，已落自动占位: ops/results/roboparts-${day}-${hh}.md`,
+  );
 }
 
 // 0) 预部署护栏须先于留痕/部署：否则护栏失败时仍会写下占位痕迹，反而污染闸门前因
@@ -302,9 +336,14 @@ snapshotWorkingTree(ROOT);
 // 就必须和真相源同一时刻更新，否则它就是一份「看起来有出处」的过期快照。
 // 与 0c/0d 同理：无条件跑一次，比"记得跑"可靠；硬校验交给回归 L1.80。
 {
-  const ex = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'export_training_dataset.mjs')], { cwd: ROOT, encoding: 'utf8' });
+  const ex = spawnSync(
+    process.execPath,
+    [path.join(ROOT, 'scripts', 'export_training_dataset.mjs')],
+    { cwd: ROOT, encoding: 'utf8' },
+  );
   if (ex.status === 0) console.log('   ✅ 训练数据集已随真相源重导出');
-  else console.warn('   ⚠️ 训练数据集导出失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
+  else
+    console.warn('   ⚠️ 训练数据集导出失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
 }
 
 // 0b3) 真实需求信号回流（api/demand-signal.json）
@@ -319,8 +358,10 @@ snapshotWorkingTree(ROOT);
   // L1.93 一上线就抓到这个（mech 率 0.0078 vs 现算 0.0575）。
   // 现改为调用 scripts/reflow_demand_signal.mjs：复制快照后**按真相源重算现算块**，
   // 使「对外派生物的现算字段与真相源同一时刻」，且该口径只有一份实现（deploy 与手工共用）。
-  const ex = spawnSync(process.execPath,
-    [path.join(ROOT, 'scripts', 'reflow_demand_signal.mjs')], { cwd: ROOT, encoding: 'utf8' });
+  const ex = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'reflow_demand_signal.mjs')], {
+    cwd: ROOT,
+    encoding: 'utf8',
+  });
   const out = (ex.stdout || '').trim();
   if (out) console.log(out);
   if (ex.status !== 0) {
@@ -336,8 +377,12 @@ snapshotWorkingTree(ROOT);
 // 制造看似可用实则失真的发现结果（假绿）。这里把重建挂进部署链，与 0b/0c/0d 同机制。
 {
   const py = process.platform === 'win32' ? 'python' : 'python3';
-  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'regen_derived.py')], { cwd: ROOT, encoding: 'utf8' });
-  if (ex.status === 0) console.log('   ✅ 语义索引已随真相源重建（双流发现·语义流；索引覆盖当前全部实体）');
+  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'regen_derived.py')], {
+    cwd: ROOT,
+    encoding: 'utf8',
+  });
+  if (ex.status === 0)
+    console.log('   ✅ 语义索引已随真相源重建（双流发现·语义流；索引覆盖当前全部实体）');
   else console.warn('   ⚠️ 语义索引重建失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
 }
 
@@ -350,9 +395,17 @@ snapshotWorkingTree(ROOT);
 // 与 0b3/0b4 完全同源的病：派生物一旦对外，就必须和真相源同一时刻更新。
 {
   const py = process.platform === 'win32' ? 'python' : 'python3';
-  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'refresh_designations_in_use.py')], { cwd: ROOT, encoding: 'utf8' });
-  if (ex.status === 0) console.log('   ✅ designations_in_use 已随实体库现算刷新（在用编码的登记状态不再靠快照）');
-  else console.warn('   ⚠️ designations_in_use 刷新失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
+  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'refresh_designations_in_use.py')], {
+    cwd: ROOT,
+    encoding: 'utf8',
+  });
+  if (ex.status === 0)
+    console.log('   ✅ designations_in_use 已随实体库现算刷新（在用编码的登记状态不再靠快照）');
+  else
+    console.warn(
+      '   ⚠️ designations_in_use 刷新失败:',
+      (ex.stderr || ex.stdout || '').trim().slice(0, 300),
+    );
 }
 
 // 0b6) 应有特征推导层生成（api/derived_features.json）
@@ -362,9 +415,16 @@ snapshotWorkingTree(ROOT);
 // 再拿声明值来比。本层同时机械复算登记表手写的 is_canonical_iso 与 note 断言。
 {
   const py = process.platform === 'win32' ? 'python' : 'python3';
-  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'build_derived_features.py')], { cwd: ROOT, encoding: 'utf8' });
+  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'build_derived_features.py')], {
+    cwd: ROOT,
+    encoding: 'utf8',
+  });
   if (ex.status === 0) console.log('   ✅ 应有特征推导层已重建（api/derived_features.json）');
-  else console.warn('   ⚠️ 应有特征推导层生成失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
+  else
+    console.warn(
+      '   ⚠️ 应有特征推导层生成失败:',
+      (ex.stderr || ex.stdout || '').trim().slice(0, 300),
+    );
 }
 
 // 0b7) 标准自校验重建（api/standard-audit.json）
@@ -376,9 +436,14 @@ snapshotWorkingTree(ROOT);
 // 而真正的 entries 是一个列表，永远读不到 → registry_gaps 恒为 []，缺口检测从未生效。
 {
   const py = process.platform === 'win32' ? 'python' : 'python3';
-  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'build_standard_audit.py')], { cwd: ROOT, encoding: 'utf8' });
-  if (ex.status === 0) console.log('   ✅ 标准自校验已重建（登记表 ↔ 实体声明交叉校验；冲突数不再靠快照）');
-  else console.warn('   ⚠️ 标准自校验重建失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
+  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'build_standard_audit.py')], {
+    cwd: ROOT,
+    encoding: 'utf8',
+  });
+  if (ex.status === 0)
+    console.log('   ✅ 标准自校验已重建（登记表 ↔ 实体声明交叉校验；冲突数不再靠快照）');
+  else
+    console.warn('   ⚠️ 标准自校验重建失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
 }
 
 // 0b8) 外部情报 feed 刷新（api/external_signals.json，来源：SwarmLabs 公开 API）
@@ -393,9 +458,17 @@ snapshotWorkingTree(ROOT);
 //   - 上游失败不掩盖：signals 里对应块写 error+http_status+request_id，L1.96 会看到
 {
   const py = process.platform === 'win32' ? 'python' : 'python3';
-  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'build_external_signals.py')], { cwd: ROOT, encoding: 'utf8' });
-  if (ex.status === 0) console.log('   ✅ 外部情报 feed 已刷新（SwarmLabs → RoboParts，跨项目独立，HTTPS-only）');
-  else console.warn('   ⚠️ 外部情报 feed 刷新失败:', (ex.stderr || ex.stdout || '').trim().slice(0, 300));
+  const ex = spawnSync(py, [path.join(ROOT, 'scripts', 'build_external_signals.py')], {
+    cwd: ROOT,
+    encoding: 'utf8',
+  });
+  if (ex.status === 0)
+    console.log('   ✅ 外部情报 feed 已刷新（SwarmLabs → RoboParts，跨项目独立，HTTPS-only）');
+  else
+    console.warn(
+      '   ⚠️ 外部情报 feed 刷新失败:',
+      (ex.stderr || ex.stdout || '').trim().slice(0, 300),
+    );
 }
 
 // 0c) 机读接入声明兜底注入（meta.access）
@@ -405,9 +478,16 @@ snapshotWorkingTree(ROOT);
 // 直到回归 L1.14 判红才被发现。这里把那句话变成真的：部署前无条件跑一次（幂等）。
 {
   const py = process.platform === 'win32' ? 'python' : 'python3';
-  const ij = spawnSync(py, [path.join(ROOT, 'scripts', 'inject_api_access.py')], { cwd: ROOT, encoding: 'utf8' });
+  const ij = spawnSync(py, [path.join(ROOT, 'scripts', 'inject_api_access.py')], {
+    cwd: ROOT,
+    encoding: 'utf8',
+  });
   if (ij.status === 0) console.log('   ✅ meta.access 注入检查通过（对外 JSON 均带领 key 入口）');
-  else console.warn('   ⚠️ meta.access 注入失败:', (ij.stderr || ij.stdout || '').trim().slice(0, 300));
+  else
+    console.warn(
+      '   ⚠️ meta.access 注入失败:',
+      (ij.stderr || ij.stdout || '').trim().slice(0, 300),
+    );
 }
 
 // 0d) 接入区块兜底注入（RP-ONBOARDING，覆盖 index + 2 落地页 + 全部 articles/*.html）
@@ -417,7 +497,10 @@ snapshotWorkingTree(ROOT);
 // 注入器幂等（先剥离旧块再写入），无条件跑一次比"记得跑"可靠。
 {
   const py = process.platform === 'win32' ? 'python' : 'python3';
-  const ob = spawnSync(py, [path.join(ROOT, 'scripts', 'inject_onboarding.py')], { cwd: ROOT, encoding: 'utf8' });
+  const ob = spawnSync(py, [path.join(ROOT, 'scripts', 'inject_onboarding.py')], {
+    cwd: ROOT,
+    encoding: 'utf8',
+  });
   if (ob.status === 0) console.log('   ✅ 接入区块注入检查通过（页面数字与真值同源）');
   else console.warn('   ⚠️ 接入区块注入失败:', (ob.stderr || ob.stdout || '').trim().slice(0, 300));
 }
@@ -431,25 +514,54 @@ snapshotWorkingTree(ROOT);
 {
   try {
     const outPath = path.join(ROOT, 'api', 'deployment.json');
-    const gitHead = execSync('git rev-parse --short HEAD', { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim();
-    const gitFull = execSync('git rev-parse HEAD', { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim();
-    const gitBranch = execSync('git rev-parse --abbrev-ref HEAD', { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim();
-    const gitTime = execSync('git log -1 --format=%cI', { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim();
+    const gitHead = execSync('git rev-parse --short HEAD', {
+      cwd: ROOT,
+      encoding: 'utf8',
+      stdio: 'pipe',
+    }).trim();
+    const gitFull = execSync('git rev-parse HEAD', {
+      cwd: ROOT,
+      encoding: 'utf8',
+      stdio: 'pipe',
+    }).trim();
+    const gitBranch = execSync('git rev-parse --abbrev-ref HEAD', {
+      cwd: ROOT,
+      encoding: 'utf8',
+      stdio: 'pipe',
+    }).trim();
+    const gitTime = execSync('git log -1 --format=%cI', {
+      cwd: ROOT,
+      encoding: 'utf8',
+      stdio: 'pipe',
+    }).trim();
     const nodeVersion = process.versions.node;
     let pyVersion = 'unknown';
     try {
-      pyVersion = execSync(process.platform === 'win32' ? 'python --version' : 'python3 --version', { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim().replace(/^Python /, '');
-    } catch { /* Python 不可用不阻塞部署 */ }
+      pyVersion = execSync(
+        process.platform === 'win32' ? 'python --version' : 'python3 --version',
+        { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' },
+      )
+        .trim()
+        .replace(/^Python /, '');
+    } catch {
+      /* Python 不可用不阻塞部署 */
+    }
     // 功能清单：把当前 api/ 下对外端点数与实体总数记入指纹，让"版本 A 有哪些能力"可查
     let totalEntities = null;
     try {
       const dj = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'data.json'), 'utf8'));
       totalEntities = dj && dj.meta && dj.meta.total_entities;
-    } catch { /* 数据文件可能未生成 */ }
-    const features = fs.readdirSync(path.join(ROOT, 'api')).filter(f => /\.json$/.test(f)).sort();
+    } catch {
+      /* 数据文件可能未生成 */
+    }
+    const features = fs
+      .readdirSync(path.join(ROOT, 'api'))
+      .filter((f) => /\.json$/.test(f))
+      .sort();
     const fp = {
       _schema: 'roboparts.deployment-fingerprint/v1',
-      _comment: 'P0-4 部署指纹静态文件。scripts/deploy.mjs 每次部署前覆写。functions/api/deployment.js 读取并合并 Cloudflare Pages 环境注入的 commit。',
+      _comment:
+        'P0-4 部署指纹静态文件。scripts/deploy.mjs 每次部署前覆写。functions/api/deployment.js 读取并合并 Cloudflare Pages 环境注入的 commit。',
       commit: gitFull,
       commitShort: gitHead,
       builtAt: new Date().toISOString(),
@@ -463,7 +575,9 @@ snapshotWorkingTree(ROOT);
       totalEntities,
     };
     fs.writeFileSync(outPath, JSON.stringify(fp, null, 2) + '\n', 'utf8');
-    console.log(`   ✅ 部署指纹已刷新: api/deployment.json (commit=${gitHead}, entities=${totalEntities || '?'})`);
+    console.log(
+      `   ✅ 部署指纹已刷新: api/deployment.json (commit=${gitHead}, entities=${totalEntities || '?'})`,
+    );
   } catch (e) {
     console.warn('   ⚠️ 部署指纹刷新失败（非阻塞）:', (e.message || '').slice(0, 200));
   }
@@ -478,15 +592,27 @@ snapshotWorkingTree(ROOT);
     execSync(`git tag -f ${tag}`, { cwd: ROOT, stdio: 'pipe' });
     console.log('   ✅ 部署回滚锚点:', tag);
     try {
-      const tags = execSync('git tag -l "deploy-*" --sort=-creatordate', { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim().split('\n').filter(Boolean);
+      const tags = execSync('git tag -l "deploy-*" --sort=-creatordate', {
+        cwd: ROOT,
+        encoding: 'utf8',
+        stdio: 'pipe',
+      })
+        .trim()
+        .split('\n')
+        .filter(Boolean);
       if (tags.length > 40) {
         const toDelete = tags.slice(40);
         for (const t of toDelete) execSync(`git tag -d ${t}`, { cwd: ROOT, stdio: 'ignore' });
         console.log(`   (清理 ${toDelete.length} 个过期 deploy tag)`);
       }
-    } catch { /* 清理失败不影响主流程 */ }
+    } catch {
+      /* 清理失败不影响主流程 */
+    }
   } catch (e) {
-    console.log('   ⚠️ 部署回滚锚点创建失败（非阻塞，如不在 git 仓库会跳过）:', e.message.slice(0, 200));
+    console.log(
+      '   ⚠️ 部署回滚锚点创建失败（非阻塞，如不在 git 仓库会跳过）:',
+      e.message.slice(0, 200),
+    );
   }
 }
 
@@ -504,8 +630,14 @@ if (WRANGLER_BIN) {
 } else {
   // 【20260912】npx 路径本机实测会无限挂死（拉包/缓存锁，上传期 CPU=0 冻结）。
   // 优先用全局安装的 wrangler.js，直接由 node 执行，绕开 npx。
-  const globalWr = path.join(process.env.APPDATA || '', 'npm', 'node_modules',
-    'wrangler', 'bin', 'wrangler.js');
+  const globalWr = path.join(
+    process.env.APPDATA || '',
+    'npm',
+    'node_modules',
+    'wrangler',
+    'bin',
+    'wrangler.js',
+  );
   if (process.env.APPDATA && fs.existsSync(globalWr)) {
     wranglerCmd = process.execPath;
     wranglerArgs = [globalWr, 'pages', 'deploy', '.', '--project-name=' + PROJECT];
@@ -516,7 +648,10 @@ if (WRANGLER_BIN) {
   }
 }
 const dep = spawnSync(wranglerCmd, wranglerArgs, {
-  stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8', cwd: ROOT, shell: true,
+  stdio: ['ignore', 'pipe', 'pipe'],
+  encoding: 'utf8',
+  cwd: ROOT,
+  shell: true,
   // 【20260912】防无限挂死：wrangler 上传阶段曾在 08-18（18 分钟）与本轮（>15 分钟，
   // CPU=0 冻结）两次静默卡住。给硬超时，超时即失败退出而非悬停。
   timeout: 8 * 60 * 1000,
@@ -555,30 +690,40 @@ async function verify() {
     try {
       const r = await fetchT(TARGET + '/' + p, { headers: SELFTEST_HEADERS });
       if (r.status !== 404) errs.push(`私有路径未拦截: /${p} 返回 ${r.status}（应为 404）`);
-    } catch (e) { errs.push(`校验请求异常 /${p}: ${e.message}`); }
+    } catch (e) {
+      errs.push(`校验请求异常 /${p}: ${e.message}`);
+    }
   }
   let localTotal = 0;
   try {
-    const meta = JSON.parse((await import('node:fs')).readFileSync(path.join(ROOT, 'api/entities.json'), 'utf8')).meta;
+    const meta = JSON.parse(
+      (await import('node:fs')).readFileSync(path.join(ROOT, 'api/entities.json'), 'utf8'),
+    ).meta;
     localTotal = meta.total_entities;
-  } catch (e) { errs.push('读取本地 meta 失败: ' + e.message); }
+  } catch (e) {
+    errs.push('读取本地 meta 失败: ' + e.message);
+  }
   // 【N03 20260805 加固】原校验仅比 meta.total_entities，属"自洽即通过"的弱口径：
   // 当线上与本地同为旧快照时也会全绿，曾掩盖 api/data.json 漂移 3 天（493/65类）。
   // 现增加 ID+category 内容指纹交叉比对，覆盖"总数不变、内容变更"的漂移。
   try {
     const fs = await import('node:fs');
-    const src = JSON.parse(fs.readFileSync(path.join(ROOT, 'api/entities.json'), 'utf8')).entities || [];
+    const src =
+      JSON.parse(fs.readFileSync(path.join(ROOT, 'api/entities.json'), 'utf8')).entities || [];
     const d = await (await fetchT(TARGET + '/api/data.json', { headers: SELFTEST_HEADERS })).json();
     const onlineArr = d?.data || d?.entities || [];
     const online = d?.meta?.total_entities;
     if (online !== localTotal) errs.push(`数据不一致: 线上 ${online} != 本地 ${localTotal}`);
-    if (onlineArr.length !== src.length) errs.push(`实体数组长度不一致: 线上 ${onlineArr.length} != 本地 ${src.length}`);
+    if (onlineArr.length !== src.length)
+      errs.push(`实体数组长度不一致: 线上 ${onlineArr.length} != 本地 ${src.length}`);
     const fp = (a) => new Set(a.map((e) => `${e.id}|${e.category}`));
     const [fsrc, fon] = [fp(src), fp(onlineArr)];
     const missing = [...fsrc].filter((k) => !fon.has(k));
     const extra = [...fon].filter((k) => !fsrc.has(k));
     if (missing.length || extra.length) {
-      errs.push(`内容指纹不一致: 线上缺 ${missing.length} 条 / 多 ${extra.length} 条（示例: ${(missing[0] || extra[0])}）`);
+      errs.push(
+        `内容指纹不一致: 线上缺 ${missing.length} 条 / 多 ${extra.length} 条（示例: ${missing[0] || extra[0]}）`,
+      );
     }
     // 【N03 20260805-r2 加固】ID+category 指纹仍是弱口径：只覆盖"实体增删 / 类目变更"，
     // 对"实体集合与类目都不变、仅字段内容变化"的漂移完全失明。
@@ -590,7 +735,12 @@ async function verify() {
     const stable = (v) => {
       if (Array.isArray(v)) return v.map(stable);
       if (v && typeof v === 'object') {
-        return Object.keys(v).sort().reduce((o, k) => { o[k] = stable(v[k]); return o; }, {});
+        return Object.keys(v)
+          .sort()
+          .reduce((o, k) => {
+            o[k] = stable(v[k]);
+            return o;
+          }, {});
       }
       return v;
     };
@@ -598,21 +748,56 @@ async function verify() {
     const [dsrc, don] = [deepFp(src), deepFp(onlineArr)];
     const fieldDrift = [...dsrc.keys()].filter((id) => don.has(id) && don.get(id) !== dsrc.get(id));
     if (fieldDrift.length) {
-      errs.push(`字段级内容漂移: ${fieldDrift.length} 条实体线上与真相源字段不一致（示例: ${fieldDrift.slice(0, 3).join(', ')}）`);
+      errs.push(
+        `字段级内容漂移: ${fieldDrift.length} 条实体线上与真相源字段不一致（示例: ${fieldDrift.slice(0, 3).join(', ')}）`,
+      );
     }
-  } catch (e) { errs.push('读取线上 /api/data.json 失败: ' + e.message); }
-  const pages = ['/', '/selection.html', '/designer.html', '/suppliers.html', '/pricing.html', '/bom-manager.html', '/urdf-library.html', '/data-hub.html', '/bom-checker.html', '/oss.html', '/adapter-generator', '/copilot', '/spec-declare', '/agent-architecture', '/build-planner', '/geo-dashboard', '/mcp-guide', '/skills/manifest.json', '/waitlist.html', '/scoreboard.html', '/embed/lookup.html'];
+  } catch (e) {
+    errs.push('读取线上 /api/data.json 失败: ' + e.message);
+  }
+  const pages = [
+    '/',
+    '/selection.html',
+    '/designer.html',
+    '/suppliers.html',
+    '/pricing.html',
+    '/bom-manager.html',
+    '/urdf-library.html',
+    '/data-hub.html',
+    '/bom-checker.html',
+    '/oss.html',
+    '/adapter-generator',
+    '/copilot',
+    '/spec-declare',
+    '/agent-architecture',
+    '/build-planner',
+    '/geo-dashboard',
+    '/mcp-guide',
+    '/skills/manifest.json',
+    '/waitlist.html',
+    '/scoreboard.html',
+    '/embed/lookup.html',
+  ];
   // OSS 数据层一致性（CL1 飞轮产物）
   try {
-    const localOss = JSON.parse((await import('node:fs')).readFileSync(path.join(ROOT, 'api/oss_components.json'), 'utf8')).meta.total_entities;
-    const onlineOss = (await (await fetchT(TARGET + '/api/oss?stats=1', { headers: SELFTEST_HEADERS })).json()).total;
-    if (onlineOss !== localOss) errs.push(`OSS 数据层不一致: 线上 ${onlineOss} != 本地 ${localOss}`);
-  } catch (e) { errs.push('读取 OSS 数据层失败: ' + e.message); }
+    const localOss = JSON.parse(
+      (await import('node:fs')).readFileSync(path.join(ROOT, 'api/oss_components.json'), 'utf8'),
+    ).meta.total_entities;
+    const onlineOss = (
+      await (await fetchT(TARGET + '/api/oss?stats=1', { headers: SELFTEST_HEADERS })).json()
+    ).total;
+    if (onlineOss !== localOss)
+      errs.push(`OSS 数据层不一致: 线上 ${onlineOss} != 本地 ${localOss}`);
+  } catch (e) {
+    errs.push('读取 OSS 数据层失败: ' + e.message);
+  }
   for (const pg of pages) {
     try {
       const r = await fetchT(TARGET + pg, { headers: SELFTEST_HEADERS });
       if (r.status !== 200) errs.push(`页面异常 ${pg}: ${r.status}`);
-    } catch (e) { errs.push(`页面请求异常 ${pg}: ${e.message}`); }
+    } catch (e) {
+      errs.push(`页面请求异常 ${pg}: ${e.message}`);
+    }
   }
   /**
    * 【20260807-16】对外公布的入口必须扛得住 HEAD 探活。
@@ -622,7 +807,16 @@ async function verify() {
    * 的对外通道。等于一边买曝光，一边对来探活的人说"我不在"。
    * 校验只查"不是 404"（405/200 都算活着），避免把方法语义写死。
    */
-  for (const ep of ['/mcp', '/api/register', '/api/validate', '/api/data.json', '/api/waitlist', '/api/badge', '/api/recommend', '/api/demand-signal']) {
+  for (const ep of [
+    '/mcp',
+    '/api/register',
+    '/api/validate',
+    '/api/data.json',
+    '/api/waitlist',
+    '/api/badge',
+    '/api/recommend',
+    '/api/demand-signal',
+  ]) {
     try {
       const r = await fetchT(TARGET + ep, { method: 'HEAD', headers: SELFTEST_HEADERS });
       // 【20260807-17 收紧】原先 HEAD 拿到 404 会回退 GET，只要 GET 通就算存活。
@@ -630,7 +824,9 @@ async function verify() {
       // 部署校验却因为 GET 能通而始终报绿，问题被掩盖了两轮。
       // 目录站发的就是 HEAD，就只认 HEAD 的结果 —— 校验方式必须和真实探活方式一致。
       if (r.status === 404) errs.push(`HEAD 探活 404（目录站会判定为下线）: ${ep}`);
-    } catch (e) { errs.push(`探活异常 ${ep}: ${e.message}`); }
+    } catch (e) {
+      errs.push(`探活异常 ${ep}: ${e.message}`);
+    }
   }
   return errs;
 }
@@ -644,7 +840,10 @@ for (let attempt = 1; attempt <= BACKOFF_MS.length + 1; attempt++) {
   errs = await verify();
   if (errs.length === 0) break;
   const wait = BACKOFF_MS[attempt - 1];
-  if (wait) { console.log(`   第 ${attempt} 次校验未通过，${wait / 1000}s 后重试（等待 CDN 别名传播）...`); await new Promise((r) => setTimeout(r, wait)); }
+  if (wait) {
+    console.log(`   第 ${attempt} 次校验未通过，${wait / 1000}s 后重试（等待 CDN 别名传播）...`);
+    await new Promise((r) => setTimeout(r, wait));
+  }
 }
 if (errs.length) {
   console.error('❌ 校验未通过（已退避重试 5 次 / 约 107s）:');
@@ -660,10 +859,16 @@ console.log('[4/4] 触发推广脉冲（IndexNow / sitemap ping / 目录登记�
 try {
   const promoteScript = fileURLToPath(new URL('./promote.mjs', import.meta.url));
   const root = fileURLToPath(new URL('..', import.meta.url));
-  const pr = spawnSync(process.execPath, [promoteScript], { cwd: root, encoding: 'utf8', timeout: 60000 });
+  const pr = spawnSync(process.execPath, [promoteScript], {
+    cwd: root,
+    encoding: 'utf8',
+    timeout: 60000,
+  });
   if (pr.stdout) process.stdout.write(pr.stdout);
   if (pr.status !== 0) console.log('   ⚠️ 推广脉冲非零退出（不影响部署）');
-} catch (e) { console.log('   ⚠️ 推广脉冲异常（不影响部署）: ' + e.message); }
+} catch (e) {
+  console.log('   ⚠️ 推广脉冲异常（不影响部署）: ' + e.message);
+}
 
 // 5) 清理派生文件时间戳漂移（2026-10-18 修复无限循环）
 // 根因：preflight 后的 regen_derived.py / inject_*.py / export_training_dataset.mjs
@@ -679,13 +884,15 @@ try {
   try {
     // 只 reset 已知的派生文件模式（api/*.json + data.js），不动其他文件
     const tsReset = execSync('git status --porcelain', { cwd: ROOT, encoding: 'utf8' })
-      .replace(/\r/g, '').trim().split('\n')
-      .filter(l => l && l.startsWith(' M ') || l.startsWith('M  '))
-      .map(l => l.slice(3))
-      .filter(p => DERIVED_RE.test(p));
+      .replace(/\r/g, '')
+      .trim()
+      .split('\n')
+      .filter((l) => (l && l.startsWith(' M ')) || l.startsWith('M  '))
+      .map((l) => l.slice(3))
+      .filter((p) => DERIVED_RE.test(p));
 
     if (tsReset.length) {
-      const resetCmd = `git checkout -- ${tsReset.map(p => `"${p}"`).join(' ')}`;
+      const resetCmd = `git checkout -- ${tsReset.map((p) => `"${p}"`).join(' ')}`;
       execSync(resetCmd, { cwd: ROOT, stdio: 'ignore' });
       console.log(`   ✅ 已重置 ${tsReset.length} 个派生文件的时间戳漂移`);
     } else {
@@ -695,4 +902,3 @@ try {
     console.log('   ⚠️ 时间戳清理失败（非阻塞）:', e.message.slice(0, 200));
   }
 }
-

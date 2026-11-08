@@ -37,9 +37,9 @@ jobs:
         uses: lm203688/roboparts/.github/actions/roboparts-compat-check@main
         with:
           mode: bom
-          bom-path: bom.json          # ← 改成你的 BOM 路径
-          fail-on-incompatible: true  # CI 阻断
-          comment-on-pr: true         # 自动评论 PR
+          bom-path: bom.json # ← 改成你的 BOM 路径
+          fail-on-incompatible: true # CI 阻断
+          comment-on-pr: true # 自动评论 PR
 
   # 模式 2：URDF 结构校验
   urdf-lint:
@@ -51,7 +51,7 @@ jobs:
         uses: lm203688/roboparts/.github/actions/roboparts-compat-check@main
         with:
           mode: urdf
-          urdf-path: urdf/robot.urdf  # ← 改成你的 URDF 路径
+          urdf-path: urdf/robot.urdf # ← 改成你的 URDF 路径
 
   # 模式 3：共装判定（"能不能同时装两个"）
   comount:
@@ -64,6 +64,6 @@ jobs:
         uses: lm203688/roboparts/.github/actions/roboparts-compat-check@main
         with:
           mode: compose
-          host-id: HUB-030    # UR3e
-          part-a: ACT-028     # ← 换你要查的器件
+          host-id: HUB-030 # UR3e
+          part-a: ACT-028 # ← 换你要查的器件
           part-b: SENS-047

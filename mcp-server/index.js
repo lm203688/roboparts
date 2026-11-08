@@ -2,7 +2,7 @@
 
 /**
  * RoboParts MCP Server
- * 
+ *
  * 基于 Model Context Protocol (MCP) 的机器人零部件数据查询服务
  * 允许 AI Agent 通过标准化协议查询机器人零部件数据
  */
@@ -18,9 +18,18 @@ import { fileURLToPath } from 'url';
 import { dialectManager } from './dialects.js';
 // 【2026-10-27 P2-6】Trace 环形缓冲 + 长任务句柄 + 协议版本协商辅助
 import {
-  recordTrace, exportTraces, replayTrace, redact,
-  startLongTask, getTaskStatus, cancelTask, listTasks,
-  PROTOCOL_VERSIONS, CAPABILITIES_BY_VERSION, toolAvailableAt, filterToolsByVersion,
+  recordTrace,
+  exportTraces,
+  replayTrace,
+  redact,
+  startLongTask,
+  getTaskStatus,
+  cancelTask,
+  listTasks,
+  PROTOCOL_VERSIONS,
+  CAPABILITIES_BY_VERSION,
+  toolAvailableAt,
+  filterToolsByVersion,
 } from './trace.js';
 
 // ============================================================
@@ -43,8 +52,10 @@ const API_DIR = join(__dirname, '..', 'api');
 // 这正是当前唯一缺失的「AI 通道是否真被使用」的可测量信号。
 // ------------------------------------------------------------
 const PKG_VERSION = '1.2.0';
-const REMOTE_BASE = (process.env.ROBOPARTS_API_BASE || 'https://roboparts.cc/api')
-  .replace(/\/+$/, '');
+const REMOTE_BASE = (process.env.ROBOPARTS_API_BASE || 'https://roboparts.cc/api').replace(
+  /\/+$/,
+  '',
+);
 const USER_AGENT = `roboparts-mcp-server/${PKG_VERSION} (+https://roboparts.cc; mcp)`;
 const FETCH_TIMEOUT_MS = 15000;
 
@@ -76,27 +87,27 @@ const dataCache = new Map();
 // 所以本次除了补齐，另加 scripts/verify_mcp_coverage.py 做机器对账，
 // 让覆盖不全变成红灯而不是静默。真相源：api/entities.json 的 meta.categories。
 const FILE_MAP = {
-  'actuators': 'actuators.json',
-  'sensors': 'sensors.json',
-  'chips': 'chips.json',
-  'protocols': 'protocols.json',
-  'platforms': 'platforms.json',
-  'llms': 'llms.json',
-  'interfaces': 'interfaces.json',
-  'flexible_actuators': 'flexible_actuators.json',
-  'robot_ai_models': 'robot_ai_models.json',
-  'data_acquisition': 'data_acquisition.json',
-  'connectors': 'connectors.json',
+  actuators: 'actuators.json',
+  sensors: 'sensors.json',
+  chips: 'chips.json',
+  protocols: 'protocols.json',
+  platforms: 'platforms.json',
+  llms: 'llms.json',
+  interfaces: 'interfaces.json',
+  flexible_actuators: 'flexible_actuators.json',
+  robot_ai_models: 'robot_ai_models.json',
+  data_acquisition: 'data_acquisition.json',
+  connectors: 'connectors.json',
   // --- 20260918 补齐：以下 9 个品类此前完全不可检索 ---
-  'grippers': 'grippers.json',
-  'reducers': 'reducers.json',
-  'bionic_mechanisms': 'bionic_mechanisms.json',
-  'controllers': 'controllers.json',
-  'structural': 'structural.json',
-  'cables': 'cables.json',
-  'power': 'power.json',
-  'pcb': 'pcb.json',
-  'integrated_joints': 'integrated_joints.json'
+  grippers: 'grippers.json',
+  reducers: 'reducers.json',
+  bionic_mechanisms: 'bionic_mechanisms.json',
+  controllers: 'controllers.json',
+  structural: 'structural.json',
+  cables: 'cables.json',
+  power: 'power.json',
+  pcb: 'pcb.json',
+  integrated_joints: 'integrated_joints.json',
 };
 
 // 搜索/筛选的默认品类集合：直接从 FILE_MAP 派生，新增品类不再漏同步。
@@ -120,8 +131,8 @@ async function fetchOnce(url) {
   const timer = setTimeout(() => ctl.abort(), FETCH_TIMEOUT_MS);
   try {
     const res = await fetch(url, {
-      headers: { 'User-Agent': USER_AGENT, 'Accept': 'application/json' },
-      signal: ctl.signal
+      headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' },
+      signal: ctl.signal,
     });
     if (!res.ok) {
       const err = new Error(`HTTP ${res.status}`);
@@ -149,13 +160,13 @@ async function fetchJSON(filename) {
         // 静默兜底是假绿温床（环境要点 #19）：重试过程必须可见。
         console.error(
           `[RoboParts MCP] ${filename} 第 ${attempt}/${FETCH_RETRIES} 次拉取失败` +
-          `（${e.message}），退避重试中…`
+            `（${e.message}），退避重试中…`,
         );
         // 指数退避 + 随机抖动：11 路并发同时失败时，确定性退避会让三路
         // 在同一毫秒醒来再次互撞（惊群）。±50% 抖动打散重试时刻（审查采纳 P0-4）。
         const backoff = RETRY_BASE_MS * Math.pow(2, attempt - 1);
         const jittered = Math.round(backoff * (0.5 + Math.random()));
-        await new Promise(r => setTimeout(r, jittered));
+        await new Promise((r) => setTimeout(r, jittered));
       }
     }
   }
@@ -166,9 +177,9 @@ async function fetchJSON(filename) {
   } catch (localErr) {
     throw new Error(
       `无法加载 ${filename}：远程 ${url} 连续 ${FETCH_RETRIES} 次失败` +
-      `（末次：${remoteErr && remoteErr.message}），` +
-      `本地回退亦不可用（${localErr.message}）。` +
-      `若网络受限，可设置环境变量 ROBOPARTS_API_BASE 指向可达的镜像地址。`
+        `（末次：${remoteErr && remoteErr.message}），` +
+        `本地回退亦不可用（${localErr.message}）。` +
+        `若网络受限，可设置环境变量 ROBOPARTS_API_BASE 指向可达的镜像地址。`,
     );
   }
 }
@@ -182,13 +193,14 @@ async function preloadAll() {
     const parsed = await fetchJSON(filename);
     dataCache.set(cat, parsed.data || []);
   });
-  jobs.push((async () => {
-    dataCache.set('__compat__', await fetchJSON('compatibility_matrix.json'));
-  })());
+  jobs.push(
+    (async () => {
+      dataCache.set('__compat__', await fetchJSON('compatibility_matrix.json'));
+    })(),
+  );
   await Promise.all(jobs);
 
-  const total = Object.keys(FILE_MAP)
-    .reduce((n, c) => n + (dataCache.get(c) || []).length, 0);
+  const total = Object.keys(FILE_MAP).reduce((n, c) => n + (dataCache.get(c) || []).length, 0);
   if (total === 0) {
     throw new Error('预载完成但实体总数为 0，判定为数据源异常，拒绝以空库启动。');
   }
@@ -224,7 +236,7 @@ function fmtSpec(v) {
   // 对象直接透传会把 {status,reason,registry_ref,...} 整块倒进 key_specs，
   // 对调用方是噪声而非规格；这里统一收敛为 'N/A'，需要结构化的走专用字段。
   if (v !== null && typeof v === 'object') return 'N/A';
-  return (v === undefined || v === null || v === '') ? 'N/A' : v;
+  return v === undefined || v === null || v === '' ? 'N/A' : v;
 }
 
 /**
@@ -257,13 +269,13 @@ function getKeySpecs(item, category) {
         speed: item.speed || 'N/A',
         voltage: item.voltage || 'N/A',
         protocol: item.protocol || 'N/A',
-        interface: item.interface || 'N/A'
+        interface: item.interface || 'N/A',
       };
     case 'sensors':
       return {
         type: item.type || 'N/A',
         range: item.range || 'N/A',
-        description: (item.description || '').substring(0, 120)
+        description: (item.description || '').substring(0, 120),
       };
     case 'chips':
       return {
@@ -272,7 +284,7 @@ function getKeySpecs(item, category) {
         gpu: item.gpu || 'N/A',
         ai_perf: item.ai_perf || 'N/A',
         tdp: item.tdp || 'N/A',
-        memory: item.memory || 'N/A'
+        memory: item.memory || 'N/A',
       };
     case 'protocols':
       return {
@@ -280,14 +292,14 @@ function getKeySpecs(item, category) {
         speed: item.speed || 'N/A',
         latency: item.latency || 'N/A',
         determinism: item.determinism || 'N/A',
-        max_nodes: item.max_nodes || 'N/A'
+        max_nodes: item.max_nodes || 'N/A',
       };
     case 'platforms':
       return {
         type: item.type || 'N/A',
         manufacturer: item.manufacturer || 'N/A',
         application: item.application || 'N/A',
-        description: (item.description || '').substring(0, 120)
+        description: (item.description || '').substring(0, 120),
       };
     case 'llms':
       return {
@@ -295,14 +307,14 @@ function getKeySpecs(item, category) {
         parameters: item.parameters || 'N/A',
         input: item.input || 'N/A',
         output: item.output || 'N/A',
-        embodied_ai: triSpec(item.embodied_ai)
+        embodied_ai: triSpec(item.embodied_ai),
       };
     case 'interfaces':
       return {
         type: item.type || 'N/A',
         speed: item.speed || 'N/A',
         power: item.power || 'N/A',
-        connector: item.connector || 'N/A'
+        connector: item.connector || 'N/A',
       };
     // 【20260809-07】connectors 新类目。连接器的关键规格既不是扭矩也不是算力，
     // 而是「载流 / 速率 / 走线开口 / 对接方向 / 形态」—— 套用别的品类字段等于一律 N/A。
@@ -316,8 +328,8 @@ function getKeySpecs(item, category) {
         routing_opening: item.routing_opening || 'N/A',
         mating_orientations: Array.isArray(item.mating_orientations)
           ? item.mating_orientations.join(' / ')
-          : (item.mating_orientations || 'N/A'),
-        form_factor: item.form_factor || 'N/A'
+          : item.mating_orientations || 'N/A',
+        form_factor: item.form_factor || 'N/A',
       };
     // 【20260806-20】以下三类此前落到 default 返回 {}，共 108/688 条（15.7%）实体
     // 在 MCP 响应里 key_specs 恒为空对象 —— 对调用方而言等同「这条没有任何规格」。
@@ -329,20 +341,20 @@ function getKeySpecs(item, category) {
         type: item.type || 'N/A',
         parameters: item.parameters || 'N/A',
         manufacturer: item.manufacturer || 'N/A',
-        embodied_ai: triSpec(item.embodied_ai)
+        embodied_ai: triSpec(item.embodied_ai),
       };
     case 'data_acquisition':
       return {
         type: item.type || 'N/A',
         manufacturer: item.manufacturer || 'N/A',
         interfaces: fmtSpec(item.interfaces),
-        applications: fmtSpec(item.applications)
+        applications: fmtSpec(item.applications),
       };
     case 'flexible_actuators':
       return {
         type: item.type || 'N/A',
         manufacturer: item.manufacturer || 'N/A',
-        application: fmtSpec(item.application)
+        application: fmtSpec(item.application),
       };
     // 【20260818-W1】新增机械骨架类目 integrated_joints（一体化关节模组）。
     // 关键规格不是扭矩/转速（厂商未公开零件级参数，不臆造），而是其**高度集成的
@@ -354,9 +366,9 @@ function getKeySpecs(item, category) {
         manufacturer: item.manufacturer || 'N/A',
         composition: Array.isArray(item.composition)
           ? item.composition.join(' + ')
-          : (item.composition || 'N/A'),
+          : item.composition || 'N/A',
         applications: fmtSpec(item.applications),
-        description: (item.description || '').substring(0, 120)
+        description: (item.description || '').substring(0, 120),
       };
     // 【20260818-W2】新增 7 个机械骨架类目（reducers / controllers / grippers /
     // structural / cables / power / pcb）。此前这些品类落到 default 返回 {}，
@@ -368,7 +380,7 @@ function getKeySpecs(item, category) {
         manufacturer: item.manufacturer || 'N/A',
         gear_type: fmtSpec((item.specs || {}).gear_type),
         backlash: fmtSpec((item.specs || {}).backlash),
-        families: fmtSpec((item.specs || {}).families || (item.specs || {}).series)
+        families: fmtSpec((item.specs || {}).families || (item.specs || {}).series),
       };
     case 'controllers':
       return {
@@ -380,7 +392,7 @@ function getKeySpecs(item, category) {
         control_modes: fmtSpec((item.specs || {}).control_modes),
         interfaces: fmtSpec((item.specs || {}).interfaces),
         modes: fmtSpec((item.specs || {}).modes),
-        reduction: fmtSpec((item.specs || {}).reduction)
+        reduction: fmtSpec((item.specs || {}).reduction),
       };
     case 'grippers':
       return {
@@ -391,15 +403,17 @@ function getKeySpecs(item, category) {
         stroke: fmtSpec((item.specs || {}).stroke),
         repeatability: fmtSpec((item.specs || {}).repeatability),
         ip_rating: fmtSpec((item.specs || {}).ip_rating),
-        interface: fmtSpec((item.specs || {}).interface)
+        interface: fmtSpec((item.specs || {}).interface),
       };
     case 'structural':
       return {
         type: item.type || 'N/A',
         manufacturer: item.manufacturer || 'N/A',
         material: fmtSpec((item.specs || {}).material),
-        series: fmtSpec((item.specs || {}).series || (item.specs || {}).system || (item.specs || {}).profiles),
-        customization: fmtSpec((item.specs || {}).customization)
+        series: fmtSpec(
+          (item.specs || {}).series || (item.specs || {}).system || (item.specs || {}).profiles,
+        ),
+        customization: fmtSpec((item.specs || {}).customization),
       };
     case 'cables':
       return {
@@ -407,7 +421,7 @@ function getKeySpecs(item, category) {
         manufacturer: item.manufacturer || 'N/A',
         torsion: fmtSpec((item.specs || {}).torsion),
         system: fmtSpec((item.specs || {}).system),
-        series: fmtSpec((item.specs || {}).series)
+        series: fmtSpec((item.specs || {}).series),
       };
     case 'power':
       return {
@@ -417,7 +431,7 @@ function getKeySpecs(item, category) {
         bms: fmtSpec((item.specs || {}).bms),
         cert: fmtSpec((item.specs || {}).cert),
         discharge: fmtSpec((item.specs || {}).discharge),
-        form: fmtSpec((item.specs || {}).form)
+        form: fmtSpec((item.specs || {}).form),
       };
     case 'pcb':
       return {
@@ -426,7 +440,7 @@ function getKeySpecs(item, category) {
         open_source: fmtSpec((item.specs || {}).open_source),
         interface: fmtSpec((item.specs || {}).interface),
         capability: fmtSpec((item.specs || {}).capability),
-        motor: fmtSpec((item.specs || {}).motor)
+        motor: fmtSpec((item.specs || {}).motor),
       };
     case 'bionic_mechanisms':
       return {
@@ -442,7 +456,7 @@ function getKeySpecs(item, category) {
         resolution: fmtSpec((item.key_specs || {}).resolution),
         frame_type: fmtSpec((item.key_specs || {}).frame_type),
         material: fmtSpec((item.key_specs || {}).material),
-        skin_type: fmtSpec((item.key_specs || {}).skin_type)
+        skin_type: fmtSpec((item.key_specs || {}).skin_type),
       };
     default:
       return {};
@@ -506,7 +520,7 @@ function voltageOverlap(v1, v2) {
  */
 function findComponent(id, category) {
   const data = loadData(category);
-  return data.find(item => item.id === id) || null;
+  return data.find((item) => item.id === id) || null;
 }
 
 /**
@@ -522,7 +536,7 @@ function summarizeComponent(item, category) {
     category: category,
     manufacturer: item.manufacturer || 'N/A',
     key_specs: getKeySpecs(item, category),
-    price_range: item.price_range || item.price || 'N/A'
+    price_range: item.price_range || item.price || 'N/A',
   };
 }
 
@@ -533,25 +547,26 @@ function summarizeComponent(item, category) {
  */
 function getSupplierSuggestion(manufacturer) {
   const knownSuppliers = {
-    'ROBOTIS': 'ROBOTIS 官方商店 / RobotShop / 易睿科技(中国代理)',
-    'NVIDIA': 'NVIDIA 官网 / 安富利(Avnet) / Mouser / 得捷(DigiKey)',
-    'STMicroelectronics': 'ST 官方 / Mouser / DigiKey / 立创商城',
+    ROBOTIS: 'ROBOTIS 官方商店 / RobotShop / 易睿科技(中国代理)',
+    NVIDIA: 'NVIDIA 官网 / 安富利(Avnet) / Mouser / 得捷(DigiKey)',
+    STMicroelectronics: 'ST 官方 / Mouser / DigiKey / 立创商城',
     'Raspberry Pi Foundation': 'Raspberry Pi 官方 / 立创商城 / Mouser / RobotShop',
-    'Odrive': 'Odrive 官方 / RobotShop / AliExpress',
-    'SimpleFOC': 'SimpleFOC GitHub / AliExpress',
-    'Bosch': 'Bosch 官方 / Mouser / DigiKey / 立创商城',
+    Odrive: 'Odrive 官方 / RobotShop / AliExpress',
+    SimpleFOC: 'SimpleFOC GitHub / AliExpress',
+    Bosch: 'Bosch 官方 / Mouser / DigiKey / 立创商城',
     'Analog Devices': 'ADI 官方 / Mouser / DigiKey / 立创商城',
-    'Velodyne (Ouster), Luminar, Hesai, Livox, Innoviz': 'Livox 官方(中国) / Ouster 官方 / RobotShop',
+    'Velodyne (Ouster), Luminar, Hesai, Livox, Innoviz':
+      'Livox 官方(中国) / Ouster 官方 / RobotShop',
     'Unitree Robotics': 'Unitree 官方淘宝店 / Unitree 官网',
     'Boston Dynamics (Hyundai)': 'Boston Dynamics 官方(企业销售)',
-    'Tesla': 'Tesla 官方(限量供应)',
+    Tesla: 'Tesla 官方(限量供应)',
     'Figure AI': 'Figure AI 官方(企业合作)',
     'Google DeepMind': '研究合作(非商业销售)',
-    'Berkeley': '开源项目 GitHub(免费)',
-    'OpenAI': 'OpenAI API 平台',
-    'Anthropic': 'Anthropic API 平台',
+    Berkeley: '开源项目 GitHub(免费)',
+    OpenAI: 'OpenAI API 平台',
+    Anthropic: 'Anthropic API 平台',
     'ANYbotics (ETH Zurich spinoff)': 'ANYbotics 官方(企业销售)',
-    'DJI': 'DJI 官方 / DJI 授权经销商',
+    DJI: 'DJI 官方 / DJI 授权经销商',
   };
 
   if (knownSuppliers[manufacturer]) {
@@ -559,7 +574,7 @@ function getSupplierSuggestion(manufacturer) {
   }
   return {
     manufacturer,
-    supplier: `${manufacturer} 官方渠道 / Mouser / DigiKey / 立创商城 / AliExpress`
+    supplier: `${manufacturer} 官方渠道 / Mouser / DigiKey / 立创商城 / AliExpress`,
   };
 }
 
@@ -585,20 +600,30 @@ function searchComponents(args) {
       // 如果有关键词，进行匹配
       if (keyword) {
         const searchText = [
-          item.id, item.name, item.manufacturer, item.type,
-          item.description, item.category, item.protocol,
-          item.interface, JSON.stringify(item.applications || []),
+          item.id,
+          item.name,
+          item.manufacturer,
+          item.type,
+          item.description,
+          item.category,
+          item.protocol,
+          item.interface,
+          JSON.stringify(item.applications || []),
           JSON.stringify(item.interfaces || []),
-          JSON.stringify(item.compatibility || [])
-        ].filter(Boolean).join(' ').toLowerCase();
+          JSON.stringify(item.compatibility || []),
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase();
 
         // 【20260909-24】多词短语兜底：纯子串匹配下 "harmonic drive 20Nm"
         // 会因字段分散而 0 命中。改为分词后全部命中即算匹配（AND 语义，
         // 不引入假阳性）；单词行为与之前完全一致。
         const tokens = keyword.toLowerCase().split(/\s+/).filter(Boolean);
-        const hit = tokens.length > 1
-          ? tokens.every(t => searchText.includes(t))
-          : searchText.includes(keyword.toLowerCase());
+        const hit =
+          tokens.length > 1
+            ? tokens.every((t) => searchText.includes(t))
+            : searchText.includes(keyword.toLowerCase());
         if (!hit) {
           continue;
         }
@@ -616,9 +641,11 @@ function searchComponents(args) {
     returned: limited.length,
     components: limited,
     // 0 命中时给调用方可执行的下一步，而不是让它猜为什么搜不到。
-    ...(results.length === 0 && keyword ? {
-      hint: '0 命中。本端为子串匹配（多词 AND），请尝试：① 拆成单个词重试；② 只用型号/厂商名（如 "XM430"、"ROBOTIS"）；③ 免鉴权端点 https://roboparts.cc/mcp 的 semantic_search 工具支持场景语义匹配。'
-    } : {})
+    ...(results.length === 0 && keyword
+      ? {
+          hint: '0 命中。本端为子串匹配（多词 AND），请尝试：① 拆成单个词重试；② 只用型号/厂商名（如 "XM430"、"ROBOTIS"）；③ 免鉴权端点 https://roboparts.cc/mcp 的 semantic_search 工具支持场景语义匹配。',
+        }
+      : {}),
   };
 }
 
@@ -640,7 +667,7 @@ function getComponentDetail(args) {
       error: '未找到零部件',
       id,
       category,
-      suggestion: '请检查 ID 和品类是否正确。可使用 search_components 工具搜索正确的零部件。'
+      suggestion: '请检查 ID 和品类是否正确。可使用 search_components 工具搜索正确的零部件。',
     };
   }
 
@@ -648,7 +675,7 @@ function getComponentDetail(args) {
     id: component.id,
     name: component.name,
     category: category,
-    ...component
+    ...component,
   };
 }
 
@@ -657,10 +684,7 @@ function getComponentDetail(args) {
  * 检查两个零部件的兼容性
  */
 function checkCompatibility(args) {
-  const {
-    component1_id, component1_category,
-    component2_id, component2_category
-  } = args;
+  const { component1_id, component1_category, component2_id, component2_category } = args;
 
   // 查找两个零部件
   const c1 = findComponent(component1_id, component1_category);
@@ -669,13 +693,13 @@ function checkCompatibility(args) {
   if (!c1) {
     return {
       error: `未找到零部件: ${component1_id} (品类: ${component1_category})`,
-      suggestion: '请使用 search_components 工具确认正确的 ID 和品类'
+      suggestion: '请使用 search_components 工具确认正确的 ID 和品类',
     };
   }
   if (!c2) {
     return {
       error: `未找到零部件: ${component2_id} (品类: ${component2_category})`,
-      suggestion: '请使用 search_components 工具确认正确的 ID 和品类'
+      suggestion: '请使用 search_components 工具确认正确的 ID 和品类',
     };
   }
 
@@ -685,33 +709,47 @@ function checkCompatibility(args) {
 
   // 获取品类对（排序以便匹配规则）
   const pair = [component1_category, component2_category].sort().join('+');
-  const actuator = component1_category === 'actuators' ? c1 : (component2_category === 'actuators' ? c2 : null);
-  const chip = component1_category === 'chips' ? c1 : (component2_category === 'chips' ? c2 : null);
-  const sensor = component1_category === 'sensors' ? c1 : (component2_category === 'sensors' ? c2 : null);
-  const proto = component1_category === 'protocols' ? c1 : (component2_category === 'protocols' ? c2 : null);
-  const iface = component1_category === 'interfaces' ? c1 : (component2_category === 'interfaces' ? c2 : null);
+  const actuator =
+    component1_category === 'actuators' ? c1 : component2_category === 'actuators' ? c2 : null;
+  const chip = component1_category === 'chips' ? c1 : component2_category === 'chips' ? c2 : null;
+  const sensor =
+    component1_category === 'sensors' ? c1 : component2_category === 'sensors' ? c2 : null;
+  const proto =
+    component1_category === 'protocols' ? c1 : component2_category === 'protocols' ? c2 : null;
+  const iface =
+    component1_category === 'interfaces' ? c1 : component2_category === 'interfaces' ? c2 : null;
 
   // ============================================================
   // 规则1: 执行器 + 芯片/控制器 — 检查协议匹配 + 电压范围
   // ============================================================
   if (pair === 'actuators+chips' && actuator && chip) {
     const actProtocol = (actuator.protocol || '').toUpperCase();
-    const chipInterfaces = (chip.interfaces || []).map(i => String(i).toUpperCase());
-    const chipCompat = (chip.compatibility || []).map(c => String(c).toUpperCase());
+    const chipInterfaces = (chip.interfaces || []).map((i) => String(i).toUpperCase());
+    const chipCompat = (chip.compatibility || []).map((c) => String(c).toUpperCase());
     const allChipIfaces = [...chipInterfaces, ...chipCompat];
     const chipStr = allChipIfaces.join(' ');
 
     // --- 协议匹配检查 ---
     if (actProtocol.includes('DYNAMIXEL')) {
       // DYNAMIXEL Protocol 需要 RS485/TTL 接口或 U2D2/OpenCM 控制器
-      if (chipStr.includes('RS485') || chipStr.includes('TTL') ||
-          chipStr.includes('U2D2') || chipStr.includes('OPENCM') ||
-          chipStr.includes('DYNAMIXEL')) {
-        reasons.push(`协议匹配: ${actuator.name} 使用 ${actuator.protocol}, ${chip.name} 支持 RS485/TTL 接口`);
+      if (
+        chipStr.includes('RS485') ||
+        chipStr.includes('TTL') ||
+        chipStr.includes('U2D2') ||
+        chipStr.includes('OPENCM') ||
+        chipStr.includes('DYNAMIXEL')
+      ) {
+        reasons.push(
+          `协议匹配: ${actuator.name} 使用 ${actuator.protocol}, ${chip.name} 支持 RS485/TTL 接口`,
+        );
       } else {
         compatible = false;
-        reasons.push(`协议不匹配: ${actuator.name} 需要 DYNAMIXEL Protocol (RS485/TTL), ${chip.name} 接口为 [${chipInterfaces.join(', ')}], 不直接支持`);
-        warnings.push(`建议使用 U2D2 或 OpenCM 控制器桥接 DYNAMIXEL 协议, 或选择带 RS485 接口的控制器`);
+        reasons.push(
+          `协议不匹配: ${actuator.name} 需要 DYNAMIXEL Protocol (RS485/TTL), ${chip.name} 接口为 [${chipInterfaces.join(', ')}], 不直接支持`,
+        );
+        warnings.push(
+          `建议使用 U2D2 或 OpenCM 控制器桥接 DYNAMIXEL 协议, 或选择带 RS485 接口的控制器`,
+        );
       }
     } else if (actProtocol.includes('CAN')) {
       if (chipStr.includes('CAN')) {
@@ -721,16 +759,27 @@ function checkCompatibility(args) {
         reasons.push(`协议不匹配: ${actuator.name} 需要 CAN 总线, ${chip.name} 不支持 CAN 接口`);
         warnings.push(`建议增加 CAN 桥接模块(如 PiCAN)或选择带 CAN 接口的芯片`);
       }
-    } else if (actProtocol.includes('UART') || actProtocol.includes('I2C') || actProtocol.includes('SPI')) {
-      const protocols = actProtocol.split(/[\/,]/).map(p => p.trim()).filter(p => p.length > 0);
-      const hasMatch = protocols.some(p => {
+    } else if (
+      actProtocol.includes('UART') ||
+      actProtocol.includes('I2C') ||
+      actProtocol.includes('SPI')
+    ) {
+      const protocols = actProtocol
+        .split(/[/,]/)
+        .map((p) => p.trim())
+        .filter((p) => p.length > 0);
+      const hasMatch = protocols.some((p) => {
         const pUpper = p.toUpperCase();
-        return chipStr.includes(pUpper) || allChipIfaces.some(i => i.includes(pUpper));
+        return chipStr.includes(pUpper) || allChipIfaces.some((i) => i.includes(pUpper));
       });
       if (hasMatch) {
-        reasons.push(`协议匹配: ${actuator.name} 使用 ${actuator.protocol}, ${chip.name} 支持对应接口`);
+        reasons.push(
+          `协议匹配: ${actuator.name} 使用 ${actuator.protocol}, ${chip.name} 支持对应接口`,
+        );
       } else {
-        warnings.push(`协议可能不匹配: ${actuator.name} 使用 ${actuator.protocol}, 请确认 ${chip.name} 是否支持`);
+        warnings.push(
+          `协议可能不匹配: ${actuator.name} 使用 ${actuator.protocol}, 请确认 ${chip.name} 是否支持`,
+        );
       }
     } else if (actProtocol && actProtocol !== 'N/A') {
       warnings.push(`执行器协议 "${actuator.protocol}" 未在已知规则中, 建议人工确认兼容性`);
@@ -739,11 +788,17 @@ function checkCompatibility(args) {
     // --- 电压范围检查 ---
     const actVoltage = parseVoltage(actuator.voltage);
     if (actVoltage) {
-      reasons.push(`电压信息: ${actuator.name} 工作电压 ${actuator.voltage} (范围: ${actVoltage.min}V ~ ${actVoltage.max}V)`);
+      reasons.push(
+        `电压信息: ${actuator.name} 工作电压 ${actuator.voltage} (范围: ${actVoltage.min}V ~ ${actVoltage.max}V)`,
+      );
       if (actVoltage.min > 24) {
-        warnings.push(`${actuator.name} 工作电压较高 (${actuator.voltage}), 需要独立供电电路, ${chip.name} 不能直接驱动, 需配置电机驱动板`);
+        warnings.push(
+          `${actuator.name} 工作电压较高 (${actuator.voltage}), 需要独立供电电路, ${chip.name} 不能直接驱动, 需配置电机驱动板`,
+        );
       } else if (actVoltage.min >= 10 && actVoltage.max <= 14.8) {
-        reasons.push(`电压匹配: ${actuator.name} 工作电压在常见 12V 供电范围内, 可使用标准电源方案`);
+        reasons.push(
+          `电压匹配: ${actuator.name} 工作电压在常见 12V 供电范围内, 可使用标准电源方案`,
+        );
       }
     }
   }
@@ -752,27 +807,47 @@ function checkCompatibility(args) {
   // 规则2: 芯片 + 传感器 — 检查接口兼容 (I2C/SPI/UART/USB)
   // ============================================================
   if (pair === 'chips+sensors' && chip && sensor) {
-    const chipInterfaces = (chip.interfaces || []).map(i => String(i).toUpperCase());
+    const chipInterfaces = (chip.interfaces || []).map((i) => String(i).toUpperCase());
     // 传感器可能没有显式接口字段, 从描述/类型中推断
-    const sensorText = `${sensor.name || ''} ${sensor.type || ''} ${sensor.description || ''} ${sensor.range || ''}`.toUpperCase();
-    const commonInterfaces = ['I2C', 'SPI', 'UART', 'USB', 'CAN', 'ETHERNET', 'GBE', '10GBE', 'MIPI', 'CSI', 'PCIe', 'ADC'];
-    const sensorIfaces = commonInterfaces.filter(iface => sensorText.includes(iface));
+    const sensorText =
+      `${sensor.name || ''} ${sensor.type || ''} ${sensor.description || ''} ${sensor.range || ''}`.toUpperCase();
+    const commonInterfaces = [
+      'I2C',
+      'SPI',
+      'UART',
+      'USB',
+      'CAN',
+      'ETHERNET',
+      'GBE',
+      '10GBE',
+      'MIPI',
+      'CSI',
+      'PCIe',
+      'ADC',
+    ];
+    const sensorIfaces = commonInterfaces.filter((iface) => sensorText.includes(iface));
 
     if (sensorIfaces.length === 0) {
       // 无法确定传感器接口
-      warnings.push(`传感器 ${sensor.name} 未明确标注接口类型, ${chip.name} 接口: [${chipInterfaces.join(', ')}]`);
+      warnings.push(
+        `传感器 ${sensor.name} 未明确标注接口类型, ${chip.name} 接口: [${chipInterfaces.join(', ')}]`,
+      );
       warnings.push(`建议查阅传感器数据手册确认通信接口`);
       reasons.push(`接口信息: ${chip.name} 支持 [${chipInterfaces.join(', ')}] 接口`);
     } else {
       // 检查是否有交集
-      const matched = sensorIfaces.filter(si =>
-        chipInterfaces.some(ci => ci.includes(si) || si.includes(ci))
+      const matched = sensorIfaces.filter((si) =>
+        chipInterfaces.some((ci) => ci.includes(si) || si.includes(ci)),
       );
       if (matched.length > 0) {
-        reasons.push(`接口兼容: 传感器 ${sensor.name} 需要 [${matched.join(', ')}] 接口, ${chip.name} 支持对应接口`);
+        reasons.push(
+          `接口兼容: 传感器 ${sensor.name} 需要 [${matched.join(', ')}] 接口, ${chip.name} 支持对应接口`,
+        );
       } else {
         compatible = false;
-        reasons.push(`接口不兼容: 传感器 ${sensor.name} 需要 [${sensorIfaces.join(', ')}] 接口, ${chip.name} 仅支持 [${chipInterfaces.join(', ')}]`);
+        reasons.push(
+          `接口不兼容: 传感器 ${sensor.name} 需要 [${sensorIfaces.join(', ')}] 接口, ${chip.name} 仅支持 [${chipInterfaces.join(', ')}]`,
+        );
         warnings.push(`建议使用接口转换模块或更换兼容的芯片/传感器`);
       }
     }
@@ -787,12 +862,21 @@ function checkCompatibility(args) {
     const protoCable = (proto.cable || '').toUpperCase();
     const ifaceName = (iface.name || '').toUpperCase();
     const ifaceType = (iface.type || '').toUpperCase();
-    const ifaceApps = (iface.applications || []).map(a => String(a).toUpperCase());
+    const ifaceApps = (iface.applications || []).map((a) => String(a).toUpperCase());
     const ifaceStr = `${ifaceName} ${ifaceType} ${ifaceApps.join(' ')}`;
 
     // EtherCAT / PROFINET 等工业以太网协议需要以太网接口
-    if (protoName.includes('ETHERCAT') || protoName.includes('PROFINET') || protoType.includes('ETHERNET')) {
-      if (ifaceStr.includes('ETHERNET') || ifaceStr.includes('GBE') || ifaceStr.includes('10GBE') || ifaceName.includes('ETHERNET')) {
+    if (
+      protoName.includes('ETHERCAT') ||
+      protoName.includes('PROFINET') ||
+      protoType.includes('ETHERNET')
+    ) {
+      if (
+        ifaceStr.includes('ETHERNET') ||
+        ifaceStr.includes('GBE') ||
+        ifaceStr.includes('10GBE') ||
+        ifaceName.includes('ETHERNET')
+      ) {
         reasons.push(`物理层兼容: ${proto.name} 基于工业以太网, ${iface.name} 支持以太网物理层`);
       } else {
         compatible = false;
@@ -815,7 +899,11 @@ function checkCompatibility(args) {
         reasons.push(`物理层不兼容: ${proto.name} 需要 USB 接口, ${iface.name} 不支持 USB`);
       }
     } else if (protoName.includes('MODBUS') || protoType.includes('SERIAL')) {
-      if (ifaceName.includes('UART') || ifaceName.includes('RS485') || ifaceName.includes('RS232')) {
+      if (
+        ifaceName.includes('UART') ||
+        ifaceName.includes('RS485') ||
+        ifaceName.includes('RS232')
+      ) {
         reasons.push(`物理层兼容: ${proto.name} 基于串口通信, ${iface.name} 支持串口物理层`);
       } else {
         warnings.push(`${proto.name} 基于串口通信, 请确认 ${iface.name} 是否支持 UART/RS485`);
@@ -832,11 +920,13 @@ function checkCompatibility(args) {
   const apps1 = c1.applications || [];
   const apps2 = c2.applications || [];
   if (apps1.length > 0 && apps2.length > 0) {
-    const commonApps = apps1.filter(a => apps2.includes(a));
+    const commonApps = apps1.filter((a) => apps2.includes(a));
     if (commonApps.length > 0) {
       reasons.push(`应用场景匹配: 两者均适用于 [${commonApps.join(', ')}]`);
     } else {
-      warnings.push(`应用场景不重叠: ${c1.name} 适用于 [${apps1.join(', ')}], ${c2.name} 适用于 [${apps2.join(', ')}]`);
+      warnings.push(
+        `应用场景不重叠: ${c1.name} 适用于 [${apps1.join(', ')}], ${c2.name} 适用于 [${apps2.join(', ')}]`,
+      );
     }
   }
 
@@ -861,9 +951,10 @@ function checkCompatibility(args) {
   const compat2 = c2.compatibility || [];
   if (compat1.length > 0) {
     const name2Upper = (c2.name || '').toUpperCase();
-    const matchedCompat = compat1.filter(c =>
-      name2Upper.includes(String(c).toUpperCase()) ||
-      String(c).toUpperCase().includes(name2Upper)
+    const matchedCompat = compat1.filter(
+      (c) =>
+        name2Upper.includes(String(c).toUpperCase()) ||
+        String(c).toUpperCase().includes(name2Upper),
     );
     if (matchedCompat.length > 0) {
       reasons.push(`官方兼容性列表: ${c1.name} 声明兼容 [${matchedCompat.join(', ')}]`);
@@ -871,9 +962,10 @@ function checkCompatibility(args) {
   }
   if (compat2.length > 0) {
     const name1Upper = (c1.name || '').toUpperCase();
-    const matchedCompat = compat2.filter(c =>
-      name1Upper.includes(String(c).toUpperCase()) ||
-      String(c).toUpperCase().includes(name1Upper)
+    const matchedCompat = compat2.filter(
+      (c) =>
+        name1Upper.includes(String(c).toUpperCase()) ||
+        String(c).toUpperCase().includes(name1Upper),
     );
     if (matchedCompat.length > 0) {
       reasons.push(`官方兼容性列表: ${c2.name} 声明兼容 [${matchedCompat.join(', ')}]`);
@@ -882,7 +974,9 @@ function checkCompatibility(args) {
 
   // 如果没有任何检查结果
   if (reasons.length === 0 && warnings.length === 0) {
-    reasons.push(`未找到针对品类组合 [${component1_category} + ${component2_category}] 的明确兼容性规则, 建议人工确认`);
+    reasons.push(
+      `未找到针对品类组合 [${component1_category} + ${component2_category}] 的明确兼容性规则, 建议人工确认`,
+    );
     warnings.push(`当前品类组合不在自动检查范围内, 请查阅产品文档或联系厂商确认兼容性`);
   }
 
@@ -899,7 +993,7 @@ function checkCompatibility(args) {
     warnings,
     summary: compatible
       ? `兼容性检查通过: ${c1.name} 与 ${c2.name} 可以配合使用`
-      : `兼容性检查未通过: ${c1.name} 与 ${c2.name} 存在兼容性问题, 请查看 reasons 和 warnings 了解详情`
+      : `兼容性检查未通过: ${c1.name} 与 ${c2.name} 存在兼容性问题, 请查看 reasons 和 warnings 了解详情`,
   };
 }
 
@@ -914,19 +1008,27 @@ function compareComponents(args) {
   let ids = Array.isArray(args?.ids) ? args.ids.map(String) : [];
   if (!ids.length && Array.isArray(args?.components)) {
     // 兼容旧形态 {components:[{id,category}]}
-    ids = args.components.map(c => String(c?.id || '')).filter(Boolean);
+    ids = args.components.map((c) => String(c?.id || '')).filter(Boolean);
   }
   if (ids.length < 2 || ids.length > 6) {
-    return { error: 'ids 需为 2~6 个零部件 ID 的数组', hint: '示例：{"ids": ["ACT-001", "ACT-002"]}' };
+    return {
+      error: 'ids 需为 2~6 个零部件 ID 的数组',
+      hint: '示例：{"ids": ["ACT-001", "ACT-002"]}',
+    };
   }
 
   const loaded = [];
   const notFound = [];
   for (const id of ids) {
-    let comp = null, cat = null;
+    let comp = null,
+      cat = null;
     for (const c of ALL_CATEGORIES) {
       const hit = findComponent(id, c);
-      if (hit) { comp = hit; cat = c; break; }
+      if (hit) {
+        comp = hit;
+        cat = c;
+        break;
+      }
     }
     if (!comp) notFound.push(id);
     else loaded.push({ item: comp, category: cat });
@@ -936,7 +1038,7 @@ function compareComponents(args) {
     return {
       error: '有效零部件不足 2 个，无法对比',
       not_found: notFound,
-      suggestion: '请先用 search_components 确认 ID 后再试。'
+      suggestion: '请先用 search_components 确认 ID 后再试。',
     };
   }
 
@@ -953,12 +1055,12 @@ function compareComponents(args) {
     category,
     manufacturer: item.manufacturer || 'N/A',
     price_range: item.price_range || item.price || 'N/A',
-    specs: getKeySpecs(item, category) || {}
+    specs: getKeySpecs(item, category) || {},
   }));
-  const rows = specKeys.map(k => {
-    const row = { spec: k, values: columns.map(c => c.specs[k] ?? '—') };
-    const present = row.values.filter(v => v !== '—');
-    row.all_equal = present.length > 1 && present.every(v => String(v) === String(present[0]));
+  const rows = specKeys.map((k) => {
+    const row = { spec: k, values: columns.map((c) => c.specs[k] ?? '—') };
+    const present = row.values.filter((v) => v !== '—');
+    row.all_equal = present.length > 1 && present.every((v) => String(v) === String(present[0]));
     return row;
   });
 
@@ -966,8 +1068,9 @@ function compareComponents(args) {
     compared: columns.map(({ id, name, category }) => ({ id, name, category })),
     not_found: notFound.length ? notFound : undefined,
     dimensions: rows,
-    note: '对比基于 key_specs 现有字段；缺失规格以 "—" 呈现，不代表该零件不支持该特性。' +
-      '注意：库内参数语义可比性当前为 0 条（跨厂商同名义参数口径未声明），数值差异需回查厂商规格书。'
+    note:
+      '对比基于 key_specs 现有字段；缺失规格以 "—" 呈现，不代表该零件不支持该特性。' +
+      '注意：库内参数语义可比性当前为 0 条（跨厂商同名义参数口径未声明），数值差异需回查厂商规格书。',
   };
 }
 
@@ -990,7 +1093,7 @@ function dialectsEvaluate(args) {
   if (!comp) {
     return {
       error: `未找到零部件: ${component_id}`,
-      suggestion: '请先用 search_components 确认 ID 与品类。'
+      suggestion: '请先用 search_components 确认 ID 与品类。',
     };
   }
   const evaluation = dialectManager.evaluateComponent(comp, String(category), String(dialect));
@@ -999,8 +1102,9 @@ function dialectsEvaluate(args) {
   }
   return {
     ...evaluation,
-    note: '评分为场景启发式参考，不替代 check_compatibility 的接口级判定；' +
-      '总分仅基于库内有证据的维度加权（无证据维度不计分）。'
+    note:
+      '评分为场景启发式参考，不替代 check_compatibility 的接口级判定；' +
+      '总分仅基于库内有证据的维度加权（无证据维度不计分）。',
   };
 }
 
@@ -1014,20 +1118,20 @@ function recommendForApplication(args) {
 
   // 应用场景映射
   const appMap = {
-    'humanoid': ['humanoid', 'humanoid_hip'],
-    'quadruped': ['quadruped'],
-    'robot_arm': ['robot_arm', 'manipulator', 'large_manipulator'],
-    'amr': ['autonomous_vehicle', 'mobile_robot', 'amr', 'autonomous'],
-    'industrial': ['industrial', 'industrial_robot', 'large_manipulator', 'CNC', 'motion_control']
+    humanoid: ['humanoid', 'humanoid_hip'],
+    quadruped: ['quadruped'],
+    robot_arm: ['robot_arm', 'manipulator', 'large_manipulator'],
+    amr: ['autonomous_vehicle', 'mobile_robot', 'amr', 'autonomous'],
+    industrial: ['industrial', 'industrial_robot', 'large_manipulator', 'CNC', 'motion_control'],
   };
 
   // 传感器推荐关键词映射
   const sensorKeywords = {
-    'humanoid': ['IMU', 'TACTILE', 'FORCE', 'TORQUE', 'CAMERA', 'VISION', 'DEPTH'],
-    'quadruped': ['IMU', 'LIDAR', 'DEPTH', 'CAMERA', 'FORCE'],
-    'robot_arm': ['FORCE', 'TORQUE', 'TACTILE', 'CAMERA', 'VISION', 'DEPTH'],
-    'amr': ['LIDAR', 'IMU', 'CAMERA', 'DEPTH', 'RADAR'],
-    'industrial': ['FORCE', 'TORQUE', 'VISION', 'CAMERA', 'PROXIMITY', 'TEMPERATURE']
+    humanoid: ['IMU', 'TACTILE', 'FORCE', 'TORQUE', 'CAMERA', 'VISION', 'DEPTH'],
+    quadruped: ['IMU', 'LIDAR', 'DEPTH', 'CAMERA', 'FORCE'],
+    robot_arm: ['FORCE', 'TORQUE', 'TACTILE', 'CAMERA', 'VISION', 'DEPTH'],
+    amr: ['LIDAR', 'IMU', 'CAMERA', 'DEPTH', 'RADAR'],
+    industrial: ['FORCE', 'TORQUE', 'VISION', 'CAMERA', 'PROXIMITY', 'TEMPERATURE'],
   };
 
   const targetApps = appMap[application] || [application];
@@ -1036,12 +1140,14 @@ function recommendForApplication(args) {
   // 预算分配（CNY → USD）
   const budgetUSD = budget ? budget / USD_TO_CNY_RATE : null;
   // 各品类预算占比: 执行器 40%, 芯片 25%, 传感器 20%, 控制器 15%
-  const budgetAllocation = budgetUSD ? {
-    actuators: budgetUSD * 0.40,
-    chips: budgetUSD * 0.25,
-    sensors: budgetUSD * 0.20,
-    controllers: budgetUSD * 0.15
-  } : null;
+  const budgetAllocation = budgetUSD
+    ? {
+        actuators: budgetUSD * 0.4,
+        chips: budgetUSD * 0.25,
+        sensors: budgetUSD * 0.2,
+        controllers: budgetUSD * 0.15,
+      }
+    : null;
 
   /**
    * 按预算筛选并排序
@@ -1050,7 +1156,7 @@ function recommendForApplication(args) {
     let filtered = items;
     if (budgetAllocation && allocKey) {
       const alloc = budgetAllocation[allocKey];
-      const withinBudget = items.filter(item => {
+      const withinBudget = items.filter((item) => {
         const price = parsePrice(item.price_range || item.price);
         if (!price) return true; // 无价格信息的不排除
         return price.mid <= alloc;
@@ -1071,43 +1177,47 @@ function recommendForApplication(args) {
 
   // --- 执行器推荐 ---
   const allActuators = loadData('actuators');
-  const matchedActuators = allActuators.filter(a => {
+  const matchedActuators = allActuators.filter((a) => {
     const apps = a.applications || [];
-    return apps.some(app => targetApps.includes(app));
+    return apps.some((app) => targetApps.includes(app));
   });
   const sortedActuators = filterAndSort(matchedActuators, 'actuators', 'actuators');
-  const actuatorRecs = sortedActuators.slice(0, n).map(a => summarizeComponent(a, 'actuators'));
+  const actuatorRecs = sortedActuators.slice(0, n).map((a) => summarizeComponent(a, 'actuators'));
 
   // --- 芯片推荐 (计算芯片) ---
   const allChips = loadData('chips');
-  const matchedComputeChips = allChips.filter(c => {
+  const matchedComputeChips = allChips.filter((c) => {
     const apps = c.applications || [];
-    return apps.some(app => targetApps.includes(app)) && c.category === 'compute';
+    return apps.some((app) => targetApps.includes(app)) && c.category === 'compute';
   });
   const sortedComputeChips = filterAndSort(matchedComputeChips, 'chips', 'chips');
-  const chipRecs = sortedComputeChips.slice(0, n).map(c => summarizeComponent(c, 'chips'));
+  const chipRecs = sortedComputeChips.slice(0, n).map((c) => summarizeComponent(c, 'chips'));
 
   // --- 控制器推荐 (MCU) ---
-  const matchedControllers = allChips.filter(c => {
+  const matchedControllers = allChips.filter((c) => {
     const apps = c.applications || [];
-    return apps.some(app => targetApps.includes(app)) && c.category === 'mcu';
+    return apps.some((app) => targetApps.includes(app)) && c.category === 'mcu';
   });
   const sortedControllers = filterAndSort(matchedControllers, 'chips', 'controllers');
-  const controllerRecs = sortedControllers.slice(0, n).map(c => summarizeComponent(c, 'chips'));
+  const controllerRecs = sortedControllers.slice(0, n).map((c) => summarizeComponent(c, 'chips'));
 
   // --- 传感器推荐 ---
   const allSensors = loadData('sensors');
-  const matchedSensors = allSensors.filter(s => {
+  const matchedSensors = allSensors.filter((s) => {
     const text = `${s.name || ''} ${s.type || ''} ${s.description || ''}`.toUpperCase();
-    return keywords.some(kw => text.includes(kw));
+    return keywords.some((kw) => text.includes(kw));
   });
   // 传感器通常没有 price_range, 不做预算筛选
-  const sensorRecs = matchedSensors.slice(0, n).map(s => summarizeComponent(s, 'sensors'));
+  const sensorRecs = matchedSensors.slice(0, n).map((s) => summarizeComponent(s, 'sensors'));
 
   // 计算预估总成本
   let estimatedCostUSD = 0;
-  const allRecs = [...sortedActuators.slice(0, n), ...sortedComputeChips.slice(0, n),
-  ...sortedControllers.slice(0, n), ...matchedSensors.slice(0, n)];
+  const allRecs = [
+    ...sortedActuators.slice(0, n),
+    ...sortedComputeChips.slice(0, n),
+    ...sortedControllers.slice(0, n),
+    ...matchedSensors.slice(0, n),
+  ];
   for (const item of allRecs) {
     const price = parsePrice(item.price_range || item.price);
     if (price) estimatedCostUSD += price.mid;
@@ -1123,24 +1233,24 @@ function recommendForApplication(args) {
     recommendations: {
       actuators: {
         count: actuatorRecs.length,
-        items: actuatorRecs
+        items: actuatorRecs,
       },
       sensors: {
         count: sensorRecs.length,
-        items: sensorRecs
+        items: sensorRecs,
       },
       chips: {
         count: chipRecs.length,
-        items: chipRecs
+        items: chipRecs,
       },
       controllers: {
         count: controllerRecs.length,
-        items: controllerRecs
-      }
+        items: controllerRecs,
+      },
     },
     note: budget
       ? `推荐已按预算 ${budget} CNY (约 ${budgetUSD.toFixed(0)} USD) 筛选, 各品类预算占比: 执行器40%, 芯片25%, 传感器20%, 控制器15%`
-      : '未设置预算限制, 按性价比排序推荐'
+      : '未设置预算限制, 按性价比排序推荐',
   };
 }
 
@@ -1180,7 +1290,7 @@ function exportBom(args) {
         status: 'NOT_FOUND',
         quantity: qty,
         unit_price_usd: 0,
-        subtotal_usd: 0
+        subtotal_usd: 0,
       });
       warnings.push(`零部件 ${id} (品类: ${category}) 未找到, 请检查 ID 和品类`);
       continue;
@@ -1207,22 +1317,26 @@ function exportBom(args) {
       subtotal_usd: subtotal.toFixed(2),
       price_range: component.price_range || component.price || 'N/A',
       key_specs: getKeySpecs(component, category),
-      status: 'OK'
+      status: 'OK',
     });
   }
 
   const totalCostCNY = totalCostUSD * USD_TO_CNY_RATE;
 
   // 生成供应商建议
-  const supplierSuggestions = Array.from(manufacturers).map(m => getSupplierSuggestion(m));
+  const supplierSuggestions = Array.from(manufacturers).map((m) => getSupplierSuggestion(m));
 
   // 生成采购建议
   const procurementAdvice = [];
   if (manufacturers.size > 3) {
-    procurementAdvice.push(`涉及 ${manufacturers.size} 个不同厂商, 建议优先选择有代理或本地仓的供应商以降低物流成本`);
+    procurementAdvice.push(
+      `涉及 ${manufacturers.size} 个不同厂商, 建议优先选择有代理或本地仓的供应商以降低物流成本`,
+    );
   }
   if (totalCostUSD > 1000) {
-    procurementAdvice.push(`总成本较高 ($${totalCostUSD.toFixed(2)}), 建议联系厂商或代理商获取批量折扣`);
+    procurementAdvice.push(
+      `总成本较高 ($${totalCostUSD.toFixed(2)}), 建议联系厂商或代理商获取批量折扣`,
+    );
   }
   if (notFoundItems.length > 0) {
     procurementAdvice.push(`${notFoundItems.length} 个零部件未找到, 请核实后补充`);
@@ -1239,9 +1353,9 @@ function exportBom(args) {
       total_cost_cny: parseFloat(totalCostCNY.toFixed(2)),
       total_modules: totalModules,
       item_count: bomItems.length,
-      found_count: bomItems.filter(i => i.status === 'OK').length,
+      found_count: bomItems.filter((i) => i.status === 'OK').length,
       not_found_count: notFoundItems.length,
-      manufacturer_count: manufacturers.size
+      manufacturer_count: manufacturers.size,
     },
     items: bomItems,
     supplier_suggestions: supplierSuggestions,
@@ -1249,8 +1363,8 @@ function exportBom(args) {
     warnings: warnings.length > 0 ? warnings : undefined,
     cost_breakdown: {
       currency_note: '价格基于数据中的 price_range 中值估算, 实际价格以供应商报价为准',
-      usd_to_cny_rate: USD_TO_CNY_RATE
-    }
+      usd_to_cny_rate: USD_TO_CNY_RATE,
+    },
   };
 }
 
@@ -1290,10 +1404,10 @@ const server = new Server(
         cancel: {},
         requests: {
           tools: {
-            call: {}
-          }
-        }
-      }
+            call: {},
+          },
+        },
+      },
     },
     // 非规范字段：SDK 会保留在 serverInfo 里，让新客户端能读到我们支持的能力映射
     experimental: {
@@ -1308,11 +1422,11 @@ const server = new Server(
         honest_limits: [
           'no_server_side_persistence',
           'no_hard_cancel',
-          'no_multi_tenant_isolation'
-        ]
-      }
-    }
-  }
+          'no_multi_tenant_isolation',
+        ],
+      },
+    },
+  },
 );
 
 // ============================================================
@@ -1323,7 +1437,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [
     {
       name: 'search_components',
-      description: '搜索机器人零部件，支持按品类、关键词、规格筛选。返回匹配的零部件列表（id, name, category, manufacturer, key_specs）。',
+      description:
+        '搜索机器人零部件，支持按品类、关键词、规格筛选。返回匹配的零部件列表（id, name, category, manufacturer, key_specs）。',
       inputSchema: {
         type: 'object',
         properties: {
@@ -1332,19 +1447,19 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
             // 【20260918】原先写死「等 11 类」并硬编码 enum——和 FILE_MAP 同源失修。
             // 现改为从 ALL_CATEGORIES 现算，新增品类自动出现在 schema 里。
             description: `品类: ${ALL_CATEGORIES.join(' / ')}（共 ${ALL_CATEGORIES.length} 类）`,
-            enum: ALL_CATEGORIES
+            enum: ALL_CATEGORIES,
           },
           keyword: {
             type: 'string',
-            description: '搜索关键词，匹配名称、厂商、类型、描述等字段'
+            description: '搜索关键词，匹配名称、厂商、类型、描述等字段',
           },
           limit: {
             type: 'number',
             description: '返回数量限制，默认10',
-            default: 10
-          }
-        }
-      }
+            default: 10,
+          },
+        },
+      },
     },
     {
       name: 'get_component_detail',
@@ -1354,48 +1469,51 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
         properties: {
           id: {
             type: 'string',
-            description: '零部件ID，如 "ACT-001"、"CHIP-001"、"SENS-001"'
+            description: '零部件ID，如 "ACT-001"、"CHIP-001"、"SENS-001"',
           },
           category: {
             type: 'string',
-            description: '品类: actuators / sensors / chips / protocols / platforms / llms / interfaces',
-            enum: ALL_CATEGORIES
-          }
+            description:
+              '品类: actuators / sensors / chips / protocols / platforms / llms / interfaces',
+            enum: ALL_CATEGORIES,
+          },
         },
-        required: ['id', 'category']
-      }
+        required: ['id', 'category'],
+      },
     },
     {
       name: 'check_compatibility',
-      description: '检查两个零部件的兼容性，基于协议、接口、电压等维度。兼容性检查规则：执行器+芯片(协议匹配+电压范围)、芯片+传感器(接口兼容)、协议+接口(物理层兼容)、通用检查(应用场景+ROS2支持)。',
+      description:
+        '检查两个零部件的兼容性，基于协议、接口、电压等维度。兼容性检查规则：执行器+芯片(协议匹配+电压范围)、芯片+传感器(接口兼容)、协议+接口(物理层兼容)、通用检查(应用场景+ROS2支持)。',
       inputSchema: {
         type: 'object',
         properties: {
           component1_id: {
             type: 'string',
-            description: '零件1 ID'
+            description: '零件1 ID',
           },
           component1_category: {
             type: 'string',
             description: '零件1品类',
-            enum: ALL_CATEGORIES
+            enum: ALL_CATEGORIES,
           },
           component2_id: {
             type: 'string',
-            description: '零件2 ID'
+            description: '零件2 ID',
           },
           component2_category: {
             type: 'string',
             description: '零件2品类',
-            enum: ALL_CATEGORIES
-          }
+            enum: ALL_CATEGORIES,
+          },
         },
-        required: ['component1_id', 'component1_category', 'component2_id', 'component2_category']
-      }
+        required: ['component1_id', 'component1_category', 'component2_id', 'component2_category'],
+      },
     },
     {
       name: 'compare_components',
-      description: '并排对比 2~6 个零部件的关键参数（规格键并集，相同值自动标注），替代为同一目的连发多次 get_component_detail。ID 自动跨品类解析。',
+      description:
+        '并排对比 2~6 个零部件的关键参数（规格键并集，相同值自动标注），替代为同一目的连发多次 get_component_detail。ID 自动跨品类解析。',
       inputSchema: {
         type: 'object',
         properties: {
@@ -1404,63 +1522,71 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
             description: '待对比零部件 ID 数组（2~6 个），形如 ["ACT-001", "ACT-002"]',
             items: { type: 'string' },
             minItems: 2,
-            maxItems: 6
-          }
+            maxItems: 6,
+          },
         },
-        required: ['ids']
-      }
+        required: ['ids'],
+      },
     },
     {
       name: 'dialects_list',
-      description: '列出可用的领域方言模板（人形/工业机械臂/灵巧手/移动机器人/科研教育），用于按应用场景评估零部件。',
-      inputSchema: { type: 'object', properties: {} }
+      description:
+        '列出可用的领域方言模板（人形/工业机械臂/灵巧手/移动机器人/科研教育），用于按应用场景评估零部件。',
+      inputSchema: { type: 'object', properties: {} },
     },
     {
       name: 'dialects_evaluate',
-      description: '按领域方言对单个零部件做场景化评分。总分仅基于库内有证据的维度加权，无证据维度不计分（返回 null），不冒充 50 分。',
+      description:
+        '按领域方言对单个零部件做场景化评分。总分仅基于库内有证据的维度加权，无证据维度不计分（返回 null），不冒充 50 分。',
       inputSchema: {
         type: 'object',
         properties: {
           component_id: { type: 'string', description: '零部件ID' },
           category: { type: 'string', description: '品类', enum: ALL_CATEGORIES },
-          dialect: { type: 'string', description: '方言ID（先用 dialects_list 查询）', enum: ['humanoid', 'industrial', 'dexterous_hand', 'mobile_robot', 'research'] }
+          dialect: {
+            type: 'string',
+            description: '方言ID（先用 dialects_list 查询）',
+            enum: ['humanoid', 'industrial', 'dexterous_hand', 'mobile_robot', 'research'],
+          },
         },
-        required: ['component_id', 'category', 'dialect']
-      }
+        required: ['component_id', 'category', 'dialect'],
+      },
     },
     {
       name: 'recommend_for_application',
-      description: '根据应用场景推荐零部件组合。基于应用场景(humanoid/quadruped/robot_arm/amr/industrial)和预算，推荐最优零部件组合（执行器、传感器、芯片、控制器各自top推荐）。',
+      description:
+        '根据应用场景推荐零部件组合。基于应用场景(humanoid/quadruped/robot_arm/amr/industrial)和预算，推荐最优零部件组合（执行器、传感器、芯片、控制器各自top推荐）。',
       inputSchema: {
         type: 'object',
         properties: {
           application: {
             type: 'string',
             description: '应用场景',
-            enum: ['humanoid', 'quadruped', 'robot_arm', 'amr', 'industrial']
+            enum: ['humanoid', 'quadruped', 'robot_arm', 'amr', 'industrial'],
           },
           budget: {
             type: 'number',
-            description: '预算上限（CNY 人民币）'
+            description: '预算上限（CNY 人民币）',
           },
           count: {
             type: 'number',
             description: '每个品类推荐数量，默认3',
-            default: 3
-          }
+            default: 3,
+          },
         },
-        required: ['application']
-      }
+        required: ['application'],
+      },
     },
     {
       name: 'export_bom',
-      description: '从选定的零部件列表导出BOM（Bill of Materials）清单。计算总成本（USD+CNY），提供供应商建议和采购建议。',
+      description:
+        '从选定的零部件列表导出BOM（Bill of Materials）清单。计算总成本（USD+CNY），提供供应商建议和采购建议。',
       inputSchema: {
         type: 'object',
         properties: {
           project_name: {
             type: 'string',
-            description: '项目名称'
+            description: '项目名称',
           },
           items: {
             type: 'array',
@@ -1470,49 +1596,51 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
               properties: {
                 id: {
                   type: 'string',
-                  description: '零部件ID'
+                  description: '零部件ID',
                 },
                 category: {
                   type: 'string',
                   description: '品类',
-                  enum: ALL_CATEGORIES
+                  enum: ALL_CATEGORIES,
                 },
                 quantity: {
                   type: 'number',
                   description: '数量',
-                  default: 1
-                }
+                  default: 1,
+                },
               },
-              required: ['id', 'category']
-            }
-          }
+              required: ['id', 'category'],
+            },
+          },
         },
-        required: ['project_name', 'items']
-      }
+        required: ['project_name', 'items'],
+      },
     },
     // 【2026-10-15 Phase A · A4】装配级工作流工具——把「成对判定」升级为「装配预检」
     {
       name: 'plan_assembly',
-      description: '装配级类型检查：给定目标 + 候选零件集，判定能否组成良类型装配。返回 well_typed（存在良类型子装配）/ ill_typed（最小缺失接口集）/ unknown（证据不足）。与 MDV 对账。',
+      description:
+        '装配级类型检查：给定目标 + 候选零件集，判定能否组成良类型装配。返回 well_typed（存在良类型子装配）/ ill_typed（最小缺失接口集）/ unknown（证据不足）。与 MDV 对账。',
       inputSchema: {
         type: 'object',
         properties: {
           goal: {
             type: 'string',
-            description: '能力目标，如 "6-DOF force-controlled grasping"、"1kg payload robot arm"'
+            description: '能力目标，如 "6-DOF force-controlled grasping"、"1kg payload robot arm"',
           },
           candidate_ids: {
             type: 'array',
             items: { type: 'string' },
-            description: '候选零件 ID 列表（至少 2 个）'
-          }
+            description: '候选零件 ID 列表（至少 2 个）',
+          },
         },
-        required: ['goal', 'candidate_ids']
-      }
+        required: ['goal', 'candidate_ids'],
+      },
     },
     {
       name: 'preflight_check',
-      description: 'BOM 出单前守门人：对候选 BOM 做一次装配预检，在生成几何/下单之前拦截 ill_typed。返回是否通过 + 缺失接口清单。零摩擦采纳的关键——把 RoboParts 变成 Agent 工具循环里的守门人。',
+      description:
+        'BOM 出单前守门人：对候选 BOM 做一次装配预检，在生成几何/下单之前拦截 ill_typed。返回是否通过 + 缺失接口清单。零摩擦采纳的关键——把 RoboParts 变成 Agent 工具循环里的守门人。',
       inputSchema: {
         type: 'object',
         properties: {
@@ -1522,20 +1650,20 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
               type: 'object',
               properties: {
                 id: { type: 'string' },
-                quantity: { type: 'number', default: 1 }
+                quantity: { type: 'number', default: 1 },
               },
-              required: ['id']
+              required: ['id'],
             },
-            description: 'BOM 条目（id + 可选 quantity）'
+            description: 'BOM 条目（id + 可选 quantity）',
           },
           strict: {
             type: 'boolean',
             description: '严格模式：任一 ill_typed 即拦截；false 时仅警告',
-            default: true
-          }
+            default: true,
+          },
         },
-        required: ['bom_items']
-      }
+        required: ['bom_items'],
+      },
     },
     // ============================================================
     // 【2026-10-27 P2-6】MCP 双版本 + Trace 回放 —— 新增 6 个工具
@@ -1551,91 +1679,104 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     // ============================================================
     {
       name: 'explain_unknown',
-      description: '解释为什么某次判定是 unknown。给定 component_id（或 verdict_id），返回结构化的 evidence_gaps / verdict_reason / blocking_axis 列表，替代自然语言解释。与 check_compatibility / preflight_check 配对使用。',
+      description:
+        '解释为什么某次判定是 unknown。给定 component_id（或 verdict_id），返回结构化的 evidence_gaps / verdict_reason / blocking_axis 列表，替代自然语言解释。与 check_compatibility / preflight_check 配对使用。',
       inputSchema: {
         type: 'object',
         properties: {
           component_id: { type: 'string', description: '组件 ID，如 ACT-001、SENS-001' },
           category: {
             type: 'string',
-            description: `品类: ${ALL_CATEGORIES.join(' / ')}`
+            description: `品类: ${ALL_CATEGORIES.join(' / ')}`,
           },
-          verdict_id: { type: 'string', description: '兼容性判定的 verdict_id（如 v_XXX），与 component_id 二选一' },
-          max_gaps: { type: 'number', description: '最多返回多少条缺口', default: 20 }
-        }
-      }
+          verdict_id: {
+            type: 'string',
+            description: '兼容性判定的 verdict_id（如 v_XXX），与 component_id 二选一',
+          },
+          max_gaps: { type: 'number', description: '最多返回多少条缺口', default: 20 },
+        },
+      },
     },
     {
       name: 'start_long_task',
-      description: '启动一个长任务并立即返回 task_id。任务体是异步执行的；后续通过 get_task_status 查询进度，通过 cancel_task 置取消标志位。stdio MCP 无中断通道，取消不是硬终止。返回 task_id / status / name。',
+      description:
+        '启动一个长任务并立即返回 task_id。任务体是异步执行的；后续通过 get_task_status 查询进度，通过 cancel_task 置取消标志位。stdio MCP 无中断通道，取消不是硬终止。返回 task_id / status / name。',
       inputSchema: {
         type: 'object',
         properties: {
           task_type: {
             type: 'string',
             enum: ['batch_check_compatibility', 'bulk_export_bom', 'deep_dialect_evaluate'],
-            description: '预定义任务类型（本版本仅这三种；后续扩展）'
+            description: '预定义任务类型（本版本仅这三种；后续扩展）',
           },
           args: {
             type: 'object',
-            description: '任务参数（如批量 ID 列表、参数配置）'
-          }
+            description: '任务参数（如批量 ID 列表、参数配置）',
+          },
         },
-        required: ['task_type']
-      }
+        required: ['task_type'],
+      },
     },
     {
       name: 'get_task_status',
-      description: '查询长任务状态。返回 status / progress / result（若 done）/ error（若 failed）/ cancelled。',
+      description:
+        '查询长任务状态。返回 status / progress / result（若 done）/ error（若 failed）/ cancelled。',
       inputSchema: {
         type: 'object',
         properties: {
-          task_id: { type: 'string', description: '任务 ID（start_long_task 返回）' }
+          task_id: { type: 'string', description: '任务 ID（start_long_task 返回）' },
         },
-        required: ['task_id']
-      }
+        required: ['task_id'],
+      },
     },
     {
       name: 'cancel_task',
-      description: '置任务取消标志位。stdio MCP 无中断通道——任务体在下一个 checkpoint 会自行退出。对已结束（done / failed / cancelled）的任务调用会返回 task_already_<status> 错误。',
+      description:
+        '置任务取消标志位。stdio MCP 无中断通道——任务体在下一个 checkpoint 会自行退出。对已结束（done / failed / cancelled）的任务调用会返回 task_already_<status> 错误。',
       inputSchema: {
         type: 'object',
         properties: {
-          task_id: { type: 'string' }
+          task_id: { type: 'string' },
         },
-        required: ['task_id']
-      }
+        required: ['task_id'],
+      },
     },
     {
       name: 'trace_export',
-      description: '导出本会话的调用轨迹。默认去敏（redact=true）：字符串只留长度 + hash，对象只留 keys，不透传原值。可选按 tool / since 过滤，limit 上限 1000（环形缓冲容量）。',
+      description:
+        '导出本会话的调用轨迹。默认去敏（redact=true）：字符串只留长度 + hash，对象只留 keys，不透传原值。可选按 tool / since 过滤，limit 上限 1000（环形缓冲容量）。',
       inputSchema: {
         type: 'object',
         properties: {
           limit: { type: 'number', description: '最多返回多少条（默认全部）', default: 200 },
           tool: { type: 'string', description: '按工具名过滤' },
           since: { type: 'string', description: 'ISO 8601 时间戳起点' },
-          redact: { type: 'boolean', description: '是否去敏（默认 true）', default: true }
-        }
-      }
+          redact: { type: 'boolean', description: '是否去敏（默认 true）', default: true },
+        },
+      },
     },
     {
       name: 'trace_replay',
-      description: '从 JSONL 文本重放轨迹：逐行 JSON.parse + 结构完整性检查。不做"重算 verdict"（那属于 P3 范畴，需要完整输入）。返回 replayed / errors / unique_tools / unique_traces。',
+      description:
+        '从 JSONL 文本重放轨迹：逐行 JSON.parse + 结构完整性检查。不做"重算 verdict"（那属于 P3 范畴，需要完整输入）。返回 replayed / errors / unique_tools / unique_traces。',
       inputSchema: {
         type: 'object',
         properties: {
           json_lines: {
             type: 'array',
             items: { type: 'string' },
-            description: 'JSONL 行数组（每行一条 trace JSON）'
+            description: 'JSONL 行数组（每行一条 trace JSON）',
           },
-          strict: { type: 'boolean', description: '严格模式：首个 parse 失败即中断', default: false }
+          strict: {
+            type: 'boolean',
+            description: '严格模式：首个 parse 失败即中断',
+            default: false,
+          },
         },
-        required: ['json_lines']
-      }
-    }
-  ]
+        required: ['json_lines'],
+      },
+    },
+  ],
 }));
 
 // ============================================================
@@ -1663,11 +1804,11 @@ function explainUnknown(args) {
   if (verdict_id) {
     // 从内存 trace 里找该 verdict_id 对应的调用（简化：按 trace_id 前缀匹配）
     const allTraces = exportTraces({ limit: TRACE_BUFFER_MAX, redact: false });
-    const matches = allTraces.filter(t =>
-      t.result_summary && (
-        t.result_summary.verdict_id === verdict_id ||
-        String(t.result_summary.reason || '').includes(verdict_id)
-      )
+    const matches = allTraces.filter(
+      (t) =>
+        t.result_summary &&
+        (t.result_summary.verdict_id === verdict_id ||
+          String(t.result_summary.reason || '').includes(verdict_id)),
     );
     if (matches.length === 0) {
       return {
@@ -1675,21 +1816,21 @@ function explainUnknown(args) {
         found: false,
         error: 'verdict_not_in_current_session',
         hint: 'verdict_id 只在当前 stdio 会话内可查；跨会话需通过 trace_export 落盘后重放',
-        traces_searched: allTraces.length
+        traces_searched: allTraces.length,
       };
     }
     return {
       verdict_id,
       found: true,
       trace_count: matches.length,
-      traces: matches.map(t => ({
+      traces: matches.map((t) => ({
         trace_id: t.trace_id,
         ts: t.ts,
         tool: t.tool,
         duration_ms: t.duration_ms,
-        result_summary: t.result_summary
+        result_summary: t.result_summary,
       })),
-      honest_note: '仅当前 stdio 会话内可查；服务端无持久化'
+      honest_note: '仅当前 stdio 会话内可查；服务端无持久化',
     };
   }
 
@@ -1699,19 +1840,27 @@ function explainUnknown(args) {
       return { error: '参数缺失: 给 component_id 时必须同时给 category' };
     }
     const data = loadData(category);
-    const item = data.find(x => x.id === component_id);
+    const item = data.find((x) => x.id === component_id);
     if (!item) {
       return {
-        component_id, category,
+        component_id,
+        category,
         found: false,
         error: 'component_not_found',
-        suggestion: '使用 search_components 确认 ID 与品类'
+        suggestion: '使用 search_components 确认 ID 与品类',
       };
     }
     // 提取所有带 "unknown" / evidence_gap / gap 语义的字段
     const evidenceGaps = [];
-    const UNKNOWN_KEYS = ['evidence_gaps', 'evidence_gap', 'gaps', 'unknown_fields',
-                          'verdict_reason', 'gap_cause', 'missing_fields'];
+    const UNKNOWN_KEYS = [
+      'evidence_gaps',
+      'evidence_gap',
+      'gaps',
+      'unknown_fields',
+      'verdict_reason',
+      'gap_cause',
+      'missing_fields',
+    ];
     for (const key of UNKNOWN_KEYS) {
       if (key in item) {
         const v = item[key];
@@ -1735,10 +1884,11 @@ function explainUnknown(args) {
       evidence_gaps: evidenceGaps.length > 0 ? evidenceGaps.slice(0, limit) : [],
       null_or_unknown_fields: nullFields,
       gap_count: evidenceGaps.length + nullFields.length,
-      summary: evidenceGaps.length === 0 && nullFields.length === 0
-        ? 'no_gaps: 该实体字段完整，不是 unknown 来源'
-        : `${evidenceGaps.length} 组显式 gap 记录 + ${nullFields.length} 个空/unknown 字段`,
-      honest_note: '字段级缺口扫描，不代表完整因果归因；完整归因见 gap_classification 层'
+      summary:
+        evidenceGaps.length === 0 && nullFields.length === 0
+          ? 'no_gaps: 该实体字段完整，不是 unknown 来源'
+          : `${evidenceGaps.length} 组显式 gap 记录 + ${nullFields.length} 个空/unknown 字段`,
+      honest_note: '字段级缺口扫描，不代表完整因果归因；完整归因见 gap_classification 层',
     };
   }
 
@@ -1748,22 +1898,27 @@ function explainUnknown(args) {
     total_entities: 0,
     entities_with_null_or_unknown: 0,
     entities_with_evidence_gaps: 0,
-    by_category: {}
+    by_category: {},
   };
   for (const cat of allCats) {
     const items = loadData(cat);
-    let nNull = 0, nGap = 0;
+    let nNull = 0,
+      nGap = 0;
     for (const it of items) {
       let hasGap = false;
       for (const key of ['evidence_gaps', 'evidence_gap', 'gaps', 'gap_cause']) {
-        if (key in it) { hasGap = true; break; }
+        if (key in it) {
+          hasGap = true;
+          break;
+        }
       }
       if (hasGap) nGap++;
       // 是否有 null/unknown 字段
       let hasNull = false;
       for (const v of Object.values(it)) {
         if (v === null || v === undefined || v === 'unknown' || v === 'N/A' || v === '') {
-          hasNull = true; break;
+          hasNull = true;
+          break;
         }
       }
       if (hasNull) nNull++;
@@ -1771,22 +1926,24 @@ function explainUnknown(args) {
     stats.by_category[cat] = {
       total: items.length,
       with_evidence_gaps: nGap,
-      with_null_or_unknown: nNull
+      with_null_or_unknown: nNull,
     };
     stats.total_entities += items.length;
     stats.entities_with_null_or_unknown += nNull;
     stats.entities_with_evidence_gaps += nGap;
   }
-  stats.null_or_unknown_rate = stats.total_entities > 0
-    ? (stats.entities_with_null_or_unknown / stats.total_entities * 100).toFixed(2) + '%'
-    : '0%';
-  stats.evidence_gap_rate = stats.total_entities > 0
-    ? (stats.entities_with_evidence_gaps / stats.total_entities * 100).toFixed(2) + '%'
-    : '0%';
+  stats.null_or_unknown_rate =
+    stats.total_entities > 0
+      ? ((stats.entities_with_null_or_unknown / stats.total_entities) * 100).toFixed(2) + '%'
+      : '0%';
+  stats.evidence_gap_rate =
+    stats.total_entities > 0
+      ? ((stats.entities_with_evidence_gaps / stats.total_entities) * 100).toFixed(2) + '%'
+      : '0%';
   return {
     mode: 'library_summary',
     ...stats,
-    honest_note: '全库扫描，字段级而非因果级；精确归因见 explain_unknown(component_id=...)'
+    honest_note: '全库扫描，字段级而非因果级；精确归因见 explain_unknown(component_id=...)',
   };
 }
 
@@ -1807,7 +1964,10 @@ const TRACE_BUFFER_MAX = 1000;
 function startLongTaskHandler(args) {
   const { task_type, args: taskArgs } = args;
   if (!task_type) {
-    return { error: '参数缺失: task_type 为必填', allowed: ['batch_check_compatibility', 'bulk_export_bom', 'deep_dialect_evaluate'] };
+    return {
+      error: '参数缺失: task_type 为必填',
+      allowed: ['batch_check_compatibility', 'bulk_export_bom', 'deep_dialect_evaluate'],
+    };
   }
 
   const taskBody = async (task, params) => {
@@ -1826,13 +1986,13 @@ function startLongTaskHandler(args) {
               component1_id: p.component1_id,
               component1_category: p.component1_category,
               component2_id: p.component2_id,
-              component2_category: p.component2_category
+              component2_category: p.component2_category,
             });
             results.push({ index: i, ...p, verdict: r });
           } catch (e) {
             results.push({ index: i, ...p, error: e.message });
           }
-          task._updateProgress((i + 1) / pairs.length * 100);
+          task._updateProgress(((i + 1) / pairs.length) * 100);
         }
         return { checked: results.length, results };
       }
@@ -1850,7 +2010,7 @@ function startLongTaskHandler(args) {
           } catch (e) {
             results.push({ index: i, error: e.message });
           }
-          task._updateProgress((i + 1) / boms.length * 100);
+          task._updateProgress(((i + 1) / boms.length) * 100);
         }
         return { exported: results.length, results };
       }
@@ -1868,7 +2028,7 @@ function startLongTaskHandler(args) {
           } catch (e) {
             results.push({ index: i, error: e.message });
           }
-          task._updateProgress((i + 1) / requests.length * 100);
+          task._updateProgress(((i + 1) / requests.length) * 100);
         }
         return { evaluated: results.length, results };
       }
@@ -1880,7 +2040,7 @@ function startLongTaskHandler(args) {
   return startLongTask({
     name: task_type,
     body: taskBody,
-    args: taskArgs || {}
+    args: taskArgs || {},
   });
 }
 
@@ -1891,16 +2051,15 @@ function startLongTaskHandler(args) {
  */
 function traceExportHandler(args) {
   const { limit, tool, since, redact } = args;
-  const limitFinal = typeof limit === 'number' ? Math.min(limit, TRACE_BUFFER_MAX) : TRACE_BUFFER_MAX;
+  const limitFinal =
+    typeof limit === 'number' ? Math.min(limit, TRACE_BUFFER_MAX) : TRACE_BUFFER_MAX;
   return exportTraces({
     limit: limitFinal,
     tool,
     since,
-    redactEnabled: redact !== false // 默认 true
+    redactEnabled: redact !== false, // 默认 true
   });
 }
-
-
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
@@ -1995,23 +2154,27 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       content: [
         {
           type: 'text',
-          text: JSON.stringify(result, null, 2)
-        }
-      ]
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
     };
   } catch (error) {
     return {
       content: [
         {
           type: 'text',
-          text: JSON.stringify({
-            error: `工具执行错误: ${name}`,
-            message: error.message,
-            arguments: args
-          }, null, 2)
-        }
+          text: JSON.stringify(
+            {
+              error: `工具执行错误: ${name}`,
+              message: error.message,
+              arguments: args,
+            },
+            null,
+            2,
+          ),
+        },
       ],
-      isError: true
+      isError: true,
     };
   }
 });

@@ -56,39 +56,44 @@ export const SCORE_WEIGHTS = {
  * @returns {{weights:object, breakdown:Array, method:string, weight_sum_decided:number, weighted_score:number|null}}
  */
 export function scoreBreakdown(dimensions) {
-  const breakdown = dimensions.map(d => {
+  const breakdown = dimensions.map((d) => {
     const w = SCORE_WEIGHTS[d.dimension] ?? 0;
     const decided = d.compatible !== null;
     const s = decided ? (d.compatible ? 1 : 0) : null;
     return {
       dimension: d.dimension,
       weight: w,
-      verdict: d.compatible === true ? 'compatible' : d.compatible === false ? 'conflict' : 'undecided',
+      verdict:
+        d.compatible === true ? 'compatible' : d.compatible === false ? 'conflict' : 'undecided',
       score: s,
       contribution: decided ? +(w * s).toFixed(4) : null,
     };
   });
-  const decidedParts = breakdown.filter(b => b.contribution !== null);
+  const decidedParts = breakdown.filter((b) => b.contribution !== null);
   const weightSum = decidedParts.reduce((acc, b) => acc + b.weight, 0);
   const contribSum = decidedParts.reduce((acc, b) => acc + b.contribution, 0);
   return {
     weights: { ...SCORE_WEIGHTS },
     breakdown,
-    method: '多因子加权：score = Σ(weight_i × s_i) / Σ(weight_i)，仅"已裁决"维度计入；'
-          + 's_i ∈ {1 兼容, 0 冲突}；未裁决(null)维度不进分子也不进分母；'
-          + '整体无法判定(overall=null)时分数置 null',
+    method:
+      '多因子加权：score = Σ(weight_i × s_i) / Σ(weight_i)，仅"已裁决"维度计入；' +
+      's_i ∈ {1 兼容, 0 冲突}；未裁决(null)维度不进分子也不进分母；' +
+      '整体无法判定(overall=null)时分数置 null',
     weight_sum_decided: +weightSum.toFixed(4),
-    weighted_score: weightSum > 0 ? Math.round(contribSum / weightSum * 100) : null,
+    weighted_score: weightSum > 0 ? Math.round((contribSum / weightSum) * 100) : null,
   };
 }
 
 export function parseVoltageRange(str) {
   if (!str) return null;
   const s = String(str);
-  const range = s.match(/([\d.]+)\s*[~\-]\s*([\d.]+)\s*V/i);
+  const range = s.match(/([\d.]+)\s*[~-]\s*([\d.]+)\s*V/i);
   if (range) return { min: parseFloat(range[1]), max: parseFloat(range[2]) };
   const single = s.match(/([\d.]+)\s*V/i);
-  if (single) { const v = parseFloat(single[1]); return { min: v, max: v }; }
+  if (single) {
+    const v = parseFloat(single[1]);
+    return { min: v, max: v };
+  }
   return null;
 }
 
@@ -97,7 +102,10 @@ export function tokens(item) {
     item.protocol,
     item.interface,
     Array.isArray(item.interfaces) ? item.interfaces.join('/') : '',
-  ].filter(Boolean).join(' ').toLowerCase();
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
 }
 
 export function overlap(a, b) {
@@ -112,10 +120,36 @@ export function overlap(a, b) {
  * 否则 includes 会先命中短词导致误判。
  */
 export const PROTOCOL_VOCAB = [
-  'ethercat', 'ethernetip', 'ethernet/ip', 'profinet', 'powerlink', 'io-link', 'iolink',
-  'canopen', 'can', 'rs485', 'rs232', 'modbus', 'flexray', 'lin',
-  'spi', 'i2c', 'uart', 'usb', 'pcie', 'mipi', 'ros2', 'ttl', 'dynamixel',
-  'ethernet', 'udp', 'tcp', 'wifi', 'bluetooth', 'zigbee', 'analog',
+  'ethercat',
+  'ethernetip',
+  'ethernet/ip',
+  'profinet',
+  'powerlink',
+  'io-link',
+  'iolink',
+  'canopen',
+  'can',
+  'rs485',
+  'rs232',
+  'modbus',
+  'flexray',
+  'lin',
+  'spi',
+  'i2c',
+  'uart',
+  'usb',
+  'pcie',
+  'mipi',
+  'ros2',
+  'ttl',
+  'dynamixel',
+  'ethernet',
+  'udp',
+  'tcp',
+  'wifi',
+  'bluetooth',
+  'zigbee',
+  'analog',
   'proprietary',
 ];
 /**
@@ -152,13 +186,24 @@ export function matchVocab(raw, vocab) {
     }
     if (ok) {
       hit.add(p);
-      (PROTOCOL_IMPLIES[p] || []).forEach(x => hit.add(x));
+      (PROTOCOL_IMPLIES[p] || []).forEach((x) => hit.add(x));
     }
   }
   return [...hit];
 }
 /** 机械接口词表（含 check.js 独有的 standard，勿删） */
-export const MECH_VOCAB = ['flange', '法兰', 'm8', 'm12', 'db9', 'connector', '连接器', 'shaft', '轴', 'standard'];
+export const MECH_VOCAB = [
+  'flange',
+  '法兰',
+  'm8',
+  'm12',
+  'db9',
+  'connector',
+  '连接器',
+  'shaft',
+  '轴',
+  'standard',
+];
 
 /**
  * 抽取一方在某维度上的证据：{ raw, matched }。
@@ -223,12 +268,14 @@ const MECH_IDENTITY_FIELDS = ['standard', 'flange'];
  * 的 undecided_designation_form 分支——那里给的是"判不了"，不是"相等"。
  */
 export function normalizeMechToken(s) {
-  return String(s)
-    // Unicode 连字符族（‐‑‒–—―−）统一成 ASCII '-'
-    .replace(/[\u2010-\u2015\u2212]/g, '-')
-    // 全角空格 / 不断行空格 / 常规空白全部去掉（编码内部的空格无语义）
-    .replace(/[\s\u00a0\u3000]+/g, '')
-    .toUpperCase();
+  return (
+    String(s)
+      // Unicode 连字符族（‐‑‒–—―−）统一成 ASCII '-'
+      .replace(/[\u2010-\u2015\u2212]/g, '-')
+      // 全角空格 / 不断行空格 / 常规空白全部去掉（编码内部的空格无语义）
+      .replace(/[\s\u00a0\u3000]+/g, '')
+      .toUpperCase()
+  );
 }
 
 /**
@@ -237,7 +284,9 @@ export function normalizeMechToken(s) {
  * 由调用方决定怎么处理——本函数不替标准裁决 A 与无 A 是否等价。
  */
 export function parseIsoFlange(token) {
-  const m = /^ISO9409-1-([A-Z]?)(\d+(?:\.\d+)?)-(\d+)-(M\d+(?:\.\d+)?)$/.exec(normalizeMechToken(token));
+  const m = /^ISO9409-1-([A-Z]?)(\d+(?:\.\d+)?)-(\d+)-(M\d+(?:\.\d+)?)$/.exec(
+    normalizeMechToken(token),
+  );
   if (!m) return null;
   return { form: m[1] || '', d1: parseFloat(m[2]), bolts: parseInt(m[3], 10), thread: m[4] };
 }
@@ -254,8 +303,8 @@ function idValues(v) {
   // 这里直接把结构化对象按 ISO 9409-1 编码形态展成 "ISO9409-1-<pcd>-<bolts>-<thread>"，
   // 与字符串形态走同一比较空间。信息不丢、语义对齐。
   return (Array.isArray(v) ? v : [v])
-    .filter(x => x !== null && x !== undefined)
-    .map(x => {
+    .filter((x) => x !== null && x !== undefined)
+    .map((x) => {
       if (x && typeof x === 'object' && !Array.isArray(x)) {
         // 只认能还原成 ISO 9409-1 编码的结构化对象；其余对象一律丢弃（不猜）。
         const pcd = x.pcd_mm ?? x.pcd ?? x.diam_mm;
@@ -268,7 +317,7 @@ function idValues(v) {
       }
       return normalizeMechToken(x);
     })
-    .filter(x => x && x !== 'UNKNOWN');
+    .filter((x) => x && x !== 'UNKNOWN');
 }
 
 /**
@@ -296,15 +345,15 @@ export function mechanicalEvidence(item) {
     const st = String(mi.status || '').toLowerCase();
     if (st === 'not_declared' || st === 'n_a') return { raw: '', matched: [], robot: [], tool: [] };
     // 多值展开为多个 token 后去重：集合与集合按交集判定，单值是集合的退化情形。
-    const idKeys = [...new Set(MECH_IDENTITY_FIELDS.flatMap(k => idValues(mi[k])))];
-    const toolKeys = [...new Set(MECH_TOOL_IDENTITY_FIELDS.flatMap(k => idValues(mi[k])))];
+    const idKeys = [...new Set(MECH_IDENTITY_FIELDS.flatMap((k) => idValues(mi[k])))];
+    const toolKeys = [...new Set(MECH_TOOL_IDENTITY_FIELDS.flatMap((k) => idValues(mi[k])))];
     // 有身份键才允许进入交集比对。刻意**不看 status 标签**：判据锚在
     // "有没有可比对的规格"这一行为事实上，而不是 partial/declared 这类
     // 人工标注的口径 —— 标签会写错，字段有没有值不会。
     if (idKeys.length || toolKeys.length) {
       return {
         raw: idKeys.join(' '),
-        matched: idKeys,        // 向后兼容：matched 恒为**机器人侧**集合
+        matched: idKeys, // 向后兼容：matched 恒为**机器人侧**集合
         robot: idKeys,
         tool: toolKeys,
         // 只给了工具侧、没给安装侧：能不能对接要看**对方**的安装侧，
@@ -315,16 +364,24 @@ export function mechanicalEvidence(item) {
     // 声明了非身份键（如 mount_type）却没有身份键：判不了。
     // 且要与"我方词表不认识"区分开 —— 这是厂商没给决定性字段，属数据缺口。
     const weak = [mi.mount_type]
-      .filter(v => v && String(v).toLowerCase() !== 'unknown')
-      .map(v => String(v).toLowerCase());
-    if (weak.length) return { raw: '', matched: [], robot: [], tool: [], weak: weak.join('/'), gap: mi.gap || null };
+      .filter((v) => v && String(v).toLowerCase() !== 'unknown')
+      .map((v) => String(v).toLowerCase());
+    if (weak.length)
+      return {
+        raw: '',
+        matched: [],
+        robot: [],
+        tool: [],
+        weak: weak.join('/'),
+        gap: mi.gap || null,
+      };
     return { raw: '', matched: [], robot: [], tool: [] };
   }
   const raw = tokens(item).trim();
   // 【20260811-09】自由文本命中的词也必须落进**同一个归一化命名空间**，否则
   // 结构化侧（已归一化为大写）与自由文本侧（词表为小写）永远交不上 ——
   // 修一处假红顺手造另一处假红，是本项目栽过的老坑（L1.23 反噬）。
-  const m = matchVocab(raw, MECH_VOCAB).map(x => normalizeMechToken(x));
+  const m = matchVocab(raw, MECH_VOCAB).map((x) => normalizeMechToken(x));
   // 自由文本里的接口词没有侧别信息，按**安装侧**处理（历史口径），tool 留空 ——
   // 留空意味着"对接关系不可判定"，而不是"不能对接"。
   return { raw, matched: m, robot: m, tool: [] };
@@ -334,7 +391,7 @@ export function mechanicalEvidence(item) {
 function inconclusiveNote(a, b, ea, eb, what) {
   const side = (x, e, dflt) => {
     if (e.matched.length) return null;
-    const nm = (x && x.name) ? x.name : dflt;
+    const nm = x && x.name ? x.name : dflt;
     // 第三种"判不了"：声明了非决定性属性（如只给安装方式，不给法兰规格）。
     // 既不该说成"未声明"（对方确实给了东西），也不该说成"我方词表不认识"
     // （我们认识 direct_mount，只是它不足以判定）。据实说是哪一格缺。
@@ -344,8 +401,12 @@ function inconclusiveNote(a, b, ea, eb, what) {
       return `${nm} 仅声明工具侧接口「${e.toolOnly}」，未声明自身安装侧规格（缺一侧，判不了互换）`;
     }
     if (e.weak) {
-      return `${nm} 仅声明安装方式「${e.weak}」，未给法兰/接口标准规格`
-        + (e.gap ? `（厂商侧缺口：${String(e.gap).slice(0, 40)}）` : '（缺可比对的接口标识，判不了孔位级互换）');
+      return (
+        `${nm} 仅声明安装方式「${e.weak}」，未给法兰/接口标准规格` +
+        (e.gap
+          ? `（厂商侧缺口：${String(e.gap).slice(0, 40)}）`
+          : '（缺可比对的接口标识，判不了孔位级互换）')
+      );
     }
     return e.raw
       ? `${nm} 声明了「${e.raw.slice(0, 40)}」但不在可比对${what}词表内（我方能力边界，非厂商缺数据）`
@@ -358,17 +419,21 @@ function inconclusiveNote(a, b, ea, eb, what) {
 export function evalDimension(name, a, b) {
   switch (name) {
     case 'protocol': {
-      const ea = protocolEvidence(a), eb = protocolEvidence(b);
+      const ea = protocolEvidence(a),
+        eb = protocolEvidence(b);
       // 任一方无协议声明 → 不可判定。此前直接 shared.length > 0，把"没数据"输出成
       // "不兼容"（假红），与 electrical/software 两个维度的三态口径自相矛盾。
       if (!ea.matched.length || !eb.matched.length) {
         return { compatible: null, score: 0, notes: inconclusiveNote(a, b, ea, eb, '通信协议') };
       }
-      const shared = ea.matched.filter(p => eb.matched.includes(p) && !NON_SHAREABLE_PROTOCOLS.includes(p));
+      const shared = ea.matched.filter(
+        (p) => eb.matched.includes(p) && !NON_SHAREABLE_PROTOCOLS.includes(p),
+      );
       if (shared.length) {
         return { compatible: true, score: 1, notes: '共享协议: ' + shared.join('/') };
       }
-      const bothProprietary = ea.matched.includes('proprietary') && eb.matched.includes('proprietary');
+      const bothProprietary =
+        ea.matched.includes('proprietary') && eb.matched.includes('proprietary');
       return {
         compatible: false,
         score: 0,
@@ -378,8 +443,10 @@ export function evalDimension(name, a, b) {
       };
     }
     case 'electrical': {
-      const va = parseVoltageRange(a.voltage), vb = parseVoltageRange(b.voltage);
-      if (!va || !vb) return { compatible: null, score: 0, notes: '一方或双方无电压数据，无法判定' };
+      const va = parseVoltageRange(a.voltage),
+        vb = parseVoltageRange(b.voltage);
+      if (!va || !vb)
+        return { compatible: null, score: 0, notes: '一方或双方无电压数据，无法判定' };
       const ok = overlap(va, vb);
       return {
         compatible: ok,
@@ -388,7 +455,8 @@ export function evalDimension(name, a, b) {
       };
     }
     case 'mechanical': {
-      const ea = mechanicalEvidence(a), eb = mechanicalEvidence(b);
+      const ea = mechanicalEvidence(a),
+        eb = mechanicalEvidence(b);
       // 同 protocol：库内绝大多数实体 status=not_declared / n_a（占比现算，见
       // meta.mechanical_interface_coverage —— 此处刻意不写死数字，旧注释里的
       // 「N 条中 M 条」在库涨到 706 后就成了假话）。
@@ -405,8 +473,8 @@ export function evalDimension(name, a, b) {
       // （两只夹爪、两个传感器）都会输出 compatible:true —— 夹爪装不到夹爪上。
       // 假绿会随数据覆盖率线性增长，必须在补数据之前先把两种关系分开。
       const mate = [
-        ...ea.tool.filter(p => eb.robot.includes(p)),
-        ...eb.tool.filter(p => ea.robot.includes(p)),
+        ...ea.tool.filter((p) => eb.robot.includes(p)),
+        ...eb.tool.filter((p) => ea.robot.includes(p)),
       ];
       const sharedMate = [...new Set(mate)];
       if (sharedMate.length) {
@@ -417,7 +485,7 @@ export function evalDimension(name, a, b) {
           notes: '可直接对接: 一方工具侧与另一方安装侧一致 (' + sharedMate.join('/') + ')',
         };
       }
-      const shared = ea.robot.filter(p => eb.robot.includes(p));
+      const shared = ea.robot.filter((p) => eb.robot.includes(p));
       if (shared.length) {
         return {
           compatible: true,
@@ -425,8 +493,10 @@ export function evalDimension(name, a, b) {
           relation: 'interchangeable',
           // 措辞必须把关系类型讲死：这是"可互换"，不是"可对接"。
           // 对接与否取决于工具侧接口，双方都没声明就是判不了，不许默认成立。
-          notes: '安装侧接口一致: ' + shared.join('/')
-            + ' —— 二者可装在同一法兰上（可互换选型）；能否彼此对接需一方声明工具侧接口，双方均未声明，对接关系不判定',
+          notes:
+            '安装侧接口一致: ' +
+            shared.join('/') +
+            ' —— 二者可装在同一法兰上（可互换选型）；能否彼此对接需一方声明工具侧接口，双方均未声明，对接关系不判定',
         };
       }
       // 【20260811-09】编码"尺寸段一致、书写形式不同"→ 判不了，不许判 false。
@@ -455,18 +525,22 @@ export function evalDimension(name, a, b) {
           compatible: null,
           score: 0,
           relation: 'undecided_designation_form',
-          notes: `ISO 9409-1 编码的尺寸段一致但书写形式不同（${[...new Set(formClash)].join('；')}）`
-            + '：带字母前缀与不带前缀是否指同一接口，须以 ISO 9409-1 标准原文为准，本平台未持有原文，'
-            + '故不判定（不判"不兼容"以免把装得上的排除掉，也不判"兼容"以免凭空断言等价）',
+          notes:
+            `ISO 9409-1 编码的尺寸段一致但书写形式不同（${[...new Set(formClash)].join('；')}）` +
+            '：带字母前缀与不带前缀是否指同一接口，须以 ISO 9409-1 标准原文为准，本平台未持有原文，' +
+            '故不判定（不判"不兼容"以免把装得上的排除掉，也不判"兼容"以免凭空断言等价）',
         };
       }
       return {
         compatible: false,
         score: 0,
         relation: 'none',
-        notes: `机械接口无交集（安装侧 ${ea.robot.join('/') || '—'} vs ${eb.robot.join('/') || '—'}`
-          + (ea.tool.length || eb.tool.length ? `；工具侧 ${ea.tool.join('/') || '—'} vs ${eb.tool.join('/') || '—'}` : '')
-          + '）',
+        notes:
+          `机械接口无交集（安装侧 ${ea.robot.join('/') || '—'} vs ${eb.robot.join('/') || '—'}` +
+          (ea.tool.length || eb.tool.length
+            ? `；工具侧 ${ea.tool.join('/') || '—'} vs ${eb.tool.join('/') || '—'}`
+            : '') +
+          '）',
       };
     }
     case 'software': {
@@ -479,14 +553,29 @@ export function evalDimension(name, a, b) {
       // 判 false 的唯一合法前提仍是：双方都有声明，且确实冲突。
       const da = typeof a.ros_support === 'boolean';
       const db = typeof b.ros_support === 'boolean';
-      if (!da && !db) return { compatible: null, score: 0, notes: '双方均未声明 ROS2 支持，无法判定（无数据 ≠ 不兼容）' };
+      if (!da && !db)
+        return {
+          compatible: null,
+          score: 0,
+          notes: '双方均未声明 ROS2 支持，无法判定（无数据 ≠ 不兼容）',
+        };
       if (!da || !db) {
-        const who = !da ? (a.name || a.id || 'A') : (b.name || b.id || 'B');
-        return { compatible: null, score: 0, notes: `${who} 未声明 ROS2 支持，无法判定（无数据 ≠ 不兼容）` };
+        const who = !da ? a.name || a.id || 'A' : b.name || b.id || 'B';
+        return {
+          compatible: null,
+          score: 0,
+          notes: `${who} 未声明 ROS2 支持，无法判定（无数据 ≠ 不兼容）`,
+        };
       }
-      if (a.ros_support && b.ros_support) return { compatible: true, score: 1, notes: '双方均原生支持 ROS2' };
-      if (!a.ros_support && !b.ros_support) return { compatible: true, score: 1, notes: '双方均明确不支持 ROS2，无 ROS2 生态冲突' };
-      return { compatible: false, score: 0, notes: '双方均有声明：仅一方支持 ROS2，混合使用需额外驱动' };
+      if (a.ros_support && b.ros_support)
+        return { compatible: true, score: 1, notes: '双方均原生支持 ROS2' };
+      if (!a.ros_support && !b.ros_support)
+        return { compatible: true, score: 1, notes: '双方均明确不支持 ROS2，无 ROS2 生态冲突' };
+      return {
+        compatible: false,
+        score: 0,
+        notes: '双方均有声明：仅一方支持 ROS2，混合使用需额外驱动',
+      };
     }
     default:
       return { compatible: null, score: 0, notes: '未知维度' };
@@ -534,7 +623,8 @@ const KIND_WHY = {
   software: '不存在机械与电气接口',
 };
 const KIND_HINT = {
-  specification: '若要问「某零件是否支持该规范」，请以零件为操作数，读其 protocol / interface / compatibility 字段',
+  specification:
+    '若要问「某零件是否支持该规范」，请以零件为操作数，读其 protocol / interface / compatibility 字段',
   software: '若要问「某算力平台能否跑该模型」，属算力与框架适配问题，不在本引擎的四维硬件兼容范畴',
 };
 
@@ -557,7 +647,11 @@ export function buildEvidenceBlock(dimensions, a, b) {
     if (d.compatible === null) {
       missing.push({ dimension: d.dimension, reason: d.notes });
     } else if (EVIDENCE_RE.test(d.notes || '')) {
-      sources.push({ dimension: d.dimension, verdict: d.compatible ? 'match' : 'conflict', detail: d.notes });
+      sources.push({
+        dimension: d.dimension,
+        verdict: d.compatible ? 'match' : 'conflict',
+        detail: d.notes,
+      });
     }
   }
   const count = sources.length;
@@ -582,20 +676,32 @@ export function judgePair(a, b) {
   // ── 入参防护（BAD-02 badcase 修复）─────────────────────────────────────
   // 当 b/a 为 undefined/null（如 ID 不存在）时，engine 不应崩溃；统一交回类型闸。
   if (!a || !b) {
-    const reason = (!a && !b)
-      ? '两个操作数均缺失，无法判定'
-      : `${!a ? '左侧' : '右侧'}操作数缺失（ID 不存在或数据缺失），无法判定`;
+    const reason =
+      !a && !b
+        ? '两个操作数均缺失，无法判定'
+        : `${!a ? '左侧' : '右侧'}操作数缺失（ID 不存在或数据缺失），无法判定`;
     return {
       a: a ? { id: a.id, name: a.name, category: a.category, entity_kind: a.entity_kind } : null,
       b: b ? { id: b.id, name: b.name, category: b.category, entity_kind: b.entity_kind } : null,
-      dimensions: DIMENSIONS.map(d => ({ dimension: d, compatible: null, score: 0, notes: reason })),
-      overall_compatible: null, compatibility_score: null, score_basis: null,
-      applicable: false, verdict_reason: reason,
-      decided_dimensions: 0, undecided_dimensions: DIMENSIONS.length, hard_dimensions_decided: 0,
+      dimensions: DIMENSIONS.map((d) => ({
+        dimension: d,
+        compatible: null,
+        score: 0,
+        notes: reason,
+      })),
+      overall_compatible: null,
+      compatibility_score: null,
+      score_basis: null,
+      applicable: false,
+      verdict_reason: reason,
+      decided_dimensions: 0,
+      undecided_dimensions: DIMENSIONS.length,
+      hard_dimensions_decided: 0,
       source: 'rule-engine (real entity fields)',
       ...buildEvidenceBlock(
-        DIMENSIONS.map(d => ({ dimension: d, compatible: null, notes: reason })),
-        a || { source_tier: null }, b || { source_tier: null }
+        DIMENSIONS.map((d) => ({ dimension: d, compatible: null, notes: reason })),
+        a || { source_tier: null },
+        b || { source_tier: null },
       ),
       evidence_basis: '入参缺失（ID 不存在或数据层缺失），非兼容性问题而是数据缺口',
     };
@@ -612,14 +718,24 @@ export function judgePair(a, b) {
     const parts = [];
     if (ka) parts.push(`${a.name}（${KIND_LABEL[ka] || ka}）${KIND_WHY[ka] || '不是实物零部件'}`);
     if (kb) parts.push(`${b.name}（${KIND_LABEL[kb] || kb}）${KIND_WHY[kb] || '不是实物零部件'}`);
-    const hints = [...new Set([ka, kb].filter(Boolean).map(k => KIND_HINT[k]).filter(Boolean))];
-    const note = `${parts.join('；')}，不构成兼容性判定对象`
-               + (hints.length ? `。${hints.join('；')}` : '');
+    const hints = [
+      ...new Set(
+        [ka, kb]
+          .filter(Boolean)
+          .map((k) => KIND_HINT[k])
+          .filter(Boolean),
+      ),
+    ];
+    const note =
+      `${parts.join('；')}，不构成兼容性判定对象` + (hints.length ? `。${hints.join('；')}` : '');
     return {
       a: { id: a.id, name: a.name, category: a.category, entity_kind: a.entity_kind },
       b: { id: b.id, name: b.name, category: b.category, entity_kind: b.entity_kind },
-      dimensions: DIMENSIONS.map(d => ({
-        dimension: d, compatible: null, score: 0, notes: note,
+      dimensions: DIMENSIONS.map((d) => ({
+        dimension: d,
+        compatible: null,
+        score: 0,
+        notes: note,
       })),
       overall_compatible: null,
       compatibility_score: null,
@@ -631,16 +747,18 @@ export function judgePair(a, b) {
       hard_dimensions_decided: 0,
       source: 'rule-engine (real entity fields)',
       ...buildEvidenceBlock(
-        DIMENSIONS.map(d => ({ dimension: d, compatible: null, notes: note })),
-        a, b
+        DIMENSIONS.map((d) => ({ dimension: d, compatible: null, notes: note })),
+        a,
+        b,
       ),
-      evidence_basis: '操作数类型不适用：本引擎只裁决 entity_kind=component 的实物零部件；'
-                    + '接口/协议规范、AI 模型与软件、企业主体、市场情报条目均保留在库供检索，'
-                    + '但不参与兼容性判定',
+      evidence_basis:
+        '操作数类型不适用：本引擎只裁决 entity_kind=component 的实物零部件；' +
+        '接口/协议规范、AI 模型与软件、企业主体、市场情报条目均保留在库供检索，' +
+        '但不参与兼容性判定',
     };
   }
 
-  const dimensions = DIMENSIONS.map(d => {
+  const dimensions = DIMENSIONS.map((d) => {
     const r = evalDimension(d, a, b);
     // 【20260811-03】relation 必须逐字段透传，不能只活在 notes 里。
     // 首版改完线上实测：notes 已经写着"可互换、对接不判定"，而机读字段 relation=undefined
@@ -655,12 +773,12 @@ export function judgePair(a, b) {
     };
   });
 
-  const decided = dimensions.filter(x => x.compatible !== null);
-  const compatibleCount = decided.filter(x => x.compatible).length;
-  const hasConflict = decided.some(x => x.compatible === false);
+  const decided = dimensions.filter((x) => x.compatible !== null);
+  const compatibleCount = decided.filter((x) => x.compatible).length;
+  const hasConflict = decided.some((x) => x.compatible === false);
   // protocol/electrical/mechanical 是硬兼容约束；software(ROS2) 只是生态便利，
   // 单凭它不足以断言两件硬件"能装在一起"。
-  const hardDecided = decided.filter(x => HARD_DIMENSIONS.includes(x.dimension));
+  const hardDecided = decided.filter((x) => HARD_DIMENSIONS.includes(x.dimension));
 
   let overall, verdict_reason;
   if (!decided.length) {
@@ -699,7 +817,8 @@ export function judgePair(a, b) {
     hard_dimensions_decided: hardDecided.length,
     source: 'rule-engine (real entity fields)',
     ...buildEvidenceBlock(dimensions, a, b),
-    evidence_basis: '基于厂商公开声明字段的规则推断，非实测；未声明维度记为无法判定，不计入分子也不计入分母；判 true 至少需一项硬约束（协议/电气/机械）有双方声明',
+    evidence_basis:
+      '基于厂商公开声明字段的规则推断，非实测；未声明维度记为无法判定，不计入分子也不计入分母；判 true 至少需一项硬约束（协议/电气/机械）有双方声明',
     // 【P1 语义层 · 诚实边界】硬维度全无证据（overall=null）时，附"语义最相近零件"作为
     // 可核查线索，绝不作为兼容性结论（不会把 similarity 写进 compatibility_score，避免假绿）。
     ...(overall === null ? { semantic_hint: attachSemanticHint(a, b) } : {}),
@@ -716,7 +835,7 @@ export function judgePair(a, b) {
  * 零件"供人工核查，而不是干巴巴返回 null。它**不是**兼容性裁决因子——
  * 语义相近 ≠ 能装在一起，绝不据此把 verdict 改成 compatible=true。
  * ═══════════════════════════════════════════════════════════════════════════ */
-let _semIndex = null;   // isolate 级缓存：{ dim, idf, ids, names, vectors }
+let _semIndex = null; // isolate 级缓存：{ dim, idf, ids, names, vectors }
 
 const SEM_CJK = /[一-鿿]/g;
 const SEM_EN = /[a-z0-9][a-z0-9.+#-]*/g;
@@ -741,7 +860,10 @@ function tokenizeSemantic(text) {
 
 function hashDimSemantic(s, dim) {
   let h = 2166136261 >>> 0;
-  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
   return h % dim;
 }
 
@@ -754,7 +876,9 @@ export async function ensureSemanticIndex(env, request) {
     const doc = await r.json();
     if (!doc || !Array.isArray(doc.vectors) || !doc.dim) return null;
     _semIndex = doc;
-  } catch { _semIndex = null; }
+  } catch {
+    _semIndex = null;
+  }
   return _semIndex;
 }
 
@@ -774,7 +898,9 @@ function neighborsOf(id, k = 3) {
   }
   sims.sort((x, y) => y.sim - x.sim);
   return sims.slice(0, k).map((s) => ({
-    id: s.id, name: s.name, similarity: Math.round(s.sim * 1000) / 1000,
+    id: s.id,
+    name: s.name,
+    similarity: Math.round(s.sim * 1000) / 1000,
   }));
 }
 
@@ -850,12 +976,18 @@ async function mergeFlywheel(env, request, map) {
     if (!r.ok) return;
     const doc = await r.json();
     const contrib = doc.entities || [];
-    let merged = 0, added = 0;
+    let merged = 0,
+      added = 0;
     for (const c of contrib) {
       if (!c || !c.id) continue;
       const exist = map[c.id];
-      if (exist) { mergeInto(exist, c); merged++; }
-      else { map[c.id] = c; added++; }
+      if (exist) {
+        mergeInto(exist, c);
+        merged++;
+      } else {
+        map[c.id] = c;
+        added++;
+      }
     }
     if (merged || added) console.warn(`[flywheel] 合并贡献层: 补充 ${merged} + 新增 ${added} 实体`);
   } catch {
@@ -865,14 +997,19 @@ async function mergeFlywheel(env, request, map) {
 
 /** 把贡献层实体 c 的声明合并进已有实体 dst：只补缺失维度，不覆盖已声明数据。 */
 function mergeInto(dst, src) {
-  const ms = dst.mechanical_interface && String(dst.mechanical_interface.status || '').toLowerCase();
-  if (src.mechanical_interface && (!dst.mechanical_interface || ms === 'not_declared' || ms === 'n_a')) {
+  const ms =
+    dst.mechanical_interface && String(dst.mechanical_interface.status || '').toLowerCase();
+  if (
+    src.mechanical_interface &&
+    (!dst.mechanical_interface || ms === 'not_declared' || ms === 'n_a')
+  ) {
     dst.mechanical_interface = src.mechanical_interface;
   }
   if (!dst.protocol && src.protocol) dst.protocol = src.protocol;
   if (!dst.interface && src.interface) dst.interface = src.interface;
   if (!dst.voltage && src.voltage) dst.voltage = src.voltage;
-  if (typeof dst.ros_support !== 'boolean' && typeof src.ros_support === 'boolean') dst.ros_support = src.ros_support;
+  if (typeof dst.ros_support !== 'boolean' && typeof src.ros_support === 'boolean')
+    dst.ros_support = src.ros_support;
 }
 
 /** 主库收录实体总数（真相源，不含飞轮贡献层），供对外数字口径使用。 */

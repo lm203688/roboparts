@@ -41,28 +41,41 @@ export async function onRequestPost(context) {
 
     // 验证必填字段
     if (!event_type || !event_data) {
-      return json({
-        error: 'invalid_request',
-        message: '缺少必填字段：event_type, event_data',
-      }, 400);
+      return json(
+        {
+          error: 'invalid_request',
+          message: '缺少必填字段：event_type, event_data',
+        },
+        400,
+      );
     }
 
     // 验证事件类型
     const validEvents = [
-      'page_view', 'feature_use', 'signup', 'trial_start', 'trial_complete',
-      'payment_start', 'payment_success', 'payment_failed', 'conversion'
+      'page_view',
+      'feature_use',
+      'signup',
+      'trial_start',
+      'trial_complete',
+      'payment_start',
+      'payment_success',
+      'payment_failed',
+      'conversion',
     ];
     if (!validEvents.includes(event_type)) {
-      return json({
-        error: 'invalid_event_type',
-        message: `无效事件类型。支持：${validEvents.join(', ')}`,
-      }, 400);
+      return json(
+        {
+          error: 'invalid_event_type',
+          message: `无效事件类型。支持：${validEvents.join(', ')}`,
+        },
+        400,
+      );
     }
 
     // 生成事件 ID 和默认时间戳
     const eventId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     const eventTimestamp = timestamp || new Date().toISOString();
-    
+
     // 构造事件对象
     const event = {
       id: eventId,
@@ -78,7 +91,7 @@ export async function onRequestPost(context) {
     // 写入 KV 存储（按日期分组）
     const dateKey = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
     const eventsKey = `events:${dateKey}`;
-    
+
     // 获取当日现有事件
     let existingEvents = [];
     try {
@@ -92,7 +105,7 @@ export async function onRequestPost(context) {
 
     // 添加新事件
     existingEvents.push(event);
-    
+
     // 限制单日事件数量（防止恶意刷量）
     if (existingEvents.length > 10000) {
       existingEvents = existingEvents.slice(-9000); // 保留最近 9000 条
@@ -109,14 +122,16 @@ export async function onRequestPost(context) {
       event_id: eventId,
       message: '事件已记录',
     });
-
   } catch (error) {
     console.error('事件处理失败:', error);
-    return json({
-      error: 'processing_failed',
-      message: '事件处理失败',
-      detail: error.message,
-    }, 500);
+    return json(
+      {
+        error: 'processing_failed',
+        message: '事件处理失败',
+        detail: error.message,
+      },
+      500,
+    );
   }
 }
 
@@ -124,7 +139,7 @@ export async function onRequestPost(context) {
 async function updateFunnelData(env, event) {
   const funnelKey = 'funnel:current';
   const today = new Date().toISOString().split('T')[0];
-  
+
   // 获取现有漏斗数据
   let funnelData = {
     date: today,
@@ -135,7 +150,7 @@ async function updateFunnelData(env, event) {
     payments_started: 0,
     payments_success: 0,
     conversions: 0,
-    events: []
+    events: [],
   };
 
   try {

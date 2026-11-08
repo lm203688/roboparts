@@ -28,8 +28,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  classifyBatch, toPublicSources, buildVerdict, estimateAnswerability,
-  buildActionableFixes, CROSS_BRAND_RE,
+  classifyBatch,
+  toPublicSources,
+  buildVerdict,
+  estimateAnswerability,
+  buildActionableFixes,
+  CROSS_BRAND_RE,
 } from './lib/demand_signal_rules.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -37,9 +41,7 @@ const ROOT = path.resolve(__dirname, '..');
 const OUT_DIR = path.join(ROOT, 'ops');
 
 // ---- 真值源现算（绝不写死数字） ----
-const entitiesData = JSON.parse(
-  fs.readFileSync(path.join(ROOT, 'api', 'entities.json'), 'utf8')
-);
+const entitiesData = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'entities.json'), 'utf8'));
 const entities = entitiesData.entities || [];
 const totalEntities = entities.length;
 
@@ -75,14 +77,14 @@ entities.forEach((e) => {
 // PAIN_RE 只是 fetch 层的**预筛**（把明显无关的条目先筛掉，减小载荷），
 // 它不是判别：「标题里有兼容词」≠「这是机器人零件的兼容提问」。
 // 三态判别统一在 lib/demand_signal_rules.mjs，本文件不得据此决定 real_signal。
-const PAIN_RE = /compat|interchange|flange|适配|替换|互[操相]?作|cross[- ]?brand|replacement|mounting|可?互?换/gi;
+const PAIN_RE =
+  /compat|interchange|flange|适配|替换|互[操相]?作|cross[- ]?brand|replacement|mounting|可?互?换/gi;
 
 const SOURCES = [
   {
     name: 'github',
     label: 'GitHub Issues/PRs',
-    url:
-      'https://api.github.com/search/issues?q=robot+OR+humanoid+(flange+OR+compatible+OR+interchangeable+OR+replacement)+in:title&per_page=20&sort=updated&order=desc',
+    url: 'https://api.github.com/search/issues?q=robot+OR+humanoid+(flange+OR+compatible+OR+interchangeable+OR+replacement)+in:title&per_page=20&sort=updated&order=desc',
     parse: (j) => {
       const d = JSON.parse(j);
       return (d.items || []).map((i) => ({
@@ -95,8 +97,7 @@ const SOURCES = [
   {
     name: 'ros_discourse',
     label: 'Open Robotics Discourse',
-    url:
-      'https://discourse.openrobotics.org/search.json?q=compatible+OR+flange+OR+replacement&limit=20',
+    url: 'https://discourse.openrobotics.org/search.json?q=compatible+OR+flange+OR+replacement&limit=20',
     parse: (j) => {
       const d = JSON.parse(j);
       const posts = d.posts || [];
@@ -110,8 +111,7 @@ const SOURCES = [
   {
     name: 'stack_exchange',
     label: 'Robotics Stack Exchange',
-    url:
-      'https://api.stackexchange.com/2.3/search?order=desc&sort=activity&intitle=robot+compatible+OR+flange&site=robotics&pagesize=20',
+    url: 'https://api.stackexchange.com/2.3/search?order=desc&sort=activity&intitle=robot+compatible+OR+flange&site=robotics&pagesize=20',
     parse: (j) => {
       const d = JSON.parse(j);
       return (d.items || []).map((i) => ({
@@ -164,10 +164,10 @@ function buildReport({ channels, classified, today, selfTest = false }) {
   // real_query_count 只计 confirmed；unclassified / noise 一律不计（fail-closed）。
   const real_query_count = byState.confirmed;
   const cross_brand = confirmedItems.filter((c) =>
-    CROSS_BRAND_RE.test(String(c.title || ''))
+    CROSS_BRAND_RE.test(String(c.title || '')),
   ).length;
   const explicit_pain = confirmedItems.filter((c) =>
-    /compat|flange|替换|互[操相]?作|replacement|interchange/i.test(String(c.title || ''))
+    /compat|flange|替换|互[操相]?作|replacement|interchange/i.test(String(c.title || '')),
   ).length;
 
   // can_answer_today 基于声明率诚实估算（不粉饰）
@@ -210,9 +210,10 @@ function buildReport({ channels, classified, today, selfTest = false }) {
     },
     retrieval_quality: {
       noise_share: +noiseShare.toFixed(3),
-      note: noiseShare > 0.5
-        ? '检索词未锚定机器人领域：多数命中被判为非机器人信号，建议收窄检索式（限定 repo: 或补硬件锚词）'
-        : '检索词锚定尚可',
+      note:
+        noiseShare > 0.5
+          ? '检索词未锚定机器人领域：多数命中被判为非机器人信号，建议收窄检索式（限定 repo: 或补硬件锚词）'
+          : '检索词锚定尚可',
     },
     real_query_count,
     explicit_compatibility_pain: explicit_pain,
@@ -234,12 +235,42 @@ function buildReport({ channels, classified, today, selfTest = false }) {
  * 这些不是「编造的需求」——它们是可复现的判别基准：历史噪声逐条来自
  * 2026-08-16/28 真实快照，真信号用于证明阳性通道没被写死为假。 */
 const SELFTEST_HITS = [
-  { source: 'github', title: 'declare C and C-unwind as mutually ABI-compatible', url: 'https://example.invalid/1', created: null },
-  { source: 'github', title: '[HIP] [FlyDSL] [Kernel] Extend MXFP4 GEMM1 replacement to A4W4', url: 'https://example.invalid/2', created: null },
-  { source: 'github', title: 'feat: stream compatible Chat completions', url: 'https://example.invalid/3', created: null },
-  { source: 'github', title: 'humanoid robot shoulder joint flange not interchangeable across brands', url: 'https://example.invalid/4', created: null },
-  { source: 'reddit', title: '舵机延长线不兼容，需要替代品', url: 'https://example.invalid/5', created: null },
-  { source: 'ros_discourse', title: 'Which versions are compatible with this release?', url: 'https://example.invalid/6', created: null },
+  {
+    source: 'github',
+    title: 'declare C and C-unwind as mutually ABI-compatible',
+    url: 'https://example.invalid/1',
+    created: null,
+  },
+  {
+    source: 'github',
+    title: '[HIP] [FlyDSL] [Kernel] Extend MXFP4 GEMM1 replacement to A4W4',
+    url: 'https://example.invalid/2',
+    created: null,
+  },
+  {
+    source: 'github',
+    title: 'feat: stream compatible Chat completions',
+    url: 'https://example.invalid/3',
+    created: null,
+  },
+  {
+    source: 'github',
+    title: 'humanoid robot shoulder joint flange not interchangeable across brands',
+    url: 'https://example.invalid/4',
+    created: null,
+  },
+  {
+    source: 'reddit',
+    title: '舵机延长线不兼容，需要替代品',
+    url: 'https://example.invalid/5',
+    created: null,
+  },
+  {
+    source: 'ros_discourse',
+    title: 'Which versions are compatible with this release?',
+    url: 'https://example.invalid/6',
+    created: null,
+  },
 ];
 
 /** 报告组装自测：验证三态计数、字段一致性、三条 verdict 分支。全部离线。 */
@@ -269,44 +300,83 @@ function selfTestReport() {
     selfTest: true,
   });
 
-  check('计数·real_query_count 只计 confirmed（=2）',
-    report.real_query_count === 2, '实得 ' + report.real_query_count);
-  check('计数·noise=3（历史噪声全部被拦）',
-    report.classification.noise === 3, JSON.stringify(report.classification));
-  check('计数·unclassified=1（领域源无锚词）',
-    report.classification.unclassified === 1, JSON.stringify(report.classification));
-  check('计数·total_hits=6',
-    report.classification.total_hits === 6, String(report.classification.total_hits));
-  check('计数·三态之和 = total_hits',
-    report.classification.confirmed + report.classification.unclassified
-      + report.classification.noise === report.classification.total_hits);
-  check('字段·real_demand_signal_count 与 real_query_count 一致',
-    report.real_demand_signal_count === report.real_query_count);
-  check('字段·cross_brand 只在 confirmed 内计数',
-    report.cross_brand_compat_engine_users <= report.real_query_count);
-  check('字段·sources.real_signal 与 signal_state 一致',
-    report.sources.every((s) => s.real_signal === (s.signal_state === 'confirmed')));
-  check('字段·历史噪声无一被判成 confirmed',
-    report.sources.filter((s) => s.real_signal).every((s) =>
-      !/ABI-compatible|GEMM1|Chat completions/.test(s.evidence)));
-  check('字段·relevance 不再是写死的「需判别」占位',
-    report.sources.every((s) => !/需判别/.test(s.relevance)));
-  check('字段·estimate 不再宣称开源 BOM 反喂 ingestion',
-    !/反喂 ingestion/.test(report.can_answer_today.estimate));
-  check('字段·can_answer_today 披露分母 mech_applicable',
-    Number.isInteger(report.can_answer_today.mech_applicable));
-  check('verdict·confirmed>0 时给出三态计数',
-    /确认兼容性提问 2 条/.test(report.verdict)
-      && /未判 1 条/.test(report.verdict) && /非机器人信号 3 条/.test(report.verdict));
-  check('verdict·不再用「已捕获 N 条真实兼容性提问信号」句式',
-    !/已捕获 \d+ 条真实兼容性提问信号/.test(report.verdict));
+  check(
+    '计数·real_query_count 只计 confirmed（=2）',
+    report.real_query_count === 2,
+    '实得 ' + report.real_query_count,
+  );
+  check(
+    '计数·noise=3（历史噪声全部被拦）',
+    report.classification.noise === 3,
+    JSON.stringify(report.classification),
+  );
+  check(
+    '计数·unclassified=1（领域源无锚词）',
+    report.classification.unclassified === 1,
+    JSON.stringify(report.classification),
+  );
+  check(
+    '计数·total_hits=6',
+    report.classification.total_hits === 6,
+    String(report.classification.total_hits),
+  );
+  check(
+    '计数·三态之和 = total_hits',
+    report.classification.confirmed +
+      report.classification.unclassified +
+      report.classification.noise ===
+      report.classification.total_hits,
+  );
+  check(
+    '字段·real_demand_signal_count 与 real_query_count 一致',
+    report.real_demand_signal_count === report.real_query_count,
+  );
+  check(
+    '字段·cross_brand 只在 confirmed 内计数',
+    report.cross_brand_compat_engine_users <= report.real_query_count,
+  );
+  check(
+    '字段·sources.real_signal 与 signal_state 一致',
+    report.sources.every((s) => s.real_signal === (s.signal_state === 'confirmed')),
+  );
+  check(
+    '字段·历史噪声无一被判成 confirmed',
+    report.sources
+      .filter((s) => s.real_signal)
+      .every((s) => !/ABI-compatible|GEMM1|Chat completions/.test(s.evidence)),
+  );
+  check(
+    '字段·relevance 不再是写死的「需判别」占位',
+    report.sources.every((s) => !/需判别/.test(s.relevance)),
+  );
+  check(
+    '字段·estimate 不再宣称开源 BOM 反喂 ingestion',
+    !/反喂 ingestion/.test(report.can_answer_today.estimate),
+  );
+  check(
+    '字段·can_answer_today 披露分母 mech_applicable',
+    Number.isInteger(report.can_answer_today.mech_applicable),
+  );
+  check(
+    'verdict·confirmed>0 时给出三态计数',
+    /确认兼容性提问 2 条/.test(report.verdict) &&
+      /未判 1 条/.test(report.verdict) &&
+      /非机器人信号 3 条/.test(report.verdict),
+  );
+  check(
+    'verdict·不再用「已捕获 N 条真实兼容性提问信号」句式',
+    !/已捕获 \d+ 条真实兼容性提问信号/.test(report.verdict),
+  );
 
   // 分支一：通道全不可达 → UNKNOWN，绝不把「通道死了」当「需求为零」
   const deadChannels = {};
   for (const s of SOURCES) {
     deadChannels[s.name] = {
-      label: s.label, alive: false, status: 0,
-      err: 'SELF-TEST: 模拟通道不可达', hit_count: 0,
+      label: s.label,
+      alive: false,
+      status: 0,
+      err: 'SELF-TEST: 模拟通道不可达',
+      hit_count: 0,
     };
   }
   const deadReport = buildReport({
@@ -317,8 +387,10 @@ function selfTestReport() {
   });
   check('UNKNOWN·通道全不可达时 verdict 标 UNKNOWN', /UNKNOWN/.test(deadReport.verdict));
   check('UNKNOWN·不推断需求为零', /不推断需求为零/.test(deadReport.verdict));
-  check('UNKNOWN·real_query_count=0 且不宣称「未捕获提问」',
-    deadReport.real_query_count === 0 && !/本轮未捕获明确兼容性提问/.test(deadReport.verdict));
+  check(
+    'UNKNOWN·real_query_count=0 且不宣称「未捕获提问」',
+    deadReport.real_query_count === 0 && !/本轮未捕获明确兼容性提问/.test(deadReport.verdict),
+  );
 
   // 分支二：通道存活但零确认 → 不得宣称真实提问，须明示历史误判成因
   const zeroReport = buildReport({
@@ -330,8 +402,10 @@ function selfTestReport() {
     selfTest: true,
   });
   check('零确认·不宣称「真实兼容性提问」', !/真实兼容性提问/.test(zeroReport.verdict));
-  check('零确认·明示零确认与历史误判成因',
-    /零确认信号/.test(zeroReport.verdict) && /real_signal=true/.test(zeroReport.verdict));
+  check(
+    '零确认·明示零确认与历史误判成因',
+    /零确认信号/.test(zeroReport.verdict) && /real_signal=true/.test(zeroReport.verdict),
+  );
 
   if (failures.length) {
     console.log('\n[demand_scan 报告组装]');
@@ -417,7 +491,7 @@ async function main() {
       report.cross_brand_compat_engine_users +
       '  声明率=' +
       (mechDeclRate * 100).toFixed(2) +
-      '%'
+      '%',
   );
   console.log('  verdict: ' + report.verdict);
   if (process.argv.includes('--json')) console.log(JSON.stringify(report, null, 2));

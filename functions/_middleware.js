@@ -35,8 +35,8 @@ const PRIVATE_PREFIXES = [
   '/scheduled-tasks-closure-analysis',
   '/roboparts-dataset-github',
   // 【N03 20260805-r3 修复 S-01】本轮实测发现的新增泄露面
-  '/scripts',   // deploy.mjs / regression.py 等运维脚本，暴露部署与校验逻辑
-  '/tasks',     // 内部周任务清单
+  '/scripts', // deploy.mjs / regression.py 等运维脚本，暴露部署与校验逻辑
+  '/tasks', // 内部周任务清单
   // 【20260805-15 修复软 404】/functions/** 此前回落首页并返回 200（源码未泄露，
   // 但对搜索引擎构成大量重复内容页面）。这里改为硬 404，语义正确且不喂垃圾给 GEO 抓取。
   '/functions',
@@ -55,12 +55,12 @@ const PRIVATE_PREFIXES = [
  * 根本不会在该路径上运行，此处判断形同虚设 —— 这正是本次泄露的直接机理。
  */
 const PRIVATE_FILES = [
-  '/wrangler.toml',          // 含 ADMIN_API_KEYS 明文
-  '/.gitignore',             // 暴露目录结构
-  '/integrity_report.txt',   // 内部审计产出
+  '/wrangler.toml', // 含 ADMIN_API_KEYS 明文
+  '/.gitignore', // 暴露目录结构
+  '/integrity_report.txt', // 内部审计产出
   '/package.json',
   '/package-lock.json',
-  '/.dev.vars',              // 防御性：wrangler 本地密钥文件
+  '/.dev.vars', // 防御性：wrangler 本地密钥文件
   '/.env',
   '/.env.local',
 ];
@@ -88,24 +88,41 @@ const PRIVATE_EXTENSIONS = ['.docx', '.xlsx', '.pptx', '.toml', '.py', '.mjs', '
 
 /** 已知 AI 检索爬虫 —— 命中即为 GEO 曝光（robots.txt 已显式放行这批） */
 const AI_BOTS = [
-  ['gptbot', 'GPTBot'], ['oai-searchbot', 'OAI-SearchBot'], ['chatgpt-user', 'ChatGPT-User'],
-  ['claudebot', 'ClaudeBot'], ['anthropic-ai', 'anthropic-ai'], ['claude-web', 'Claude-Web'],
-  ['perplexitybot', 'PerplexityBot'], ['perplexity-user', 'Perplexity-User'],
-  ['google-extended', 'Google-Extended'], ['applebot-extended', 'Applebot-Extended'],
-  ['bytespider', 'Bytespider'], ['petalbot', 'PetalBot'], ['youbot', 'YouBot'],
-  ['ccbot', 'CCBot'], ['diffbot', 'Diffbot'], ['cohere-ai', 'cohere-ai'],
-  ['meta-externalagent', 'Meta-ExternalAgent'], ['amazonbot', 'Amazonbot'],
+  ['gptbot', 'GPTBot'],
+  ['oai-searchbot', 'OAI-SearchBot'],
+  ['chatgpt-user', 'ChatGPT-User'],
+  ['claudebot', 'ClaudeBot'],
+  ['anthropic-ai', 'anthropic-ai'],
+  ['claude-web', 'Claude-Web'],
+  ['perplexitybot', 'PerplexityBot'],
+  ['perplexity-user', 'Perplexity-User'],
+  ['google-extended', 'Google-Extended'],
+  ['applebot-extended', 'Applebot-Extended'],
+  ['bytespider', 'Bytespider'],
+  ['petalbot', 'PetalBot'],
+  ['youbot', 'YouBot'],
+  ['ccbot', 'CCBot'],
+  ['diffbot', 'Diffbot'],
+  ['cohere-ai', 'cohere-ai'],
+  ['meta-externalagent', 'Meta-ExternalAgent'],
+  ['amazonbot', 'Amazonbot'],
 ];
 
 /** 传统搜索引擎爬虫 —— 命中即为 SEO 收录进展 */
 const SEARCH_BOTS = [
-  ['googlebot', 'Googlebot'], ['bingbot', 'Bingbot'], ['baiduspider', 'Baiduspider'],
-  ['yandexbot', 'YandexBot'], ['duckduckbot', 'DuckDuckBot'], ['sogou', 'Sogou'],
-  ['360spider', '360Spider'], ['slurp', 'Yahoo-Slurp'], ['applebot', 'Applebot'],
+  ['googlebot', 'Googlebot'],
+  ['bingbot', 'Bingbot'],
+  ['baiduspider', 'Baiduspider'],
+  ['yandexbot', 'YandexBot'],
+  ['duckduckbot', 'DuckDuckBot'],
+  ['sogou', 'Sogou'],
+  ['360spider', '360Spider'],
+  ['slurp', 'Yahoo-Slurp'],
+  ['applebot', 'Applebot'],
 ];
 
-const FLUSH_MS = 60_000;        // 普通流量：每个 isolate 最多每 60s 落盘一次
-const SHARDS = 16;              // 单日 KV 键数上限
+const FLUSH_MS = 60_000; // 普通流量：每个 isolate 最多每 60s 落盘一次
+const SHARDS = 16; // 单日 KV 键数上限
 const METRIC_TTL = 60 * 60 * 24 * 120; // 120 天后自动过期
 /**
  * 【20260805-18 二次修正 —— 勿改回纯节流】
@@ -122,8 +139,8 @@ const MAX_WRITES_PER_ISOLATE_DAY = 150;
 /** isolate 级累加器（跨请求复用同一 isolate 内存，零 KV 成本） */
 let _buf = Object.create(null);
 let _lastFlush = 0;
-let _writes = 0;      // 本 isolate 当日已写次数（额度兜底）
-let _writeDay = '';   // 跨日自动重置
+let _writes = 0; // 本 isolate 当日已写次数（额度兜底）
+let _writeDay = ''; // 跨日自动重置
 
 /**
  * ⚠️【20260805-18 事故：全站 404 —— 勿回退】
@@ -167,9 +184,20 @@ function normalizePath(p) {
   if (p.startsWith('/articles/')) return p === '/articles/' ? '/articles/' : '/articles/*';
   if (p.startsWith('/api/')) return '/api/*';
   const tracked = [
-    '/pricing', '/data-hub', '/bom-checker', '/iso-9409-flange', '/selection',
-    '/suppliers', '/designer', '/oss', '/credits', '/mcp-guide', '/api-pricing',
-    '/llms.txt', '/sitemap.xml', '/robots.txt',
+    '/pricing',
+    '/data-hub',
+    '/bom-checker',
+    '/iso-9409-flange',
+    '/selection',
+    '/suppliers',
+    '/designer',
+    '/oss',
+    '/credits',
+    '/mcp-guide',
+    '/api-pricing',
+    '/llms.txt',
+    '/sitemap.xml',
+    '/robots.txt',
     // 【20260806-00】hosted MCP 端点。它是免鉴权只读的，KV 里没有 user 记录，
     // 若不在此显式追踪，所有 Agent 调用都会落进 __other 被丢弃 ——
     // 那就等于新开了一条通道却看不见它有没有人走（"指标看不见 = 以为没人用"）。
@@ -182,8 +210,7 @@ function normalizePath(p) {
 }
 
 /** 漏洞扫描器特征：这些 404 是噪声，不给它们在 KV 里开独立键 */
-const SCAN_RE =
-  /wp-|wordpress|\.env|\.git|\.svn|\.aws|\.ssh|id_rsa|phpmyadmin|xmlrpc|eval-stdin/i;
+const SCAN_RE = /wp-|wordpress|\.env|\.git|\.svn|\.aws|\.ssh|id_rsa|phpmyadmin|xmlrpc|eval-stdin/i;
 const SCAN_EXT_RE = /\.(php|asp|aspx|jsp|sql|bak|old|zip|tar|gz|ini|yml|yaml)$/i;
 const SCAN_PATH_RE = /^\/(admin|vendor|cgi-bin|backup|actuator|shell|config)(\/|$)/i;
 
@@ -222,16 +249,21 @@ async function flush(env) {
   const kv = env && env.USER_CREDITS;
   if (!kv) return;
   const day = new Date().toISOString().slice(0, 10);
-  if (day !== _writeDay) { _writeDay = day; _writes = 0; }   // 跨日重置额度
-  if (_writes >= MAX_WRITES_PER_ISOLATE_DAY) return;          // 额度兜底：保留缓冲，不清空
+  if (day !== _writeDay) {
+    _writeDay = day;
+    _writes = 0;
+  } // 跨日重置额度
+  if (_writes >= MAX_WRITES_PER_ISOLATE_DAY) return; // 额度兜底：保留缓冲，不清空
   const entries = Object.entries(_buf);
-  _buf = Object.create(null);                                 // 清空，避免重复计数
+  _buf = Object.create(null); // 清空，避免重复计数
   _writes++;
   const key = `metrics:${day}:s${shardId()}`;
   let prev = {};
   try {
     prev = (await kv.get(key, { type: 'json' })) || {};
-  } catch { /* 读失败则按新建处理，宁可丢历史也不丢本批 */ }
+  } catch {
+    /* 读失败则按新建处理，宁可丢历史也不丢本批 */
+  }
   for (const [k, v] of entries) prev[k] = (prev[k] || 0) + v;
   prev._updated = new Date().toISOString();
   await kv.put(key, JSON.stringify(prev), { expirationTtl: METRIC_TTL });
@@ -285,7 +317,9 @@ function record(context, url, status) {
       try {
         const h = new URL(ref).hostname.replace(/^www\./, '');
         if (!h.endsWith('roboparts.cc')) bump(`ref:${h.slice(0, 40)}`);
-      } catch { /* 非法 referer 忽略 */ }
+      } catch {
+        /* 非法 referer 忽略 */
+      }
     }
 
     // 【20260909-25】渠道点击侧计数。注册端已有 stat:via: 聚合注册数，
@@ -294,19 +328,26 @@ function record(context, url, status) {
     // 同一清洗规则：渠道名进 KV 键，只留安全字符。
     try {
       const viaRaw = new URL(req.url).searchParams.get('via') || '';
-      const viaCh = viaRaw.replace(/[^a-z0-9._-]/gi, '').toLowerCase().slice(0, 40);
+      const viaCh = viaRaw
+        .replace(/[^a-z0-9._-]/gi, '')
+        .toLowerCase()
+        .slice(0, 40);
       if (viaCh) bump(`via:${viaCh}`);
-    } catch { /* URL 畸形忽略 */ }
+    } catch {
+      /* URL 畸形忽略 */
+    }
 
     // 分级落盘：爬虫命中是 GEO 曝光的核心证据且天然低频，必须立即落盘，
     // 否则在零流量站点上会因等不到下一个请求而永久丢失（见 MAX_WRITES 处注释）。
-    const highValue = (kind === 'ai' || kind === 'search');
+    const highValue = kind === 'ai' || kind === 'search';
     const now = Date.now();
     if (highValue || now - _lastFlush >= FLUSH_MS) {
       _lastFlush = now;
       context.waitUntil(flush(context.env).catch(() => {}));
     }
-  } catch { /* 遥测永不影响主流程 */ }
+  } catch {
+    /* 遥测永不影响主流程 */
+  }
 }
 
 // 导出供 L1.44 闸门真跑（同 L1.43 的做法：对外可测的真相源只此一份，
@@ -319,9 +360,7 @@ export async function onRequest(context) {
   const p = url.pathname;
   const lower = p.toLowerCase();
   const isPrivate =
-    PRIVATE_PREFIXES.some(
-      (prefix) => p === prefix || p.startsWith(prefix + '/')
-    ) ||
+    PRIVATE_PREFIXES.some((prefix) => p === prefix || p.startsWith(prefix + '/')) ||
     PRIVATE_FILES.includes(lower) ||
     PRIVATE_EXTENSIONS.some((ext) => lower.endsWith(ext));
   if (isPrivate) {

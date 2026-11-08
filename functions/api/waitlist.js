@@ -17,7 +17,7 @@ async function hashEmail(email) {
   const data = encoder.encode(email.toLowerCase().trim());
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 function cors() {
@@ -31,8 +31,18 @@ function cors() {
 
 // 零件类目白名单（与 demand-signal category_counts 对齐），防止 KV 被任意键污染
 const NEED_CATEGORIES = [
-  'actuators', 'sensors', 'connectors', 'controllers', 'chips', 'platforms',
-  'interfaces', 'llms', 'protocols', 'flexible_actuators', 'data_acquisition', 'robot_ai_models',
+  'actuators',
+  'sensors',
+  'connectors',
+  'controllers',
+  'chips',
+  'platforms',
+  'interfaces',
+  'llms',
+  'protocols',
+  'flexible_actuators',
+  'data_acquisition',
+  'robot_ai_models',
 ];
 
 export async function onRequestOptions() {
@@ -61,7 +71,9 @@ export async function onRequestGet(context) {
       const n = parseInt(v || '0', 10) || 0;
       if (n > 0) out.needs[c] = n;
     }
-  } catch (e) { /* 读计数失败不影响主流程 */ }
+  } catch (e) {
+    /* 读计数失败不影响主流程 */
+  }
   return new Response(JSON.stringify(out), { headers: cors() });
 }
 
@@ -76,10 +88,15 @@ export async function onRequestPost(context) {
 
     // 零件级需求（可多选，白名单校验，H6/L6 闭环信号）
     let needCategories = Array.isArray(body.need_categories) ? body.need_categories : [];
-    needCategories = needCategories.filter((c) => NEED_CATEGORIES.includes(c)).slice(0, NEED_CATEGORIES.length);
+    needCategories = needCategories
+      .filter((c) => NEED_CATEGORIES.includes(c))
+      .slice(0, NEED_CATEGORIES.length);
 
     if (!email || !email.includes('@')) {
-      return new Response(JSON.stringify({ error: 'Valid email required' }), { status: 400, headers: h });
+      return new Response(JSON.stringify({ error: 'Valid email required' }), {
+        status: 400,
+        headers: h,
+      });
     }
 
     const emailHash = await hashEmail(email);
@@ -91,18 +108,30 @@ export async function onRequestPost(context) {
     const existing = await env.USER_CREDITS.get(key);
     let already = false;
     if (existing) {
-      try { already = !JSON.parse(existing).selftest; } catch { already = false; }
+      try {
+        already = !JSON.parse(existing).selftest;
+      } catch {
+        already = false;
+      }
     }
 
     const record = {
-      email_hash: emailHash, email, role, note, need_categories: needCategories,
-      source: src, created: new Date().toISOString(), selftest: isSelftest,
+      email_hash: emailHash,
+      email,
+      role,
+      note,
+      need_categories: needCategories,
+      source: src,
+      created: new Date().toISOString(),
+      selftest: isSelftest,
     };
     await env.USER_CREDITS.put(key, JSON.stringify(record));
 
     // 计数（仅真实且首次签名才 +1）
     if (!isSelftest && !already) {
-      const roleKey = 'stat:waitlist:' + (role === 'builder' ? 'builders' : role === 'investor' ? 'investors' : 'suppliers');
+      const roleKey =
+        'stat:waitlist:' +
+        (role === 'builder' ? 'builders' : role === 'investor' ? 'investors' : 'suppliers');
       for (const k of ['stat:waitlist:total', roleKey]) {
         const cur = await env.USER_CREDITS.get(k);
         await env.USER_CREDITS.put(k, String((parseInt(cur || '0', 10) || 0) + 1));
@@ -110,14 +139,19 @@ export async function onRequestPost(context) {
       // 零件级需求热度累加（仅真实首次签名，避免重复计数）
       for (const c of needCategories) {
         const cur = await env.USER_CREDITS.get('stat:waitlist:need:' + c);
-        await env.USER_CREDITS.put('stat:waitlist:need:' + c, String((parseInt(cur || '0', 10) || 0) + 1));
+        await env.USER_CREDITS.put(
+          'stat:waitlist:need:' + c,
+          String((parseInt(cur || '0', 10) || 0) + 1),
+        );
       }
     }
 
     const totalRaw = await env.USER_CREDITS.get('stat:waitlist:total');
     const total = parseInt(totalRaw || '0', 10) || 0;
 
-    return new Response(JSON.stringify({ success: true, total, duplicate: already, role }), { headers: h });
+    return new Response(JSON.stringify({ success: true, total, duplicate: already, role }), {
+      headers: h,
+    });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: h });
   }

@@ -40,20 +40,30 @@ code = code.replace(oldBlock, newBlock);
 // === 修改 2：所有 return 对象加 use_header ===
 const returnReplacements = [
   // verified_free (KV)
-  [/{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key: '' };/g,
-   /{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key: '', use_header: useHeader };/],
+  [
+    /{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key: '' };/g,
+    /{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key: '', use_header: useHeader };/,
+  ],
   // verified_free (Creem 404/400)
-  [/{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: 'not_found', key: '' };/g,
-   /{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: 'not_found', key: '', use_header: useHeader };/],
+  [
+    /{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: 'not_found', key: '' };/g,
+    /{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: 'not_found', key: '', use_header: useHeader };/,
+  ],
   // verified_free (Creem inactive)
-  [/{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: d.status \|\| 'inactive', key: '' };/g,
-   /{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: d.status || 'inactive', key: '', use_header: useHeader };/],
+  [
+    /{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: d.status \|\| 'inactive', key: '' };/g,
+    /{ tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: d.status || 'inactive', key: '', use_header: useHeader };/,
+  ],
   // verified_pro (KV)
-  [/{ tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided };/g,
-   /{ tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided, use_header: useHeader };/],
+  [
+    /{ tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided };/g,
+    /{ tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided, use_header: useHeader };/,
+  ],
   // verified_pro (Creem active)
-  [/{ tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided };/g,
-   /{ tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided, use_header: useHeader };/],
+  [
+    /{ tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided };/g,
+    /{ tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided, use_header: useHeader };/,
+  ],
 ];
 
 for (const [old, new_] of returnReplacements) {
@@ -65,23 +75,23 @@ for (const [old, new_] of returnReplacements) {
 // === 修改 3：unverified returns ===
 code = code.replace(
   /{ tier: 'free', auth_state: 'unverified', auth_failure: \{ source: 'kv', kind: 'no_user_credits_binding' \}, key: '' }/,
-  `{ tier: 'free', auth_state: 'unverified', auth_failure: { source: 'kv', kind: 'no_user_credits_binding' }, key: '', use_header: useHeader }`
+  `{ tier: 'free', auth_state: 'unverified', auth_failure: { source: 'kv', kind: 'no_user_credits_binding' }, key: '', use_header: useHeader }`,
 );
 code = code.replace(
   /{ tier: 'free', auth_state: 'unverified', auth_failure: \{ source: 'kv', kind: 'lookup_failed'/g,
-  `{ tier: 'free', auth_state: 'unverified', auth_failure: { source: 'kv', kind: 'lookup_failed'`
+  `{ tier: 'free', auth_state: 'unverified', auth_failure: { source: 'kv', kind: 'lookup_failed'`,
 );
 code = code.replace(
   /{ tier: 'free', auth_state: 'unverified', auth_failure: \{ source: 'creem', kind: 'no_api_key_configured' \}, key: '' }/,
-  `{ tier: 'free', auth_state: 'unverified', auth_failure: { source: 'creem', kind: 'no_api_key_configured' }, key: '', use_header: useHeader }`
+  `{ tier: 'free', auth_state: 'unverified', auth_failure: { source: 'creem', kind: 'no_api_key_configured' }, key: '', use_header: useHeader }`,
 );
 code = code.replace(
   /{ tier: 'free', auth_state: 'unverified', auth_failure: \{ source: 'creem', kind: 'upstream_status_' \+ r.status \}, key: '' }/g,
-  `{ tier: 'free', auth_state: 'unverified', auth_failure: { source: 'creem', kind: 'upstream_status_' + r.status }, key: '', use_header: useHeader }`
+  `{ tier: 'free', auth_state: 'unverified', auth_failure: { source: 'creem', kind: 'upstream_status_' + r.status }, key: '', use_header: useHeader }`,
 );
 code = code.replace(
   /{ tier: 'free', auth_state: 'unverified', auth_failure: \{ source: 'creem', kind: 'validate_failed'/g,
-  `{ tier: 'free', auth_state: 'unverified', auth_failure: { source: 'creem', kind: 'validate_failed'`
+  `{ tier: 'free', auth_state: 'unverified', auth_failure: { source: 'creem', kind: 'validate_failed'`,
 );
 
 // === 修改 4：在 tierMessage 后添加 deprecationHeaders ===
@@ -89,8 +99,8 @@ const deprecationFn = `\n\n/** 生成 deprecation 提示头（当 API Key 仍通
 
 if (!code.includes('deprecationHeaders')) {
   code = code.replace(
-    "export function authHeaders(authState, upgradeUrl) {",
-    deprecationFn + "\n\nexport function authHeaders(authState, upgradeUrl) {"
+    'export function authHeaders(authState, upgradeUrl) {',
+    deprecationFn + '\n\nexport function authHeaders(authState, upgradeUrl) {',
   );
 }
 

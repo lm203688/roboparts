@@ -1,13 +1,13 @@
 /**
  * P0 兼容性规则批量推导
- * 
+ *
  * 基于已有 35 条有 voltage/protocol/interface 的实体，
  * 用确定性规则推导兼容性关系：
  *   1. 同电压域 ±20% → same_voltage_domain (compatible)
  *   2. 同协议 → same_protocol (compatible)
  *   3. 同机械接口 → same_interface (compatible)
  *   4. 同品类 + 同厂商 → same_lineage (compatible)
- * 
+ *
  * 当前 21 条规则 → 目标 200+ 条
  */
 
@@ -22,7 +22,7 @@ const compatData = JSON.parse(fs.readFileSync(compatPath, 'utf8'));
 
 const entities = entitiesData.entities;
 const existingRules = compatData.rules || [];
-const existingPairs = new Set(existingRules.map(r => `${r.from}→${r.to}`));
+const existingPairs = new Set(existingRules.map((r) => `${r.from}→${r.to}`));
 
 // 分组索引
 const byVoltage = {};
@@ -84,8 +84,13 @@ const newRules = [];
 for (const [voltage, group] of Object.entries(byVoltage)) {
   for (let i = 0; i < group.length; i++) {
     for (let j = i + 1; j < group.length; j++) {
-      const rule = buildRule(group[i], group[j], 'same_voltage_domain',
-        `Both entities operate at ${voltage} voltage domain`, voltage);
+      const rule = buildRule(
+        group[i],
+        group[j],
+        'same_voltage_domain',
+        `Both entities operate at ${voltage} voltage domain`,
+        voltage,
+      );
       if (rule) newRules.push(rule);
     }
   }
@@ -95,8 +100,13 @@ for (const [voltage, group] of Object.entries(byVoltage)) {
 for (const [proto, group] of Object.entries(byProtocol)) {
   for (let i = 0; i < group.length; i++) {
     for (let j = i + 1; j < group.length; j++) {
-      const rule = buildRule(group[i], group[j], 'same_protocol',
-        `Both entities support ${proto} communication protocol`, proto);
+      const rule = buildRule(
+        group[i],
+        group[j],
+        'same_protocol',
+        `Both entities support ${proto} communication protocol`,
+        proto,
+      );
       if (rule) newRules.push(rule);
     }
   }
@@ -106,8 +116,13 @@ for (const [proto, group] of Object.entries(byProtocol)) {
 for (const [iface, group] of Object.entries(byInterface)) {
   for (let i = 0; i < group.length; i++) {
     for (let j = i + 1; j < group.length; j++) {
-      const rule = buildRule(group[i], group[j], 'same_mechanical_interface',
-        `Both entities share mechanical interface: ${iface}`, iface);
+      const rule = buildRule(
+        group[i],
+        group[j],
+        'same_mechanical_interface',
+        `Both entities share mechanical interface: ${iface}`,
+        iface,
+      );
       if (rule) newRules.push(rule);
     }
   }
@@ -119,8 +134,13 @@ for (const [key, group] of Object.entries(byCategoryMfr)) {
   const [cat, mfr] = key.split('|||');
   for (let i = 0; i < group.length; i++) {
     for (let j = i + 1; j < group.length; j++) {
-      const rule = buildRule(group[i], group[j], 'same_lineage',
-        `Same manufacturer ${mfr} in category ${cat}`, null);
+      const rule = buildRule(
+        group[i],
+        group[j],
+        'same_lineage',
+        `Same manufacturer ${mfr} in category ${cat}`,
+        null,
+      );
       if (rule) newRules.push(rule);
     }
   }
@@ -150,7 +170,7 @@ compatData.statistics.last_derivation = new Date().toISOString();
 
 // 按 relationship_type 分组统计
 const byType = {};
-allRules.forEach(r => {
+allRules.forEach((r) => {
   const t = r.relationship_type || 'unknown';
   byType[t] = (byType[t] || 0) + 1;
 });

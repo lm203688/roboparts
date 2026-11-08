@@ -56,16 +56,28 @@ export async function loadJsonAsset(env, request, path, failures) {
  * 而不是 200 + 空数组（那会被读成「库里没有」）。
  */
 export function upstreamUnavailableResponse(failures, corsHeaders, hint) {
-  return new Response(JSON.stringify({
-    error: 'Upstream data source unavailable',
-    error_kind: 'upstream_unavailable',
-    meaning: '数据源读取失败，这**不代表**查询结果为空或该条目不存在；请稍后重试。',
-    failures: failures || [],
-    hint: hint || 'retry_after_seconds: 30',
-  }, null, 2), {
-    status: 503,
-    headers: { ...(corsHeaders || {}), 'Cache-Control': 'no-store', 'Retry-After': '30', 'X-Data-State': 'upstream_unavailable' },
-  });
+  return new Response(
+    JSON.stringify(
+      {
+        error: 'Upstream data source unavailable',
+        error_kind: 'upstream_unavailable',
+        meaning: '数据源读取失败，这**不代表**查询结果为空或该条目不存在；请稍后重试。',
+        failures: failures || [],
+        hint: hint || 'retry_after_seconds: 30',
+      },
+      null,
+      2,
+    ),
+    {
+      status: 503,
+      headers: {
+        ...(corsHeaders || {}),
+        'Cache-Control': 'no-store',
+        'Retry-After': '30',
+        'X-Data-State': 'upstream_unavailable',
+      },
+    },
+  );
 }
 
 /**
@@ -84,28 +96,64 @@ export async function resolveAuthState(request, env) {
   const useHeader = !!fromHeader;
   const provided = fromHeader || qk.trim();
 
-  if (!provided) return { tier: 'free', auth_state: 'anonymous', auth_failure: null, key: '', use_header: useHeader };
+  if (!provided)
+    return {
+      tier: 'free',
+      auth_state: 'anonymous',
+      auth_failure: null,
+      key: '',
+      use_header: useHeader,
+    };
 
   if (provided.startsWith('gtk_')) {
     if (!env.USER_CREDITS) {
-      return { tier: 'free', auth_state: 'unverified', auth_failure: { source: 'kv', kind: 'no_user_credits_binding' }, key: '', use_header: useHeader };
+      return {
+        tier: 'free',
+        auth_state: 'unverified',
+        auth_failure: { source: 'kv', kind: 'no_user_credits_binding' },
+        key: '',
+        use_header: useHeader,
+      };
     }
     try {
       const ud = await env.USER_CREDITS.get(provided);
       if (ud) {
         const u = JSON.parse(ud);
         if (u.plan === 'pro' || u.plan === 'admin' || (u.credits || 0) > 0) {
-          return { tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided, use_header: useHeader };
+          return {
+            tier: 'pro',
+            auth_state: 'verified_pro',
+            auth_failure: null,
+            key: provided,
+            use_header: useHeader,
+          };
         }
       }
-      return { tier: 'free', auth_state: 'verified_free', auth_failure: null, key: '', use_header: useHeader };
+      return {
+        tier: 'free',
+        auth_state: 'verified_free',
+        auth_failure: null,
+        key: '',
+        use_header: useHeader,
+      };
     } catch (e) {
-      return { tier: 'free', auth_state: 'unverified', auth_failure: { source: 'kv', kind: 'lookup_failed', message: e && e.message }, key: '' };
+      return {
+        tier: 'free',
+        auth_state: 'unverified',
+        auth_failure: { source: 'kv', kind: 'lookup_failed', message: e && e.message },
+        key: '',
+      };
     }
   }
 
   if (!env.CREEM_API_KEY) {
-    return { tier: 'free', auth_state: 'unverified', auth_failure: { source: 'creem', kind: 'no_api_key_configured' }, key: '', use_header: useHeader };
+    return {
+      tier: 'free',
+      auth_state: 'unverified',
+      auth_failure: { source: 'creem', kind: 'no_api_key_configured' },
+      key: '',
+      use_header: useHeader,
+    };
   }
   try {
     const r = await fetch('https://api.creem.io/v1/licenses/validate', {
@@ -119,22 +167,54 @@ export async function resolveAuthState(request, env) {
     //   401/403  = 我们自己的 CREEM_API_KEY 有问题，与用户订阅无关 → unverified；
     //   5xx/429/网络异常 = 真故障 → unverified。
     if (r.status === 404 || r.status === 400) {
-      return { tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: 'not_found', key: '', use_header: useHeader };
+      return {
+        tier: 'free',
+        auth_state: 'verified_free',
+        auth_failure: null,
+        key_status: 'not_found',
+        key: '',
+        use_header: useHeader,
+      };
     }
     if (!r.ok) {
-      return { tier: 'free', auth_state: 'unverified', auth_failure: { source: 'creem', kind: 'upstream_status_' + r.status }, key: '', use_header: useHeader };
+      return {
+        tier: 'free',
+        auth_state: 'unverified',
+        auth_failure: { source: 'creem', kind: 'upstream_status_' + r.status },
+        key: '',
+        use_header: useHeader,
+      };
     }
     const d = await r.json();
-    if (d.status === 'active') return { tier: 'pro', auth_state: 'verified_pro', auth_failure: null, key: provided, use_header: useHeader };
-    return { tier: 'free', auth_state: 'verified_free', auth_failure: null, key_status: d.status || 'inactive', key: '', use_header: useHeader };
+    if (d.status === 'active')
+      return {
+        tier: 'pro',
+        auth_state: 'verified_pro',
+        auth_failure: null,
+        key: provided,
+        use_header: useHeader,
+      };
+    return {
+      tier: 'free',
+      auth_state: 'verified_free',
+      auth_failure: null,
+      key_status: d.status || 'inactive',
+      key: '',
+      use_header: useHeader,
+    };
   } catch (e) {
-    return { tier: 'free', auth_state: 'unverified', auth_failure: { source: 'creem', kind: 'validate_failed', message: e && e.message }, key: '' };
+    return {
+      tier: 'free',
+      auth_state: 'unverified',
+      auth_failure: { source: 'creem', kind: 'validate_failed', message: e && e.message },
+      key: '',
+    };
   }
 }
 
 const UNVERIFIED_COPY =
-  '密钥校验链路暂时不可用（非订阅问题），已按免费层字段返回。'
-  + '这**不代表**你的 Pro 订阅无效或已过期，请稍后重试；持续失败请联系支持。';
+  '密钥校验链路暂时不可用（非订阅问题），已按免费层字段返回。' +
+  '这**不代表**你的 Pro 订阅无效或已过期，请稍后重试；持续失败请联系支持。';
 
 /** 分层提示文案：unverified 下**不得**输出「需升级 Pro」这类对用户付费状态的断言。 */
 export function tierMessage(authState, freeCopy, proCopy) {
@@ -145,14 +225,14 @@ export function tierMessage(authState, freeCopy, proCopy) {
 
 /** unverified 不发升级引导头，避免向付费用户投放「你没买」的信号。 */
 
-
 /** 生成 deprecation 提示头（当 API Key 仍通过 query 参数传递时） */
 export function deprecationHeaders(useHeader) {
   if (useHeader) return {};
   return {
-    'Deprecation': 'true',
-    'Sunset': '2026-10-01',
-    'X-Auth-Migration': 'API Key should be passed via Authorization: Bearer header, not as query parameter ?key=',
+    Deprecation: 'true',
+    Sunset: '2026-10-01',
+    'X-Auth-Migration':
+      'API Key should be passed via Authorization: Bearer header, not as query parameter ?key=',
   };
 }
 
@@ -165,14 +245,28 @@ export function authHeaders(authState, upgradeUrl) {
 
 /** 需要「确认用户不是 Pro」才能执行的硬限制（如免费额度拦截）在 unverified 下必须让路。 */
 export function authUnavailableResponse(authFailure, corsHeaders) {
-  return new Response(JSON.stringify({
-    error: 'Authorization backend unavailable',
-    error_kind: 'auth_unavailable',
-    meaning: '无法校验你的密钥，因此**不能**判定你是否为 Pro。为避免误判为免费用户而拒绝服务，此请求未被执行，请稍后重试。',
-    failure: authFailure || null,
-    hint: 'retry_after_seconds: 30',
-  }, null, 2), {
-    status: 503,
-    headers: { ...(corsHeaders || {}), 'Cache-Control': 'no-store', 'Retry-After': '30', 'X-Auth-State': 'unverified', 'X-Auth-Degraded': '1' },
-  });
+  return new Response(
+    JSON.stringify(
+      {
+        error: 'Authorization backend unavailable',
+        error_kind: 'auth_unavailable',
+        meaning:
+          '无法校验你的密钥，因此**不能**判定你是否为 Pro。为避免误判为免费用户而拒绝服务，此请求未被执行，请稍后重试。',
+        failure: authFailure || null,
+        hint: 'retry_after_seconds: 30',
+      },
+      null,
+      2,
+    ),
+    {
+      status: 503,
+      headers: {
+        ...(corsHeaders || {}),
+        'Cache-Control': 'no-store',
+        'Retry-After': '30',
+        'X-Auth-State': 'unverified',
+        'X-Auth-Degraded': '1',
+      },
+    },
+  );
 }

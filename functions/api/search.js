@@ -60,9 +60,20 @@ const FIELD_WEIGHTS = [
   { fields: ['name', 'name_en', 'codename'], weight: 30 },
   { fields: ['manufacturer', 'manufacturer_en', 'vendor', 'company'], weight: 20 },
   { fields: ['type', 'type_en', 'category', 'form_factor'], weight: 15 },
-  { fields: ['applications', 'application', 'application_en', 'interface',
-             'interfaces', 'protocol', 'key_features', 'features',
-             'bionic_features'], weight: 10 },
+  {
+    fields: [
+      'applications',
+      'application',
+      'application_en',
+      'interface',
+      'interfaces',
+      'protocol',
+      'key_features',
+      'features',
+      'bionic_features',
+    ],
+    weight: 10,
+  },
   { fields: ['description', 'description_en', 'specs', 'key_findings'], weight: 5 },
 ];
 
@@ -79,9 +90,19 @@ function flatten(v) {
 /** 结果白名单：只放发现所需的字段，深度数据引导到 /api/entity/{id} 与 entities.json。 */
 function project(e) {
   const out = {};
-  for (const k of ['id', 'name', 'name_en', 'category', 'manufacturer',
-                   'type', 'entity_kind', 'data_quality', 'source_tier',
-                   'quarantine', 'verified']) {
+  for (const k of [
+    'id',
+    'name',
+    'name_en',
+    'category',
+    'manufacturer',
+    'type',
+    'entity_kind',
+    'data_quality',
+    'source_tier',
+    'quarantine',
+    'verified',
+  ]) {
     if (e[k] !== undefined) out[k] = e[k];
   }
   return out;
@@ -94,23 +115,27 @@ export async function onRequestGet(context) {
   const q = (url.searchParams.get('q') || '').trim();
   const category = (url.searchParams.get('category') || '').trim().toLowerCase();
   const includeQ = ['1', 'true', 'yes'].includes(
-    (url.searchParams.get('include_quarantine') || '').toLowerCase());
+    (url.searchParams.get('include_quarantine') || '').toLowerCase(),
+  );
   let limit = parseInt(url.searchParams.get('limit') || '20', 10);
   if (!Number.isFinite(limit) || limit < 1) limit = 20;
   limit = Math.min(limit, 100);
 
   if (!q) {
-    return json({
-      error: 'missing_query',
-      message: '缺少查询词。用法：GET /api/search?q=keyword',
-      parameters: {
-        q: '必填，关键词。多个词以空格分隔，按「全部命中」(AND) 匹配',
-        category: '选填，限定品类',
-        limit: '选填，返回条数，默认 20，上限 100',
-        include_quarantine: '选填，=1 时把已隔离的可疑条目一并返回',
+    return json(
+      {
+        error: 'missing_query',
+        message: '缺少查询词。用法：GET /api/search?q=keyword',
+        parameters: {
+          q: '必填，关键词。多个词以空格分隔，按「全部命中」(AND) 匹配',
+          category: '选填，限定品类',
+          limit: '选填，返回条数，默认 20，上限 100',
+          include_quarantine: '选填，=1 时把已隔离的可疑条目一并返回',
+        },
+        example: 'https://roboparts.cc/api/search?q=harmonic%20drive&limit=10',
       },
-      example: 'https://roboparts.cc/api/search?q=harmonic%20drive&limit=10',
-    }, 400);
+      400,
+    );
   }
 
   // ── 取数：失败即 503，不降级为空结果 ──────────────────────────────────
@@ -119,22 +144,28 @@ export async function onRequestGet(context) {
     const map = await loadEntityMap(env, request);
     list = Object.values(map);
   } catch (err) {
-    return json({
-      error: 'dataset_unavailable',
-      message: '实体库暂时不可用，本次检索未执行。这是服务故障，不代表库中没有匹配项。',
-      detail: String(err && err.message || err),
-    }, 503);
+    return json(
+      {
+        error: 'dataset_unavailable',
+        message: '实体库暂时不可用，本次检索未执行。这是服务故障，不代表库中没有匹配项。',
+        detail: String((err && err.message) || err),
+      },
+      503,
+    );
   }
 
   const totalIndexed = list.length;
-  const categories = [...new Set(list.map(e => e.category).filter(Boolean))].sort();
+  const categories = [...new Set(list.map((e) => e.category).filter(Boolean))].sort();
 
   if (category && !categories.includes(category)) {
-    return json({
-      error: 'unknown_category',
-      message: `品类 "${category}" 不存在。返回空结果会让你误以为该品类下无匹配，故报错。`,
-      valid_categories: categories,
-    }, 400);
+    return json(
+      {
+        error: 'unknown_category',
+        message: `品类 "${category}" 不存在。返回空结果会让你误以为该品类下无匹配，故报错。`,
+        valid_categories: categories,
+      },
+      400,
+    );
   }
 
   // ── 过滤 ────────────────────────────────────────────────────────────────
@@ -144,8 +175,8 @@ export async function onRequestGet(context) {
   // 事实是这 N 条里绝大多数与本次查询毫不相关。报一个真数字却给出假印象，
   // 与本仓一直在修的"口径 ≠ 事实"是同一种病。改为报**真正被扣下的命中数**。
   // N 不写死 —— 随数据演化，从 pool 现算。
-  const pool = category ? list.filter(e => e.category === category) : list;
-  const quarantineInIndex = pool.filter(e => e.quarantine === true).length;
+  const pool = category ? list.filter((e) => e.category === category) : list;
+  const quarantineInIndex = pool.filter((e) => e.quarantine === true).length;
 
   // ── 打分：多词 AND，每词取其命中的最高权重字段 ──────────────────────────
   const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
@@ -169,11 +200,17 @@ export async function onRequestGet(context) {
           const hay = text[f];
           if (!hay || !hay.includes(t)) continue;
           // id 完全相等时额外加权：精确 ID 查询应当排第一
-          const w = (f === 'id' && hay === t) ? group.weight * 3 : group.weight;
-          if (w > best) { best = w; bestField = f; }
+          const w = f === 'id' && hay === t ? group.weight * 3 : group.weight;
+          if (w > best) {
+            best = w;
+            bestField = f;
+          }
         }
       }
-      if (best === 0) { allTermsHit = false; break; }
+      if (best === 0) {
+        allTermsHit = false;
+        break;
+      }
       score += best;
       matched.add(bestField);
     }
@@ -194,14 +231,17 @@ export async function onRequestGet(context) {
       const inManuf = manuf.includes(t);
       const inName = name.includes(t);
       const inId = id.includes(t);
-      if (!inManuf && !inName && !inId) { allInSmartFields = false; break; }
+      if (!inManuf && !inName && !inId) {
+        allInSmartFields = false;
+        break;
+      }
       if (inManuf && inName) smartScore += 50;
       else if (inName) smartScore += 30;
       else if (inManuf) smartScore += 20;
       else if (inId) smartScore += 40;
     }
     if (allInSmartFields && smartScore > 0) {
-      const existing = scored.find(s => s.e.id === e.id);
+      const existing = scored.find((s) => s.e.id === e.id);
       if (!existing || existing.score < smartScore) {
         scored.push({ e, score: smartScore, matched: ['smart_manufacturer_model'] });
       }
@@ -212,10 +252,10 @@ export async function onRequestGet(context) {
   scored.sort((a, b) => b.score - a.score || String(a.e.id).localeCompare(String(b.e.id)));
 
   // 命中里有多少条是隔离条目 —— 这才是"因隔离而没给你看"的真实数量
-  const hiddenMatched = scored.filter(s => s.e.quarantine === true).length;
-  const visible = includeQ ? scored : scored.filter(s => s.e.quarantine !== true);
+  const hiddenMatched = scored.filter((s) => s.e.quarantine === true).length;
+  const visible = includeQ ? scored : scored.filter((s) => s.e.quarantine !== true);
 
-  const results = visible.slice(0, limit).map(s => ({
+  const results = visible.slice(0, limit).map((s) => ({
     ...project(s.e),
     relevance_score: s.score,
     matched_fields: s.matched,
@@ -233,12 +273,15 @@ export async function onRequestGet(context) {
       // 只报后者会让人以为有一大批相关结果被藏起来了。
       quarantine_matched_withheld: includeQ ? 0 : hiddenMatched,
       quarantine_in_index: quarantineInIndex,
-      ranking: '按字段加权的子串命中数排序（id > 名称 > 厂商 > 类型 > 应用/接口 > 描述）；'
-             + '多个查询词按全部命中(AND)匹配。这是字面匹配，不是语义检索。',
-      not_searched: '价格/兼容性/置信度/来源/合规/国产化率等付费字段不参与匹配，也不在结果中返回；'
-                  + '完整字段见 /api/entities.json（需 API Key）。',
-      caveat: '命中即相关的字面匹配结果，不构成选型建议，也不构成兼容性结论。'
-            + '兼容性判定请用 POST /api/compatibility。',
+      ranking:
+        '按字段加权的子串命中数排序（id > 名称 > 厂商 > 类型 > 应用/接口 > 描述）；' +
+        '多个查询词按全部命中(AND)匹配。这是字面匹配，不是语义检索。',
+      not_searched:
+        '价格/兼容性/置信度/来源/合规/国产化率等付费字段不参与匹配，也不在结果中返回；' +
+        '完整字段见 /api/entities.json（需 API Key）。',
+      caveat:
+        '命中即相关的字面匹配结果，不构成选型建议，也不构成兼容性结论。' +
+        '兼容性判定请用 POST /api/compatibility。',
     },
     results,
   });

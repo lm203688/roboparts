@@ -56,68 +56,96 @@ export async function onRequestPost(context) {
     }
 
     if (errors.length > 0) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '参数校验失败',
-        details: errors,
-      }), { status: 400, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '参数校验失败',
+          details: errors,
+        }),
+        { status: 400, headers: corsHeaders },
+      );
     }
 
     // ========== 2. 验证 API Key ==========
     if (!env.USER_CREDITS) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '积分系统未配置',
-      }), { status: 500, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '积分系统未配置',
+        }),
+        { status: 500, headers: corsHeaders },
+      );
     }
 
     const userRecord = await env.USER_CREDITS.get(api_key);
     if (!userRecord) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: 'API Key 无效或不存在',
-      }), { status: 401, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'API Key 无效或不存在',
+        }),
+        { status: 401, headers: corsHeaders },
+      );
     }
 
     // ========== 2.1 管理员角色校验（P0 安全修复：任何注册用户此前可审批任意供应商）============
     let parsedUser = null;
-    try { parsedUser = JSON.parse(userRecord); } catch (e) {}
-    const adminAllowlist = (env.ADMIN_API_KEYS || '').split(',').map(s => s.trim()).filter(Boolean);
+    try {
+      parsedUser = JSON.parse(userRecord);
+    } catch (e) {
+      /* JSON.parse 失败：非管理员 */
+    }
+    const adminAllowlist = (env.ADMIN_API_KEYS || '')
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
     const isAdmin = (parsedUser && parsedUser.role === 'admin') || adminAllowlist.includes(api_key);
     if (!isAdmin) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '权限不足：仅管理员可审核供应商',
-        code: 'FORBIDDEN',
-      }), { status: 403, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '权限不足：仅管理员可审核供应商',
+          code: 'FORBIDDEN',
+        }),
+        { status: 403, headers: corsHeaders },
+      );
     }
 
     // ========== 3. 验证供应商存在 ==========
     if (!env.SUPPLIERS) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '供应商系统未配置',
-      }), { status: 500, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '供应商系统未配置',
+        }),
+        { status: 500, headers: corsHeaders },
+      );
     }
 
     const supplierRecord = await env.SUPPLIERS.get(supplier_id);
     if (!supplierRecord) {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '供应商 ID 不存在',
-        supplier_id: supplier_id,
-      }), { status: 404, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '供应商 ID 不存在',
+          supplier_id: supplier_id,
+        }),
+        { status: 404, headers: corsHeaders },
+      );
     }
 
     const supplierData = JSON.parse(supplierRecord);
 
     // ========== 4. 状态校验 ==========
     if (supplierData.review_status !== 'pending') {
-      return new Response(JSON.stringify({
-        success: false,
-        error: '该供应商当前状态为 ' + supplierData.review_status + '，无法再次审核',
-        current_status: supplierData.review_status,
-      }), { status: 409, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '该供应商当前状态为 ' + supplierData.review_status + '，无法再次审核',
+          current_status: supplierData.review_status,
+        }),
+        { status: 409, headers: corsHeaders },
+      );
     }
 
     // ========== 5. 更新供应商状态 ==========
@@ -129,22 +157,25 @@ export async function onRequestPost(context) {
     await env.SUPPLIERS.put(supplier_id, JSON.stringify(supplierData));
 
     // ========== 6. 返回结果 ==========
-    return new Response(JSON.stringify({
-      success: true,
-      supplier_id: supplier_id,
-      company_name: supplierData.company_name,
-      review_status: supplierData.review_status,
-      review_reason: supplierData.review_reason,
-      reviewed_at: supplierData.reviewed_at,
-      message: action === 'approve'
-        ? '供应商审核已通过'
-        : '供应商审核已拒绝',
-    }), { headers: corsHeaders });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        supplier_id: supplier_id,
+        company_name: supplierData.company_name,
+        review_status: supplierData.review_status,
+        review_reason: supplierData.review_reason,
+        reviewed_at: supplierData.reviewed_at,
+        message: action === 'approve' ? '供应商审核已通过' : '供应商审核已拒绝',
+      }),
+      { headers: corsHeaders },
+    );
   } catch (e) {
-    return new Response(JSON.stringify({
-      success: false,
-      error: '服务器内部错误: ' + e.message,
-    }), { status: 500, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: '服务器内部错误: ' + e.message,
+      }),
+      { status: 500, headers: corsHeaders },
+    );
   }
 }

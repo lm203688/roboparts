@@ -37,11 +37,15 @@ export const SNAP_PREFIX = 'refs/roboparts/deployed/';
 export const SNAP_KEEP = 40;
 
 export function snapshotWorkingTree(root, log = console.log) {
-  if (!fs.existsSync(path.join(root, '.git'))) return null;   // 非 git 仓库则不介入
+  if (!fs.existsSync(path.join(root, '.git'))) return null; // 非 git 仓库则不介入
 
-  const run = (args, opts = {}) => spawnSync('git', args, {
-    cwd: root, encoding: 'utf8', shell: true, ...opts,
-  });
+  const run = (args, opts = {}) =>
+    spawnSync('git', args, {
+      cwd: root,
+      encoding: 'utf8',
+      shell: true,
+      ...opts,
+    });
   const out = (args, opts) => (run(args, opts).stdout || '').trim();
 
   // 工作区干净就没有"未入库内容"可丢，无需快照（避免 ref 无意义堆积）
@@ -50,8 +54,9 @@ export function snapshotWorkingTree(root, log = console.log) {
 
   const now = new Date();
   const p2 = (n) => String(n).padStart(2, '0');
-  const stamp = `${now.getFullYear()}${p2(now.getMonth() + 1)}${p2(now.getDate())}`
-    + `-${p2(now.getHours())}${p2(now.getMinutes())}${p2(now.getSeconds())}`;
+  const stamp =
+    `${now.getFullYear()}${p2(now.getMonth() + 1)}${p2(now.getDate())}` +
+    `-${p2(now.getHours())}${p2(now.getMinutes())}${p2(now.getSeconds())}`;
 
   // 临时索引：不污染调用者暂存区。先 read-tree HEAD 播种，
   // 这样「已追踪但被 .gitignore 忽略」的文件（如 mcp-server/*）不会从快照里消失。
@@ -59,7 +64,7 @@ export function snapshotWorkingTree(root, log = console.log) {
   const env = { ...process.env, GIT_INDEX_FILE: tmpIndex };
   try {
     if (run(['read-tree', 'HEAD'], { env }).status !== 0) return null;
-    run(['add', '-A'], { env });                // 无 pathspec：已追踪文件照常更新
+    run(['add', '-A'], { env }); // 无 pathspec：已追踪文件照常更新
     const tree = out(['write-tree'], { env });
     if (!/^[0-9a-f]{40}$/.test(tree)) return null;
 
@@ -72,7 +77,9 @@ export function snapshotWorkingTree(root, log = console.log) {
       `未入库文件 ${dirty.length} 项：`,
       ...dirty.slice(0, 20).map((d) => '  ' + d),
     ].join('\n');
-    const commit = (run(['commit-tree', tree, '-p', head], { env, input: msg }).stdout || '').trim();
+    const commit = (
+      run(['commit-tree', tree, '-p', head], { env, input: msg }).stdout || ''
+    ).trim();
     if (!/^[0-9a-f]{40}$/.test(commit)) return null;
 
     const ref = SNAP_PREFIX + stamp;
@@ -80,7 +87,9 @@ export function snapshotWorkingTree(root, log = console.log) {
 
     // 保留最近 SNAP_KEEP 个，避免无限堆积（ref 很便宜，但没必要留一年）
     const refs = out(['for-each-ref', '--format=%(refname)', SNAP_PREFIX])
-      .split('\n').filter(Boolean).sort();
+      .split('\n')
+      .filter(Boolean)
+      .sort();
     for (const old of refs.slice(0, Math.max(0, refs.length - SNAP_KEEP))) {
       run(['update-ref', '-d', old], { env });
     }
@@ -88,6 +97,10 @@ export function snapshotWorkingTree(root, log = console.log) {
     log('      取回: git diff HEAD ' + ref);
     return ref;
   } finally {
-    try { if (fs.existsSync(tmpIndex)) fs.unlinkSync(tmpIndex); } catch { /* 忽略 */ }
+    try {
+      if (fs.existsSync(tmpIndex)) fs.unlinkSync(tmpIndex);
+    } catch {
+      /* 忽略 */
+    }
   }
 }

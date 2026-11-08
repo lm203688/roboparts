@@ -41,30 +41,36 @@ export async function onRequestGet(context) {
   const id = url.searchParams.get('id');
 
   if (!id) {
-    return new Response(JSON.stringify({
-      error: 'Missing id parameter',
-      message: '请提供 id 参数，例如: /api/urdf/download?id=URDF-001',
-      hint: '访问 /api/urdf/library 获取可用模型列表',
-    }), {
-      status: 400,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: 'Missing id parameter',
+        message: '请提供 id 参数，例如: /api/urdf/download?id=URDF-001',
+        hint: '访问 /api/urdf/library 获取可用模型列表',
+      }),
+      {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' },
+      },
+    );
   }
 
   // Load models from KV or preset
   const models = await loadModels(env);
-  const model = models.find(m => m.id === id);
+  const model = models.find((m) => m.id === id);
 
   if (!model) {
-    return new Response(JSON.stringify({
-      error: 'Model not found',
-      message: '未找到 ID 为 ' + id + ' 的 URDF 模型',
-      available_ids: models.slice(0, 10).map(m => m.id),
-      total_available: models.length,
-    }), {
-      status: 404,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: 'Model not found',
+        message: '未找到 ID 为 ' + id + ' 的 URDF 模型',
+        available_ids: models.slice(0, 10).map((m) => m.id),
+        total_available: models.length,
+      }),
+      {
+        status: 404,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' },
+      },
+    );
   }
 
   // 格式选择：?format=mjcf 返回 MJCF，否则默认 URDF
@@ -225,7 +231,8 @@ function generateMJCF(model) {
     const axis = jc.axis.split(' ').map(Number);
 
     // 关节属于上一级 body 的 children（base_link 或 link_{i}）
-    xml += `      <joint name="joint_${i + 1}" body="${childBody}"` +
+    xml +=
+      `      <joint name="joint_${i + 1}" body="${childBody}"` +
       ` type="${jc.type === 'continuous' ? 'hinge' : 'hinge'}"\n`;
     xml += `        pos="${xyz[0]} ${xyz[1]} ${xyz[2]}" axis="${axis[0]} ${axis[1]} ${axis[2]}"\n`;
     xml += `        range="${jc.lower || -3.14} ${jc.upper || 3.14}"\n`;
@@ -259,11 +266,61 @@ function generateMJCF(model) {
 // 诚实边界：这些是估算值，非实测；真实设备需从厂商规格或实测替换。
 function getPhysicsParams(robotType) {
   const presets = {
-    arm:      { base_mass: 1.0, link_mass: 0.5, friction: 1.5, damping: 1.0, armature: 0.01, solref: "0.02 1", solimp: "0.95 0.99 0.001", timestep: 0.002, integrator: "implicit" },
-    humanoid: { base_mass: 3.0, link_mass: 1.0, friction: 1.0, damping: 2.0, armature: 0.05, solref: "0.02 1", solimp: "0.95 0.99 0.001", timestep: 0.002, integrator: "implicit" },
-    quadruped:{ base_mass: 5.0, link_mass: 0.8, friction: 2.0, damping: 3.0, armature: 0.02, solref: "0.02 1", solimp: "0.95 0.99 0.001", timestep: 0.002, integrator: "implicit" },
-    hand:     { base_mass: 0.2, link_mass: 0.05,friction: 0.8, damping: 0.5, armature: 0.002,solref: "0.01 1", solimp: "0.95 0.99 0.001", timestep: 0.001, integrator: "implicit" },
-    gripper:  { base_mass: 0.3, link_mass: 0.1, friction: 1.0, damping: 0.5, armature: 0.005, solref: "0.01 1", solimp: "0.95 0.99 0.001", timestep: 0.001, integrator: "implicit" },
+    arm: {
+      base_mass: 1.0,
+      link_mass: 0.5,
+      friction: 1.5,
+      damping: 1.0,
+      armature: 0.01,
+      solref: '0.02 1',
+      solimp: '0.95 0.99 0.001',
+      timestep: 0.002,
+      integrator: 'implicit',
+    },
+    humanoid: {
+      base_mass: 3.0,
+      link_mass: 1.0,
+      friction: 1.0,
+      damping: 2.0,
+      armature: 0.05,
+      solref: '0.02 1',
+      solimp: '0.95 0.99 0.001',
+      timestep: 0.002,
+      integrator: 'implicit',
+    },
+    quadruped: {
+      base_mass: 5.0,
+      link_mass: 0.8,
+      friction: 2.0,
+      damping: 3.0,
+      armature: 0.02,
+      solref: '0.02 1',
+      solimp: '0.95 0.99 0.001',
+      timestep: 0.002,
+      integrator: 'implicit',
+    },
+    hand: {
+      base_mass: 0.2,
+      link_mass: 0.05,
+      friction: 0.8,
+      damping: 0.5,
+      armature: 0.002,
+      solref: '0.01 1',
+      solimp: '0.95 0.99 0.001',
+      timestep: 0.001,
+      integrator: 'implicit',
+    },
+    gripper: {
+      base_mass: 0.3,
+      link_mass: 0.1,
+      friction: 1.0,
+      damping: 0.5,
+      armature: 0.005,
+      solref: '0.01 1',
+      solimp: '0.95 0.99 0.001',
+      timestep: 0.001,
+      integrator: 'implicit',
+    },
   };
   return presets[robotType] || presets.arm;
 }
@@ -284,7 +341,8 @@ function getJointConfigs(robotType, totalJoints) {
         xyz: i === 0 ? '0.05 0 -0.05' : `0 0 -${0.15 + i * 0.05}`,
         axis: i === 0 ? '0 1 0' : '0 1 0',
         length: 0.15,
-        effort: 200, velocity: 2.0,
+        effort: 200,
+        velocity: 2.0,
       });
     }
     // Right leg
@@ -295,7 +353,8 @@ function getJointConfigs(robotType, totalJoints) {
         xyz: i === 0 ? '-0.05 0 -0.05' : `0 0 -${0.15 + i * 0.05}`,
         axis: '0 1 0',
         length: 0.15,
-        effort: 200, velocity: 2.0,
+        effort: 200,
+        velocity: 2.0,
       });
     }
     // Left arm
@@ -306,7 +365,8 @@ function getJointConfigs(robotType, totalJoints) {
         xyz: i === 0 ? '0.05 0 0.2' : `0 0 ${0.1 + i * 0.05}`,
         axis: i === 0 ? '1 0 0' : '0 1 0',
         length: 0.1,
-        effort: 50, velocity: 3.0,
+        effort: 50,
+        velocity: 3.0,
       });
     }
     // Right arm
@@ -317,14 +377,18 @@ function getJointConfigs(robotType, totalJoints) {
         xyz: i === 0 ? '-0.05 0 0.2' : `0 0 ${0.1 + i * 0.05}`,
         axis: i === 0 ? '1 0 0' : '0 1 0',
         length: 0.1,
-        effort: 50, velocity: 3.0,
+        effort: 50,
+        velocity: 3.0,
       });
     }
   } else if (robotType === 'quadruped') {
     // 4 legs, 3 joints each = 12
     const perLeg = Math.floor(count / 4);
     const legOffsets = [
-      [0.1, 0.1], [-0.1, 0.1], [0.1, -0.1], [-0.1, -0.1]
+      [0.1, 0.1],
+      [-0.1, 0.1],
+      [0.1, -0.1],
+      [-0.1, -0.1],
     ];
     for (let leg = 0; leg < 4 && leg * perLeg < count; leg++) {
       for (let i = 0; i < perLeg; i++) {
@@ -334,7 +398,8 @@ function getJointConfigs(robotType, totalJoints) {
           xyz: i === 0 ? `${legOffsets[leg][0]} ${legOffsets[leg][1]} 0` : `0 0 -${0.1 + i * 0.08}`,
           axis: i === 0 ? '1 0 0' : '0 1 0',
           length: 0.1,
-          effort: 100, velocity: 2.0,
+          effort: 100,
+          velocity: 2.0,
         });
       }
     }
@@ -347,7 +412,8 @@ function getJointConfigs(robotType, totalJoints) {
         xyz: i === 0 ? '0 0 0.05' : `0 0 ${0.1 + i * 0.05}`,
         axis: i % 2 === 0 ? '0 1 0' : '1 0 0',
         length: 0.1,
-        effort: 50, velocity: 2.0,
+        effort: 50,
+        velocity: 2.0,
       });
     }
   } else if (robotType === 'hand' || robotType === 'gripper') {
@@ -361,8 +427,10 @@ function getJointConfigs(robotType, totalJoints) {
         xyz: `${side * 0.02} 0 0.05`,
         axis: '1 0 0',
         length: 0.05,
-        effort: 10, velocity: 5.0,
-        lower: 0, upper: 1.5,
+        effort: 10,
+        velocity: 5.0,
+        lower: 0,
+        upper: 1.5,
       });
     }
   } else {
@@ -374,7 +442,8 @@ function getJointConfigs(robotType, totalJoints) {
         xyz: i === 0 ? '0.1 0 0' : i === 1 ? '-0.1 0 0' : '0 0 0.1',
         axis: i < 2 ? '0 0 1' : '0 0 0',
         length: 0.1,
-        effort: 100, velocity: 5.0,
+        effort: 100,
+        velocity: 5.0,
       });
     }
   }
@@ -400,11 +469,51 @@ async function loadModels(env) {
 
   // Minimal fallback - return basic presets
   return [
-    { id: 'URDF-001', name: '6-DOF机械臂基础模型', robot_type: 'arm', joints: 6, links: 7, license: 'MIT', author: 'RoboParts' },
-    { id: 'URDF-002', name: '人形机器人上半身', robot_type: 'humanoid', joints: 14, links: 15, license: 'MIT', author: 'RoboParts' },
-    { id: 'URDF-003', name: '四足机器人基础模型', robot_type: 'quadruped', joints: 12, links: 13, license: 'MIT', author: 'RoboParts' },
-    { id: 'URDF-004', name: '机器人夹爪', robot_type: 'hand', joints: 2, links: 3, license: 'MIT', author: 'RoboParts' },
-    { id: 'URDF-005', name: '人形机器人全身模型', robot_type: 'humanoid', joints: 28, links: 29, license: 'Apache-2.0', author: 'RoboParts' },
+    {
+      id: 'URDF-001',
+      name: '6-DOF机械臂基础模型',
+      robot_type: 'arm',
+      joints: 6,
+      links: 7,
+      license: 'MIT',
+      author: 'RoboParts',
+    },
+    {
+      id: 'URDF-002',
+      name: '人形机器人上半身',
+      robot_type: 'humanoid',
+      joints: 14,
+      links: 15,
+      license: 'MIT',
+      author: 'RoboParts',
+    },
+    {
+      id: 'URDF-003',
+      name: '四足机器人基础模型',
+      robot_type: 'quadruped',
+      joints: 12,
+      links: 13,
+      license: 'MIT',
+      author: 'RoboParts',
+    },
+    {
+      id: 'URDF-004',
+      name: '机器人夹爪',
+      robot_type: 'hand',
+      joints: 2,
+      links: 3,
+      license: 'MIT',
+      author: 'RoboParts',
+    },
+    {
+      id: 'URDF-005',
+      name: '人形机器人全身模型',
+      robot_type: 'humanoid',
+      joints: 28,
+      links: 29,
+      license: 'Apache-2.0',
+      author: 'RoboParts',
+    },
   ];
 }
 

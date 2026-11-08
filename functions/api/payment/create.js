@@ -2,7 +2,7 @@
  * 虎皮椒支付订单创建 API
  * POST /api/payment/create
  * Body: { plan: 'starter'|'pro'|'lifetime', api_key: 'gtk_xxx', email: 'xxx@xxx.com' }
- * 
+ *
  * 积分套餐（1积分 = 1次API调用，积分永久有效，无月费）：
  * - starter: ¥9 / 100积分
  * - pro: ¥29 / 500积分
@@ -25,7 +25,9 @@ const corsHeaders = {
  * E2E 自检、冒烟测试产生的订单不得污染真实转化指标。
  */
 function isTestEmail(email) {
-  const s = String(email || '').toLowerCase().trim();
+  const s = String(email || '')
+    .toLowerCase()
+    .trim();
   if (!s) return false;
   // 1) 自有域名下单一律视为内部测试（真实客户不会用平台自身域名邮箱付费）
   if (/@roboparts\.cc$/.test(s)) return true;
@@ -49,17 +51,22 @@ export async function onRequestPost(context) {
     try {
       body = await request.json();
     } catch {
-      return new Response(JSON.stringify({ error: 'Invalid or empty request body' }),
-        { status: 400, headers: corsHeaders });
+      return new Response(JSON.stringify({ error: 'Invalid or empty request body' }), {
+        status: 400,
+        headers: corsHeaders,
+      });
     }
     const { plan, api_key, email } = body;
 
     // Validate plan
     if (!plan || !PLANS[plan]) {
-      return new Response(JSON.stringify({
-        error: 'Invalid plan',
-        available_plans: Object.keys(PLANS).map(k => ({ id: k, ...PLANS[k] })),
-      }), { status: 400, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          error: 'Invalid plan',
+          available_plans: Object.keys(PLANS).map((k) => ({ id: k, ...PLANS[k] })),
+        }),
+        { status: 400, headers: corsHeaders },
+      );
     }
 
     const planConfig = PLANS[plan];
@@ -68,8 +75,11 @@ export async function onRequestPost(context) {
     let userKey = api_key;
     if (!userKey && env.USER_CREDITS) {
       // Generate a new key for users without one
-      userKey = 'gtk_' + Array.from(crypto.getRandomValues(new Uint8Array(24)))
-        .map(b => b.toString(16).padStart(2, '0')).join('');
+      userKey =
+        'gtk_' +
+        Array.from(crypto.getRandomValues(new Uint8Array(24)))
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
     }
 
     // Create order in KV for tracking
@@ -88,7 +98,10 @@ export async function onRequestPost(context) {
     };
 
     if (env.USER_CREDITS) {
-      await env.USER_CREDITS.put((isTest ? 'testorder_' : 'order_') + orderId, JSON.stringify(orderData));
+      await env.USER_CREDITS.put(
+        (isTest ? 'testorder_' : 'order_') + orderId,
+        JSON.stringify(orderData),
+      );
     }
 
     // Build 虎皮椒 request parameters
@@ -96,17 +109,19 @@ export async function onRequestPost(context) {
     const secret = env.XUNHU_SECRET;
 
     if (!appid || !secret) {
-      return new Response(JSON.stringify({
-        error: 'Payment gateway not configured',
-        message: 'XUNHU_APPID or XUNHU_SECRET environment variables missing',
-      }), { status: 500, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          error: 'Payment gateway not configured',
+          message: 'XUNHU_APPID or XUNHU_SECRET environment variables missing',
+        }),
+        { status: 500, headers: corsHeaders },
+      );
     }
 
     // Determine the base URL for callbacks (use custom domain or pages.dev)
     const requestUrl = new URL(request.url);
-    const baseUrl = requestUrl.hostname === 'localhost'
-      ? 'https://robotparts-924.pages.dev'
-      : requestUrl.origin;
+    const baseUrl =
+      requestUrl.hostname === 'localhost' ? 'https://robotparts-924.pages.dev' : requestUrl.origin;
 
     const params = {
       version: '1.1',
@@ -143,32 +158,40 @@ export async function onRequestPost(context) {
 
     if (xunhuResult.errcode === 0 && xunhuResult.url) {
       // Success: return payment URL for mobile redirect
-      return new Response(JSON.stringify({
-        success: true,
-        order_id: orderId,
-        api_key: userKey,
-        payment_url: xunhuResult.url,
-        qrcode_url: xunhuResult.url_qrcode || null,
-        price: planConfig.price,
-        credits: planConfig.credits,
-        plan: plan,
-        message: 'Please complete payment. Credits will be added after successful payment.',
-      }), { headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          order_id: orderId,
+          api_key: userKey,
+          payment_url: xunhuResult.url,
+          qrcode_url: xunhuResult.url_qrcode || null,
+          price: planConfig.price,
+          credits: planConfig.credits,
+          plan: plan,
+          message: 'Please complete payment. Credits will be added after successful payment.',
+        }),
+        { headers: corsHeaders },
+      );
     } else {
       // Payment gateway error
-      return new Response(JSON.stringify({
-        success: false,
-        error: 'Payment gateway error',
-        errcode: xunhuResult.errcode,
-        errmsg: xunhuResult.errmsg,
-        order_id: orderId,
-      }), { status: 502, headers: corsHeaders });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Payment gateway error',
+          errcode: xunhuResult.errcode,
+          errmsg: xunhuResult.errmsg,
+          order_id: orderId,
+        }),
+        { status: 502, headers: corsHeaders },
+      );
     }
-
   } catch (e) {
-    return new Response(JSON.stringify({
-      error: 'Internal error',
-    }), { status: 500, headers: corsHeaders });
+    return new Response(
+      JSON.stringify({
+        error: 'Internal error',
+      }),
+      { status: 500, headers: corsHeaders },
+    );
   }
 }
 
@@ -180,11 +203,13 @@ export async function onRequestPost(context) {
  * 4. MD5 运算，32位小写
  */
 function generateHash(params, secret) {
-  const sortedKeys = Object.keys(params).filter(k => {
-    return k !== 'hash' && params[k] !== null && params[k] !== '' && params[k] !== undefined;
-  }).sort();
+  const sortedKeys = Object.keys(params)
+    .filter((k) => {
+      return k !== 'hash' && params[k] !== null && params[k] !== '' && params[k] !== undefined;
+    })
+    .sort();
 
-  const stringA = sortedKeys.map(k => k + '=' + params[k]).join('&');
+  const stringA = sortedKeys.map((k) => k + '=' + params[k]).join('&');
   const stringSignTemp = stringA + secret;
 
   return md5(stringSignTemp);
@@ -206,17 +231,31 @@ function md5(str) {
   function md5cmn(q, a, b, x, s, t) {
     return safeAdd(bitRotateLeft(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b);
   }
-  function md5ff(a, b, c, d, x, s, t) { return md5cmn((b & c) | (~b & d), a, b, x, s, t); }
-  function md5gg(a, b, c, d, x, s, t) { return md5cmn((b & d) | (c & ~d), a, b, x, s, t); }
-  function md5hh(a, b, c, d, x, s, t) { return md5cmn(b ^ c ^ d, a, b, x, s, t); }
-  function md5ii(a, b, c, d, x, s, t) { return md5cmn(c ^ (b | ~d), a, b, x, s, t); }
+  function md5ff(a, b, c, d, x, s, t) {
+    return md5cmn((b & c) | (~b & d), a, b, x, s, t);
+  }
+  function md5gg(a, b, c, d, x, s, t) {
+    return md5cmn((b & d) | (c & ~d), a, b, x, s, t);
+  }
+  function md5hh(a, b, c, d, x, s, t) {
+    return md5cmn(b ^ c ^ d, a, b, x, s, t);
+  }
+  function md5ii(a, b, c, d, x, s, t) {
+    return md5cmn(c ^ (b | ~d), a, b, x, s, t);
+  }
 
   function binlMD5(x, len) {
     x[len >> 5] |= 0x80 << (len % 32);
     x[(((len + 64) >>> 9) << 4) + 14] = len;
-    var a = 1732584193, b = -271733879, c = -1732584194, d = 271733878;
+    var a = 1732584193,
+      b = -271733879,
+      c = -1732584194,
+      d = 271733878;
     for (var i = 0; i < x.length; i += 16) {
-      var olda = a, oldb = b, oldc = c, oldd = d;
+      var olda = a,
+        oldb = b,
+        oldc = c,
+        oldd = d;
       a = md5ff(a, b, c, d, x[i], 7, -680876936);
       d = md5ff(d, a, b, c, x[i + 1], 12, -389564586);
       c = md5ff(c, d, a, b, x[i + 2], 17, 606105819);
@@ -305,7 +344,7 @@ function md5(str) {
       output[i] = 0;
     }
     var length8 = input.length * 8;
-    for (var i = 0; i < length8; i += 8) {
+    for (i = 0; i < length8; i += 8) {
       output[i >> 5] |= (input.charCodeAt(i / 8) & 0xff) << (i % 32);
     }
     return output;

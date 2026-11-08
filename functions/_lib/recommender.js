@@ -23,8 +23,12 @@ import { judgePair } from './compat_engine.js';
  */
 function recallTokens(e) {
   const t = new Set();
-  const norm = (s) => String(s || '')
-    .toLowerCase().split(/[\s,;/、|]+/).map((x) => x.trim()).filter(Boolean);
+  const norm = (s) =>
+    String(s || '')
+      .toLowerCase()
+      .split(/[\s,;/、|]+/)
+      .map((x) => x.trim())
+      .filter(Boolean);
   for (const k of ['protocol', 'protocols', 'comm_protocol', 'interface', 'interfaces']) {
     const v = e[k];
     if (typeof v === 'string') norm(v).forEach((x) => t.add('p:' + x));
@@ -47,10 +51,17 @@ function defaultSource(target, all) {
   const seen = new Set([target.id]);
   for (const e of all) {
     if (seen.has(e.id)) continue;
-    if (e.category === target.category) { out.push(e.id); continue; }
+    if (e.category === target.category) {
+      out.push(e.id);
+      continue;
+    }
     const et = recallTokens(e);
     let overlap = false;
-    for (const tok of tt) if (et.has(tok)) { overlap = true; break; }
+    for (const tok of tt)
+      if (et.has(tok)) {
+        overlap = true;
+        break;
+      }
     if (overlap) out.push(e.id);
   }
   return out;
@@ -92,7 +103,7 @@ function defaultRanker(scored, limit = 10) {
     const decided = x.score_basis?.weight_sum_decided || 0;
     // 兼容排前面（1 类），未定排后面（0 类）；类内按分数/证据量降序
     const cls = x.overall_compatible === true ? 1 : 0;
-    const key = x.overall_compatible === true ? (x.compatibility_score || 0) : decided;
+    const key = x.overall_compatible === true ? x.compatibility_score || 0 : decided;
     return cls * 100000 + key;
   };
   return scored
@@ -117,11 +128,11 @@ export function buildRecommender(stages = {}) {
     if (!target) return { error: '实体不存在: ' + forId, recommendations: [] };
 
     const candidateIds = await source(target, Object.values(map), map); // Source
-    const hydrated = await hydrate(candidateIds, map);                  // Hydrate
+    const hydrated = await hydrate(candidateIds, map); // Hydrate
     const judged = hydrated.map((b) => ({ b, verdict: judgePair(target, b) }));
-    const filtered = await filter(judged);                              // Filter
-    const scored = await scorer(filtered);                              // Scorer
-    const ranked = await ranker(scored, limit);                        // Rank
+    const filtered = await filter(judged); // Filter
+    const scored = await scorer(filtered); // Scorer
+    const ranked = await ranker(scored, limit); // Rank
 
     return {
       for: { id: target.id, name: target.name, category: target.category },
