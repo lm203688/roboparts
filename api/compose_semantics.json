@@ -18,7 +18,7 @@
       "gap_distance[d] = 恰有 d 轴判 unknown 的配对数（仅统计 overall=unknown；type_error 是类型冲突而非证据缺口，不计入）。d=1 即「补一轴声明即可判定」，是数据补录的最高优先级目标；gap_distance['0'] 恒为 0（无缺口就不可能是 unknown）。",
       "reflexivity 公理（同型必配）只对**几何规格型**类型成立（同标号法兰必然可装）；对**方向性角色型**类型（OUTPUT_SPIKE~OUTPUT_SPIKE）不成立——两个输出端不是必然可装，而是互为不互补。type_compat 里显式登记的自配对裁决优先于该公理。"
     ],
-    "generated_at": "2026-11-01T06:00:40+08:00",
+    "generated_at": "2026-11-07T17:03:37+08:00",
     "access": {
       "summary_zh": "30 秒领取免费 API key：无需审批、无需信用卡、无需绑卡。",
       "summary": "Free API key in 30 seconds. No approval, no credit card.",
