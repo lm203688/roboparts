@@ -199,7 +199,7 @@ def gate_eval_compat():
 
 
 def gate_cross_engine_consistency():
-    """跨引擎一致性（P2-8 · 第一/三阶段）。
+    """跨引擎一致性（P2-8 · 第一/三阶段 + 重放测试第二阶段）。
 
     产品面 JS 引擎（judgePair）与研究层 Python 引擎（compose）对同一实体对在
     共享轴（electrical/mechanical）上必须给出**可换算的一致裁决**。
@@ -212,10 +212,16 @@ def gate_cross_engine_consistency():
     不强行"修到一致"（那会破坏诚实边界）。
 
     **阴阳自证**：阳性（当前数据通过）+ 阴性（注入 1 真缺陷判红）。
+
+    **重放测试补充（--check）**：用确定性样本验证事件流格式与 Python compose 的一致性，
+    作为动态事件流的 fail-closed 校验，与静态 golden 集形成互补。
     """
     run_sub('跨引擎一致性（差异登记 + 棘轮 + 自证）',
             [sys.executable, os.path.join(ROOT, 'scripts', 'verify_cross_engine.py'), '--check'],
             timeout=180)
+    run_sub('跨引擎一致性（重放测试 --check 自生成确定性样本）',
+            [sys.executable, os.path.join(ROOT, 'scripts', 'verify_cross_engine_replay.py'), '--check'],
+            timeout=60)
 
 
 def gate_readme_stats_fresh():
