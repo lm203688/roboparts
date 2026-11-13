@@ -121,10 +121,24 @@ def family_hits(text):
     return [v for v in FAMILY if v in s]
 
 
+def _has_cjk(s):
+    """含 CJK 字符（退役表述里跨行拆开仍是同一短语的情形）。"""
+    return any('\u4e00' <= ch <= '\u9fff' for ch in s)
+
+
 def retired_hits(text):
-    """文本里出现的退役表述（去重、稳定顺序）。"""
+    """文本里出现的退役表述（去重、稳定顺序）。
+
+    2026-11-13 假红修复：`squash()` 抹掉全部空白，会把合法的两词表述
+    「Robot Parts」（本站数据集引文，`DATA-LICENSE-MATRIX.md:121`）压成
+    退役品牌「RobotParts」，造成误判。规则：含 CJK 的退役表述允许跨行
+    匹配（走空白压缩，因为 CJK 换行在渲染里不产生真空格）；纯 ASCII /
+    混合表述只在「保留空白、仅去标签」的归一文本里匹配——这类表述里的
+    空格在渲染后是真空格，空白压缩会凭空拼出子串（假红）。
+    """
+    norm = _WS.sub(' ', _TAG.sub('', text))
     s = squash(text)
-    return [v for v in RETIRED if v in s]
+    return [v for v in RETIRED if v in norm or (_has_cjk(v) and v in s)]
 
 
 def positioning_violations(pairs, local_map):
