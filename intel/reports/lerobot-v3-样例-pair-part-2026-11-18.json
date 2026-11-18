@@ -1,0 +1,187 @@
+﻿{
+    "schema_version":  "1.0",
+    "sample_note":  "RoboParts meta/roboparts.json 样例——取自 api/training_dataset.json@2026-11-13T10:38:46.656Z；用于验证 schema 草案字段名与实际数据逐一对齐（未重命名、未过滤）",
+    "parts":  [
+                  {
+                      "id":  "ACT-001",
+                      "name":  "DYNAMIXEL XM540-W270-T",
+                      "name_en":  "DYNAMIXEL XM540-W270-T",
+                      "category":  "actuators",
+                      "entity_kind":  "component",
+                      "manufacturer":  "ROBOTIS",
+                      "type":  "smart_servo",
+                      "specs":  {
+                                    "torque":  "9.2 Nm @ 12V",
+                                    "speed":  "0.222 sec/60° @ 12V",
+                                    "weight":  "82g",
+                                    "voltage":  "10.0~14.8V",
+                                    "protocol":  "DYNAMIXEL Protocol 2.0",
+                                    "interface":  "TTL/RS485",
+                                    "position_resolution":  "4096"
+                                },
+                      "applications":  [
+                                           "humanoid",
+                                           "manipulator",
+                                           "quadruped"
+                                       ],
+                      "price_range":  "0-100",
+                      "ros_support":  true,
+                      "modalities":  [
+                                         "geometric",
+                                         "electrical",
+                                         "force"
+                                     ],
+                      "modality_details":  {
+                                               "exposed":  [
+                                                               "geometric",
+                                                               "electrical",
+                                                               "force"
+                                                           ],
+                                               "force":  {
+                                                             "declared":  true,
+                                                             "torque_nm":  9.2,
+                                                             "weight_kg":  0.082,
+                                                             "force_control_precision_nm":  null,
+                                                             "basis":  [
+                                                                           "torque",
+                                                                           "weight"
+                                                                       ]
+                                                         },
+                                               "tactile":  {
+                                                               "declared":  false,
+                                                               "basis":  [
+
+                                                                         ],
+                                                               "note":  "声明级/类别级触觉相关（软体柔顺性、表面材质、抓握力），无原始触觉传感时序"
+                                                           },
+                                               "geometric":  {
+                                                                 "declared":  true,
+                                                                 "identity":  [
+
+                                                                              ]
+                                                             },
+                                               "electrical":  {
+                                                                  "declared":  true,
+                                                                  "voltage_range":  [
+                                                                                        10,
+                                                                                        14.8
+                                                                                    ],
+                                                                  "protocols":  [
+                                                                                    "DYNAMIXEL Protocol 2.0"
+                                                                                ]
+                                                              },
+                                               "vision":  {
+                                                              "declared":  false,
+                                                              "note":  "RoboParts 平台不提供原始图像流，消费方须自备相机/RGB(-D)观测"
+                                                          }
+                                           },
+                      "evidence":  {
+                                       "source_tier":  "B",
+                                       "confidence":  0.5,
+                                       "verified":  false,
+                                       "quarantine":  false,
+                                       "source_url":  null
+                                   },
+                      "standards":  {
+                                        "caee060_relevant":  true,
+                                        "iso22166_relevant":  true,
+                                        "bus_class":  "RS485",
+                                        "ros2":  true,
+                                        "interop_posture":  "unknown"
+                                    }
+                  }
+              ],
+    "assemble_pairs":  [
+                           {
+                               "a":  "ACT-001",
+                               "b":  "ACT-002",
+                               "dimensions":  [
+                                                  {
+                                                      "dimension":  "protocol",
+                                                      "compatible":  true,
+                                                      "score":  1,
+                                                      "notes":  "共享协议: rs485/ttl/dynamixel"
+                                                  },
+                                                  {
+                                                      "dimension":  "electrical",
+                                                      "compatible":  true,
+                                                      "score":  1,
+                                                      "notes":  "电压区间重叠 (10-14.8V / 10-14.8V)"
+                                                  },
+                                                  {
+                                                      "dimension":  "mechanical",
+                                                      "compatible":  null,
+                                                      "score":  0,
+                                                      "notes":  "DYNAMIXEL XM540-W270-T 仅声明安装方式「direct_mount」，未给法兰/接口标准规格（厂商侧缺口：horn/框架孔位 PCD、孔数、螺纹的法兰级几何未在公开页面给出，需对照官方 ）；DYNAMIXEL XM430-W350-T 仅声明安装方式「direct_mount」，未给法兰/接口标准规格（厂商侧缺口：horn/框架孔位 PCD、孔数、螺纹的法兰级几何未在公开页面给出，需对照官方 ），无法判定（无数据 ≠ 不兼容）"
+                                                  },
+                                                  {
+                                                      "dimension":  "software",
+                                                      "compatible":  true,
+                                                      "score":  1,
+                                                      "notes":  "双方均原生支持 ROS2"
+                                                  }
+                                              ],
+                               "overall_compatible":  true,
+                               "compatibility_score":  100,
+                               "decided_dimensions":  3,
+                               "undecided_dimensions":  1,
+                               "hard_dimensions_decided":  2,
+                               "interaction_type":  "connector_insert",
+                               "force_profile":  {
+                                                     "force_senses":  [
+                                                                          "insertion_force",
+                                                                          "electrical_contact"
+                                                                      ],
+                                                     "guidance":  "接插件插拔：关注插入力与接触力；本平台无原始插拔力曲线，需传感采集补充"
+                                                 },
+                               "verdict_reason":  "3 个维度有双方声明且均兼容（含 2 项硬约束）",
+                               "evidence_basis":  "基于厂商公开声明字段的规则推断，非实测；未声明维度记为无法判定，不计入分子也不计入分母；判 true 至少需一项硬约束（协议/电气/机械）有双方声明"
+                           },
+                           {
+                               "a":  "ACT-001",
+                               "b":  "ACT-003",
+                               "dimensions":  [
+                                                  {
+                                                      "dimension":  "protocol",
+                                                      "compatible":  true,
+                                                      "score":  1,
+                                                      "notes":  "共享协议: rs485/dynamixel"
+                                                  },
+                                                  {
+                                                      "dimension":  "electrical",
+                                                      "compatible":  false,
+                                                      "score":  0,
+                                                      "notes":  "电压区间不重叠"
+                                                  },
+                                                  {
+                                                      "dimension":  "mechanical",
+                                                      "compatible":  null,
+                                                      "score":  0,
+                                                      "notes":  "DYNAMIXEL XM540-W270-T 仅声明安装方式「direct_mount」，未给法兰/接口标准规格（厂商侧缺口：horn/框架孔位 PCD、孔数、螺纹的法兰级几何未在公开页面给出，需对照官方 ）；DYNAMIXEL PH54-200-S500-R 仅声明安装方式「direct_mount」，未给法兰/接口标准规格（厂商侧缺口：horn/框架孔位 PCD、孔数、螺纹的法兰级几何未在公开页面给出，需对照官方 ），无法判定（无数据 ≠ 不兼容）"
+                                                  },
+                                                  {
+                                                      "dimension":  "software",
+                                                      "compatible":  true,
+                                                      "score":  1,
+                                                      "notes":  "双方均原生支持 ROS2"
+                                                  }
+                                              ],
+                               "overall_compatible":  false,
+                               "compatibility_score":  62,
+                               "decided_dimensions":  3,
+                               "undecided_dimensions":  1,
+                               "hard_dimensions_decided":  2,
+                               "interaction_type":  "connector_insert",
+                               "force_profile":  {
+                                                     "force_senses":  [
+                                                                          "insertion_force",
+                                                                          "electrical_contact"
+                                                                      ],
+                                                     "guidance":  "接插件插拔：关注插入力与接触力；本平台无原始插拔力曲线，需传感采集补充"
+                                                 },
+                               "verdict_reason":  "存在双方均有声明且确实冲突的维度",
+                               "evidence_basis":  "基于厂商公开声明字段的规则推断，非实测；未声明维度记为无法判定，不计入分子也不计入分母；判 true 至少需一项硬约束（协议/电气/机械）有双方声明"
+                           }
+                       ],
+    "honesty":  "兼容性结论基于厂商公开声明字段的规则推断，非实测；未声明的维度记为无法判定，不计入证据。本导出已剔除无证据的 undecided 配对，仅保留至少有 1 个维度有双方声明的兼容性关系。v2 多模态扩展：force/tactile 模态仅承载「厂商声明级/类别级」参数（torque/weight/bionic_features/material_note/data_modalities），原始触觉/力觉传感时序本平台为零，绝不编造。"
+}
