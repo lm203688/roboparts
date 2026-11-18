@@ -205,7 +205,7 @@
 </div>
 
 <footer>
-  RoboParts · 机器人零件兼容性判定层 · 中立第三方：不生产、不销售、不代理任何零部件 · <a href="https://github.com/lm203688/roboparts">GitHub</a> · <a href="/waitlist.html">构建者候补</a> · 数据层持续摄取开源机器人项目
+  RoboParts · 机器人零件兼容性判定层 · 中立第三方：不生产、不销售、不代理任何零部件 · <a href="https://github.com/lm203688/roboparts">GitHub</a> · <a href="/waitlist.html">构建者候补</a> · <a href="/TERMS-OF-SERVICE.md">服务条款</a> · <a href="/PRIVACY-POLICY.md">隐私政策</a> · <a href="/DATA-LICENSE-MATRIX.md">数据许可矩阵</a> · 数据层持续摄取开源机器人项目
 </footer><script>
 // 页面访问埋点（M9 P0-1 激活漏斗）
 (function(){
@@ -260,7 +260,9 @@ background:rgba(0,0,0,.06);border:1px solid rgba(128,128,128,.22);font-size:13px
   -H "Content-Type: application/json" \
   -d '{"email":"you@example.com"}'</code></pre>
 <p>返回 <code>api_key</code>（<code>gtk_</code> 前缀）、<span data-rp="credits">100</span> 次免费额度、
-<span data-rp="rate_limit">30</span> 次/小时限速。邮箱仅以 SHA-256 摘要存储，不保留明文。</p>
+<span data-rp="rate_limit">30</span> 次/小时限速。邮箱仅以 SHA-256 摘要存储，不保留明文。
+注册即视为同意 <a href="/TERMS-OF-SERVICE.md">服务条款</a> 与 <a href="/PRIVACY-POLICY.md">隐私政策</a>；
+数据处理与许可详见 <a href="/DATA-LICENSE-MATRIX.md">数据许可矩阵</a>。</p>
 
 <h3>第 2 步 · 校验兼容性</h3>
 <pre class="rp-code"><code>curl -X POST https://roboparts.cc/api/validate \

@@ -40,6 +40,16 @@ So adding the PCD dimensions from a Robotiq manual is far more useful than refac
 
 **You don't need to know JSON.** The first channel is for people who "have the material but don't want to learn the format".
 
+### 跨 GFW 贡献通道（中国大陆贡献者，已验证）
+
+GitHub 直连在 GFW 下可能间歇受阻。**RoboParts 已验证一条不依赖直连的同步路径**：远程提交 `897fe5a`（2026-11-13）即通过 Git Data API 同步，提交信息含 `via Git Data API (GFW bypass)`，同步后本地/远程内容 0 行差异（已核对）。因此：
+
+1. 若 `git push` 直连失败，先 `git pull --rebase` 后重试（多数瞬时阻断可恢复）；
+2. 仍失败则改走 Git Data API 通道（该 API 不经过被墙的 git 协议端口；具体用法以本项目实际用过的提交说明为准），或在 Issue/PR 正文粘贴 diff——我们合入后保留你的署名；
+3. **无论哪条通道，闸门与溯源要求不变，无豁免**：`ci_gate.py` 照跑、`source`/`source_url` 照填、Tier 判定照旧。绕行的是传输，不是规则。
+
+> 诚实边界：Git Data API 通道的"已验证"结论来自远程提交 `897fe5a` 的存在与内容核对；本文件只陈述该事实，不给出未经实测的 API 调用参数。
+
 ---
 
 ## II. The Only Hard Rule: No Source, No Entry
