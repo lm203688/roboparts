@@ -1,0 +1,5 @@
+Level,Criterion,Pairs,Percent,RatioToNext,Source,SourceFile
+D0,"identical port type label on both ends, placeholders included",139139,64.764%,D0/D1 = 12650x,E,morphology_graph.json + Scripts/rp_ladder_recompute.py
+D1,identical port designation after excluding ELEC:UNKNOWN,11,0.00512%,D1/D2 = 1.4x,E,morphology_graph.json + Scripts/rp_ladder_recompute.py
+D2,engine pairing verdict requiring type + pin order + gender,8,0.00372%,D0/D3 = 139000x,V,B4_稳健性与B2分诊_计算产物.json (co_mount_engine/v1)
+D3,manual connector-locus correction down to device-to-device true mating,1,0.00047%,—,V,B1_电气端口取证表.md

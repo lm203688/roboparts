@@ -1,0 +1,8 @@
+Metric,Value,Unit,Computation,Source,SourceFile,Note
+New pairs among the 35 completed class-A parts,595,pairs,"C(35,2)=595",E,Scripts/rp_upper_bound.py,optimistic completion of all 35 class-A flange-borne EOAT
+New pairs against already-declared nodes,665,pairs,35 x 19=665,E,Scripts/rp_upper_bound.py,19 = nodes with declared electrical ports audited in B1
+Max new decidable pairs,1260,pairs,595+665=1260,E,Scripts/rp_upper_bound.py,"ignores pin order, gender and complementary-role constraints"
+Max D2 pairs after completion,1268,pairs,1260+8 observed=1268,E,Scripts/rp_upper_bound.py,"upper bound on the D2 level, not an estimate"
+Density of the 214840-pair universe,0.590%,percent,1268/214840=0.590%,E,Scripts/rp_upper_bound.py,share of the full composable pair universe
+Density of the 200661-pair quarantined universe,0.632%,percent,1268/200661=0.632%,E,Scripts/rp_upper_bound.py,share after isolating the 22 generic placeholders
+Verdict,even the most optimistic completion bound leaves electrical decidability below 1%,—,n/a,E,FROZEN_NUMBERS.json upper_bound_calculation,completing declarations cannot move the axis above the 1% band

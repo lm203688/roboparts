@@ -1,0 +1,6 @@
+Class,Definition,Count,RemovableByEvidence,Evidence,Source
+Z1 port exhausted,host connector budget p(h) smaller than the slots the devices require,126,No — design constraint (Proposition P1),co_mount histogram port_exhausted=126; stage blocker port_budget=exhausted=240,E — co_mount.json
+Z2 type mismatch within type_error,different flange / interface type between the two devices,distributed within the 171 type_error pairs,"Partially — via adapter, at quantifiable cost (e.g. UR20/30 adapter caps payload at 20 kg)",co_mount histogram type_error=171,E — co_mount.json
+Z3 device side undeclared,the device itself carries no interface declaration (ELEC:UNKNOWN),63 unknown pairs backed by 528 unknown ports,Yes — direct target of follow-up sourcing,co_mount histogram unknown=63; morphology gap_hubs.ELEC:UNKNOWN=528,E — co_mount.json + morphology_graph.json
+Z4 host side undeclared,the host keeps p(h) undeclared,subset of the 63 unknown pairs (FR3 route),Yes — one datasheet resolves it,robot_tool_side.json SUPERDEX-fr3 tool_io_ports=null (deliberately blank),V — robot_tool_side.json
+Z5 role not complementary,"the two devices are functionally redundant (two grippers, two same-type force sensors)",171,"No — demand-side constraint, not an evidence gap",stage blocker signal_complementary=not_complementary=171,E — co_mount.json

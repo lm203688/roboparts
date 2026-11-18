@@ -1,0 +1,54 @@
+{
+ "all_files_pass": true,
+ "files": {
+  "T1_corpus_and_ports.csv": {
+   "physical_lines": 15,
+   "data_rows_excl_header": 14,
+   "header_fields": 7,
+   "row_field_count_uniform": true,
+   "bad_line_numbers": []
+  },
+  "T2_decidability_ladder.csv": {
+   "physical_lines": 5,
+   "data_rows_excl_header": 4,
+   "header_fields": 7,
+   "row_field_count_uniform": true,
+   "bad_line_numbers": []
+  },
+  "T3_d1_pairs.csv": {
+   "physical_lines": 12,
+   "data_rows_excl_header": 11,
+   "header_fields": 4,
+   "row_field_count_uniform": true,
+   "bad_line_numbers": []
+  },
+  "T4_bootstrap.csv": {
+   "physical_lines": 9,
+   "data_rows_excl_header": 5,
+   "header_fields": 7,
+   "row_field_count_uniform": true,
+   "bad_line_numbers": []
+  },
+  "T5_zero_taxonomy.csv": {
+   "physical_lines": 6,
+   "data_rows_excl_header": 5,
+   "header_fields": 6,
+   "row_field_count_uniform": true,
+   "bad_line_numbers": []
+  },
+  "T6_upper_bound.csv": {
+   "physical_lines": 8,
+   "data_rows_excl_header": 7,
+   "header_fields": 7,
+   "row_field_count_uniform": true,
+   "bad_line_numbers": []
+  },
+  "T7_case_evidence.csv": {
+   "physical_lines": 9,
+   "data_rows_excl_header": 8,
+   "header_fields": 7,
+   "row_field_count_uniform": true,
+   "bad_line_numbers": []
+  }
+ }
+}

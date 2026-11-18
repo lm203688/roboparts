@@ -1,0 +1,64 @@
+{
+  "root": "C:\\Users\\xing\\Desktop\\所有项目\\RoboParts_兼容性四级阶梯_SCI",
+  "files": 57,
+  "dirs": 9,
+  "checks": {
+    "1_docx_reopen": {
+      "ok": 12,
+      "failed": [],
+      "pass": true
+    },
+    "2_docx_residue": {
+      "files_with_hits": [],
+      "pass": true
+    },
+    "3_identity_words": {
+      "files_with_hits": [],
+      "pass": true
+    },
+    "4_references": {
+      "entries": 28,
+      "problems": [],
+      "pass": true
+    },
+    "5_6_numbers_and_tables": {
+      "EN": {
+        "pass": true,
+        "table_rows": {
+          "1": 14,
+          "2": 4,
+          "3": 11,
+          "4": 5,
+          "5": 5,
+          "6": 7
+        },
+        "percentages_rogue": {},
+        "problems": []
+      },
+      "CN": {
+        "pass": true,
+        "table_rows": {
+          "1": 14,
+          "2": 4,
+          "3": 11,
+          "4": 5,
+          "5": 5,
+          "6": 7
+        },
+        "percentages_rogue": {},
+        "problems": []
+      },
+      "pass": true
+    },
+    "7_zip_manifest": {
+      "zip": "C:\\Users\\xing\\Desktop\\所有项目\\RoboParts_兼容性四级阶梯_SCI.zip",
+      "entries": 66,
+      "files": 57,
+      "dirs": 9,
+      "package_files": 57,
+      "package_dirs": 9,
+      "pass": true
+    }
+  },
+  "pass": true
+}

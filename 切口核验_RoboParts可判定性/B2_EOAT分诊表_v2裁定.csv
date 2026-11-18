@@ -1,0 +1,102 @@
+﻿id,name,category,manufacturer,bucket
+CHIP-67,Intel RealSense D435i,sensors,Intel,B_body_mounted
+CHIP-71,Intel RealSense L515,sensors,Intel,B_body_mounted
+CHIP-79,Intel RealSense SR300,sensors,Intel,B_body_mounted
+CHIP-83,RealSense D435i,sensors,Intel,B_body_mounted
+CHIP-84,RealSense L515,sensors,Intel,B_body_mounted
+DEXHAND021PRO-001,DexHand021 Pro,grippers,DexRobot,A_flange_eoat
+GRIP-003,SCHUNK EGP,grippers,SCHUNK,A_flange_eoat
+GRIP-004,DH Robotics 大寰 Electric Gripper,grippers,DH Robotics (大寰),A_flange_eoat
+GRIP-008,Schunk WSG 050,grippers,Schunk,A_flange_eoat
+GRIP-010,Festo DHAS,grippers,Festo,A_flange_eoat
+GRIP-011,Soft Robotics mGrip,grippers,Soft Robotics (now Quantos),A_flange_eoat
+GRIP-013,Barrett Hand BH8-282,grippers,Barrett Technology,A_flange_eoat
+GRIPPER-ONR-NG1,OnRobot NG10 电动夹爪,grippers,OnRobot,A_flange_eoat
+GRIPPER-ONR-NG30,OnRobot NG30 电动夹爪,grippers,OnRobot,A_flange_eoat
+GRIPPER-ONR-VG1,OnRobot VG1 气动夹爪,grippers,OnRobot,A_flange_eoat
+GRIPPER-POS-2F20,正实 2F-20 电动夹爪,grippers,正实机器人,A_flange_eoat
+GRIPPER-SCHUNK-SWG15,Schunk SWG 15 气动夹爪,grippers,Schunk,A_flange_eoat
+NEO-HAND-001,NEO 25-DoF Hand,grippers,1X Technologies,A_flange_eoat
+PRIMA1-HAND-001,Prima1 Dexterous Hand,grippers,Xynova,A_flange_eoat
+PROHAND-001,ProHand 1.0,grippers,Proception,A_flange_eoat
+SENS-001,LiDAR (Light Detection and Ranging),sensors,"Velodyne (Ouster), Luminar, Hesai, Livox, Innoviz",C_placeholder
+SENS-002,Event Camera (Neuromorphic Vision),sensors,"Prophesee (Metavision), iniVation (DAVIS), CelePixel",C_placeholder
+SENS-003,Tactile Sensor (GelSight),sensors,"GelSight (MIT spinoff), SynTouch, Pressure Profile Systems",C_placeholder
+SENS-004,IMU (Inertial Measurement Unit),sensors,"Bosch, InvenSense (TDK), STMicroelectronics, Analog Devices",C_placeholder
+SENS-005,Force/Torque Sensor,sensors,"ATI Industrial Automation, OnRobot, SCHUNK, ME-Meßsysteme",C_placeholder
+SENS-006,XELA uSkin 3-Axis Tactile Sensor,sensors,XELA Robotics,B_body_mounted
+SENS-007,Robotiq TSF-85 Tactile Sensor Fingertips,sensors,Robotiq,B_body_mounted
+SENS-008,Tactile Foundation Model Sensor Suite,sensors,"Multiple (Meta AI Research, XELA, academic labs)",C_placeholder
+SENS-009,Bioinspired Flexible Tactile Sensor,sensors,Academic research (ACS Applied Materials & Interfaces 2025),C_placeholder
+SENS-048,ATI Mini45 六轴力/力矩传感器,sensors,ATI Industrial Automation (Novanta),A_flange_eoat
+SENS-050,Bota Systems MiniONE 六轴力传感器,sensors,Bota Systems,A_flange_eoat
+SENS-051,蓝点触控六维力传感器,sensors,蓝点触控 (LinkTouch),A_flange_eoat
+SENS-052,宇立仪器 M4313SXX 多轴力传感器,sensors,宇立仪器 (Sunrise SRI),A_flange_eoat
+SENS-053,GelSight Mini 视触觉传感器,sensors,GelSight Inc. (MIT),B_body_mounted
+SENS-054,Meta DIGIT 视触觉传感器,sensors,Meta AI Research,B_body_mounted
+SENS-055,TacTip 仿生光学触觉传感器,sensors,Bristol Robotics Laboratory,B_body_mounted
+SENS-056,SynTouch BioTac 仿生触觉传感器,sensors,SynTouch LLC,B_body_mounted
+SENS-057,戴盟机器人 DM-Tac W2 视触觉传感器,sensors,戴盟机器人 (Daimon Robotics),B_body_mounted
+SENS-058,帕西尼 PX-6AX 多维触觉传感器,sensors,帕西尼感知科技 (PaXini),B_body_mounted
+SENS-059,Tekscan I-Scan 压力分布传感器,sensors,Tekscan,B_body_mounted
+SENS-060,PPS TactArray 触觉压力分布传感器,sensors,Pressure Profile Systems (PPS),B_body_mounted
+SENS-061,汉威/能斯达 ZNS-01 柔性电子皮肤,sensors,汉威科技/能斯达电子,B_body_mounted
+SENS-062,他山科技 SNN触觉芯片,sensors,他山科技 (清华系),B_body_mounted
+SENS-13,High-Res LiDAR Unit V2,sensors,,C_placeholder
+SENS-14,9-Axis IMU Fusion Module,sensors,,C_placeholder
+SENS-15,Pan-Tilt-Zoom Optical Camera,sensors,,C_placeholder
+SENS-16,Multi-Spectral Vision Array,sensors,,C_placeholder
+SENS-17,Electro-Active Tactile Skin,sensors,,C_placeholder
+SENS-18,Gripper Contact Array,sensors,,C_placeholder
+SENS-19,Wide-Angle Ultrasonic Array,sensors,,C_placeholder
+SENS-20,6-Axis Force-Torque Sensor,sensors,,C_placeholder
+SENS-21,Solid-State LiDAR Scanner,sensors,,C_placeholder
+SENS-22,Laser Vibrometer,sensors,,C_placeholder
+SENS-23,Event-Based Vision Sensor,sensors,,C_placeholder
+SENS-24,3D Tactile Digit,sensors,,C_placeholder
+SENS-25,3D Time-of-Flight Camera,sensors,,C_placeholder
+SENS-26,Microphone Array,sensors,,C_placeholder
+SENS-27,Strain-Gauge Torque Sensor,sensors,,C_placeholder
+SENS-28,Velodyne VLP-32C LiDAR,sensors,,B_body_mounted
+SENS-29,Xsens MTi-300 IMU,sensors,,B_body_mounted
+SENS-30,Intel RealSense D435i Camera,sensors,,B_body_mounted
+SENS-32,MaxBotix MB7066 Ultrasonic Sensor,sensors,,B_body_mounted
+SENS-33,SynTouch BioTac Tactile Sensor,sensors,,B_body_mounted
+SENS-34,Ouster OS1-64 LiDAR,sensors,,B_body_mounted
+SENS-35,Bosch BNO055 IMU,sensors,,B_body_mounted
+SENS-36,FLIR Blackfly S Camera,sensors,,B_body_mounted
+SENS-38,HC-SR04 Ultrasonic Sensor,sensors,,B_body_mounted
+SENS-39,Optoforce Tactile Sensor Array,sensors,,B_body_mounted
+SENS-40,Livox Horizon LiDAR,sensors,,B_body_mounted
+SENS-41,Sony IMX477 Camera Module,sensors,,B_body_mounted
+SENS-42,ATI Nano17 Force-Torque Sensor,sensors,,B_body_mounted
+SENS-853,ATI Mini45,sensors,ATI Industrial Automation,A_flange_eoat
+SENS-856,Robotiq Fingertip,sensors,Robotiq,B_body_mounted
+SENS-cam-orbbec-gemini335,奥比中光 Gemini 335 双目结构光深度相机,sensors,奥比中光科技 (688322.SH),B_body_mounted
+SENS-cam-percipio-fm851,图漾科技 FM851 工业级 3D 相机,sensors,上海图漾信息科技 (Percipio.XYZ),B_body_mounted
+SENS-ft-anpulong-ceramic,安培龙 陶瓷电容式六维力传感器,sensors,深圳安培龙科技 (301413.SZ),A_flange_eoat
+SENS-ft-haozhi-6axis,昊志机电 六维力矩传感器,sensors,广州昊志机电 (300503.SZ),A_flange_eoat
+SENS-ft-hipersen-hpsft,海伯森 HPS-FT 系列六维力传感器,sensors,深圳海伯森技术 (Hipersen),A_flange_eoat
+SENS-ft-keli-6axis,柯力传感 六维力传感器,sensors,宁波柯力传感科技 (603662.SH),A_flange_eoat
+SENS-ft-kunwei-kwr-n,坤维科技 KWR-N 高精度六维力传感器,sensors,常州坤维科技 (KunWei),A_flange_eoat
+SENS-ft-me-k3d,ME-Systeme K3D 系列多轴力传感器,sensors,ME-Meßsysteme GmbH (德国),A_flange_eoat
+SENS-ft-qianfenyi-6axis,千分一 六维力传感器,sensors,深圳千分一科技 (Qianfenyi),A_flange_eoat
+SENS-ft-sri-m221x,宇立仪器 M221X 关节扭矩传感器,sensors,宇立仪器 (Sunrise Instruments / SRI),A_flange_eoat
+SENS-ft-sri-m35xx,宇立仪器 M35XX 超薄型六维力传感器,sensors,宇立仪器 (Sunrise Instruments / SRI),A_flange_eoat
+SENS-ft-sri-m37xx,宇立仪器 M37XX / M47XX 六维力传感器,sensors,宇立仪器 (Sunrise Instruments / SRI),A_flange_eoat
+SENS-ft-sysgroup-sysft,神源生 SYS-FT 系列六维力传感器,sensors,南京神源生智能科技 (SYS),A_flange_eoat
+SENS-ft-xjc-ft,鑫精诚 XJC-FT 系列六维力传感器,sensors,深圳鑫精诚传感技术 (XJC),A_flange_eoat
+SENS-imu-huayi-automotive,华依科技 车规级 IMU 惯性模组,sensors,上海华依科技 (688071.SH),B_body_mounted
+SENS-imu-xindonglianke-mems,芯动联科 高性能 MEMS 陀螺/IMU,sensors,安徽芯动联科微系统 (688582.SH),B_body_mounted
+SENS-lidar-hesai-ft120,禾赛科技 FT120 纯固态补盲激光雷达,sensors,禾赛科技 (HSAI / 688771.SH),B_body_mounted
+SENS-lidar-robosense-ac1,速腾聚创 Active Camera AC1,sensors,"速腾聚创 (RoboSense, 2498.HK)",B_body_mounted
+SENS-oss-anyskin,AnySkin 可更换磁性电子皮肤,sensors,New York University (NYU),B_body_mounted
+SENS-oss-reskin,ReSkin 磁性弹性体触觉皮肤,sensors,Meta AI Research + Carnegie Mellon University,B_body_mounted
+SENS-strain-avicem,中航电测 应变式力/扭矩传感器,sensors,中航电测仪器 (300114.SZ),A_flange_eoat
+SENS-tesla-optimus-g3-suite,Tesla Optimus Gen 3 Sensor Suite,sensors,Tesla,B_body_mounted
+SENS-unitree-g1-lidar,Unitree G1 Perception System (3D LiDAR + Depth Camera),sensors,Unitree Robotics (China),B_body_mounted
+SENS-unitree-h1-360depth,Unitree H1 360° Depth Perception System,sensors,Unitree Robotics (China),B_body_mounted
+sensor-ft-001,ATI Nano43 六维力/力矩传感器,sensors,,A_flange_eoat
+sensor-ft-002,坤维 KWR46B 六维力传感器,sensors,,A_flange_eoat
+sensor-imu-001,Xsens MTi-30 惯性测量单元,sensors,,B_body_mounted
+sensor-tactile-001,SynTouch BioTac 仿生触觉传感器,sensors,,B_body_mounted

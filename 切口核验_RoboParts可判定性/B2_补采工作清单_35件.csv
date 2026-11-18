@@ -1,0 +1,36 @@
+﻿id,name,manufacturer,family,week,fields_to_collect,need,known_flange_hint
+DEXHAND021PRO-001,DexHand021 Pro,DexRobot,其他/待查,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+GRIP-003,SCHUNK EGP,SCHUNK,Schunk,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+GRIP-004,DH Robotics 大寰 Electric Gripper,DH Robotics (大寰),其他/待查,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+GRIP-008,Schunk WSG 050,Schunk,Schunk,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+GRIP-010,Festo DHAS,Festo,Festo,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+GRIP-011,Soft Robotics mGrip,Soft Robotics (now Quantos),Soft Robotics,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+GRIP-013,Barrett Hand BH8-282,Barrett Technology,Barrett,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+GRIPPER-ONR-NG1,OnRobot NG10 电动夹爪,OnRobot,OnRobot,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,Quick Changer 机器人侧 ISO 9409-1-50-4-M6；器件本身不写法兰
+GRIPPER-ONR-NG30,OnRobot NG30 电动夹爪,OnRobot,OnRobot,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,Quick Changer 机器人侧 ISO 9409-1-50-4-M6；器件本身不写法兰
+GRIPPER-ONR-VG1,OnRobot VG1 气动夹爪,OnRobot,OnRobot,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,Quick Changer 机器人侧 ISO 9409-1-50-4-M6；器件本身不写法兰
+GRIPPER-POS-2F20,正实 2F-20 电动夹爪,正实机器人,其他/待查,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+GRIPPER-SCHUNK-SWG15,Schunk SWG 15 气动夹爪,Schunk,Schunk,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+NEO-HAND-001,NEO 25-DoF Hand,1X Technologies,其他/待查,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+PRIMA1-HAND-001,Prima1 Dexterous Hand,Xynova,其他/待查,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+PROHAND-001,ProHand 1.0,Proception,其他/待查,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-048,ATI Mini45 六轴力/力矩传感器,ATI Industrial Automation (Novanta),ATI,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,Axia 族 71.12 mm BC 6×M5（非 ISO 标号）；Mini45/Nano 系列需另取
+SENS-050,Bota Systems MiniONE 六轴力传感器,Bota Systems,其他/待查,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-051,蓝点触控六维力传感器,蓝点触控 (LinkTouch),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-052,宇立仪器 M4313SXX 多轴力传感器,宇立仪器 (Sunrise SRI),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-853,ATI Mini45,ATI Industrial Automation,ATI,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,Axia 族 71.12 mm BC 6×M5（非 ISO 标号）；Mini45/Nano 系列需另取
+SENS-ft-anpulong-ceramic,安培龙 陶瓷电容式六维力传感器,深圳安培龙科技 (301413.SZ),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-ft-haozhi-6axis,昊志机电 六维力矩传感器,广州昊志机电 (300503.SZ),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-ft-hipersen-hpsft,海伯森 HPS-FT 系列六维力传感器,深圳海伯森技术 (Hipersen),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-ft-keli-6axis,柯力传感 六维力传感器,宁波柯力传感科技 (603662.SH),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-ft-kunwei-kwr-n,坤维科技 KWR-N 高精度六维力传感器,常州坤维科技 (KunWei),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-ft-me-k3d,ME-Systeme K3D 系列多轴力传感器,ME-Meßsysteme GmbH (德国),其他/待查,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-ft-qianfenyi-6axis,千分一 六维力传感器,深圳千分一科技 (Qianfenyi),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-ft-sri-m221x,宇立仪器 M221X 关节扭矩传感器,宇立仪器 (Sunrise Instruments / SRI),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-ft-sri-m35xx,宇立仪器 M35XX 超薄型六维力传感器,宇立仪器 (Sunrise Instruments / SRI),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-ft-sri-m37xx,宇立仪器 M37XX / M47XX 六维力传感器,宇立仪器 (Sunrise Instruments / SRI),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-ft-sysgroup-sysft,神源生 SYS-FT 系列六维力传感器,南京神源生智能科技 (SYS),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-ft-xjc-ft,鑫精诚 XJC-FT 系列六维力传感器,深圳鑫精诚传感技术 (XJC),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+SENS-strain-avicem,中航电测 应变式力/扭矩传感器,中航电测仪器 (300114.SZ),国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰,未取（需查 datasheet 安装图）
+sensor-ft-001,ATI Nano43 六维力/力矩传感器,,ATI,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰+厂商,Axia 族 71.12 mm BC 6×M5（非 ISO 标号）；Mini45/Nano 系列需另取
+sensor-ft-002,坤维 KWR46B 六维力传感器,,国产六维力,W1,"flange(pcd_mm,bolt,thread) + 本体是否有自带连接器 + 厂商(若空)",法兰+厂商,未取（需查 datasheet 安装图）

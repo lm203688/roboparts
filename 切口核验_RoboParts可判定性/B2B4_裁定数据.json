@@ -1,0 +1,190 @@
+{
+ "host_port_budget": {
+  "HUB-030": {
+   "elec_ports": 0,
+   "types": [],
+   "status": [],
+   "mech": [
+    "MECH:ISO9409-1-A50-4-M6"
+   ]
+  },
+  "HUB-031": {
+   "elec_ports": 0,
+   "types": [],
+   "status": [],
+   "mech": [
+    "MECH:ISO9409-1-A50-4-M6"
+   ]
+  },
+  "SUPERDEX-fr3": {
+   "elec_ports": 0,
+   "types": [],
+   "status": [],
+   "mech": [
+    "MECH:ISO9409-1-A50-4-M6"
+   ]
+  }
+ },
+ "co_mount_kpi": {
+  "pair_evaluations": 360,
+  "hist": {
+   "type_error": 171,
+   "port_exhausted": 126,
+   "unknown": 63
+  }
+ },
+ "b2_v2": {
+  "pending": 101,
+  "buckets": {
+   "B_body_mounted": 44,
+   "A_flange_eoat": 35,
+   "C_placeholder": 22
+  },
+  "real_products": 79,
+  "placeholder": 22,
+  "vendor_field_empty": 32,
+  "vendor_missing_ids": [
+   "SENS-13",
+   "SENS-14",
+   "SENS-15",
+   "SENS-16",
+   "SENS-17",
+   "SENS-18",
+   "SENS-19",
+   "SENS-20",
+   "SENS-21",
+   "SENS-22",
+   "SENS-23",
+   "SENS-24",
+   "SENS-25",
+   "SENS-26",
+   "SENS-27",
+   "SENS-28",
+   "SENS-29",
+   "SENS-30",
+   "SENS-32",
+   "SENS-33",
+   "SENS-34",
+   "SENS-35",
+   "SENS-36",
+   "SENS-38",
+   "SENS-39",
+   "SENS-40",
+   "SENS-41",
+   "SENS-42",
+   "sensor-ft-001",
+   "sensor-ft-002",
+   "sensor-imu-001",
+   "sensor-tactile-001"
+  ],
+  "A_ids": [
+   "DEXHAND021PRO-001",
+   "GRIP-003",
+   "GRIP-004",
+   "GRIP-008",
+   "GRIP-010",
+   "GRIP-011",
+   "GRIP-013",
+   "GRIPPER-ONR-NG1",
+   "GRIPPER-ONR-NG30",
+   "GRIPPER-ONR-VG1",
+   "GRIPPER-POS-2F20",
+   "GRIPPER-SCHUNK-SWG15",
+   "NEO-HAND-001",
+   "PRIMA1-HAND-001",
+   "PROHAND-001",
+   "SENS-048",
+   "SENS-050",
+   "SENS-051",
+   "SENS-052",
+   "SENS-853",
+   "SENS-ft-anpulong-ceramic",
+   "SENS-ft-haozhi-6axis",
+   "SENS-ft-hipersen-hpsft",
+   "SENS-ft-keli-6axis",
+   "SENS-ft-kunwei-kwr-n",
+   "SENS-ft-me-k3d",
+   "SENS-ft-qianfenyi-6axis",
+   "SENS-ft-sri-m221x",
+   "SENS-ft-sri-m35xx",
+   "SENS-ft-sri-m37xx",
+   "SENS-ft-sysgroup-sysft",
+   "SENS-ft-xjc-ft",
+   "SENS-strain-avicem",
+   "sensor-ft-001",
+   "sensor-ft-002"
+  ],
+  "B_count": 44,
+  "kappa_rule_vs_adjudication": 0.6236,
+  "agreement": 0.7426,
+  "flips": 26,
+  "flip_examples": [
+   [
+    "SENS-009",
+    "B_body_mounted",
+    "C_placeholder"
+   ],
+   [
+    "SENS-061",
+    "C_placeholder",
+    "B_body_mounted"
+   ],
+   [
+    "SENS-28",
+    "C_placeholder",
+    "B_body_mounted"
+   ],
+   [
+    "SENS-29",
+    "C_placeholder",
+    "B_body_mounted"
+   ],
+   [
+    "SENS-30",
+    "C_placeholder",
+    "B_body_mounted"
+   ],
+   [
+    "SENS-32",
+    "C_placeholder",
+    "B_body_mounted"
+   ],
+   [
+    "SENS-33",
+    "C_placeholder",
+    "B_body_mounted"
+   ],
+   [
+    "SENS-34",
+    "C_placeholder",
+    "B_body_mounted"
+   ],
+   [
+    "SENS-35",
+    "C_placeholder",
+    "B_body_mounted"
+   ],
+   [
+    "SENS-36",
+    "C_placeholder",
+    "B_body_mounted"
+   ],
+   [
+    "SENS-38",
+    "C_placeholder",
+    "B_body_mounted"
+   ],
+   [
+    "SENS-39",
+    "C_placeholder",
+    "B_body_mounted"
+   ]
+  ]
+ },
+ "universe_after_quarantine": {
+  "composable_now": 656,
+  "quarantine": 22,
+  "composable_after": 634,
+  "pairs_after": 200661
+ }
+}

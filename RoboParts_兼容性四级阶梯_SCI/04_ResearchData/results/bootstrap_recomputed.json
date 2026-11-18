@@ -1,0 +1,65 @@
+{
+ "script": "rp_bootstrap.py",
+ "B": 1000,
+ "seed": 20261109,
+ "cluster_unit": "manufacturer",
+ "n_clusters_observed": 329,
+ "note": "frozen says 329 clusters; empty manufacturer collapsed to one cluster",
+ "axes": {
+  "mechanical_same_flange": {
+   "observed_pairs": 996,
+   "observed_point_pct": "0.4636%",
+   "ci95_low_pct": "0.0968%",
+   "ci95_high_pct": "1.2712%",
+   "frozen_point_pct": "0.1373%",
+   "frozen_ci": [
+    "0.0132%",
+    "0.573%"
+   ]
+  },
+  "mechanical_both_declared": {
+   "observed_pairs": 2211,
+   "observed_point_pct": "1.0291%",
+   "ci95_low_pct": "0.1688%",
+   "ci95_high_pct": "3.1443%",
+   "frozen_point_pct": "1.0291%",
+   "frozen_ci": [
+    "0.160%",
+    "2.959%"
+   ]
+  },
+  "mechanical_both_declared_or_partial": {
+   "observed_pairs": 3240,
+   "observed_point_pct": "1.5081%",
+   "ci95_low_pct": "0.3495%",
+   "ci95_high_pct": "3.9635%",
+   "frozen_point_pct": "1.5081%",
+   "frozen_ci": [
+    "0.368%",
+    "4.205%"
+   ]
+  },
+  "electrical_both_declared": {
+   "observed_pairs": 171,
+   "observed_point_pct": "0.0796%",
+   "ci95_low_pct": "0.0053%",
+   "ci95_high_pct": "0.3113%",
+   "frozen_point_pct": "0.0796%",
+   "frozen_ci": [
+    "0.0069%",
+    "0.268%"
+   ]
+  },
+  "signal_both_declared": {
+   "observed_pairs": 77815,
+   "observed_point_pct": "36.2200%",
+   "ci95_low_pct": "25.8742%",
+   "ci95_high_pct": "45.5465%",
+   "frozen_point_pct": "36.220%",
+   "frozen_ci": [
+    "26.18%",
+    "45.57%"
+   ]
+  }
+ }
+}

@@ -1,0 +1,15 @@
+Metric,Value,Unit,Denominator,Source,SourceFile,Note
+Entities total,868,entities,whole catalogue,E,entities.json,"entities.json count field; includes non-composable, software and specification nodes"
+Composable nodes,656,nodes,whole catalogue,E,morphology_graph.json,nodes with composable=true; summary.nodes_composable
+Unordered pairs,214840,pairs,656 nodes,E,morphology_graph.json,"C(656,2)=214840; recomputed by rp_ladder_recompute.py"
+Vendors with manufacturer,329,vendors,656 nodes,O,entities.json / morphology_graph.json,"frozen value retained; independent recompute on non-empty manufacturer strings yielded 328 (1-vendor normalization gap, see results/frozen_checks.json)"
+Nodes after isolating 22 placeholders,634,nodes,656 nodes,E,B2B4_裁定数据.json,universe_after_quarantine.composable_after; C_placeholder bucket of the v2 adjudication
+Unordered pairs after quarantine,200661,pairs,634 nodes,E,B2B4_裁定数据.json,"C(634,2)=200661; universe_after_quarantine.pairs_after"
+Electrical ports total,553,ports,656 nodes,E,morphology_graph.json,sum of port_status_by_axis.electrical (declared 25 + not_declared 528); recomputed match
+Distinct electrical type ids,17,type ids,553 ports,E,morphology_graph.json,"port_types_by_axis.electrical=18 entries of which 5264-3P has zero consumers, 17 in use; recomputed match"
+ELEC:UNKNOWN ports,528,ports,553 ports,E,morphology_graph.json,gap_hubs.ELEC:UNKNOWN; recomputed match
+UNKNOWN share,95.48%,percent,553 ports,E,morphology_graph.json,528/553=95.48%
+Declared electrical ports,25,ports,553 ports,E,morphology_graph.json,port_status_by_axis.electrical.declared; recomputed match
+Not-declared electrical ports,528,ports,553 ports,E,morphology_graph.json,port_status_by_axis.electrical.not_declared; recomputed match
+Nodes with more than one declared electrical port,6,nodes,19 declared nodes,E,morphology_graph.json,25 declared ports spread over 19 nodes; 6 nodes carry >1; recomputed match
+Nodes with electrical declaration audited in B1,19,nodes,656 nodes,V,B1_电气端口取证表.md,the 19 audited nodes; matches recomputed declared-node count

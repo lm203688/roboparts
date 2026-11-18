@@ -1,0 +1,100 @@
+{
+ "script": "rp_ladder_recompute.py",
+ "corpus": "api/morphology_graph.json + api/entities.json",
+ "recomputed": {
+  "entities_total": 868,
+  "composable_nodes": 656,
+  "unordered_pairs": 214840,
+  "vendors_distinct_nonempty": 328,
+  "electrical_ports_total": 553,
+  "electrical_distinct_type_ids": 17,
+  "electrical_unknown_ports": 528,
+  "electrical_status_declared": 25,
+  "electrical_status_not_declared": 528,
+  "nodes_with_declared_electrical_port": 19,
+  "nodes_with_gt1_declared_electrical_port": 6,
+  "D0_pairs": 139139,
+  "D0_unknown_pairs": 139128,
+  "D1_pairs": 11
+ },
+ "checks": [
+  {
+   "field": "corpus.entities",
+   "expected": 868,
+   "recomputed": 868,
+   "status": "match"
+  },
+  {
+   "field": "corpus.composable_nodes",
+   "expected": 656,
+   "recomputed": 656,
+   "status": "match"
+  },
+  {
+   "field": "corpus.unordered_pairs",
+   "expected": 214840,
+   "recomputed": 214840,
+   "status": "match"
+  },
+  {
+   "field": "corpus.vendors_with_manufacturer",
+   "expected": 329,
+   "recomputed": 328,
+   "status": "MISMATCH"
+  },
+  {
+   "field": "electrical_ports.total_ports",
+   "expected": 553,
+   "recomputed": 553,
+   "status": "match"
+  },
+  {
+   "field": "electrical_ports.distinct_type_ids",
+   "expected": 17,
+   "recomputed": 17,
+   "status": "match"
+  },
+  {
+   "field": "electrical_ports.unknown_type_ports",
+   "expected": 528,
+   "recomputed": 528,
+   "status": "match"
+  },
+  {
+   "field": "electrical_ports.status_declared",
+   "expected": 25,
+   "recomputed": 25,
+   "status": "match"
+  },
+  {
+   "field": "electrical_ports.status_not_declared",
+   "expected": 528,
+   "recomputed": 528,
+   "status": "match"
+  },
+  {
+   "field": "electrical_ports.nodes_with_more_than_one_declared_electrical_port",
+   "expected": 6,
+   "recomputed": 6,
+   "status": "match"
+  },
+  {
+   "field": "ladder.D0.pairs",
+   "expected": 139139,
+   "recomputed": 139139,
+   "status": "match"
+  },
+  {
+   "field": "ladder.D0_unknown_pairs",
+   "expected": 139128,
+   "recomputed": 139128,
+   "status": "match"
+  },
+  {
+   "field": "ladder.D1.pairs",
+   "expected": 11,
+   "recomputed": 11,
+   "status": "match"
+  }
+ ]
+}

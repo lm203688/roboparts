@@ -1,0 +1,207 @@
+{
+  "_meta": {
+    "version": "v1-frozen-2026-11-09",
+    "rule": "本文件是全文唯一数字源。正文、表格、图、摘要、投稿包凡出现数字必须与本文件逐字一致；禁止四舍五入改写、禁止新增、禁止推算未列在此的数字。",
+    "provenance_source": "主代理在本地 ROBOPARTS 语料（C:/Users/xing/Desktop/所有项目/2.robopart/api/*.json）上的现算产物：rp_b24.py / rp_b2v2.py / rp_ladder.py；落盘 B4_稳健性与B2分诊_计算产物.json、B2B4_裁定数据.json、核验报告_RoboParts_收尾B2B3B4_v3.md、B1_电气端口取证表.md"
+  },
+  "corpus": {
+    "entities": 868,
+    "composable_nodes": 656,
+    "unordered_pairs": 214840,
+    "vendors_with_manufacturer": 329,
+    "after_isolating_22_placeholders": {
+      "nodes": 634,
+      "pairs": 200661
+    }
+  },
+  "electrical_ports": {
+    "total_ports": 553,
+    "distinct_type_ids": 17,
+    "unknown_type_ports": 528,
+    "unknown_share_pct": "95.48%",
+    "status_declared": 25,
+    "status_not_declared": 528,
+    "nodes_with_more_than_one_declared_electrical_port": 6,
+    "nodes_with_electrical_declaration_audited_in_B1": 19
+  },
+  "ladder": {
+    "denominator_pairs": 214840,
+    "levels": [
+      {
+        "id": "D0",
+        "criterion": "identical port type label on both ends, placeholders included",
+        "pairs": 139139,
+        "percent": "64.764%"
+      },
+      {
+        "id": "D1",
+        "criterion": "identical port designation after excluding ELEC:UNKNOWN",
+        "pairs": 11,
+        "percent": "0.00512%"
+      },
+      {
+        "id": "D2",
+        "criterion": "engine pairing verdict requiring type + pin order + gender",
+        "pairs": 8,
+        "percent": "0.00372%"
+      },
+      {
+        "id": "D3",
+        "criterion": "manual connector-locus correction down to device-to-device true mating",
+        "pairs": 1,
+        "percent": "0.00047%"
+      }
+    ],
+    "ratios": {
+      "D0_over_D1": "12,650x",
+      "D1_over_D2": "1.4x",
+      "D0_over_D3": "139,000x"
+    },
+    "D0_unknown_pairs": 139128,
+    "D0_unknown_share": "99.992%"
+  },
+  "D1_pairs": [
+    {"pair": "ACT-001 x ACT-002", "token": "JST-EHR-03"},
+    {"pair": "ACT-028 x GRIP-002", "token": "Robotiq 10-SPRING-PIN / DEVICE-CABLE-5-POLE-M8"},
+    {"pair": "ACT-028 x GRIP-006", "token": "Robotiq 10-SPRING-PIN / DEVICE-CABLE-5-POLE-M8"},
+    {"pair": "GRIP-002 x GRIP-006", "token": "Robotiq 10-SPRING-PIN / DEVICE-CABLE-5-POLE-M8"},
+    {"pair": "GRIP-012 x GRIP-014", "token": "UR-TOOL-CONNECTOR-COMPOSITE"},
+    {"pair": "SENS-047 x SENS-37", "token": "12-PIN-ROUND-AMPHENOL"},
+    {"pair": "SENS-049 x SENS-854", "token": "M8-5-PIN-SENSOR-CABLE"},
+    {"pair": "SENS-31 x SENS-855", "token": "M12-5-PIN-A-CODED-IEC-61076-2-101"}
+  ],
+  "D1_pair_notes": "11 pairs collapse onto 8 engine tokens: Robotiq 2F-85 duplicated entity plus shared coupling part accounts for the repeats; three pairs are cable-end tokens.",
+  "bootstrap": {
+    "B": 1000,
+    "seed": 20261109,
+    "cluster_unit": "manufacturer (329 clusters, whole-cluster resampling)",
+    "rows": [
+      {"axis": "mechanical_same_flange", "pairs": 295, "point_pct": "0.1373%", "ci_low": "0.0132%", "ci_high": "0.573%", "cross_vendor_pct": "76.61%"},
+      {"axis": "mechanical_both_declared", "pairs": 2211, "point_pct": "1.0291%", "ci_low": "0.160%", "ci_high": "2.959%", "cross_vendor_pct": "86.88%"},
+      {"axis": "mechanical_both_declared_or_partial", "pairs": 3240, "point_pct": "1.5081%", "ci_low": "0.368%", "ci_high": "4.205%", "cross_vendor_pct": "90.37%"},
+      {"axis": "electrical_both_declared", "pairs": 171, "point_pct": "0.0796%", "ci_low": "0.0069%", "ci_high": "0.268%", "cross_vendor_pct": "85.96%"},
+      {"axis": "signal_both_declared", "pairs": 77815, "point_pct": "36.220%", "ci_low": "26.18%", "ci_high": "45.57%", "cross_vendor_pct": "97.3%"}
+    ]
+  },
+  "dedup_sensitivity": {
+    "nodes_after_name_normalisation": 645,
+    "pairs_after_name_normalisation": 207690,
+    "mechanical_same_flange_pairs": {"before": 295, "after": 294},
+    "D2_pairs": {"before": 8, "after": 8},
+    "verdict": "qualitative conclusions unchanged, magnitude shifts below 4%"
+  },
+  "co_mount": {
+    "engine": "co_mount_engine/v1",
+    "hosts": 3,
+    "devices": 16,
+    "pair_evaluations": 360,
+    "mountable_pairs": 0,
+    "verdicts": {"type_error": 171, "port_exhausted": 126, "unknown": 63},
+    "stage_blockers": {"port_budget_exhausted": 240, "signal_complementary_not_complementary": 171, "port_budget_unknown": 120},
+    "single_mount": {"mountable": 32, "unknown": 16}
+  },
+  "host_tool_side": {
+    "HUB-030_UR3e": {"tool_flange": "MECH:ISO9409-1-A50-4-M6", "tool_io_ports": 1, "connector": "M8 8-pin", "pins": 8, "signals": ["24V", "GND", "2x DO", "2x DI", "2x AI/RS485"], "source_tier": "A", "confidence": 0.85},
+    "HUB-031_UR5e": {"tool_flange": "MECH:ISO9409-1-A50-4-M6", "tool_io_ports": 1, "connector": "M8 8-pin", "pins": 8, "signals": ["24V", "GND", "2x DO", "2x DI", "2x AI/RS485"], "source_tier": "A", "confidence": 0.85},
+    "FR3": {"tool_flange": "MECH:ISO9409-1-A50", "tool_io_ports": null, "connector": "end effector connector", "signals": ["2x DI", "2x DO (24V, isolated, EN 61131-2 type 3)"], "source_tier": "B", "confidence": 0.95},
+    "discipline_note": "8 is pin count, not channel count; bits = 1. Treating pin count as bit count would let the engine report 8 simultaneously mountable tools."
+  },
+  "B1_locus": {
+    "audited_nodes": 19,
+    "device_side": 4,
+    "device_side_nodes": ["ACT-001 JST EHR-03", "ACT-002 JST EHR-03", "ACT-003 EHR-04", "ACT-016 A1257WR-S-3P + XT30PW-M"],
+    "adapter_side": 3,
+    "adapter_side_nodes": ["Robotiq 2F-85", "Robotiq Hand-E", "GRIP-007 (also host)"],
+    "host_side": 3,
+    "host_side_nodes": ["Robotiq EPick", "OnRobot VGC10", "OnRobot RG2 (mixed)"],
+    "cable_side": 7,
+    "cable_side_nodes": ["ATI 12-pin Amphenol", "OnRobot HEX M8", "Robotiq FT 300 M12", "and four more"],
+    "finding": "no end-effector or sensor in the audited set owns a true device-side port; after locus correction only one pair (ACT-001 x ACT-002) remains a device-to-device true mating (DYNAMIXEL TTL daisy chain)"
+  },
+  "B1_evidence_quotes": [
+    {"item": "2FG7 port ownership", "quote": "supported in the operation mode via tool connector: 2FG7, 2FGP20", "note": "ETHERNET in the declared name is a protocol, not a connector type"},
+    {"item": "HEX-E pin count", "quote": "sensor cable (4 pin M8 - 4 pin M8, 5 m)", "note": "database records 5-pin; correct value is 4-pin M8; HEX-E QC manual: for RG2-FT use the marked M8-4pin connector"},
+    {"item": "ATI Axia80 port placement", "quote": "This model has an 8-pin M8 connector on the sensor. All other Axia80 models have a 6-pin M8 connector.", "note": "8-pin M12 sits on the cable end (part 9105-C-ZC22-ZC28-4)"},
+    {"item": "UR20/UR30 cross-generation", "quote": "UR20/30 Tool Flange Adapter - Official tool flange adapter to convert the UR20/UR30 layout to EN ISO 9409-1-50-4-M6 (e-Series layout). Maximum rated payload 20 kg.", "note": "adapter converts mechanics only, not electrics, and caps payload at 20 kg"}
+  ],
+  "flange_standard_generations": {
+    "UR8_Long_15_18": "ISO 9409-1-50-4-M6",
+    "UR20_30": "ISO 9409-1-80-6-M8"
+  },
+  "suite_attribute_evidence": [
+    {"vendor": "Robotiq", "fact": "same gripper reaches 31.5-4-M5 and 40-4-M6 through the universal coupling kit, 50-4-M6 through the UR-specific coupling kit; 3-Finger only 40-4-M6"},
+    {"vendor": "OnRobot", "fact": "devices do not carry a flange designation; they mount to the Quick Changer, whose robot side is ISO 9409-1-50-4-M6"},
+    {"vendor": "ATI", "fact": "Axia mounting side is a 71.12 mm bolt circle with 6 x M5 and no ISO designation"}
+  ],
+  "B2_triage": {
+    "mechanical_not_declared_EOAT": 101,
+    "composable_EOAT": 121,
+    "composable_grippers": 26,
+    "composable_sensing": 95,
+    "class_A_flange_borne": 35,
+    "class_A_grippers": 15,
+    "class_A_dexterous_hands": 4,
+    "class_A_force_torque": 20,
+    "class_B_body_or_surface_mounted": 44,
+    "class_B_realSense_cameras": 5,
+    "class_C_generic_placeholders": 22,
+    "real_products": 79,
+    "placeholders": 22,
+    "empty_manufacturer_field": 32,
+    "kappa": 0.6236,
+    "agreement_pct": "74.26%",
+    "flipped_items": 26,
+    "kappa_note": "the 0.6236 is keyword-rule versus manual adjudication, not inter-rater; it falls below the 0.75 gate"
+  },
+  "B3_external": {
+    "HRIM_repo": "AcutronicRobotics/HRIM",
+    "license": "Apache-2.0",
+    "archived": true,
+    "last_push": "2019-08-07",
+    "stars": 71,
+    "class_models": 21,
+    "class_models_breakdown": {"actuator": 3, "composite": 3, "power": 1, "sensor": 14},
+    "instance_datasheets": 3,
+    "instance_datasheets_names": ["hans_rotaryservo", "robotiq_gripper_finger", "xtion_depthsensor"],
+    "mechanical_mating_fields": 0,
+    "connector_level_electrical_fields": 0,
+    "gripper_xml_verbatim": "<module name=\"gripper\" type=\"actuator\" description=\"defines the messages to interact with grippers\">",
+    "UR_plus_products": 528,
+    "UR_plus_interface_fields": "0/528",
+    "conclusion": "no external corpus can supply a part with both mechanical and electrical mating declarations; interface-field absence is an ecosystem-level phenomenon"
+  },
+  "upper_bound_calculation": {
+    "scenario": "optimistic completion of all 35 class-A parts",
+    "new_pairs_among_the_35": 595,
+    "existing_declared_nodes": 19,
+    "new_pairs_to_existing": 665,
+    "max_new_pairs": 1260,
+    "max_D2_pairs": 1268,
+    "density_of_214840": "0.590%",
+    "density_of_200661": "0.632%",
+    "verdict": "even the most optimistic completion bound leaves electrical decidability below 1%",
+    "method": "C(35,2)=595 pairs among the completed parts plus 35 x 19 = 665 pairs against every already-declared node, added to the 8 observed; ignores pin-order, gender and complementary-role constraints, hence an upper bound"
+  },
+  "proposition": {
+    "P1": "if host h exposes p(h) independently powered and independently addressed connector slots on its tool side, and device d occupies one slot unless it is externally powered or bus-shared, then the number of co-mounted devices k satisfies k <= p(h); with bus sharing k <= p(h)*m",
+    "C1": "p(UR3e)=p(UR5e)=1 implies every k>=2 co-mount question is unsatisfiable regardless of how complete either side's declarations are",
+    "C2": "completing Z3/Z4 can only turn unknown into compatible or incompatible; it cannot change the unsatisfiability of Z1",
+    "C3": "FR3 keeps p undeclared, so its unknown pairs belong to Z4, are undecidable before completion, and must not be merged into Z1"
+  },
+  "zero_taxonomy": {
+    "Z1_port_exhausted": 126,
+    "Z2_type_mismatch_within_type_error": 171,
+    "Z3_device_side_undeclared": 63,
+    "Z4_host_side_undeclared": "FR3 route, subset of the 63 unknown pairs",
+    "Z5_role_not_complementary": 171,
+    "irreducible_Z1_plus_Z5": 297,
+    "irreducible_share_pct": "82.5%",
+    "evaluation_denominator": 360
+  },
+  "prohibited_numbers": [
+    "6.57% (legacy single decidability rate from v1; deleted from the record)",
+    "0.9384% / 0.0037% / 13.2657% (legacy v2 engine denominators; superseded by the frozen bootstrap rows)",
+    "2016 pairs / 0.94% (legacy mechanical aggregate that conflicts with the frozen bootstrap rows)",
+    "K=2 structural theorem (abandoned claim of the old Mechatronics draft)"
+  ]
+}

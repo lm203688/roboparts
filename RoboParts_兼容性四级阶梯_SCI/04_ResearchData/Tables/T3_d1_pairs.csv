@@ -1,0 +1,12 @@
+Pair,SharedToken,MechanismNote,Source
+ACT-001 x ACT-002,JST-EHR-03,Both ends device-side TTL ports; DYNAMIXEL daisy chain; the only pair surviving locus correction (D3),V — B1_电气端口取证表.md
+ACT-028 x GRIP-002,Robotiq COUPLING-10-SPRING-PIN,Adapter locus; ACT-028 and GRIP-002 are duplicated entities of the same Robotiq 2F-85 product,V — B1_电气端口取证表.md
+ACT-028 x GRIP-006,Robotiq COUPLING-10-SPRING-PIN,"Adapter locus; each gripper mates its own coupling, the two grippers cannot mate each other",V — B1_电气端口取证表.md
+GRIP-002 x GRIP-006,Robotiq COUPLING-10-SPRING-PIN,Adapter locus; duplicated-entity pair of the same 2F-85 / Hand-E coupling family,V — B1_电气端口取证表.md
+ACT-028 x GRIP-002,Robotiq DEVICE-CABLE-5-POLE-M8,"Second shared token of the same 3-node cluster; pair-token incidence, not a new node pair",E — morphology_graph.json
+ACT-028 x GRIP-006,Robotiq DEVICE-CABLE-5-POLE-M8,"Second shared token of the same 3-node cluster; pair-token incidence, not a new node pair",E — morphology_graph.json
+GRIP-002 x GRIP-006,Robotiq DEVICE-CABLE-5-POLE-M8,"Second shared token of the same 3-node cluster; pair-token incidence, not a new node pair",E — morphology_graph.json
+GRIP-012 x GRIP-014,UR-TOOL-CONNECTOR-COMPOSITE,"Host locus; both devices compete for the same robot tool connector, they do not mate each other",V — B1_电气端口取证表.md
+SENS-047 x SENS-37,12-PIN-ROUND-AMPHENOL,"Cable locus; 12-pin round Amphenol pigtail ends at the interface box, not at another device",V — B1_电气端口取证表.md
+SENS-049 x SENS-854,M8-5-PIN-SENSOR-CABLE,Cable locus; corpus declares 5-pin but the HEX-E manual ships a 4-pin M8 cable (B1 correction),V — B1_电气端口取证表.md
+SENS-031 x SENS-855,M12-5-PIN-A-CODED-IEC-61076-2-101,Cable locus; Robotiq FT300 family M12 A-coded receptacle on the sensor side,V — B1_电气端口取证表.md

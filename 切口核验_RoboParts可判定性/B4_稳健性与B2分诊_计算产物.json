@@ -1,0 +1,145 @@
+{
+ "universe": {
+  "nodes": 656,
+  "pairs": 214840,
+  "vendors": 329,
+  "mech_declared": 67,
+  "mech_loose": 81,
+  "elec_declared": 19,
+  "elec_any": 547,
+  "sig_declared": 395,
+  "elec_with_token": 547,
+  "flange_nonnull": 57
+ },
+ "ladder": {
+  "mech_same_flange": {
+   "pairs": 295,
+   "pct_of_pairs": 0.137311,
+   "ci95_cluster_vendor": [
+    0.000132,
+    0.00573
+   ],
+   "same_vendor_pairs": 69,
+   "cross_vendor_pairs": 226,
+   "cross_vendor_share_pct": 76.61
+  },
+  "mech_both_declared": {
+   "pairs": 2211,
+   "pct_of_pairs": 1.029138,
+   "ci95_cluster_vendor": [
+    0.001595,
+    0.029589
+   ],
+   "same_vendor_pairs": 290,
+   "cross_vendor_pairs": 1921,
+   "cross_vendor_share_pct": 86.88
+  },
+  "mech_both_loose": {
+   "pairs": 3240,
+   "pct_of_pairs": 1.508099,
+   "ci95_cluster_vendor": [
+    0.003682,
+    0.042047
+   ],
+   "same_vendor_pairs": 312,
+   "cross_vendor_pairs": 2928,
+   "cross_vendor_share_pct": 90.37
+  },
+  "elec_both_declared": {
+   "pairs": 171,
+   "pct_of_pairs": 0.079594,
+   "ci95_cluster_vendor": [
+    6.9e-05,
+    0.002682
+   ],
+   "same_vendor_pairs": 24,
+   "cross_vendor_pairs": 147,
+   "cross_vendor_share_pct": 85.96
+  },
+  "elec_both_any": {
+   "pairs": 149331,
+   "pct_of_pairs": 69.508006,
+   "ci95_cluster_vendor": [
+    0.556088,
+    0.807966
+   ],
+   "same_vendor_pairs": 3583,
+   "cross_vendor_pairs": 145748,
+   "cross_vendor_share_pct": 97.6
+  },
+  "elec_same_token": {
+   "pairs": 139136,
+   "pct_of_pairs": 64.762614,
+   "ci95_cluster_vendor": [
+    0.521917,
+    0.765879
+   ],
+   "same_vendor_pairs": 3361,
+   "cross_vendor_pairs": 135775,
+   "cross_vendor_share_pct": 97.58
+  },
+  "sig_both_declared": {
+   "pairs": 77815,
+   "pct_of_pairs": 36.219978,
+   "ci95_cluster_vendor": [
+    0.261791,
+    0.455741
+   ],
+   "same_vendor_pairs": 2104,
+   "cross_vendor_pairs": 75711,
+   "cross_vendor_share_pct": 97.3
+  }
+ },
+ "dedupe": {
+  "unique_nodes": 645,
+  "unique_pairs": 207690,
+  "per_flag_pairs": {
+   "mech_same_flange": 294,
+   "mech_both_declared": 2145,
+   "mech_both_loose": 3160,
+   "elec_both_declared": 171,
+   "elec_both_any": 144453,
+   "elec_same_token": 134429,
+   "sig_both_declared": 75855
+  }
+ },
+ "b2": {
+  "eo_composable": 121,
+  "pending": 101,
+  "buckets": {
+   "B_body_mounted": 29,
+   "A_flange_eoat": 28,
+   "C_placeholder": 44
+  },
+  "A_ids": [
+   "DEXHAND021PRO-001",
+   "GRIP-003",
+   "GRIP-004",
+   "GRIP-008",
+   "GRIP-010",
+   "GRIP-011",
+   "GRIP-013",
+   "GRIPPER-ONR-NG1",
+   "GRIPPER-ONR-NG30",
+   "GRIPPER-ONR-VG1",
+   "GRIPPER-POS-2F20",
+   "GRIPPER-SCHUNK-SWG15",
+   "NEO-HAND-001",
+   "PRIMA1-HAND-001",
+   "PROHAND-001",
+   "SENS-048",
+   "SENS-050",
+   "SENS-051",
+   "SENS-052",
+   "SENS-ft-anpulong-ceramic",
+   "SENS-ft-haozhi-6axis",
+   "SENS-ft-hipersen-hpsft",
+   "SENS-ft-keli-6axis",
+   "SENS-ft-kunwei-kwr-n",
+   "SENS-ft-me-k3d",
+   "SENS-ft-qianfenyi-6axis",
+   "SENS-ft-sysgroup-sysft",
+   "SENS-ft-xjc-ft"
+  ]
+ }
+}

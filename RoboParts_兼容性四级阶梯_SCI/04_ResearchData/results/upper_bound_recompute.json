@@ -1,0 +1,49 @@
+{
+ "script": "rp_upper_bound.py",
+ "recomputed": {
+  "C(35,2)": 595,
+  "35x19": 665,
+  "max_new_pairs": 1260,
+  "max_D2_pairs": 1268,
+  "density_of_214840_pct": 0.59,
+  "density_of_200661_pct": 0.632
+ },
+ "checks": [
+  {
+   "field": "upper_bound.C(35,2)",
+   "expected": 595,
+   "recomputed": 595,
+   "status": "match"
+  },
+  {
+   "field": "upper_bound.35x19",
+   "expected": 665,
+   "recomputed": 665,
+   "status": "match"
+  },
+  {
+   "field": "upper_bound.max_new_pairs",
+   "expected": 1260,
+   "recomputed": 1260,
+   "status": "match"
+  },
+  {
+   "field": "upper_bound.max_D2_pairs",
+   "expected": 1268,
+   "recomputed": 1268,
+   "status": "match"
+  },
+  {
+   "field": "upper_bound.density_of_214840_pct",
+   "expected": "0.590%",
+   "recomputed": "0.590%",
+   "status": "match"
+  },
+  {
+   "field": "upper_bound.density_of_200661_pct",
+   "expected": "0.632%",
+   "recomputed": "0.632%",
+   "status": "match"
+  }
+ ]
+}

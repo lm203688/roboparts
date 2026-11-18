@@ -1,0 +1,7 @@
+axis,definition,pairs,point_pct,ci_low_pct,ci_high_pct,cross_vendor_pct,provenance
+mech,same_flange_label,295,0.1373,0.0132,0.573,76.61,E
+mech,both_ends_declared,2211,1.0291,0.160,2.959,86.88,E
+mech,both_ends_loose,3240,1.5081,0.368,4.205,90.37,E
+elec,both_ends_declared,171,0.0796,0.0069,0.268,85.96,E
+signal,both_ends_declared,77815,36.220,26.18,45.57,97.3,E
+bootstrap_params,B=1000 seed=20261109 329_vendor_clusters,,,,,E

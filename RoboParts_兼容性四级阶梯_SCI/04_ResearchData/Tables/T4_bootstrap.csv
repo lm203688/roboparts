@@ -1,0 +1,9 @@
+# Vendor whole-cluster bootstrap: B=1000, seed=20261109, 329 manufacturer clusters resampled whole
+# Point estimates and 95% CI verbatim from FROZEN_NUMBERS.json bootstrap.rows
+# Independent re-implementation in Scripts/rp_bootstrap.py reproduced all five point estimates and nearby CI bands
+Axis,Pairs,PointPct,CI_Low,CI_High,CrossVendorPct,Source
+mechanical_same_flange,295,0.1373%,0.0132%,0.573%,76.61%,E — B4_稳健性与B2分诊_计算产物.json
+mechanical_both_declared,2211,1.0291%,0.160%,2.959%,86.88%,E — B4_稳健性与B2分诊_计算产物.json
+mechanical_both_declared_or_partial,3240,1.5081%,0.368%,4.205%,90.37%,E — B4_稳健性与B2分诊_计算产物.json
+electrical_both_declared,171,0.0796%,0.0069%,0.268%,85.96%,E — B4_稳健性与B2分诊_计算产物.json
+signal_both_declared,77815,36.220%,26.18%,45.57%,97.3%,E — B4_稳健性与B2分诊_计算产物.json
