@@ -8,3 +8,4 @@
 - 未经 Chief 明确指示不 push；修改核心文件后先跑门禁验证，等待指示再提交。
 - 使用 UTF-8；Windows 下 GBK/WinError 5 类编码错误是环境假红，不是真实失败，需区分。
 - `ops/` 是本地私有归档（`.gitignore` 有意忽略），永不部署到公开 Pages。
+- 数据再生管道：`api/entities.json` 是本地构建源（在 git 中；根目录无同名文件，保鲜产物在 `进度成果/`），`normalize_categories.py` 再生会覆盖人工策展的 URL 并丢弃 confidence 字段；再生 `compose_frontier.json` 后必须运行 `python scripts/sync_confidence_fields.py` 并验证无 URL 回归。
