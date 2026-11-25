@@ -213,16 +213,28 @@ function generateMJCF(model) {
 
   // Worldbody
   xml += `  <worldbody>\n`;
-  xml += `    <light pos="0 0 3" dir="0 0 -1" diffuse="0.8" ambient="0.3"/>\n`;
+  // 注意：MJCF 中 light 的 diffuse/ambient/specular 是颜色（3 个分量 r g b），
+  // 单值会被 MuJoCo 以 "attribute 'ambient' does not have enough data" 拒载。
+  xml += `    <light pos="0 0 3" dir="0 0 -1" diffuse="0.8 0.8 0.8" ambient="0.3 0.3 0.3"/>\n`;
   xml += `    <body name="base_link" pos="0 0 0">\n`;
   // P0-7a：base_link 的 geom 必须命名，contact 才能通过 geom 名引用它。
   xml += `      <geom name="geom_base" type="box" size="0.05 0.05 0.025" material="roboparts_grey"\n`;
   xml += `        mass="${phys.base_mass}" friction="${phys.friction}" solref="${phys.solref}" solimp="${phys.solimp}"/>\n`;
 
-  // 关节链（P0-7b/c 修复：改为 body/joint 嵌套 + geom 命名）
-  // 旧版所有 link_i 直接平铺在 base_link 下、每个 joint 都挂 base_link —— 那不是链，
-  // 而是同一坐标系下的并联星形，机器人学理上完全错。正确结构：
-  //   base_link → joint_1 → link_1 → joint_2 → link_2 → ... → joint_n → link_n
+  // 关节链（P0-7b/c 修复：body/joint 嵌套 + geom 命名）
+  // 正确结构：base_link → link_1 → link_2 → … → link_n，每级 body 嵌在上一级内部。
+  //   base_link → joint_1 → link_1 → joint_2 → link_2 → … → joint_n → link_n
+  //
+  // MJCF 标准（v2.6+ schema）里 <joint> 没有 body 属性，关节必须作为**子 body 的孩子**
+  // 声明（joint_i 属于 link_i，连接 link_i 与上一级）。旧版把 <joint> 平铺在父 body 下、
+  // 用 body="link_i" 指目标 —— MuJoCo 直接报 schema violation 拒载（已验证 4.0.1），
+  // 且即使忽略该属性，拓扑也是同一坐标系下的并联星形，不是链。此处改为标准写法：
+  //   <body name="link_i" pos="xyz">
+  //     <joint name="joint_i" type="hinge" pos="0 0 0" axis=".." range=".."/>
+  //     <geom name="geom_i" .../>
+  //     <body name="link_{i+1}" ...> ... </body>
+  //   </body>
+  // joint_i pos="0 0 0"：链节点原点即挂载点（parent 坐标系下的 xyz 偏移），几何不变。
   for (let i = 0; i < jointConfigs.length; i++) {
     const jc = jointConfigs[i];
     const childBody = `link_${i + 1}`;
@@ -230,16 +242,13 @@ function generateMJCF(model) {
     const xyz = jc.xyz.split(' ').map(Number);
     const axis = jc.axis.split(' ').map(Number);
 
-    // 关节属于上一级 body 的 children（base_link 或 link_{i}）
-    xml +=
-      `      <joint name="joint_${i + 1}" body="${childBody}"` +
-      ` type="${jc.type === 'continuous' ? 'hinge' : 'hinge'}"\n`;
-    xml += `        pos="${xyz[0]} ${xyz[1]} ${xyz[2]}" axis="${axis[0]} ${axis[1]} ${axis[2]}"\n`;
-    xml += `        range="${jc.lower || -3.14} ${jc.upper || 3.14}"\n`;
-    xml += `        damping="${phys.damping}" stiffness="0" armature="${phys.armature}"/>\n`;
-
     // 子 body：每个 link_i 都嵌在上一个 link_{i-1} 内部（递归链）
     xml += `      <body name="${childBody}" pos="${xyz[0]} ${xyz[1]} ${xyz[2]}">\n`;
+    // 关节作为子 body 的孩子声明（MJCF 标准；无 body 属性，pos 相对本 body 原点）
+    xml += `        <joint name="joint_${i + 1}" type="hinge"\n`;
+    xml += `          pos="0 0 0" axis="${axis[0]} ${axis[1]} ${axis[2]}"\n`;
+    xml += `          range="${jc.lower || -3.14} ${jc.upper || 3.14}"\n`;
+    xml += `          damping="${phys.damping}" stiffness="0" armature="${phys.armature}"/>\n`;
     xml += `        <geom name="${geomName}" type="cylinder" size="0.03 ${jc.length / 2}" material="roboparts_blue"\n`;
     xml += `          mass="${phys.link_mass}" friction="${phys.friction}" solref="${phys.solref}" solimp="${phys.solimp}"/>\n`;
   }

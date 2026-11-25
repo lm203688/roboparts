@@ -17,6 +17,8 @@
  *   SMOKE_RETRIES=1 node scripts/smoke_prod.mjs  # 关掉重试（调试）
  */
 
+import { realLoad } from './validate_mjcf.mjs';
+
 const TARGET = (
   process.env.SMOKE_TARGET ||
   process.argv.find((a) => a.startsWith('http')) ||
@@ -151,16 +153,33 @@ const checkUrdfDownload = async () =>
     return { ok: true };
   });
 
-/** /api/urdf/download?id=URDF-001&format=mjcf 应返回 MJCF XML，根元素 <mujoco> */
+/** /api/urdf/download?id=URDF-001&format=mjcf 应返回可在 MuJoCo 里真加载并 step 的 MJCF（① 融合点）
+ *
+ * 升级说明（2026-11-19，①）：旧版只查 <mujoco 根 + <worldbody> 两个正则。正则测不出
+ * schema 违例——2026-11-19 实修前，生成器把 <joint body="link_i"> 平铺在父 body 下
+ * （MJCF 无 body 属性，MuJoCo 拒载）+ <light> 颜色只给单值（需 3 分量），5 个预设
+ * 全部 from_xml_string 失败，正则全绿。本检查在正则之上加真加载：
+ *   · 结构正则（快速失败，给出可读原因）
+ *   · realLoad()：mujoco.MjModel.from_xml_string + mj_step×100
+ * MuJoCo 绑定缺失（MUJOCO_PY 未设/未装包）时判 FAIL 而非静默绿——这是契约检查，
+ * 静默跳过会让本次事故重演。前置：安装 mujoco 绑定（见 validate_mjcf.mjs 头注释）。
+ */
 const checkMjcfDownload = async () =>
   check(
-    '/api/urdf/download URDF-001 · 根元素 <mujoco>',
+    '/api/urdf/download URDF-001 · MuJoCo 真加载并 step',
     '/api/urdf/download?id=URDF-001&format=mjcf',
     (r) => {
       if (!r.text.trimStart().startsWith('<?xml')) return { ok: false, reason: '响应非 XML' };
       if (!/<mujoco\s/.test(r.text)) return { ok: false, reason: '无 <mujoco 根元素——不合法 MJCF' };
       if (!/<worldbody/.test(r.text))
         return { ok: false, reason: '无 <worldbody>——MuJoCo 无法加载' };
+      const load = realLoad(r.text);
+      if (load.skip)
+        return {
+          ok: false,
+          reason: `真加载 SKIP：MuJoCo 绑定缺失（${load.note}）。契约检查不能静默跳过——请安装绑定或设 MUJOCO_PY`,
+        };
+      if (!load.ok) return { ok: false, reason: `MuJoCo 拒载：${load.note}` };
       return { ok: true };
     },
   );
