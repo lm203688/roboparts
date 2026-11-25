@@ -1,7 +1,9 @@
 # PhyRC 2026 Submission Final Summary · RoboParts
 
+> 🔴 **已废弃（2026-11-20）**：正式处置记录见 `docs/roboparts-phyrc-status-deprecated-2026-11-20.md`。不再推进提交、不再跟踪截止。以下内容仅作历史溯源保留。
+
 **Submission Date**: 2026-11-10  
-**Status**: ✅ Package Ready, Awaiting Browser Tool Login  
+**Status**: ✅ Package Ready, Awaiting Browser Tool Login（后经 2026-11-20 废弃标注，未提交）
 **Account**: 463102527@qq.com  
 **Deadline**: 2026-12-15 (49 days remaining)
 
